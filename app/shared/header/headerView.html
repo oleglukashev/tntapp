@@ -1,0 +1,78 @@
+<!-- navbar header -->
+<div class='header-mobile navbar-header visible-xs'>
+  <button class='header-mobile__config pull-right visible-xs dk' ui-toggle-class='show' data-target='.navbar-collapse'>
+    <i class='mdi-action-settings'></i>
+  </button>
+  <button class='header-mobile__menu pull-left visible-xs' ui-toggle-class='off-screen' data-target='.app-aside' ui-scroll-to='app'>
+    <i class='mdi-editor-format-align-justify'></i>
+  </button>
+  <!-- brand -->
+  </a>
+
+</div>
+<!-- / navbar header -->
+
+<!-- navbar collapse -->
+<div class="collapse navbar-collapse">
+  <div class='header-logo pull-left'>
+  </div>
+  <ul class='header-menu nav navbar-nav hidden-xs'>
+    <li class='header-menu__item active'>
+      <a href='#'>Dashboard</a>
+    </li>
+    <li class='header-menu__item'>
+      <a href='#'>
+        Reserveringen
+        <span class='visible-xs-inline'>Notifications</span>
+        <span class='badge badge-sm up bg-danger pull-right-xs'>2</span>
+      </a>
+    </li>
+    <li class='header-menu__item'>
+      <a href='#'>Agenda</a>
+    </li>
+    <li class='header-menu__item'>
+      <a href='#'>Profielen</a>
+    </li>
+  </ul>
+  <ul class='nav navbar-nav hidden-xs navbar-right'>
+    <li>
+      <div class='header-search pull-right'>
+        <i class='mdi-action-search'></i>
+      </div>
+    </li>
+    <li class='dropdown' dropdown>
+      <div class='header-account-menu pull-right m-l-sm'>
+        <div class='dropdown-toggle clearfix' dropdown-toggle>
+          <div class='header-account-menu__avatar pull-left'></div>
+          <div class='header-account-menu__info pull-left hidden-sm hidden-md m-l-sm'>
+            <p class='header-account-menu__name'>Trevor Hansen</p>
+            <p class='header-account-menu__info'>ACME</p>
+          </div>
+          <b class='pull-right caret m-l-sm m-t'></b>
+        </div>
+
+        <!-- dropdown -->
+        <ul class="header-account-menu-box dropdown-menu animated">
+          <li>
+            <a href='#'>
+              <span>Instellingen</span>
+              <i class='mdi-navigation-check pull-right'></i>
+            </a>
+          </li>
+          <li>
+            <a href='#'>
+              <span>Upgrade</span>
+            </a>
+          </li>
+          <li>
+            <a href='#'>
+              <span>Uitloggen</span>
+            </a>
+          </li>
+        </ul>
+        <!-- / dropdown -->
+      </div>
+    </li>
+  </ul>
+</div>
+<!-- / navbar collapse -->
