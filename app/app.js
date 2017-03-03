@@ -1,20 +1,20 @@
-'use strict';
-
+import styles   from './assets/css/app.styl';
+import angular  from 'angular';
 
 angular.module('app', [
-    'ngAnimate',
-    'ngAria',
-    'ngCookies',
-    'ngMessages',
-    'ngResource',
-    'ngSanitize',
-    'ngTouch',
-    'ngStorage',
-    'ui.router',
-    'ui.bootstrap',
-    'ui.utils',
-    'ui.load',
-    'ui.jq',
-    'oc.lazyLoad',
-    'pascalprecht.translate'
+  'ngAnimate',
+  'ngAria',
+  'ngCookies',
+  'ngMessages',
+  'ngResource',
+  'ngSanitize',
+  'ngTouch',
+  'ngStorage',
+  'ui.router',
+  'ui.bootstrap',
+  'ui.utils',
+  'ui.load',
+  'ui.jq',
+  'oc.lazyLoad',
+  'pascalprecht.translate'
 ]);

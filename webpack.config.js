@@ -1,16 +1,20 @@
 'use strict';
 
-const webpack = require('webpack')
+var webpack = require('webpack');
+var Extract = require('extract-text-webpack-plugin');
+
 
 module.exports = {
-  entry: './app/main',
+  entry: './app/app.js',
   output: {
-    filename: 'build.js'
+    path         : './public/assets',
+    filename     : 'app.js',
   },
 
   watch: true,
 
   plugins: [
+    new Extract('app.css'),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         'warnings'     : false,
@@ -29,11 +33,15 @@ module.exports = {
       },
       {
         test  : /\.styl$/,
-        loader: 'style!css!autoprefixer?{browsers:["last 2 version"], cascade:false}!stylus'
+        loader: Extract.extract({ fallback: 'style-loader', use: 'css-loader!autoprefixer-loader?browsers=last 2 version!stylus-loader' })
       },
       {
         test  : /\.css$/,
-        loader: 'style!css!autoprefixer?{browsers:["last 2 version"], cascade:false}'
+        loader: Extract.extract({ fallback: 'style-loader', use: 'css-loader!autoprefixer-loader?browsers=last 2 version' })
+      },
+      {
+        test: /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
+        loader: 'file?=name[path][name].[ext]'
       }
     ]
   }
