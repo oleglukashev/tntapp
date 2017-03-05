@@ -7,8 +7,8 @@ var Extract = require('extract-text-webpack-plugin');
 module.exports = {
   entry: './app/app.js',
   output: {
-    path         : './public/assets',
-    filename     : 'app.js',
+    path: './public/assets',
+    filename: 'app.js',
   },
 
   watch: true,
@@ -41,7 +41,11 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
-        loader: 'file?=name[path][name].[ext]'
+        loader: 'file-loader?=name[path][name].[ext]'
+      },
+      {
+        test: /\.html$/,
+        loader: 'html-loader'
       }
     ]
   }

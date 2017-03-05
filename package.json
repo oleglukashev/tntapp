@@ -5,18 +5,37 @@
   "scripts": {
     "start": "node node_modules/http-server/bin/http-server -o"
   },
-  "keywords": [],
-  "repository": "",
+  "repository": "https://git.thenextsoftware.io/TheNextSoftware/TheNextTableApp.git",
   "author": "TheNextTableSoftware",
-  "license": "",
-  "dependencies": {
-    "extract-text-webpack-plugin": "^2.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "angular": "^1.6.2",
+    "angular-animate": "^1.6.2",
+    "angular-aria": "^1.6.2",
+    "angular-bootstrap-npm": "^0.14.3",
+    "angular-cookies": "^1.6.2",
+    "angular-messages": "^1.6.2",
+    "angular-resource": "^1.6.2",
+    "angular-sanitize": "^1.6.2",
+    "angular-storage": "0.0.15",
+    "angular-touch": "^1.6.2",
+    "angular-translate": "^2.15.1",
+    "angular-translate-loader-static-files": "^2.15.1",
+    "angular-translate-storage-cookie": "^2.15.1",
+    "angular-translate-storage-local": "^2.15.1",
+    "angular-ui-router": "^0.4.2",
+    "angular-ui-scroll": "^1.6.0",
+    "angular-ui-utils": "^0.1.1",
     "autoprefixer-loader": "^3.2.0",
+    "css-loader": "^0.26.2",
+    "extract-text-webpack-plugin": "^2.0.0",
+    "file-loader": "^0.10.1",
+    "html-loader": "^0.4.5",
     "http-server": "^0.6.1",
+    "raw-loader": "^0.5.1",
     "style-loader": "^0.13.2",
     "stylus": "^0.54.5",
-    "stylus-loader": "^2.5.0"
+    "stylus-loader": "^2.5.0",
+    "ui-utils-npm": "^1.0.0"
   }
 }

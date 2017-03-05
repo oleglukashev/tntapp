@@ -1,5 +1,11 @@
 'use strict';
 
-app.controller('DashboardCtrl', ['$scope', function($scope) {
+export default class DashboardCtrl {
+  constructor() {
+    this.name = 'World';
+  }
 
-}]);
+  changeName() {
+    this.name = 'angular-tips';
+  }
+}
