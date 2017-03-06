@@ -45,7 +45,8 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        loader: 'html-loader'
+        loader: "ng-cache-loader",
+        exclude: /node_modules/
       }
     ]
   }

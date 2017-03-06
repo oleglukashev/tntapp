@@ -7,14 +7,17 @@ import angular_messages   from 'angular-messages'
 import angular_resource   from 'angular-resource'
 import angular_sanitize   from 'angular-sanitize'
 import angular_touch      from 'angular-touch'
-import angular_storage    from 'angular-storage'
 import angular_ui_router  from 'angular-ui-router'
 import angular_ui_bootstrap  from 'angular-bootstrap-npm'
 import angular_translate  from 'angular-translate'
 import angular_translate_storage_locale from 'angular-translate-storage-local'
 import angular_translate_storage_cookie from 'angular-translate-storage-cookie'
 import layout from './components/layout/app.html'
+import dashboard from './components/dashboard/dashboard'
 
+
+//@require "./shared/**/*.html"
+//@require "./components/**/*.html"
 
 const app = angular
   .module('app', [
@@ -25,12 +28,12 @@ const app = angular
     angular_resource,
     angular_sanitize,
     angular_touch,
-    angular_storage,
     angular_ui_router,
     angular_ui_bootstrap,
     angular_translate,
     angular_translate_storage_locale,
-    angular_translate_storage_cookie
+    angular_translate_storage_cookie,
+    dashboard
   ])
   .config(['$translateProvider', function($translateProvider){
     // Register a loader for the static files
@@ -67,14 +70,86 @@ const app = angular
     function ($stateProvider,   $urlRouterProvider) {
       $urlRouterProvider.otherwise('/app/dashboard');
 
-      alert(1);
-
       $stateProvider
         .state('app', {
           abstract: true,
           url: '/app',
-          template: layout
+          views: {
+            '': {
+              template: 'app.html'
+            }
+          }
         });
     }
-  ]
-);
+  ])
+  .controller('AppCtrl', ['$scope', '$translate', '$window',
+    function(              $scope,   $translate,   $window ) {
+      // add 'ie' classes to html
+      const isIE = !!navigator.userAgent.match(/MSIE/i);
+      if(isIE){ angular.element($window.document.body).addClass('ie');}
+      if(isSmartDevice( $window ) ){ angular.element($window.document.body).addClass('smart')};
+
+      // config
+      $scope.app = {
+        name: 'Angulr',
+        version: '2.2.0',
+        // for chart colors
+        color: {
+          primary: '#7266ba',
+          info:    '#23b7e5',
+          success: '#27c24c',
+          warning: '#fad733',
+          danger:  '#f05050',
+          light:   '#e8eff0',
+          dark:    '#3a3f51',
+          black:   '#1c2b36'
+        },
+        settings: {
+          themeID: 1,
+          asideColor: 'bg-black',
+          headerFixed: true,
+          asideFixed: false,
+          asideFolded: false,
+          asideDock: false,
+          container: false
+        }
+      }
+
+      // // save settings to local storage
+      // if ( angular.isDefined($localStorage.settings) ) {
+      //   $scope.app.settings = $localStorage.settings;
+      // } else {
+      //   $localStorage.settings = $scope.app.settings;
+      // }
+      $scope.$watch('app.settings', function(){
+        if( $scope.app.settings.asideDock  &&  $scope.app.settings.asideFixed ){
+          // aside dock and fixed must set the header fixed.
+          $scope.app.settings.headerFixed = true;
+        }
+        // for box layout, add background image
+        $scope.app.settings.container ? angular.element('html').addClass('bg') : angular.element('html').removeClass('bg');
+        // save to local storage
+        // $localStorage.settings = $scope.app.settings;
+      }, true);
+
+      // angular translate
+      $scope.lang = { isopen: false };
+      $scope.langs = { en:'English', de_DE:'German', it_IT:'Italian' };
+      $scope.selectLang = $scope.langs[$translate.proposedLanguage()] || "English";
+      $scope.setLang = function(langKey, $event) {
+        // set the current lang
+        $scope.selectLang = $scope.langs[langKey];
+        // You can change the language during runtime
+        $translate.use(langKey);
+        $scope.lang.isopen = !$scope.lang.isopen;
+      };
+
+      function isSmartDevice( $window )
+      {
+        // Adapted from http://www.detectmobilebrowsers.com
+        const ua = $window['navigator']['userAgent'] || $window['navigator']['vendor'] || $window['opera'];
+        // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
+        return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
+      }
+
+    }]);
