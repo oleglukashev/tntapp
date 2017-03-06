@@ -3,7 +3,6 @@
 var webpack = require('webpack');
 var Extract = require('extract-text-webpack-plugin');
 
-
 module.exports = {
   entry: './app/app.js',
   output: {
@@ -45,8 +44,7 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        loader: "ng-cache-loader",
-        exclude: /node_modules/
+        loader: 'raw-loader'
       }
     ]
   }

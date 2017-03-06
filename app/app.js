@@ -12,12 +12,10 @@ import angular_ui_bootstrap  from 'angular-bootstrap-npm'
 import angular_translate  from 'angular-translate'
 import angular_translate_storage_locale from 'angular-translate-storage-local'
 import angular_translate_storage_cookie from 'angular-translate-storage-cookie'
-import layout from './components/layout/app.html'
 import dashboard from './components/dashboard/dashboard'
 
 
-//@require "./shared/**/*.html"
-//@require "./components/**/*.html"
+//require('ng-cache-loader!./shared/header/headerView.html');
 
 const app = angular
   .module('app', [
@@ -74,11 +72,7 @@ const app = angular
         .state('app', {
           abstract: true,
           url: '/app',
-          views: {
-            '': {
-              template: 'app.html'
-            }
-          }
+          template: require('./components/layout/app.html')
         });
     }
   ])
@@ -152,4 +146,7 @@ const app = angular
         return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
       }
 
+    }])
+    .run(["$templateCache", function ($templateCache) {
+      $templateCache.put("headerView.html", require("./shared/header/headerView.html"));
     }]);
