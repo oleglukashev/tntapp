@@ -4,10 +4,7 @@ export default function routes($stateProvider) {
   $stateProvider
     .state('app.dashboard', {
       url: '/dashboard',
-      views: {
-        '': {
-          template: 'dashboardView.html'
-        }
-      }
-    });
+      template: require('./dashboardView.html'),
+      controller: 'DashboardCtrl'
+    })
 }

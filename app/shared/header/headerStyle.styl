@@ -9,14 +9,21 @@
   margin 0
   border-width 0
   border-radius 0
+  z-index 1
 
   .header-logo
     width 113px
     height 72px
-    margin-right 25px
+    margin-right 36px
+    padding 12px 0
 
   .header-menu
     .header-menu__item
+      margin-left 0
+
+      &:first-child
+        margin-left 0
+
       & > a
         line-height 42px
         font-size 14px
@@ -41,6 +48,10 @@
 
         a
           padding-bottom 11px
+
+    @media (min-width 962px)
+      .header-menu__item
+        margin-left 26px
 
 
   .header-search
