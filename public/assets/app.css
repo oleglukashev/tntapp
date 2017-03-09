@@ -20491,12 +20491,22 @@ small,
   }
 }
 .header .header-search {
-  width: 24px;
-  height: 24px;
-  margin: 24px 0;
+  height: 42px;
+  margin: 15px 0;
+}
+.header .header-search input {
+  color: #c8c8c8;
+}
+.header .header-search input,
+.header .header-search button {
+  height: 42px;
+  padding: 0;
+  vertical-align: top;
+  background-color: transparent;
+  border: none;
 }
 .header .header-search i {
-  font-size: 24px;
+  font-size: 25px;
   color: #fff;
 }
 .header .header-account-menu .header-account-menu__avatar {
