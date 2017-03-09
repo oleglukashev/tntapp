@@ -12,8 +12,8 @@ export default class DashboardCtrl {
             this.group_reservations = reservations.filter((item) => item.is_group === true);
             this.today_reservation = reservations
                                        .filter((res) => {
-                                         res.reservation_parts.filter((res_part) => {
-                                           moment(res_part.datetime).format('MMM Do YY') === moment().format('MMM Do YY')
+                                         return res.reservation_parts.filter((res_part) => {
+                                           return this.moment(res_part.datetime).format('MMM DD YY') == this.moment().format('MMM DD YY')
                                          })
                                        })
           }
