@@ -7,7 +7,7 @@ class Reservation {
 
   getAll() {
     return this.$http({
-        url: 'http://127.0.0.1:8000/api/v2/company/94/reservation',
+        url: 'http://sven.thenexttable.com/api/v2/company/79/reservation',
         method: 'GET',
       }).then((res) => res.data);
 
