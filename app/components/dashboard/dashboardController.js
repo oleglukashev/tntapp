@@ -1,5 +1,6 @@
 export default class DashboardCtrl {
   constructor($scope, Reservation, moment, $ocLazyLoad, $timeout) {
+    //$ocLazyLoad.load('assets/jquery.easypiechart.fill.js');
 
     this.moment = moment;
     Reservation

@@ -20454,6 +20454,12 @@ small,
   margin-right: 36px;
   padding: 12px 0;
 }
+.header .header-logo a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url(620aa47083e0679d72516e403b423a01.png) no-repeat 0 0;
+}
 .header .header-menu .header-menu__item {
   margin-left: 0;
 }
@@ -20587,6 +20593,12 @@ small,
 .header .header-mobile .header-mobile__menu i {
   font-size: 25px;
 }
+@media only screen and (-Webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min-device-pixel-ratio: 1.5) {
+  .header .header-logo a {
+    background-image: url(caf94bbb7d0826f1c81b502bc70aba2d.png);
+    background-size: 113px 48px;
+  }
+}
 .dashboard .dashboard-book.dashboard-book--today {
   margin-top: 52px;
 }
@@ -20693,6 +20705,31 @@ small,
   line-height: 40px;
   text-align: center;
   font-size: 24px;
+}
+.dashboard .dashboard-reservation .clearfix {
+  padding: 12px 0;
+}
+.dashboard .dashboard-reservation .clearfix .dashboard-reservation__chart {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.dashboard .dashboard-reservation .clearfix .dashboard-reservation__chart > div {
+  position: relative;
+  text-align: center;
+}
+.dashboard .dashboard-reservation .clearfix .dashboard-reservation__chart > div div {
+  position: relative;
+  z-index: 1;
+  font-size: 16px;
+}
+.dashboard .dashboard-reservation .clearfix .dashboard-reservation__chart canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+.dashboard .dashboard-reservation .clearfix .dashboard-reservation__title {
+  font-size: 16px;
 }
 .dashboard .dashboard-ad .panel-body img {
   width: 100%;

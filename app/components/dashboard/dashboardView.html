@@ -1,5 +1,5 @@
 <div class='dashboard'>
-  <div class='col-lg-8 col-md-8 col-sm-8'>
+  <div class='col-lg-6 col-md-6 col-sm-6'>
     <div class='dashboard-book dashboard-book--request-acts panel'>
       <div class='panel-heading'>Actie vereist</div>
       <div class='panel-body'>
@@ -115,17 +115,109 @@
 
 
 
+  <div class='col-lg-4 col-md-4 col-sm-6'>
+    <div class='dashboard-reservation panel'>
+      <div class='panel-heading'>
+        Reserveringen
+      </div>
+      <div class='panel-body'>
+        <div class='clearfix'>
+          <div class='col-xs-6 text-center'>
+            <div class='dashboard-reservation__chart'>
+              <div ui-jq='easyPieChart' ui-options='{
+                        percent: 50,
+                        lineWidth: 2,
+                        trackColor: "#787878",
+                        barColor: "#f6f6f6",
+                        scaleColor: false,
+                        size: 84,
+                        rotate: 90,
+                        lineCap: "butt"
+                      }'>
+                <div>
+                  <span>50</span>
+                </div>
+              </div>
+            </div>
+            <div class='dashboard-reservation__title'>Borrel</div>
+          </div>
+
+          <div class='col-xs-6 text-center'>
+            <div class='dashboard-reservation__chart'>
+              <div ui-jq='easyPieChart' ui-options='{
+                        percent: 50,
+                        lineWidth: 2,
+                        trackColor: "#787878",
+                        barColor: "#f6f6f6",
+                        scaleColor: false,
+                        size: 84,
+                        rotate: 90,
+                        lineCap: "butt"
+                      }'>
+                <div>
+                  <span>50</span>
+                </div>
+              </div>
+            </div>
+            <div class='dashboard-reservation__title'>Lunch</div>
+          </div>
+        </div>
+
+        <div class='clearfix'>
+          <div class='col-xs-6 text-center'>
+            <div class='dashboard-reservation__chart'>
+              <div ui-jq='easyPieChart' ui-options='{
+                        percent: 15,
+                        lineWidth: 2,
+                        trackColor: "#787878",
+                        barColor: "#f6f6f6",
+                        scaleColor: false,
+                        size: 84,
+                        rotate: 90,
+                        lineCap: "butt"
+                      }'>
+                <div>
+                  <span>15</span>
+                </div>
+              </div>
+            </div>
+            <div class='dashboard-reservation__title'>Diner</div>
+          </div>
+
+          <div class='col-xs-6  text-center'>
+            <div class='dashboard-reservation__chart'>
+              <div ui-jq='easyPieChart' ui-options='{
+                        percent: 26,
+                        lineWidth: 2,
+                        trackColor: "#787878",
+                        barColor: "#f6f6f6",
+                        scaleColor: false,
+                        size: 84,
+                        rotate: 90,
+                        lineCap: "butt"
+                      }'>
+                <div>
+                  <span>26</span>
+                </div>
+              </div>
+            </div>
+            <div class='dashboard-reservation__title'>Ontbijt</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
 
 
 
-  <div class='col-lg-4 col-md-4 col-sm-4'>
+  <div class='col-lg-2 col-md-2 hidden-xs hidden-sm'>
     <div class='dashboard-ad panel'>
       <div class='panel-body'>
         <div>
-          <img src='images/receipts.png' title='receipts' />
+          <img src='images/receipts.png' srcset='images/receipts@2x.png 2x' title='receipts' />
         </div>
         <p>Ook je reviews bijhouden?<p/>
       </div>
@@ -137,7 +229,7 @@
     <div class='dashboard-ad panel'>
       <div class='panel-body'>
         <div>
-          <img src='images/reviews.png' title='reviews' />
+          <img src='images/reviews.png' srcset='images/reviews@2x.png 2x' title='reviews' />
         </div>
         <p>Ook je bonnetjes online bijhouden?<p/>
       </div>

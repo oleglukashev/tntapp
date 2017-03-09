@@ -23,6 +23,7 @@ angular.module('ui.jq', ['ui.load']).
   return {
     restrict: 'A',
     compile: function uiJqCompilingFunction(tElm, tAttrs) {
+
       if (!angular.isFunction(tElm[tAttrs.uiJq]) && !JQ_CONFIG[tAttrs.uiJq]) {
         throw new Error('ui-jq: The "' + tAttrs.uiJq + '" function does not exist');
       }
@@ -84,5 +85,3 @@ angular.module('ui.jq', ['ui.load']).
     }
   };
 }]);
-
-module.exports = 'ui.jq';
