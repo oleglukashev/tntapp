@@ -4,26 +4,27 @@
       <div class='panel-heading'>Actie vereist</div>
       <div class='panel-body'>
         <div class='dashboard-book-list'>
-          <div class='dashboard-book-item clearfix'>
-            <div class='dashboard-book-item__icon pull-left'>
-              <i class='mdi mdi-star-outline'></i>
-            </div>
-            <div class='dashboard-book-item__info pull-left'>
-              <p class='dashboard-book-item__name'>Sjors Klaasen</p>
-              <div class='dashboard-book-item__base-info clearfix'>
-                <i class='mdi mdi-account-multiple'></i>
-                <span>2x</span>
-                <i class='mdi mdi-clock'></i>
-                <span>20:45</span>
-                <i><img src='images/table.svg' title='table' /></i>
-                <span>3</span>
+          <div ng-repeat='reservation in dash.request_reservations'>
+            <div class='dashboard-book-item clearfix' ng-repeat='reservation_part in reservation.reservation_parts'>
+              <div class='dashboard-book-item__icon pull-left'>
+                <i class='mdi mdi-star-outline'></i>
               </div>
-              <div class='dashboard-book-item__description'>
-                Bla bla bla bla bla bla bla bla bla
+
+              <div class='dashboard-book-item__info pull-left'>
+                <p class='dashboard-book-item__name'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</p>
+                <div class='dashboard-book-item__base-info clearfix'>
+                  <i class='mdi mdi-account-multiple'></i>
+                  <span>{{ reservation_part.person_count }}x</span>
+                  <i class='mdi mdi-clock'></i>
+                  <span ng-bind='dash.parsedDate(reservation_part.datetime)'></span>
+                  <i><img src='images/table.svg' title='table' /></i>
+                  <span>3</span>
+                </div>
+                <div class='dashboard-book-item__description' ng-bind='reservation.notes | limitTo: 50'></div>
               </div>
-            </div>
-            <div class='dashboard-book-item__actions pull-right'>
-              <i class='mdi mdi-dots-vertical'></i>
+              <div class='dashboard-book-item__actions pull-right'>
+                <i class='mdi mdi-dots-vertical'></i>
+              </div>
             </div>
           </div>
         </div>
@@ -43,54 +44,30 @@
     </div>
 
 
-    <div class='dashboard-book dashboard-book--week panel'>
+    <div class='dashboard-book dashboard-book--group panel'>
       <div class='panel-heading'>Groepen deze week</div>
       <div class='panel-body'>
         <div class='dashboard-book-list'>
-          <div class='dashboard-book-item clearfix'>
-            <div class='dashboard-book-item__icon pull-left'>
-              <i class='mdi mdi-account-multiple'></i>
-            </div>
-            <div class='dashboard-book-item__info pull-left'>
-              <p class='dashboard-book-item__name'>Sjors Klaasen</p>
-              <div class='dashboard-book-item__base-info clearfix'>
+          <div ng-repeat='reservation in dash.group_reservations'>
+            <div class='dashboard-book-item clearfix' ng-repeat='reservation_part in reservation.reservation_parts'>
+              <div class='dashboard-book-item__icon pull-left'>
                 <i class='mdi mdi-account-multiple'></i>
-                <span>2x</span>
-                <i class='mdi mdi-clock'></i>
-                <span>20:45</span>
-                <i><img src='images/table.svg' title='table' /></i>
-                <span>3</span>
               </div>
-              <div class='dashboard-book-item__description'>
-                Bla bla bla bla bla bla bla bla bla
+              <div class='dashboard-book-item__info pull-left'>
+                <p class='dashboard-book-item__name'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</p>
+                <div class='dashboard-book-item__base-info clearfix'>
+                  <i class='mdi mdi-account-multiple'></i>
+                  <span>{{ reservation_part.person_count }}x</span>
+                  <i class='mdi mdi-clock'></i>
+                  <span ng-bind='dash.parsedDate(reservation_part.datetime)'></span>
+                  <i><img src='images/table.svg' title='table' /></i>
+                  <span>3</span>
+                </div>
+                <div class='dashboard-book-item__description' ng-bind='reservation.notes | limitTo: 50'></div>
               </div>
-            </div>
-            <div class='dashboard-book-item__actions pull-right'>
-              <i class='mdi mdi-dots-vertical'></i>
-            </div>
-          </div>
-
-
-          <div class='dashboard-book-item clearfix'>
-            <div class='dashboard-book-item__icon pull-left'>
-              <i class='mdi mdi-account-multiple'></i>
-            </div>
-            <div class='dashboard-book-item__info pull-left'>
-              <p class='dashboard-book-item__name'>Sjors Klaasen</p>
-              <div class='dashboard-book-item__base-info clearfix'>
-                <i class='mdi mdi-account-multiple'></i>
-                <span>2x</span>
-                <i class='mdi mdi-clock'></i>
-                <span>20:45</span>
-                <i><img src='images/table.svg' title='table' /></i>
-                <span>3</span>
+              <div class='dashboard-book-item__actions pull-right'>
+                <i class='mdi mdi-dots-vertical'></i>
               </div>
-              <div class='dashboard-book-item__description'>
-                Bla bla bla bla bla bla bla bla bla
-              </div>
-            </div>
-            <div class='dashboard-book-item__actions pull-right'>
-              <i class='mdi mdi-dots-vertical'></i>
             </div>
           </div>
         </div>
@@ -107,98 +84,26 @@
       </div>
       <div class='panel-body'>
         <div class='dashboard-book-list'>
-          <div class='dashboard-book-item clearfix'>
-            <div class='dashboard-book-item__icon pull-left'>
-              <i class='mdi mdi-check'></i>
-            </div>
-            <div class='dashboard-book-item__info pull-left'>
-              <p class='dashboard-book-item__name'>Sjors Klaasen</p>
-              <div class='dashboard-book-item__base-info clearfix'>
-                <i class='mdi mdi-account-multiple'></i>
-                <span>2x</span>
-                <i class='mdi mdi-clock'></i>
-                <span>20:45</span>
-                <i><img src='images/table.svg' title='table' /></i>
-                <span>3</span>
+          <div ng-repeat='reservation in dash.today_reservation'>
+            <div class='dashboard-book-item clearfix'>
+              <div class='dashboard-book-item__icon pull-left'>
+                <i class='mdi mdi-check'></i>
               </div>
-              <div class='dashboard-book-item__description'>
-                Bla bla bla bla bla bla bla bla bla
+              <div class='dashboard-book-item__info pull-left'>
+                <p class='dashboard-book-item__name'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</p>
+                <div class='dashboard-book-item__base-info clearfix'>
+                  <i class='mdi mdi-account-multiple'></i>
+                  <span>{{ reservation_part.person_count }}x</span>
+                  <i class='mdi mdi-clock'></i>
+                  <span ng-bind='dash.parsedDate(reservation_part.datetime)'></span>
+                  <i><img src='images/table.svg' title='table' /></i>
+                  <span>3</span>
+                </div>
+                <div class='dashboard-book-item__description' ng-bind='reservation.notes | limitTo: 50'></div>
               </div>
-            </div>
-            <div class='dashboard-book-item__actions pull-right'>
-              <i class='mdi mdi-dots-vertical'></i>
-            </div>
-          </div>
-
-
-          <div class='dashboard-book-item dashboard-book-item--blocked clearfix'>
-            <div class='dashboard-book-item__icon pull-left'>
-              <i class='mdi mdi-close'></i>
-            </div>
-            <div class='dashboard-book-item__info pull-left'>
-              <p class='dashboard-book-item__name'>Sjors Klaasen</p>
-              <div class='dashboard-book-item__base-info clearfix'>
-                <i class='mdi mdi-account-multiple'></i>
-                <span>2x</span>
-                <i class='mdi mdi-clock'></i>
-                <span>20:45</span>
-                <i><img src='images/table.svg' title='table' /></i>
-                <span>3</span>
+              <div class='dashboard-book-item__actions pull-right'>
+                <i class='mdi mdi-dots-vertical'></i>
               </div>
-              <div class='dashboard-book-item__description'>
-                Bla bla bla bla bla bla bla bla bla
-              </div>
-            </div>
-            <div class='dashboard-book-item__actions pull-right'>
-              <i class='mdi mdi-dots-vertical'></i>
-            </div>
-          </div>
-
-
-          <div class='dashboard-book-item clearfix'>
-            <div class='dashboard-book-item__icon pull-left'>
-              <i class='mdi mdi-exclamation'></i>
-            </div>
-            <div class='dashboard-book-item__info pull-left'>
-              <p class='dashboard-book-item__name'>Sjors Klaasen</p>
-              <div class='dashboard-book-item__base-info clearfix'>
-                <i class='mdi mdi-account-multiple'></i>
-                <span>2x</span>
-                <i class='mdi mdi-clock'></i>
-                <span>20:45</span>
-                <i><img src='images/table.svg' title='table' /></i>
-                <span>3</span>
-              </div>
-              <div class='dashboard-book-item__description'>
-                Bla bla bla bla bla bla bla bla bla
-              </div>
-            </div>
-            <div class='dashboard-book-item__actions pull-right'>
-              <i class='mdi mdi-dots-vertical'></i>
-            </div>
-          </div>
-
-
-          <div class='dashboard-book-item clearfix'>
-            <div class='dashboard-book-item__icon pull-left'>
-              <i class='mdi mdi-checkbox-blank-circle-outline'></i>
-            </div>
-            <div class='dashboard-book-item__info pull-left'>
-              <p class='dashboard-book-item__name'>Sjors Klaasen</p>
-              <div class='dashboard-book-item__base-info clearfix'>
-                <i class='mdi mdi-account-multiple'></i>
-                <span>2x</span>
-                <i class='mdi mdi-clock'></i>
-                <span>20:45</span>
-                <i><img src='images/table.svg' title='table' /></i>
-                <span>3</span>
-              </div>
-              <div class='dashboard-book-item__description'>
-                Bla bla bla bla bla bla bla bla bla
-              </div>
-            </div>
-            <div class='dashboard-book-item__actions pull-right'>
-              <i class='mdi mdi-dots-vertical'></i>
             </div>
           </div>
         </div>

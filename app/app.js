@@ -1,18 +1,19 @@
-import styles             from './assets/css/app.styl'
-import angular            from 'angular'
-import angular_animate    from 'angular-animate'
-import angular_aria       from 'angular-aria'
-import angular_cookies    from 'angular-cookies'
-import angular_messages   from 'angular-messages'
-import angular_resource   from 'angular-resource'
-import angular_sanitize   from 'angular-sanitize'
-import angular_touch      from 'angular-touch'
-import angular_ui_router  from 'angular-ui-router'
-import angular_ui_bootstrap  from 'angular-bootstrap-npm'
-import angular_translate  from 'angular-translate'
-import angular_translate_storage_locale from 'angular-translate-storage-local'
-import angular_translate_storage_cookie from 'angular-translate-storage-cookie'
-import dashboard from './components/dashboard/dashboard'
+import styles                             from './assets/css/app.styl'
+import angular                            from 'angular'
+import angular_animate                    from 'angular-animate'
+import angular_aria                       from 'angular-aria'
+import angular_cookies                    from 'angular-cookies'
+import angular_messages                   from 'angular-messages'
+import angular_resource                   from 'angular-resource'
+import angular_sanitize                   from 'angular-sanitize'
+import angular_touch                      from 'angular-touch'
+import angular_ui_router                  from 'angular-ui-router'
+import angular_ui_bootstrap               from 'angular-bootstrap-npm'
+import angular_translate                  from 'angular-translate'
+import angular_translate_storage_locale   from 'angular-translate-storage-local'
+import angular_translate_storage_cookie   from 'angular-translate-storage-cookie'
+import angular_moment                     from 'angular-moment'
+import dashboard                          from './components/dashboard/dashboard'
 
 
 //require('ng-cache-loader!./shared/header/headerView.html');
@@ -31,6 +32,7 @@ const app = angular
     angular_translate,
     angular_translate_storage_locale,
     angular_translate_storage_cookie,
+    angular_moment,
     dashboard
   ])
   .config(['$translateProvider', function($translateProvider){
@@ -103,9 +105,9 @@ const app = angular
         return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
       }
 
-    }])
-    .run(["$templateCache", function ($templateCache) {
-      //remove later
-      $templateCache.removeAll();
-      $templateCache.put("headerView.html", require("./shared/header/headerView.html"));
-    }])
+  }])
+  .run(["$templateCache", function ($templateCache) {
+    //remove later
+    $templateCache.removeAll();
+    $templateCache.put("headerView.html", require("./shared/header/headerView.html"));
+  }]);

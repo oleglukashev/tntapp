@@ -1,11 +1,26 @@
-'use strict';
-
 export default class DashboardCtrl {
-  constructor() {
-    this.name = 'World';
+  constructor($scope, Reservation, moment) {
+    this.moment = moment;
+    Reservation
+      .getAll()
+        .then(
+          (reservations) => {
+            this.reservationsLoaded = true;
+            this.request_reservations = reservations.filter((item) => item.status === 'Aanvraag');
+            this.group_reservations = reservations.filter((item) => item.is_group === true);
+            this.today_reservation = reservations
+                                       .filter((res) => {
+                                         res.reservation_parts.filter((res_part) => {
+                                           moment(res_part.datetime).format('MMM Do YY') === moment().format('MMM Do YY')
+                                         })
+                                       })
+          }
+        );
   }
 
-  changeName() {
-    this.name = 'angular-tips';
+  parsedDate(date) {
+    return this.moment(date).format('h:mm');
   }
 }
+
+DashboardCtrl.$inject = ['$scope', 'Reservation', 'moment'];
