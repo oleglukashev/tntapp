@@ -75,7 +75,7 @@ const app = angular
   ])
   .controller('AppCtrl', app_controller)
   .constant('JQ_CONFIG', {
-    easyPieChart: ['assets/jquery.easypiechart.fill.js'],
+    easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],
   }).constant('MODULE_CONFIG', [])
   .config(['$ocLazyLoadProvider', 'MODULE_CONFIG', function ($ocLazyLoadProvider, MODULE_CONFIG) {
     // We configure ocLazyLoad to use the lib script.js as the async loader
