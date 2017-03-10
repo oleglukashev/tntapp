@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Angular,Bootstrap,Babel,Webpack,ES6",
   "scripts": {
-    "start": "node node_modules/http-server/bin/http-server -o"
+    "start": "node node_modules/http-server/bin/http-server ./ -o"
   },
   "repository": "https://git.thenextsoftware.io/TheNextSoftware/TheNextTableApp.git",
   "author": "TheNextTableSoftware",
