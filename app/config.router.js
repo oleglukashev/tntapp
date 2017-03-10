@@ -1,35 +1,12 @@
-'use strict';
+routes.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-/**
- * Config for the router
- */
+export default function routes($stateProvider,   $urlRouterProvider) {
+  $urlRouterProvider.otherwise('/app/dashboard');
 
-angular.module('app')
-  .run(
-    ['$rootScope', '$state', '$stateParams',
-      function ($rootScope,   $state,   $stateParams) {
-        $rootScope.$state = $state;
-        $rootScope.$stateParams = $stateParams;
-      }
-    ]
-  )
-  .config(
-    ['$stateProvider', '$urlRouterProvider', 'JQ_CONFIG', 'MODULE_CONFIG',
-      function ($stateProvider,   $urlRouterProvider, JQ_CONFIG, MODULE_CONFIG) {
-        var layout = "app/components/layout/app.html";
-
-        $urlRouterProvider.otherwise('/app/dashboard');
-
-        $stateProvider
-            .state('app', {
-              abstract: true,
-              url: '/app',
-              templateUrl: layout
-            })
-            .state('app.dashboard', {
-              url: '/dashboard',
-              templateUrl: 'app/components/dashboard/dashboardView.html'
-            });
-      }
-    ]
-  );
+  $stateProvider
+    .state('app', {
+      abstract: true,
+      url: '/app',
+      template: require('./components/layout/app.html')
+    });
+}

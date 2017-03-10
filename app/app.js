@@ -16,6 +16,8 @@ import angular_moment                     from 'angular-moment'
 import anguar_oclazyLoad                  from 'oclazyload'
 import ui_load                            from './common/services/ui-load'
 import ui_jq                              from './common/directives/ui-jq'
+import main_route                         from './config.router'
+import app_controller                     from './common/controllers/app.controller'
 import dashboard                          from './components/dashboard/dashboard'
 
 
@@ -39,6 +41,7 @@ const app = angular
     ui_jq,
     dashboard
   ])
+  .config(main_route)
   .config(['$translateProvider', function($translateProvider){
     // Register a loader for the static files
     // So, the module will search missing translation tables under the specified urls.
@@ -70,46 +73,7 @@ const app = angular
       $rootScope.$stateParams = $stateParams;
     }
   ])
-  .config(['$stateProvider', '$urlRouterProvider',
-    function ($stateProvider,   $urlRouterProvider) {
-      $urlRouterProvider.otherwise('/app/dashboard');
-
-      $stateProvider
-        .state('app', {
-          abstract: true,
-          url: '/app',
-          template: require('./components/layout/app.html')
-        });
-    }
-  ])
-  .controller('AppCtrl', ['$scope', '$translate', '$window',
-    function(              $scope,   $translate,   $window ) {
-      // add 'ie' classes to html
-      const isIE = !!navigator.userAgent.match(/MSIE/i);
-      if(isIE){ angular.element($window.document.body).addClass('ie');}
-      if(isSmartDevice( $window ) ){ angular.element($window.document.body).addClass('smart')};
-
-      // angular translate
-      $scope.lang = { isopen: false };
-      $scope.langs = { en:'English', de_DE:'German', it_IT:'Italian' };
-      $scope.selectLang = $scope.langs[$translate.proposedLanguage()] || "English";
-      $scope.setLang = function(langKey, $event) {
-        // set the current lang
-        $scope.selectLang = $scope.langs[langKey];
-        // You can change the language during runtime
-        $translate.use(langKey);
-        $scope.lang.isopen = !$scope.lang.isopen;
-      };
-
-      function isSmartDevice( $window )
-      {
-        // Adapted from http://www.detectmobilebrowsers.com
-        const ua = $window['navigator']['userAgent'] || $window['navigator']['vendor'] || $window['opera'];
-        // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
-        return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
-      }
-
-  }])
+  .controller('AppCtrl', app_controller)
   .constant('JQ_CONFIG', {
     easyPieChart: ['assets/jquery.easypiechart.fill.js'],
   }).constant('MODULE_CONFIG', [])
@@ -125,72 +89,4 @@ const app = angular
     //remove later
     $templateCache.removeAll();
     $templateCache.put("headerView.html", require("./shared/header/headerView.html"));
-  }])
-  .value('uiJqConfig', {})
-  .directive('uiJq', ['uiJqConfig', 'JQ_CONFIG', 'uiLoad', '$timeout', function uiJqInjectingFunction(uiJqConfig, JQ_CONFIG, uiLoad, $timeout) {
-
-    return {
-      restrict: 'A',
-      compile: function uiJqCompilingFunction(tElm, tAttrs) {
-
-        if (!angular.isFunction(tElm[tAttrs.uiJq]) && !JQ_CONFIG[tAttrs.uiJq]) {
-          throw new Error('ui-jq: The "' + tAttrs.uiJq + '" function does not exist');
-        }
-        var options = uiJqConfig && uiJqConfig[tAttrs.uiJq];
-
-        return function uiJqLinkingFunction(scope, elm, attrs) {
-
-          function getOptions(){
-            var linkOptions = [];
-
-            // If ui-options are passed, merge (or override) them onto global defaults and pass to the jQuery method
-            if (attrs.uiOptions) {
-              linkOptions = scope.$eval('[' + attrs.uiOptions + ']');
-              if (angular.isObject(options) && angular.isObject(linkOptions[0])) {
-                linkOptions[0] = angular.extend({}, options, linkOptions[0]);
-              }
-            } else if (options) {
-              linkOptions = [options];
-            }
-            return linkOptions;
-          }
-
-          // If change compatibility is enabled, the form input's "change" event will trigger an "input" event
-          if (attrs.ngModel && elm.is('select,input,textarea')) {
-            elm.bind('change', function() {
-              elm.trigger('input');
-            });
-          }
-
-          // Call jQuery method and pass relevant options
-          function callPlugin() {
-            $timeout(function() {
-              elm[attrs.uiJq].apply(elm, getOptions());
-            }, 0, false);
-          }
-
-          function refresh(){
-            // If ui-refresh is used, re-fire the the method upon every change
-            if (attrs.uiRefresh) {
-              scope.$watch(attrs.uiRefresh, function(newValue, oldValue) {
-                if(newValue == oldValue) return;
-                callPlugin();
-              });
-            }
-          }
-
-          if ( JQ_CONFIG[attrs.uiJq] ) {
-            uiLoad.load(JQ_CONFIG[attrs.uiJq]).then(function() {
-              callPlugin();
-              refresh();
-            }).catch(function() {
-
-            });
-          } else {
-            callPlugin();
-            refresh();
-          }
-        };
-      }
-    };
   }]);

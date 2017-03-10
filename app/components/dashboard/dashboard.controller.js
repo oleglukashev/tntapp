@@ -1,13 +1,10 @@
 export default class DashboardCtrl {
-  constructor($scope, Reservation, moment, $ocLazyLoad, $timeout) {
-    //$ocLazyLoad.load('assets/jquery.easypiechart.fill.js');
-
+  constructor(Reservation, moment) {
     this.moment = moment;
     Reservation
       .getAll()
         .then(
           (reservations) => {
-            $ocLazyLoad.load('assets/jquery.easypiechart.fill.js')
             this.reservationsLoaded = true;
             this.request_reservations = reservations.filter((item) => item.status === 'Aanvraag');
             this.group_reservations = reservations.filter((item) => item.is_group === true);
@@ -26,4 +23,4 @@ export default class DashboardCtrl {
   }
 }
 
-DashboardCtrl.$inject = ['$scope', 'Reservation', 'moment', '$ocLazyLoad', '$timeout'];
+DashboardCtrl.$inject = ['Reservation', 'moment'];
