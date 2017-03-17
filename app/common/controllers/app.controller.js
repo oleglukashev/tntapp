@@ -1,5 +1,7 @@
 export default class AppCtrl {
   constructor($scope, $translate, $window) {
+    'ngInject';
+
     // add 'ie' classes to html
     const isIE = !!navigator.userAgent.match(/MSIE/i);
     if (isIE) {
@@ -30,6 +32,3 @@ export default class AppCtrl {
     return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
   }
 }
-
-
-AppCtrl.$inject = ['$scope', '$translate', '$window'];

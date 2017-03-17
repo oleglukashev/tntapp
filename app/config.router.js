@@ -1,12 +1,17 @@
-routes.$inject = ['$stateProvider', '$urlRouterProvider'];
-
 export default function routes($stateProvider,   $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/app/dashboard');
+  'ngInject';
 
   $stateProvider
     .state('app', {
       abstract: true,
-      url: '/app',
-      template: require('./components/layout/app.html')
+      template: require('./components/layout/app.html'),
+      resolve: {
+        auth: function(User) {
+          alert(User);
+          return User.verifyAuth();
+        }
+      }
     });
+
+  $urlRouterProvider.otherwise('/');
 }

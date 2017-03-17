@@ -2,6 +2,7 @@
 
 var webpack = require('webpack');
 var Extract = require('extract-text-webpack-plugin');
+var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
 
 module.exports = {
   entry: './app/app.js',
@@ -21,6 +22,9 @@ module.exports = {
         'drop_console' : true,
         'pure_funcs'   : ['console.log']
       }
+    }),
+    new ngAnnotatePlugin({
+      add: true
     })
   ],
 
@@ -28,7 +32,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel-loader?presets[]=es2015'
+        loader: ['ng-annotate-loader', 'babel-loader?presets[]=es2015']
       },
       {
         test  : /\.styl$/,

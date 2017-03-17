@@ -18,7 +18,8 @@ import ui_load                            from './common/services/ui-load'
 import ui_jq                              from './common/directives/ui-jq'
 import main_route                         from './config.router'
 import app_controller                     from './common/controllers/app.controller'
-import dashboard                          from './components/dashboard/dashboard'
+import dashboard                          from './components/dashboard'
+import                                         './common/services'
 
 
 const app = angular
@@ -39,7 +40,8 @@ const app = angular
     ui_load,
     anguar_oclazyLoad,
     ui_jq,
-    dashboard
+    dashboard,
+    'app.services'
   ])
   .config(main_route)
   .config(['$translateProvider', function($translateProvider){

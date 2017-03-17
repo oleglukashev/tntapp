@@ -1,5 +1,7 @@
 export default class DashboardCtrl {
   constructor(Reservation, moment) {
+    'ngInject';
+
     this.moment = moment;
     Reservation
       .getAll()
@@ -22,5 +24,3 @@ export default class DashboardCtrl {
     return this.moment(date).format('h:mm');
   }
 }
-
-DashboardCtrl.$inject = ['Reservation', 'moment'];

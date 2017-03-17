@@ -1,7 +1,9 @@
 import angular from 'angular';
 
-class Reservation {
+export default class Reservation {
   constructor($http) {
+    'ngInject';
+
     this.$http = $http;
   }
 
@@ -13,9 +15,3 @@ class Reservation {
 
   }
 }
-
-export default angular.module('services', [])
-  .service('Reservation', Reservation)
-  .name;
-
-Reservation.$inject = ['$http'];
