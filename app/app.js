@@ -18,6 +18,7 @@ import ui_load                            from './common/services/ui-load'
 import ui_jq                              from './common/directives/ui-jq'
 import main_route                         from './config.router'
 import app_controller                     from './common/controllers/app.controller'
+import header_controller                  from './shared/header/header.controller'
 import dashboard                          from './components/dashboard'
 import auth                               from './components/auth'
 import                                         './common/services'
@@ -85,6 +86,7 @@ const app = angular
     }
   ])
   .controller('AppCtrl', app_controller)
+  .controller('HeaderCtrl', header_controller)
   .constant('JQ_CONFIG', {
     easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],
   }).constant('MODULE_CONFIG', [])

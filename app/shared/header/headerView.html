@@ -41,7 +41,7 @@
         <div class='dropdown-toggle clearfix' dropdown-toggle>
           <div class='header-account-menu__avatar pull-left'></div>
           <div class='header-account-menu__info pull-left hidden-sm hidden-md m-l-sm'>
-            <p class='header-account-menu__name'>Trevor Hansen</p>
+            <p class='header-account-menu__name'>{{ header.currentUser.first_name }} {{ header.currentUser.last_name }}</p>
             <p class='header-account-menu__info'>ACME</p>
           </div>
           <b class='pull-right caret m-l-sm m-t'></b>
@@ -61,7 +61,7 @@
             </a>
           </li>
           <li>
-            <a href='#'>
+            <a href='#' ng-click='header.logout()'>
               <span>Uitloggen</span>
             </a>
           </li>

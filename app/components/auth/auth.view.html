@@ -7,10 +7,10 @@
 
     <form ng-submit='auth.submitForm()' class='ng-pristine ng-valid ng-valid-email ng-submitted'>
       <div class='form-group' ng-class="{ 'has-error': auth.errors }">
-        <input type='email' class='form-control ng-touched ng-not-empty ng-dirty ng-valid ng-valid-email' ng-model='auth.formData.username' placeholder='Email' />
+        <input type='email' class='form-control ng-touched ng-not-empty ng-dirty ng-valid ng-valid-email' ng-model='auth.formData.username' placeholder='Email' autocomplete='new-password' />
       </div>
       <div class='form-group' ng-class="{ 'has-error': auth.errors }">
-        <input type='password' class='form-control ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched' ng-model='auth.formData.password' placeholder='Password' />
+        <input type='password' class='form-control ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched' ng-model='auth.formData.password' placeholder='Password' autocomplete='new-password' />
       </div>
 
       <button md-ink-ripple class='md-btn md-flat btn-fw' type='submit'>Log in</button>

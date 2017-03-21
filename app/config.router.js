@@ -16,5 +16,5 @@ export default function routes($stateProvider, $urlRouterProvider, $httpProvider
       }
     });
 
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/login');
 }
