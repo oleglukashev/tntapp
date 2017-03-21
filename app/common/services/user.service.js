@@ -1,11 +1,12 @@
 export default class User {
-  constructor(JWT, AppConstants, $http, $state, $q) {
+  constructor(JWT, AppConstants, $http, $state, $q, $location) {
     'ngInject';
 
     this.JWT = JWT;
     this.AppConstants = AppConstants;
     this.$http = $http;
     this.$state = $state;
+    this.$location = $location;
     this.$q = $q;
 
     this.current = null;
@@ -59,7 +60,6 @@ export default class User {
 
     if (this.current) {
       deferred.resolve(true);
-
     } else {
       this.$http({
         url: this.AppConstants.api + '/user',
@@ -88,12 +88,13 @@ export default class User {
 
     this.verifyAuth().then((authValid) => {
       if (authValid !== bool) {
-        this.$state.go('app.dashboard')
+        //this.$state.go('app.dashboard')
+        this.$location.path('/')
         deferred.resolve(false);
       } else {
+        this.$location.path('/login')
         deferred.resolve(true);
       }
-
     });
 
     return deferred.promise;

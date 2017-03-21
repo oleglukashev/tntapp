@@ -11,10 +11,10 @@ export default function routes($stateProvider, $urlRouterProvider, $httpProvider
       templateUrl: 'app.html',
       resolve: {
         auth: function(User) {
-          return User.verifyAuth();
+          return User.ensureAuthIs(false);
         }
       }
     });
 
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/');
 }
