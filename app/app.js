@@ -19,7 +19,9 @@ import ui_jq                              from './common/directives/ui-jq'
 import main_route                         from './config.router'
 import app_controller                     from './common/controllers/app.controller'
 import dashboard                          from './components/dashboard'
+import auth                               from './components/auth'
 import                                         './common/services'
+import                                         './common/directives'
 
 
 const app = angular
@@ -41,9 +43,16 @@ const app = angular
     anguar_oclazyLoad,
     ui_jq,
     dashboard,
-    'app.services'
+    auth,
+    'app.services',
+    'app.directives'
   ])
   .config(main_route)
+  .constant('AppConstants', {
+    api: 'http://api.tnt.me/api/v2',
+    jwtKey: 'jwtToken',
+    appName: 'TNT',
+  })
   .config(['$translateProvider', function($translateProvider){
     // Register a loader for the static files
     // So, the module will search missing translation tables under the specified urls.
@@ -90,5 +99,7 @@ const app = angular
   .run(["$templateCache", function ($templateCache) {
     //remove later
     $templateCache.removeAll();
-    $templateCache.put("headerView.html", require("./shared/header/headerView.html"));
+    $templateCache.put('headerView.html', require('./shared/header/headerView.html'));
+    $templateCache.put('app.html', require('./components/layout/app.html'));
+    $templateCache.put('login.html', require('./components/layout/login.html'));
   }]);

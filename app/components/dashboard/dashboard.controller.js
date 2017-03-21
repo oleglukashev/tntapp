@@ -1,5 +1,5 @@
 export default class DashboardCtrl {
-  constructor(Reservation, moment) {
+  constructor(Reservation, moment, $window, AppConstants, JWT) {
     'ngInject';
 
     this.moment = moment;

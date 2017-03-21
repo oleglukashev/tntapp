@@ -1,0 +1,24 @@
+<div class='auth panel popup'>
+  <div class='panel-heading'>
+    <div></div>
+  </div>
+  <div class='panel-body'>
+    <p class='auth__title'>Welkom bij TheNextTable</p>
+
+    <form ng-submit='auth.submitForm()' class='ng-pristine ng-valid ng-valid-email ng-submitted'>
+      <div class='form-group' ng-class="{ 'has-error': auth.errors }">
+        <input type='email' class='form-control ng-touched ng-not-empty ng-dirty ng-valid ng-valid-email' ng-model='auth.formData.username' placeholder='Email' />
+      </div>
+      <div class='form-group' ng-class="{ 'has-error': auth.errors }">
+        <input type='password' class='form-control ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched' ng-model='auth.formData.password' placeholder='Password' />
+      </div>
+
+      <button md-ink-ripple class='md-btn md-flat btn-fw' type='submit'>Log in</button>
+
+      <a href='#'>Forgot password</a>
+      <a href='#'>Create an account</a>
+    </form>
+  </div>
+</div>
+
+<p class='auth__corp'>TheNextTable © 2017</p>

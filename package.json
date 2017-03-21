@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Angular,Bootstrap,Babel,Webpack,ES6",
   "scripts": {
-    "start": "node node_modules/http-server/bin/http-server ./ -o"
+    "start": "node node_modules/http-server/bin/http-server ./ -o -p 8082"
   },
   "repository": "https://git.thenextsoftware.io/TheNextSoftware/TheNextTableApp.git",
   "author": "TheNextTableSoftware",
@@ -13,6 +13,7 @@
     "angular-ui-load": "^0.1.1",
     "angular-ui-utils": "^0.1.1",
     "moment": "^2.17.1",
+    "ngstorage": "^0.3.11",
     "oclazyload": "^1.1.0"
   },
   "devDependencies": {

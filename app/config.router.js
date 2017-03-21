@@ -1,13 +1,16 @@
-export default function routes($stateProvider,   $urlRouterProvider) {
+import authInterceptor from './config.interceptor'
+
+export default function routes($stateProvider, $urlRouterProvider, $httpProvider) {
   'ngInject';
+
+  $httpProvider.interceptors.push(authInterceptor);
 
   $stateProvider
     .state('app', {
       abstract: true,
-      template: require('./components/layout/app.html'),
+      templateUrl: 'app.html',
       resolve: {
         auth: function(User) {
-          alert(User);
           return User.verifyAuth();
         }
       }
