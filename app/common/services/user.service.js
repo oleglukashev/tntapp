@@ -46,7 +46,7 @@ export default class User {
   logout() {
     this.current = null;
     this.JWT.destroy();
-    //this.$state.go('auth.login', null, { reload: true });
+    this.$state.go('auth.login', null, { reload: true });
   }
 
   verifyAuth() {
