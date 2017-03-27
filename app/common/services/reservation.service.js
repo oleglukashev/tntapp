@@ -1,17 +1,17 @@
 import angular from 'angular';
 
 export default class Reservation {
-  constructor($http) {
+  constructor(AppConstants, $http) {
     'ngInject';
 
     this.$http = $http;
+    this.AppConstants = AppConstants;
   }
 
   getAll() {
     return this.$http({
-        url: 'http://api.sven.thenexttable.com/api/v2/company/79/reservation',
-        method: 'GET',
-      }).then((res) => res.data);
-
+      url: this.AppConstants.api + '/company/79/reservation',
+      method: 'GET',
+    }).then((result) => result.data);
   }
 }

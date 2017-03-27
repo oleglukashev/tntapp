@@ -5,18 +5,32 @@
   <div class='panel-body'>
     <p class='auth__title'>Welkom bij TheNextTable</p>
 
-    <form ng-submit='auth.submitForm()' class='ng-pristine ng-valid ng-valid-email ng-submitted'>
+    <form ng-submit='auth.submitForm()' class='form-validation'>
       <div class='form-group' ng-class="{ 'has-error': auth.errors }">
-        <input type='email' class='form-control ng-touched ng-not-empty ng-dirty ng-valid ng-valid-email' ng-model='auth.formData.username' placeholder='Email' autocomplete='new-password' />
+        <input type='email' class='form-control' ng-model='auth.formData.email' placeholder='E-mail' required autocomplete='new-password' />
       </div>
+
+      <div class='form-group' ng-show='{{ auth.authType == "register" }}'>
+        <input type='text' class='form-control' ng-model='auth.formData.first_name' required placeholder='Voornaam' />
+      </div>
+
+      <div class='form-group' ng-show='{{ auth.authType == "register" }}'>
+        <input type='text' class='form-control' ng-model='auth.formData.last_name' required placeholder='Achternaam' />
+      </div>
+
       <div class='form-group' ng-class="{ 'has-error': auth.errors }">
-        <input type='password' class='form-control ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched' ng-model='auth.formData.password' placeholder='Password' autocomplete='new-password' />
+        <input type='password' class='form-control' ng-model='auth.formData.plainPassword.first' required placeholder='Wachtwoord' autocomplete='new-password' />
+      </div>
+
+      <div class='form-group' ng-class="{ 'has-error': auth.errors }" ng-show='{{ auth.authType == "register" }}'>
+        <input type='password' class='form-control' ng-model='auth.formData.plainPassword.second' placeholder='Wachtwoord herhalen' autocomplete='new-password' />
       </div>
 
       <button md-ink-ripple class='md-btn md-flat btn-fw' type='submit'>Log in</button>
 
-      <a href='#'>Forgot password</a>
-      <a href='#'>Create an account</a>
+      <a ui-sref='auth.forgot'>Forgot password</a>
+      <a ng-show='{{ auth.authType == "register" }}' ui-sref='auth.login'>Sign in</a>
+      <a ng-show='{{ auth.authType == "login" }}' ui-sref='auth.register'>Create an account</a>
     </form>
   </div>
 </div>

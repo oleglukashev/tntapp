@@ -13,15 +13,23 @@ export default class User {
   }
 
 
-  attemptAuth(credentials) {
+  tryAuth(authType, formData) {
+    let url = this.AppConstants.api + '/authenticate_check';
+    let data = $.param({
+      _username: formData.username,
+      _password: formData.password
+    });
+
+    if (authType == 'register') {
+      url  = this.AppConstants.api + '/register';
+      data = formData;
+    }
+
     return this.$http({
-      url: this.AppConstants.api + '/authenticate_check',
+      url: url,
       method: 'POST',
       headers : {'Content-Type': 'application/x-www-form-urlencoded'},
-      data: $.param({
-        _username: credentials.username,
-        _password: credentials.password
-      })
+      data: data
     }).then(
       (result) => {
         this.JWT.save(result.data.token);
