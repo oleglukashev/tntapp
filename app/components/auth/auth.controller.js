@@ -16,7 +16,12 @@ class AuthCtrl {
       },
       (error) => {
           this.isSubmitting = false;
-          this.errors = error.data;
+
+          if (this.authType == 'login') {
+            this.errors = error.data;
+          } else {
+            this.errors = error.data.errors;
+          }
       });
   }
 }

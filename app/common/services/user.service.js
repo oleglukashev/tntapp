@@ -15,10 +15,7 @@ export default class User {
 
   tryAuth(authType, formData) {
     let url = this.AppConstants.api + '/authenticate_check';
-    let data = $.param({
-      _username: formData.username,
-      _password: formData.password
-    });
+    let data = $.param(formData);
 
     if (authType == 'register') {
       url  = this.AppConstants.api + '/register';
