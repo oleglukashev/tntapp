@@ -11,21 +11,16 @@ export default class User {
     this.$window = $window;
 
     this.current = null;
-    this.authType = $state.current.name.replace('auth.', '');
   }
 
 
   tryAuth(path, formData) {
     let data = formData;
 
-    if (this.authType === 'authenticate_check' || this.authType === 'reset_password_finish') {
-      data = $.param(data);
-    }
-
     return this.$http({
       url: this.AppConstants.api + path,
       method: 'POST',
-      headers : {'Content-Type': 'application/x-www-form-urlencoded'},
+      //headers : {'Content-Type': 'application/x-www-form-urlencoded'},
       data: data
     }).then(
       (result) => {
