@@ -11,13 +11,14 @@ export default class User {
     this.$window = $window;
 
     this.current = null;
+    this.authType = $state.current.name.replace('auth.', '');
   }
 
 
   tryAuth(path, formData) {
     let data = formData;
 
-    if (path == '/authenticate_check' || this.$window.location.href.indexOf('/reset_password') >= 0) {
+    if (this.authType === 'authenticate_check' || this.authType === 'reset_password_finish') {
       data = $.param(data);
     }
 

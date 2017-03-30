@@ -15,6 +15,7 @@
             <input type='email'
                    class='form-control no-border'
                    ng-model='auth.formData._username'
+                   ng-required='auth.authType == "login"'
                    placeholder='E-mail'
                    autocomplete='new-password' />
           </div>
@@ -30,11 +31,8 @@
 
         <div ng-show='auth.authType == "register"'>
           <div class='text-default wrapper text-center bg-danger' ng-show='auth.errors'>
-            <div ng-repeat='error in auth.errors.errors track by $index'>
-              {{ error }}
-            </div>
-            <div ng-repeat='error in auth.errors.children.plainPassword.children.first.errors track by $index'>
-              {{ error }}
+            <div ng-repeat='error in auth.errors'>
+              {{ error.origin }}: {{ error.message }}
             </div>
           </div>
 
@@ -42,6 +40,7 @@
             <input type='email'
                    class='form-control no-border'
                    ng-model='auth.formData.email'
+                   ng-required='auth.authType == "register"'
                    placeholder='E-mail'
                    autocomplete='new-password' />
           </div>
@@ -50,6 +49,7 @@
             <input type='text'
                    class='form-control no-border'
                    ng-model='auth.formData.first_name'
+                   ng-required='auth.authType == "register"'
                    placeholder='Voornaam' />
           </div>
 
@@ -57,6 +57,7 @@
             <input type='text'
                    class='form-control no-border'
                    ng-model='auth.formData.last_name'
+                   ng-required='auth.authType == "register"'
                    placeholder='Achternaam' />
           </div>
 
@@ -64,6 +65,7 @@
             <input type='password'
                    class='form-control no-border'
                    ng-model='auth.formData.plainPassword.first'
+                   ng-required='auth.authType == "register"'
                    placeholder='Wachtwoord'
                    autocomplete='new-password' />
           </div>
