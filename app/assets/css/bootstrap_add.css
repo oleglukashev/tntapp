@@ -918,11 +918,6 @@ body {
     .navbar-header {
         width: 200px;
     }
-    .navbar-collapse,
-    .app-content,
-    .app-footer {
-        margin-left: 200px;
-    }
     .app-aside-right {
         position: absolute;
         top: 50px;
@@ -1114,6 +1109,7 @@ body {
         margin-bottom: 0;
     }
 }
+
 
 .app.container {
     padding-right: 0;
@@ -1766,6 +1762,17 @@ body {
     top: auto;
     bottom: 19px;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5233,3 +5240,4 @@ a.text-#000000:hover {
         background-color: #7266ba;
     }
 }
+

@@ -10,6 +10,7 @@ class AuthCtrl {
 
   submitForm() {
     let path = '/authenticate_check';
+    this.isSubmitting = true;
 
     if (this.authType === 'register') {
       path = '/register';
@@ -18,8 +19,6 @@ class AuthCtrl {
     } else if (this.authType === 'reset_password_finish') {
       path = '/reset_password/' + this.$stateParams.id + '/' + this.$stateParams.token;
     }
-
-    this.isSubmitting = true;
 
     this.User.tryAuth(path, this.formData).then(
       (result) => {

@@ -104,6 +104,7 @@ const app = angular
     //remove later
     $templateCache.removeAll();
     $templateCache.put('headerView.html', require('./shared/header/headerView.html'));
+    $templateCache.put('footer.view.html', require('./shared/footer/footer.view.html'));
     $templateCache.put('app.html', require('./components/layout/app.html'));
     $templateCache.put('login.html', require('./components/layout/login.html'));
   }]);

@@ -1,6 +1,6 @@
 <div class='fade-in-right-big smooth ng-scope'>
   <div class='container w-xxl w-auto-xs ng-scope'>
-    <div class='auth panel no-border'>
+    <div class='auth popup panel no-border m-t text-muted'>
       <div class='panel-heading blue-grey-900'>
         <div></div>
       </div>
@@ -70,7 +70,7 @@
                    autocomplete='new-password' />
           </div>
 
-          <div class='list-group-item'>
+          <div class='list-group-item no-border'>
             <input type='password'
                    class='form-control no-border'
                    ng-model='auth.formData.plainPassword.second'
@@ -80,12 +80,16 @@
         </div>
 
         <div class='wrapper'>
-          <button type='submit' style='height: 42px;' class='md-btn md-flat btn-fw btn-block m-t-md'>
-            <span ng-show='!auth.isSubmiting'>
+          <button type='submit' class='md-btn md-flat btn-fw btn-block m-t-md'>
+            <span ng-show='!auth.isSubmitting'>
               <span ng-show='auth.authType == "login"'>Login</span>
               <span ng-show='auth.authType == "register"'>Account aanmaken</span>
             </span>
-            <span ng-show='auth.isSubmiting'>123</span>
+            <div layout='row' layout-sm='column' layout-align='space-around' ng-show='auth.isSubmitting'>
+              <md-progress-circular class='md-warn md-hue-1 md-default-theme'
+                                    md-mode="indeterminate"
+                                    md-diameter='22'></md-progress-circular>
+            </div>
           </button>
 
           <div class='text-center bold'>
@@ -102,5 +106,3 @@
     </div>
   </div>
 </div>
-
-<p class='auth__corp'>TheNextTable © 2017</p>
