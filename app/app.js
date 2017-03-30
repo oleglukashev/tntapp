@@ -52,7 +52,7 @@ const app = angular
   ])
   .config(main_route)
   .constant('AppConstants', {
-    api: 'http://api.tnt.me/api/v2',
+    api: 'http://api.sven.thenexttable.com/api/v2',
     jwtKey: 'jwtToken',
     appName: 'TNT',
   })
