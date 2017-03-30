@@ -8,7 +8,7 @@ class AuthCtrl {
     this.authType = $state.current.name.replace('auth.', '');
 
     if (this.authType === 'reset_password_finish') {
-        this.formData = { user_up: { _token: this.$stateParams.token } };
+        this.formData = { _token: this.$stateParams.token };
     }
   }
 
@@ -36,12 +36,14 @@ class AuthCtrl {
       (error) => {
           this.isSubmitting = false;
 
-          if (this.authType == 'login') {
+          if (error.data) {
+            if (this.authType == 'login') {
               this.errors = error.data;
-          } else if (this.authType == 'reset_password_finish') {
+            } else if (this.authType == 'reset_password_finish') {
               this.errors = error.data.error;
-          } else {
-            this.errors = error.data.errors;
+            } else {
+              this.errors = error.data.errors;
+            }
           }
       });
   }
