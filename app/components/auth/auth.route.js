@@ -28,5 +28,29 @@ export default function routes($stateProvider, $httpProvider) {
           return User.ensureAuthIs(false);
         }
       }
+    })
+
+    .state('auth.reset_password', {
+        url: '/reset_password',
+        controller: 'AuthCtrl',
+        controllerAs: 'auth',
+        template: require('./auth.reset_password.view.html'),
+        resolve: {
+            auth: function(User) {
+                return User.ensureAuthIs(false);
+            }
+        }
+    })
+
+    .state('auth.reset_password_finish', {
+        url: '/reset_password/:id/:token',
+        controller: 'AuthCtrl',
+        controllerAs: 'auth',
+        template: require('./auth.reset_password.view.html'),
+        resolve: {
+            auth: function(User) {
+                return User.ensureAuthIs(false);
+            }
+        }
     });
 }

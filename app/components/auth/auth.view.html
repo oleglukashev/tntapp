@@ -1,65 +1,103 @@
-<div class='auth panel popup'>
-  <div class='panel-heading'>
-    <div></div>
-  </div>
-  <div class='panel-body'>
-    <p class='auth__title'>Welkom bij TheNextTable</p>
-
-    <form ng-submit='auth.submitForm()' novalidate>
-      <div ng-show='{{ auth.authType == "login" }}'>
-        <div class='form-group'>
-          <input type='email' class='form-control' ng-model='auth.formData._username' placeholder='E-mail' required autocomplete='new-password' />
-        </div>
-
-        <div class='form-group'>
-          <input type='password' class='form-control' ng-model='auth.formData._password' required placeholder='Wachtwoord' autocomplete='new-password' />
-        </div>
-
-        <div class='form-error' ng-show='auth.errors'>
-          {{ auth.errors.message }}
-        </div>
-
-        <button md-ink-ripple class='md-btn md-flat btn-fw' type='submit'>
-          <span ng-show='!auth.isSubmitting'>Sign In</span>
-          <span ng-show='auth.isSubmitting'>123</span>
-        </button>
-        <a ui-sref='auth.register'>Create an account</a>
+<div class='fade-in-right-big smooth ng-scope'>
+  <div class='container w-xxl w-auto-xs ng-scope'>
+    <div class='auth panel no-border'>
+      <div class='panel-heading blue-grey-900'>
+        <div></div>
       </div>
+      <div class='text-muted m-b m-t text-center'>Welkom bij TheNextTable</div>
+      <form ng-submit='auth.submitForm()'>
+        <div ng-show='auth.authType == "login"'>
+          <div class='text-default wrapper text-center bg-danger' ng-show='auth.errors'>
+            {{ auth.errors.message }}
+          </div>
 
-      <div ng-show='{{ auth.authType == "register" }}'>
-        <div class='form-group'>
-          <input type='email' class='form-control' ng-model='auth.formData.email' placeholder='E-mail' required autocomplete='new-password' />
+          <div class='list-group-item'>
+            <input type='email'
+                   class='form-control no-border'
+                   ng-model='auth.formData._username'
+                   placeholder='E-mail'
+                   autocomplete='new-password' />
+          </div>
+
+          <div class='list-group-item'>
+            <input type='password'
+                   class='form-control no-border'
+                   ng-model='auth.formData._password'
+                   placeholder='Wachtwoord'
+                   autocomplete='new-password' />
+          </div>
         </div>
-        <div class='form-group'>
-          <input type='text' class='form-control' ng-model='auth.formData.first_name' required placeholder='Voornaam' />
+
+        <div ng-show='auth.authType == "register"'>
+          <div class='text-default wrapper text-center bg-danger' ng-show='auth.errors'>
+            <div ng-repeat='error in auth.errors.errors track by $index'>
+              {{ error }}
+            </div>
+            <div ng-repeat='error in auth.errors.children.plainPassword.children.first.errors track by $index'>
+              {{ error }}
+            </div>
+          </div>
+
+          <div class='list-group-item'>
+            <input type='email'
+                   class='form-control no-border'
+                   ng-model='auth.formData.email'
+                   placeholder='E-mail'
+                   autocomplete='new-password' />
+          </div>
+
+          <div class='list-group-item'>
+            <input type='text'
+                   class='form-control no-border'
+                   ng-model='auth.formData.first_name'
+                   placeholder='Voornaam' />
+          </div>
+
+          <div class='list-group-item'>
+            <input type='text'
+                   class='form-control no-border'
+                   ng-model='auth.formData.last_name'
+                   placeholder='Achternaam' />
+          </div>
+
+          <div class='list-group-item'>
+            <input type='password'
+                   class='form-control no-border'
+                   ng-model='auth.formData.plainPassword.first'
+                   placeholder='Wachtwoord'
+                   autocomplete='new-password' />
+          </div>
+
+          <div class='list-group-item'>
+            <input type='password'
+                   class='form-control no-border'
+                   ng-model='auth.formData.plainPassword.second'
+                   placeholder='Wachtwoord herhalen'
+                   autocomplete='new-password' />
+          </div>
         </div>
 
-        <div class='form-group'>
-          <input type='text' class='form-control' ng-model='auth.formData.last_name' required placeholder='Achternaam' />
+        <div class='wrapper'>
+          <button type='submit' style='height: 42px;' class='md-btn md-flat btn-fw btn-block m-t-md'>
+            <span ng-show='!auth.isSubmiting'>
+              <span ng-show='auth.authType == "login"'>Login</span>
+              <span ng-show='auth.authType == "register"'>Account aanmaken</span>
+            </span>
+            <span ng-show='auth.isSubmiting'>123</span>
+          </button>
+
+          <div class='text-center bold'>
+            <div class='m-t-lg'>
+              <a ng-show='auth.authType == "login"' class='text-success' ui-sref='auth.register'>CREATE AN ACCOUNT</a>
+              <a ng-show='auth.authType == "register"' class='text-success' ui-sref='auth.login'>SIGN IN</a>
+            </div>
+            <div class='m-t-sm'>
+              <a ui-sref='auth.reset_password'>WACHTWOORD VERGETEN?</a>
+            </div>
+          </div>
         </div>
-
-        <div class='form-group'>
-          <input type='password' class='form-control' ng-model='auth.formData.plainPassword.first' required placeholder='Wachtwoord' autocomplete='new-password' />
-        </div>
-
-        <div class='form-group'>
-          <input type='password' class='form-control' ng-model='auth.formData.plainPassword.second' placeholder='Wachtwoord herhalen' autocomplete='new-password' />
-        </div>
-
-        <div class='form-error' ng-show='auth.errors' ng-repeat='error in auth.errors'>
-          {{ error.origin }}: {{ error.message }}
-        </div>
-
-        <button md-ink-ripple class='md-btn md-flat btn-fw' type='submit'>
-          <span ng-show='!auth.isSubmitting'>Sign Up</span>
-          <span ng-show='auth.isSubmitting'>123</span>
-        </button>
-
-        <a ui-sref='auth.login'>Sign In</a>
-      </div>
-
-      <a ui-sref='auth.forgot'>Forgot password</a>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 

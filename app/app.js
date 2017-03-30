@@ -23,6 +23,7 @@ import dashboard                          from './components/dashboard'
 import auth                               from './components/auth'
 import                                         './common/services'
 import                                         './common/directives'
+import  angular_material                  from 'angular-material'
 
 
 const app = angular
@@ -40,6 +41,7 @@ const app = angular
     angular_translate_storage_locale,
     angular_translate_storage_cookie,
     angular_moment,
+    angular_material,
     ui_load,
     anguar_oclazyLoad,
     ui_jq,

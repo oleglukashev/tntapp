@@ -1,5 +1,5 @@
 export default class User {
-  constructor(JWT, AppConstants, $http, $state, $q, $location) {
+  constructor(JWT, AppConstants, $http, $state, $q, $location, $window) {
     'ngInject';
 
     this.JWT = JWT;
@@ -8,22 +8,21 @@ export default class User {
     this.$state = $state;
     this.$location = $location;
     this.$q = $q;
+    this.$window = $window;
 
     this.current = null;
   }
 
 
-  tryAuth(authType, formData) {
-    let url = this.AppConstants.api + '/authenticate_check';
-    let data = $.param(formData);
+  tryAuth(path, formData) {
+    let data = formData;
 
-    if (authType == 'register') {
-      url  = this.AppConstants.api + '/register';
-      data = formData;
+    if (path == '/authenticate_check' || this.$window.location.href.indexOf('/reset_password') >= 0) {
+      data = $.param(data);
     }
 
     return this.$http({
-      url: url,
+      url: this.AppConstants.api + path,
       method: 'POST',
       headers : {'Content-Type': 'application/x-www-form-urlencoded'},
       data: data
@@ -97,7 +96,12 @@ export default class User {
         this.$location.path('/')
         deferred.resolve(false);
       } else {
-        this.$location.path('/login')
+        if (this.$window.location.href.indexOf('register') < 0 &&
+            this.$window.location.href.indexOf('reset_password') < 0
+        ) {
+          this.$location.path('/login')
+        }
+
         deferred.resolve(true);
       }
     });
