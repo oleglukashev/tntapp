@@ -1,14 +1,35 @@
 'use strict';
 
 var webpack = require('webpack');
+var path    = require('path');
 var Extract = require('extract-text-webpack-plugin');
 var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
 
 module.exports = {
-  entry: './app/app.js',
+  entry: {
+    app: './app/app.js',
+    vendor: [
+      'angular',
+      'angular-animate',
+      'angular-aria',
+      'angular-cookies',
+      'angular-messages',
+      'angular-resource',
+      'angular-sanitize',
+      'angular-touch',
+      'angular-ui-router',
+      'angular-bootstrap-npm',
+      'angular-translate',
+      'angular-translate-storage-local',
+      'angular-translate-storage-cookie',
+      'angular-moment',
+      'angular-material'
+    ]
+  },
+
   output: {
-    path: './public/assets',
-    filename: 'app.js',
+    path: path.join(process.cwd(), 'public', 'assets'),
+    filename: '[name].js',
   },
 
   watch: true,
@@ -22,6 +43,12 @@ module.exports = {
         'drop_console' : true,
         'pure_funcs'   : ['console.log']
       }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name     : 'vendor',
+      chunks   : ['app'],
+      filename : 'vendor.js',
+      minChunks: Infinity
     }),
     new ngAnnotatePlugin({
       add: true

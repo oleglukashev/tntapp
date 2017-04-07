@@ -1,0 +1,179 @@
+<md-sidenav class='md-sidenav-right md-whiteframe-z2 pos-fix' md-component-id='right'>
+  <md-content>
+    <div class='wrapper blue-grey-900'>
+      <div class='clear'>
+        <button md-ink-ripple class='md-btn md-flat btn-fw' ng-click='closeRight()'>
+          <i class='mdi mdi-close i-30' ></i>
+        </button>
+        <button md-ink-ripple class='pull-right md-btn md-flat btn-fw'>
+          <i class='mdi mdi-dots-vertical i-30' ></i>
+        </button>
+      </div>
+      <h1 class='i-30'>Jelle Klaasen</h1>
+    </div>
+
+    <ul class='nav'>
+      <li class='hidden-folded padder m-t m-b-sm text-muted text-xs'>
+        <span>Reservering</span>
+      </li>
+
+
+      <div class='inset'>
+        <div class='md-list-item-left'>
+          <i class='mdi mdi-attachment icon-muted i-24'></i>
+        </div>
+        <div class='md-list-item-content'>
+          <h3 class="text-md">10 December 2016 18:00</h3>
+          <small class="font-thin">Diner, 18 personen</small>
+        </div>
+      </div>
+
+      <div class="inset" >
+        <div class="md-list-item-left ">
+          <i class="mdi mdi-phone icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content" style="overflow:visible">
+
+          <h3 class="text-md">(650) 555-1234</h3>
+          <small class="font-thin">Telefoon</small>
+          <span>
+				  <script type="text/ng-template" id="myModalAntwoord.html">
+					<div ng-include="'tpl/modal.antwoord.html'"></div>
+				  </script>
+			<button ng-click="open('md')" style="margin-top:-30px; box-shadow: none;" md-ink-ripple="" class="md-btn md-fab pull-right"><i class="mdi mdi-comment-processing text-success i-24"></i><div class="md-ripple-container" style=""></div></button>
+			</span>
+        </div>
+      </div>
+      <div class="inset">
+        <div class="md-list-item-left ">
+          <i class="mdi mdi-email icon-muted i-24" ></i>
+        </div>
+        <div class="md-list-item-content" style="overflow:visible">
+          <h3 class="text-md">info@Example.com</h3>
+          <small class="font-thin">E-mail</small>
+          <span>
+				  <script type="text/ng-template" id="myModalAntwoord.html">
+					<div ng-include="'tpl/modal.antwoord.html'"></div>
+				  </script>
+				<button ng-click='' style="margin-top:-30px; box-shadow: none;" md-ink-ripple="" class="md-btn md-fab pull-right"><i class="mdi mdi-comment-processing text-success i-24"></i><div class="md-ripple-container" style=""></div></button>
+			</span>
+
+        </div>
+      </div>
+      <div class="inset">
+        <div class="md-list-item-left ">
+          <i class="mdi mdi-comment-text icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">Ik ben de baas en ik wil graag champagne op tafel! En ik ben de opmerking.</h3>
+          <small class="font-thin">Opmerkingen</small>
+        </div>
+      </div>
+
+      <div class="inset">
+        <div class="md-list-item-left ">
+          <i class="mdi mdi-information-outline icon-muted i-24"></i>
+
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">Noten</h3>
+          <small class="font-thin">Allergieën</small>
+        </div>
+      </div>
+
+      <div class="inset">
+        <div class="md-list-item-left ">
+          <i class="mdi mdi-information-outline icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">Raam</h3>
+          <small class="font-thin">Voorkeuren</small>
+        </div>
+      </div>
+
+
+      <!-- list -->
+
+
+      <li ng-class="{active:$state.includes('app.material')}">
+        <ul class="nav nav-sub">
+          <li ui-sref-active="active">
+            <a md-ink-ripple  class="text-success" >
+
+              <b><span style="margin-left:56px">PROFIEL BEKIJKEN</span></b>
+
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span >Eerdere reserveringen</span>
+      </li>
+
+      <li ng-class="{active:$state.includes('app.material')}">
+        <ul class="nav nav-sub">
+          <li ui-sref-active="active">
+            <a class="inset" md-ink-ripple>
+              <div class="md-list-item-left ">
+                <i class="mdi mdi-book icon-muted i-24"></i>
+              </div>
+              <div class="md-list-item-content">
+                <h3 class="text-md">10 December 2016 18:00</h3>
+                <small class="font-thin">Diner, 18 personen</small>
+              </div>
+            </a>
+          </li>
+
+          <li ui-sref-active="active">
+            <a class="inset" md-ink-ripple>
+              <div class="md-list-item-left ">
+                <i class="mdi mdi-book icon-muted i-24"></i>
+              </div>
+              <div class="md-list-item-content">
+                <h3 class="text-md">8 Maart 2016 18:15</h3>
+                <small class="font-thin">Diner, 15 personen</small>
+              </div>
+            </a>
+          </li>
+
+          <li ui-sref-active="active">
+            <a class="inset" md-ink-ripple>
+              <div class="md-list-item-left ">
+                <i class="mdi mdi-book icon-muted i-24"></i>
+              </div>
+              <div class="md-list-item-content">
+                <h3 class="text-md">9 Februari 2016 12:00</h3>
+                <small class="font-thin">Lunch, 2 personen</small>
+              </div>
+            </a>
+          </li>
+
+          <li ui-sref-active="active">
+            <a class="inset" md-ink-ripple>
+              <div class="md-list-item-left ">
+                <i class="mdi mdi-book icon-muted i-24"></i>
+              </div>
+              <div class="md-list-item-content">
+                <h3 class="text-md">3 December 2015 16:30</h3>
+                <small class="font-thin">Lunch, 2 personen</small>
+              </div>
+            </a>
+          </li>
+
+          <li ui-sref-active="active">
+            <a class="inset" md-ink-ripple>
+              <div class="md-list-item-left ">
+                <i class="mdi mdi-book icon-muted i-24"></i>
+              </div>
+              <div class="md-list-item-content">
+                <h3 class="text-md">20 December 2015 14:30</h3>
+                <small class="font-thin">Lunch, 2 personen</small>
+
+              </div>
+            </a>
+          </li>
+        </ul>
+      </li>
+  </md-content>
+</md-sidenav>

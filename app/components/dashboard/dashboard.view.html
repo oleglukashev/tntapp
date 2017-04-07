@@ -1,109 +1,137 @@
 <div class='dashboard'>
   <div class='col-lg-6 col-md-6 col-sm-6'>
-    <div class='dashboard-book dashboard-book--request-acts panel'>
+    <div class='panel'>
       <div class='panel-heading'>Actie vereist</div>
-      <div class='panel-body'>
-        <div class='dashboard-book-list'>
-          <div ng-repeat='reservation in dash.request_reservations'>
-            <div class='dashboard-book-item clearfix' ng-repeat='reservation_part in reservation.reservation_parts'>
-              <div class='dashboard-book-item__icon pull-left'>
-                <i class='mdi mdi-star-outline'></i>
-              </div>
+      <div class='md-list'>
+        <div class='wrapper' layout='row' layout-sm='column' layout-align='space-around' ng-hide='dash.action_required.length > 0'>
+          <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+        </div>
 
-              <div class='dashboard-book-item__info pull-left'>
-                <p class='dashboard-book-item__name'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</p>
-                <div class='dashboard-book-item__base-info clearfix'>
-                  <i class='mdi mdi-account-multiple'></i>
-                  <span>{{ reservation_part.person_count }}x</span>
-                  <i class='mdi mdi-clock'></i>
-                  <span ng-bind='dash.parsedDate(reservation_part.datetime)'></span>
-                  <i><img src='public/images/table.svg' title='table' /></i>
-                  <span>3</span>
-                </div>
-                <div class='dashboard-book-item__description' ng-bind='reservation.notes | limitTo: 50'></div>
-              </div>
-              <div class='dashboard-book-item__actions pull-right'>
-                <i class='mdi mdi-dots-vertical'></i>
-              </div>
+        <div ng-repeat='reservation in dash.action_required'>
+          <div class='md-list-item' ng-repeat='reservation_part in reservation.reservation_parts'>
+            <div class='md-list-item-left img-circle m-t-sm grey-100'>
+              <i class='mdi-action-grade i-24'></i>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class='panel-footer'>
-        <div class='dashboard-book__actions clearfix'>
-          <div class='pull-left'>
-            <i class='mdi mdi-check-circle'></i>
-            <span>Bevestig</span>
-          </div>
-          <div class='pull-left'>
-            <i class='mdi mdi-reply'></i>
-            <span>Antwoord</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class='dashboard-book dashboard-book--group panel'>
-      <div class='panel-heading'>Groepen deze week</div>
-      <div class='panel-body'>
-        <div class='dashboard-book-list'>
-          <div ng-repeat='reservation in dash.group_reservations'>
-            <div class='dashboard-book-item clearfix' ng-repeat='reservation_part in reservation.reservation_parts'>
-              <div class='dashboard-book-item__icon pull-left'>
+            <div class='pull-right'>
+              <button md-ink-ripple
+                      class='md-btn md-fab m-t-xs m-b-xs no-shadow'
+                      ng-disabled='disabled'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                      aria-disabled='false'
+                      ng-click='dash.openUserMenu()'>
+                <i class='mdi mdi-dots-vertical i-24'></i>
+              </button>
+            </div>
+            <div class='md-list-item-content'>
+              <h3 class='text-md'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</h3>
+              <div>
                 <i class='mdi mdi-account-multiple'></i>
+                <small class='font-thin m-r-xs'>{{ reservation_part.person_count }}x</small>
+                <i class='mdi mdi-clock'></i>
+                <small class='font-thin' ng-bind='dash.parsedDate(reservation_part.datetime)'></small>
               </div>
-              <div class='dashboard-book-item__info pull-left'>
-                <p class='dashboard-book-item__name'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</p>
-                <div class='dashboard-book-item__base-info clearfix'>
-                  <i class='mdi mdi-account-multiple'></i>
-                  <span>{{ reservation_part.person_count }}x</span>
-                  <i class='mdi mdi-clock'></i>
-                  <span ng-bind='dash.parsedDate(reservation_part.datetime)'></span>
-                  <i><img src='public/images/table.svg' title='table' /></i>
-                  <span>3</span>
-                </div>
-                <div class='dashboard-book-item__description' ng-bind='reservation.notes | limitTo: 50'></div>
+              <small class='font-thin'>
+                {{ reservation.notes | limitTo: 50 }}{{ reservation.notes.length > 50 ? '...' : '' }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='panel-footer' ng-show='dash.action_required.length > 0'>
+        <button md-ink-ripple class='md-btn md-flat btn-fw text-success m-l-xxl'>
+          <i class='mdi mdi-checkbox-marked-circle'></i>
+          Bevestig
+        </button>
+        <button md-ink-ripple class='md-btn md-flat btn-fw m-l-sm text-success'>
+          <i class='mdi mdi-reply'></i>
+          Antwoord
+        </button>
+      </div>
+    </div>
+
+    <div class='panel'>
+      <div class='panel-heading'>Groepen deze week</div>
+      <div class='md-list'>
+        <div class='wrapper'  layout='row' layout-sm='column' layout-align='space-around' ng-hide='dash.group_this_week.length > 0'>
+          <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+        </div>
+
+        <div ng-repeat='reservation in dash.group_this_week'>
+          <div class='md-list-item' ng-repeat='reservation_part in reservation.reservation_parts'>
+            <div class='md-list-item-left img-circle m-t-sm grey-100'>
+              <i class='mdi-action-grade i-24'></i>
+            </div>
+            <div class='pull-right'>
+              <button md-ink-ripple
+                      class='md-btn md-fab m-t-xs m-b-xs no-shadow'
+                      ng-disabled='disabled'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                      aria-disabled='false'
+                      ng-click='dash.openUserMenu()'>
+                <i class='mdi mdi-dots-vertical i-24'></i>
+              </button>
+            </div>
+            <div class='md-list-item-content'>
+              <h3 class='text-md'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</h3>
+              <div>
+                <i class='mdi mdi-account-multiple'></i>
+                <small class='font-thin m-r-xs'>{{ reservation_part.person_count }}x</small>
+                <i class='mdi mdi-clock'></i>
+                <small class='font-thin' ng-bind='dash.parsedDate(reservation_part.datetime)'></small>
               </div>
-              <div class='dashboard-book-item__actions pull-right'>
-                <i class='mdi mdi-dots-vertical'></i>
-              </div>
+              <small class='font-thin'>
+                {{ reservation.notes | limitTo: 50 }}{{ reservation.notes.length > 50 ? '...' : '' }}
+              </small>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <button ng-click='dash.openReservation()' md-ink-ripple class='panel-add-button md-btn md-fab m-b orange'>
+      <i class='mdi mdi-plus i-24'></i>
+    </button>
 
-    <div class='dashboard-book dashboard-book--today panel'>
-      <div class='panel-heading'>
-        Vandaag
-        <div class='dashboard-book__add md-btn md-fab orange'>
-          <i class='mdi mdi-plus i-24'></i>
+    <script type="text/ng-template" id="reservationContent.html">
+      <div ng-include=" 'dashboard.reservation.view.html' "></div>
+    </script>
+
+    <div class='panel'>
+      <div class='panel-heading'>Vandaag</div>
+      <div class='md-list'>
+        <div class='wrapper'  layout='row' layout-sm='column' layout-align='space-around' ng-hide='dash.today.length > 0'>
+          <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
         </div>
-      </div>
-      <div class='panel-body'>
-        <div class='dashboard-book-list'>
-          <div ng-repeat='reservation in dash.today_reservation'>
-            <div class='dashboard-book-item clearfix'>
-              <div class='dashboard-book-item__icon pull-left'>
-                <i class='mdi mdi-check'></i>
+
+        <div class='md-list-item clear' ng-repeat='reservation in dash.today'>
+          <div ng-repeat='reservation_part in reservation.reservation_parts'>
+            <div class='md-list-item-left img-circle m-t-sm grey-100'>
+              <i class='mdi-action-grade i-24'></i>
+            </div>
+            <div class='pull-right'>
+              <button md-ink-ripple
+                      class='md-btn md-fab m-t-xs m-b-xs no-shadow'
+                      ng-disabled='disabled'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                      aria-disabled='false'
+                      ng-click='dash.openUserMenu()'>
+                <i class='mdi mdi-dots-vertical i-24'></i>
+              </button>
+            </div>
+            <div class='md-list-item-content'>
+              <h3 class='text-md'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</h3>
+              <div>
+                <i class='mdi mdi-account-multiple'></i>
+                <small class='font-thin m-r-xs'>{{ reservation_part.person_count }}x</small>
+                <i class='mdi mdi-clock'></i>
+                <small class='font-thin' ng-bind='dash.parsedDate(reservation_part.datetime)'></small>
               </div>
-              <div class='dashboard-book-item__info pull-left'>
-                <p class='dashboard-book-item__name'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</p>
-                <div class='dashboard-book-item__base-info clearfix'>
-                  <i class='mdi mdi-account-multiple'></i>
-                  <span>{{ reservation_part.person_count }}x</span>
-                  <i class='mdi mdi-clock'></i>
-                  <span ng-bind='dash.parsedDate(reservation_part.datetime)'></span>
-                  <i><img src='public/images/table.svg' title='table' /></i>
-                  <span>3</span>
-                </div>
-                <div class='dashboard-book-item__description' ng-bind='reservation.notes | limitTo: 50'></div>
-              </div>
-              <div class='dashboard-book-item__actions pull-right'>
-                <i class='mdi mdi-dots-vertical'></i>
-              </div>
+              <small class='font-thin'>
+                {{ reservation.notes | limitTo: 50 }}{{ reservation.notes.length > 50 ? '...' : '' }}
+              </small>
             </div>
           </div>
         </div>
@@ -121,89 +149,9 @@
         Reserveringen
       </div>
       <div class='panel-body'>
-        <div class='clearfix'>
-          <div class='col-xs-6 text-center'>
-            <div class='dashboard-reservation__chart'>
-              <div ui-jq='easyPieChart' ui-options='{
-                        percent: 50,
-                        lineWidth: 2,
-                        trackColor: "#787878",
-                        barColor: "#f6f6f6",
-                        scaleColor: false,
-                        size: 84,
-                        rotate: 90,
-                        lineCap: "butt"
-                      }'>
-                <div>
-                  <span>50</span>
-                </div>
-              </div>
-            </div>
-            <div class='dashboard-reservation__title'>Borrel</div>
-          </div>
 
-          <div class='col-xs-6 text-center'>
-            <div class='dashboard-reservation__chart'>
-              <div ui-jq='easyPieChart' ui-options='{
-                        percent: 50,
-                        lineWidth: 2,
-                        trackColor: "#787878",
-                        barColor: "#f6f6f6",
-                        scaleColor: false,
-                        size: 84,
-                        rotate: 90,
-                        lineCap: "butt"
-                      }'>
-                <div>
-                  <span>50</span>
-                </div>
-              </div>
-            </div>
-            <div class='dashboard-reservation__title'>Lunch</div>
-          </div>
-        </div>
 
-        <div class='clearfix'>
-          <div class='col-xs-6 text-center'>
-            <div class='dashboard-reservation__chart'>
-              <div ui-jq='easyPieChart' ui-options='{
-                        percent: 15,
-                        lineWidth: 2,
-                        trackColor: "#787878",
-                        barColor: "#f6f6f6",
-                        scaleColor: false,
-                        size: 84,
-                        rotate: 90,
-                        lineCap: "butt"
-                      }'>
-                <div>
-                  <span>15</span>
-                </div>
-              </div>
-            </div>
-            <div class='dashboard-reservation__title'>Diner</div>
-          </div>
 
-          <div class='col-xs-6  text-center'>
-            <div class='dashboard-reservation__chart'>
-              <div ui-jq='easyPieChart' ui-options='{
-                        percent: 26,
-                        lineWidth: 2,
-                        trackColor: "#787878",
-                        barColor: "#f6f6f6",
-                        scaleColor: false,
-                        size: 84,
-                        rotate: 90,
-                        lineCap: "butt"
-                      }'>
-                <div>
-                  <span>26</span>
-                </div>
-              </div>
-            </div>
-            <div class='dashboard-reservation__title'>Ontbijt</div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -221,8 +169,8 @@
         </div>
         <p>Ook je reviews bijhouden?<p/>
       </div>
-      <div class='panel-footer'>
-        <a href='#'>Probeer gratis</a>
+      <div class='panel-footer text-center'>
+        <button md-ink-ripple class='md-btn md-flat btn-fw text-success'>Probeer gratis</button>
       </div>
     </div>
 
@@ -233,9 +181,11 @@
         </div>
         <p>Ook je bonnetjes online bijhouden?<p/>
       </div>
-      <div class='panel-footer'>
-        <a href='#'>Probeer gratis</a>
+      <div class='panel-footer text-center'>
+        <button md-ink-ripple class='md-btn md-flat btn-fw text-success'>Probeer gratis</button>
       </div>
     </div>
   </div>
+
+  <div data-ng-include=" 'user_menu.view.html' " ng-controller='UserMenuCtrl as user'></div>
 </div>

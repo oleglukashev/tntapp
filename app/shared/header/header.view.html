@@ -48,15 +48,20 @@
         </div>
 
         <!-- dropdown -->
-        <ul class="header-account-menu-box dropdown-menu animated">
-          <li>
-            <a href='#'>
+        <ul class="header-account-menu-box dropdown-menu animated blue-grey-900">
+          <li ng-repeat='company in header.currentUser.owned_companies'>
+            <a href='#' ng-click='header.setDefaultCompany(company.id)'>
+              <span>{{ company.name }}</span>
+              <i ng-show='company.id === header.currentCompany.id' class='mdi mdi-check pull-right'></i>
+            </a>
+          </li>
+          <li class='m-t-sm'>
+            <a href='#' ng-sref='app.settings'>
               <span>Instellingen</span>
-              <i class='mdi mdi-check pull-right'></i>
             </a>
           </li>
           <li>
-            <a href='#'>
+            <a href='#' ng-sref='app.upgrade'>
               <span>Upgrade</span>
             </a>
           </li>

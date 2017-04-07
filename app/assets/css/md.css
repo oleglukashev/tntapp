@@ -10,6 +10,10 @@
     font-size: 24px;
 }
 
+.i-30 {
+    font-size: 30px;
+}
+
 .md-btn {
     position: relative;
     display: inline-block;
@@ -37,6 +41,10 @@
     -ms-user-select: none;
     user-select: none;
     font-variant: inherit;
+}
+
+.md-btn.orange {
+    color: #fff;
 }
 
 .md-btn.md-flat:not([disabled]):hover,

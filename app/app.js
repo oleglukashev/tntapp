@@ -1,6 +1,7 @@
 import styles                             from './assets/css/app.styl'
 import angular                            from 'angular'
 import angular_animate                    from 'angular-animate'
+import angular_material                   from 'angular-material'
 import angular_aria                       from 'angular-aria'
 import angular_cookies                    from 'angular-cookies'
 import angular_messages                   from 'angular-messages'
@@ -17,13 +18,14 @@ import anguar_oclazyLoad                  from 'oclazyload'
 import ui_load                            from './common/services/ui-load'
 import ui_jq                              from './common/directives/ui-jq'
 import main_route                         from './config.router'
+import init_templates                     from './config.templates'
 import app_controller                     from './common/controllers/app.controller'
 import header_controller                  from './shared/header/header.controller'
+import user_menu_controller               from './shared/user_menu/user_menu.controller'
 import dashboard                          from './components/dashboard'
 import auth                               from './components/auth'
 import                                         './common/services'
 import                                         './common/directives'
-import  angular_material                  from 'angular-material'
 
 
 const app = angular
@@ -52,7 +54,7 @@ const app = angular
   ])
   .config(main_route)
   .constant('AppConstants', {
-    api: 'http://api.sven.thenexttable.com/api/v2',
+    api: 'http://api.tnt.me/api/v2',
     jwtKey: 'jwtToken',
     appName: 'TNT',
   })
@@ -89,6 +91,7 @@ const app = angular
   ])
   .controller('AppCtrl', app_controller)
   .controller('HeaderCtrl', header_controller)
+  .controller('UserMenuCtrl', user_menu_controller)
   .constant('JQ_CONFIG', {
     easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],
   }).constant('MODULE_CONFIG', [])
@@ -100,11 +103,7 @@ const app = angular
       modules: MODULE_CONFIG
     });
   }])
-  .run(["$templateCache", function ($templateCache) {
-    //remove later
-    $templateCache.removeAll();
-    $templateCache.put('headerView.html', require('./shared/header/headerView.html'));
-    $templateCache.put('footer.view.html', require('./shared/footer/footer.view.html'));
-    $templateCache.put('app.html', require('./components/layout/app.html'));
-    $templateCache.put('login.html', require('./components/layout/login.html'));
-  }]);
+  .config(['$mdThemingProvider', function($mdThemingProvider) {
+    $mdThemingProvider.disableTheming();
+  }])
+  .run(init_templates);

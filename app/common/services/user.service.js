@@ -14,20 +14,33 @@ export default class User {
   }
 
 
-  tryAuth(path, formData) {
-    let data = formData;
-
+  auth(path, formData) {
     return this.$http({
       url: this.AppConstants.api + path,
       method: 'POST',
-      //headers : {'Content-Type': 'application/x-www-form-urlencoded'},
-      data: data
+      data: formData
     }).then(
       (result) => {
         this.JWT.save(result.data.token);
         return result;
       }
     );
+  }
+
+  resetPassword(formData) {
+    return this.$http({
+      url: this.AppConstants.api + '/reset_password',
+      method: 'POST',
+      data: formData
+    }).then(
+      (result) => {
+        return result;
+      }
+    );
+  }
+
+  setDefaultCompany(id) {
+    this.currentCompany = this.current.owned_companies.filter((item) => item.id === id)[0];
   }
 
   update(fields) {
@@ -70,6 +83,8 @@ export default class User {
       }).then(
         (result) => {
           this.current = result.data;
+          this.setDefaultCompany(this.current.owned_companies[0].id);
+
           deferred.resolve(true);
         },
         (error) => {
@@ -88,7 +103,6 @@ export default class User {
 
     this.verifyAuth().then((authValid) => {
       if (authValid !== bool) {
-        //this.$state.go('app.dashboard')
         this.$location.path('/')
         deferred.resolve(false);
       } else {

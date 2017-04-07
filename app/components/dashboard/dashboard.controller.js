@@ -1,23 +1,42 @@
 export default class DashboardCtrl {
-  constructor(Reservation, moment, $window, AppConstants, JWT) {
+  constructor(Reservation, moment, AppConstants, JWT, $window, $mdSidenav, $rootScope, $modal) {
     'ngInject';
 
-    this.moment = moment;
+    this.moment          = moment;
+    this.action_required = [];
+    this.group_this_week = [];
+    this.today           = [];
+    this.$mdSidenav      = $mdSidenav;
+    this.$rootScope      = $rootScope;
+    this.$modal          = $modal;
+
     Reservation
       .getAll()
         .then(
           (reservations) => {
             this.reservationsLoaded = true;
-            this.request_reservations = reservations.filter((item) => item.status === 'Aanvraag');
-            this.group_reservations = reservations.filter((item) => item.is_group === true);
-            this.today_reservation = reservations
-                                       .filter((res) => {
-                                         return res.reservation_parts.filter((res_part) => {
-                                           return this.moment(res_part.datetime).format('MMM DD YY') == this.moment().format('MMM DD YY')
-                                         })
-                                       })
-          }
-        );
+            this.action_required = reservations.action_required;
+            this.group_this_week = reservations.group_this_week;
+            this.today = reservations.today;
+          });
+  }
+
+  openUserMenu() {
+    this.$rootScope.$broadcast('UserMenuCtrl', );
+    this.$mdSidenav('right').toggle();
+  }
+
+  openReservation() {
+    this.$modal.open({
+      templateUrl: 'reservationContent.html',
+      //controller: 'ModalInstanceCtrl',
+      size: 'md',
+      // resolve: {
+      //   items: () => {
+      //     return $scope.items;
+      //   }
+      // }
+    });
   }
 
   parsedDate(date) {

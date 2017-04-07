@@ -8,43 +8,57 @@ class AuthCtrl {
     this.authType = $state.current.name.replace('auth.', '');
   }
 
-  submitForm() {
-    let path = '/authenticate_check';
+  sendAuthForm(path) {
     this.isSubmitting = true;
 
-    if (this.authType === 'register') {
-      path = '/register';
-    } else if (this.authType === 'reset_password') {
-      path = '/reset_password';
-    } else if (this.authType === 'reset_password_finish') {
-      path = '/reset_password/' + this.$stateParams.id + '/' + this.$stateParams.token;
-    }
-
-    this.User.tryAuth(path, this.formData).then(
+    this.User.auth(path, this.formData).then(
       (result) => {
-        this.success = true;
-
-        if (this.authType != 'reset_password') {
-          this.$state.go('app.dashboard');
-        }
+        this.$state.go('app.dashboard');
       },
       (error) => {
         this.isSubmitting = false;
 
-        if (error.data) {
-          if (this.authType == 'login') {
-            this.errors = error.data;
-          } else if (this.authType == 'reset_password_finish') {
-            if (error.data.message) {
-              this.errors = [error.data];
-            } else {
-              this.errors = error.data.errors;
-            }
+        if (this.authType == 'login') {
+          this.errors = error.data;
+        } else if (this.authType == 'reset_password_finish') {
+          if (error.data.message) {
+            this.errors = [error.data];
           } else {
-            this.errors = error.data.errors;
+            this.errors = [error.data.error];
           }
+        } else {
+          this.errors = error.data.errors;
         }
       });
+  }
+
+  sendResetPasswordForm() {
+    this.isSubmitting = true;
+
+    this.User.resetPassword(this.formData).then(
+      (result) => {
+        this.isSubmitting = false;
+        this.success      = true;
+      },
+      (error) => {
+        this.isSubmitting = false;
+      });
+  }
+
+  submitForm() {
+    if (this.authType === 'reset_password') {
+      this.sendResetPasswordForm();
+    } else {
+      let path = '/authenticate_check';
+
+      if (this.authType === 'register') {
+        path = '/register';
+      } else if (this.authType === 'reset_password_finish') {
+        path = '/reset_password/' + this.$stateParams.id + '/' + this.$stateParams.token;
+      }
+
+      this.sendAuthForm(path);
+    }
   }
 }
 
