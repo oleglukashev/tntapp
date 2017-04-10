@@ -22,14 +22,14 @@ export default class DashboardCtrl {
   }
 
   openUserMenu() {
-    this.$rootScope.$broadcast('UserMenuCtrl', );
+    this.$rootScope.$broadcast('UserMenuCtrl');
     this.$mdSidenav('right').toggle();
   }
 
   openReservation() {
     this.$modal.open({
       templateUrl: 'reservationContent.html',
-      //controller: 'ModalInstanceCtrl',
+      controller: 'ReservationCtrl as reserv',
       size: 'md',
       // resolve: {
       //   items: () => {

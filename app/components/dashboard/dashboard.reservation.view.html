@@ -1,365 +1,249 @@
-
-
-
-<div class="md-list md-whiteframe-z0 bg-white m-b">
-  <div class="panel-heading  blue-grey-900" Style="font-size:18px; font-weight: 400;width:100%;color:#ffffff""><i  class="mdi-navigation-arrow-back blue-grey-900 i-24 m-t-sm" style="padding-right:24px;color:#ffffff"></i>Reserveren</div>
-
-<md-tabs flex md-selected="data.selectedIndex" class="class="blue-grey-900" style="min-height: 500px;">
-<md-tab label= "DATUM" class="class="blue-grey-900">
-
-<div class="b-t" flex>
-  <div class="md-list-item">
-
-    <div class="md-list-item-content">
-
-      <small class="">Kies een datum</small>
-    </div>
+<div class='md-list md-whiteframe-z0 bg-white m-b'>
+  <div class='panel-heading no-border blue-grey-900 i-24 '>
+    <i class='mdi mdi-arrow-left m-r-sm'></i>
+    Reserveren
   </div>
-  <div class="wrapper" layout="column" layout-align="space-around center">
-    <datepicker ng-click="data.selectedIndex=1" ng-model="dt" min-date="minDate" show-weeks="false" class="datepicker fade-in-right"></datepicker>
 
-  </div>
+  <md-tabs class='reservation_tabs' flex md-selected='data.selectedIndex' md-dynamic-height>
+    <md-tab>
+      <md-tab-label>
+        <div class='text-center l-h'><i class='mdi mdi-calendar'></i></div>
+        <div class='text-center l-h'>
+          <span ng-show='reserv.new_reservation.date'>{{ reserv.new_reservation.date | date:'d MMMM' }}</span>
+          <span ng-hide='reserv.new_reservation.date'>DATUM</span>
+        </div>
+      </md-tab-label>
+      <md-tab-body>
+        <div class='b-t' flex>
+          <div class='md-list-item'>
+            <div class='md-list-item-content text-center'>
+              <h4>Kies een datum</h4>
+            </div>
+          </div>
+          <div class='wrapper' layout='column' layout-align='space-around center'>
+            <datepicker ng-change='data.selectedIndex=1'
+                        ng-model='reserv.new_reservation.date'
+                        min-date='minDate'
+                        show-weeks='false'
+                        class='datepicker'></datepicker>
+          </div>
+        </div>
+      </md-tab-body>
+    </md-tab>
+
+    <md-tab>
+      <md-tab-label>
+        <div class='text-center l-h'><i class='mdi mdi-account-multiple'></i></div>
+        <div class='text-center l-h'>
+          <span ng-show='reserv.new_reservation.number_of_persons'>
+            {{ reserv.new_reservation.number_of_persons }} PERSONEN
+          </span>
+          <span ng-hide='reserv.new_reservation.number_of_persons'>AANTAL</span>
+        </div>
+      </md-tab-label>
+      <md-tab-body>
+        <div class='b-t' flex>
+          <div class=' tab{{$index%4}}' >
+            <div class='md-list-item'>
+              <div class='md-list-item-content text-center'>
+                <h4>Aantal personen</h4>
+              </div>
+            </div>
+            <div class='wrapper' layout='column' layout-align='space-around center'>
+              <div class='w-lg'>
+                <label ng-repeat='number in [1,2,3,4,5,6,7]'
+                  ng-click='data.selectedIndex=2'
+                  ng-class="{ 'btn-success': reserv.new_reservation.number_of_persons == number }"
+                  class='btn btn-default btn-lg m-xs text-success no-shadow no-border'
+                  ng-model='reserv.new_reservation.number_of_persons'
+                  uncheckable
+                  aria-invalid='false'
+                  btn-radio='number'>{{ number }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </md-tab-body>
+    </md-tab>
+
+
+    <!--<md-tab label='PRODUCT'>-->
+      <!--<div class='b-t' flex>-->
+        <!--<div class='md-list-item'>-->
+          <!--<div class='md-list-item-content'>-->
+            <!--<small class=''>Kies je product</small>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class=' tab{{$index%4}}' >-->
+          <!--<div md-ink-ripple='' class='row row-sm wrapper' ng-click='data.selectedIndex=3' style='border-bottom: 1px solid rgba(160, 160, 160, 0.2);'>-->
+            <!--<button   class='md-btn md-flat  text-success'>TERRAS<div class='md-ripple-container' style=''></div></button>-->
+          <!--</div>-->
+          <!--<div md-ink-ripple='' class='row row-sm wrapper' ng-click='data.selectedIndex=3' style='border-bottom: 1px solid rgba(160, 160, 160, 0.2);'>-->
+            <!--<button   class='md-btn md-flat  text-success'>BALZAAL<div class='md-ripple-container' style=''></div></button>-->
+          <!--</div>-->
+          <!--<div md-ink-ripple='' class='row row-sm wrapper' ng-click='data.selectedIndex=3' style='border-bottom: 1px solid rgba(160, 160, 160, 0.2);'>-->
+            <!--<button   class='md-btn md-flat  text-success'>DISCO<div class='md-ripple-container' style=''></div></button>-->
+          <!--</div>-->
+          <!--<div md-ink-ripple='' class='row row-sm wrapper' ng-click='data.selectedIndex=3' style='border-bottom: 1px solid rgba(160, 160, 160, 0.2);'>-->
+            <!--<button   class='md-btn md-flat  text-success'>BOOT<div class='md-ripple-container' style=''></div></button>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</md-tab>-->
+
+
+
+    <md-tab>
+      <md-tab-label>
+        <div class='text-center l-h'><i class='mdi mdi-clock'></i></div>
+        <div class='text-center l-h'>
+          <span ng-show='reserv.new_reservation.time'>
+            {{ reserv.new_reservation.time }}
+          </span>
+          <span ng-hide='reserv.new_reservation.time'>TIJDSTIP</span>
+        </div>
+      </md-tab-label>
+      <md-tab-body>
+        <div class='b-t' flex>
+          <div class=' tab{{$index%4}}' >
+            <div class='md-list-item'>
+              <div class='md-list-item-content text-center'>
+                <h4>Beschikbare tijden</h4>
+              </div>
+            </div>
+
+            <div class='wrapper' layout='column' layout-align='space-around center'>
+              <div class='w-xl'>
+                <label ng-repeat="time in ['10:00','10:15','10:30','10:45','11:00','11:15','11:30']"
+                       ng-click='data.selectedIndex=3'
+                       ng-class="{ 'btn-success': reserv.new_reservation.time == time }"
+                       class='btn btn-default btn-lg m-xs m-l-none no-border no-shadow text-success'
+                       ng-model='reserv.new_reservation.time'
+                       uncheckable
+                       aria-invalid='false'
+                       btn-radio='time'>{{ time }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </md-tab-body>
+    </md-tab>
+
+
+    <md-tab>
+      <md-tab-label>
+        <div class='text-center l-h'><i class='mdi mdi-account'></i></div>
+        <div class='text-center l-h'>PERSOON</div>
+      </md-tab-label>
+      <md-tab-body>
+        <div class='b-t' flex>
+          <div class=' tab{{$index%4}}' layout='column'>
+            <div class='md-list-item'>
+              <div class='md-list-item-content text-center'>
+                <h4>Persoonsgegevens</h4>
+              </div>
+            </div>
+            <div class='wrapper' layout='column' layout-align='space-around center'>
+              <div class='w-xl'>
+                <div class='md-form-group float-label'>
+                  <input class='md-input' ng-model='reserv.new_reservation.name' required>
+                  <label>Voor- en achternaam</label>
+                </div>
+                <div class='md-form-group float-label'>
+                  <input class='md-input' ng-model='reserv.new_reservation.email' required>
+                  <label>E-mail</label>
+                </div>
+                <div class='md-form-group float-label'>
+                  <input class='md-input' ng-model='reserv.new_reservation.phone' required>
+                  <label>Telefoonnummer</label>
+                </div>
+                <div class='md-form-group float-label'>
+                  <input class='md-input' ng-model='reserv.new_reservation.note' required>
+                  <label>Opmerking</label>
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <div>
+              <div class='card-body'>
+              <li ng-class='{active:$state.includes('app.material')}'>
+                <ul class='nav nav-sub'>
+                  <li ui-sref-active='active'>
+                    <a md-ink-ripple  ng-click='data.selectedIndex=5' class='text-success bold' >
+                      <span class='text-success bold'>RESERVEER</span>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+            </div>
+          </div>
+        </div>
+      </md-tab-body>
+    </md-tab>
+
+
+    <!--<md-tab label= 'BEVESTIGING' class='empty-cells'>-->
+      <!--<div class='b-t' flex>-->
+        <!--<div class=''>-->
+          <!--<div class='md-list-item'>-->
+            <!--<div class='md-list-item-content'>-->
+              <!--<small class=''>Reservering geplaatst</small>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class='md-list-item inset'>-->
+            <!--<div class='md-list-item-left'>-->
+              <!--<img src='img/a2.jpg' class='w-full img-circle'>-->
+            <!--</div>-->
+            <!--<div class='md-list-item-content'>-->
+              <!--<h3 class='text-md'>Jelle Klaasen</h3>-->
+              <!--<small class='font-thin'>Min Li Chan</small>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class='md-list-item inset' >-->
+            <!--<div class='md-list-item-left '>-->
+              <!--<i class='mdi-communication-phone icon-muted i-24'></i>-->
+            <!--</div>-->
+            <!--<div class='md-list-item-content'>-->
+              <!--<h3 class='text-md'>(650) 555-1234</h3>-->
+              <!--<small class='font-thin'>Telefoon</small>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class='md-list-item inset'>-->
+            <!--<div class='md-list-item-left '>-->
+              <!--<i class='mdi-communication-email icon-muted i-24'></i>-->
+            <!--</div>-->
+            <!--<div class='md-list-item-content'>-->
+              <!--<h3 class='text-md'>info@Example.com</h3>-->
+              <!--<small class='font-thin'>E-mail</small>-->
+            <!--</div>-->
+          <!--</div>-->
+
+          <!--<div class='md-list-item '>-->
+            <!--<div class='md-list-item-left '>-->
+              <!--<i class='mdi-action-grade icon-muted i-24'></i>-->
+            <!--</div>-->
+            <!--<div class='md-list-item-content'>-->
+              <!--<h3 class='text-md'>Ik wil graag champagne op tafel</h3>-->
+              <!--<small class='font-thin'>Opmerkingen</small>-->
+            <!--</div>-->
+          <!--</div>-->
+
+
+          <!--<li ng-class='{active:$state.includes('app.material')}'>-->
+            <!--<ul class='nav nav-sub'>-->
+              <!--<li ui-sref-active='active' ng-click='cancel()'>-->
+                <!--<a md-ink-ripple  ng-click='data.selectedIndex=5' class='text-success bold' >-->
+                  <!--<span class='text-success bold' >TERUG NAAR OVERZICHT</span>-->
+                <!--</a>-->
+              <!--</li>-->
+            <!--</ul>-->
+          <!--</li>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</md-tab>-->
+  </md-tabs>
 </div>
-</md-tab>
-<md-tab label="AANTAL" class="blue-grey-900">
-  <div class="b-t" flex>
-
-
-    <div class=" tab{{$index%4}}" >
-      <div class="md-list-item">
-
-        <div class="md-list-item-content">
-
-          <small class="">Aantal personen</small>
-        </div>
-      </div>
-
-      <div class="center" ng-controller="MDSelectCtrl">
-
-        <div class="row wrapper" >
-
-
-          <div ng-controller="ButtonsDemoCtrl" class="panel panel-default ng-scope">
-
-
-
-            <div class="m-t m-b wrapper">
-
-
-
-              <label ng-click="data.selectedIndex=2" class="btn btn-success ng-untouched ng-valid ng-dirty text-success" md-ink-ripple="" ng-model="radioModel" btn-radio="'1'" uncheckable="" aria-invalid="false">1</label>
-              <label ng-click="data.selectedIndex=2" class="btn btn-success ng-untouched ng-valid ng-dirty text-success" md-ink-ripple="" ng-model="radioModel" btn-radio="'2'" uncheckable="" aria-invalid="false">2</label>
-              <label ng-click="data.selectedIndex=2" class="btn btn-success ng-untouched ng-valid ng-dirty text-success" md-ink-ripple="" ng-model="radioModel" btn-radio="'3'" uncheckable="" aria-invalid="false">3</label>
-              <label ng-click="data.selectedIndex=2" class="btn btn-success ng-untouched ng-valid ng-dirty text-success" md-ink-ripple="" ng-model="radioModel" btn-radio="'4'" uncheckable="" aria-invalid="false">4</label>
-              <label ng-click="data.selectedIndex=2" class="btn btn-success ng-untouched ng-valid ng-dirty text-success" md-ink-ripple="" ng-model="radioModel" btn-radio="'5'" uncheckable="" aria-invalid="false">5</label>
-              <label ng-click="data.selectedIndex=2" class="btn btn-success ng-untouched ng-valid ng-dirty text-success" md-ink-ripple="" ng-model="radioModel" btn-radio="'6'" uncheckable="" aria-invalid="false">6</label>
-              <label ng-click="data.selectedIndex=2" class="btn btn-success ng-untouched ng-valid ng-dirty text-success" md-ink-ripple="" ng-model="radioModel" btn-radio="'7'" uncheckable="" aria-invalid="false">7</label>
-              <label ng-click="data.selectedIndex=2" class="btn btn-success ng-untouched ng-valid ng-dirty text-success" md-ink-ripple="" ng-model="radioModel" btn-radio="'8'" uncheckable="" aria-invalid="false">8</label>
-              <label ng-click="data.selectedIndex=2" class="btn btn-success ng-untouched ng-valid ng-dirty text-success" md-ink-ripple="" ng-model="radioModel" btn-radio="'9'" uncheckable="" aria-invalid="false">9</label>
-              <label ng-click="data.selectedIndex=2" class="btn btn-success ng-untouched ng-valid ng-dirty text-success" md-ink-ripple="" ng-model="radioModel" btn-radio="'10'" uncheckable="" aria-invalid="false">10</label>
-            </div>
-
-          </div>
-
-
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      </div>
-
-
-    </div>
-  </div>
-</md-tab>
-<md-tab label="PRODUCT">
-  <div class="b-t" flex>
-
-    <div class="md-list-item">
-
-      <div class="md-list-item-content">
-
-        <small class="">Kies je product</small>
-      </div>
-    </div>
-
-
-
-    <div class=" tab{{$index%4}}" >
-      <div md-ink-ripple="" class="row row-sm wrapper" ng-click="data.selectedIndex=3" style="border-bottom: 1px solid rgba(160, 160, 160, 0.2);">
-        <button   class="md-btn md-flat  text-success">TERRAS<div class="md-ripple-container" style=""></div></button>
-      </div>
-      <div md-ink-ripple="" class="row row-sm wrapper" ng-click="data.selectedIndex=3" style="border-bottom: 1px solid rgba(160, 160, 160, 0.2);">
-        <button   class="md-btn md-flat  text-success">BALZAAL<div class="md-ripple-container" style=""></div></button>
-      </div>
-      <div md-ink-ripple="" class="row row-sm wrapper" ng-click="data.selectedIndex=3" style="border-bottom: 1px solid rgba(160, 160, 160, 0.2);">
-        <button   class="md-btn md-flat  text-success">DISCO<div class="md-ripple-container" style=""></div></button>
-      </div>
-      <div md-ink-ripple="" class="row row-sm wrapper" ng-click="data.selectedIndex=3" style="border-bottom: 1px solid rgba(160, 160, 160, 0.2);">
-        <button   class="md-btn md-flat  text-success">BOOT<div class="md-ripple-container" style=""></div></button>
-      </div>
-
-
-
-    </div>
-  </div>
-</md-tab>
-<md-tab label="TIJD">
-
-  <div class="b-t" flex>
-
-    <div class=" tab{{$index%4}}" >
-      <div class="md-list-item">
-
-        <div class="md-list-item-content">
-
-          <small class="">Beschikbare tijden</small>
-        </div>
-      </div>
-
-
-      <div class="row row-sm wrapper">
-
-        <div class="col-sm-12">
-          <button md-ink-ripple="" ng-click="data.selectedIndex=4" class="md-btn md-flat m-b btn-fw text-success">15:00<div class="md-ripple-container" style=""></div></button>
-          <button md-ink-ripple="" ng-click="data.selectedIndex=4" class="md-btn md-flat m-b btn-fw text-success">15:15<div class="md-ripple-container" style=""></div></button>
-          <button md-ink-ripple="" ng-click="data.selectedIndex=4" class="md-btn md-flat m-b btn-fw text-success" disabled="">15:30</button>
-          <button md-ink-ripple="" ng-click="data.selectedIndex=4" class="md-btn md-flat m-b btn-fw text-success">15:45<div class="md-ripple-container" style=""></div></button>
-          <button md-ink-ripple="" ng-click="data.selectedIndex=4" class="md-btn md-flat m-b btn-fw text-success">15:00<div class="md-ripple-container" style=""></div></button>
-          <button md-ink-ripple="" ng-click="data.selectedIndex=4" class="md-btn md-flat m-b btn-fw text-success ">15:15<div class="md-ripple-container" style=""></div></button>
-          <button md-ink-ripple="" ng-click="data.selectedIndex=4" class="md-btn md-raised m-b btn-fw red " disabled="">15:30</button>
-          <button md-ink-ripple="" ng-click="data.selectedIndex=4" class="md-btn md-flat m-b btn-fw text-success">15:45<div class="md-ripple-container" style=""></div></button>
-        </div>
-      </div>
-      <div class="wrapper" ng-controller="MDCheckboxCtrl">
-
-
-        <md-checkbox ng-model="data.cb2" aria-label="Checkbox 2" ng-true-value="'Meerdere tijden'" ng-false-value="'Enkele tijd'" >
-          Meerdere tijden selecteren
-        </md-checkbox>
-
-
-
-      </div>
-
-
-    </div>
-  </div>
-</md-tab>
-<md-tab label="PERSOON">
-  <div class="b-t" flex>
-
-    <div class=" tab{{$index%4}}" layout="column">
-      <div class="md-list-item">
-
-        <div class="md-list-item-content">
-
-          <small class="">Persoonsgegevens</small>
-        </div>
-      </div>
-
-      <div class="" ng-controller="MDInputCtrl" >
-
-
-
-        <div class="card-body">
-
-          <div class="row row-sm">
-
-            <div class="col-sm-12">
-              <div class="md-form-group float-label">
-                <input class="md-input" ng-model="user.firstName" required>
-                <label>Voor- en achternaam</label>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="row row-sm">
-
-            <div class="col-sm-12">
-              <div class="md-form-group float-label">
-                <input class="md-input" required>
-                <label>E-mail</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="row row-sm">
-
-            <div class="col-sm-12">
-              <div class="md-form-group float-label">
-                <input class="md-input" required>
-                <label>Telefoonnummer</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="row row-sm">
-
-            <div class="col-sm-12">
-              <div class="md-form-group float-label">
-                <input class="md-input" required>
-                <label>Opmerking</label>
-              </div>
-            </div>
-          </div>
-
-
-
-
-
-
-
-
-
-        </div>
-
-        <li ng-class="{active:$state.includes('app.material')}">
-
-          <ul class="nav nav-sub">
-            <li ui-sref-active="active">
-              <a md-ink-ripple  ng-click="data.selectedIndex=5" class="text-success bold" >
-
-                <span class="text-success bold">RESERVEER</span>
-
-              </a>
-            </li>
-
-          </ul>
-        </li>
-
-
-
-      </div>
-
-    </div>
-  </div>
-</md-tab>
-<md-tab label= "BEVESTIGING" class="empty-cells">
-  <div class="b-t" flex>
-    <div class="">
-
-
-
-
-
-
-
-
-      <div class="md-list-item">
-
-        <div class="md-list-item-content">
-
-          <small class="">Reservering geplaatst</small>
-        </div>
-      </div>
-
-
-
-
-
-
-
-
-      <div class="md-list-item inset">
-        <div class="md-list-item-left">
-          <img src="img/a2.jpg" class="w-full img-circle">
-        </div>
-        <div class="md-list-item-content">
-          <h3 class="text-md">Jelle Klaasen</h3>
-          <small class="font-thin">Min Li Chan</small>
-        </div>
-      </div>
-      <div class="md-list-item inset" >
-        <div class="md-list-item-left ">
-          <i class="mdi-communication-phone icon-muted i-24"></i>
-        </div>
-        <div class="md-list-item-content">
-          <h3 class="text-md">(650) 555-1234</h3>
-          <small class="font-thin">Telefoon</small>
-        </div>
-      </div>
-      <div class="md-list-item inset">
-        <div class="md-list-item-left ">
-          <i class="mdi-communication-email icon-muted i-24"></i>
-        </div>
-        <div class="md-list-item-content">
-          <h3 class="text-md">info@Example.com</h3>
-          <small class="font-thin">E-mail</small>
-
-        </div>
-      </div>
-
-      <div class="md-list-item ">
-        <div class="md-list-item-left ">
-          <i class="mdi-action-grade icon-muted i-24"></i>
-        </div>
-        <div class="md-list-item-content">
-          <h3 class="text-md">Ik wil graag champagne op tafel</h3>
-          <small class="font-thin">Opmerkingen</small>
-        </div>
-      </div>
-
-
-
-      <li ng-class="{active:$state.includes('app.material')}">
-
-        <ul class="nav nav-sub">
-          <li ui-sref-active="active" ng-click="cancel()">
-
-            <a md-ink-ripple  ng-click="data.selectedIndex=5" class="text-success bold" >
-
-              <span class="text-success bold" >TERUG NAAR OVERZICHT</span>
-
-
-
-            </a>
-          </li>
-
-        </ul>
-      </li>
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-  </div>
-</md-tab>
-</md-tabs>

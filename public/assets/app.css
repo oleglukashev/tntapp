@@ -12570,6 +12570,10 @@ md-tooltip {
     position: relative;
 }
 
+.i-16 {
+    font-size: 16px
+}
+
 .i-24 {
     font-size: 24px;
 }
@@ -22514,9 +22518,7 @@ a.list-group-item.hover {
     border-radius: 0px 0px 0 0;
   }
 }
-.panel-default .panel-heading,
 .panel-heading.no-border {
-  margin: -1px -1px 0 -1px;
   border: none;
 }
 .panel-heading .nav {
@@ -23664,11 +23666,6 @@ body {
   top: auto;
   bottom: 19px;
 }
-.btn {
-  font-weight: 500;
-  border-radius: 22px;
-  outline: 0 !important;
-}
 .btn-link {
   color: #58666e;
 }
@@ -23755,12 +23752,18 @@ fieldset[disabled] .btn-primary.active {
   background-color: #7266ba;
   border-color: #7266ba;
 }
+.btn-success {
+  color: #fff !important;
+  background-color: #36b590;
+  border-color: #36b590;
+}
 .btn-success:focus,
 .btn-success:active,
 .btn-success.active,
 .open .dropdown-toggle.btn-success {
   color: #fff !important;
   background-color: #36b590;
+  border-color: #36b590;
 }
 .btn-success:active,
 .btn-success.active,
@@ -24063,6 +24066,13 @@ fieldset[disabled] .btn-black.active {
 }
 .btn-groups .btn {
   margin-bottom: 5px;
+}
+.btn-group-sm>.btn,
+.btn-sm {
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 3px;
 }
 .list-icon i {
   display: inline-block;
@@ -25593,6 +25603,9 @@ a.text-#000000:hover {
 .no-padder {
   padding: 0 !important;
 }
+.no-margin {
+  margin: 0 !important;
+}
 .pull-in {
   margin-right: -15px;
   margin-left: -15px;
@@ -26263,9 +26276,38 @@ a.text-#000000:hover {
 md-progress-circular path {
   stroke: #98a6ad;
 }
+md-tabs.reservation_tabs {
+  border-radius: 0;
+}
+md-tabs.reservation_tabs md-tabs-wrapper {
+  background-color: #263238;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas {
+  height: 56px;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper {
+  height: 56px;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper md-tab-item.md-tab {
+  width: 150px;
+  height: 56px;
+  padding: 5px 0;
+  font-size: 16px;
+  line-height: 30px;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper md-tab-item.md-tab.md-active {
+  color: #fff;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper md-ink-bar {
+  height: 4px;
+  background-color: #36b590;
+}
 .panel-add-button {
   display: block;
   margin-left: auto;
   margin-right: 16px;
   margin-bottom: -28px;
+}
+.datepicker tr > td > .btn {
+  border-radius: 50%;
 }

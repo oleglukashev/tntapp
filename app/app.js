@@ -23,6 +23,7 @@ import app_controller                     from './common/controllers/app.control
 import header_controller                  from './shared/header/header.controller'
 import user_menu_controller               from './shared/user_menu/user_menu.controller'
 import dashboard                          from './components/dashboard'
+import new_reservation                        from './components/reservation'
 import auth                               from './components/auth'
 import                                         './common/services'
 import                                         './common/directives'
@@ -48,6 +49,7 @@ const app = angular
     anguar_oclazyLoad,
     ui_jq,
     dashboard,
+    new_reservation,
     auth,
     'app.services',
     'app.directives'

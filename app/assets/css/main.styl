@@ -454,14 +454,7 @@ a.list-group-item.hover
   .panel-heading
     border-radius 0px 0px 0 0
 
-
-
-.panel-default .panel-heading
-
-
-
 .panel-heading.no-border
-  margin -1px -1px 0 -1px
   border none
 
 
@@ -1800,12 +1793,6 @@ body
 
 
 
-.btn
-  font-weight 500
-  border-radius 22px
-  outline 0!important
-
-
 .btn-link
   color #58666e
 
@@ -1906,7 +1893,10 @@ fieldset[disabled] .btn-primary.active
   border-color #7266ba
 
 
-
+.btn-success
+  color #ffffff !important
+  background-color #36b590
+  border-color #36b590
 
 
 .btn-success:focus,
@@ -1915,6 +1905,7 @@ fieldset[disabled] .btn-primary.active
 .open .dropdown-toggle.btn-success
   color #ffffff !important
   background-color #36b590
+  border-color #36b590
 
 
 
@@ -2260,6 +2251,13 @@ fieldset[disabled] .btn-black.active
 
 .btn-groups .btn
   margin-bottom 5px
+
+
+.btn-group-sm>.btn, .btn-sm
+  padding 10px 14px
+  font-size 14px
+  line-height 1.5
+  border-radius 3px
 
 
 .list-icon i
@@ -4201,6 +4199,10 @@ a.text-#000000:hover
   padding 0 !important
 
 
+.no-margin
+  margin 0 !important
+
+
 .pull-in
   margin-right -15px
   margin-left -15px
@@ -5042,7 +5044,6 @@ a.text-#000000:hover
 
 
 
-
 // angular material
 .md-backdrop.md-opaque
   background none
@@ -5054,9 +5055,40 @@ md-progress-circular
   path
     stroke #98a6ad
 
+md-tabs.reservation_tabs
+  border-radius 0
+
+  md-tabs-wrapper
+    background-color #263238
+
+    md-tabs-canvas
+      height 56px
+
+    md-pagination-wrapper
+      height 56px
+
+      md-tab-item.md-tab
+        width 150px
+        height 56px
+        padding 5px 0
+        font-size 16px
+        line-height 30px
+
+        &.md-active
+          color #fff
+
+      md-ink-bar
+        height 4px
+        background-color #36b590
+
 
 .panel-add-button
   display block
   margin-left auto
   margin-right 16px
   margin-bottom -28px
+
+
+.datepicker
+  tr > td > .btn
+    border-radius: 50%
