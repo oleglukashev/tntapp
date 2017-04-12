@@ -22658,6 +22658,11 @@ pre {
   padding-right: 10px;
   padding-left: 10px;
 }
+@media (max-width: 768px) {
+  .modal-dialog {
+    margin: 0;
+  }
+}
 .modal-content {
   position: relative;
   background-color: #fff;
@@ -23765,6 +23770,10 @@ fieldset[disabled] .btn-primary.active {
   background-color: #36b590;
   border-color: #36b590;
 }
+.btn-success:hover {
+  background-color: #36b590;
+  border-color: #36b590;
+}
 .btn-success:active,
 .btn-success.active,
 .open .dropdown-toggle.btn-success {
@@ -23785,8 +23794,8 @@ fieldset[disabled] .btn-success:active,
 .btn-success.disabled.active,
 .btn-success[disabled].active,
 fieldset[disabled] .btn-success.active {
-  background-color: #27c24c;
-  border-color: #27c24c;
+  background-color: #36b590;
+  border-color: #36b590;
 }
 .btn-info {
   color: #fff !important;
@@ -24873,27 +24882,11 @@ fieldset[disabled] .i-checks input + i:before {
 }
 .bg-success {
   color: #c6efd0;
-  background-color: #27c24c;
-}
-.bg-success.lt,
-.bg-success .lt {
-  background-color: #31d257;
-}
-.bg-success.lter,
-.bg-success .lter {
-  background-color: #48d46a;
-}
-.bg-success.dk,
-.bg-success .dk {
-  background-color: #20af42;
-}
-.bg-success.dker,
-.bg-success .dker {
-  background-color: #1a9c39;
+  background-color: #36b590;
 }
 .bg-success.bg,
 .bg-success .bg {
-  background-color: #27c24c;
+  background-color: #36b590;
 }
 .bg-success a {
   color: #eefaf1;
@@ -26287,9 +26280,10 @@ md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas {
 }
 md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper {
   height: 56px;
+  width: 100%;
 }
 md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper md-tab-item.md-tab {
-  width: 150px;
+  width: 25%;
   height: 56px;
   padding: 5px 0;
   font-size: 16px;
@@ -26302,6 +26296,46 @@ md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper md-ink-bar {
   height: 4px;
   background-color: #36b590;
 }
+md-tabs.reservation_tabs md-tabs-content-wrapper #tab-content-3 .datepicker .btn-group-sm > .btn,
+md-tabs.reservation_tabs md-tabs-content-wrapper #tab-content-3 .datepicker .btn-sm {
+  padding: 7px 12px;
+}
+md-radio-button {
+  margin: 8px 8px 8px 0;
+  color: #36b590;
+}
+md-radio-button .md-on {
+  background-color: #36b590;
+}
+md-checkbox {
+  margin: 8px 8px 8px 0;
+  color: #36b590;
+}
+md-checkbox:not(.md-checked) .md-icon {
+  border-color: #36b590;
+}
+md-checkbox.md-checked .md-icon {
+  background-color: #36b590;
+  border-color: transparent;
+}
+md-checkbox.md-checked .md-icon:after {
+  border-color: #fff;
+}
+md-checkbox .md-label {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: normal;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  margin-left: 10px;
+  margin-right: 0;
+}
+.md-form-group {
+  padding: 10px 0;
+}
 .panel-add-button {
   display: block;
   margin-left: auto;
@@ -26309,5 +26343,5 @@ md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper md-ink-bar {
   margin-bottom: -28px;
 }
 .datepicker tr > td > .btn {
-  border-radius: 50%;
+  border-radius: 21px;
 }

@@ -27,15 +27,21 @@ export default class DashboardCtrl {
   }
 
   openReservation() {
-    this.$modal.open({
+    let modalInstance = this.$modal.open({
       templateUrl: 'reservationContent.html',
       controller: 'ReservationCtrl as reserv',
-      size: 'md',
+      size: 'md'
       // resolve: {
       //   items: () => {
       //     return $scope.items;
       //   }
       // }
+    });
+
+    modalInstance.result.then((selectedItem) => {
+      //success
+    }, () => {
+      // fail
     });
   }
 

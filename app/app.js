@@ -1,6 +1,7 @@
 import styles                             from './assets/css/app.styl'
 import angular                            from 'angular'
 import angular_animate                    from 'angular-animate'
+import angular_ng_uploader                from 'ng-file-upload'
 import angular_material                   from 'angular-material'
 import angular_aria                       from 'angular-aria'
 import angular_cookies                    from 'angular-cookies'
@@ -32,6 +33,7 @@ import                                         './common/directives'
 const app = angular
   .module('app', [
     angular_animate,
+    angular_ng_uploader,
     angular_aria,
     angular_cookies,
     angular_messages,
