@@ -23,4 +23,18 @@ export default class Reservation {
       method: 'GET',
     }).then((result) => result.data);
   }
+
+  create(data) {
+    let deferred = this.$q.defer();
+
+    if (!this.currentCompany) {
+      return deferred.promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/reservation',
+      method: 'POST',
+      data: data
+    }).then((result) => result.data);
+  }
 }
