@@ -1,29 +1,29 @@
 import angular from 'angular';
 
 export default class ReservationCtrl {
-  constructor(Upload, Reservation, Product, Zone, Table, moment, filterFilter, $scope, $window, $modalInstance) {
+  constructor(Reservation, Product, Zone, Table, moment, filterFilter, $rootScope, $scope, $window, $modalInstance) {
     'ngInject';
 
-    this.Upload               = Upload;
     this.Reservation          = Reservation;
     this.Product              = Product;
     this.Zone                 = Zone;
     this.Table                = Table;
 
     this.$scope               = $scope;
+    this.$rootScope           = $rootScope;
     this.filterFilter         = filterFilter;
     this.$window              = $window;
     this.$modalInstance       = $modalInstance;
     this.moment               = moment;
 
-    this.dateOptions = {
+    this.date_options = {
       formatYear: 'yy',
       startingDay: 1,
       showWeeks: false,
       class: 'datepicker'
     };
 
-    this.initDate             = new Date();
+    this.init_date             = new Date();
     this.format               = 'dd-MM-yyyy';
 
     this.reservation = {
@@ -41,7 +41,6 @@ export default class ReservationCtrl {
 
     $scope.$watchCollection('reserv.reservation.product', () => {
       this.current_product = null;
-      this.$window.console.log('reservation.product changed');
 
       if (this.reservation.product) {
         this.current_product = this.filterFilter(this.products, { id: this.reservation.product })[0];
@@ -51,7 +50,6 @@ export default class ReservationCtrl {
     });
 
     $scope.$watchCollection('reserv.reservation.person_count', () => {
-      this.$window.console.log('reservation.person_count changed');
       this.loadTime();
     });
 
@@ -66,9 +64,15 @@ export default class ReservationCtrl {
       });
     });
 
-    $scope.$watchCollection('reserv.reservation.full_date', () => {
-      this.$window.console.log('reservation.full_date changed');
-      this.reservation.date = this.moment(this.reservation.full_date).format('DD-MM-YYYY')
+    $scope.$watch('reserv.reservation.full_date', () => {
+      this.reservation.date         = this.moment(this.reservation.full_date).format('DD-MM-YYYY');
+      this.reservation.person_count = null;
+      this.reservation.time         = null;
+      this.preloadData();
+    });
+
+    $scope.$watch('reserv.reservation.full_date_of_birth', () => {
+      this.reservation.date_of_birth = this.moment(this.reservation.full_date_of_birth).format('DD-MM-YYYY');
     });
 
     this.preloadData();
@@ -82,18 +86,20 @@ export default class ReservationCtrl {
     this.choose_person_count_is_opened = !this.choose_person_count_is_opened;
   }
 
-  sendForm() {
+  submitForm() {
+    this.is_submitting = true;
+    let name = this.reservation.name || '';
+
     let data = {
       language: this.reservation.language,
       send_confirmation: this.reservation.send_confirmation ? "1" : "0",
-      //reservationPDF: this.reservation.reservationPDF,
+      //reservation_pdf: this.reservation.reservation_pdf,
       notes: this.reservation.notes,
       is_group: this.reservation.is_group ? "1" : "0",
-      company_name: this.reservation.companyName,
-      //aantal_personen: this.reservation.person_count,
+      company_name: this.reservation.company_name,
       customer: {
-        last_name: this.reservation.name,
-        first_name: this.reservation.name,
+        last_name: name.split(' ').splice(1).join(' '),
+        first_name: name.split(' ')[0],
         primary_phone_number: this.reservation.primary_phone_number,
         mail: this.reservation.mail,
         secondary_phone_number: this.reservation.secondary_phone_number,
@@ -114,18 +120,21 @@ export default class ReservationCtrl {
 
     this.Reservation.create(data)
       .then((result) => {
-        this.success = true;
+        this.is_submitting = false;
+        this.success       = true;
+        this.$rootScope.$broadcast('DashboardCtrl.reload_reservations');
       },
       (error) => {
+        this.is_submitting = false;
         this.errors = error;
       });
   }
 
   formIsValid() {
     return (
-              typeof this.reservation.date == 'undefined' ||
-              typeof this.reservation.person_count == 'undefined' ||
-              typeof this.reservation.time == 'undefined'
+              this.reservation.date == null ||
+              this.reservation.person_count == null ||
+              this.reservation.time == null
            )
   }
 
@@ -210,24 +219,30 @@ export default class ReservationCtrl {
           (result) => {
             this.available_time = result;
             this.time_is_loaded = true;
+          },
+          (error) => {
           });
     }
   }
 
   loadProducts() {
-    this.products_is_loaded = false;
-    this.products           = [];
+    this.reservation.product = null;
+    this.products_is_loaded  = false;
+    this.products            = [];
 
     this.Product.getAll(false)
       .then(
         (result) => {
           this.products = result;
           this.products_is_loaded = true;
+        },
+        (error) => {
         });
   }
 
   loadZones() {
     this.zones_is_loaded = false;
+    this.reservation.tables_values = [];
     this.zones           = [];
 
     this.Zone.getAll()
@@ -235,6 +250,8 @@ export default class ReservationCtrl {
         (result) => {
           this.zones = result;
           this.zones_is_loaded = true;
+        },
+        (error) => {
         });
   }
 
@@ -245,7 +262,13 @@ export default class ReservationCtrl {
       .then(
         (result) => {
           this.tables = result;
+        },
+        (error) => {
         });
+  }
+
+  selectTab(index) {
+    this.selected_index = index;
   }
 
   canLoadTime() {
@@ -258,5 +281,9 @@ export default class ReservationCtrl {
     this.loadProducts();
     this.loadZones();
     this.loadTables();
+  }
+
+  getReservationDateForSuccess() {
+    return this.moment(this.reservation.full_date).format('DD MMMM YYYY');
   }
 }

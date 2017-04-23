@@ -1,3 +1,6 @@
+green_color = #36b590
+default_color = #58666e
+
 html
   background-color #f9f7f5
 
@@ -6,7 +9,7 @@ body
   font-size 14px
   -webkit-font-smoothing antialiased
   line-height 1.42857143
-  color #58666e
+  color default_color
   background-color transparent
 
 .app
@@ -556,7 +559,7 @@ pre
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus
-  color #58666e
+  color default_color
   background-color #edf1f2 !important
   background-image none
   filter none
@@ -572,7 +575,7 @@ pre
 
 .dropdown-submenu:hover > a,
 .dropdown-submenu:focus > a
-  color #58666e
+  color default_color
   background-color #edf1f2 !important
 
 
@@ -636,6 +639,11 @@ pre
 .row-sm > div
   padding-right 10px
   padding-left 10px
+
+@media (min-width: 768px)
+  .modal-dialog
+    width 740px
+
 
 @media (max-width: 768px)
   .modal-dialog
@@ -1797,12 +1805,12 @@ body
 
 
 
-
-
-
+.btn
+  -webkit-box-shadow none !important
+  box-shadow none !important
 
 .btn-link
-  color #58666e
+  color default_color
 
 
 .btn-link.active
@@ -1811,7 +1819,7 @@ body
 
 
 .btn-default
-  color #58666e
+  color default_color
   background-color #fcfdfd
   background-color #fff
   border-color #dee5e7
@@ -1825,7 +1833,7 @@ body
 .btn-default:active,
 .btn-default.active,
 .open .dropdown-toggle.btn-default
-  color #58666e !important
+  color default_color !important
   background-color #edf1f2
   border-color #c7d3d6
 
@@ -1903,8 +1911,8 @@ fieldset[disabled] .btn-primary.active
 
 .btn-success
   color #ffffff !important
-  background-color #36b590
-  border-color #36b590
+  background-color green_color
+  border-color green_color
 
 
 .btn-success:focus,
@@ -1912,12 +1920,12 @@ fieldset[disabled] .btn-primary.active
 .btn-success.active,
 .open .dropdown-toggle.btn-success
   color #ffffff !important
-  background-color #36b590
-  border-color #36b590
+  background-color green_color
+  border-color green_color
 
 .btn-success:hover
-  background-color #36b590
-  border-color #36b590
+  background-color #26a69a
+  border-color #26a69a
 
 .btn-success:active,
 .btn-success.active,
@@ -1940,8 +1948,8 @@ fieldset[disabled] .btn-success:active,
 .btn-success.disabled.active,
 .btn-success[disabled].active,
 fieldset[disabled] .btn-success.active
-  background-color #36b590
-  border-color #36b590
+  background-color #80cbc4
+  border-color #80cbc4
 
 
 .btn-info
@@ -1956,8 +1964,8 @@ fieldset[disabled] .btn-success.active
 .btn-info.active,
 .open .dropdown-toggle.btn-info
   color #ffffff !important
-  background-color #36b590
-  border-color #36b590
+  background-color green_color
+  border-color green_color
 
 
 .btn-info:active,
@@ -2932,7 +2940,7 @@ fieldset[disabled] .i-checks input + i:before
 }
 
 .bg-light
-  color #58666e
+  color default_color
   background-color #edf1f2
 
 
@@ -3275,12 +3283,12 @@ fieldset[disabled] .i-checks input + i:before
 
 .bg-success
   color #c6efd0
-  background-color #36b590
+  background-color green_color
 
 
 .bg-success.bg,
 .bg-success .bg
-  background-color #36b590
+  background-color green_color
 
 
 .bg-success a
@@ -3670,7 +3678,7 @@ fieldset[disabled] .i-checks input + i:before
 
 
 .bg-white
-  color #58666e
+  color default_color
   background-color #fff
 
 
@@ -3746,7 +3754,7 @@ a.text-info:hover
 
 
 .text-info
-  color #36b590
+  color green_color
 
 
 .text-info-lt
@@ -3774,7 +3782,7 @@ a.text-success:hover
 
 
 .text-success
-  color #36b590
+  color green_color
 
 
 .text-success-lt
@@ -5045,6 +5053,10 @@ md-progress-circular
   path
     stroke #98a6ad
 
+  &.white
+    path
+      stroke #fff
+
 md-tabs.reservation_tabs
   border-radius 0
 
@@ -5070,7 +5082,7 @@ md-tabs.reservation_tabs
 
       md-ink-bar
         height 4px
-        background-color #36b590
+        background-color green_color
 
 
   md-tabs-content-wrapper
@@ -5083,22 +5095,22 @@ md-tabs.reservation_tabs
 
 md-radio-button
   margin 8px 8px 8px 0
-  color #36b590
+  color green_color
 
   .md-on
-    background-color #36b590
+    background-color green_color
 
 md-checkbox
   margin 8px 8px 8px 0
-  color #36b590
+  color green_color
 
   &:not(.md-checked)
     .md-icon
-      border-color #36b590
+      border-color green_color
 
   &.md-checked
     .md-icon
-      background-color #36b590
+      background-color green_color
       border-color transparent
 
       &:after
