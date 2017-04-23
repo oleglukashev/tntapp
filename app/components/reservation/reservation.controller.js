@@ -134,7 +134,8 @@ export default class ReservationCtrl {
     return (
               this.reservation.date == null ||
               this.reservation.person_count == null ||
-              this.reservation.time == null
+              this.reservation.time == null ||
+              this.reservation.product == null
            )
   }
 
