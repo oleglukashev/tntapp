@@ -103,7 +103,7 @@ export default class User {
 
     this.verifyAuth().then((authValid) => {
       if (authValid !== bool) {
-        this.$location.path('/')
+        this.$location.path('/');
         deferred.resolve(false);
       } else {
         if (this.$window.location.href.indexOf('register') < 0 &&

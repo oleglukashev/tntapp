@@ -1,5 +1,5 @@
 export default class DashboardCtrl {
-  constructor(Reservation, moment, AppConstants, JWT, $window, $mdSidenav, $rootScope, $modal) {
+  constructor(Reservation, moment, AppConstants, JWT, $window, $mdSidenav, $rootScope, $scope, $modal) {
     'ngInject';
 
     this.moment          = moment;
@@ -8,17 +8,16 @@ export default class DashboardCtrl {
     this.today           = [];
     this.$mdSidenav      = $mdSidenav;
     this.$rootScope      = $rootScope;
+    this.$scope          = $scope;
     this.$modal          = $modal;
 
-    Reservation
-      .getAll()
-        .then(
-          (reservations) => {
-            this.reservationsLoaded = true;
-            this.action_required = reservations.action_required;
-            this.group_this_week = reservations.group_this_week;
-            this.today = reservations.today;
-          });
+    this.Reservation     = Reservation;
+
+    $scope.$on('DashboardCtrl.reload_reservations', () => {
+      this.loadReservations();
+    });
+
+    this.loadReservations();
   }
 
   openUserMenu() {
@@ -31,11 +30,6 @@ export default class DashboardCtrl {
       templateUrl: 'reservationContent.html',
       controller: 'ReservationCtrl as reserv',
       size: 'md'
-      // resolve: {
-      //   items: () => {
-      //     return $scope.items;
-      //   }
-      // }
     });
 
     modalInstance.result.then((selectedItem) => {
@@ -47,5 +41,17 @@ export default class DashboardCtrl {
 
   parsedDate(date) {
     return this.moment(date).format('h:mm');
+  }
+
+  loadReservations() {
+    this.Reservation
+      .getAll()
+        .then(
+          (reservations) => {
+            this.reservationsLoaded = true;
+            this.action_required = reservations.action_required;
+            this.group_this_week = reservations.group_this_week;
+            this.today = reservations.today;
+          });
   }
 }

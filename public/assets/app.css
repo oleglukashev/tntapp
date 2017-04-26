@@ -22148,6 +22148,50 @@ fieldset[disabled] .md-switch input + i:after {
     background-size: 125px 40px;
   }
 }
+.reservation_tabs .reservation_person_count .wrapper .w-lg > label {
+  padding: 10px 0;
+  width: 44px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: none;
+}
+.reservation_tabs .reservation_product .wrapper > div > label {
+  position: relative;
+  color: #58666e;
+  width: 159px;
+  height: 110px;
+  border-radius: 0;
+  text-align: center;
+  margin: 10px 8px;
+}
+.reservation_tabs .reservation_product .wrapper > div > label i {
+  display: none;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: -8px;
+  right: -8px;
+  line-height: 16px;
+  border-radius: 50%;
+  background-color: #36b590;
+  color: #fff;
+}
+.reservation_tabs .reservation_product .wrapper > div > label p {
+  line-height: 96px;
+}
+.reservation_tabs .reservation_product .wrapper > div > label.active {
+  border-color: #36b590;
+  background-color: #fff;
+  box-shadow: none;
+}
+.reservation_tabs .reservation_product .wrapper > div > label.active i {
+  display: block;
+}
+.reservation_tabs .reservation_zone .wrapper > .w-xxl > div > label.active {
+  background-color: #36b590;
+  border-color: #36b590;
+  color: #fff !important;
+}
 .dashboard .md-list-item .md-list-item-content > button {
   box-shadow: none;
 }
@@ -22231,6 +22275,12 @@ small,
   color: inherit;
   background-color: transparent;
   border: 1px solid rgba(0,0,0,0.15);
+}
+.text-left {
+  text-align: left !important;
+}
+.text-right {
+  text-align: right !important;
 }
 blockquote {
   border-color: #dee5e7;
@@ -22657,6 +22707,11 @@ pre {
 .row-sm > div {
   padding-right: 10px;
   padding-left: 10px;
+}
+@media (min-width: 768px) {
+  .modal-dialog {
+    width: 740px;
+  }
 }
 @media (max-width: 768px) {
   .modal-dialog {
@@ -23671,6 +23726,9 @@ body {
   top: auto;
   bottom: 19px;
 }
+.btn {
+  box-shadow: none !important;
+}
 .btn-link {
   color: #58666e;
 }
@@ -23771,8 +23829,8 @@ fieldset[disabled] .btn-primary.active {
   border-color: #36b590;
 }
 .btn-success:hover {
-  background-color: #36b590;
-  border-color: #36b590;
+  background-color: #26a69a;
+  border-color: #26a69a;
 }
 .btn-success:active,
 .btn-success.active,
@@ -23794,8 +23852,8 @@ fieldset[disabled] .btn-success:active,
 .btn-success.disabled.active,
 .btn-success[disabled].active,
 fieldset[disabled] .btn-success.active {
-  background-color: #36b590;
-  border-color: #36b590;
+  background-color: #80cbc4;
+  border-color: #80cbc4;
 }
 .btn-info {
   color: #fff !important;
@@ -26269,6 +26327,9 @@ a.text-#000000:hover {
 md-progress-circular path {
   stroke: #98a6ad;
 }
+md-progress-circular.white path {
+  stroke: #fff;
+}
 md-tabs.reservation_tabs {
   border-radius: 0;
 }
@@ -26283,7 +26344,7 @@ md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper {
   width: 100%;
 }
 md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper md-tab-item.md-tab {
-  width: 25%;
+  width: 16.66%;
   height: 56px;
   padding: 5px 0;
   font-size: 16px;

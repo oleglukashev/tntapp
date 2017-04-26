@@ -1,0 +1,51 @@
+green_color = #36b590
+default_color = #58666e
+
+.reservation_tabs
+	.reservation_person_count
+		.wrapper
+			.w-lg
+				& > label
+					padding 10px 0
+					width 44px
+					border-radius 50%
+					border none
+					box-shadow none
+
+	.reservation_product
+		.wrapper > div > label
+			position relative
+			color default_color
+			width 159px
+			height 110px
+			border-radius 0
+			text-align center
+			margin 10px 8px
+
+			i
+				display none
+				position absolute
+				width 16px
+				height 16px
+				top -8px
+				right -8px
+				line-height 16px
+				border-radius 50%
+				background-color green_color
+				color #fff
+
+			p
+				line-height 96px
+
+			&.active
+				border-color green_color
+				background-color #fff
+				box-shadow none
+
+				i
+					display block
+	.reservation_zone
+		.wrapper > .w-xxl > div > label.active
+			background-color green_color
+			border-color green_color
+			color #fff !important
