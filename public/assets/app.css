@@ -25493,6 +25493,10 @@ a.text-#000000:hover {
 .no-radius {
   border-radius: 0;
 }
+.no-top-radius {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 .block {
   display: block;
 }
@@ -26339,27 +26343,52 @@ md-tabs.reservation_tabs md-tabs-wrapper {
 md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas {
   height: 56px;
 }
-md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper {
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper {
   height: 56px;
   width: 100%;
 }
-md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper md-tab-item.md-tab {
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item.md-tab {
   width: 16.66%;
   height: 56px;
   padding: 5px 0;
   font-size: 16px;
   line-height: 30px;
 }
-md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper md-tab-item.md-tab.md-active {
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item.md-tab.md-active {
   color: #fff;
 }
-md-tabs.reservation_tabs md-tabs-wrapper md-pagination-wrapper md-ink-bar {
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-ink-bar {
   height: 4px;
   background-color: #36b590;
 }
-md-tabs.reservation_tabs md-tabs-content-wrapper #tab-content-3 .datepicker .btn-group-sm > .btn,
-md-tabs.reservation_tabs md-tabs-content-wrapper #tab-content-3 .datepicker .btn-sm {
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex {
+  height: 444px;
+}
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_person {
+  height: auto;
+  min-height: 444px;
+}
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_zone .item > button {
+  position: absolute;
+  right: -57px;
+  top: 31px;
+}
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_zone .item .datepicker .btn-group-sm > .btn,
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_zone .item .datepicker .btn-sm {
   padding: 7px 12px;
+}
+@media (max-width: 600px) {
+  md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center {
+    display: none;
+  }
+  md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center:first-child {
+    display: block;
+    heght: 46px;
+  }
+  md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center:first-child i {
+    font-size: 22px;
+    line-height: 46px;
+  }
 }
 md-radio-button {
   margin: 8px 8px 8px 0;

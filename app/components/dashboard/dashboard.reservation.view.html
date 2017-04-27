@@ -83,7 +83,7 @@
 
                     <button type='button'
                             class='btn btn-md btn-success text-success'
-                            ng-click='reserv.triggerChoosePersonCount();this.selectTab(2);'>Ok</button>
+                            ng-click='reserv.triggerChoosePersonCount();reserv.selectTab(2);'>Ok</button>
                   </div>
                 </div>
               </div>
@@ -147,7 +147,11 @@
                 </div>
               </div>
               <div class='wrapper' layout='column' layout-align='space-around center'>
-                <div class='w-xxl'>
+                <div class='w-xxl item'>
+                  <button type='button'
+                            class='btn btn-md btn-success text-success'
+                            ng-click='reserv.selectTab(4);'>Ok</button>
+                  
                   <div ng-show='reserv.zones_is_loaded' ng-repeat='zone in reserv.zones'>
                     <p><small class='text-muted'>{{ zone.name }}:</small></p>
 
@@ -223,12 +227,12 @@
             <div class='text-center l-h'>PERSOON</div>
           </md-tab-label>
           <md-tab-body>
-            <div class='b-t' flex>
-              <div class='md-list-item'>
+            <div class='reservation_person b-t' flex>
+              <!-- <div class='md-list-item'>
                 <div class='md-list-item-content text-center'>
                   <h4>Persoonsgegevens</h4>
                 </div>
-              </div>
+              </div> -->
               <div class='wrapper' layout='column' layout-align='space-around center'>
                 <div class='w-xl'>
                   <div class='md-form-group float-label'>
@@ -331,6 +335,18 @@
                     MINDER VELDEN
                   </span>
               </button>
+
+              <button type='submit'
+                      class='btn btn-lg btn-success text-success w-full no-top-radius'
+                      ng-class="{ 'disabled': reserv.formIsValid() }"
+                      ng-show='reserv.selected_index == 5 && !reserv.success'>
+                <span ng-hide='reserv.is_submitting'>RESERVEER</span>
+                <div layout='row' layout-align='space-around' ng-show='reserv.is_submitting'>
+                  <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
+                </div>
+              </button>
+        </div>
+      </button>
             </div>
           </md-tab-body>
         </md-tab>
@@ -382,21 +398,8 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class='panel-footer no-border no-padder bg-success' ng-show='reserv.selected_index == 5 || reserv.success'>
-      <button type='submit'
-              class='btn btn-lg btn-success text-success w-full'
-              ng-class="{ 'disabled': reserv.formIsValid() }"
-              ng-show='reserv.selected_index == 5 && !reserv.success'>
-        <span ng-hide='reserv.is_submitting'>RESERVEER</span>
-        <div layout='row' layout-align='space-around' ng-show='reserv.is_submitting'>
-          <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
-        </div>
-      </button>
-
       <button type='button'
-              class='btn btn-lg btn-success text-success w-full'
+              class='btn btn-lg btn-success text-success w-full no-top-radius'
               ng-show='reserv.success'
               ng-click='reserv.closeModal()'>TERUG NAAR OVERZICHT</button>
     </div>

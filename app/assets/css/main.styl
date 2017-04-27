@@ -3985,6 +3985,9 @@ a.text-#000000:hover
 .no-radius
   border-radius 0
 
+.no-top-radius
+  border-top-left-radius 0
+  border-top-right-radius 0
 
 .block
   display block
@@ -5066,32 +5069,63 @@ md-tabs.reservation_tabs
     md-tabs-canvas
       height 56px
 
-    md-pagination-wrapper
-      height 56px
-      width 100%
-
-      md-tab-item.md-tab
-        width 16.66%
+      md-pagination-wrapper
         height 56px
-        padding 5px 0
-        font-size 16px
-        line-height 30px
+        width 100%
 
-        &.md-active
-          color #fff
+        md-tab-item.md-tab
+          width 16.66%
+          height 56px
+          padding 5px 0
+          font-size 16px
+          line-height 30px
 
-      md-ink-bar
-        height 4px
-        background-color green_color
+          &.md-active
+            color #fff
+
+        md-ink-bar
+          height 4px
+          background-color green_color
 
 
   md-tabs-content-wrapper
-    #tab-content-3
-      .datepicker
-        .btn-group-sm > .btn,
-        .btn-sm
-          padding 7px 12px
+    md-tab-content
+      .flex
+        height 444px
 
+        &.reservation_person
+          height auto
+          min-height 444px
+
+        &.reservation_zone
+          .item
+            & > button
+              position absolute
+              right -57px
+              top 31px
+
+            .datepicker
+              .btn-group-sm > .btn,
+              .btn-sm
+                padding 7px 12px
+
+
+@media (max-width 600px)
+  md-tabs.reservation_tabs
+    md-tabs-wrapper
+      md-tabs-canvas
+        md-pagination-wrapper
+          md-tab-item
+            .text-center
+              display none
+
+              &:first-child
+                display block
+                heght 46px
+
+                i
+                  font-size 22px
+                  line-height 46px
 
 md-radio-button
   margin 8px 8px 8px 0

@@ -31,8 +31,7 @@ export default class ReservationCtrl {
       number_of_persons: undefined,
       time: undefined,
       language: 'NL',
-      gender: 'Man',
-      is_group: "0"
+      gender: 'Man'
     };
 
     //states
