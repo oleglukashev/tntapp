@@ -11,7 +11,7 @@ export default function routes($stateProvider, $urlRouterProvider, $httpProvider
       templateUrl: 'app.html',
       resolve: {
         auth: function(User) {
-          return User.ensureAuthIs(false);
+          return User.ensureAuthForClosedPages();
         }
       }
     });
