@@ -8,7 +8,7 @@
         </div>
 
         <div ng-repeat='reservation in dash.action_required'>
-          <div class='md-list-item'
+          <div class='reservation_action_required md-list-item'
                data-ng-include=" 'dashboard.reservation_item.view.html' "
                ng-repeat='reservation_part in reservation.reservation_parts'></div>
         </div>
@@ -33,7 +33,7 @@
         </div>
 
         <div ng-repeat='reservation in dash.group_this_week'>
-          <div class='md-list-item'
+          <div class='reservation_group_this_week md-list-item'
                data-ng-include=" 'dashboard.reservation_item.view.html' "
                ng-repeat='reservation_part in reservation.reservation_parts'></div>
         </div>
@@ -55,7 +55,7 @@
           <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
         </div>
         <div ng-repeat='reservation in dash.today'>
-          <div class='md-list-item'
+          <div class='reservation_today md-list-item'
                data-ng-include=" 'dashboard.reservation_item.view.html' "
                ng-repeat='reservation_part in reservation.reservation_parts'></div>
         </div>

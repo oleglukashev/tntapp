@@ -1,5 +1,5 @@
 <div class='md-list-item-left img-circle m-t-sm grey-100'>
-  <i class='mdi-action-grade i-24'></i>
+  <i ng-class='dash.getTodayIconClass(reservation, reservation_part)' class='mdi i-24'></i>
 </div>
 <div class='pull-right'>
   <button md-ink-ripple
@@ -20,7 +20,7 @@
     <i class='mdi mdi-clock'></i>
     <small class='font-thin m-r-xs' ng-bind='dash.parsedDate(reservation_part.datetime)'></small>
     <img class='table_icon' src='public/images/table.svg' />
-    <small class='font-thin'>{{ dash.getTableNumbersByTableIds(reservation_part.table_ids).join(', ') }}</small>
+    <small class='font-thin' ng-bind='dash.getTableNumbersByTableIds(reservation_part.table_ids).join(", "")'></small>
   </div>
   <small class='font-thin'>
     {{ (reservation.notes || '&nbsp;') | limitTo: 50 }}{{ reservation.notes.length > 50 ? '...' : '' }}

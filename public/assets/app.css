@@ -22148,6 +22148,12 @@ fieldset[disabled] .md-switch input + i:after {
     background-size: 125px 40px;
   }
 }
+.reservation_action_required .md-list-item-left .mdi:before {
+  content: "\F4D2";
+}
+.reservation_group_this_week .md-list-item-left .mdi:before {
+  content: "\F00E";
+}
 .reservation_tabs .reservation_person_count .wrapper .w-lg > label {
   padding: 10px 0;
   width: 44px;
@@ -26413,6 +26419,12 @@ md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservatio
     font-size: 22px;
     line-height: 46px;
   }
+}
+md-toolbar {
+  border-radius: 6px 6px 0 0;
+}
+md-content {
+  border-radius: 0 0 6px 6px;
 }
 md-radio-button {
   margin: 8px 8px 8px 0;

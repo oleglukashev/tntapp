@@ -64,6 +64,10 @@ export default class DashboardCtrl {
     return this.moment(date).format('HH:mm');
   }
 
+  getTodayIconClass(reservation, reservation_part) {
+    return null;
+  }
+
   loadReservations() {
     this.Reservation
       .getAll()
