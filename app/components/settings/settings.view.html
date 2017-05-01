@@ -1,0 +1,12 @@
+<div class='col-lg-8 col-md-8 col-sm-8'>
+	<div ui-view></div>
+</div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+	<div class='list-group list-group-md no-radius m-b-none no-bg'>
+		<div ng-repeat='(page, state) in settings.pages'
+				 ng-class="{ 'b-l-success' : $state.current.name == state }"
+				 class='list-group-item b-trans b-l-3x text-md'>
+			{{ page }}
+		</div>
+	</div>
+</div>

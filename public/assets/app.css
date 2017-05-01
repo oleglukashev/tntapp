@@ -25776,6 +25776,9 @@ a.text-#000000:hover {
 .b-white {
   border-color: #fff;
 }
+.b-trans {
+  border-color: transparent;
+}
 .b-dashed {
   border-style: dashed !important;
 }
@@ -25792,7 +25795,7 @@ a.text-#000000:hover {
   border-left-color: #7266ba;
 }
 .b-l-success {
-  border-left-color: #27c24c;
+  border-left-color: #36b590;
 }
 .b-l-info {
   border-left-color: #23b7e5;
