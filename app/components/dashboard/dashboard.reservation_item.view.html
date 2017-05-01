@@ -20,7 +20,7 @@
     <i class='mdi mdi-clock'></i>
     <small class='font-thin m-r-xs' ng-bind='dash.parsedDate(reservation_part.datetime)'></small>
     <img class='table_icon' src='public/images/table.svg' />
-    <small class='font-thin' ng-bind='dash.getTableNumbersByTableIds(reservation_part.table_ids).join(", "")'></small>
+    <small class='font-thin' ng-bind='dash.getTableNumbersByTableIds(reservation_part.table_ids).join(", ")'></small>
   </div>
   <small class='font-thin'>
     {{ (reservation.notes || '&nbsp;') | limitTo: 50 }}{{ reservation.notes.length > 50 ? '...' : '' }}
