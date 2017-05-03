@@ -12,7 +12,6 @@ export default class User {
     this.current_company = null;
   }
 
-
   auth(path, formData) {
     return this.$http({
       url: API_URL + path,
@@ -116,7 +115,6 @@ export default class User {
     return deferred.promise;
   }
 
-
   ensureAuthForClosedPages() {
     let deferred = this.$q.defer();
 
@@ -124,7 +122,7 @@ export default class User {
       if (authValid === true) {
         deferred.resolve(true);
       } else {
-        this.$state.go('auth.login'); 
+        this.$state.go('auth.login');
         deferred.resolve(false);
       }
     });
@@ -137,7 +135,7 @@ export default class User {
 
     this.verifyAuth().then((authValid) => {
       if (authValid === true) {
-        this.$state.go('app.dashboard'); 
+        this.$state.go('app.dashboard');
         deferred.resolve(true);
       } else {
         deferred.resolve(false);
@@ -145,5 +143,20 @@ export default class User {
     });
 
     return deferred.promise;
+  }
+
+  findById(id) {
+    let deferred = this.$q.defer();
+
+    if (!this.currentCompany) {
+      return deferred.promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/customer/find_by_id/' + id,
+      method: 'GET',
+    }).then((result) => {
+      return result.data;
+    });
   }
 }
