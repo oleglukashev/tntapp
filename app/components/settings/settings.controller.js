@@ -7,9 +7,7 @@ export default class SettingsCtrl {
     this.$window 			= $window;
 
     this.pages 				= {
-    	'ALGEMEEN'								: 'app.settings.general',
-    	'MAILS'										: 'app.settings.mails',
-    	'OPENINGSTIJDEN/PRODUCTEN': 'app.settings.products'
+    	'ALGEMEEN': 'app.settings.general'
     };
   }
 }

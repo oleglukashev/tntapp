@@ -5,8 +5,11 @@
 	<div class='list-group list-group-md no-radius m-b-none no-bg'>
 		<div ng-repeat='(page, state) in settings.pages'
 				 ng-class="{ 'b-l-success' : $state.current.name == state }"
-				 class='list-group-item b-trans b-l-3x text-md'>
-			{{ page }}
+				 class='list-group-item no-border b-l-3x'>
+			<a class='text-md font-bold'
+				 ng-class="{ 'text-muted' : $state.current.name != state }"
+				 href='#'
+				 ui-sref='{{ state }}'>{{ page }}</a>
 		</div>
 	</div>
 </div>
