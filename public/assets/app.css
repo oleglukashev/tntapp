@@ -26013,6 +26013,9 @@ a.text-#000000:hover {
 .m-b-n-xxl {
   margin-bottom: -50px;
 }
+.p-b-none {
+  padding-bottom: 0 !important;
+}
 .avatar {
   position: relative;
   display: block;
@@ -26322,6 +26325,24 @@ a.text-#000000:hover {
     display: none;
   }
 }
+.table_icon {
+  vertical-align: baseline;
+  width: 13px;
+}
+md-input-container {
+  padding-bottom: 0;
+  height: 51px;
+}
+md-input-container label,
+md-input-container .md-placeholder {
+  color: rgba(0,0,0,0.26);
+}
+md-input-container.md-input-invalid.md-input-focused label {
+  color: #f44336;
+}
+md-input-container.md-input-invalid .md-input {
+  border-color: #f44336;
+}
 .md-backdrop.md-opaque {
   background: none;
 }
@@ -26362,11 +26383,14 @@ md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md
   background-color: #36b590;
 }
 md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex {
-  height: 444px;
+  height: 442px;
 }
 md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_person {
   height: auto;
-  min-height: 444px;
+  min-height: 442px;
+}
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_zone {
+  overflow-y: auto;
 }
 md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_zone .item > button {
   position: absolute;

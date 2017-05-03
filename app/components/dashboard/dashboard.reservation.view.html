@@ -15,7 +15,6 @@
                flex
                md-selected='reserv.selected_index'
                md-no-pagination
-               md-center-tab
                md-stretch-tabs
                md-dynamic-height>
         <md-tab>
@@ -235,61 +234,46 @@
               </div> -->
               <div class='wrapper' layout='column' layout-align='space-around center'>
                 <div class='w-xl'>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.name' required />
+                  <md-input-container>
                     <label>Voor- en achternaam</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.mail' required />
+                    <input ng-model='reserv.reservation.name' required />
+                  </md-input-container>
+                  <md-input-container>
                     <label>E-mail</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.primary_phone_number' required />
+                    <input type='email' ng-model='reserv.reservation.mail' required />
+                  </md-input-container>
+                  <md-input-container>
                     <label>Telefoonnummer</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.notes' />
+                    <input ng-model='reserv.reservation.primary_phone_number' required />
+                  </md-input-container>
+                  <md-input-container>
                     <label>Opmerking</label>
-                  </div>
-                  <div class='md-form-group float-label no-padder'>
+                    <input ng-model='reserv.reservation.notes' />
+                  </md-input-container>
+                  <div class='md-form-group p-b-none'>
                     <md-radio-group ng-model="reserv.reservation.language">
                       <md-radio-button value='NL' class='inline md-success'>Nederlands</md-radio-button>
                       <md-radio-button value='EN' class='inline md-success'>Engels</md-radio-button>
                     </md-radio-group>
                   </div>
-                  <div class='md-form-group float-label no-padder'>
+                  <div class='md-form-group no-padder'>
                     <md-checkbox ng-model="reserv.reservation.is_group" aria-label="Groep">
                       Groep
                     </md-checkbox>
                   </div>
-                  <div class='md-form-group float-label no-padder'>
+                  <div class='md-form-group no-padder'>
                     <md-checkbox ng-model="reserv.reservation.send_confirmation" aria-label="Inschrijven nieuwsbrief">
                       Inschrijven nieuwsbrief
                     </md-checkbox>
                   </div>
                 </div>
                 <div class='w-xl' ng-show='reserv.additional_is_opened'>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.secondary_phone_number' />
+                  <md-input-container>
                     <label>Secundair nummer</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.street' />
-                    <label>Straat</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.house_number' />
-                    <label>Huisnummer</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.zipcode' />
-                    <label>Postcode</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.city' />
-                    <label>Stad</label>
-                  </div>
-                  <div class='md-form-group float-label'>
+                    <input ng-model='reserv.reservation.secondary_phone_number' />
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Geboortedatum</label>
                     <input class='md-input'
                            ng-focus='reserv.openDatepicker($event)'
                            ng-model='reserv.reservation.full_date_of_birth'
@@ -298,17 +282,32 @@
                            datepicker-options='reserv.date_options'
                            show-button-bar='false'
                            close-text='Close' />
-                    <label>Geboortedatum</label>
-                  </div>
-                  <div class='md-form-group float-label no-padder'>
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Straat</label>
+                    <input ng-model='reserv.reservation.street' />
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Huisnummer</label>
+                    <input ng-model='reserv.reservation.house_number' />
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Postcode</label>
+                    <input ng-model='reserv.reservation.zipcode' />
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Stad</label>
+                    <input ng-model='reserv.reservation.city' />
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Bedrijfsnaam</label>
+                    <input ng-model='reserv.reservation.company_name' />
+                  </md-input-container>
+                  <div class='md-form-group p-b-none'>
                     <md-radio-group ng-model="reserv.reservation.gender">
                       <md-radio-button value='Man' class="inline md-success">Man</md-radio-button>
                       <md-radio-button value='Vrouw' class="inline md-success">Vrouw</md-radio-button>
                     </md-radio-group>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.company_name' />
-                    <label>Bedrijfsnaam</label>
                   </div>
                   <!--<button type='button' md-ink-ripple class='md-btn md-flat m-b m-t btn-fw text-success'>-->
                     <!--<span ng-hide='reserv.reservation.reservation_pdf'>PDF UPLOADEN...</span>-->

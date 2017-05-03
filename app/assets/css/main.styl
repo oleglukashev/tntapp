@@ -4672,6 +4672,9 @@ a.text-#000000:hover
 .m-b-n-xxl
   margin-bottom -50px
 
+.p-b-none
+  padding-bottom 0 !important
+
 
 .avatar
   position relative
@@ -5044,8 +5047,29 @@ a.text-#000000:hover
     display none
 
 
+.table_icon
+  vertical-align baseline
+  width 13px
 
 // angular material
+md-input-container
+  padding-bottom 0
+  height 51px
+
+  label,
+  .md-placeholder
+    color rgba(0,0,0,0.26)
+
+  &.md-input-invalid
+    &.md-input-focused
+      label
+        color rgb(244,67,54)
+
+    .md-input
+      border-color rgb(244,67,54)
+
+
+
 .md-backdrop.md-opaque
   background none
 
@@ -5091,13 +5115,15 @@ md-tabs.reservation_tabs
   md-tabs-content-wrapper
     md-tab-content
       .flex
-        height 444px
+        height 442px
 
         &.reservation_person
           height auto
-          min-height 444px
+          min-height 442px
 
         &.reservation_zone
+          overflow-y auto
+
           .item
             & > button
               position absolute

@@ -8,34 +8,9 @@
         </div>
 
         <div ng-repeat='reservation in dash.action_required'>
-          <div class='md-list-item' ng-repeat='reservation_part in reservation.reservation_parts'>
-            <div class='md-list-item-left img-circle m-t-sm grey-100'>
-              <i class='mdi-action-grade i-24'></i>
-            </div>
-            <div class='pull-right'>
-              <button md-ink-ripple
-                      class='md-btn md-fab m-t-xs m-b-xs no-shadow'
-                      ng-disabled='disabled'
-                      aria-haspopup='true'
-                      aria-expanded='false'
-                      aria-disabled='false'
-                      ng-click='dash.openUserMenu()'>
-                <i class='mdi mdi-dots-vertical i-24'></i>
-              </button>
-            </div>
-            <div class='md-list-item-content'>
-              <h3 class='text-md'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</h3>
-              <div>
-                <i class='mdi mdi-account-multiple'></i>
-                <small class='font-thin m-r-xs'>{{ reservation_part.person_count }}x</small>
-                <i class='mdi mdi-clock'></i>
-                <small class='font-thin' ng-bind='dash.parsedDate(reservation_part.datetime)'></small>
-              </div>
-              <small class='font-thin'>
-                {{ reservation.notes | limitTo: 50 }}{{ reservation.notes.length > 50 ? '...' : '' }}
-              </small>
-            </div>
-          </div>
+          <div class='md-list-item'
+               data-ng-include=" 'dashboard.reservation_item.view.html' "
+               ng-repeat='reservation_part in reservation.reservation_parts'></div>
         </div>
       </div>
       <div class='panel-footer' ng-show='dash.action_required.length > 0'>
@@ -58,34 +33,9 @@
         </div>
 
         <div ng-repeat='reservation in dash.group_this_week'>
-          <div class='md-list-item' ng-repeat='reservation_part in reservation.reservation_parts'>
-            <div class='md-list-item-left img-circle m-t-sm grey-100'>
-              <i class='mdi-action-grade i-24'></i>
-            </div>
-            <div class='pull-right'>
-              <button md-ink-ripple
-                      class='md-btn md-fab m-t-xs m-b-xs no-shadow'
-                      ng-disabled='disabled'
-                      aria-haspopup='true'
-                      aria-expanded='false'
-                      aria-disabled='false'
-                      ng-click='dash.openUserMenu()'>
-                <i class='mdi mdi-dots-vertical i-24'></i>
-              </button>
-            </div>
-            <div class='md-list-item-content'>
-              <h3 class='text-md'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</h3>
-              <div>
-                <i class='mdi mdi-account-multiple'></i>
-                <small class='font-thin m-r-xs'>{{ reservation_part.person_count }}x</small>
-                <i class='mdi mdi-clock'></i>
-                <small class='font-thin' ng-bind='dash.parsedDate(reservation_part.datetime)'></small>
-              </div>
-              <small class='font-thin'>
-                {{ reservation.notes | limitTo: 50 }}{{ reservation.notes.length > 50 ? '...' : '' }}
-              </small>
-            </div>
-          </div>
+          <div class='md-list-item'
+               data-ng-include=" 'dashboard.reservation_item.view.html' "
+               ng-repeat='reservation_part in reservation.reservation_parts'></div>
         </div>
       </div>
     </div>
@@ -104,36 +54,10 @@
         <div class='wrapper' layout='row' layout-align='space-around' ng-hide='dash.today.length > 0'>
           <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
         </div>
-
-        <div class='md-list-item clear' ng-repeat='reservation in dash.today'>
-          <div ng-repeat='reservation_part in reservation.reservation_parts'>
-            <div class='md-list-item-left img-circle m-t-sm grey-100'>
-              <i class='mdi-action-grade i-24'></i>
-            </div>
-            <div class='pull-right'>
-              <button md-ink-ripple
-                      class='md-btn md-fab m-t-xs m-b-xs no-shadow'
-                      ng-disabled='disabled'
-                      aria-haspopup='true'
-                      aria-expanded='false'
-                      aria-disabled='false'
-                      ng-click='dash.openUserMenu()'>
-                <i class='mdi mdi-dots-vertical i-24'></i>
-              </button>
-            </div>
-            <div class='md-list-item-content'>
-              <h3 class='text-md'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</h3>
-              <div>
-                <i class='mdi mdi-account-multiple'></i>
-                <small class='font-thin m-r-xs'>{{ reservation_part.person_count }}x</small>
-                <i class='mdi mdi-clock'></i>
-                <small class='font-thin' ng-bind='dash.parsedDate(reservation_part.datetime)'></small>
-              </div>
-              <small class='font-thin'>
-                {{ reservation.notes | limitTo: 50 }}{{ reservation.notes.length > 50 ? '...' : '' }}
-              </small>
-            </div>
-          </div>
+        <div ng-repeat='reservation in dash.today'>
+          <div class='md-list-item'
+               data-ng-include=" 'dashboard.reservation_item.view.html' "
+               ng-repeat='reservation_part in reservation.reservation_parts'></div>
         </div>
       </div>
     </div>
