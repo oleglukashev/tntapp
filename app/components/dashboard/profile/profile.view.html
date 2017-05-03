@@ -1,0 +1,57 @@
+<md-sidenav class='md-sidenav-left md-whiteframe-z2 pos-fix' md-component-id='left'ng-swipe-left="profile.closeMenu()">
+  <md-content>
+    <div class='wrapper blue-grey-900 profile-wrapper'>
+      <div class='clear'>
+        <div class='profile-menu__avatar pull-left'></div>
+        <button md-ink-ripple class='pull-right md-btn md-flat btn-fw' ng-click='profile.closeMenu()'>
+          <i class='mdi mdi-close i-30' ></i>
+        </button>
+      </div>
+      <h3 class="text-md top-profile-email">
+        <span>{{ profile.User.current.email }}</span>
+        <b class="caret"></b>
+      </h3>
+
+    </div>
+
+    <ul class='nav'>
+
+      <div class='inset hover-blue m-t'>
+        <div class='md-list-item-left'>
+          <i class='mdi mdi-book icon-muted i-24'></i>
+        </div>
+        <div class='md-list-item-content mt-8'>
+          <a class="text-md" href="#">Reserveringen</a>
+        </div>
+      </div>
+
+      <div class='inset hover-blue'>
+        <div class='md-list-item-left'>
+          <i class='mdi mdi-view-agenda icon-muted i-24'></i>
+        </div>
+        <div class='md-list-item-content mt-8'>
+          <a class="text-md" href="#">Agenda</a>
+        </div>
+      </div>
+
+      <div class='inset hover-blue'>
+        <div class='md-list-item-left'>
+          <i class='mdi mdi-recycle icon-muted i-24'></i>
+        </div>
+        <div class='md-list-item-content mt-8'>
+          <a class="text-md" href="#">Profielen</a>
+        </div>
+      </div>
+
+      <div class='inset hover-blue'>
+        <div class='md-list-item-left'>
+          <i class='mdi mdi-exclamation icon-muted i-24'></i>
+        </div>
+        <div class='md-list-item-content mt-8'>
+          <a class="text-md" href="#">Statieken</a>
+        </div>
+      </div>
+
+    </ul>
+  </md-content>
+</md-sidenav>

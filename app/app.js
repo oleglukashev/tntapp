@@ -23,6 +23,7 @@ import init_templates                     from './config.templates'
 import app_controller                     from './common/controllers/app.controller'
 import header_controller                  from './shared/header/header.controller'
 import user_menu_controller               from './shared/user_menu/user_menu.controller'
+import profile_controller                 from './components/dashboard/profile/profile.controller'
 import dashboard                          from './components/dashboard'
 import new_reservation                    from './components/reservation'
 import settings                           from './components/settings'
@@ -98,6 +99,7 @@ const app = angular
   .controller('AppCtrl', app_controller)
   .controller('HeaderCtrl', header_controller)
   .controller('UserMenuCtrl', user_menu_controller)
+  .controller('ProfileCtrl', profile_controller)
   .constant('JQ_CONFIG', {
     easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],
   }).constant('MODULE_CONFIG', [])
