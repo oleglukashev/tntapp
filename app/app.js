@@ -25,6 +25,7 @@ import app_controller                     from './common/controllers/app.control
 import header_controller                  from './shared/header/header.controller'
 import user_menu_controller               from './shared/user_menu/user_menu.controller'
 import profile_controller                 from './components/dashboard/profile/profile.controller'
+import search                             from './shared/search'
 import dashboard                          from './components/dashboard'
 import new_reservation                    from './components/reservation'
 import settings                           from './components/settings'
@@ -53,6 +54,7 @@ const app = angular
     anguar_oclazyLoad,
     ui_jq,
     dnd_lists,
+    search,
     dashboard,
     new_reservation,
     auth,

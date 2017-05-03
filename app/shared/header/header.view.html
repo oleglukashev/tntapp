@@ -60,12 +60,8 @@
       </div>
     </li>
   </ul>
-  <div class='header-search pull-right'>
-    <form>
-      <button>
-        <i class='mdi mdi-magnify'></i>
-      </button>
-    </form>
-  </div>
+
+  <div data-ng-include=" 'search.view.html' " ng-controller='SearchCtrl as search'></div>
+
 </div>
 <!-- / navbar collapse -->
