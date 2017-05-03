@@ -27,6 +27,10 @@ module.exports = {
     ]
   },
 
+  resolve: {
+    alias: {'chart': require.resolve('chart.js')}
+  },
+
   output: {
     path: path.join(process.cwd(), 'public', 'assets'),
     publicPath: "/public/assets/",
@@ -39,10 +43,10 @@ module.exports = {
     new Extract('app.min.css'),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        'warnings'     : false,
-        'drop_debugger': true,
-        'drop_console' : true,
-        'pure_funcs'   : ['console.log']
+        // 'warnings'     : false,
+        // 'drop_debugger': true,
+        // 'drop_console' : true,
+        // 'pure_funcs'   : ['console.log']
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({

@@ -29,9 +29,11 @@ import search                             from './shared/search'
 import dashboard                          from './components/dashboard'
 import new_reservation                    from './components/reservation'
 import settings                           from './components/settings'
+import charts_controller                  from './components/dashboard/charts/charts.controller'
 import auth                               from './components/auth'
 import                                         './common/services'
 import                                         './common/directives'
+import chartjs from                   'angular-chart.js'
 
 const app = angular
   .module('app', [
@@ -60,8 +62,18 @@ const app = angular
     auth,
     settings,
     'app.services',
-    'app.directives'
+    'app.directives',
+    chartjs
   ])
+
+  .config(['ChartJsProvider', function (ChartJsProvider) {
+    ChartJsProvider.setOptions({
+      chartColors: ['#787878', '#c8c8c8'],
+      responsive : true
+    });
+  }])
+
+
   .config(main_route)
   .constant('AppConstants', {
     jwtKey: 'jwtToken',
@@ -102,8 +114,10 @@ const app = angular
   .controller('HeaderCtrl', header_controller)
   .controller('UserMenuCtrl', user_menu_controller)
   .controller('ProfileCtrl', profile_controller)
+  .controller('ChartsCtrl', charts_controller)
   .constant('JQ_CONFIG', {
     easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],
+    plot: ['vendor/jquery/flot/jquery.flot.js'],
   }).constant('MODULE_CONFIG', [])
   .config(['$ocLazyLoadProvider', 'MODULE_CONFIG', function ($ocLazyLoadProvider, MODULE_CONFIG) {
     // We configure ocLazyLoad to use the lib script.js as the async loader

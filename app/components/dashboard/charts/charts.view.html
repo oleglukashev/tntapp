@@ -1,0 +1,75 @@
+
+  <div class='col-lg-4 col-md-4 col-sm-6'>
+    <div class='dashboard-reservation panel'>
+      <div class='panel-heading'>
+        Reserveringen
+      </div>
+      <div class='panel-body relative'>
+        <div class='wrapper'  layout='row' layout-sm='column' layout-align='space-around' ng-hide='charts.graphs.doughnut_values'>
+          <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+        </div>
+
+        <canvas id="doughnut" class="chart chart-doughnut"
+          chart-data="charts.graphs.doughnut_values" chart-labels="charts.graphs.doughnut_keys">
+        </canvas>
+
+        <div class="total_today">
+          {{ charts.graphs.total_guests_d }}
+        </div>
+
+      </div>
+    </div>
+
+    <div class='dashboard-reservation panel deze-week'>
+      <div class='panel-heading'>
+        Deze week
+      </div>
+      <div class='panel-body'>
+
+        <div class='wrapper'  layout='row' layout-sm='column' layout-align='space-around' ng-hide='charts.graphs.day_guests_arr.length > 0'>
+          <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+        </div>
+
+        <div ng-if="charts.graphs.day_guests_arr" ui-jq="plot" ui-options="
+          [
+            {
+              data: {{ charts.graphs.day_guests_arr}},
+              label: '',
+              points: { show: true, radius: 2 },
+              lines: {
+                show: true,
+                fill: false,
+                lineWidth: 1,
+              }
+            },
+          ],
+          {
+            colors: [ '#bababa' ],
+            series: { shadowSize: 2 },
+            xaxis:{ ticks: {{ charts.graphs.week_axis }}, tickColor: '#fff', font: { color: '#999' } },
+            yaxis:{ ticks: 10, tickDecimals:0, tickColor: '#f4f4f4', font: { color: '#999' } },
+            grid: { labelMargin: 20, margin: 0, minBorderMargin: 10,  hoverable: true, clickable: true, borderWidth: 0, color: '#f4f4f4' },
+            tooltip: false,
+          }
+        " style="height:240px"></div>
+      </div>
+
+      <div class='panel-footer table-wrapper'>
+        <div class='year-panel'>
+          <div class="bottom_total_title">Totaal</div>
+          <div class="bottom_total_count">{{ charts.graphs.total_guests_y }}</div>
+        </div>
+        <div class='month-panel'>
+          <div class="bottom_total_title">Maand</div>
+          <div class="bottom_total_count">{{ charts.graphs.total_guests_m }}</div>
+        </div>
+        <div class='week-panel'>
+          <div class="bottom_total_title">Week</div>
+          <div class="bottom_total_count">{{ charts.graphs.total_guests_w }}</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+

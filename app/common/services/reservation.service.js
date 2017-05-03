@@ -22,13 +22,24 @@ export default class Reservation {
     }).then((result) => result.data);
   }
 
+  getProducts(company_id) {
+    let deferred = this.$q.defer();
+
+    if (! company_id) {
+      return deferred.promise;
+    }
+
+    return this.$http({
+      url: API_URL + '/company/' + company_id + '/product',
+      method: 'GET',
+    }).then((result) => result.data);
+  }
+
   create(company_id, data) {
     let that = this;
-
     if (! company_id) {
       return this.$q.defer().promise;
     }
-
     return that.$http({
       url: API_URL + '/company/' + company_id + '/reservation',
       method: 'POST',

@@ -7,6 +7,7 @@ import TableService         from './table.service'
 import ReservationService   from './reservation.service'
 import JWTService           from './jwt.service'
 import SearchService        from './search.service'
+import ChartsService        from './charts.service'
 
 export default angular.module('app.services', [])
   .service('User', UserService)
@@ -17,4 +18,5 @@ export default angular.module('app.services', [])
   .service('Reservation', ReservationService)
   .service('JWT', JWTService)
   .service('Search', SearchService)
+  .service('Charts', ChartsService)
   .name;

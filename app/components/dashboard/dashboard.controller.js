@@ -4,20 +4,19 @@ export default class DashboardCtrl {
   constructor(User, Reservation, Table, moment, AppConstants, JWT, filterFilter, $window, $mdSidenav, $rootScope, $scope, $modal) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company  = User.current_company;
 
-    this.moment          = moment;
-    this.action_required = [];
-    this.group_this_week = [];
-    this.today           = [];
-    this.$mdSidenav      = $mdSidenav;
-    this.$rootScope      = $rootScope;
-    this.filterFilter    = filterFilter;
-    this.$modal          = $modal;
-    this.$window         = $window;
+    this.filterFilter     = filterFilter;
 
-    this.Reservation     = Reservation;
-    this.Table           = Table;
+    this.Reservation      = Reservation;
+    this.Table            = Table;
+    this.products         = {};
+    this.reservations     = {};
+    this.all_reservations = {};
+    this.$scope           = $scope;
+    this.$rootScope       = $rootScope;
+    this.$window          = $window;
+    this.moment           = moment;
 
     $scope.$on('DashboardCtrl.reload_reservations', () => {
       this.loadReservations();
@@ -49,7 +48,7 @@ export default class DashboardCtrl {
   getTableNumbersByTableIds(table_ids) {
     let result = [];
     let that = this;
-    
+
     angular.forEach(table_ids, function(value) {
       let table = that.filterFilter(that.tables, { id: value })[0];
 
@@ -97,10 +96,13 @@ export default class DashboardCtrl {
       .getAll(this.current_company.id)
         .then(
           (reservations) => {
+            this.all_reservations = reservations;
             this.reservationsLoaded = true;
             this.action_required = reservations.action_required;
             this.group_this_week = reservations.group_this_week;
             this.today = reservations.today;
-          });
+
+            this.$rootScope.$broadcast('reservationsLoaded');
+    });
   }
 }
