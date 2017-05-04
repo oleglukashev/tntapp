@@ -17,32 +17,19 @@
   <div class='header-logo pull-left'>
     <a href='#'></a>
   </div>
-  <ul class='header-menu nav navbar-nav hidden-xs'>
-    <li class='header-menu__item active'>
-      <a href='#'>Dashboard</a>
-    </li>
-    <li class='header-menu__item'>
-      <a href='#'>
-        Reserveringen
-        <span class='visible-xs-inline'>Notifications</span>
-        <span class='badge badge-sm up bg-danger pull-right-xs'>2</span>
-      </a>
-    </li>
-    <li class='header-menu__item'>
-      <a href='#'>Agenda</a>
-    </li>
-    <li class='header-menu__item'>
-      <a href='#'>Profielen</a>
-    </li>
-  </ul>
+  <md-tabs class='header-menu' md-selected='selected_index'>
+    <md-tab ui-sref='app.dashboard'>Dashboard</md-tab>
+    <md-tab ui-sref='app.dashboard'>Reserveringen</md-tab>
+    <md-tab ui-sref='app.dashboard'>Agenda</md-tab>
+  </md-tabs>
   <ul class='nav navbar-nav hidden-xs navbar-right'>
     <li class='dropdown' dropdown>
       <div class='header-account-menu pull-right m-l-sm'>
         <div class='dropdown-toggle clearfix' dropdown-toggle>
-          <div class='header-account-menu__avatar pull-left'></div>
+          <div class='header-account-menu__avatar bg-light pull-left'></div>
           <div class='header-account-menu__info pull-left hidden-sm hidden-md m-l-sm'>
             <p class='header-account-menu__name'>{{ header.currentUser.first_name }}</p>
-            <p class='header-account-menu__info'>ACME</p>
+            <p class='header-account-menu__info'>{{ header.currentCompany.name }}</p>
           </div>
           <b class='pull-right caret m-l-sm m-t'></b>
         </div>
