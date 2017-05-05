@@ -22154,14 +22154,58 @@ fieldset[disabled] .md-switch input + i:after {
 .reservation_group_this_week .md-list-item-left .mdi:before {
   content: "\F00E";
 }
-.reservation_tabs .reservation_person_count .wrapper .w-lg > label {
+md-tabs.reservation_tabs {
+  border-radius: 0;
+}
+md-tabs.reservation_tabs md-tabs-wrapper {
+  background-color: #263238;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas {
+  height: 56px;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper {
+  height: 56px;
+  width: 100%;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item.md-tab {
+  width: 16.66%;
+  height: 56px;
+  padding: 5px 0;
+  font-size: 16px;
+  line-height: 30px;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item.md-tab.md-active {
+  color: #fff;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-ink-bar {
+  height: 4px;
+  background-color: #36b590;
+}
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex {
+  overflow-y: auto;
+  height: 442px;
+}
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_person {
+  height: auto;
+  padding-bottom: 78px;
+  min-height: 442px;
+}
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_person > button[type='submit'] {
+  position: absolute;
+  bottom: 0;
+}
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_person > button[type='button'] {
+  position: absolute;
+  bottom: 46px;
+}
+.reservation_person_count .wrapper .w-lg > label {
   padding: 12px 0;
   width: 44px;
   border-radius: 50%;
   border: none;
   box-shadow: none;
 }
-.reservation_tabs .reservation_product .wrapper > div > label {
+.reservation_product .wrapper > div label {
   position: relative;
   color: #58666e;
   width: 159px;
@@ -22170,7 +22214,7 @@ fieldset[disabled] .md-switch input + i:after {
   text-align: center;
   margin: 10px 8px;
 }
-.reservation_tabs .reservation_product .wrapper > div > label i {
+.reservation_product .wrapper > div label i {
   display: none;
   position: absolute;
   width: 16px;
@@ -22182,21 +22226,34 @@ fieldset[disabled] .md-switch input + i:after {
   background-color: #36b590;
   color: #fff;
 }
-.reservation_tabs .reservation_product .wrapper > div > label p {
+.reservation_product .wrapper > div label p {
   line-height: 96px;
 }
-.reservation_tabs .reservation_product .wrapper > div > label.active {
+.reservation_product .wrapper > div label.active {
   border-color: #36b590;
   background-color: #fff;
   box-shadow: none;
 }
-.reservation_tabs .reservation_product .wrapper > div > label.active i {
+.reservation_product .wrapper > div label.active i {
   display: block;
 }
-.reservation_tabs .reservation_zone .wrapper > .w-xxl > div > div > label.active {
+.reservation_zone .wrapper .w-xxl label.active {
   background-color: #36b590;
   border-color: #36b590;
   color: #fff !important;
+}
+@media (max-width: 600px) {
+  md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center {
+    display: none;
+  }
+  md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center:first-child {
+    display: block;
+    heght: 46px;
+  }
+  md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center:first-child i {
+    font-size: 22px;
+    line-height: 46px;
+  }
 }
 .dashboard .md-list-item .md-list-item-content > button {
   box-shadow: none;
@@ -26360,56 +26417,6 @@ md-progress-circular path {
 }
 md-progress-circular.white path {
   stroke: #fff;
-}
-md-tabs.reservation_tabs {
-  border-radius: 0;
-}
-md-tabs.reservation_tabs md-tabs-wrapper {
-  background-color: #263238;
-}
-md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas {
-  height: 56px;
-}
-md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper {
-  height: 56px;
-  width: 100%;
-}
-md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item.md-tab {
-  width: 16.66%;
-  height: 56px;
-  padding: 5px 0;
-  font-size: 16px;
-  line-height: 30px;
-}
-md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item.md-tab.md-active {
-  color: #fff;
-}
-md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-ink-bar {
-  height: 4px;
-  background-color: #36b590;
-}
-md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex {
-  height: 442px;
-}
-md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_person {
-  height: auto;
-  min-height: 442px;
-}
-md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_zone {
-  overflow-y: auto;
-}
-@media (max-width: 600px) {
-  md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center {
-    display: none;
-  }
-  md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center:first-child {
-    display: block;
-    heght: 46px;
-  }
-  md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center:first-child i {
-    font-size: 22px;
-    line-height: 46px;
-  }
 }
 md-toolbar {
   border-radius: 6px 6px 0 0;
