@@ -22155,7 +22155,7 @@ fieldset[disabled] .md-switch input + i:after {
   content: "\F00E";
 }
 .reservation_tabs .reservation_person_count .wrapper .w-lg > label {
-  padding: 10px 0;
+  padding: 12px 0;
   width: 44px;
   border-radius: 50%;
   border: none;
@@ -22193,7 +22193,7 @@ fieldset[disabled] .md-switch input + i:after {
 .reservation_tabs .reservation_product .wrapper > div > label.active i {
   display: block;
 }
-.reservation_tabs .reservation_zone .wrapper > .w-xxl > div > label.active {
+.reservation_tabs .reservation_zone .wrapper > .w-xxl > div > div > label.active {
   background-color: #36b590;
   border-color: #36b590;
   color: #fff !important;
@@ -26397,15 +26397,6 @@ md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservatio
 }
 md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_zone {
   overflow-y: auto;
-}
-md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_zone .item > button {
-  position: absolute;
-  right: -57px;
-  top: 31px;
-}
-md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_zone .item .datepicker .btn-group-sm > .btn,
-md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_zone .item .datepicker .btn-sm {
-  padding: 7px 12px;
 }
 @media (max-width: 600px) {
   md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center {

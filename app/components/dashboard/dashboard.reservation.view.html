@@ -149,21 +149,23 @@
                 </div>
                 <div class='wrapper' layout='column' layout-align='space-around center'>
                   <div class='w-xxl item'>
-                    <button type='button'
-                              class='btn btn-md btn-success text-success'
-                              ng-click='reserv.selectTab(4);'>Ok</button>
-                    
-                    <div ng-show='reserv.zones_is_loaded' ng-repeat='zone in reserv.zones'>
-                      <p><small class='text-muted'>{{ zone.name }}:</small></p>
+                    <div ng-show='reserv.zones_is_loaded'>
+                      <div ng-repeat='zone in reserv.zones'>
+                        <p><small class='text-muted'>{{ zone.name }}:</small></p>
 
-                      <label ng-repeat='table_id in zone.table_ids'
-                             ng-class="{ 'disabled': reserv.isDisabledTableByTableId(table_id) }"
-                             class='btn btn-default block  m-b-xs no-shadow text-success text-left'
-                             ng-model='reserv.reservation.tables_values[table_id]'
-                             uncheckable
-                             btn-checkbox>
-                        <span class='m-r-lg'>Tafel {{ reserv.getTableNumberByTableId(table_id) }}</span><span>{{ reserv.getPersonCountByTableId(table_id) }} personen</span>
-                      </label>
+                        <label ng-repeat='table_id in zone.table_ids'
+                               ng-class="{ 'disabled': reserv.isDisabledTableByTableId(table_id) }"
+                               class='btn btn-default block  m-b-xs no-shadow text-success text-left'
+                               ng-model='reserv.reservation.tables_values[table_id]'
+                               uncheckable
+                               btn-checkbox>
+                          <span class='m-r-lg'>Tafel {{ reserv.getTableNumberByTableId(table_id) }}</span><span>{{ reserv.getPersonCountByTableId(table_id) }} personen</span>
+                        </label>
+                      </div>
+
+                      <button type='button'
+                              class='btn btn-md btn-success text-success w-full'
+                              ng-click='reserv.selectTab(4);'>Ok</button>
                     </div>
                     <div class='m-t-xxl m-b-xxl'
                          layout='row'
