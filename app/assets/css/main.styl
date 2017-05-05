@@ -4672,6 +4672,9 @@ a.text-#000000:hover
 .m-b-n-xxl
   margin-bottom -50px
 
+.p-b-none
+  padding-bottom 0 !important
+
 
 .avatar
   position relative
@@ -5044,8 +5047,29 @@ a.text-#000000:hover
     display none
 
 
+.table_icon
+  vertical-align baseline
+  width 13px
 
 // angular material
+md-input-container
+  padding-bottom 0
+  height 51px
+
+  label,
+  .md-placeholder
+    color rgba(0,0,0,0.26)
+
+  &.md-input-invalid
+    &.md-input-focused
+      label
+        color rgb(244,67,54)
+
+    .md-input
+      border-color rgb(244,67,54)
+
+
+
 .md-backdrop.md-opaque
   background none
 
@@ -5091,23 +5115,14 @@ md-tabs.reservation_tabs
   md-tabs-content-wrapper
     md-tab-content
       .flex
-        height 444px
+        height 442px
 
         &.reservation_person
           height auto
-          min-height 444px
+          min-height 442px
 
         &.reservation_zone
-          .item
-            & > button
-              position absolute
-              right -57px
-              top 31px
-
-            .datepicker
-              .btn-group-sm > .btn,
-              .btn-sm
-                padding 7px 12px
+          overflow-y auto
 
 
 @media (max-width 600px)
@@ -5126,6 +5141,21 @@ md-tabs.reservation_tabs
                 i
                   font-size 22px
                   line-height 46px
+
+
+md-toolbar
+  border-radius 6px 6px 0 0
+
+md-content
+  border-radius 0 0 6px 6px
+
+@media (max-width 768px)
+  md-toolbar
+    border-radius 0
+
+  md-content
+    border-radius 0
+
 
 md-radio-button
   margin 8px 8px 8px 0

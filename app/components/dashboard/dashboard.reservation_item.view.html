@@ -1,0 +1,28 @@
+<div class='md-list-item-left img-circle m-t-sm grey-100'>
+  <i ng-class='dash.getTodayIconClass(reservation, reservation_part)' class='mdi i-24'></i>
+</div>
+<div class='pull-right'>
+  <button md-ink-ripple
+          class='md-btn md-fab m-t-xs m-b-xs no-shadow'
+          ng-disabled='disabled'
+          aria-haspopup='true'
+          aria-expanded='false'
+          aria-disabled='false'
+          ng-click='dash.openUserMenu()'>
+    <i class='mdi mdi-dots-vertical i-24'></i>
+  </button>
+</div>
+<div class='md-list-item-content'>
+  <h3 class='text-md'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</h3>
+  <div>
+    <i class='mdi mdi-account-multiple'></i>
+    <small class='font-thin m-r-xs'>{{ reservation_part.person_count }}x</small>
+    <i class='mdi mdi-clock'></i>
+    <small class='font-thin m-r-xs' ng-bind='dash.parsedDate(reservation_part.datetime)'></small>
+    <img class='table_icon' src='public/images/table.svg' />
+    <small class='font-thin' ng-bind='dash.getTableNumbersByTableIds(reservation_part.table_ids).join(", ")'></small>
+  </div>
+  <small class='font-thin'>
+    {{ (reservation.notes || '&nbsp;') | limitTo: 50 }}{{ reservation.notes.length > 50 ? '...' : '' }}
+  </small>
+</div>

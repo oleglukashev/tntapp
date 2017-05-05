@@ -1,407 +1,411 @@
-<div class='panel no-margin'>
+<section class='no-margin'>
   <form ng-submit='reserv.submitForm()'>
-    <div class='panel-heading no-border blue-grey-900 i-24'>
-      <div ng-click='reserv.closeModal()' ng-hide='reserv.success'>
-        <i class='mdi mdi-arrow-left m-r-sm'></i>
-        Reserveren
+    <md-toolbar class='blue-grey-900'>
+      <div class='md-toolbar-tools'>
+        <div ng-click='reserv.closeModal()' ng-hide='reserv.success'>
+          <i class='mdi mdi-arrow-left m-r-sm'></i>
+          Reserveren
+        </div>
+        <div ng-show='reserv.success'>
+          Nieuwe reservering
+        </div>
       </div>
-      <div ng-show='reserv.success'>
-        Nieuwe reservering
-      </div>
-    </div>
-
-    <div ng-hide='reserv.success'>
-      <md-tabs class='reservation_tabs'
-               flex
-               md-selected='reserv.selected_index'
-               md-no-pagination
-               md-center-tab
-               md-stretch-tabs
-               md-dynamic-height>
-        <md-tab>
-          <md-tab-label>
-            <div class='text-center l-h'><i class='mdi mdi-calendar'></i></div>
-            <div class='text-center l-h'>
-              <span ng-show='reserv.reservation.full_date'>{{ reserv.reservation.full_date | date:'d MMMM' }}</span>
-              <span ng-hide='reserv.reservation.full_date'>DATUM</span>
-            </div>
-          </md-tab-label>
-          <md-tab-body>
-            <div class='b-t' flex>
-              <div class='md-list-item'>
-                <div class='md-list-item-content text-center'>
-                  <h4>Kies een datum</h4>
+    </md-toolbar>
+    <md-content>
+      <div ng-hide='reserv.success'>
+        <md-tabs class='reservation_tabs'
+                 flex
+                 md-selected='reserv.selected_index'
+                 md-no-pagination
+                 md-stretch-tabs
+                 md-dynamic-height>
+          <md-tab>
+            <md-tab-label>
+              <div class='text-center l-h'><i class='mdi mdi-calendar'></i></div>
+              <div class='text-center l-h'>
+                <span ng-show='reserv.reservation.full_date'>{{ reserv.reservation.full_date | date:'d MMMM' }}</span>
+                <span ng-hide='reserv.reservation.full_date'>DATUM</span>
+              </div>
+            </md-tab-label>
+            <md-tab-body>
+              <div class='b-t' flex>
+                <div class='md-list-item'>
+                  <div class='md-list-item-content text-center'>
+                    <h4>Kies een datum</h4>
+                  </div>
+                </div>
+                <div class='wrapper' layout='column' layout-align='space-around center'>
+                  <datepicker ng-change='reserv.selectTab(1)'
+                              datepicker-options='reserv.date_options'
+                              ng-model='reserv.reservation.full_date'
+                              min-date='reserv.init_date'
+                              class='datepicker'></datepicker>
                 </div>
               </div>
-              <div class='wrapper' layout='column' layout-align='space-around center'>
-                <datepicker ng-change='reserv.selectTab(1)'
-                            datepicker-options='reserv.date_options'
-                            ng-model='reserv.reservation.full_date'
-                            min-date='reserv.init_date'
-                            class='datepicker'></datepicker>
-              </div>
-            </div>
-          </md-tab-body>
-        </md-tab>
+            </md-tab-body>
+          </md-tab>
 
-        <md-tab>
-          <md-tab-label>
-            <div class='text-center l-h'><i class='mdi mdi-account-multiple'></i></div>
-            <div class='text-center l-h'>
-              <span ng-show='reserv.reservation.person_count'>
-                {{ reserv.reservation.person_count }} PERSONEN
-              </span>
-              <span ng-hide='reserv.reservation.person_count'>AANTAL</span>
-            </div>
-          </md-tab-label>
-          <md-tab-body>
-            <div class='reservation_person_count b-t' flex>
-              <div class='md-list-item'>
-                <div class='md-list-item-content text-center'>
-                  <h4>Aantal personen</h4>
+          <md-tab>
+            <md-tab-label>
+              <div class='text-center l-h'><i class='mdi mdi-account-multiple'></i></div>
+              <div class='text-center l-h'>
+                <span ng-show='reserv.reservation.person_count'>
+                  {{ reserv.reservation.person_count }} PERSONEN
+                </span>
+                <span ng-hide='reserv.reservation.person_count'>AANTAL</span>
+              </div>
+            </md-tab-label>
+            <md-tab-body>
+              <div class='reservation_person_count b-t' flex>
+                <div class='md-list-item'>
+                  <div class='md-list-item-content text-center'>
+                    <h4>Aantal personen</h4>
+                  </div>
                 </div>
-              </div>
-              <div class='wrapper' layout='column' layout-align='space-around center'>
-                <div class='w-lg'>
-                  <label ng-repeat='number in [1,2,3,4,5,6,7,8,9,10]'
-                    ng-click='reserv.selectTab(2)'
-                    ng-class="{ 'btn-success': reserv.reservation.person_count == number }"
-                    class='btn btn-default btn-lg m-xs text-success'
-                    ng-model='reserv.reservation.person_count'
-                    uncheckable
-                    btn-radio='number'>{{ number }}</label>
+                <div class='wrapper' layout='column' layout-align='space-around center'>
+                  <div class='w-lg'>
+                    <label ng-repeat='number in [1,2,3,4,5,6,7,8,9,10]'
+                      ng-click='reserv.selectTab(2)'
+                      ng-class="{ 'btn-success': reserv.reservation.person_count == number }"
+                      class='btn btn-default btn-sm font-bold m-xs text-success'
+                      ng-model='reserv.reservation.person_count'
+                      uncheckable
+                      btn-radio='number'>{{ number }}</label>
 
-                  <label ng-click='reserv.triggerChoosePersonCount()'
-                         ng-hide='reserv.choose_person_count_is_opened'
-                         class='btn btn-lg m-xs text-success no-shadow no-border'>More...</label>
+                    <label ng-click='reserv.triggerChoosePersonCount()'
+                           ng-hide='reserv.choose_person_count_is_opened'
+                           class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>More...</label>
 
-                  <div class='m-t-md' ng-show='reserv.choose_person_count_is_opened'>
-                    <div class='md-form-group float-label'>
-                      <input type='number' class='md-input' ng-model='reserv.reservation.person_count' required />
-                      <label>Aantal personen</label>
+                    <div class='m-t-md' ng-show='reserv.choose_person_count_is_opened'>
+                      <div class='md-form-group float-label'>
+                        <input type='number' class='md-input' ng-model='reserv.reservation.person_count' required />
+                        <label>Aantal personen</label>
+                      </div>
+
+                      <button type='button'
+                              class='btn btn-md btn-success text-success'
+                              ng-click='reserv.triggerChoosePersonCount();reserv.selectTab(2);'>Ok</button>
                     </div>
-
-                    <button type='button'
-                            class='btn btn-md btn-success text-success'
-                            ng-click='reserv.triggerChoosePersonCount();reserv.selectTab(2);'>Ok</button>
                   </div>
                 </div>
               </div>
-            </div>
-          </md-tab-body>
-        </md-tab>
+            </md-tab-body>
+          </md-tab>
 
 
-        <md-tab>
-          <md-tab-label>
-            <div class='text-center l-h'><i class='mdi mdi-food-fork-drink'></i></div>
-            <div class='text-center l-h'>
-              <span ng-show='reserv.reservation.product'>{{ reserv.getProductNameByProductId(reserv.reservation.product) }}</span>
-              <span ng-hide='reserv.reservation.product'>PRODUCT</span>
-            </div>
-          </md-tab-label>
-          <md-tab-body>
-            <div class='reservation_product b-t' flex>
-              <div class='md-list-item'>
-                <div class='md-list-item-content text-center'>
-                  <h4>Welk product komt de klant voor?</h4>
-                </div>
+          <md-tab>
+            <md-tab-label>
+              <div class='text-center l-h'><i class='mdi mdi-food-fork-drink'></i></div>
+              <div class='text-center l-h'>
+                <span ng-show='reserv.reservation.product'>{{ reserv.getProductNameByProductId(reserv.reservation.product) }}</span>
+                <span ng-hide='reserv.reservation.product'>PRODUCT</span>
               </div>
-              <div class='wrapper' layout='column' layout-align='space-around center'>
-                <div ng-show='reserv.products_is_loaded'>
-                  <label ng-repeat="product in reserv.products"
-                         ng-click='reserv.selectTab(3)'
-                         class='btn btn-default'
-                         ng-model='reserv.reservation.product'
-                         uncheckable
-                         btn-radio='product.id'>
-                    <i class='mdi mdi-check'></i>
-                    <p class='no-margin'>{{ product.name }}</p>
-                  </label>
+            </md-tab-label>
+            <md-tab-body>
+              <div class='reservation_product b-t' flex>
+                <div class='md-list-item'>
+                  <div class='md-list-item-content text-center'>
+                    <h4>Welk product komt de klant voor?</h4>
+                  </div>
                 </div>
-                <div class='m-t-xxl m-b-xxl'
-                     layout='row'
-                     layout-align='space-around'
-                     ng-hide='reserv.products_is_loaded'>
-                  <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-                </div>
-              </div>
-            </div>
-          </md-tab-body>
-        </md-tab>
-
-
-
-        <md-tab>
-          <md-tab-label>
-            <div class='text-center l-h'><i class='mdi mdi-border-horizontal'></i></div>
-            <div class='text-center l-h'>
-              <span>ZONE</span>
-            </div>
-          </md-tab-label>
-          <md-tab-body>
-            <div class='reservation_zone b-t' flex>
-              <div class='md-list-item'>
-                <div class='md-list-item-content text-center'>
-                  <h4>Welk tafel komt de klant te zitten?</h4>
-                </div>
-              </div>
-              <div class='wrapper' layout='column' layout-align='space-around center'>
-                <div class='w-xxl item'>
-                  <button type='button'
-                            class='btn btn-md btn-success text-success'
-                            ng-click='reserv.selectTab(4);'>Ok</button>
-                  
-                  <div ng-show='reserv.zones_is_loaded' ng-repeat='zone in reserv.zones'>
-                    <p><small class='text-muted'>{{ zone.name }}:</small></p>
-
-                    <label ng-repeat='table_id in zone.table_ids'
-                           ng-class="{ 'disabled': reserv.isDisabledTableByTableId(table_id) }"
-                           class='btn btn-default block  m-b-xs no-shadow text-success text-left'
-                           ng-model='reserv.reservation.tables_values[table_id]'
+                <div class='wrapper' layout='column' layout-align='space-around center'>
+                  <div ng-show='reserv.products_is_loaded'>
+                    <label ng-repeat="product in reserv.products"
+                           ng-click='reserv.selectTab(3)'
+                           class='btn btn-default'
+                           ng-model='reserv.reservation.product'
                            uncheckable
-                           btn-checkbox>
-                      <span class='m-r-lg'>Tafel {{ reserv.getTableNumberByTableId(table_id) }}</span><span>{{ reserv.getPersonCountByTableId(table_id) }} personen</span>
+                           btn-radio='product.id'>
+                      <i class='mdi mdi-check'></i>
+                      <p class='no-margin'>{{ product.name }}</p>
                     </label>
                   </div>
                   <div class='m-t-xxl m-b-xxl'
                        layout='row'
                        layout-align='space-around'
-                       ng-hide='reserv.zones_is_loaded'>
+                       ng-hide='reserv.products_is_loaded'>
                     <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
                   </div>
                 </div>
               </div>
-            </div>
-          </md-tab-body>
-        </md-tab>
+            </md-tab-body>
+          </md-tab>
 
 
 
-        <md-tab>
-          <md-tab-label>
-            <div class='text-center l-h'><i class='mdi mdi-clock'></i></div>
-            <div class='text-center l-h'>
-              <span ng-show='reserv.reservation.time'>
-                {{ reserv.reservation.time }}
-              </span>
-              <span ng-hide='reserv.reservation.time'>TIJDSTIP</span>
-            </div>
-          </md-tab-label>
-          <md-tab-body>
-            <div class='b-t' flex>
-              <div class='md-list-item'>
-                <div class='md-list-item-content text-center'>
-                  <h4>Beschikbare tijden</h4>
+          <md-tab>
+            <md-tab-label>
+              <div class='text-center l-h'><i class='mdi mdi-border-horizontal'></i></div>
+              <div class='text-center l-h'>
+                <span>ZONE</span>
+              </div>
+            </md-tab-label>
+            <md-tab-body>
+              <div class='reservation_zone b-t' flex>
+                <div class='md-list-item'>
+                  <div class='md-list-item-content text-center'>
+                    <h4>Welk tafel komt de klant te zitten?</h4>
+                  </div>
+                </div>
+                <div class='wrapper' layout='column' layout-align='space-around center'>
+                  <div class='w-xxl item'>
+                    <div ng-show='reserv.zones_is_loaded'>
+                      <div ng-repeat='zone in reserv.zones'>
+                        <p><small class='text-muted'>{{ zone.name }}:</small></p>
+
+                        <label ng-repeat='table_id in zone.table_ids'
+                               ng-class="{ 'disabled': reserv.isDisabledTableByTableId(table_id) }"
+                               class='btn btn-default block  m-b-xs no-shadow text-success text-left'
+                               ng-model='reserv.reservation.tables_values[table_id]'
+                               uncheckable
+                               btn-checkbox>
+                          <span class='m-r-lg'>Tafel {{ reserv.getTableNumberByTableId(table_id) }}</span><span>{{ reserv.getPersonCountByTableId(table_id) }} personen</span>
+                        </label>
+                      </div>
+
+                      <button type='button'
+                              class='btn btn-md btn-success text-success w-full'
+                              ng-click='reserv.selectTab(4);'>Ok</button>
+                    </div>
+                    <div class='m-t-xxl m-b-xxl'
+                         layout='row'
+                         layout-align='space-around'
+                         ng-hide='reserv.zones_is_loaded'>
+                      <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </md-tab-body>
+          </md-tab>
 
-              <div class='wrapper' layout='column' layout-align='space-around center'>
-                <div class='w-xl'>
-                  <div ng-show='reserv.time_is_loaded'>
-                    <label ng-repeat='time_obj in reserv.available_time'
-                           ng-click='reserv.selectTab(5)'
-                           ng-class="{ 'btn-success': reserv.reservation.time == time_obj.time,
-                                       'disabled': reserv.timeIsDisabled(time_obj)}"
-                           class='btn btn-default btn-lg m-xs m-l-none no-shadow text-success'
-                           ng-model='reserv.reservation.time'
-                           uncheckable
-                           btn-radio='time_obj.time'>{{ time_obj.time }}</label>
+
+
+          <md-tab>
+            <md-tab-label>
+              <div class='text-center l-h'><i class='mdi mdi-clock'></i></div>
+              <div class='text-center l-h'>
+                <span ng-show='reserv.reservation.time'>
+                  {{ reserv.reservation.time }}
+                </span>
+                <span ng-hide='reserv.reservation.time'>TIJDSTIP</span>
+              </div>
+            </md-tab-label>
+            <md-tab-body>
+              <div class='b-t' flex>
+                <div class='md-list-item'>
+                  <div class='md-list-item-content text-center'>
+                    <h4>Beschikbare tijden</h4>
                   </div>
-                  <div class='m-t-xxl m-b-xxl'
-                       layout='row'
-                       layout-align='space-around'
-                       ng-hide='reserv.time_is_loaded'>
-                    <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+                </div>
+
+                <div class='wrapper' layout='column' layout-align='space-around center'>
+                  <div class='w-xl'>
+                    <div ng-show='reserv.time_is_loaded'>
+                      <label ng-repeat='time_obj in reserv.available_time'
+                             ng-click='reserv.selectTab(5)'
+                             ng-class="{ 'btn-success': reserv.reservation.time == time_obj.time,
+                                         'disabled': reserv.timeIsDisabled(time_obj)}"
+                             class='btn btn-default btn-lg m-xs m-l-none no-shadow text-success'
+                             ng-model='reserv.reservation.time'
+                             uncheckable
+                             btn-radio='time_obj.time'>{{ time_obj.time }}</label>
+                    </div>
+                    <div class='m-t-xxl m-b-xxl'
+                         layout='row'
+                         layout-align='space-around'
+                         ng-hide='reserv.time_is_loaded'>
+                      <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </md-tab-body>
-        </md-tab>
+            </md-tab-body>
+          </md-tab>
 
 
-        <md-tab>
-          <md-tab-label>
-            <div class='text-center l-h'><i class='mdi mdi-account'></i></div>
-            <div class='text-center l-h'>PERSOON</div>
-          </md-tab-label>
-          <md-tab-body>
-            <div class='reservation_person b-t' flex>
-              <!-- <div class='md-list-item'>
-                <div class='md-list-item-content text-center'>
-                  <h4>Persoonsgegevens</h4>
+          <md-tab>
+            <md-tab-label>
+              <div class='text-center l-h'><i class='mdi mdi-account'></i></div>
+              <div class='text-center l-h'>PERSOON</div>
+            </md-tab-label>
+            <md-tab-body>
+              <div class='reservation_person b-t' flex>
+                <!-- <div class='md-list-item'>
+                  <div class='md-list-item-content text-center'>
+                    <h4>Persoonsgegevens</h4>
+                  </div>
+                </div> -->
+                <div class='wrapper' layout='column' layout-align='space-around center'>
+                  <div class='w-xl'>
+                    <md-input-container>
+                      <label>Voor- en achternaam</label>
+                      <input ng-model='reserv.reservation.name' required />
+                    </md-input-container>
+                    <md-input-container>
+                      <label>E-mail</label>
+                      <input type='email' ng-model='reserv.reservation.mail' required />
+                    </md-input-container>
+                    <md-input-container>
+                      <label>Telefoonnummer</label>
+                      <input ng-model='reserv.reservation.primary_phone_number' required />
+                    </md-input-container>
+                    <md-input-container>
+                      <label>Opmerking</label>
+                      <input ng-model='reserv.reservation.notes' />
+                    </md-input-container>
+                    <div class='md-form-group p-b-none'>
+                      <md-radio-group ng-model="reserv.reservation.language">
+                        <md-radio-button value='NL' class='inline md-success'>Nederlands</md-radio-button>
+                        <md-radio-button value='EN' class='inline md-success'>Engels</md-radio-button>
+                      </md-radio-group>
+                    </div>
+                    <div class='md-form-group no-padder'>
+                      <md-checkbox ng-model="reserv.reservation.is_group" aria-label="Groep">
+                        Groep
+                      </md-checkbox>
+                    </div>
+                    <div class='md-form-group no-padder'>
+                      <md-checkbox ng-model="reserv.reservation.send_confirmation" aria-label="Inschrijven nieuwsbrief">
+                        Inschrijven nieuwsbrief
+                      </md-checkbox>
+                    </div>
+                  </div>
+                  <div class='w-xl' ng-show='reserv.additional_is_opened'>
+                    <md-input-container>
+                      <label>Secundair nummer</label>
+                      <input ng-model='reserv.reservation.secondary_phone_number' />
+                    </md-input-container>
+                    <md-input-container>
+                      <label>Geboortedatum</label>
+                      <input class='md-input'
+                             ng-focus='reserv.openDatepicker($event)'
+                             ng-model='reserv.reservation.full_date_of_birth'
+                             datepicker-popup='{{ reserv.format }}'
+                             is-open='reserv.opened'
+                             datepicker-options='reserv.date_options'
+                             show-button-bar='false'
+                             close-text='Close' />
+                    </md-input-container>
+                    <md-input-container>
+                      <label>Straat</label>
+                      <input ng-model='reserv.reservation.street' />
+                    </md-input-container>
+                    <md-input-container>
+                      <label>Huisnummer</label>
+                      <input ng-model='reserv.reservation.house_number' />
+                    </md-input-container>
+                    <md-input-container>
+                      <label>Postcode</label>
+                      <input ng-model='reserv.reservation.zipcode' />
+                    </md-input-container>
+                    <md-input-container>
+                      <label>Stad</label>
+                      <input ng-model='reserv.reservation.city' />
+                    </md-input-container>
+                    <md-input-container>
+                      <label>Bedrijfsnaam</label>
+                      <input ng-model='reserv.reservation.company_name' />
+                    </md-input-container>
+                    <div class='md-form-group p-b-none'>
+                      <md-radio-group ng-model="reserv.reservation.gender">
+                        <md-radio-button value='Man' class="inline md-success">Man</md-radio-button>
+                        <md-radio-button value='Vrouw' class="inline md-success">Vrouw</md-radio-button>
+                      </md-radio-group>
+                    </div>
+                    <!--<button type='button' md-ink-ripple class='md-btn md-flat m-b m-t btn-fw text-success'>-->
+                      <!--<span ng-hide='reserv.reservation.reservation_pdf'>PDF UPLOADEN...</span>-->
+                      <!--<span ng-show='reserv.reservation.reservation_pdf'>{{ reserv.reservation.reservation_pdf }}</span>-->
+                      <!--<input type='file'-->
+                             <!--ngf-select-->
+                             <!--ngf-max-size='2MB'-->
+                             <!--ngf-pattern="'application/pdf'"-->
+                             <!--ng-model='reserv.reservation.reservation_pdf'-->
+                             <!--ngf-model-invalid='errorFile' />-->
+                    <!--</button>-->
+                  </div>
                 </div>
-              </div> -->
-              <div class='wrapper' layout='column' layout-align='space-around center'>
-                <div class='w-xl'>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.name' required />
-                    <label>Voor- en achternaam</label>
+                <button type='button'
+                        md-ink-ripple
+                        ng-click='reserv.triggerAdditionalInfo()'
+                        class='md-btn w-full md-flat btn-fw no-radius text-success'>
+                    <span ng-hide='reserv.additional_is_opened'>
+                      <i class='mdi mdi-plus-circle-outline'></i>
+                      MEER VELDEN
+                    </span>
+                    <span ng-show='reserv.additional_is_opened'>
+                      <i class='mdi mdi-minus-circle-outline'></i>
+                      MINDER VELDEN
+                    </span>
+                </button>
+
+                <button type='submit'
+                        class='btn btn-lg btn-success text-success w-full no-top-radius'
+                        ng-class="{ 'disabled': reserv.formIsValid() }"
+                        ng-show='reserv.selected_index == 5 && !reserv.success'>
+                  <span ng-hide='reserv.is_submitting'>RESERVEER</span>
+                  <div layout='row' layout-align='space-around' ng-show='reserv.is_submitting'>
+                    <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
                   </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.mail' required />
-                    <label>E-mail</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.primary_phone_number' required />
-                    <label>Telefoonnummer</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.notes' />
-                    <label>Opmerking</label>
-                  </div>
-                  <div class='md-form-group float-label no-padder'>
-                    <md-radio-group ng-model="reserv.reservation.language">
-                      <md-radio-button value='NL' class='inline md-success'>Nederlands</md-radio-button>
-                      <md-radio-button value='EN' class='inline md-success'>Engels</md-radio-button>
-                    </md-radio-group>
-                  </div>
-                  <div class='md-form-group float-label no-padder'>
-                    <md-checkbox ng-model="reserv.reservation.is_group" aria-label="Groep">
-                      Groep
-                    </md-checkbox>
-                  </div>
-                  <div class='md-form-group float-label no-padder'>
-                    <md-checkbox ng-model="reserv.reservation.send_confirmation" aria-label="Inschrijven nieuwsbrief">
-                      Inschrijven nieuwsbrief
-                    </md-checkbox>
-                  </div>
-                </div>
-                <div class='w-xl' ng-show='reserv.additional_is_opened'>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.secondary_phone_number' />
-                    <label>Secundair nummer</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.street' />
-                    <label>Straat</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.house_number' />
-                    <label>Huisnummer</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.zipcode' />
-                    <label>Postcode</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.city' />
-                    <label>Stad</label>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input'
-                           ng-focus='reserv.openDatepicker($event)'
-                           ng-model='reserv.reservation.full_date_of_birth'
-                           datepicker-popup='{{ reserv.format }}'
-                           is-open='reserv.opened'
-                           datepicker-options='reserv.date_options'
-                           show-button-bar='false'
-                           close-text='Close' />
-                    <label>Geboortedatum</label>
-                  </div>
-                  <div class='md-form-group float-label no-padder'>
-                    <md-radio-group ng-model="reserv.reservation.gender">
-                      <md-radio-button value='Man' class="inline md-success">Man</md-radio-button>
-                      <md-radio-button value='Vrouw' class="inline md-success">Vrouw</md-radio-button>
-                    </md-radio-group>
-                  </div>
-                  <div class='md-form-group float-label'>
-                    <input class='md-input' ng-model='reserv.reservation.company_name' />
-                    <label>Bedrijfsnaam</label>
-                  </div>
-                  <!--<button type='button' md-ink-ripple class='md-btn md-flat m-b m-t btn-fw text-success'>-->
-                    <!--<span ng-hide='reserv.reservation.reservation_pdf'>PDF UPLOADEN...</span>-->
-                    <!--<span ng-show='reserv.reservation.reservation_pdf'>{{ reserv.reservation.reservation_pdf }}</span>-->
-                    <!--<input type='file'-->
-                           <!--ngf-select-->
-                           <!--ngf-max-size='2MB'-->
-                           <!--ngf-pattern="'application/pdf'"-->
-                           <!--ng-model='reserv.reservation.reservation_pdf'-->
-                           <!--ngf-model-invalid='errorFile' />-->
-                  <!--</button>-->
-                </div>
+                </button>
+          </div>
+        </button>
               </div>
-              <button type='button'
-                      md-ink-ripple
-                      ng-click='reserv.triggerAdditionalInfo()'
-                      class='md-btn w-full md-flat btn-fw no-radius text-success'>
-                  <span ng-hide='reserv.additional_is_opened'>
-                    <i class='mdi mdi-plus-circle-outline'></i>
-                    MEER VELDEN
-                  </span>
-                  <span ng-show='reserv.additional_is_opened'>
-                    <i class='mdi mdi-minus-circle-outline'></i>
-                    MINDER VELDEN
-                  </span>
-              </button>
-
-              <button type='submit'
-                      class='btn btn-lg btn-success text-success w-full no-top-radius'
-                      ng-class="{ 'disabled': reserv.formIsValid() }"
-                      ng-show='reserv.selected_index == 5 && !reserv.success'>
-                <span ng-hide='reserv.is_submitting'>RESERVEER</span>
-                <div layout='row' layout-align='space-around' ng-show='reserv.is_submitting'>
-                  <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
-                </div>
-              </button>
-        </div>
-      </button>
-            </div>
-          </md-tab-body>
-        </md-tab>
-      </md-tabs>
-    </div>
-
-    <div class='b-t' flex ng-show='reserv.success'>
-      <div class='md-list-item'>
-        <div class='md-list-item-content'>
-          <h4>Reservering geplaatst</h4>
-        </div>
+            </md-tab-body>
+          </md-tab>
+        </md-tabs>
       </div>
-      <div class='wrapper'>
-        <div class="md-list-item inset">
-          <div class="md-list-item-left">
-            <i class="mdi mdi-attachment icon-muted i-24"></i>
-          </div>
-          <div class="md-list-item-content">
-            <h3 class="text-md">{{ reserv.getReservationDateForSuccess() }} {{ reserv.reservation.time }}</h3>
-            <small class="font-thin">{{ reserv.getProductNameByProductId(reserv.reservation.product) }},  {{ reserv.reservation.person_count }} personen</small>
-          </div>
-        </div>
-        <div class="md-list-item inset">
-          <div class="md-list-item-left ">
-            <i class="mdi mdi-phone icon-muted i-24"></i>
-          </div>
-          <div class="md-list-item-content">
-            <h3 class="text-md">{{ reserv.reservation.primary_phone_number }}</h3>
-            <small class="font-thin">Telefoon</small>
-          </div>
-        </div>
-        <div class="md-list-item inset">
-          <div class="md-list-item-left ">
-            <i class="mdi mdi-email icon-muted i-24"></i>
-          </div>
-          <div class="md-list-item-content">
-            <h3 class="text-md">{{ reserv.reservation.mail }}</h3>
-            <small class="font-thin">E-mail</small>
-          </div>
-        </div>
 
-        <div class="md-list-item ">
-          <div class="md-list-item-left ">
-            <i class="mdi mdi-comment-text icon-muted i-24"></i>
-          </div>
-          <div class="md-list-item-content">
-            <h3 class="text-md">{{ reserv.reservation.notes }}</h3>
-            <small class="font-thin">Opmerkingen</small>
+      <div class='b-t' flex ng-show='reserv.success'>
+        <div class='md-list-item'>
+          <div class='md-list-item-content'>
+            <h4>Reservering geplaatst</h4>
           </div>
         </div>
+        <div class='wrapper'>
+          <div class="md-list-item inset">
+            <div class="md-list-item-left">
+              <i class="mdi mdi-attachment icon-muted i-24"></i>
+            </div>
+            <div class="md-list-item-content">
+              <h3 class="text-md">{{ reserv.getReservationDateForSuccess() }} {{ reserv.reservation.time }}</h3>
+              <small class="font-thin">{{ reserv.getProductNameByProductId(reserv.reservation.product) }},  {{ reserv.reservation.person_count }} personen</small>
+            </div>
+          </div>
+          <div class="md-list-item inset">
+            <div class="md-list-item-left ">
+              <i class="mdi mdi-phone icon-muted i-24"></i>
+            </div>
+            <div class="md-list-item-content">
+              <h3 class="text-md">{{ reserv.reservation.primary_phone_number }}</h3>
+              <small class="font-thin">Telefoon</small>
+            </div>
+          </div>
+          <div class="md-list-item inset">
+            <div class="md-list-item-left ">
+              <i class="mdi mdi-email icon-muted i-24"></i>
+            </div>
+            <div class="md-list-item-content">
+              <h3 class="text-md">{{ reserv.reservation.mail }}</h3>
+              <small class="font-thin">E-mail</small>
+            </div>
+          </div>
+
+          <div class="md-list-item ">
+            <div class="md-list-item-left ">
+              <i class="mdi mdi-comment-text icon-muted i-24"></i>
+            </div>
+            <div class="md-list-item-content">
+              <h3 class="text-md">{{ reserv.reservation.notes }}</h3>
+              <small class="font-thin">Opmerkingen</small>
+            </div>
+          </div>
+        </div>
+        <button type='button'
+                class='btn btn-lg btn-success text-success w-full no-top-radius'
+                ng-show='reserv.success'
+                ng-click='reserv.closeModal()'>TERUG NAAR OVERZICHT</button>
       </div>
-      <button type='button'
-              class='btn btn-lg btn-success text-success w-full no-top-radius'
-              ng-show='reserv.success'
-              ng-click='reserv.closeModal()'>TERUG NAAR OVERZICHT</button>
-    </div>
+    </md-content>
   </form>
-</div>
+</section>
