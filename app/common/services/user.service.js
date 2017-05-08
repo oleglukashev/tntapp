@@ -98,21 +98,30 @@ export default class User {
   }
 
 
-  ensureAuthIs(bool) {
+  ensureAuthForClosedPages() {
     let deferred = this.$q.defer();
 
     this.verifyAuth().then((authValid) => {
-      if (authValid !== bool) {
-        this.$location.path('/');
-        deferred.resolve(false);
-      } else {
-        if (this.$window.location.href.indexOf('register') < 0 &&
-            this.$window.location.href.indexOf('reset_password') < 0
-        ) {
-          this.$location.path('/login')
-        }
-
+      if (authValid === true) {
         deferred.resolve(true);
+      } else {
+        this.$state.go('auth.login'); 
+        deferred.resolve(false);
+      }
+    });
+
+    return deferred.promise;
+  }
+
+  ensureAuthForLoginPages() {
+    let deferred = this.$q.defer();
+
+    this.verifyAuth().then((authValid) => {
+      if (authValid === true) {
+        this.$state.go('app.dashboard'); 
+        deferred.resolve(true);
+      } else {
+        deferred.resolve(false);
       }
     });
 
