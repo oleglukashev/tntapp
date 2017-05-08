@@ -1,5 +1,6 @@
 green_color = #36b590
 default_color = #58666e
+muted_color = #98a6ad
 
 html
   background-color #f9f7f5
@@ -505,6 +506,8 @@ a.list-group-item.hover
 .table > thead > tr > th
   padding 8px 15px
   border-bottom 1px solid #eaeff0
+  font-weight normal
+  color muted_color
 
 
 .table-bordered
@@ -5057,6 +5060,7 @@ a.text-#000000:hover
 // angular material
 md-input-container
   padding-bottom 0
+  margin-bottom 0
   height 51px
 
   label,
@@ -5191,18 +5195,6 @@ md-checkbox
 
       &:after
         border-color #fff
-
-  .md-label
-    position relative
-    display inline-block
-    vertical-align middle
-    white-space normal
-    -webkit-user-select text
-    -moz-user-select text
-    -ms-user-select text
-    user-select text
-    margin-left 10px
-    margin-right 0
 
 .md-form-group
   padding 10px 0

@@ -1,0 +1,125 @@
+<div class='panel'>
+  <div class='panel-heading'>Mails</div>
+  <div class='wrapper'
+  		 layout='row'
+  		 layout-align='space-around'
+  		 ng-hide='mails_settings.is_loaded'>
+    <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+  </div>
+  <form ng-show='mails_settings.is_loaded'>
+	  <div class='md-list'>
+	  	<div class='md-list-item clear'>
+	  		<div class='pull-left'>
+		  		<h3 class='no-margin text-md'>Aanvraagbevestiging</h3>
+		  		<small class='text-muted'>Aanvraagbevestiging aan de restauranteigenaar sturen</small>
+	  		</div>
+	  		<div class='pull-right m-r-n-xs'>
+          <div class='md-form-group no-padder'>
+            <md-switch ng-model='mails_settings.mails_settings_form_data.send_mail_to_owner_on_request'
+            					 ng-change='mails_settings.submitMailsSettingsForm()'></md-switch>
+          </div>
+	  		</div>
+	  	</div>
+	  	<div class='md-list-item clear'>
+	  		<div class='pull-left'>
+		  		<h3 class='no-margin text-md'>Reserveringsbevestiging</h3>
+		  		<small class='text-muted'>Reserveringsbevestiging aan de restauranteigenaar sturen</small>
+	  		</div>
+	  		<div class='pull-right m-r-n-xs'>
+          <div class='md-form-group no-padder'>
+            <md-switch ng-model='mails_settings.mails_settings_form_data.send_confirmation_mail_to_owner'
+            					 ng-change='mails_settings.submitMailsSettingsForm()'></md-switch>
+          </div>
+	  		</div>
+	  	</div>
+      <div class='md-list-item clear'>
+        <div class='pull-left'>
+          <h3 class='no-margin text-md'>Mail na bezoek</h3>
+          <small class='text-muted'>Geef aan hoeveel uur na het bezoek je een mail wil versturen</small>
+        </div>
+        <div class='pull-right m-r-n-xs'>
+          <div class='md-form-group no-padder'>
+            <md-switch ng-model='mails_settings.mails_settings_form_data.send_mail_after_visit'
+                       ng-change='mails_settings.submitMailsSettingsForm()'></md-switch>
+          </div>
+        </div>
+      </div>
+	  </div>
+  </form>
+</div>
+
+<div class='panel'>
+  <div class='panel-heading'>Nederlandse mails</div>
+  <div class='wrapper'
+       layout='row'
+       layout-align='space-around'
+       ng-hide='mails_settings.is_loaded'>
+    <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+  </div>
+  <div class='md-list' ng-show='mails_settings.is_loaded'>
+    <div class='md-list-item no-padder'>
+      <table class='table'>
+        <thead>
+          <th>Type</th>
+          <th>Titel</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="mail in mails_settings.mails_texts_settings | filter:{ language: 'NL' }">
+            <td class='v-middle'>{{ mails_settings.statuses[mail.type] }}</td>
+            <td class='v-middle'>{{ mail.title }}</td>
+            <td class='v-middle text-right'>
+              <button md-ink-ripple
+                      class='md-btn md-fab m-t-xs m-b-xs no-shadow'
+                      ng-disabled='disabled'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                      aria-disabled='false'
+                      ng-click='mails_settings.editMail(mail.id)'>
+                <i class='mdi mdi-dots-vertical i-24'></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class='panel'>
+  <div class='panel-heading'>Engelse mails</div>
+  <div class='wrapper'
+       layout='row'
+       layout-align='space-around'
+       ng-hide='mails_settings.is_loaded'>
+    <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+  </div>
+  <div class='md-list' ng-show='mails_settings.is_loaded'>
+    <div class='md-list-item no-padder'>
+      <table class='table'>
+        <thead>
+          <th>Type</th>
+          <th>Titel</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="mail in mails_settings.mails_texts_settings | filter:{ language: 'EN' }">
+            <td class='v-middle'>{{ mails_settings.statuses[mail.type] }}</td>
+            <td class='v-middle'>{{ mail.title }}</td>
+            <td class='v-middle text-right'>
+              <button md-ink-ripple
+                      class='md-btn md-fab m-t-xs m-b-xs no-shadow'
+                      ng-disabled='disabled'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                      aria-disabled='false'
+                      ng-click='mails_settings.editMail(mail.id)'>
+                <i class='mdi mdi-dots-vertical i-24'></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -31,7 +31,7 @@ export default class SettingsGeneralCtrl {
 
   loadGeneralSettings() {
   	this.Settings
-  		.getGeneral()
+  		.getGeneralSettings()
   			.then(
           (general_settings) => {
             this.is_loaded = true;
@@ -62,7 +62,7 @@ export default class SettingsGeneralCtrl {
 
 
 		this.Settings
-			.updateGeneral(data)
+			.updateGeneralSettings(data)
 	      .then((general_settings) => {
 	        
 	      });

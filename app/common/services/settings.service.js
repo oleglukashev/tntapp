@@ -11,11 +11,10 @@ export default class Settings {
     this.currentCompany = User.currentCompany;
   }
 
-  getGeneral() {
-    let deferred = this.$q.defer();
-
+  getGeneralSettings() {
+    // need to think how can we optimize this block for each method
     if (!this.currentCompany) {
-      return deferred.promise;
+      return this.$q.defer().promise;
     }
 
     return this.$http({
@@ -24,15 +23,47 @@ export default class Settings {
     }).then((result) => result.data);
   }
 
-  updateGeneral(data) {
-    let deferred = this.$q.defer();
-
+  getMailsSettings() {
     if (!this.currentCompany) {
-      return deferred.promise;
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/settings/mails',
+      method: 'GET',
+    }).then((result) => result.data);
+  }
+
+  getMailsTextsSettings() {
+    if (!this.currentCompany) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/settings/mails_texts',
+      method: 'GET',
+    }).then((result) => result.data);
+  }
+
+  updateGeneralSettings(data) {
+    if (!this.currentCompany) {
+      return this.$q.defer().promise;
     }
 
     return this.$http({
       url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/settings/general',
+      method: 'PATCH',
+      data: data
+    }).then((result) => result.data);
+  }
+
+  updateMailsSettings(data) {
+    if (!this.currentCompany) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/settings/mails',
       method: 'PATCH',
       data: data
     }).then((result) => result.data);

@@ -14,9 +14,9 @@
 		  		<small class='text-muted'>Ik wil champagene op tafel</small>
 	  		</div>
 	  		<div class='pull-right'>
-	  			<md-input-container>
+	  			<md-input-container class='w-3x no-margin'>
     				<input type='number'
-    							 class='w-3x text-center'
+    							 class='text-center'
     							 ng-model='general_settings.form_data.bezettings_minuten'
     							 ng-change='general_settings.submitForm()'
     							 required
@@ -36,7 +36,7 @@
             <md-radio-group ng-model='general_settings.form_data.limit_type'
             								ng-change='general_settings.submitForm()'>
               <md-radio-button value='Tafels' class='inline md-success'>Tafels</md-radio-button>
-              <md-radio-button value='Personen' class='inline md-success m-r-n-sm'>Personen</md-radio-button>
+              <md-radio-button value='Personen' class='inline md-success m-r-none'>Personen</md-radio-button>
             </md-radio-group>
           </div>
 	  		</div>
@@ -47,9 +47,9 @@
 		  		<small class='text-muted'>Ik wil champagene op tafel</small>
 	  		</div>
 	  		<div class='pull-right'>
-	  			<md-input-container>
+	  			<md-input-container class='w-3x no-margin'>
     				<input type='number'
-    							 class='w-3x text-center'
+    							 class='text-center'
     							 ng-model='general_settings.form_data.auto_accept_reservation_persion_limit'
     							 ng-change='general_settings.submitForm()'
     							 required
@@ -64,10 +64,9 @@
 		  		<h3 class='no-margin text-md'>Telefoonnummer verplicht</h3>
 		  		<small class='text-muted'>Ik wil champagene op tafel</small>
 	  		</div>
-	  		<div class='pull-right'>
+	  		<div class='pull-right m-r-n-xs'>
 	  			<div class='md-form-group no-padder'>
-            <md-switch class='m-r-n-sm'
-            					 ng-model='general_settings.form_data.phone_number_is_required'
+            <md-switch ng-model='general_settings.form_data.phone_number_is_required'
             					 ng-change='general_settings.submitForm()'
             	></md-switch>
           </div>
@@ -78,10 +77,9 @@
 		  		<h3 class='no-margin text-md'>Snel reserveren</h3>
 		  		<small class='text-muted'>Ik wil champagene op tafel</small>
 	  		</div>
-	  		<div class='pull-right'>
+	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
-            <md-switch class='m-r-n-sm'
-            					 ng-model='general_settings.form_data.quick_reservations_enabled'
+            <md-switch ng-model='general_settings.form_data.quick_reservations_enabled'
             					 ng-change='general_settings.submitForm()'></md-switch>
           </div>
 	  		</div>
@@ -91,10 +89,9 @@
 		  		<h3 class='no-margin text-md'>Tafels automatisch toekennen aan reserveringen</h3>
 		  		<small class='text-muted'>Ik wil champagene op tafel</small>
 	  		</div>
-	  		<div class='pull-right'>
+	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
-            <md-switch class='m-r-n-sm'
-            					 ng-model='general_settings.form_data.auto_assign_tables_to_frontoffice_reservations'
+            <md-switch ng-model='general_settings.form_data.auto_assign_tables_to_frontoffice_reservations'
             					 ng-change='general_settings.submitForm()'></md-switch>
           </div>
 	  		</div>
@@ -106,7 +103,7 @@
 	  		</div>
 	  		<div class='pull-right'>
           <div class='md-form-group no-padder'>
-  					<md-input-container class='pull-right'>
+  					<md-input-container class='pull-right no-margin'>
 		          <md-select ng-model='general_settings.form_data.reservation_deadline_minutes'
 		          					 placeholder='mm'
 			  								 ng-change='general_settings.submitForm()'
@@ -116,7 +113,7 @@
 		  				</md-select>
   					</md-input-container>
   					<span class='pull-right m-t-sm'>:</span>
-  					<md-input-container class='pull-right'>
+  					<md-input-container class='pull-right no-margin'>
           		<md-select ng-model='general_settings.form_data.reservation_deadline_hours'
 	  									 	 placeholder='HH'
 		  								 	 ng-change='general_settings.submitForm()'
@@ -138,7 +135,7 @@
             <md-radio-group ng-model='general_settings.form_data.show_timetable_first'
             								ng-change='general_settings.submitForm()'>
               <md-radio-button value='0' class='inline md-success'>Agenda</md-radio-button>
-              <md-radio-button value='1' class='inline md-success m-r-n-sm'>Tijdschema</md-radio-button>
+              <md-radio-button value='1' class='inline md-success m-r-none'>Tijdschema</md-radio-button>
             </md-radio-group>
           </div>
 	  		</div>
@@ -148,10 +145,9 @@
 		  		<h3 class='no-margin text-md'>Extra gastinformatie in agenda</h3>
 		  		<small class='text-muted'>Ik wil champagene op tafel</small>
 	  		</div>
-	  		<div class='pull-right'>
+	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
-            <md-switch class='m-r-n-sm'
-            					 ng-model='general_settings.form_data.show_customer_info_popup'
+            <md-switch ng-model='general_settings.form_data.show_customer_info_popup'
             					 ng-change='general_settings.submitForm()'></md-switch>
           </div>
 	  		</div>
@@ -161,10 +157,9 @@
 		  		<h3 class='no-margin text-md'>Reserveren via twitter</h3>
 		  		<small class='text-muted'>Gasten mogen reserveren via Twitter</small>
 	  		</div>
-	  		<div class='pull-right'>
+	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
-            <md-switch class='m-r-n-sm'
-            					 ng-model='general_settings.form_data.allow_twitter_login'
+            <md-switch ng-model='general_settings.form_data.allow_twitter_login'
             					 ng-change='general_settings.submitForm()'></md-switch>
           </div>
 	  		</div>
@@ -174,10 +169,9 @@
 		  		<h3 class='no-margin text-md'>Reserveren via facebook</h3>
 		  		<small class='text-muted'>Gasten mogen reserveren via Facebook</small>
 	  		</div>
-	  		<div class='pull-right'>
+	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
-            <md-switch class='m-r-n-sm'
-            					 ng-model='general_settings.form_data.allow_facebook_login'
+            <md-switch ng-model='general_settings.form_data.allow_facebook_login'
             					 ng-change='general_settings.submitForm()'></md-switch>
           </div>
 	  		</div>
@@ -187,10 +181,9 @@
 		  		<h3 class='no-margin text-md'>Productlimieten gebruiken</h3>
 		  		<small class='text-muted'>Ik wil champagene op tafel</small>
 	  		</div>
-	  		<div class='pull-right'>
+	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
-            <md-switch class='m-r-n-sm'
-            					 ng-model='general_settings.form_data.enable_product_limits'
+            <md-switch ng-model='general_settings.form_data.enable_product_limits'
             					 ng-change='general_settings.submitForm()'></md-switch>
           </div>
 	  		</div>
