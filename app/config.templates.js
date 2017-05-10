@@ -9,6 +9,8 @@ export default function templates($templateCache) {
   $templateCache.put('user_menu.view.html', require('./shared/user_menu/user_menu.view.html'));
   $templateCache.put('dashboard.reservation.view.html', require('./components/dashboard/dashboard.reservation.view.html'));
   $templateCache.put('dashboard.reservation_item.view.html', require('./components/dashboard/dashboard.reservation_item.view.html'));
+  $templateCache.put('settings_mails.edit_mail.view.html', require('./components/settings/mails/settings_mails.edit_mail.view.html'));
+
 
   //angular-bootstrap tpls
   $templateCache.put("template/modal/backdrop.html",

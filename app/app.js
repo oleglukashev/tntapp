@@ -24,7 +24,8 @@ import app_controller                     from './common/controllers/app.control
 import header_controller                  from './shared/header/header.controller'
 import user_menu_controller               from './shared/user_menu/user_menu.controller'
 import dashboard                          from './components/dashboard'
-import new_reservation                        from './components/reservation'
+import new_reservation                    from './components/reservation'
+import settings                           from './components/settings'
 import auth                               from './components/auth'
 import                                         './common/services'
 import                                         './common/directives'
@@ -53,12 +54,13 @@ const app = angular
     dashboard,
     new_reservation,
     auth,
+    settings,
     'app.services',
     'app.directives'
   ])
   .config(main_route)
   .constant('AppConstants', {
-    api: 'http://api.sven.thenexttable.com/api/v2',
+    api: 'http://api.tnt.me/api/v2',
     jwtKey: 'jwtToken',
     appName: 'TNT',
   })
