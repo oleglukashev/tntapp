@@ -91,16 +91,21 @@ green_color = #36b590
     .header-account-menu__info
       text-transform uppercase
       max-width 102px
+      overflow hidden
 
-      .header-account-menu__name,
-      .header-account-menu__info
-        color #fff
+      p 
+        width 1000px
         margin 0
-        font-size 15px
-        line-height 18px
 
-      .header-account-menu__name
-        letter-spacing 0.3px
+    .header-account-menu__name,
+    .header-account-menu__info
+      color #fff
+      font-size 15px
+      line-height 18px
+
+    .header-account-menu__name
+      margin 0
+      letter-spacing 0.3px
 
     .header-account-menu-box
       width 196px
@@ -112,7 +117,7 @@ green_color = #36b590
 
       li
         a
-          padding 6px 24px
+          padding 6px 15px 6px 25px
           line-height 23px
 
           &:focus,

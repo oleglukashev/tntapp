@@ -28,18 +28,20 @@
         <div class='dropdown-toggle clearfix' dropdown-toggle>
           <div class='header-account-menu__avatar bg-light pull-left'></div>
           <div class='header-account-menu__info pull-left hidden-sm hidden-md m-l-sm'>
-            <p class='header-account-menu__name'>{{ header.currentUser.first_name }}</p>
-            <p class='header-account-menu__info'>{{ header.currentCompany.name }}</p>
+            <p class='header-account-menu__name'>{{ header.current_user.first_name }}</p>
+            <div class='header-account-menu__info'>
+              <p>{{ header.current_company.name }}</p>
+            </div>
           </div>
           <b class='pull-right caret m-l-sm m-t'></b>
         </div>
 
         <!-- dropdown -->
         <ul class="header-account-menu-box dropdown-menu animated blue-grey-900">
-          <li ng-repeat='company in header.currentUser.owned_companies'>
+          <li ng-repeat='company in header.current_user.owned_companies'>
             <a href='#' ng-click='header.setDefaultCompany(company.id)'>
               <span>{{ company.name }}</span>
-              <i ng-show='company.id === header.currentCompany.id' class='mdi mdi-check pull-right'></i>
+              <i ng-show='company.id === header.current_company.id' class='mdi mdi-check pull-right'></i>
             </a>
           </li>
           <li class='m-t-sm'>

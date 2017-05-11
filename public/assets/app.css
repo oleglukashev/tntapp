@@ -14876,15 +14876,20 @@ fieldset[disabled] .md-switch input + i:after {
 .header .header-account-menu .header-account-menu__info {
   text-transform: uppercase;
   max-width: 102px;
+  overflow: hidden;
 }
-.header .header-account-menu .header-account-menu__info .header-account-menu__name,
-.header .header-account-menu .header-account-menu__info .header-account-menu__info {
-  color: #fff;
+.header .header-account-menu .header-account-menu__info p {
+  width: 1000px;
   margin: 0;
+}
+.header .header-account-menu .header-account-menu__name,
+.header .header-account-menu .header-account-menu__info {
+  color: #fff;
   font-size: 15px;
   line-height: 18px;
 }
-.header .header-account-menu .header-account-menu__info .header-account-menu__name {
+.header .header-account-menu .header-account-menu__name {
+  margin: 0;
   letter-spacing: 0.3px;
 }
 .header .header-account-menu .header-account-menu-box {
@@ -14896,7 +14901,7 @@ fieldset[disabled] .md-switch input + i:after {
   background-color: #263238;
 }
 .header .header-account-menu .header-account-menu-box li a {
-  padding: 6px 24px;
+  padding: 6px 15px 6px 25px;
   line-height: 23px;
 }
 .header .header-account-menu .header-account-menu-box li a:focus,
