@@ -15115,6 +15115,188 @@ md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservatio
 md-sidenav {
   background-color: #fff;
 }
+.seats-free .wrapper .scroll-x .table .time {
+  text-align: center;
+}
+.seats-free .wrapper .scroll-x .table .clickable {
+  cursor: pointer;
+}
+.seats-free .wrapper .scroll-x .table .clickable:hover {
+  color: #fff;
+  background-color: #36b590;
+}
+.auth .panel-heading div {
+  width: 125px;
+  height: 40px;
+  background: url(2c295f17c0661bd12c18edadb60a39a0.png) no-repeat 0 0;
+  margin: 0 auto;
+}
+.auth > form .list-group-item {
+  border-radius: 0;
+}
+.auth > form > .wrapper > button {
+  height: 48px;
+}
+@media only screen and (-Webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min-device-pixel-ratio: 1.5) {
+  .auth .panel-heading div {
+    background-image: url(2c295f17c0661bd12c18edadb60a39a0.png);
+    background-size: 125px 40px;
+  }
+}
+.reservation_action_required .md-list-item-left .mdi:before {
+  content: "\F4D2";
+}
+.reservation_group_this_week .md-list-item-left .mdi:before {
+  content: "\F00E";
+}
+md-tabs.reservation_tabs {
+  border-radius: 0;
+}
+md-tabs.reservation_tabs md-tabs-wrapper {
+  background-color: #263238;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas {
+  height: 56px;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper {
+  height: 56px;
+  width: 100%;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item.md-tab {
+  width: 16.66%;
+  height: 56px;
+  padding: 5px 0;
+  font-size: 16px;
+  line-height: 30px;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item.md-tab.md-active {
+  color: #fff;
+}
+md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-ink-bar {
+  height: 4px;
+  background-color: #36b590;
+}
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex {
+  overflow-y: auto;
+  height: 442px;
+}
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_person {
+  height: auto;
+  padding-bottom: 78px;
+  min-height: 442px;
+}
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_person > button[type='submit'] {
+  position: absolute;
+  bottom: 0;
+}
+md-tabs.reservation_tabs md-tabs-content-wrapper md-tab-content .flex.reservation_person > button[type='button'] {
+  position: absolute;
+  bottom: 46px;
+}
+.reservation_person_count .wrapper .w-lg > label {
+  padding: 12px 0;
+  width: 44px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: none;
+}
+.reservation_product .wrapper > div label {
+  position: relative;
+  color: #58666e;
+  width: 159px;
+  height: 110px;
+  border-radius: 0;
+  text-align: center;
+  margin: 10px 8px;
+}
+.reservation_product .wrapper > div label i {
+  display: none;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: -8px;
+  right: -8px;
+  line-height: 16px;
+  border-radius: 50%;
+  background-color: #36b590;
+  color: #fff;
+}
+.reservation_product .wrapper > div label p {
+  line-height: 96px;
+}
+.reservation_product .wrapper > div label.active {
+  border-color: #36b590;
+  background-color: #fff;
+  box-shadow: none;
+}
+.reservation_product .wrapper > div label.active i {
+  display: block;
+}
+.reservation_zone .wrapper .w-xxl label.active {
+  background-color: #36b590;
+  border-color: #36b590;
+  color: #fff !important;
+}
+@media (max-width: 600px) {
+  md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center {
+    display: none;
+  }
+  md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center:first-child {
+    display: block;
+    heght: 46px;
+  }
+  md-tabs.reservation_tabs md-tabs-wrapper md-tabs-canvas md-pagination-wrapper md-tab-item .text-center:first-child i {
+    font-size: 22px;
+    line-height: 46px;
+  }
+}
+.dashboard .md-list-item .md-list-item-content > button {
+  box-shadow: none;
+}
+.profile-wrapper {
+  background-color: #263238;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.24), 0 0 2px 0 rgba(0,0,0,0.12);
+  border-style: solid;
+  border-width: 0.5px;
+  border-image-source: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0) 80%, rgba(0,0,0,0.02) 95%, rgba(0,0,0,0.04));
+  border-image-slice: 1;
+}
+.profile-menu__avatar {
+  margin: 25px 0 0 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  background-color: #fff;
+}
+.top-profile-email {
+  font-size: 14px;
+  line-height: 1.43;
+  color: #fff;
+}
+.top-profile-email span {
+  margin-right: 7px;
+}
+.mt-8 {
+  margin-top: 8px;
+}
+.hover-blue:hover a,
+.hover-blue:hover i {
+  color: #36b590;
+}
+md-sidenav {
+  background-color: #fff;
+}
+.seats-free .wrapper .scroll-x .table .time {
+  text-align: center;
+}
+.seats-free .wrapper .scroll-x .table .clickable {
+  cursor: pointer;
+}
+.seats-free .wrapper .scroll-x .table .clickable:hover {
+  color: #fff;
+  background-color: #36b590;
+}
 html {
   background-color: #f9f7f5;
 }

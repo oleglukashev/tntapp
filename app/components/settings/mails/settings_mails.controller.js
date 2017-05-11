@@ -58,10 +58,10 @@ export default class SettingsMailsCtrl {
       controller: 'SettingsMailsEditMailCtrl as edit_mail',
       size: 'md',
       resolve: {
-          item: function () {
-            return that.filterFilter(that.mails_texts_settings, { id: id })[0];
-          }
+        item: function () {
+          return that.filterFilter(that.mails_texts_settings, { id: id })[0];
         }
+      }
     });
 
     modalInstance.result.then((selectedItem) => {
