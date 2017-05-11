@@ -25,10 +25,9 @@ export default class Reservation {
 
   create(company_id, data) {
     let that = this;
-    let deferred = this.$q.defer();
 
     if (! company_id) {
-      return deferred.promise;
+      return this.$q.defer().promise;
     }
 
     return that.$http({

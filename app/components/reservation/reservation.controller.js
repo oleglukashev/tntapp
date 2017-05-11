@@ -4,7 +4,7 @@ export default class ReservationCtrl {
   constructor(User, Reservation, Product, Zone, Table, moment, filterFilter, $rootScope, $scope, $window, $modalInstance) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company      = User.current_company;
 
     this.Reservation          = Reservation;
     this.Product              = Product;
@@ -119,7 +119,7 @@ export default class ReservationCtrl {
       }]
     }
 
-    this.Reservation.create(data)
+    this.Reservation.create(this.current_company.id, data)
       .then((result) => {
         this.is_submitting = false;
         this.success       = true;
