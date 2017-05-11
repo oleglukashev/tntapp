@@ -1,8 +1,10 @@
 import angular from 'angular';
 
 export default class ReservationCtrl {
-  constructor(Reservation, Product, Zone, Table, moment, filterFilter, $rootScope, $scope, $window, $modalInstance) {
+  constructor(User, Reservation, Product, Zone, Table, moment, filterFilter, $rootScope, $scope, $window, $modalInstance) {
     'ngInject';
+
+    this.current_company = User.current_company;
 
     this.Reservation          = Reservation;
     this.Product              = Product;
@@ -214,14 +216,15 @@ export default class ReservationCtrl {
     this.available_time = [];
 
     if (this.canLoadTime()) {
-      this.Product.getAvailableTables(this.reservation.product, this.reservation.date)
-        .then(
-          (result) => {
-            this.available_time = result;
-            this.time_is_loaded = true;
-          },
-          (error) => {
-          });
+      this.Product
+        .getAvailableTables(this.current_company.id, this.reservation.product, this.reservation.date)
+          .then(
+            (result) => {
+              this.available_time = result;
+              this.time_is_loaded = true;
+            },
+            (error) => {
+            });
     }
   }
 
@@ -230,14 +233,15 @@ export default class ReservationCtrl {
     this.products_is_loaded  = false;
     this.products            = [];
 
-    this.Product.getAll(false)
-      .then(
-        (result) => {
-          this.products = result;
-          this.products_is_loaded = true;
-        },
-        (error) => {
-        });
+    this.Product
+      .getAll(this.current_company.id, false)
+        .then(
+          (result) => {
+            this.products = result;
+            this.products_is_loaded = true;
+          },
+          (error) => {
+          });
   }
 
   loadZones() {
@@ -245,26 +249,28 @@ export default class ReservationCtrl {
     this.reservation.tables_values = [];
     this.zones           = [];
 
-    this.Zone.getAll()
-      .then(
-        (result) => {
-          this.zones = result;
-          this.zones_is_loaded = true;
-        },
-        (error) => {
-        });
+    this.Zone
+      .getAll(this.current_company.id)
+        .then(
+          (result) => {
+            this.zones = result;
+            this.zones_is_loaded = true;
+          },
+          (error) => {
+          });
   }
 
   loadTables() {
     this.tables = [];
 
-    this.Table.getAll()
-      .then(
-        (result) => {
-          this.tables = result;
-        },
-        (error) => {
-        });
+    this.Table
+      .getAll(this.current_company.id)
+        .then(
+          (result) => {
+            this.tables = result;
+          },
+          (error) => {
+          });
   }
 
   selectTab(index) {

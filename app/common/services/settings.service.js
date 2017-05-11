@@ -4,66 +4,64 @@ export default class Settings {
   constructor(User, AppConstants, $http, $q) {
     'ngInject';
 
-    this.$http          = $http;
-    this.$q             = $q;
-    this.AppConstants   = AppConstants;
-    this.currentUser    = User.current;
-    this.currentCompany = User.currentCompany;
+    this.$http           = $http;
+    this.$q              = $q;
+    this.AppConstants    = AppConstants;
   }
 
-  getGeneralSettings() {
+  getGeneralSettings(company_id) {
     // need to think how can we optimize this block for each method
-    if (!this.currentCompany) {
+    if (! company_id) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/settings/general',
+      url: this.AppConstants.api + '/company/' + company_id + '/settings/general',
       method: 'GET',
     }).then((result) => result.data);
   }
 
-  getMailsSettings() {
-    if (!this.currentCompany) {
+  getMailsSettings(company_id) {
+    if (! company_id) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/settings/mails',
+      url: this.AppConstants.api + '/company/' + company_id + '/settings/mails',
       method: 'GET',
     }).then((result) => result.data);
   }
 
-  getMailsTextsSettings() {
-    if (!this.currentCompany) {
+  getMailsTextsSettings(company_id) {
+    if (! company_id) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/settings/mails_texts',
+      url: this.AppConstants.api + '/company/' + company_id + '/settings/mails_texts',
       method: 'GET',
     }).then((result) => result.data);
   }
 
-  updateGeneralSettings(data) {
-    if (!this.currentCompany) {
+  updateGeneralSettings(company_id, data) {
+    if (! company_id) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/settings/general',
+      url: this.AppConstants.api + '/company/' + company_id + '/settings/general',
       method: 'PATCH',
       data: data
     }).then((result) => result.data);
   }
 
-  updateMailsSettings(data) {
-    if (!this.currentCompany) {
+  updateMailsSettings(company_id, data) {
+    if (! company_id) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/settings/mails',
+      url: this.AppConstants.api + '/company/' + company_id + '/settings/mails',
       method: 'PATCH',
       data: data
     }).then((result) => result.data);

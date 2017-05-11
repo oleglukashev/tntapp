@@ -1,8 +1,9 @@
 export default class HeaderCtrl {
-  constructor(User, $state) {
+  constructor(User, $state, $rootScope) {
     'ngInject';
 
     this.$state           = $state;
+    this.$rootScope       = $rootScope;
 
     this.User             = User;
     this.current_user     = User.current;
