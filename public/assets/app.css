@@ -14868,6 +14868,7 @@ fieldset[disabled] .md-switch input + i:after {
   height: 32px;
   border-radius: 50%;
   border: 1px solid #fff;
+  background-color: #fff;
 }
 .header .header-account-menu .dropdown-toggle {
   padding: 18px 15px;
@@ -19339,12 +19340,8 @@ md-select md-select-value .md-select-icon:after {
   font-size: 13px;
   transform: scaleY(0.5) scaleX(1);
 }
-<<<<<<< HEAD
 .md-select-menu-container,
 md-menu-content {
-=======
-.md-select-menu-container {
->>>>>>> rebuild js
   background-color: #fff;
 }
 md-switch .md-bar {
