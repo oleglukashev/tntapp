@@ -19339,8 +19339,12 @@ md-select md-select-value .md-select-icon:after {
   font-size: 13px;
   transform: scaleY(0.5) scaleX(1);
 }
+<<<<<<< HEAD
 .md-select-menu-container,
 md-menu-content {
+=======
+.md-select-menu-container {
+>>>>>>> rebuild js
   background-color: #fff;
 }
 md-switch .md-bar {
