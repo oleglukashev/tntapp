@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 export default class SettingsMailsCtrl {
   constructor(User, Settings, filterFilter, $scope, $modal) {
     'ngInject';

@@ -5396,6 +5396,10 @@ you can use the generic selector below, but it's slower:
     font-size: 16px
 }
 
+.i-20 {
+    font-size: 20px;
+}
+
 .i-24 {
     font-size: 24px;
 }
@@ -5424,8 +5428,6 @@ you can use the generic selector below, but it's slower:
     border: 0;
     border-radius: 3px;
     outline: none;
-    transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -6890,7 +6892,7 @@ you can use the generic selector below, but it's slower:
     right: 0;
     bottom: 0;
     left: 0;
-    border-bottom: 1px solid rgba(160, 160, 160, 0.2);
+    border-bottom: 1px solid #dee5e7;
     content: "";
 }
 
@@ -19181,6 +19183,9 @@ a.text-#000000:hover {
 .avatar.thumb-xs i {
   margin: 0;
 }
+.w-40 {
+  width: 40px !important;
+}
 .w-1x {
   width: 1em;
 }
@@ -19444,6 +19449,11 @@ md-input-container {
 md-input-container label,
 md-input-container .md-placeholder {
   color: rgba(0,0,0,0.26);
+}
+md-input-container [ng-messages] div {
+  color: #f44336;
+  font-size: 12px;
+  line-height: 14px;
 }
 md-input-container.md-input-invalid.md-input-focused label {
   color: #f44336;

@@ -9,6 +9,9 @@ import general_controller 	from './general/settings_general.controller';
 import mails_routing 				from './mails/settings_mails.route';
 import mails_controller 		from './mails/settings_mails.controller';
 
+import tables_routing 			from './tables/settings_tables.route';
+import tables_controller 		from './tables/settings_tables.controller';
+
 import edit_mail_controller from './mails/settings_mails.edit_mail.controller';
 
 import limits_routing 			from './limits/settings_limits.route';
@@ -22,6 +25,8 @@ export default angular.module('app.settings', [])
   .controller('SettingsGeneralCtrl', general_controller)
   .config(mails_routing)
   .controller('SettingsMailsCtrl', mails_controller)
-  .controller('SettingsLimitsCtrl', limits_controller)
   .config(limits_routing)
+  .controller('SettingsLimitsCtrl', limits_controller)
+  .config(tables_routing)
+  .controller('SettingsTablesCtrl', tables_controller)
   .name;

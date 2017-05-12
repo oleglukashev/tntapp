@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 export default class SettingsGeneralCtrl {
   constructor(User, Settings, moment, $scope) {
     'ngInject';
