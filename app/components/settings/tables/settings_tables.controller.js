@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export default class SettingsTablesCtrl {
-  constructor(Zone, Settings) {
+  constructor(Zone, Settings, $scope, $window) {
     'ngInject';
 
     this.Settings  = Settings;
@@ -15,12 +15,10 @@ export default class SettingsTablesCtrl {
 
   submitForm() {
     this.errors = [];
-    let data    = { tables: this.form_data };
     
     this.Settings
-      .updateTablesSettings(data)
+      .updateTablesSettings({ tables: this.form_data })
         .then((tables) => {
-
         }, 
         (error) => {
           this.errors = error.data.errors;
@@ -42,8 +40,6 @@ export default class SettingsTablesCtrl {
               }
             });
           });
-          
-          //this.setFormData(tables);
   }
 
   loadZonesAndTables() {
@@ -58,13 +54,16 @@ export default class SettingsTablesCtrl {
   }
 
   addTable() {
-    let last_position      = Math.max.apply(Math, this.form_data.map((item) => item.position));
-    let last_table_number  = Math.max.apply(Math, this.form_data.map((item) => item.table_number));
+    let last_position      = this.form_data.length ? Math.max.apply(Math, this.form_data.map((item) => item.position)) : null;
+    let last_table_number  = this.form_data.length ? Math.max.apply(Math, this.form_data.map((item) => item.table_number)) : null;
+
+    let position           = last_position ? last_position + 1 : 0;
+    let table_number       = last_table_number ? last_table_number + 1 : 1;
     
     this.form_data.push({
-      table_number      : last_table_number + 1,
-      number_of_persons : 1,
-      position          : last_position + 1,
+      table_number      : table_number,
+      number_of_persons : 0,
+      position          : position,
       zones             : []
     });
 
@@ -75,14 +74,19 @@ export default class SettingsTablesCtrl {
     return 'table_number_' + index;
   }
 
-  // setFormData(table) {
-  //   let that = this;
-  //   that.form_data = [];
+  callback() {
+    this.errors = [];
 
-  //   angular.forEach(tables, (table) => {
-  //     that.form_data.push({
-  //       table_number: table.table_number
-  //     })
-  //   })
-  // }
+    angular.forEach(this.form_data, (item, index) => {
+      item.position = index;
+    });
+
+    this.Settings
+      .updateTablesSettings({ tables: this.form_data })
+        .then((tables) => {
+        }, 
+        (error) => {
+          this.errors = error.data.errors;
+        });
+  }
 }

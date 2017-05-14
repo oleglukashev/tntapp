@@ -15127,6 +15127,23 @@ md-sidenav {
   color: #fff;
   background-color: #36b590;
 }
+.settings_tables .tables .dndPlaceholder {
+  background-color: #58666e;
+  display: block;
+  height: 88px;
+}
+.settings_tables .tables .table_item {
+  height: 88px;
+}
+.settings_tables .tables .table_item .table_item_number {
+  width: 40%;
+}
+.settings_tables .tables .table_item .table_item_persons {
+  width: 40%;
+}
+.settings_tables .tables .table_item .table_item_actions {
+  width: 20%;
+}
 .auth .panel-heading div {
   width: 125px;
   height: 40px;
@@ -15298,6 +15315,23 @@ md-sidenav {
 .seats-free .wrapper .scroll-x .table .clickable:hover {
   color: #fff;
   background-color: #36b590;
+}
+.settings_tables .tables .dndPlaceholder {
+  background-color: #58666e;
+  display: block;
+  height: 88px;
+}
+.settings_tables .tables .table_item {
+  height: 88px;
+}
+.settings_tables .tables .table_item .table_item_number {
+  width: 40%;
+}
+.settings_tables .tables .table_item .table_item_persons {
+  width: 40%;
+}
+.settings_tables .tables .table_item .table_item_actions {
+  width: 20%;
 }
 html {
   background-color: #f9f7f5;
@@ -15701,11 +15735,11 @@ a.list-group-item.hover {
 .table > tfoot > tr > th,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-  padding: 8px 15px;
+  padding: 8px 16px;
   border-top: 1px solid #eaeff0;
 }
 .table > thead > tr > th {
-  padding: 8px 15px;
+  padding: 8px 16px;
   border-bottom: 1px solid #eaeff0;
   font-weight: normal;
   color: #98a6ad;
@@ -19581,4 +19615,7 @@ md-checkbox.md-checked .md-icon:after {
 }
 .datepicker tr > td > .btn {
   border-radius: 21px;
+}
+.dndDraggingSource {
+  display: none;
 }
