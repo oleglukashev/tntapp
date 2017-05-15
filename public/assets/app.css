@@ -15127,6 +15127,9 @@ md-sidenav {
   color: #fff;
   background-color: #36b590;
 }
+.settings_tables .panel-heading .accordion-toggle .pull-left {
+  line-height: 25px;
+}
 .settings_tables .tables .dndPlaceholder {
   background-color: #58666e;
   display: block;
@@ -15315,6 +15318,9 @@ md-sidenav {
 .seats-free .wrapper .scroll-x .table .clickable:hover {
   color: #fff;
   background-color: #36b590;
+}
+.settings_tables .panel-heading .accordion-toggle .pull-left {
+  line-height: 25px;
 }
 .settings_tables .tables .dndPlaceholder {
   background-color: #58666e;
@@ -15683,7 +15689,7 @@ a.list-group-item.hover {
 }
 .panel .accordion-toggle {
   display: block;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
 }
 .panel .list-group-item {
@@ -15699,7 +15705,7 @@ a.list-group-item.hover {
 .panel-heading {
   padding: 16px;
   border-radius: 6px 6px 0 0;
-  border-bottom: 1px solid rgba(160,160,160,0.2);
+  border-bottom: 1px solid #dee5e7;
 }
 @media (max-width: 767px) {
   .panel-heading {
@@ -15719,7 +15725,7 @@ a.list-group-item.hover {
   background-color: #fff;
   padding: 16px;
   border-radius: 0 0 6px 6px;
-  border-top: 1px solid rgba(160,160,160,0.2);
+  border-top: 1px solid #dee5e7;
 }
 .panel-default {
   border-color: #dee5e7;
@@ -15729,29 +15735,29 @@ a.list-group-item.hover {
   border-color: #edf1f2;
 }
 .panel-group .panel-heading + .panel-collapse .panel-body {
-  border-top: 1px solid #eaedef;
+  border-top: 1px solid #dee5e7;
 }
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
   padding: 8px 16px;
-  border-top: 1px solid #eaeff0;
+  border-top: 1px solid #dee5e7;
 }
 .table > thead > tr > th {
   padding: 8px 16px;
-  border-bottom: 1px solid #eaeff0;
+  border-bottom: 1px solid #dee5e7;
   font-weight: normal;
   color: #98a6ad;
 }
 .table-bordered {
-  border-color: #eaeff0;
+  border-color: #dee5e7;
 }
 .table-bordered > tbody > tr > td {
-  border-color: #eaeff0;
+  border-color: #dee5e7;
 }
 .table-bordered > thead > tr > th {
-  border-color: #eaeff0;
+  border-color: #dee5e7;
 }
 .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {
@@ -15759,7 +15765,7 @@ a.list-group-item.hover {
 }
 .table-striped > thead > th {
   background-color: #fafbfc;
-  border-right: 1px solid #eaeff0;
+  border-right: 1px solid #dee5e7;
 }
 .table-striped > thead > th:last-child {
   border-right: none;
@@ -19475,6 +19481,48 @@ a.text-#000000:hover {
   vertical-align: baseline;
   width: 13px;
 }
+.box {
+  position: relative;
+  color: #58666e;
+  width: 157px;
+  height: 110px;
+  text-align: center;
+  margin: 10px;
+  background-color: #fff;
+  border: 1px solid #dee5e7;
+}
+.box:hover {
+  background-color: #edf1f2;
+}
+.box.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+.box.active {
+  border-color: #36b590;
+}
+.box.active .box_active_icon {
+  display: block;
+}
+.box .box_icon {
+  display: block;
+  font-size: 26px;
+  line-height: 26px;
+  margin: 35px 0 5px;
+}
+.box .box_active_icon {
+  display: none;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: -8px;
+  right: -8px;
+  line-height: 16px;
+  border-radius: 50%;
+  background-color: #36b590;
+  color: #fff;
+}
 md-input-container {
   padding-bottom: 0;
   margin-bottom: 0;
@@ -19511,7 +19559,15 @@ md-toolbar {
   border-radius: 6px 6px 0 0;
 }
 md-content {
+  position: relative;
+  min-height: 520px;
   border-radius: 0 0 6px 6px;
+}
+.md_content_button {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
 }
 @media (max-width: 768px) {
   md-toolbar {
@@ -19615,6 +19671,9 @@ md-checkbox.md-checked .md-icon:after {
 }
 .datepicker tr > td > .btn {
   border-radius: 21px;
+}
+md-menu-content {
+  background-color: #fff;
 }
 .dndDraggingSource {
   display: none;

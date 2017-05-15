@@ -11,6 +11,7 @@ export default function templates($templateCache) {
   $templateCache.put('dashboard.reservation.view.html', require('./components/dashboard/dashboard.reservation.view.html'));
   $templateCache.put('dashboard.reservation_item.view.html', require('./components/dashboard/dashboard.reservation_item.view.html'));
   $templateCache.put('settings_mails.edit_mail.view.html', require('./components/settings/mails/settings_mails.edit_mail.view.html'));
+  $templateCache.put('settings_tables.new_zone.view.html', require('./components/settings/tables/settings_tables.new_zone.view.html'));
 
 
   //angular-bootstrap tpls
@@ -101,4 +102,18 @@ export default function templates($templateCache) {
     "	</li>\n" +
     "</ul>\n" +
     "");
+
+  $templateCache.put("template/accordion/accordion-group.html",
+    "<div class=\"panel\">\n" +
+    "  <div class=\"panel-heading\">\n" +
+    "    <a href class=\"accordion-toggle\" ng-click=\"toggleOpen()\" accordion-transclude=\"heading\"><span ng-class=\"{'text-muted': isDisabled}\">{{heading}}</span></a>\n" +
+    "  </div>\n" +
+    "  <div class=\"panel-collapse\" collapse=\"!isOpen\">\n" +
+    "     <div class=\"panel-body no-padder\" ng-transclude></div>\n" +
+    "  </div>\n" +
+    "</div>\n" +
+    "");
+
+  $templateCache.put("template/accordion/accordion.html",
+    "<div class=\"panel-group\" ng-transclude></div>");
 }

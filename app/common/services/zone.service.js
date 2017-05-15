@@ -19,4 +19,16 @@ export default class Zone {
         method: 'GET',
       }).then((result) => result.data);
   }
+
+  create(data) {
+    if (!this.currentCompany) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/zone',
+      method: 'POST',
+      data: data
+    }).then((result) => result.data);
+  }
 }

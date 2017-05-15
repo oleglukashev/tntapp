@@ -436,7 +436,7 @@ a.list-group-item.hover
 
 .panel .accordion-toggle
   display block
-  font-size 14px
+  font-size 16px
   cursor pointer
 
 
@@ -456,7 +456,7 @@ a.list-group-item.hover
 .panel-heading
   padding 16px
   border-radius 6px 6px 0 0
-  border-bottom 1px solid rgba(160, 160, 160, 0.2)
+  border-bottom 1px solid #dee5e7
 
 
 @media (max-width 767px)
@@ -479,7 +479,7 @@ a.list-group-item.hover
   background-color #ffffff
   padding 16px
   border-radius 0 0 6px 6px
-  border-top 1px solid rgba(160, 160, 160, 0.2)
+  border-top 1px solid #dee5e7
 
 
 .panel-default
@@ -492,7 +492,7 @@ a.list-group-item.hover
 
 
 .panel-group .panel-heading + .panel-collapse .panel-body
-  border-top 1px solid #eaedef
+  border-top 1px solid #dee5e7
 
 
 .table > tbody > tr > th,
@@ -500,26 +500,26 @@ a.list-group-item.hover
 .table > tbody > tr > td,
 .table > tfoot > tr > td
   padding 8px 16px
-  border-top 1px solid #eaeff0
+  border-top 1px solid #dee5e7
 
 
 .table > thead > tr > th
   padding 8px 16px
-  border-bottom 1px solid #eaeff0
+  border-bottom 1px solid #dee5e7
   font-weight normal
   color muted_color
 
 
 .table-bordered
-  border-color #eaeff0
+  border-color #dee5e7
 
 
 .table-bordered > tbody > tr > td
-  border-color #eaeff0
+  border-color #dee5e7
 
 
 .table-bordered > thead > tr > th
-  border-color #eaeff0
+  border-color #dee5e7
 
 
 .table-striped > tbody > tr:nth-child(odd) > td,
@@ -529,7 +529,7 @@ a.list-group-item.hover
 
 .table-striped > thead > th
   background-color #fafbfc
-  border-right 1px solid #eaeff0
+  border-right 1px solid #dee5e7
 
 
 .table-striped > thead > th:last-child
@@ -5060,6 +5060,49 @@ a.text-#000000:hover
   width 13px
 
 
+.box
+  position relative
+  color default_color
+  width 157px
+  height 110px
+  text-align center
+  margin 10px
+  background-color #fff
+  border 1px solid #dee5e7
+
+  &:hover
+    background-color #edf1f2
+
+  &.disabled
+    pointer-events none
+    cursor not-allowed
+    opacity .65
+
+  &.active
+    border-color green_color
+
+    .box_active_icon
+      display block
+
+  .box_icon
+    display block
+    font-size 26px
+    line-height 26px
+    margin 35px 0 5px
+
+  .box_active_icon
+    display none
+    position absolute
+    width 16px
+    height 16px
+    top -8px
+    right -8px
+    line-height 16px
+    border-radius 50%
+    background-color green_color
+    color #fff
+
+
 // angular material
 md-input-container
   padding-bottom 0
@@ -5103,7 +5146,15 @@ md-toolbar
   border-radius 6px 6px 0 0
 
 md-content
+  position relative
+  min-height 520px
   border-radius 0 0 6px 6px
+
+.md_content_button
+  position absolute
+  width 100%
+  left 0
+  bottom 0
 
 @media (max-width 768px)
   md-toolbar
@@ -5218,6 +5269,9 @@ md-checkbox
   tr > td > .btn
     border-radius 21px
 
+
+md-menu-content
+  background-color #fff
 
 // dnd
 .dndDraggingSource

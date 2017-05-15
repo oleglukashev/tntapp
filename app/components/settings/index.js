@@ -13,12 +13,14 @@ import tables_routing 			from './tables/settings_tables.route';
 import tables_controller 		from './tables/settings_tables.controller';
 
 import edit_mail_controller from './mails/settings_mails.edit_mail.controller';
+import new_zone_controller  from './tables/settings_tables.new_zone.controller';
 
 import limits_routing 			from './limits/settings_limits.route';
 import limits_controller 		from './limits/settings_limits.controller';
 
 export default angular.module('app.settings', [])
 	.controller('SettingsMailsEditMailCtrl', edit_mail_controller)
+  .controller('SettingsTablesNewZoneCtrl', new_zone_controller)
 	.config(routing)
 	.controller('SettingsCtrl', controller)
 	.config(general_routing)

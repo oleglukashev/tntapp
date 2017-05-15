@@ -1,15 +1,36 @@
 <button ng-click='tables_settings.addZone()' md-ink-ripple class='panel-add-button md-btn md-fab m-b orange'>
   <i class='mdi mdi-plus i-24'></i>
 </button>
-<div class='panel settings_tables'>
-  <div class='panel-heading'>Restaurant</div>
-  <div class='panel-body no-padder'>
-    <div class='wrapper'
-    		 layout='row'
-    		 layout-align='space-around'
-    		 ng-hide='tables_settings.is_loaded'>
-      <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-    </div>
+
+
+<div class='wrapper'
+     layout='row'
+     layout-align='space-around'
+     ng-hide='tables_settings.is_loaded'>
+  <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+</div>
+
+<accordion class='settings_tables'
+           close-others='oneAtATime'
+           ng-show='tables_settings.is_loaded'>
+  <accordion-group ng-repeat='zone in tables_settings.zones' is-open='true'>
+    <accordion-heading>
+      <div class='clearfix'>
+        <div class='pull-left'>
+        {{ zone.name }}
+        </div>
+
+        <md-menu class='pull-left m-l-sm'>
+          <i class='mdi mdi-dots-vertical i-20' ng-click='$mdMenu.open($event);'></i>
+          <md-menu-content>
+            <md-menu-item>
+              <md-button ng-click='tables_settings.removeZone($index)'>Zone verwijderen</md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </div>
+    </accordion-heading>
+    
     <form name='tables_form' ng-submit='tables_settings.submitForm();'>
       <table class='table no-margin' ng-show='tables_settings.is_loaded'>
         <col width='33%'>
@@ -22,71 +43,75 @@
         </thead>
       </table>
       <ul class='tables md-list no-padder no-margin' dnd-list='tables_settings.form_data'>
-
         <li class='table_item md-list-item clear'
             ng-repeat="table in tables_settings.form_data | orderBy:'position'"
             dnd-draggable="table"
             dnd-moved="tables_settings.form_data.splice($index, 1)"
             dnd-effect-allowed="move"
             dnd-selected="tables_settings.selected = table"
-            dnd-dragend='tables_settings.callback()'
+            dnd-dragend='tables_settings.submitForm();'
             ng-class="{'selected': tables_settings.selected === table}">
-            <dnd-nodrag>
-              <div class='table_item_number pull-left m-t-sm'>
-                <md-input-container class='no-margin'>
-                  <input type='number'
-                         class='text-center w-40'
-                         name='table_number_{{$index}}'
-                         ng-model='tables_settings.form_data[$index].table_number'
-                         ng-change='tables_settings.submitForm();'
-                         required
-                         ng-maxlength='3'
-                         minlength='1'
-                         min='0' />
+          <div class='table_item_number pull-left m-t-sm'>
+            <md-input-container class='no-margin'>
+              <input type='number'
+                     class='text-center w-40'
+                     name='table_number_{{$index}}'
+                     ng-model='tables_settings.form_data[$index].table_number'
+                     ng-change='tables_settings.submitForm();'
+                     required
+                     ng-maxlength='3'
+                     minlength='1'
+                     min='0' />
 
-                  <div ng-messages='tables_form[tables_settings.getTableNumberNameByIndex($index)].$error'>
-                    <div ng-message='required'>This is required!</div>
-                  </div>
-                  <div ng-messages='tables_form[tables_settings.getTableNumberNameByIndex($index)].$error'
-                       ng-show='tables_settings.errors.children.tables.children[$index].children.table_number.errors'>
-                    <div ng-repeat='error in tables_settings.errors.children.tables.children[$index].children.table_number.errors'>{{ error }}</div>
-                  </div>
+              <div ng-messages='tables_form[tables_settings.getTableNumberNameByIndex($index)].$error'>
+                <div ng-message='required'>This is required!</div>
               </div>
-              <div class='table_item_persons pull-left m-t-sm'>
-                <md-input-container class='no-margin'>
-                  <input type='number'
-                         class='text-center w-40'
-                         ng-model='tables_settings.form_data[$index].number_of_persons'
-                         ng-change='tables_settings.submitForm()'
-                         required
-                         ng-maxlength='3'
-                         minlength='1'
-                         min='0' />
-                </md-input-container>
+              <div ng-messages='tables_form[tables_settings.getTableNumberNameByIndex($index)].$error'
+                   ng-show='tables_settings.errors.children.tables.children[$index].children.table_number.errors'>
+                <div ng-repeat='error in tables_settings.errors.children.tables.children[$index].children.table_number.errors'>{{ error }}</div>
               </div>
-              <div class='table_item_actions pull-left text-right'>
-                <button md-ink-ripple
-                        dnd-handle
-                        class='md-btn md-fab no-shadow'
-                        ng-disabled='disabled'
-                        aria-haspopup='true'
-                        aria-expanded='false'
-                        aria-disabled='false'
-                        ng-click='tables_settings.editTable(table.id)'>
-                  <i class='mdi mdi-dots-vertical i-24'></i>
-                </button>
-              </div>
-            </dnd-nodrag>
+          </div>
+          <div class='table_item_persons pull-left m-t-sm'>
+            <md-input-container class='no-margin'>
+              <input type='number'
+                     class='text-center w-40'
+                     ng-model='tables_settings.form_data[$index].number_of_persons'
+                     ng-change='tables_settings.submitForm()'
+                     required
+                     ng-maxlength='3'
+                     minlength='1'
+                     min='0' />
+            </md-input-container>
+          </div>
+          <div class='table_item_actions pull-left text-right'>
+            <md-menu>
+              <button md-ink-ripple
+                    class='md-btn md-fab no-shadow'
+                    ng-disabled='disabled'
+                    aria-haspopup='true'
+                    aria-expanded='false'
+                    aria-disabled='false'
+                    ng-click='$mdMenu.open($event)'>
+                <i class='mdi mdi-dots-vertical i-24'></i>
+              </button>
+              <md-menu-content>
+                <md-menu-item>
+                  <md-button ng-click='tables_settings.removeTable($index)'>Tafel verwijderen</md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+          </div>
         </li>
       </ul>
     </form>
-  </div>
-  <div class='panel-footer' ng-show='tables_settings.is_loaded'>
-    <button md-ink-ripple
-            class='md-btn md-flat btn-fw text-success'
-            ng-click='tables_settings.addTable()'>
-      <i class='mdi mdi-plus-circle-outline'></i>
-      TAFEL TOEVOEGEN 
-    </button>
-  </div>
-</div>
+
+    <div class='wrapper b-t'>
+      <button md-ink-ripple
+              class='md-btn md-flat btn-fw text-success'
+              ng-click='tables_settings.addTable()'>
+        <i class='mdi mdi-plus-circle-outline'></i>
+        TAFEL TOEVOEGEN 
+      </button>
+    </div>
+  </accordion-group>
+</accordion>
