@@ -161,15 +161,22 @@
             <td class='v-middle'>{{ mails_settings.statuses[mail.type] }}</td>
             <td class='v-middle'>{{ mail.title }}</td>
             <td class='v-middle text-right'>
-              <button md-ink-ripple
-                      class='md-btn md-fab m-t-xs m-b-xs no-shadow'
+              <md-menu>
+                <button md-ink-ripple
+                      class='md-btn md-fab no-shadow'
                       ng-disabled='disabled'
                       aria-haspopup='true'
                       aria-expanded='false'
                       aria-disabled='false'
-                      ng-click='mails_settings.editMail(mail.id)'>
-                <i class='mdi mdi-dots-vertical i-24'></i>
-              </button>
+                      ng-click='$mdMenu.open($event)'>
+                  <i class='mdi mdi-dots-vertical i-24'></i>
+                </button>
+                <md-menu-content>
+                  <md-menu-item>
+                    <md-button ng-click='mails_settings.editMail(mail.id)'>Mail bewerken</md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
             </td>
           </tr>
         </tbody>
