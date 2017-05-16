@@ -1,3 +1,5 @@
+green_color = #36b590
+
 .header
   position fixed
   top 0
@@ -23,41 +25,35 @@
       height 100%
       background url('../../../public/images/logo.png') no-repeat 0 0;
 
-  .header-menu
-    .header-menu__item
-      margin-left 0
+  
+  md-tabs.header-menu
+    width 450px
+    float left
+    border-radius 0
 
-      &:first-child
-        margin-left 0
+    md-tabs-canvas
+      height 72px
 
-      & > a
-        line-height 42px
-        font-size 14px
-        text-transform uppercase
-        color #b7bbbd
-        letter-spacing 0.7px
-        font-weight bold
-        background-color transparent
+      md-pagination-wrapper
+        height 72px
 
-        &:hover
-          color #fff
+        md-tab-item
+          line-height 52px
+          padding 10px 15px
+          color #b7bbbd
+          font-weight bold
+          letter-spacing 0.7px
 
-        .badge
-          position relative
-          top -10px
-          margin-left -10px
-          color #fff
-          letter-spacing normal
+          &:first-child
+            margin-left 0
 
-      &.active
-        border-bottom 4px solid #36b590
+        @media (min-width 962px)
+          md-tab-item
+            margin-left 26px
 
-        a
-          padding-bottom 11px
-
-    @media (min-width 962px)
-      .header-menu__item
-        margin-left 26px
+    md-ink-bar
+      height 4px
+      background-color green_color
 
 
   .header-search
@@ -93,17 +89,23 @@
       cursor pointer
 
     .header-account-menu__info
+      text-transform uppercase
       max-width 102px
+      overflow hidden
 
-      .header-account-menu__name,
-      .header-account-menu__info
-        color #fff
+      p 
+        width 1000px
         margin 0
-        font-size 15px
-        line-height 18px
 
-      .header-account-menu__name
-        letter-spacing 0.3px
+    .header-account-menu__name,
+    .header-account-menu__info
+      color #fff
+      font-size 15px
+      line-height 18px
+
+    .header-account-menu__name
+      margin 0
+      letter-spacing 0.3px
 
     .header-account-menu-box
       width 196px
@@ -115,7 +117,7 @@
 
       li
         a
-          padding 6px 24px
+          padding 6px 15px 6px 25px
           line-height 23px
 
           &:focus,

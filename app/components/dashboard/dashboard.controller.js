@@ -1,8 +1,10 @@
 import angular from 'angular';
 
 export default class DashboardCtrl {
-  constructor(Reservation, Table, moment, AppConstants, JWT, filterFilter, $window, $mdSidenav, $rootScope, $scope, $modal) {
+  constructor(User, Reservation, Table, moment, AppConstants, JWT, filterFilter, $window, $mdSidenav, $rootScope, $scope, $modal) {
     'ngInject';
+
+    this.current_company = User.current_company;
 
     this.moment          = moment;
     this.action_required = [];
@@ -11,7 +13,6 @@ export default class DashboardCtrl {
     this.$mdSidenav      = $mdSidenav;
     this.$rootScope      = $rootScope;
     this.filterFilter    = filterFilter;
-    this.$scope          = $scope;
     this.$modal          = $modal;
     this.$window         = $window;
 
@@ -70,7 +71,7 @@ export default class DashboardCtrl {
 
   loadReservations() {
     this.Reservation
-      .getAll()
+      .getAll(this.current_company.id)
         .then(
           (reservations) => {
             this.reservationsLoaded = true;
@@ -84,7 +85,7 @@ export default class DashboardCtrl {
     this.tables = [];
 
     this.Table
-      .getAll()
+      .getAll(this.current_company.id)
         .then(
           (result) => {
             this.tables = result;
@@ -93,7 +94,7 @@ export default class DashboardCtrl {
 
   loadReservations() {
     this.Reservation
-      .getAll()
+      .getAll(this.current_company.id)
         .then(
           (reservations) => {
             this.reservationsLoaded = true;

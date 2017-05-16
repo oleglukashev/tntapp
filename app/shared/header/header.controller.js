@@ -1,14 +1,18 @@
 export default class HeaderCtrl {
-  constructor(User) {
+  constructor(User, $state, $rootScope) {
     'ngInject';
 
-    this.User           = User;
-    this.currentUser    = User.current;
-    this.currentCompany = User.currentCompany;
-    this.logout = User.logout.bind(User);
+    this.$state           = $state;
+    this.$rootScope       = $rootScope;
+
+    this.User             = User;
+    this.current_user     = User.current;
+    this.current_company  = User.current_company;
+    this.logout           = User.logout.bind(User);
   }
 
   setDefaultCompany(id) {
     this.User.setDefaultCompany(id);
+    this.$state.reload();
   }
 }

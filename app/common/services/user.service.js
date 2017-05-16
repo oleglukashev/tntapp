@@ -2,15 +2,15 @@ export default class User {
   constructor(JWT, AppConstants, $http, $state, $q, $location, $window) {
     'ngInject';
 
-    this.JWT = JWT;
-    this.AppConstants = AppConstants;
-    this.$http = $http;
-    this.$state = $state;
-    this.$location = $location;
-    this.$q = $q;
-    this.$window = $window;
-
-    this.current = null;
+    this.JWT             = JWT;
+    this.AppConstants    = AppConstants;
+    this.$http           = $http;
+    this.$state          = $state;
+    this.$location       = $location;
+    this.$q              = $q;
+    this.$window         = $window;
+    this.current         = null;
+    this.current_company = null;
   }
 
 
@@ -40,7 +40,17 @@ export default class User {
   }
 
   setDefaultCompany(id) {
-    this.currentCompany = this.current.owned_companies.filter((item) => item.id === id)[0];
+    this.current_company = this.current.owned_companies.filter((item) => item.id === id)[0];
+    let current_company_id = this.$window.localStorage.getItem('current_company_id');
+
+    if (id != current_company_id) {
+      this.$window.localStorage.setItem('current_company_id', id);
+    }
+  }
+
+  removeDefaultCompany() {
+    this.current_company = null;
+    this.$window.localStorage.removeItem('current_company_id');
   }
 
   update(fields) {
@@ -59,6 +69,7 @@ export default class User {
   logout() {
     this.current = null;
     this.JWT.destroy();
+    this.removeDefaultCompany();
     this.$state.go('auth.login', null, { reload: true });
   }
 
@@ -83,12 +94,21 @@ export default class User {
       }).then(
         (result) => {
           this.current = result.data;
-          this.setDefaultCompany(this.current.owned_companies[0].id);
+
+          let current_company_id = parseInt(this.$window.localStorage.getItem('current_company_id'));
+          let available_ids      = this.current.owned_companies.map((item) => item.id);
+
+          if (! current_company_id || ! available_ids.includes(current_company_id)) {
+            current_company_id = this.current.owned_companies[0].id;
+          }
+
+          this.setDefaultCompany(current_company_id);
 
           deferred.resolve(true);
         },
         (error) => {
           this.JWT.destroy();
+          this.removeDefaultCompany();
           deferred.resolve(false);
         }
       )

@@ -4,37 +4,34 @@ export default class Reservation {
   constructor(Upload, User, AppConstants, $http, $q) {
     'ngInject';
 
-    this.$http          = $http;
-    this.$q             = $q;
-    this.AppConstants   = AppConstants;
-    this.currentUser    = User.current;
-    this.currentCompany = User.currentCompany;
-    this.Upload         = Upload;
+    this.$http           = $http;
+    this.$q              = $q;
+    this.AppConstants    = AppConstants;
+    this.Upload          = Upload;
   }
 
-  getAll() {
+  getAll(company_id) {
     let deferred = this.$q.defer();
 
-    if (!this.currentCompany) {
+    if (! company_id) {
       return deferred.promise;
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/reservation',
+      url: this.AppConstants.api + '/company/' + company_id + '/reservation',
       method: 'GET',
     }).then((result) => result.data);
   }
 
-  create(data) {
+  create(company_id, data) {
     let that = this;
-    let deferred = this.$q.defer();
 
-    if (!this.currentCompany) {
-      return deferred.promise;
+    if (! company_id) {
+      return this.$q.defer().promise;
     }
 
     return that.$http({
-      url: that.AppConstants.api + '/company/' + that.currentCompany.id + '/reservation',
+      url: that.AppConstants.api + '/company/' + company_id + '/reservation',
       method: 'POST',
       data: data
     }).then((result) => result.data);
