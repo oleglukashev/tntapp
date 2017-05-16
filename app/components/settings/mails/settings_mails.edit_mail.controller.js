@@ -35,4 +35,8 @@ export default class SettingsMailsEditMailCtrl {
           // nothing
         });
   }
+
+  closeModal() {
+    this.$modalInstance.dismiss('cancel');
+  }
 }

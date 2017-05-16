@@ -1,8 +1,10 @@
 <section class='no-margin'>
   <md-toolbar class='blue-grey-900'>
     <div class='md-toolbar-tools'>
-      <i class='mdi mdi-arrow-left m-r-sm'></i>
-      {{ edit_mail.types[edit_mail.form_data.type] }}
+      <span ng-click='edit_mail.closeModal();'>
+        <i class='mdi mdi-arrow-left m-r-sm'></i>
+        {{ edit_mail.types[edit_mail.form_data.type] }}
+      </span>
     </div>
   </md-toolbar>
   <md-content>
