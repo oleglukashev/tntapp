@@ -44,8 +44,56 @@
           </div>
         </div>
       </div>
+      <div class='md-list-item clear'>
+        <div class='pull-left m-t-sm'>
+          <h3 class='no-margin text-md'>Mail X uren na bezoek versturen</h3>
+        </div>
+        <div class='pull-right'>
+          <md-input-container class='w-3x no-margin'>
+            <input type='number'
+                   class='text-center'
+                   ng-model='mails_settings.mails_settings_form_data.send_mail_after_visit_hours_delay'
+                   ng-change='mails_settings.submitMailsSettingsForm()'
+                   required
+                   ng-maxlength='3'
+                   minlength='1'
+                   min='0' />
+          </md-input-container>
+        </div>
+      </div>
 	  </div>
   </form>
+</div>
+
+<div class='panel blue-50' ng-show='mails_settings.is_loaded'>
+  <div class='panel-body'>
+    <p>De volgende placeholders kunnen worden gebruikt:</p>
+    <ul>
+      <li>%OPMERKINGEN%</li>
+      <li>%STATUS%</li>
+      <li>%BEDRIJFSNAAM%</li>
+      <li>%AANTAL_PERSONEN%</li>
+      <li>%TIJDSTIP%</li>
+      <li>%VOORNAAM%</li>
+      <li>%ACHTERNAAM%</li>
+      <li>%PRIMAIR_NUMMER%</li>
+      <li>%SECUNDAIR_NUMMER%</li>
+      <li>%STRAAT%</li>
+      <li>%HUISNUMMER%</li>
+      <li>%POSTCODE%</li>
+      <li>%PLAATS%</li>
+      <li>%MAIL%</li>
+      <li>%GEBOORTEDATUM%</li>
+      <li>%GESLACHT%</li>
+      <li>%PRODUCT%</li>
+      <li>%EINDTIJD%</li>
+      <li>%STARTTIJD%</li>
+      <li>%DATUM%</li>
+      <li>%ICAL_LINK%</li>
+      <li>%GOOGLE_CAL_LINK%</li>
+      <li>%TNRLINK%</li>
+    </ul>
+  </div>
 </div>
 
 <div class='panel'>
@@ -69,15 +117,22 @@
             <td class='v-middle'>{{ mails_settings.statuses[mail.type] }}</td>
             <td class='v-middle'>{{ mail.title }}</td>
             <td class='v-middle text-right'>
-              <button md-ink-ripple
-                      class='md-btn md-fab m-t-xs m-b-xs no-shadow'
+              <md-menu>
+                <button md-ink-ripple
+                      class='md-btn md-fab no-shadow'
                       ng-disabled='disabled'
                       aria-haspopup='true'
                       aria-expanded='false'
                       aria-disabled='false'
-                      ng-click='mails_settings.editMail(mail.id)'>
-                <i class='mdi mdi-dots-vertical i-24'></i>
-              </button>
+                      ng-click='$mdMenu.open($event)'>
+                  <i class='mdi mdi-dots-vertical i-24'></i>
+                </button>
+                <md-menu-content>
+                  <md-menu-item>
+                    <md-button ng-click='mails_settings.editMail(mail.id)'>Mail bewerken</md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
             </td>
           </tr>
         </tbody>
@@ -107,15 +162,22 @@
             <td class='v-middle'>{{ mails_settings.statuses[mail.type] }}</td>
             <td class='v-middle'>{{ mail.title }}</td>
             <td class='v-middle text-right'>
-              <button md-ink-ripple
-                      class='md-btn md-fab m-t-xs m-b-xs no-shadow'
+              <md-menu>
+                <button md-ink-ripple
+                      class='md-btn md-fab no-shadow'
                       ng-disabled='disabled'
                       aria-haspopup='true'
                       aria-expanded='false'
                       aria-disabled='false'
-                      ng-click='mails_settings.editMail(mail.id)'>
-                <i class='mdi mdi-dots-vertical i-24'></i>
-              </button>
+                      ng-click='$mdMenu.open($event)'>
+                  <i class='mdi mdi-dots-vertical i-24'></i>
+                </button>
+                <md-menu-content>
+                  <md-menu-item>
+                    <md-button ng-click='mails_settings.editMail(mail.id)'>Mail bewerken</md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
             </td>
           </tr>
         </tbody>

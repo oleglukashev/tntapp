@@ -19305,7 +19305,8 @@ md-select md-select-value .md-select-icon:after {
   font-size: 13px;
   transform: scaleY(0.5) scaleX(1);
 }
-.md-select-menu-container {
+.md-select-menu-container,
+md-menu-content {
   background-color: #fff;
 }
 md-switch .md-bar {

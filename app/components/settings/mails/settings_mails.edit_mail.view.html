@@ -1,27 +1,31 @@
 <section class='no-margin'>
   <md-toolbar class='blue-grey-900'>
     <div class='md-toolbar-tools'>
-      <i class='mdi mdi-arrow-left m-r-sm'></i>
-      {{ edit_mail.types[edit_mail.item.type] }}
+      <span ng-click='edit_mail.closeModal();'>
+        <i class='mdi mdi-arrow-left m-r-sm'></i>
+        {{ edit_mail.types[edit_mail.form_data.type] }}
+      </span>
     </div>
   </md-toolbar>
   <md-content>
-    <form ng-submit='edit_mail.submitForm()'>
+    <form name='edit_mail_form' ng-submit='edit_mail.submitForm(edit_mail_form.$valid)'>
       <div class='wrapper'>
         <md-input-container class='md-block'>
           <label>Titel</label>
-          <input ng-model='edit_mail.item.title' required />
+          <input ng-model='edit_mail.form_data.title' required />
         </md-input-container>
         <md-input-container class='md-block'>
           <label>Inhoud</label>
-          <textarea rows='10' ng-model='edit_mail.item.content' md-maxlength='300'></textarea>
-          <div ng-messages='edit_mail.item.content.$error' ng-show='edit_mail.item.content.$dirty'>
-            <div ng-message='md-maxlength'>That's too long!</div>
-          </div>
+          <textarea rows='10' ng-model='edit_mail.form_data.content' md-maxlength='300'></textarea>
         </md-input-container>
       </div>
-      <button type='submit' class='btn btn-lg btn-success text-success w-full no-top-radius'>
-        OPSLAAN
+      <button type='submit'
+              ng-class="{ 'disabled': !edit_mail_form.$valid }"
+              class='btn btn-lg btn-success text-success w-full no-top-radius'>
+        <span ng-hide='edit_mail.is_submitting'>OPSLAAN</span>
+        <div layout='row' layout-align='space-around' ng-show='edit_mail.is_submitting'>
+          <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
+        </div>
       </button>
     </form>
   </md-content>

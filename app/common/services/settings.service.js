@@ -66,4 +66,16 @@ export default class Settings {
       data: data
     }).then((result) => result.data);
   }
+
+  updateMailtext(id, data) {
+    if (!this.currentCompany) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/settings/mails_texts/' + id,
+      method: 'PATCH',
+      data: data
+    }).then((result) => result.data);
+  }
 }
