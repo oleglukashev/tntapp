@@ -31,4 +31,15 @@ export default class Zone {
       data: data
     }).then((result) => result.data);
   }
+
+  delete(id) {
+    if (!this.currentCompany) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/zone/' + id,
+      method: 'DELETE'
+    }).then((result) => result.data);
+  }
 }
