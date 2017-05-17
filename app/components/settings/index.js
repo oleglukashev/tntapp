@@ -1,16 +1,16 @@
-import angular    					from 'angular';
+import angular              from 'angular';
 
-import routing 							from './settings.route';
-import controller 					from './settings.controller';
+import routing              from './settings.route';
+import controller           from './settings.controller';
 
-import general_routing 			from './general/settings_general.route';
-import general_controller 	from './general/settings_general.controller';
+import general_routing      from './general/settings_general.route';
+import general_controller   from './general/settings_general.controller';
 
-import mails_routing 				from './mails/settings_mails.route';
-import mails_controller 		from './mails/settings_mails.controller';
+import mails_routing        from './mails/settings_mails.route';
+import mails_controller     from './mails/settings_mails.controller';
 
-import tables_routing 			from './tables/settings_tables.route';
-import tables_controller 		from './tables/settings_tables.controller';
+import tables_routing       from './tables/settings_tables.route';
+import tables_controller    from './tables/settings_tables.controller';
 
 import edit_mail_controller from './mails/settings_mails.edit_mail.controller';
 import new_zone_controller  from './tables/settings_tables.new_zone.controller';
