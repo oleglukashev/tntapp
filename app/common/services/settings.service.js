@@ -43,6 +43,17 @@ export default class Settings {
     }).then((result) => result.data);
   }
 
+  getLimitsSettings(company_id) {
+    if (! company_id) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + company_id + '/settings/minimum_seats_free',
+      method: 'GET',
+    }).then((result) => result.data);
+  }
+
   updateGeneralSettings(company_id, data) {
     if (! company_id) {
       return this.$q.defer().promise;

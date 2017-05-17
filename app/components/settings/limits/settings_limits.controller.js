@@ -1,8 +1,10 @@
 import angular from 'angular';
 
 export default class SettingsLimitsCtrl {
-  constructor(Settings, moment, filterFilter, $window) {
+  constructor(User, Settings, moment, filterFilter, $window) {
     'ngInject';
+
+    this.current_company = User.current_company;
 
     this.Settings  				= Settings;
     this.moment 	 				= moment;
@@ -19,7 +21,7 @@ export default class SettingsLimitsCtrl {
 
   loadLimits() {
   	this.Settings
-  		.getLimitsSettings()
+  		.getLimitsSettings(this.current_company.id)
   			.then(
           (limits) => {
             this.is_loaded = true;
@@ -29,7 +31,7 @@ export default class SettingsLimitsCtrl {
   }
 
   saveLimitByTimeAndDay(time, day_of_week) {
-  	let new_value = this.getChangedValue();
+  	let new_value = this.getChangedValue(time, day_of_week);
 		let data = [this.buildLimit(time, day_of_week, new_value)];
 
   	this.setLimit(time, day_of_week, new_value);
@@ -41,7 +43,7 @@ export default class SettingsLimitsCtrl {
   	let that = this;
   	
   	angular.forEach(that.days, (day, day_of_week) => {
-  		let new_value = that.getChangedValue();
+  		let new_value = that.getChangedValue(time, day_of_week);
 
   		that.setLimit(time, day_of_week, new_value);
   		data.push(that.buildLimit(time, day_of_week, new_value));
@@ -55,7 +57,7 @@ export default class SettingsLimitsCtrl {
   	let that = this;
   	
   	angular.forEach(that.times, (time) => {
-  		let new_value = that.getChangedValue();
+  		let new_value = that.getChangedValue(time, day_of_week);
 
   		that.setLimit(time, day_of_week, new_value);
   		data.push(that.buildLimit(time, day_of_week, new_value));
@@ -64,13 +66,13 @@ export default class SettingsLimitsCtrl {
     that.saveLimit(data);
   }
 
-  getChangedValue() {
+  getChangedValue(time, day_of_week) {
     return this.limits[day_of_week] && this.limits[day_of_week][time] ? null : this.limit
   }
 
   saveLimit(data) {
   	this.Settings
-  		.saveLimitsSettings(data)
+  		.saveLimitsSettings(this.current_company.id, data)
   			.then(
           (limit) => {
             //nothing
