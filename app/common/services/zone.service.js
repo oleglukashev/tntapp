@@ -20,25 +20,25 @@ export default class Zone {
       }).then((result) => result.data);
   }
 
-  create(data) {
-    if (!this.currentCompany) {
+  create(company_id, data) {
+    if (! company_id) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/zone',
+      url: this.AppConstants.api + '/company/' + company_id + '/zone',
       method: 'POST',
       data: data
     }).then((result) => result.data);
   }
 
-  delete(id) {
-    if (!this.currentCompany) {
+  delete(company_id, id) {
+    if (! company_id) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/zone/' + id,
+      url: this.AppConstants.api + '/company/' + company_id + '/zone/' + id,
       method: 'DELETE'
     }).then((result) => result.data);
   }
