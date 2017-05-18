@@ -43,6 +43,17 @@ export default class Settings {
     }).then((result) => result.data);
   }
 
+  getLimitsSettings(company_id) {
+    if (! company_id) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + company_id + '/settings/minimum_seats_free',
+      method: 'GET',
+    }).then((result) => result.data);
+  }
+
   updateGeneralSettings(company_id, data) {
     if (! company_id) {
       return this.$q.defer().promise;
@@ -67,14 +78,26 @@ export default class Settings {
     }).then((result) => result.data);
   }
 
-  updateMailtext(id, data) {
-    if (!this.currentCompany) {
+  updateMailtext(company_id, id, data) {
+    if (! company_id) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/settings/mails_texts/' + id,
+      url: this.AppConstants.api + '/company/' + company_id + '/settings/mails_texts/' + id,
       method: 'PATCH',
+      data: data
+    }).then((result) => result.data);
+  }
+
+  saveLimitsSettings(company_id, data) {
+    if (! company_id) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + company_id + '/settings/minimum_seats_free/save',
+      method: 'POST',
       data: data
     }).then((result) => result.data);
   }
