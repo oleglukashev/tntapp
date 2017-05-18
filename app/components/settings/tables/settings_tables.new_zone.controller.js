@@ -1,6 +1,8 @@
 export default class SettingsTablesNewZoneCtrl {
-  constructor(Zone, zones, $modalInstance) {
+  constructor(User, Zone, zones, $modalInstance) {
     'ngInject';
+
+    this.current_company = User.current_company;
 
     this.Zone          = Zone;
     this.zones         = zones;
@@ -19,7 +21,7 @@ export default class SettingsTablesNewZoneCtrl {
     this.errors        = [];
 
     this.Zone
-      .create(this.item)
+      .create(this.current_company.id, this.item)
         .then((zone) => {
           this.is_submitting = false;
           this.zones.push(zone);
