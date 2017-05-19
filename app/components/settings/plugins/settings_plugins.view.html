@@ -1,0 +1,89 @@
+<div class='wrapper'
+     layout='row'
+     layout-align='space-around'
+     ng-hide='plugins_settings.is_loaded'>
+  <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+</div>
+
+<div ng-show='plugins_settings.is_loaded'>
+  <div class='panel'>
+    <div class='panel-heading'>
+      Wordpress plugin
+    </div>
+    <div class='panel-body'>
+      <p class='m-b-md'>U kunt een reserveer-widget en een reserveer-tag op uw WordPress website plaatsen. Hiervoor moet eerst de TheNextTable plugin geïnstalleerd worden.</p>
+      <ul class='list_number_point'>
+        <li><span class='number_point'>1</span>Download de plugin van de WordPress plugin website of hier</li>
+        <li><span class='number_point'>2</span>Activeer de plugin als deze nog niet geactiveerd is</li>
+        <li><span class='number_point'>3</span>Ga naar de instellingen van TheNextTable in het Admin-paneel</li>
+        <li><span class='number_point'>4</span>Voer de onderstaande koppel-code in om het restaurant met de widget te koppelen:</li>
+      </ul>
+    </div>
+    <div class='panel-footer clearfix form-horizontal'>
+      <div class='form-group no-margin'>
+        <label class='col-sm-2 text-left p-l-none control-label'>Koppel-code</label>
+
+        <div class='col-sm-10 no-padder'>
+          <input type='text' class='form-control' readonly />
+        </div>
+    </div>
+  </div>
+</div>
+
+<div ng-show='plugins_settings.is_loaded'>
+  <div class='panel'>
+    <div class='panel-heading'>
+      iFrame widget
+    </div>
+    <div class='panel-body'>
+      <p class='m-b-md'>Als u geen WordPress heeft, kunt u alsnog gebruik maken van de reserveer-widget.</p>
+      <p class='no-margin'>Plaats de volgende HTML-code op uw website voor de widget:</p>
+    </div>
+    <div class='panel-footer clearfix form-horizontal'>
+      <div class='form-group no-margin'>
+        <label class='col-sm-2 text-left p-l-none control-label'>Koppel-code</label>
+
+        <div class='col-sm-10 no-padder'>
+          <textarea class='form-control' readonly />
+            
+          </textarea>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div ng-show='plugins_settings.is_loaded'>
+  <div class='panel'>
+    <div class='panel-heading'>
+      Koppeling The Next Review
+    </div>
+    <div class='panel-body'>
+      <p class='m-b-md'>Link TheNextReview en TheNextTable, en zie de beoordelingen van je gasten direct vanuit TheNextTable.</p>
+    </div>
+    <div class='panel-footer clearfix form-horizontal'>
+      <label class='col-sm-3 text-left p-l-none control-label'>Probeer 30 dagen gratis</label>
+
+      <div class='col-sm-9 no-padder'>
+        <button type='button' class='md-button btn-success no-margin'>KOPPELEN</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-show='plugins_settings.is_loaded'>
+  <div class='panel'>
+    <div class='panel-heading'>
+      API Token
+    </div>
+    <div class='panel-body'>
+      <p class='m-b-md'>Hieronder staat het API-token dat gebruikt kan worden voor communicatie met de TheNextTable API.</p>
+    </div>
+    <div class='panel-footer clearfix form-horizontal'>
+      <label class='col-sm-2 text-left p-l-none control-label'>API token</label>
+
+      <div class='col-sm-10 no-padder'>
+        <input type='text' class='form-control' readonly />
+      </div>
+    </div>
+  </div>
+</div>
