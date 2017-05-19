@@ -10,6 +10,10 @@
     font-size: 16px
 }
 
+.i-20 {
+    font-size: 20px;
+}
+
 .i-24 {
     font-size: 24px;
 }
@@ -38,8 +42,6 @@
     border: 0;
     border-radius: 3px;
     outline: none;
-    transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -1504,7 +1506,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    border-bottom: 1px solid rgba(160, 160, 160, 0.2);
+    border-bottom: 1px solid #dee5e7;
     content: "";
 }
 

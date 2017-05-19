@@ -18,6 +18,7 @@ import angular_moment                     from 'angular-moment'
 import anguar_oclazyLoad                  from 'oclazyload'
 import ui_load                            from './common/services/ui-load'
 import ui_jq                              from './common/directives/ui-jq'
+import dnd_lists                          from './common/directives/angular-drag-and-drop-lists.directive'
 import main_route                         from './config.router'
 import init_templates                     from './config.templates'
 import app_controller                     from './common/controllers/app.controller'
@@ -30,7 +31,6 @@ import settings                           from './components/settings'
 import auth                               from './components/auth'
 import                                         './common/services'
 import                                         './common/directives'
-
 
 const app = angular
   .module('app', [
@@ -52,6 +52,7 @@ const app = angular
     ui_load,
     anguar_oclazyLoad,
     ui_jq,
+    dnd_lists,
     dashboard,
     new_reservation,
     auth,

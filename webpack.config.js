@@ -29,13 +29,13 @@ module.exports = {
 
   output: {
     path: path.join(process.cwd(), 'public', 'assets'),
-    filename: '[name].js',
+    filename: '[name].min.js',
   },
 
   watch: true,
 
   plugins: [
-    new Extract('app.css'),
+    new Extract('app.min.css'),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         'warnings'     : false,
@@ -47,7 +47,7 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name     : 'vendor',
       chunks   : ['app'],
-      filename : 'vendor.js',
+      filename : 'vendor.min.js',
       minChunks: Infinity
     }),
     new ngAnnotatePlugin({

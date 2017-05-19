@@ -23,6 +23,7 @@
     "angular-animate": "^1.6.2",
     "angular-aria": "^1.6.2",
     "angular-cookies": "^1.6.2",
+    "angular-drag-and-drop-lists": "^2.1.0",
     "angular-material": "^1.1.4",
     "angular-messages": "^1.6.2",
     "angular-resource": "^1.6.2",
