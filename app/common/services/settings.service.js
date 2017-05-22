@@ -53,6 +53,17 @@ export default class Settings {
     }).then((result) => result.data);
   }
 
+  getPluginsSettings(company_id) {
+    if (! company_id) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + company_id + '/settings/plugins',
+      method: 'GET',
+    }).then((result) => result.data);
+  }
+
   updateGeneralSettings(company_id, data) {
     if (! company_id) {
       return this.$q.defer().promise;
@@ -97,6 +108,18 @@ export default class Settings {
     return this.$http({
       url: API_URL + '/company/' + company_id + '/settings/minimum_seats_free/save',
       method: 'POST',
+      data: data
+    }).then((result) => result.data);
+  }
+
+  updateTnrSyncTokenSettings(company_id, data) {
+    if (! company_id) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: this.AppConstants.api + '/company/' + company_id + '/settings/plugins/update_tnr_sync_token',
+      method: 'PATCH',
       data: data
     }).then((result) => result.data);
   }

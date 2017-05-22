@@ -4,7 +4,7 @@ export default function routes($stateProvider) {
   $stateProvider
     .state('app.settings.plugins', {
       url: '/plugins',
-      controller: 'SettingsPluginCtrl',
+      controller: 'SettingsPluginsCtrl',
       controllerAs: 'plugins_settings',
       template: require('./settings_plugins.view.html')
     })

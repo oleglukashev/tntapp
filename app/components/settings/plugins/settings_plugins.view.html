@@ -24,7 +24,7 @@
         <label class='col-sm-2 text-left p-l-none control-label'>Koppel-code</label>
 
         <div class='col-sm-10 no-padder'>
-          <input type='text' class='form-control' readonly />
+          <input type='text' class='form-control' ng-model='plugins_settings.wordpress_token' readonly />
         </div>
     </div>
   </div>
@@ -44,15 +44,13 @@
         <label class='col-sm-2 text-left p-l-none control-label'>Koppel-code</label>
 
         <div class='col-sm-10 no-padder'>
-          <textarea class='form-control' readonly />
-            
-          </textarea>
+          <textarea class='form-control' readonly>{{ plugins_settings.iframe_widget }}</textarea>
         </div>
     </div>
   </div>
 </div>
 
-<div ng-show='plugins_settings.is_loaded'>
+<!-- <div ng-show='plugins_settings.is_loaded'>
   <div class='panel'>
     <div class='panel-heading'>
       Koppeling The Next Review
@@ -66,6 +64,28 @@
       <div class='col-sm-9 no-padder'>
         <button type='button' class='md-button btn-success no-margin'>KOPPELEN</button>
       </div>
+    </div>
+  </div>
+</div> -->
+
+<div ng-show='plugins_settings.is_loaded'>
+  <div class='panel'>
+    <div class='panel-heading'>
+      TheNextReview Link-code
+    </div>
+    <div class='panel-body'>
+      <p class='m-b-md'>Link TheNextReview en TheNextTable, en zie de beoordelingen van je gasten direct vanuit TheNextTable. Vul hier de code die bij TheNextReview onder de algemene instellingen staat. Pas daarna in de mails de link naar TheNextReview aan. De nieuwe link kan je op TheNextReview, onder Bedrijf Beheren > Vragenlijst-instellingen vinden.</p>
+    </div>
+    <div class='panel-footer clearfix form-horizontal'>
+      <form ng-submit='plugins_settings.submitForm();'>
+        <label class='col-sm-2 col-xs-12 text-left p-l-none control-label'>Link-code</label>
+        <div class='col-sm-8 col-xs-8 no-padder'>
+          <input type='text' class='form-control' ng-model='plugins_settings.tnr_sync_token' />
+        </div>
+        <div class='col-sm-2 col-xs-4 no-padder text-right'>
+          <button type='submit' class='md-button btn-success no-margin'>Opslaan</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -82,7 +102,7 @@
       <label class='col-sm-2 text-left p-l-none control-label'>API token</label>
 
       <div class='col-sm-10 no-padder'>
-        <input type='text' class='form-control' readonly />
+        <input type='text' class='form-control' ng-model='plugins_settings.api_token' readonly />
       </div>
     </div>
   </div>
