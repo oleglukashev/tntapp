@@ -1,12 +1,11 @@
 import angular from 'angular';
 
 export default class Search {
-  constructor(User, AppConstants, $http, $q) {
+  constructor(User, $http, $q) {
     'ngInject';
 
     this.$http          = $http;
     this.$q             = $q;
-    this.AppConstants   = AppConstants;
     this.currentUser    = User.current;
     this.currentCompany = User.currentCompany;
   }
@@ -19,7 +18,7 @@ export default class Search {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/customer/find',
+      url: API_URL + '/company/' + this.currentCompany.id + '/customer/find',
       method: 'POST',
     }).then((result) => {
       return result.data;
@@ -34,7 +33,7 @@ export default class Search {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/customer/search/' + customerId,
+      url: API_URL + '/company/' + this.currentCompany.id + '/customer/search/' + customerId,
       method: 'POST',
     }).then((result) => {
       return result.data;

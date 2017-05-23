@@ -1,12 +1,11 @@
 import angular from 'angular';
 
 export default class Reservation {
-  constructor(Upload, User, AppConstants, $http, $q) {
+  constructor(Upload, User, $http, $q) {
     'ngInject';
 
     this.$http           = $http;
     this.$q              = $q;
-    this.AppConstants    = AppConstants;
     this.Upload          = Upload;
   }
 
@@ -18,7 +17,7 @@ export default class Reservation {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/reservation',
+      url: API_URL + '/company/' + company_id + '/reservation',
       method: 'GET',
     }).then((result) => result.data);
   }
@@ -31,7 +30,7 @@ export default class Reservation {
     }
 
     return that.$http({
-      url: that.AppConstants.api + '/company/' + company_id + '/reservation',
+      url: API_URL + '/company/' + company_id + '/reservation',
       method: 'POST',
       data: data
     }).then((result) => result.data);

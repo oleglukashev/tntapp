@@ -1,9 +1,10 @@
 {
   "name": "TheNextTableApp",
   "version": "0.0.1",
-  "description": "Angular,Bootstrap,Babel,Webpack,ES6",
+  "description": "TheNextTableApp",
   "scripts": {
-    "start": "node node_modules/http-server/bin/http-server ./ -o -p 8082"
+    "build": "webpack --config webpack.config.prod.js",
+    "dev": "webpack-dev-server --port 8082"
   },
   "repository": "https://git.thenextsoftware.io/TheNextSoftware/TheNextTableApp.git",
   "author": "TheNextTableSoftware",
@@ -38,7 +39,9 @@
     "angular-ui-scroll": "^1.6.0",
     "angular-ui-utils": "^0.1.1",
     "autoprefixer-loader": "^3.2.0",
+    "babel-preset-es2015": "^6.24.1",
     "css-loader": "^0.26.2",
+    "extended-define-webpack-plugin": "^0.1.3",
     "extract-text-webpack-plugin": "^2.0.0",
     "file-loader": "^0.10.1",
     "html-loader": "^0.4.5",

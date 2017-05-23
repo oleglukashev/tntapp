@@ -1,12 +1,11 @@
 import angular from 'angular';
 
 export default class Zone {
-  constructor(User, AppConstants, $http, $q) {
+  constructor(User, $http, $q) {
     'ngInject';
 
     this.$http           = $http;
     this.$q              = $q;
-    this.AppConstants    = AppConstants;
   }
 
   getAll(company_id) {
@@ -15,7 +14,7 @@ export default class Zone {
     }
 
     return this.$http({
-        url: this.AppConstants.api + '/company/' + company_id + '/zone',
+        url: API_URL + '/company/' + company_id + '/zone',
         method: 'GET',
       }).then((result) => result.data);
   }
@@ -26,7 +25,7 @@ export default class Zone {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/zone',
+      url: API_URL + '/company/' + company_id + '/zone',
       method: 'POST',
       data: data
     }).then((result) => result.data);
@@ -38,7 +37,7 @@ export default class Zone {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/zone/' + id,
+      url: API_URL + '/company/' + company_id + '/zone/' + id,
       method: 'DELETE'
     }).then((result) => result.data);
   }

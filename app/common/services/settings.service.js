@@ -1,12 +1,11 @@
 import angular from 'angular';
 
 export default class Settings {
-  constructor(User, AppConstants, $http, $q) {
+  constructor(User, $http, $q) {
     'ngInject';
 
     this.$http           = $http;
     this.$q              = $q;
-    this.AppConstants    = AppConstants;
   }
 
   getGeneralSettings(company_id) {
@@ -16,7 +15,7 @@ export default class Settings {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/settings/general',
+      url: API_URL + '/company/' + company_id + '/settings/general',
       method: 'GET',
     }).then((result) => result.data);
   }
@@ -27,7 +26,7 @@ export default class Settings {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/settings/mails',
+      url: API_URL + '/company/' + company_id + '/settings/mails',
       method: 'GET',
     }).then((result) => result.data);
   }
@@ -38,7 +37,7 @@ export default class Settings {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/settings/mails_texts',
+      url: API_URL + '/company/' + company_id + '/settings/mails_texts',
       method: 'GET',
     }).then((result) => result.data);
   }
@@ -49,7 +48,7 @@ export default class Settings {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/settings/minimum_seats_free',
+      url: API_URL + '/company/' + company_id + '/settings/minimum_seats_free',
       method: 'GET',
     }).then((result) => result.data);
   }
@@ -60,7 +59,7 @@ export default class Settings {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/settings/general',
+      url: API_URL + '/company/' + company_id + '/settings/general',
       method: 'PATCH',
       data: data
     }).then((result) => result.data);
@@ -72,7 +71,7 @@ export default class Settings {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/settings/mails',
+      url: API_URL + '/company/' + company_id + '/settings/mails',
       method: 'PATCH',
       data: data
     }).then((result) => result.data);
@@ -84,7 +83,7 @@ export default class Settings {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/settings/mails_texts/' + id,
+      url: API_URL + '/company/' + company_id + '/settings/mails_texts/' + id,
       method: 'PATCH',
       data: data
     }).then((result) => result.data);
@@ -96,7 +95,7 @@ export default class Settings {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/settings/minimum_seats_free/save',
+      url: API_URL + '/company/' + company_id + '/settings/minimum_seats_free/save',
       method: 'POST',
       data: data
     }).then((result) => result.data);

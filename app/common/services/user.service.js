@@ -1,9 +1,8 @@
 export default class User {
-  constructor(JWT, AppConstants, $http, $state, $q, $location, $window) {
+  constructor(JWT, $http, $state, $q, $location, $window) {
     'ngInject';
 
     this.JWT             = JWT;
-    this.AppConstants    = AppConstants;
     this.$http           = $http;
     this.$state          = $state;
     this.$location       = $location;
@@ -16,7 +15,7 @@ export default class User {
 
   auth(path, formData) {
     return this.$http({
-      url: this.AppConstants.api + path,
+      url: API_URL + path,
       method: 'POST',
       data: formData
     }).then(
@@ -29,7 +28,7 @@ export default class User {
 
   resetPassword(formData) {
     return this.$http({
-      url: this.AppConstants.api + '/reset_password',
+      url: API_URL + '/reset_password',
       method: 'POST',
       data: formData
     }).then(
@@ -55,7 +54,7 @@ export default class User {
 
   update(fields) {
     return this.$http({
-      url:  this.AppConstants.api + '/user',
+      url:  API_URL + '/user',
       method: 'PUT',
       data: { user: fields }
     }).then(
@@ -86,7 +85,7 @@ export default class User {
       deferred.resolve(true);
     } else {
       this.$http({
-        url: this.AppConstants.api + '/user',
+        url: API_URL + '/user',
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + this.JWT.get()
