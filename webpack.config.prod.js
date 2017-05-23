@@ -29,7 +29,6 @@ module.exports = {
 
   output: {
     path: path.join(process.cwd(), 'public', 'assets'),
-    publicPath: "/public/assets/",
     filename: '[name].min.js',
   },
 
@@ -52,7 +51,7 @@ module.exports = {
       minChunks: Infinity
     }),
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify('http://api.tnt.me/api/v2')
+      API_URL: JSON.stringify('http://api.sven.thenexttable.com/api/v2')
     }),
     new ngAnnotatePlugin({
       add: true

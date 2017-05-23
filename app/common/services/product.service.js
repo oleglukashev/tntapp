@@ -1,12 +1,11 @@
 import angular from 'angular';
 
 export default class Product {
-  constructor(User, AppConstants, $http, $q) {
+  constructor(User, $http, $q) {
     'ngInject';
 
     this.$http           = $http;
     this.$q              = $q;
-    this.AppConstants    = AppConstants;
   }
 
   getAll(company_id, with_hidden) {
@@ -17,7 +16,7 @@ export default class Product {
     }
 
     return this.$http({
-        url: this.AppConstants.api + '/company/' + company_id + '/product',
+        url: API_URL + '/company/' + company_id + '/product',
         method: 'GET',
       }).then(
         (result) => {
@@ -37,7 +36,7 @@ export default class Product {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/product/available_tables',
+      url: API_URL + '/company/' + company_id + '/product/available_tables',
       method: 'POST',
       data: { product_id: product_id, date: date }
     }).then((result) => result.data);
