@@ -1,10 +1,10 @@
-function authInterceptor(JWT, AppConstants, $window, $q) {
+function authInterceptor(JWT, $window, $q) {
   'ngInject'
 
   return {
     // automatically attach Authorization header
     request: function(config) {
-      if(config.url.indexOf(AppConstants.api) === 0 && JWT.get()) {
+      if(config.url.indexOf(API_URL) === 0 && JWT.get()) {
         config.headers.Authorization = 'Bearer ' + JWT.get();
       }
       return config;
