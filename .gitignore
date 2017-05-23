@@ -2,3 +2,6 @@
 npm-debug.log
 node_modules
 .DS_Store
+public/assets/app.min.js
+public/assets/app.min.css
+public/assets/vendor.min.js
