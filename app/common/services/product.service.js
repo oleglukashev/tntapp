@@ -8,6 +8,27 @@ export default class Product {
     this.$q              = $q;
   }
 
+  create(company_id, data) {
+    if (! company_id) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: API_URL + '/company/' + company_id + '/products/create',
+      method: 'POST',
+      data: data
+    }).then((result) => result.data);
+  }
+
+  hidden(company_id, product_id) {
+    if (! company_id) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http.post(API_URL + '/company/' + company_id + '/products/hidden/' + product_id)
+      .then((result) => result.data);
+  }
+
   getAll(company_id, with_hidden) {
     let deferred = this.$q.defer();
 

@@ -7,11 +7,12 @@ export default class SettingsCtrl {
     this.$window            = $window;
 
     this.pages              = {
-        'ALGEMEEN'               : 'app.settings.general',
-        'MAILS'                  : 'app.settings.mails',
-        'PLEKKEN VRIJHOUDEN'     : 'app.settings.limits',
-        'TAFELS'                 : 'app.settings.tables',
-        'PLUGINS'                : 'app.settings.plugins'
+        'ALGEMEEN'                 : 'app.settings.general',
+        'MAILS'                    : 'app.settings.mails',
+        'OPENINGSTIJDEN/PRODUCTEN' : 'app.settings.products',
+        'PLEKKEN VRIJHOUDEN'       : 'app.settings.limits',
+        'TAFELS'                   : 'app.settings.tables',
+        'PLUGINS'                  : 'app.settings.plugins'
     };
   }
 }

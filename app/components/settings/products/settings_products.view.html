@@ -1,0 +1,90 @@
+<div class='wrapper'
+     layout='row'
+     layout-align='space-around'
+     ng-hide='products_settings.is_loaded'>
+  <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+</div>
+
+
+<div ng-show='products_settings.is_loaded'>
+  <button ng-click='products_settings.addProduct()' md-ink-ripple class='panel-add-button md-btn md-fab m-b orange'>
+    <i class='mdi mdi-plus i-24'></i>
+  </button>
+
+  <accordion class='products_tables' close-others='true'>
+    <accordion-group ng-repeat='day in products_settings.days' is-open='products_settings.opened[$index]' ng-click="products_settings.redrawSliders()">
+      <accordion-heading>
+        <div class='clearfix'>
+
+            <table class='table no-margin head-table'>
+              <col width='33%'>
+              <col width='33%'>
+              <col width='34%'>
+              <thead>
+                <th class="day-of-week">{{ day }}</th>
+                <th class="nine-o-clock">9:00</th>
+                <th class="twenty-four-o-clock">24:00</th>
+              </thead>
+            </table>
+
+
+        </div>
+      </accordion-heading>
+
+      <form name='tables_form' ng-submit='products_settings.submitForm();'>
+        <ul class='tables md-list no-padder no-margin'>
+          <li class='table_item_li md-list-item clear'
+              ng-repeat="product in products_settings.products_by_day[day] track by $index">
+
+
+            <div class='table_item_product pull-left m-t-sm'>
+              {{ product.name }}
+            </div>
+
+            <div class='table_item_slider pull-left m-t-sm'>
+
+              <rzslider
+                rz-slider-model="products_settings.products_by_day[day][$index].minValue"
+                rz-slider-high="products_settings.products_by_day[day][$index].maxValue"
+                rz-slider-options="products_settings.products_by_day[day][$index].options"
+                ng-click="products_settings.sliderChanged(day, $index)"
+              ></rzslider>
+
+            </div>
+            <div class='table_item_actions pull-left text-right'>
+              <md-menu>
+                <button md-ink-ripple
+                      class='md-btn md-fab no-shadow'
+                      ng-disabled='disabled'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                      aria-disabled='false'
+                      ng-click='$mdMenu.open($event)'>
+                  <i class='mdi mdi-dots-vertical i-24'></i>
+                </button>
+                <md-menu-content width="4">
+
+                  <md-menu-item>
+                    <md-button ng-click='products_settings.closeToday(day, $index)' ng-if="!products_settings.products_by_day[day][$index].options.disabled">Vandaag sluiten</md-button>
+                    <md-button ng-click='products_settings.closeToday(day, $index)' ng-if="products_settings.products_by_day[day][$index].options.disabled">Vandaag openen</md-button>
+                  </md-menu-item>
+
+                  <md-menu-item>
+                    <md-button ng-click='products_settings.hidden(product.productId)' ng-if="!products_settings.products[product.productId].hidden">Verberg</md-button>
+                    <md-button ng-click='products_settings.hidden(product.productId)' ng-if="products_settings.products[product.productId].hidden">Tonen</md-button>
+                  </md-menu-item>
+
+                  <md-menu-item>
+                    <md-button ng-click='products_settings.removeProduct(product.productId)' class="remove-button">Product verwijderen</md-button>
+                  </md-menu-item>
+
+                </md-menu-content>
+              </md-menu>
+            </div>
+          </li>
+        </ul>
+      </form>
+
+    </accordion-group>
+  </accordion>
+</div>
