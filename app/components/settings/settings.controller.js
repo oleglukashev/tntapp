@@ -10,7 +10,8 @@ export default class SettingsCtrl {
         'ALGEMEEN'               : 'app.settings.general',
         'MAILS'                  : 'app.settings.mails',
         'PLEKKEN VRIJHOUDEN'     : 'app.settings.limits',
-        'TAFELS'                 : 'app.settings.tables'
+        'TAFELS'                 : 'app.settings.tables',
+        'PLUGINS'                : 'app.settings.plugins'
     };
   }
 }

@@ -153,7 +153,7 @@ export default class User {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + this.currentCompany.id + '/customer/find_by_id/' + id,
+      url: API_URL + '/company/' + this.currentCompany.id + '/customer/find_by_id/' + id,
       method: 'GET',
     }).then((result) => {
       return result.data;
