@@ -59,7 +59,7 @@ export default class Settings {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/settings/plugins',
+      url: API_URL + '/company/' + company_id + '/settings/plugins',
       method: 'GET',
     }).then((result) => result.data);
   }
@@ -118,7 +118,7 @@ export default class Settings {
     }
 
     return this.$http({
-      url: this.AppConstants.api + '/company/' + company_id + '/settings/plugins/update_tnr_sync_token',
+      url: API_URL + '/company/' + company_id + '/settings/plugins/update_tnr_sync_token',
       method: 'PATCH',
       data: data
     }).then((result) => result.data);
