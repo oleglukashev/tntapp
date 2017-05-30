@@ -1,16 +1,20 @@
 <div class='md-list-item-left img-circle m-t-sm grey-100'>
-  <i ng-class='dash.getTodayIconClass(reservation, reservation_part)' class='mdi i-24'></i>
+  <div class='pull-left m-l-sm'>
+    <i ng-class='dash.status_classes[reservation.status]' class='mdi i-20' ng-click='dash.changeTodayIconClass(reservation, reservation_part)'></i>
+  </div>
 </div>
 <div class='pull-right'>
-  <button md-ink-ripple
-          class='md-btn md-fab m-t-xs m-b-xs no-shadow'
-          ng-disabled='disabled'
-          aria-haspopup='true'
-          aria-expanded='false'
-          aria-disabled='false'
-          ng-click='dash.openUserMenu()'>
-    <i class='mdi mdi-dots-vertical i-24'></i>
-  </button>
+  <md-menu>
+    <i class='mdi mdi-dots-vertical i-24' ng-click='$mdMenu.open($event);'></i>
+    <md-menu-content width="4" class="reservation_menu">
+      <md-menu-item ng-repeat="menu in dash.right_menu[reservation.status]">
+        <md-button ng-click='dash.changeStatus(reservation, menu.status)' ng-disabled="menu.disabled">
+          <i class='mdi i-24 mdi-with-button-padding' ng-class="menu.class"></i>
+          {{ menu.name }}
+        </md-button>
+      </md-menu-item>
+    </md-menu-content>
+  </md-menu>
 </div>
 <div class='md-list-item-content'>
   <h3 class='text-md'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</h3>
