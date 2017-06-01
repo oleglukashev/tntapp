@@ -32,7 +32,7 @@ module.exports = {
     filename: '[name].min.js',
   },
 
-  watch: true,
+  watch: false,
 
   plugins: [
     new Extract('app.min.css'),
