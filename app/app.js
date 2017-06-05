@@ -16,6 +16,7 @@ import angular_translate_storage_locale   from 'angular-translate-storage-local'
 import angular_translate_storage_cookie   from 'angular-translate-storage-cookie'
 import angular_moment                     from 'angular-moment'
 import anguar_oclazyLoad                  from 'oclazyload'
+import rzModule                           from 'angularjs-slider'
 import ui_load                            from './common/services/ui-load'
 import ui_jq                              from './common/directives/ui-jq'
 import dnd_lists                          from './common/directives/angular-drag-and-drop-lists.directive'
@@ -61,6 +62,7 @@ const app = angular
     new_reservation,
     auth,
     settings,
+    rzModule,
     'app.services',
     'app.directives',
     chartjs

@@ -1,0 +1,118 @@
+<section class='no-margin'>
+  <md-toolbar class='blue-grey-900'>
+    <div class='md-toolbar-tools'>
+      <i class='mdi mdi-close m-r-sm' ng-click='new_product.closeModal()' ng-if="new_product.tab_index==0"></i>
+      <i class='mdi mdi-arrow-left m-r-sm' ng-click='new_product.tab_index=0' ng-if="new_product.tab_index==1"></i>
+      Product toevoegen
+    </div>
+  </md-toolbar>
+  <md-content>
+
+  <md-tabs class='reservation_tabs product_tabs'
+           flex
+           md-selected='new_product.tab_index'
+           md-no-pagination
+           md-stretch-tabs
+           md-dynamic-height>
+    <md-tab>
+
+      <md-tab-body>
+
+        <div class='select-product-wrapper reservation_person b-t' flex>
+
+          <div class='md-list-item'>
+            <div class='md-list-item-content text-center'>
+              <h4>Wat voor soort product wil je toevoegen?</h4>
+            </div>
+          </div>
+          <div class='wrapper'>
+            <div class='clearfix'>
+              <label ng-repeat="product in new_product.default_products"
+                     ng-class="{ 'disabled': new_product.prosucts_used.includes(product) }"
+                     ng-click=''
+                     class='box'
+                     ng-model='new_product.item.name'
+                     uncheckable
+                     btn-radio='product'>
+                <i class='box_active_icon mdi mdi-check'></i>
+                <i class='box_icon mdi {{ new_product.icons_classes[product] }}'></i>
+                <p class='no-margin'>{{ product }}</p>
+              </label>
+            </div>
+
+            <button
+                  ng-hide='new_product.add_name_is_opened'
+                  class='md-btn md-flat btn-fw m-t-md text-success'
+                  ng-click='new_product.add_name_is_opened = true;'>
+              <i class='mdi mdi-plus-circle-outline'></i>
+              ZELF NAAM TOEVOEGEN
+            </button>
+
+            <md-input-container class='m-l-sm' ng-show='new_product.add_name_is_opened'>
+              <label>ZELF NAAM TOEVOEGEN</label>
+              <input ng-model='new_product.item.name' ng-required />
+            </md-input-container>
+          </div>
+
+          <button class='btn btn-lg btn-success text-success no-top-radius md_content_button'
+                  ng-class="{ 'disabled': !new_product.item.name }"
+                  ng-click='new_product.selectProduct();new_product.tab_index=1'>
+            <span ng-hide='new_product.is_submitting'>VERDER</span>
+          </button>
+        </div>
+      </md-tab-body>
+    </md-tab>
+
+    <md-tab>
+      <md-tab-body>
+
+        <div class='select-product-wrapper reservation_person b-t adding-product-wrapper' flex>
+
+          <div class='md-list-item'>
+            <div class='md-list-item-content text-center'>
+              <h4>Wat zijn je openingstijden voor het <strong>{{ new_product.item.name }}?</strong></h4>
+            </div>
+          </div>
+          <div class='wrapper'>
+            <div class='clearfix'>
+
+              <table class='table no-margin head-table'>
+                <col width='33%'>
+                <col width='33%'>
+                <col width='34%'>
+                <thead>
+                  <th></th>
+                  <th class="eleven-o-clock"><div>11:00</div></th>
+                  <th class="twenty-four-o-clock2"><div>24:00</div></th>
+                </thead>
+                <tr ng-repeat="slider in new_product.sliders track by $index">
+                  <td>{{ slider.name }}</td>
+                  <td colspan="2">
+                     <rzslider
+                      rz-slider-model="new_product.sliders[$index].slider.minValue"
+                      rz-slider-high="new_product.sliders[$index].slider.maxValue"
+                      rz-slider-options="new_product.sliderOptions"
+                    ></rzslider>
+                  </td>
+                </tr>
+              </table>
+
+            </div>
+          </div>
+
+          <button class='btn btn-lg btn-success text-success no-top-radius md_content_button'
+                  ng-class="{ 'disabled': !new_product.item.name }"
+                  ng-click='new_product.submitForm();'
+                  ng-disabled="new_product.is_submitting">
+            <span ng-hide='new_product.is_submitting'>VOLTOOIEN</span>
+            <div layout='row' layout-align='space-around' ng-show='new_product.is_submitting'>
+              <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
+            </div>
+          </button>
+        </div>
+
+      </md-tab-body>
+    </md-tab>
+
+  </md-content>
+</section>
