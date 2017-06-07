@@ -1,17 +1,13 @@
 export default class UserMenuCtrl {
-  constructor(User, Search, moment, $scope, $rootScope, $mdSidenav) {
+  constructor(Customer, moment, $scope, $rootScope, $mdSidenav) {
     'ngInject';
 
-    this.moment         = moment;
-    this.User           = User;
-    this.Search         = Search;
-    this.currentUser    = User.current;
-    this.currentCompany = User.currentCompany;
-    this.logout         = User.logout.bind(User);
-    this.$scope         = $scope;
-    this.$rootScope     = $rootScope;
-    this.$mdSidenav     = $mdSidenav;
-    this.months         = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
+    this.moment          = moment;
+    this.Customer        = Customer;
+    this.$scope          = $scope;
+    this.$rootScope      = $rootScope;
+    this.$mdSidenav      = $mdSidenav;
+    this.months          = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
 
     $rootScope.userData                 = {};
     $rootScope.userDataLoaded           = false;
@@ -29,11 +25,11 @@ export default class UserMenuCtrl {
   openUserMenu(customerId, resetvationPartId) {
     this.closeUserMenu();
 
-    this.User.findById(customerId).then(customer => {
+    this.Customer.findById(customerId).then(customer => {
       this.$rootScope.userData = customer[0];
       this.$rootScope.userDataLoaded = true;
 
-      this.Search.searchReservationsByCustomerId(customerId).then(results => {
+      this.Customer.searchReservationsByCustomerId(customerId).then(results => {
         this.$rootScope.userReservations = results;
         this.$rootScope.userReservationsLoaded = true;
 

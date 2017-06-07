@@ -13,6 +13,7 @@ import ChartsService            from './charts.service'
 import TimeRangeService         from './time_range.service'
 import PageFilterTimeRangeService from './page_filter_time_range.service';
 import SliderService              from './slider.service';
+import CustomerService          from './customer.service'
 
 export default angular.module('app.services', [])
   .service('User', UserService)
@@ -29,4 +30,5 @@ export default angular.module('app.services', [])
   .service('TimeRange', TimeRangeService)
   .service('PageFilterTimeRange', PageFilterTimeRangeService)
   .service('Slider', SliderService)
+  .service('Customer', CustomerService)
   .name;
