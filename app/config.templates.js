@@ -10,8 +10,8 @@ export default function templates($templateCache) {
   $templateCache.put('profile.view.html', require('./components/dashboard/profile/profile.view.html'));
   $templateCache.put('search.view.html', require('./shared/search/search.view.html'));
   $templateCache.put('charts.view.html', require('./components/dashboard/charts/charts.view.html'));
-  $templateCache.put('dashboard.reservation.view.html', require('./components/dashboard/dashboard.reservation.view.html'));
-  $templateCache.put('dashboard.reservation_item.view.html', require('./components/dashboard/dashboard.reservation_item.view.html'));
+  $templateCache.put('dashboard_reservation.view.html', require('./components/dashboard/reservation/dashboard_reservation.view.html'));
+  $templateCache.put('dashboard_reservation.item.view.html', require('./components/dashboard/reservation/dashboard_reservation.item.view.html'));
   $templateCache.put('settings_mails.edit_mail.view.html', require('./components/settings/mails/settings_mails.edit_mail.view.html'));
   $templateCache.put('settings_tables.new_zone.view.html', require('./components/settings/tables/settings_tables.new_zone.view.html'));
   $templateCache.put('settings_products.new_product.view.html', require('./components/settings/products/settings_products.new_product.view.html'));

@@ -1,0 +1,89 @@
+green_color = #36b590
+default_color = #58666e
+
+.reservation_modal
+  md-content
+    padding-bottom 0
+    height auto
+    min-height 520px
+    
+    md-tabs.reservation_tabs
+      border-radius 0
+
+      md-tabs-wrapper
+        background-color #263238
+
+        md-tabs-canvas
+          height 56px
+
+          md-pagination-wrapper
+            height 56px
+            width 100%
+
+            md-tab-item.md-tab
+              width 16.66%
+              height 56px
+              padding 5px 0
+              font-size 16px
+              line-height 30px
+
+              &.md-active
+                color #fff
+
+            md-ink-bar
+              height 4px
+              background-color green_color
+
+      md-tabs-content-wrapper
+        md-tab-content
+          .flex
+            overflow-y auto
+            height 442px
+
+            &.reservation_person
+              padding-bottom 78px
+              height auto
+              min-height 464px
+
+              & > button[type='submit']
+                position absolute
+                bottom 0
+
+              & > button[type='button']
+                position absolute
+                bottom 46px
+
+            &.reservation_person_count
+              .wrapper
+                .w-lg
+                  & > label
+                    padding 12px 0
+                    width 44px
+                    border-radius 50%
+                    border none
+                    box-shadow none
+
+            &.reservation_zone
+              .wrapper
+                .w-xxl
+                  label.active
+                    background-color green_color
+                    border-color green_color
+                    color #fff !important
+
+    @media (max-width 600px)
+      md-tabs.reservation_tabs
+        md-tabs-wrapper
+          md-tabs-canvas
+            md-pagination-wrapper
+              md-tab-item
+                .text-center
+                  display none
+
+                  &:first-child
+                    display block
+                    heght 46px
+
+                    i
+                      font-size 22px
+                      line-height 46px

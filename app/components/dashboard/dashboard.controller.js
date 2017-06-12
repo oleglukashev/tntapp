@@ -183,8 +183,8 @@ export default class DashboardCtrl {
 
   openReservation() {
     let modalInstance = this.$modal.open({
-      templateUrl: 'reservationContent.html',
-      controller: 'ReservationCtrl as reserv',
+      templateUrl: 'dashboard_reservation.view.html',
+      controller: 'DashboardReservationCtrl as dash_reserv',
       size: 'md'
     });
 

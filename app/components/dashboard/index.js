@@ -1,10 +1,12 @@
-import angular from 'angular';
-import uirouter from 'angular-ui-router';
+import angular                from 'angular';
 
-import routing from './dashboard.route';
-import controller from './dashboard.controller';
+import routing                from './dashboard.route';
+import controller             from './dashboard.controller';
 
-export default angular.module('app.dashboard', [uirouter])
+import dashboard_reservation_controller from './reservation/dashboard_reservation.controller';
+
+export default angular.module('app.dashboard', [])
   .config(routing)
   .controller('DashboardCtrl', controller)
+  .controller('DashboardReservationCtrl', dashboard_reservation_controller)
   .name;

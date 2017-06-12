@@ -9,7 +9,7 @@
 
         <div ng-repeat='reservation in dash.action_required'>
           <div class='reservation_action_required md-list-item'
-               data-ng-include=" 'dashboard.reservation_item.view.html' "
+               data-ng-include=" 'dashboard_reservation.item.view.html' "
                ng-repeat='reservation_part in reservation.reservation_parts'></div>
         </div>
       </div>
@@ -34,7 +34,7 @@
 
         <div ng-repeat='reservation in dash.group_this_week'>
           <div class='reservation_group_this_week md-list-item'
-               data-ng-include=" 'dashboard.reservation_item.view.html' "
+               data-ng-include=" 'dashboard_reservation.item.view.html' "
                ng-repeat='reservation_part in reservation.reservation_parts'></div>
         </div>
       </div>
@@ -44,10 +44,6 @@
       <i class='mdi mdi-plus i-24'></i>
     </button>
 
-    <script type="text/ng-template" id="reservationContent.html">
-      <div ng-include=" 'dashboard.reservation.view.html' "></div>
-    </script>
-
     <div class='panel'>
       <div class='panel-heading'>Vandaag</div>
       <div class='md-list'>
@@ -56,7 +52,7 @@
         </div>
         <div ng-repeat='reservation in dash.today'>
           <div class='reservation_today md-list-item'
-               data-ng-include=" 'dashboard.reservation_item.view.html' "
+               data-ng-include=" 'dashboard_reservation.item.view.html' "
                ng-repeat='reservation_part in reservation.reservation_parts'></div>
         </div>
       </div>
