@@ -49,6 +49,7 @@ import                                         './common/directives'
 import profiles                           from './components/profiles'
 import constants                          from './config.constants'
 import                                         'angular-growl-notifications'
+import edit_user                          from './shared/user_menu/edit'
 
 const app = angular
   .module('app', [
@@ -88,7 +89,7 @@ const app = angular
     profiles,
     constants,
     'growlNotifications',
-    agenda
+    edit_user
   ])
   .config(jwt_config)
   .controller('AppCtrl', app_controller)
