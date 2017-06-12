@@ -148,6 +148,7 @@ export default class DashboardCtrl {
 
     this.right_menu.delayed  = this.right_menu.confirmed;
     this.right_menu.expected = this.right_menu.present;
+    this.$modal           = $modal;
 
     $scope.$on('DashboardCtrl.reload_reservations', () => {
       this.loadReservations();
