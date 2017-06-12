@@ -112,24 +112,23 @@
                   </div>
                 </div>
                 <div class='wrapper'>
-                    <div class='clearfix text-center' ng-show='reserv.products_is_loaded'>
-                      <label ng-repeat="product in reserv.products"
-                             ng-click='reserv.selectTab(3)'
-                             class='box'
-                             ng-model='reserv.reservation.product'
-                             uncheckable
-                             btn-radio='product.id'>
-                        <i class='box_active_icon mdi mdi-check'></i>
-                        <i class='box_icon mdi mdi-food-fork-drink'></i>
-                        <p class='no-margin'>{{ product.name }}</p>
-                      </label>
-                    </div>
-                    <div class='m-t-xxl m-b-xxl'
-                         layout='row'
-                         layout-align='space-around'
-                         ng-hide='reserv.products_is_loaded'>
-                      <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-                    </div>
+                  <div class='text-center' ng-show='reserv.products_is_loaded'>
+                    <label ng-repeat='product in reserv.products'
+                           ng-click='reserv.selectTab(3)'
+                           class='box'
+                           ng-model='reserv.reservation.product'
+                           uncheckable
+                           btn-radio='product.id'>
+                      <i class='box_active_icon mdi mdi-check'></i>
+                      <i class='box_icon mdi mdi-food-fork-drink'></i>
+                      <p class='no-margin'>{{ product.name }}</p>
+                    </label>
+                  </div>
+                  <div class='m-t-xxl m-b-xxl'
+                       layout='row'
+                       layout-align='space-around'
+                       ng-hide='reserv.products_is_loaded'>
+                    <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
                   </div>
               </div>
             </md-tab-body>
@@ -150,32 +149,42 @@
                     <h4>Welk tafel komt de klant te zitten?</h4>
                   </div>
                 </div>
-                <div class='wrapper' layout='column' layout-align='space-around center'>
-                  <div class='w-xxl item'>
-                    <div ng-show='reserv.zones_is_loaded'>
-                      <div ng-repeat='zone in reserv.zones'>
-                        <p><small class='text-muted'>{{ zone.name }}:</small></p>
-
-                        <label ng-repeat='table_id in zone.table_ids'
-                               ng-class="{ 'disabled': reserv.isDisabledTableByTableId(table_id) }"
-                               class='btn btn-default block  m-b-xs no-shadow text-success text-left'
-                               ng-model='reserv.reservation.tables_values[table_id]'
-                               uncheckable
-                               btn-checkbox>
-                          <span class='m-r-lg'>Tafel {{ reserv.getTableNumberByTableId(table_id) }}</span><span>{{ reserv.getPersonCountByTableId(table_id) }} personen</span>
-                        </label>
-                      </div>
-
-                      <button type='button'
-                              class='btn btn-md btn-success text-success w-full'
-                              ng-click='reserv.selectTab(4);'>Ok</button>
+                <div class='wrapper' ng-show='reserv.zones_is_loaded'>
+                  <div class='zones_boxes clearfix text-center' ng-show='reserv.zones_is_showed'>
+                    <div ng-repeat="zone in reserv.zones"
+                         ng-click='reserv.setZone(zone);'
+                         class='box'>
+                      <i class='box_icon mdi mdi-martini'></i>
+                      <p class='no-margin'>{{ zone.name }}</p>
                     </div>
-                    <div class='m-t-xxl m-b-xxl'
-                         layout='row'
-                         layout-align='space-around'
-                         ng-hide='reserv.zones_is_loaded'>
-                      <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-                    </div>
+                  </div>
+
+                  <div class='tables_boxes' ng-hide='reserv.zones_is_showed'>
+                    <p><small class='text-muted'>{{ reserv.reservation.zone.name }}:</small></p>
+                    <label ng-repeat='table_id in reserv.reservation.zone.table_ids'
+                           ng-class="{ 'disabled': reserv.isDisabledTableByTableId(table_id) }"
+                           class='btn btn-default block  m-b-xs no-shadow text-success text-left'
+                           ng-model='reserv.reservation.tables_values[table_id]'
+                           uncheckable
+                           btn-checkbox>
+                      <span class='m-r-lg'>Tafel {{ reserv.getTableNumberByTableId(table_id) }}</span><span>{{ reserv.getPersonCountByTableId(table_id) }} personen</span>
+                    </label>
+
+                    <label ng-click='reserv.zones_is_showed = true'
+                           class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>Show zones</label>
+
+                    <button type='button'
+                            class='btn btn-md btn-success text-success w-full'
+                            ng-click='reserv.selectTab(4);'>Ok</button>
+                  </div>
+                </div>
+                
+                <div class='wrapper' layout='column' layout-align='space-around center' ng-hide='reserv.zones_is_loaded'>
+                  <div class='m-t-xxl m-b-xxl'
+                       layout='row'
+                       layout-align='space-around'
+                       ng-hide='reserv.zones_is_loaded'>
+                    <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
                   </div>
                 </div>
               </div>

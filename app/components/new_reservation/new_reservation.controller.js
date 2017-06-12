@@ -24,6 +24,7 @@ export default class NewReservationCtrl {
     this.social               = null;
     
     this.moment               = moment;
+    this.zones_is_showed      = true;
 
     this.date_options = {
       formatYear: 'yy',
@@ -182,7 +183,7 @@ export default class NewReservationCtrl {
     let table = this.filterFilter(this.tables, { id: table_id })[0];
 
     if (table) {
-      return table.person_count;
+      return table.number_of_persons;
     } else {
       return null;
     }
@@ -216,6 +217,11 @@ export default class NewReservationCtrl {
     } else {
       return null;
     }
+  }
+
+  setZone(zone) {
+    this.zones_is_showed  = false;
+    this.reservation.zone = zone
   }
 
   loadTime() {
