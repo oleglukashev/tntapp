@@ -1,8 +1,9 @@
 export default class User {
-  constructor(JWT, $http, $state, $q, $location, $window) {
+  constructor(JWT, Upload, $http, $state, $q, $location, $window) {
     'ngInject';
 
     this.JWT             = JWT;
+    this.Upload          = Upload;
     this.$http           = $http;
     this.$state          = $state;
     this.$location       = $location;
@@ -153,6 +154,37 @@ export default class User {
     return this.$http({
       url: API_URL + '/company/' + company_id + '/customer/find_by_id/' + id,
       method: 'GET',
+    }).then((result) => {
+      return result.data;
+    });
+  }
+
+  uploadPhoto(user_id, file) {
+    file.upload = this.Upload.upload({
+      url:  API_URL + '/company/' + this.current_company.id + '/user/' + user_id + '/upload',
+      data: { photo: file },
+      headers: {
+        Authorization: 'Bearer ' + this.JWT.get()
+      }
+    });
+
+    return file.upload;
+  }
+
+  getPhoto(user_id) {
+
+    let deferred = this.$q.defer();
+
+    if (!this.current_company) {
+      return deferred.promise;
+    }
+
+    return this.$http({
+      url: API_URL + '/company/' + this.current_company.id + '/user/' + user_id + '/photo?' + new Date().getTime(),
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + this.JWT.get()
+      }
     }).then((result) => {
       return result.data;
     });

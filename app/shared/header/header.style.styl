@@ -76,15 +76,25 @@ green_color = #36b590
       color #fff
 
 
-  .header-account-menu
-    .header-account-menu__avatar
-      margin 2px 0
-      width 32px
-      height 32px
-      border-radius 50%
-      border 1px solid #fff
-      background-color #fff
+  .header-account-menu__avatar
+    margin 2px 0
+    width 32px
+    height 32px
+    border-radius 50%
+    border 1px solid #fff
+    background-color #fff
+    position relative
+    top 18px
+    left 25px
+    background-clip border-box
+    background-origin padding-box
+    background-position-x 50%
+    background-position-y 50%
+    background-size cover
+    div
+      margin-left -3px
 
+  .header-account-menu
     .dropdown-toggle
       padding 18px 15px
       cursor pointer
@@ -183,3 +193,7 @@ only screen and (min-device-pixel-ratio: 1.5)
   font-size 16px
   left 81px
   font-weight bold
+
+.photo_loading
+  background-image none
+  background-color #999

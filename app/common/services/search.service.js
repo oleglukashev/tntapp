@@ -1,13 +1,11 @@
 import angular from 'angular';
 
 export default class Search {
-  constructor(User, $http, $q) {
+  constructor($http, $q) {
     'ngInject';
 
     this.$http           = $http;
     this.$q              = $q;
-    this.currentUser     = User.current;
-    this.current_company = User.current_company;
   }
 
   // Relevation sort functions for search results:
