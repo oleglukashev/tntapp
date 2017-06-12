@@ -6,6 +6,7 @@ import ZoneService              from './zone.service'
 import TableService             from './table.service'
 import ReservationService       from './reservation.service'
 import ReservationStatusService from './reservation_status.service'
+import CustomerCompanyService   from './customer_company.service'
 import JWTService               from './jwt.service'
 import SearchService            from './search.service'
 import ChartsService            from './charts.service'
@@ -19,6 +20,7 @@ export default angular.module('app.services', [])
   .service('Table', TableService)
   .service('Reservation', ReservationService)
   .service('ReservationStatus', ReservationStatusService)
+  .service('CustomerCompany', CustomerCompanyService)
   .service('JWT', JWTService)
   .service('Search', SearchService)
   .service('Charts', ChartsService)

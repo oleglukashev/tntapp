@@ -41,14 +41,6 @@ module.exports = {
 
   plugins: [
     new Extract('app.min.css'),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        // 'warnings'     : false,
-        // 'drop_debugger': true,
-        // 'drop_console' : true,
-        // 'pure_funcs'   : ['console.log']
-      }
-    }),
     new webpack.optimize.CommonsChunkPlugin({
       name     : 'vendor',
       chunks   : ['app'],
@@ -56,7 +48,8 @@ module.exports = {
       minChunks: Infinity
     }),
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify('http://api.tnt.me/api/v2')
+      API_URL: JSON.stringify('http://api.tnt.me/api/v2'),
+      FACEBOOK_ID: '722157017888974'
     }),
     new ngAnnotatePlugin({
       add: true

@@ -26,12 +26,14 @@ import app_controller                     from './common/controllers/app.control
 import header_controller                  from './shared/header/header.controller'
 import user_menu_controller               from './shared/user_menu/user_menu.controller'
 import profile_controller                 from './components/dashboard/profile/profile.controller'
+import new_reservation_controller         from './components/new_reservation/new_reservation.controller'
 import search                             from './shared/search'
 import dashboard                          from './components/dashboard'
-import new_reservation                    from './components/reservation'
+import customer_reservation               from './components/customer_reservation'
 import settings                           from './components/settings'
 import charts_controller                  from './components/dashboard/charts/charts.controller'
 import auth                               from './components/auth'
+import satellizer                         from 'satellizer'
 import                                         './common/services'
 import                                         './common/directives'
 import chartjs from                   'angular-chart.js'
@@ -57,9 +59,10 @@ const app = angular
     anguar_oclazyLoad,
     ui_jq,
     dnd_lists,
+    satellizer,
     search,
     dashboard,
-    new_reservation,
+    customer_reservation,
     auth,
     settings,
     rzModule,
@@ -81,7 +84,16 @@ const app = angular
     jwtKey: 'jwtToken',
     appName: 'TNT',
   })
-  .config(['$translateProvider', function($translateProvider){
+  .config(['$authProvider', ($authProvider) => {
+    $authProvider.facebook({
+      clientId: FACEBOOK_ID,
+      url: API_URL + '/auth/facebook/'
+    });
+    $authProvider.twitter({
+      url: API_URL + '/auth/twitter'
+    });
+  }])
+  .config(['$translateProvider', ($translateProvider) => {
     // Register a loader for the static files
     // So, the module will search missing translation tables under the specified urls.
     // Those urls are [prefix][langKey][suffix].
@@ -117,6 +129,7 @@ const app = angular
   .controller('UserMenuCtrl', user_menu_controller)
   .controller('ProfileCtrl', profile_controller)
   .controller('ChartsCtrl', charts_controller)
+  .controller('NewReservationCtrl', new_reservation_controller)
   .constant('JQ_CONFIG', {
     easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],
     plot: ['vendor/jquery/flot/jquery.flot.js'],

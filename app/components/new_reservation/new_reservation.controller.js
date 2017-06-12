@@ -1,21 +1,28 @@
 import angular from 'angular';
 
-export default class ReservationCtrl {
-  constructor(User, Reservation, Product, Zone, Table, moment, filterFilter, $rootScope, $scope, $window, $modalInstance) {
+export default class NewReservationCtrl {
+  constructor(User, Reservation, CustomerCompany, Product, Zone, Table, moment, filterFilter, $state,
+    $stateParams, $rootScope, $scope, $window, $auth) {
     'ngInject';
 
-    this.current_company      = User.current_company;
+    this.is_dashboard_page    = $state.current.name == 'app.dashboard';
+    this.is_reservation_page  = $state.current.name == 'reservation.new';
+
+    this.current_company_id = this.is_dashboard_page ? User.current_company.id : $stateParams.id;
 
     this.Reservation          = Reservation;
+    this.CustomerCompany      = CustomerCompany;
     this.Product              = Product;
     this.Zone                 = Zone;
     this.Table                = Table;
 
+    this.$auth                = $auth;
     this.$scope               = $scope;
     this.$rootScope           = $rootScope;
     this.filterFilter         = filterFilter;
     this.$window              = $window;
-    this.$modalInstance       = $modalInstance;
+    this.social               = null;
+    
     this.moment               = moment;
 
     this.date_options = {
@@ -30,10 +37,11 @@ export default class ReservationCtrl {
 
     this.reservation = {
       date: this.initDate,
-      number_of_persons: undefined,
-      time: undefined,
+      number_of_persons: null,
+      time: null,
       language: 'NL',
-      gender: 'Man'
+      gender: 'Man',
+      social: null
     };
 
     //states
@@ -119,7 +127,7 @@ export default class ReservationCtrl {
       }]
     }
 
-    this.Reservation.create(this.current_company.id, data)
+    this.Reservation.create(this.current_company_id, data)
       .then((result) => {
         this.is_submitting = false;
         this.success       = true;
@@ -140,16 +148,15 @@ export default class ReservationCtrl {
            )
   }
 
-  closeModal() {
-    this.$modalInstance.dismiss('cancel');
-  }
-
   openDatepicker() {
     this.opened = true;
   }
 
   timeIsDisabled(time_obj) {
-    if (this.reservation.person_count > time_obj.max_personen || time_obj.is_closed) {
+    if (this.reservation.person_count > time_obj.max_personen ||
+        time_obj.is_closed ||
+        time_obj.more_than_deadline ||
+        time_obj.time_is_past) {
       return true;
     }
 
@@ -217,7 +224,7 @@ export default class ReservationCtrl {
 
     if (this.canLoadTime()) {
       this.Product
-        .getAvailableTables(this.current_company.id, this.reservation.product, this.reservation.date)
+        .getAvailableTables(this.current_company_id, this.reservation.product, this.reservation.date)
           .then(
             (result) => {
               this.available_time = result;
@@ -234,7 +241,7 @@ export default class ReservationCtrl {
     this.products            = [];
 
     this.Product
-      .getAll(this.current_company.id, false)
+      .getAll(this.current_company_id, false)
         .then(
           (result) => {
             this.products = result;
@@ -250,7 +257,7 @@ export default class ReservationCtrl {
     this.zones           = [];
 
     this.Zone
-      .getAll(this.current_company.id)
+      .getAll(this.current_company_id)
         .then(
           (result) => {
             this.zones = result;
@@ -264,12 +271,22 @@ export default class ReservationCtrl {
     this.tables = [];
 
     this.Table
-      .getAll(this.current_company.id)
+      .getAll(this.current_company_id)
         .then(
           (result) => {
             this.tables = result;
           },
           (error) => {
+          });
+  }
+
+  loadSocialUrls() {
+    this.CustomerCompany
+      .getSocialUrls(this.current_company_id)
+        .then(
+          (socials) => {
+            this.socials           = socials;
+            this.socials_is_loaded = true;
           });
   }
 
@@ -285,11 +302,33 @@ export default class ReservationCtrl {
 
   preloadData() {
     this.loadProducts();
-    this.loadZones();
-    this.loadTables();
+
+    if (this.is_dashboard_page) {
+      this.loadZones();
+      this.loadTables();
+    } else {
+      this.loadSocialUrls();
+    }
   }
 
   getReservationDateForSuccess() {
     return this.moment(this.reservation.full_date).format('DD MMMM YYYY');
+  }
+
+  authenticate(provider) {
+    this.reservation.social = provider;
+
+    if (provider === 'email') {
+      this.selectTab(1);
+    } else {
+      this.$auth.authenticate(provider).then(
+      (response) => {
+        this.reservation.name = response.data.name;
+        this.reservation.mail = response.data.email;
+        this.selectTab(1);
+      }, (error) => {
+        // nothing
+      });
+    }
   }
 }
