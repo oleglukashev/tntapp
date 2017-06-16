@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export default class Product {
-  constructor(User, $http, $q) {
+  constructor($http, $q) {
     'ngInject';
 
     this.$http           = $http;

@@ -41,6 +41,14 @@ module.exports = {
 
   plugins: [
     new Extract('app.min.css'),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        'warnings'     : false,
+        'drop_debugger': true,
+        'drop_console' : true,
+        'pure_funcs'   : ['console.log']
+      }
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name     : 'vendor',
       chunks   : ['app'],

@@ -1,22 +1,21 @@
 import angular from 'angular';
 
 export default class SettingsLimitsCtrl {
-  constructor(User, Settings, moment, filterFilter, $window) {
+  constructor(User, Settings, moment, $window) {
     'ngInject';
 
     this.current_company = User.current_company;
 
-    this.Settings  				= Settings;
-    this.moment 	 				= moment;
-    this.is_loaded 				= false;
-    this.filterFilter			= filterFilter;
-    this.$window					= $window;
+    this.Settings         = Settings;
+    this.moment           = moment;
+    this.is_loaded        = false;
+    this.$window          = $window;
 
-    this.days			 				= ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'];
-    this.limit 						= 1;
+    this.days             = ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'];
+    this.limit            = 1;
 
     this.loadLimits();
-    this.limits 					= {};
+    this.limits           = {};
   }
 
   loadLimits() {

@@ -1,0 +1,13 @@
+<div class='page_filter m-b-md clearfix'>
+  <div class='pull-left'>
+    <md-datepicker ng-model='page_filter.date_filter'></md-datepicker>
+  </div>
+  <md-menu>
+    <i class='mdi mdi-settings i-24 m-l-md' ng-click='$mdMenu.open($event);' />
+    <md-menu-content>
+      <md-menu-item>
+        <md-button ng-click='page_filter.openSettings();'>Overboeken aan/uit zetten</md-button>
+      </md-menu-item>
+    </md-menu-content>
+  </md-menu>
+</div>

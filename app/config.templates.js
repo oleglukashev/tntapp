@@ -8,14 +8,17 @@ export default function templates($templateCache) {
   $templateCache.put('login.html', require('./components/layout/login.html'));
   $templateCache.put('user_menu.view.html', require('./shared/user_menu/user_menu.view.html'));
   $templateCache.put('profile.view.html', require('./components/dashboard/profile/profile.view.html'));
+  $templateCache.put('page_filter.view.html', require('./shared/page_filter/page_filter.view.html'));
+  $templateCache.put('page_filter_settings.view.html', require('./shared/page_filter/settings/page_filter_settings.view.html'));
   $templateCache.put('search.view.html', require('./shared/search/search.view.html'));
   $templateCache.put('charts.view.html', require('./components/dashboard/charts/charts.view.html'));
-  $templateCache.put('dashboard_reservation.view.html', require('./components/dashboard/reservation/dashboard_reservation.view.html'));
-  $templateCache.put('dashboard_reservation.item.view.html', require('./components/dashboard/reservation/dashboard_reservation.item.view.html'));
+  $templateCache.put('settings_products.new_product.view.html', require('./components/settings/products/settings_products.new_product.view.html'));
   $templateCache.put('settings_mails.edit_mail.view.html', require('./components/settings/mails/settings_mails.edit_mail.view.html'));
   $templateCache.put('settings_tables.new_zone.view.html', require('./components/settings/tables/settings_tables.new_zone.view.html'));
-  $templateCache.put('settings_products.new_product.view.html', require('./components/settings/products/settings_products.new_product.view.html'));
-  $templateCache.put('rzSliderTpl.html', require('./components/settings/products/rzSliderTpl.html'));
+  $templateCache.put('dashboard_reservations.view.html', require('./components/dashboard/reservations/dashboard_reservations.view.html'));
+  $templateCache.put('dashboard_reservations.item.view.html', require('./components/dashboard/reservations/dashboard_reservations.item.view.html'));
+  $templateCache.put('dashboard_reservations.new.view.html', require('./components/dashboard/reservations/dashboard_reservations.new.view.html'));
+  $templateCache.put('rzSliderTpl.html', require('./shared/rz-slider/rz-slider.view.html'));
 
 
   //angular-bootstrap tpls
@@ -113,7 +116,7 @@ export default function templates($templateCache) {
     "    <a href class=\"accordion-toggle\" ng-click=\"toggleOpen()\" accordion-transclude=\"heading\"><span ng-class=\"{'text-muted': isDisabled}\">{{heading}}</span></a>\n" +
     "  </div>\n" +
     "  <div class=\"panel-collapse\" collapse=\"!isOpen\">\n" +
-    "     <div class=\"panel-body no-padder\" ng-transclude></div>\n" +
+    "     <div class=\"panel-body\" ng-transclude></div>\n" +
     "  </div>\n" +
     "</div>\n" +
     "");

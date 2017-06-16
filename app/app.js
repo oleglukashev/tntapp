@@ -27,16 +27,20 @@ import header_controller                  from './shared/header/header.controlle
 import user_menu_controller               from './shared/user_menu/user_menu.controller'
 import profile_controller                 from './components/dashboard/profile/profile.controller'
 import new_reservation_controller         from './components/new_reservation/new_reservation.controller'
+import page_filter_controller             from './shared/page_filter/page_filter.controller'
+import page_filter_settings_controller    from './shared/page_filter/settings/page_filter_settings.controller'
 import search                             from './shared/search'
 import dashboard                          from './components/dashboard'
+import dashboard_reservations             from './components/dashboard/reservations/dashboard_reservations.controller'
+import reservations                       from './components/reservations'
 import customer_reservation               from './components/customer_reservation'
 import settings                           from './components/settings'
 import charts_controller                  from './components/dashboard/charts/charts.controller'
 import auth                               from './components/auth'
 import satellizer                         from 'satellizer'
+import chartjs                            from 'angular-chart.js'
 import                                         './common/services'
 import                                         './common/directives'
-import chartjs from                   'angular-chart.js'
 
 const app = angular
   .module('app', [
@@ -63,6 +67,7 @@ const app = angular
     search,
     dashboard,
     customer_reservation,
+    reservations,
     auth,
     settings,
     rzModule,
@@ -130,6 +135,9 @@ const app = angular
   .controller('ProfileCtrl', profile_controller)
   .controller('ChartsCtrl', charts_controller)
   .controller('NewReservationCtrl', new_reservation_controller)
+  .controller('DashboardReservationsCtrl', dashboard_reservations)
+  .controller('PageFilterCtrl', page_filter_controller)
+  .controller('PageFilterSettingsCtrl', page_filter_settings_controller)
   .constant('JQ_CONFIG', {
     easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],
     plot: ['vendor/jquery/flot/jquery.flot.js'],
