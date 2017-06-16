@@ -14,7 +14,7 @@ export default class TimeRange {
     }
 
     return this.$http({
-        url: API_URL + '/company/' + company_id + '/time_ranges',
+        url: API_URL + '/company/' + company_id + '/settings/time_ranges',
         method: 'GET',
       }).then((result) => result.data);
   }
@@ -24,7 +24,7 @@ export default class TimeRange {
       return this.$q.defer().promise;
     }
 
-    return this.$http.post(API_URL + '/company/' + company_id + '/time_ranges/edit/' + range_id,
+    return this.$http.post(API_URL + '/company/' + company_id + '/settings/time_ranges/edit/' + range_id,
       data
     ).then((result) => result.data);
   }
@@ -35,7 +35,7 @@ export default class TimeRange {
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/time_ranges/create',
+      url: API_URL + '/company/' + company_id + '/settings/time_ranges/create',
       method: 'POST',
       data: data
     }).then((result) => result.data);
@@ -46,7 +46,7 @@ export default class TimeRange {
       return this.$q.defer().promise;
     }
 
-    return this.$http.post(API_URL + '/company/' + company_id + '/time_ranges/delete/' + range_id)
+    return this.$http.post(API_URL + '/company/' + company_id + '/settings/time_ranges/delete/' + range_id)
       .then((result) => result.data);
   }
 }

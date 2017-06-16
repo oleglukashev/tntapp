@@ -11,6 +11,8 @@ import JWTService               from './jwt.service'
 import SearchService            from './search.service'
 import ChartsService            from './charts.service'
 import TimeRangeService         from './time_range.service'
+import PageFilterTimeRangeService from './page_filter_time_range.service';
+import SliderService              from './slider.service';
 
 export default angular.module('app.services', [])
   .service('User', UserService)
@@ -25,4 +27,6 @@ export default angular.module('app.services', [])
   .service('Search', SearchService)
   .service('Charts', ChartsService)
   .service('TimeRange', TimeRangeService)
+  .service('PageFilterTimeRange', PageFilterTimeRangeService)
+  .service('Slider', SliderService)
   .name;

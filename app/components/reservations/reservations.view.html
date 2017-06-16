@@ -1,0 +1,28 @@
+<div class='clearfix'>
+  <div class='col-lg-8 col-md-8 col-sm-8'>
+    <div data-ng-include=" 'page_filter.view.html' " ng-controller='PageFilterCtrl as page_filter'></div>
+    
+    <button ng-click='reservations.openReservation();'
+            md-ink-ripple class='panel-add-button md-btn md-fab m-b m-t-n-md orange'>
+      <i class='mdi mdi-plus i-24'></i>
+    </button>
+
+    <div class='panel'>
+      <div class='panel-heading'>Reserveringen</div>
+      <div class='md-list'>
+        <div class='wrapper' layout='row' layout-align='space-around' ng-hide='reservations.reservations.length'>
+          <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+        </div>
+
+        <div ng-repeat='reservation in reservations.reservations' ng-show='reservations.reservations.length'>
+          <div class='md-list-item'
+               data-ng-include=" 'dashboard_reservations.item.view.html' "
+               ng-repeat='reservation_part in reservation.reservation_parts'></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-ng-include=" 'profile.view.html' " ng-controller='ProfileCtrl as profile'></div>
+  <div data-ng-include=" 'user_menu.view.html' " ng-controller='UserMenuCtrl as user'></div>
+</div>

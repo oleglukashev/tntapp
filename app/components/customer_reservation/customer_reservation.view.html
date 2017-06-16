@@ -329,6 +329,16 @@
                       <!--</button>-->
                     </div>
                   </div>
+                  <div class='wrapper'
+                       ng-show='reserv.errors'
+                       layout='column'
+                       layout-align='space-around center'>
+                    <div class='alert alert-danger no-margin' ng-show='reserv.errors'>
+                      <div ng-repeat='error in reserv.errors.data.errors.errors'>
+                        {{ error }}
+                      </div>
+                    </div>
+                  </div>
                   <button type='button'
                           md-ink-ripple
                           ng-click='reserv.triggerAdditionalInfo()'

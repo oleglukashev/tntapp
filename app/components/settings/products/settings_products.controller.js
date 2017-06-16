@@ -1,13 +1,14 @@
 import angular from 'angular';
 
 export default class SettingsProductsCtrl {
-  constructor(User, Product, TimeRange, filterFilter, $scope, $timeout, $window, $modal) {
+  constructor(User, Product, TimeRange, Slider, filterFilter, $scope, $timeout, $window, $modal) {
     'ngInject';
 
     this.current_company = User.current_company;
 
     this.Product         = Product;
     this.TimeRange       = TimeRange;
+    this.Slider          = Slider;
     this.filterFilter    = filterFilter;
     this.$modal          = $modal;
     this.$window         = $window;
@@ -22,37 +23,7 @@ export default class SettingsProductsCtrl {
     this.products        = [];
     this.products_used   = [];
 
-    this.slider = {
-      options: {
-        disabled: false,
-        floor: 1,
-        ceil: 96,
-        step: 1,
-        minRange: 1,
-        pushRange: true,
-        draggableRange: true,
-        noSwitching: true,
-        hideLimitLabels: true,
-        translate: (val) => {
-      		let min = '00';
-      		switch(val % 4) {
-      			case 1: {
-      				min = '15'
-      				break;
-      			}
-      			case 2: {
-      				min = '30'
-      				break;
-      			}
-      			case 3: {
-      				min = '45'
-      				break;
-      			}
-      		}
-      	  return Math.floor(val/4) + ':' + min;
-      	},
-      }
-    };
+    this.slider = this.Slider.getOptions();
 
     this.loadProducts();
   }
@@ -62,8 +33,8 @@ export default class SettingsProductsCtrl {
       let timeRange = this.products_by_day[day][id];
       let data = {
         'product_time_range': {
-          'startTime'        : this.from15Min(timeRange.minValue),
-          'endTime'          : this.from15Min(timeRange.maxValue),
+          'startTime'        : this.Slider.from15Min(timeRange.minValue),
+          'endTime'          : this.Slider.from15Min(timeRange.maxValue),
           'product'          : timeRange.productId,
           'dayOfWeekBitfield': [this.days_of_week[timeRange.day]],
           'value'            : timeRange.options.disabled ? 0 : 1,
@@ -83,8 +54,8 @@ export default class SettingsProductsCtrl {
     let timeRange = this.products_by_day[day][id];
     let data = {
       'product_time_range': {
-        'startTime'        : this.from15Min(timeRange.minValue),
-        'endTime'          : this.from15Min(timeRange.maxValue),
+        'startTime'        : this.Slider.from15Min(timeRange.minValue),
+        'endTime'          : this.Slider.from15Min(timeRange.maxValue),
         'product'          : timeRange.productId,
         'dayOfWeekBitfield': [this.days_of_week[timeRange.day]],
         'value'            : timeRange.options.disabled ? 1 : 0,
@@ -126,11 +97,11 @@ export default class SettingsProductsCtrl {
 
           ranges.map((range) => {
             let product          = this.products[range.productId];
-            let productStartTime = this.to15Min('00:00'); //product.start_time
-            let productEndTime   = this.to15Min('23:59', false); //product.end_time
+            let productStartTime = this.Slider.to15Min('00:00'); //product.start_time
+            let productEndTime   = this.Slider.to15Min('23:59', false); //product.end_time
             range.daysOfWeek.map((day) => {
-              let rangeStartTime = this.to15Min(range.startTime);
-              let rangeEndTime   = this.to15Min(range.endTime, false);
+              let rangeStartTime = this.Slider.to15Min(range.startTime);
+              let rangeEndTime   = this.Slider.to15Min(range.endTime, false);
 
               let startTime = Math.max(productStartTime, rangeStartTime);
               let endTime   = Math.min(productEndTime, rangeEndTime);
@@ -187,12 +158,16 @@ export default class SettingsProductsCtrl {
           return res;
         }
       }
-    }).result.then((res) => {
+    });
+
+
+    modalInstance.result.then((res) => {
       let productId = 0;
       this.products.map((product) => {
         if (product.name == res.productName) productId = product.id;
       });
-console.log(productId)
+      
+      console.log(productId)
       if (!productId) {
 
         this.Product
@@ -212,13 +187,6 @@ console.log(productId)
       } else {
         this.addTimeRange(res, productId)
       }
-
-    });
-
-    modalInstance.result.then((selectedItem) => {
-      //success
-    }, () => {
-      // fail
     });
   }
 
@@ -243,8 +211,8 @@ console.log(productId)
 
         data = {
           'product_time_range': {
-            'startTime'        : this.from15Min(arr['minValue']),
-            'endTime'          : this.from15Min(arr['maxValue']),
+            'startTime'        : this.Slider.from15Min(arr['minValue']),
+            'endTime'          : this.Slider.from15Min(arr['maxValue']),
             'product'          : productId,
             'dayOfWeekBitfield': this.days_of_week[i],
             'value'            : 1,
@@ -295,21 +263,6 @@ console.log(productId)
         },
         (error) => {
         });
-  }
-
-  to15Min(time, round=true) {
-    let arr = time.split(':');
-    return arr[0]*4 + (round ? Math.round(arr[1]/15) : Math.floor(arr[1]/15)) || 1;
-  }
-
-  from15Min(min15) {
-    let hours = this.to2Digits(Math.floor(min15/4));
-    let mins  = this.to2Digits((min15%4)*15);
-    return [hours,mins].join(':');
-  }
-
-  to2Digits(dig) {
-    return (dig < 10 ? '0' : '') + dig
   }
 
   redrawSliders() {

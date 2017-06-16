@@ -1,15 +1,14 @@
 import angular from 'angular';
 
 export default class Reservation {
-  constructor(Upload, User, $http, $q) {
+  constructor($http, $q) {
     'ngInject';
 
     this.$http           = $http;
     this.$q              = $q;
-    this.Upload          = Upload;
   }
 
-  getAll(company_id) {
+  getAll(company_id, date) {
     let deferred = this.$q.defer();
 
     if (! company_id) {
@@ -17,7 +16,20 @@ export default class Reservation {
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/reservation',
+      url: API_URL + '/company/' + company_id + '/reservation?date=' + date,
+      method: 'GET',
+    }).then((result) => result.data);
+  }
+
+  getAllGrouped(company_id) {
+    let deferred = this.$q.defer();
+
+    if (! company_id) {
+      return deferred.promise;
+    }
+
+    return this.$http({
+      url: API_URL + '/company/' + company_id + '/reservation/grouped',
       method: 'GET',
     }).then((result) => result.data);
   }
@@ -42,6 +54,18 @@ export default class Reservation {
     }
     return that.$http({
       url: API_URL + '/company/' + company_id + '/reservation',
+      method: 'POST',
+      data: data
+    }).then((result) => result.data);
+  }
+
+  createCustomerReservation(company_id, data) {
+    let that = this;
+    if (! company_id) {
+      return this.$q.defer().promise;
+    }
+    return that.$http({
+      url: API_URL + '/company/' + company_id + '/reservation?is_customer=true',
       method: 'POST',
       data: data
     }).then((result) => result.data);

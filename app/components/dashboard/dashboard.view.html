@@ -1,65 +1,8 @@
 <div class='dashboard'>
-  <div class='col-lg-6 col-md-6 col-sm-6'>
-    <div class='panel'>
-      <div class='panel-heading'>Actie vereist</div>
-      <div class='md-list'>
-        <div class='wrapper' layout='row' layout-align='space-around' ng-hide='dash.action_required.length > 0'>
-          <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-        </div>
-
-        <div ng-repeat='reservation in dash.action_required'>
-          <div class='reservation_action_required md-list-item'
-               data-ng-include=" 'dashboard_reservation.item.view.html' "
-               ng-repeat='reservation_part in reservation.reservation_parts'></div>
-        </div>
-      </div>
-      <div class='panel-footer' ng-show='dash.action_required.length > 0'>
-        <button md-ink-ripple class='md-btn md-flat btn-fw text-success m-l-xxl'>
-          <i class='mdi mdi-checkbox-marked-circle'></i>
-          Bevestig
-        </button>
-        <button md-ink-ripple class='md-btn md-flat btn-fw m-l-sm text-success'>
-          <i class='mdi mdi-reply'></i>
-          Antwoord
-        </button>
-      </div>
-    </div>
-
-    <div class='panel'>
-      <div class='panel-heading'>Groepen deze week</div>
-      <div class='md-list'>
-        <div class='wrapper' layout='row' layout-align='space-around' ng-hide='dash.group_this_week.length > 0'>
-          <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-        </div>
-
-        <div ng-repeat='reservation in dash.group_this_week'>
-          <div class='reservation_group_this_week md-list-item'
-               data-ng-include=" 'dashboard_reservation.item.view.html' "
-               ng-repeat='reservation_part in reservation.reservation_parts'></div>
-        </div>
-      </div>
-    </div>
-
-    <button ng-click='dash.openReservation()' md-ink-ripple class='panel-add-button md-btn md-fab m-b orange'>
-      <i class='mdi mdi-plus i-24'></i>
-    </button>
-
-    <div class='panel'>
-      <div class='panel-heading'>Vandaag</div>
-      <div class='md-list'>
-        <div class='wrapper' layout='row' layout-align='space-around' ng-hide='dash.today.length > 0'>
-          <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-        </div>
-        <div ng-repeat='reservation in dash.today'>
-          <div class='reservation_today md-list-item'
-               data-ng-include=" 'dashboard_reservation.item.view.html' "
-               ng-repeat='reservation_part in reservation.reservation_parts'></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div data-ng-include=" 'charts.view.html' " ng-controller='ChartsCtrl as charts'></div>
+  <div data-ng-include=" 'dashboard_reservations.view.html' "
+       ng-controller='DashboardReservationsCtrl as reservations'></div>
+  <div data-ng-include=" 'charts.view.html' "
+       ng-controller='ChartsCtrl as charts'></div>
 
   <div class='col-lg-2 col-md-2 hidden-xs hidden-sm'>
     <div class='dashboard-ad panel'>

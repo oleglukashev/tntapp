@@ -6,9 +6,12 @@ export default class NewReservationCtrl {
     'ngInject';
 
     this.is_dashboard_page    = $state.current.name == 'app.dashboard';
-    this.is_reservation_page  = $state.current.name == 'reservation.new';
+    this.is_reservations      = $state.current.name == 'app.reservations';
+    this.is_customer_reservation = $state.current.name == 'customer_reservation.new';
 
-    this.current_company_id = this.is_dashboard_page ? User.current_company.id : $stateParams.id;
+    this.current_company_id = this.is_dashboard_page || this.is_reservations 
+                              ? User.current_company.id 
+                              : $stateParams.id;
 
     this.Reservation          = Reservation;
     this.CustomerCompany      = CustomerCompany;
@@ -128,11 +131,15 @@ export default class NewReservationCtrl {
       }]
     }
 
-    this.Reservation.create(this.current_company_id, data)
+    let create_method = this.is_customer_reservation ?
+                        this.Reservation.createCustomerReservation(this.current_company_id, data) :
+                        this.Reservation.create(this.current_company_id, data);
+
+    create_method
       .then((result) => {
         this.is_submitting = false;
         this.success       = true;
-        this.$rootScope.$broadcast('DashboardCtrl.reload_reservations');
+        this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
       },
       (error) => {
         this.is_submitting = false;
@@ -156,10 +163,21 @@ export default class NewReservationCtrl {
   timeIsDisabled(time_obj) {
     if (this.reservation.person_count > time_obj.max_personen ||
         time_obj.is_closed ||
-        time_obj.more_than_deadline ||
-        time_obj.time_is_past) {
+        time_obj.time_is_past
+        ) {
       return true;
     }
+
+    if (this.is_customer_reservation) {
+      let not_enough_room_in_restaurant = (this.reservation.person_count > time_obj.available_seat_count ||
+                                           this.reservation.person_count > time_obj.max_personen_voor_tafels) &&
+                                           !time_obj.can_overbook;
+
+      if (not_enough_room_in_restaurant || time_obj.more_than_deadline) {
+        return true;
+      }
+    }
+
 
     if (this.current_product) {
       let obj_time = this.moment(this.reservation.date + ' ' + time_obj.time);
@@ -309,7 +327,7 @@ export default class NewReservationCtrl {
   preloadData() {
     this.loadProducts();
 
-    if (this.is_dashboard_page) {
+    if (this.is_dashboard_page || this.is_reservations) {
       this.loadZones();
       this.loadTables();
     } else {
