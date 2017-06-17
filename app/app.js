@@ -41,6 +41,8 @@ import satellizer                         from 'satellizer'
 import chartjs                            from 'angular-chart.js'
 import                                         './common/services'
 import                                         './common/directives'
+import chartjs                            from 'angular-chart.js'
+import profiles                           from './components/profiles'
 
 const app = angular
   .module('app', [
@@ -73,7 +75,8 @@ const app = angular
     rzModule,
     'app.services',
     'app.directives',
-    chartjs
+    chartjs,
+    profiles
   ])
 
   .config(['ChartJsProvider', function (ChartJsProvider) {

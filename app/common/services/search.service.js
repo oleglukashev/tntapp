@@ -4,40 +4,10 @@ export default class Search {
   constructor(User, $http, $q) {
     'ngInject';
 
-    this.$http          = $http;
-    this.$q             = $q;
-    this.currentUser    = User.current;
-    this.currentCompany = User.currentCompany;
-  }
-
-  getCustomers() {
-    let deferred = this.$q.defer();
-
-    if (!this.currentCompany) {
-      return deferred.promise;
-    }
-
-    return this.$http({
-      url: API_URL + '/company/' + this.currentCompany.id + '/customer/find',
-      method: 'POST',
-    }).then((result) => {
-      return result.data;
-    });
-  }
-
-  searchReservationsByCustomerId(customerId) {
-    let deferred = this.$q.defer();
-
-    if (!this.currentCompany) {
-      return deferred.promise;
-    }
-
-    return this.$http({
-      url: API_URL + '/company/' + this.currentCompany.id + '/customer/search/' + customerId,
-      method: 'POST',
-    }).then((result) => {
-      return result.data;
-    });
+    this.$http           = $http;
+    this.$q              = $q;
+    this.currentUser     = User.current;
+    this.current_company = User.current_company;
   }
 
   // Relevation sort functions for search results:

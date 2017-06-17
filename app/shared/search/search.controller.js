@@ -1,5 +1,5 @@
 class SearchCtrl {
-  constructor(Search, moment, $scope, $state, $rootScope, $stateParams) {
+  constructor(Search, Customer, moment, $scope, $state, $rootScope, $stateParams) {
     'ngInject';
 
     this.moment        = moment;
@@ -9,6 +9,7 @@ class SearchCtrl {
     this.$scope        = $scope;
     this.$scope.class  = "collapse";
     this.Search        = Search;
+    this.Customer      = Customer;
     this.months        = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
 
     $rootScope.searchResults       = [];
@@ -34,7 +35,7 @@ class SearchCtrl {
   }
 
   selectedItemChange(item) {
-    this.Search.searchReservationsByCustomerId(item['value']).then(results => {
+    this.Customer.searchReservationsByCustomerId(item['value']).then(results => {
       this.$rootScope.searchResults = results;
       this.$rootScope.searchResultsLoaded = true;
     })
@@ -43,11 +44,9 @@ class SearchCtrl {
   }
 
   loadAll() {
-    let customers = this.Search.getCustomers();
-
-    customers.then(results => {
+    this.Customer.getAllForSearch().then(results => {
       this.states = results.map(customer => ({
-        value:   customer['id'],
+        value  : customer['id'],
         display: `${customer['first_name']} ${customer['last_name']}`
       }));
     })
