@@ -1,4 +1,4 @@
-<section class='no-margin'>
+<section class='no-margin new_zone_wrapper'>
   <md-toolbar class='blue-grey-900'>
     <div class='md-toolbar-tools'>
       <i class='mdi mdi-arrow-left m-r-sm'></i>
@@ -11,11 +11,11 @@
         <h4>Wat voor soort zone wil je toevoegen?</h4>
       </div>
     </div>
-    <div class='wrapper'>
+    <div class='settings_add_tables'>
       <div class='clearfix'>
-        <label ng-repeat="zone in new_zone.default_zones"
+        <label ng-repeat="(zone, className) in new_zone.icons_classes"
                ng-class="{ 'disabled': new_zone.zonesNames().includes(zone) }"
-               ng-click=''
+               ng-click='new_zone.changeClass(className)'
                class='box'
                ng-model='new_zone.item.name'
                uncheckable
@@ -25,30 +25,39 @@
           <p class='no-margin'>{{ zone }}</p>
         </label>
       </div>
-
-      <div class='md-form-group m-l-sm no-padder'>
-        <md-checkbox ng-model="new_zone.item.use_in_frontoffice_availability"
-                     aria-label='Gebruiken voor reserveringen via frontoffice'>
-          Gebruiken voor reserveringen via frontoffice
-        </md-checkbox>
-      </div>
-
-      <button
-            ng-hide='new_zone.add_name_is_opened'
-            class='md-btn md-flat btn-fw m-t-md text-success'
-            ng-click='new_zone.add_name_is_opened = true;'>
-        <i class='mdi mdi-plus-circle-outline'></i>
-        ZELF NAAM TOEVOEGEN 
-      </button>
-
-      <md-input-container class='m-l-sm' ng-show='new_zone.add_name_is_opened'>
-        <label>ZELF NAAM TOEVOEGEN</label>
-        <input ng-model='new_zone.item.name' ng-required />
-      </md-input-container>
     </div>
 
+    <div class='md-form-group m-l-sm no-padder'>
+      <md-checkbox ng-model="new_zone.item.use_in_frontoffice_availability"
+                   aria-label='Gebruiken voor reserveringen via frontoffice'>
+        Gebruiken voor reserveringen via frontoffice
+      </md-checkbox>
+    </div>
+
+    <button
+          ng-hide='new_zone.add_name_is_opened'
+          class='md-btn md-flat btn-fw m-t-md text-success'
+          ng-click='new_zone.add_name_is_opened = true;'>
+      <i class='mdi mdi-plus-circle-outline'></i>
+      ZELF NAAM TOEVOEGEN
+    </button>
+
+    <md-input-container class='m-l-sm' ng-show='new_zone.add_name_is_opened'>
+      <label>ZELF NAAM TOEVOEGEN</label>
+      <input ng-model='new_zone.item.name' ng-required />
+    </md-input-container>
+
+    <md-input-container ng-show="new_zone.add_name_is_opened">
+      <label>ICON</label>
+      <md-select ng-model="new_zone.item.class" ng-required>
+        <md-option ng-repeat="class in new_zone.icons_classes" ng-value="class">
+          <i class="mdi {{ class }} i-24"></i>
+        </md-option>
+      </md-select>
+    </md-input-container>
+
     <button class='btn btn-lg btn-success text-success no-top-radius md_content_button'
-            ng-class="{ 'disabled': !new_zone.item.name }"
+            ng-class="{ 'disabled': !(new_zone.item.name && new_zone.item.class) }"
             ng-click='new_zone.submitForm();'>
       <span ng-hide='new_zone.is_submitting'>OPSLAAN</span>
       <div layout='row' layout-align='space-around' ng-show='new_zone.is_submitting'>
