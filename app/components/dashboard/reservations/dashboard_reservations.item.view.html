@@ -1,4 +1,4 @@
-<div ng-style="{ opacity: reservation.status == 'cancelled' ? 0.3 : 1 }">
+<div ng-class='reservation.status'>
   <div class='md-list-item-left img-circle m-t-sm grey-100'>
     <div class='pull-left m-l-sm'>
       <i ng-class='reservations.ReservationStatus.status_classes[reservation.status]'
@@ -21,7 +21,7 @@
         <md-menu-item ng-repeat="menu in reservations.ReservationStatus.right_menu[reservation.status]">
           <md-button ng-click='reservations.ReservationStatus.changeStatus(reservations.current_company.id, reservation, menu.status)' ng-disabled="menu.disabled">
             <i class='mdi i-24 mdi-with-button-padding' ng-class="menu.class"></i>
-            {{ menu.name }}
+            <span class="menu_name">{{ menu.name }}</span>
           </md-button>
         </md-menu-item>
       </md-menu-content>
