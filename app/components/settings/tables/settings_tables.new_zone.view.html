@@ -49,15 +49,15 @@
 
     <md-input-container ng-show="new_zone.add_name_is_opened">
       <label>ICON</label>
-      <md-select ng-model="new_zone.item.class" ng-required>
-        <md-option ng-repeat="class in new_zone.icons_classes" ng-value="class">
-          <i class="mdi {{ class }} i-24"></i>
+      <md-select ng-model="new_zone.item.icon_class" ng-required>
+        <md-option ng-repeat="icon_class in new_zone.icons_classes" ng-value="icon_class">
+          <i class="mdi {{ icon_class }} i-24"></i>
         </md-option>
       </md-select>
     </md-input-container>
 
     <button class='btn btn-lg btn-success text-success no-top-radius md_content_button'
-            ng-class="{ 'disabled': !(new_zone.item.name && new_zone.item.class) }"
+            ng-class="{ 'disabled': !(new_zone.item.name && new_zone.item.icon_class) }"
             ng-click='new_zone.submitForm();'>
       <span ng-hide='new_zone.is_submitting'>OPSLAAN</span>
       <div layout='row' layout-align='space-around' ng-show='new_zone.is_submitting'>
