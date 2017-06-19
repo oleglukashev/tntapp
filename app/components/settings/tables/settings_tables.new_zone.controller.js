@@ -25,7 +25,7 @@ export default class SettingsTablesNewZoneCtrl {
   }
 
   changeClass(className) {
-    this.item.class = className;
+    this.item.icon_class = className;
   }
 
   submitForm() {
@@ -51,7 +51,7 @@ export default class SettingsTablesNewZoneCtrl {
   zonesHash() {
     let zones = {};
     this.zones.map((item) => {
-      zones[item.name] = (item.class ? item.class : this.icons_classes[item.name]) || this.empty_mdi_class;
+      zones[item.name] = (item.icon_class ? item.icon_class : this.icons_classes[item.name]) || this.empty_mdi_class;
     });
     return zones;
   }
