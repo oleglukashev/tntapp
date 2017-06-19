@@ -84,7 +84,6 @@ export default class ReservationsCtrl {
         .then(
           (reservations) => {
             this.is_loaded    = true;
-            this.$window.console.log(this.reservations);
             this.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
             this.loadTables();
           });

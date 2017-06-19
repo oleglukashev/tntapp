@@ -34,6 +34,7 @@ import dashboard                          from './components/dashboard'
 import dashboard_reservations             from './components/dashboard/reservations/dashboard_reservations.controller'
 import reservations                       from './components/reservations'
 import customer_reservation               from './components/customer_reservation'
+import reservation_answer_controller      from './components/reservation_answer/reservation_answer.controller';
 import settings                           from './components/settings'
 import charts_controller                  from './components/dashboard/charts/charts.controller'
 import auth                               from './components/auth'
@@ -140,6 +141,7 @@ const app = angular
   .controller('DashboardReservationsCtrl', dashboard_reservations)
   .controller('PageFilterCtrl', page_filter_controller)
   .controller('PageFilterSettingsCtrl', page_filter_settings_controller)
+  .controller('ReservationAnswerCtrl', reservation_answer_controller)
   .constant('JQ_CONFIG', {
     easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],
     plot: ['vendor/jquery/flot/jquery.flot.js'],

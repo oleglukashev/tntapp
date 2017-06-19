@@ -57,6 +57,37 @@ export default class DashboardReservationsCtrl {
     this.$mdSidenav('right').toggle();
   }
 
+  answer() {
+    // TEST
+    let reservation = this.action_required[0];
+
+    let modalInstance = this.$modal.open({
+      templateUrl: 'reservation_answer.view.html',
+      controller: 'ReservationAnswerCtrl as antwoord',
+      size: 'md',
+      resolve: {
+        reservation: () => {
+          return reservation;
+        },
+        today_reservation: () => {
+          return this.filterFilter(this.today, { id: reservation.id })[0];
+        },
+        group_this_week_reservation: () => {
+          return this.filterFilter(this.group_this_week, { id: reservation.id })[0];
+        },
+        action_required_reservations: () => {
+          return this.action_required;
+        }
+      }
+    });
+
+    modalInstance.result.then((selectedItem) => {
+      //success
+    }, () => {
+      // fail
+    });
+  }
+
   loadReservations() {
     this.Reservation
       .getAllGrouped(this.current_company.id)
