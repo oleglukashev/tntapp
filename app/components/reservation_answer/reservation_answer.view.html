@@ -1,0 +1,42 @@
+<section class='no-margin'>
+  <md-toolbar class='blue-grey-900'>
+    <div class='md-toolbar-tools' ng-click='antwoord.closeModal();'>
+      <i class='mdi mdi-arrow-left m-r-sm'></i>
+      Antwoord
+    </div>
+  </md-toolbar>
+  <md-content>
+    <form name='mail_form' ng-submit='antwoord.submitForm(mail_form.$valid, "confirm");'>
+      <div class='wrapper'>
+        <div class='clearfix m-b-lg m-t-sm'>
+          <span class='md-list-item-left img-circle grey-100'>
+          </span>
+          <span>
+            <span class='clear'>{{ antwoord.reservation.customer.last_name }} {{ antwoord.reservation.customer.first_name }}</span>
+            <small class='text-muted'>{{ antwoord.reservation.customer.mail }}</small>
+          </span>
+        </div>
+        <md-input-container class='md-block'>
+          <label>Onderwerp</label>
+          <input ng-model='antwoord.form_data.title' required />
+        </md-input-container>
+        <md-input-container class='md-block'>
+          <label>Bericht</label>
+          <textarea rows='8' 
+                    ng-model='antwoord.form_data.content'
+                    md-maxlength='300'
+                    required></textarea>
+        </md-input-container>
+        <small class='text-muted'>Dit bericht word verstoord via SMS en mail. Uiteraard is het ook nog erg klantvriendelijk om de klant telefonisch te bevestigen dat zijn reservering is geannuleerd.</small>
+      </div>
+      <button type='submit'
+              ng-class="{ 'disabled': !mail_form.$valid }"
+              class='btn btn-lg btn-success text-success w-full no-top-radius md_content_button'>
+        <span ng-hide='antwoord.is_submitting'>VERSTOOR</span>
+        <div layout='row' layout-align='space-around' ng-show='antwoord.is_submitting'>
+          <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
+        </div>
+      </button>
+    </form>
+  </md-content>
+</section>

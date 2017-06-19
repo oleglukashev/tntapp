@@ -145,15 +145,13 @@ export default class User {
     return deferred.promise;
   }
 
-  findById(id) {
-    let deferred = this.$q.defer();
-
-    if (!this.currentCompany) {
-      return deferred.promise;
+  findById(company_id, id) {
+    if (! company_id) {
+      return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + this.currentCompany.id + '/customer/find_by_id/' + id,
+      url: API_URL + '/company/' + company_id + '/customer/find_by_id/' + id,
       method: 'GET',
     }).then((result) => {
       return result.data;

@@ -24,6 +24,12 @@
             <span class="menu_name">{{ menu.name }}</span>
           </md-button>
         </md-menu-item>
+        <md-menu-item ng-show='reservation.status ==="request"'>
+          <md-button ng-click='reservations.answer(reservation);'>
+            <i class='mdi i-24 mdi-reply' />
+            <span class="menu_name">Antwoord</span>
+          </md-button>
+        </md-menu-item>
       </md-menu-content>
     </md-menu>
   </div>

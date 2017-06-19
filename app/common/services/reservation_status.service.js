@@ -164,19 +164,31 @@ export default class ReservationStatus {
     ).then((result) => result.data);
   }
 
-  changeStatus(current_company_id, reservation, status) {
+  changeStatus(company_id, reservation, status, mail) {
     let dutch_status;
+    let deferred = this.$q.defer();
+
+    if (! company_id) {
+      return deferred.promise;
+    }
 
     Object.keys(this.dutch_statuses).map((du, en) => {
       if (this.dutch_statuses[du] == status) dutch_status = du;
     })
 
-    this.edit(current_company_id, reservation.id, {
-      'status': dutch_status
-    })
+    let data = {
+      status: dutch_status
+    }
+
+    if (mail) {
+      data = Object.assign(data, mail);
+    }
+
+    return this.edit(company_id, reservation.id, data)
       .then(() => {
         reservation.status = status;
         reservation = this.checkStatusForDelay(reservation);
+        return reservation;
       },
       (error) => {
         this.errors = error.data.errors;
