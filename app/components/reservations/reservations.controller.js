@@ -78,6 +78,11 @@ export default class ReservationsCtrl {
     });
   }
 
+  changeStatus(reservation, status) {
+    this.ReservationStatus
+      .changeStatus(this.current_company.id, reservation, status);
+  }
+
   loadReservations() {
     this.Reservation
       .getAll(this.current_company.id, this.moment(this.date_filter).format('YYYY-MM-DD'))
