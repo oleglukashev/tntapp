@@ -43,6 +43,7 @@ import chartjs                            from 'angular-chart.js'
 import                                         './common/services'
 import                                         './common/directives'
 import profiles                           from './components/profiles'
+import constants                          from './config.constants'
 
 const app = angular
   .module('app', [
@@ -76,22 +77,37 @@ const app = angular
     'app.services',
     'app.directives',
     chartjs,
-    profiles
+    profiles,
+    constants
   ])
-
+  .controller('AppCtrl', app_controller)
+  .controller('HeaderCtrl', header_controller)
+  .controller('UserMenuCtrl', user_menu_controller)
+  .controller('ProfileCtrl', profile_controller)
+  .controller('ChartsCtrl', charts_controller)
+  .controller('NewReservationCtrl', new_reservation_controller)
+  .controller('DashboardReservationsCtrl', dashboard_reservations)
+  .controller('PageFilterCtrl', page_filter_controller)
+  .controller('PageFilterSettingsCtrl', page_filter_settings_controller)
+  .controller('ReservationAnswerCtrl', reservation_answer_controller)
+  .config(['$ocLazyLoadProvider', 'MODULE_CONFIG', function ($ocLazyLoadProvider, MODULE_CONFIG) {
+    // We configure ocLazyLoad to use the lib script.js as the async loader
+    $ocLazyLoadProvider.config({
+      debug: false,
+      events: true,
+      modules: MODULE_CONFIG
+    });
+  }])
+  .config(['$mdThemingProvider', function($mdThemingProvider) {
+    $mdThemingProvider.disableTheming();
+  }])
   .config(['ChartJsProvider', function (ChartJsProvider) {
     ChartJsProvider.setOptions({
       chartColors: ['#787878', '#c8c8c8'],
       responsive : true
     });
   }])
-
-
   .config(main_route)
-  .constant('AppConstants', {
-    jwtKey: 'jwtToken',
-    appName: 'TNT',
-  })
   .config(['$authProvider', ($authProvider) => {
     $authProvider.facebook({
       clientId: FACEBOOK_ID,
@@ -114,47 +130,10 @@ const app = angular
     // Tell the module to store the language in the local storage
     $translateProvider.useLocalStorage();
   }])
-  .config(['$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
-    function ($controllerProvider,   $compileProvider,   $filterProvider,   $provide) {
-      //lazy controller, directive and service
-      app.controller = $controllerProvider.register;
-      app.directive  = $compileProvider.directive;
-      app.filter     = $filterProvider.register;
-      app.factory    = $provide.factory;
-      app.service    = $provide.service;
-      app.constant   = $provide.constant;
-      app.value      = $provide.value;
-    }
-  ])
+  .run(init_templates)
   .run(['$rootScope', '$state', '$stateParams',
     function ($rootScope,   $state,   $stateParams) {
       $rootScope.$state = $state;
       $rootScope.$stateParams = $stateParams;
     }
-  ])
-  .controller('AppCtrl', app_controller)
-  .controller('HeaderCtrl', header_controller)
-  .controller('UserMenuCtrl', user_menu_controller)
-  .controller('ProfileCtrl', profile_controller)
-  .controller('ChartsCtrl', charts_controller)
-  .controller('NewReservationCtrl', new_reservation_controller)
-  .controller('DashboardReservationsCtrl', dashboard_reservations)
-  .controller('PageFilterCtrl', page_filter_controller)
-  .controller('PageFilterSettingsCtrl', page_filter_settings_controller)
-  .controller('ReservationAnswerCtrl', reservation_answer_controller)
-  .constant('JQ_CONFIG', {
-    easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],
-    plot: ['vendor/jquery/flot/jquery.flot.js'],
-  }).constant('MODULE_CONFIG', [])
-  .config(['$ocLazyLoadProvider', 'MODULE_CONFIG', function ($ocLazyLoadProvider, MODULE_CONFIG) {
-    // We configure ocLazyLoad to use the lib script.js as the async loader
-    $ocLazyLoadProvider.config({
-      debug: false,
-      events: true,
-      modules: MODULE_CONFIG
-    });
-  }])
-  .config(['$mdThemingProvider', function($mdThemingProvider) {
-    $mdThemingProvider.disableTheming();
-  }])
-  .run(init_templates);
+  ]);

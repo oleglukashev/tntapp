@@ -1,140 +1,18 @@
 import angular from 'angular';
 
 export default class ReservationStatus {
-  constructor(Upload, User, moment, $http, $q) {
+  constructor(AppConstants, Upload, User, moment, $http, $q, $window) {
     'ngInject';
 
-    this.$http           = $http;
-    this.$q              = $q;
-    this.moment          = moment;
-    this.Upload          = Upload;
-
-    this.status_classes  = {
-      expected : 'mdi-clock',
-      present  : 'mdi-check',
-      delayed  : 'mdi-exclamation',
-      confirmed: 'mdi-checkbox-blank-circle-outline',
-      cancelled: 'mdi-close',
-      request  : 'mdi-star-outline'
-    };
-
-    this.dutch_statuses = {
-      'Geannuleerd': 'cancelled',
-      'Bevestigd'  : 'confirmed',
-      'Aanvraag'   : 'request',
-      'Reservering': 'present'
-    };
-
-    this.right_menu = {
-      present: [
-        {
-          disabled: true,
-          name    : 'Aanvraag',
-          status  : 'request',
-          class   : 'mdi-star-outline'
-        },
-        {
-          disabled: true,
-          name    : 'Bevestig',
-          status  : 'confirmed',
-          class   : 'mdi-checkbox-blank-circle-outline'
-        },
-        {
-          disabled: false,
-          name    : 'Is NIET aanwezig',
-          status  : 'confirmed',
-          class   : 'mdi-checkbox-marked-circle'
-        },
-        {
-          disabled: false,
-          name    : 'Annuleer',
-          status  : 'cancelled',
-          class   : 'mdi-close-circle'
-        },
-      ],
-
-      confirmed: [
-        {
-          disabled: false,
-          name    : 'Aanvraag',
-          status  : 'request',
-          class   : 'mdi-star-outline'
-        },
-        {
-          disabled: true,
-          name    : 'Bevestig',
-          status  : 'confirmed',
-          class   : 'mdi-checkbox-blank-circle-outline'
-        },
-        {
-          disabled: false,
-          name    : 'Is aanwezig',
-          status  : 'present',
-          class   : 'mdi-checkbox-marked-circle'
-        },
-        {
-          disabled: false,
-          name    : 'Annuleer',
-          status  : 'cancelled',
-          class   : 'mdi-close-circle'
-        },
-      ],
-
-      cancelled: [
-        {
-          disabled: false,
-          name    : 'Aanvraag',
-          status  : 'request',
-          class   : 'mdi-star-outline'
-        },
-        {
-          disabled: false,
-          name    : 'Bevestig',
-          status  : 'confirmed',
-          class   : 'mdi-checkbox-blank-circle-outline'
-        },
-        {
-          disabled: true,
-          name    : 'Is aanwezig',
-          status  : 'present',
-          class   : 'mdi-checkbox-marked-circle'
-        },
-        {
-          disabled: true,
-          name    : 'Annuleer',
-          status  : 'cancelled',
-          class   : 'mdi-close-circle'
-        },
-      ],
-
-      request: [
-        {
-          disabled: true,
-          name    : 'Aanvraag',
-          status  : 'request',
-          class   : 'mdi-star-outline'
-        },
-        {
-          disabled: false,
-          name    : 'Bevestig',
-          status  : 'confirmed',
-          class   : 'mdi-checkbox-blank-circle-outline'
-        },
-        {
-          disabled: true,
-          name    : 'Is aanwezig',
-          status  : 'present',
-          class   : 'mdi-checkbox-marked-circle'
-        },
-        {
-          disabled: false,
-          name    : 'Annuleer',
-          status  : 'cancelled',
-          class   : 'mdi-close-circle'
-        },
-      ],
-    };
-
+    this.$http               = $http;
+    this.$q                  = $q;
+    this.$window             = $window;
+    this.moment              = moment;
+    this.AppConstants        = AppConstants;
+    this.Upload              = Upload;
+    this.status_classes      = this.AppConstants.reservationStatusClasses;
+    this.dutch_statuses      = this.AppConstants.reservationDutchStatuses;
+    this.right_menu          = this.AppConstants.reservationMenuStatuses;
     this.right_menu.delayed  = this.right_menu.confirmed;
     this.right_menu.expected = this.right_menu.present;
   }
