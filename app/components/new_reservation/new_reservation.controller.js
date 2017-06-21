@@ -24,7 +24,6 @@ export default class NewReservationCtrl {
     this.$rootScope           = $rootScope;
     this.filterFilter         = filterFilter;
     this.$window              = $window;
-    this.social               = null;
     
     this.moment               = moment;
     this.zones_is_showed      = true;
@@ -131,9 +130,18 @@ export default class NewReservationCtrl {
       }]
     }
 
+    let social_account = JSON.parse(this.$window.localStorage.getItem('social_account'));
+
+    if (this.reservation.social && social_account) {
+      data.social_account      = social_account;
+      data.social_account.type = this.reservation.social;
+    }
+
     let create_method = this.is_customer_reservation ?
                         this.Reservation.createCustomerReservation(this.current_company_id, data) :
                         this.Reservation.create(this.current_company_id, data);
+
+    this.$window.localStorage.removeItem('social_account');
 
     create_method
       .then((result) => {
@@ -347,8 +355,15 @@ export default class NewReservationCtrl {
     } else {
       this.$auth.authenticate(provider).then(
       (response) => {
-        this.reservation.name = response.data.name;
-        this.reservation.mail = response.data.email;
+        this.$window.localStorage.setItem('social_account', JSON.stringify(response.data));
+        this.reservation.name                 = response.data.name;
+        this.reservation.mail                 = response.data.email;
+        this.reservation.full_date_of_birth   = response.data.date_of_birth;
+        this.reservation.primary_phone_number = response.data.primary_phone_number;
+        if (response.data.gender) {
+          this.reservation.gender             = response.data.gender;
+        }
+
         this.selectTab(1);
       }, (error) => {
         // nothing
