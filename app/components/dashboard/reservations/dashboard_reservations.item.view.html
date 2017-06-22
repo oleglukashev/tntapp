@@ -19,12 +19,12 @@
       </button>
       <md-menu-content width="4" class="reservation_menu">
         <md-menu-item ng-repeat="menu in reservations.ReservationStatus.right_menu[reservation.status]">
-          <md-button ng-click='reservations.ReservationStatus.changeStatus(reservations.current_company.id, reservation, menu.status)' ng-disabled="menu.disabled">
+          <md-button ng-click='reservations.changeStatus(reservation, menu.status);' ng-disabled="menu.disabled">
             <i class='mdi i-24 mdi-with-button-padding' ng-class="menu.class"></i>
             <span class="menu_name">{{ menu.name }}</span>
           </md-button>
         </md-menu-item>
-        <md-menu-item ng-show='reservation.status ==="request"'>
+        <md-menu-item ng-show='reservations.showAnswerButton();'>
           <md-button ng-click='reservations.answer(reservation);'>
             <i class='mdi i-24 mdi-reply' />
             <span class="menu_name">Antwoord</span>

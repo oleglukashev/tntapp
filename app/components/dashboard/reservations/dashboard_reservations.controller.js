@@ -2,18 +2,17 @@ export default class DashboardReservationsCtrl {
   constructor(User, Reservation, ReservationStatus, Table, filterFilter, moment, $scope, $rootScope, $mdSidenav, $modal, $window) {
     'ngInject';
 
-    this.current_company = User.current_company;
-    this.Reservation     = Reservation;
-    this.ReservationStatus = ReservationStatus;
-    this.Table           = Table;
-    this.filterFilter    = filterFilter;
-    this.$rootScope      = $rootScope;
-    this.$mdSidenav      = $mdSidenav;
-    this.$modal          = $modal;
-    this.$window         = $window;
-    this.moment          = moment;
-
-    this.tables          = [];
+    this.current_company    = User.current_company;
+    this.Reservation        = Reservation;
+    this.ReservationStatus  = ReservationStatus;
+    this.Table              = Table;
+    this.filterFilter       = filterFilter;
+    this.$rootScope         = $rootScope;
+    this.$mdSidenav         = $mdSidenav;
+    this.$modal             = $modal;
+    this.$window            = $window;
+    this.moment             = moment;
+    this.tables             = [];
 
     $scope.$on('NewReservationCtrl.reload_reservations', () => {
       this.loadReservations();
@@ -57,6 +56,10 @@ export default class DashboardReservationsCtrl {
     this.$mdSidenav('right').toggle();
   }
 
+  showAnswerButton() {
+    return true;
+  }
+
   answer() {
     // TEST
     let reservation = this.action_required[0];
@@ -86,6 +89,32 @@ export default class DashboardReservationsCtrl {
     }, () => {
       // fail
     });
+  }
+
+  changeStatus(reservation, status) {
+    this.ReservationStatus
+      .changeStatus(this.current_company.id, reservation, status)
+        .then((reservation) => {
+          let datetime                        = reservation.reservation_parts[0];
+          let action_required_has_reservation = this.filterFilter(this.action_required, { id: reservation.id })[0];
+
+          if (reservation.status === "request" &&
+              datetime &&
+              this.moment(datetime).format('YYYY-MM-DD') === this.moment().format('YYYY-MM-DD')) {
+
+            if (! action_required_has_reservation) {
+              this.action_required.push(reservation);
+            }
+          } else {
+            let index = this.action_required.map((item) => { return item.id }).indexOf(reservation.id);
+
+            if (action_required_has_reservation) {
+              this.action_required.splice(index, 1);
+            }
+          }
+        }, (error) => {
+          // nothing
+        });
   }
 
   loadReservations() {
