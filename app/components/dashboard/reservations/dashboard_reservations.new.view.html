@@ -178,7 +178,7 @@
                             ng-click='reserv.selectTab(4);'>Ok</button>
                   </div>
                 </div>
-                
+
                 <div class='wrapper' layout='column' layout-align='space-around center' ng-hide='reserv.zones_is_loaded'>
                   <div class='m-t-xxl m-b-xxl'
                        layout='row'
@@ -319,16 +319,14 @@
                         <md-radio-button value='Vrouw' class="inline md-success">Vrouw</md-radio-button>
                       </md-radio-group>
                     </div>
-                    <!--<button type='button' md-ink-ripple class='md-btn md-flat m-b m-t btn-fw text-success'>-->
-                      <!--<span ng-hide='reserv.reservation.reservation_pdf'>PDF UPLOADEN...</span>-->
-                      <!--<span ng-show='reserv.reservation.reservation_pdf'>{{ reserv.reservation.reservation_pdf }}</span>-->
-                      <!--<input type='file'-->
-                             <!--ngf-select-->
-                             <!--ngf-max-size='2MB'-->
-                             <!--ngf-pattern="'application/pdf'"-->
-                             <!--ng-model='reserv.reservation.reservation_pdf'-->
-                             <!--ngf-model-invalid='errorFile' />-->
-                    <!--</button>-->
+
+                    <div ng-show="reserv.reservation.pdfFile" class="file_wrapper">
+                      <button ng-click="reserv.reservation.pdfFile = null" md-ink-ripple class='md-btn md-flat btn-fw text-success m-r-6 m-l-6'  ng-show="reserv.reservation.pdfFile"><i class="mdi mdi-close i-24"></i></button>
+                      <span>{{ reserv.reservation.pdfFile.name }}</span>
+                    </div>
+
+                    <button type='button' md-ink-ripple class='md-btn md-flat m-b m-t btn-fw text-success m-l-6' ngf-select="" ngf-drop="" ngf-pattern="'.pdf'" accept="application/pdf" ng-model="reserv.reservation.pdfFile">PDF UPLOADEN...</button>
+
                   </div>
                 </div>
                 <button type='button'

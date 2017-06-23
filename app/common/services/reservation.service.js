@@ -1,12 +1,14 @@
 import angular from 'angular';
 
 export default class Reservation {
-  constructor(moment, $http, $q) {
+  constructor(JWT, Upload, moment, $http, $q) {
     'ngInject';
 
     this.moment          = moment;
     this.$http           = $http;
     this.$q              = $q;
+    this.JWT             = JWT;
+    this.Upload          = Upload;
   }
 
   getAll(company_id, date) {
@@ -49,26 +51,27 @@ export default class Reservation {
   }
 
   create(company_id, data) {
-    let that = this;
     if (! company_id) {
       return this.$q.defer().promise;
     }
-    return that.$http({
-      url: API_URL + '/company/' + company_id + '/reservation',
-      method: 'POST',
-      data: data
+    return this.Upload.upload({
+      url:  API_URL + '/company/' + company_id + '/reservation',
+      data: data,
+      headers: {
+        Authorization: 'Bearer ' + this.JWT.get()
+      }
     }).then((result) => result.data);
   }
-
   createCustomerReservation(company_id, data) {
-    let that = this;
     if (! company_id) {
       return this.$q.defer().promise;
     }
-    return that.$http({
-      url: API_URL + '/company/' + company_id + '/reservation?is_customer=true',
-      method: 'POST',
-      data: data
+    return this.Upload.upload({
+      url:  API_URL + '/company/' + company_id + '/reservation?is_customer=true',
+      data: data,
+      headers: {
+        Authorization: 'Bearer ' + this.JWT.get()
+      }
     }).then((result) => result.data);
   }
 
