@@ -105,7 +105,6 @@ export default class NewReservationCtrl {
     let data = {
       language: this.reservation.language,
       send_confirmation: this.reservation.send_confirmation ? "1" : "0",
-      //reservation_pdf: this.reservation.reservation_pdf,
       notes: this.reservation.notes,
       is_group: this.reservation.is_group ? "1" : "0",
       company_name: this.reservation.company_name,
@@ -127,7 +126,8 @@ export default class NewReservationCtrl {
         person_count: this.reservation.person_count,
         product: this.reservation.product,
         tables: this.reservation.tables,
-      }]
+      }],
+      reservation_pdf: this.reservation.pdfFile
     }
 
     let social_account = JSON.parse(this.$window.localStorage.getItem('social_account'));
