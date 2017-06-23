@@ -45,7 +45,7 @@ export default class UserMenuCtrl {
     this.closeUserMenu();
 
     this.Customer.findById(this.current_company.id, customerId).then(customer => {
-      this.$rootScope.userData = customer[0];
+      this.$rootScope.userData = customer;
       this.$rootScope.userDataLoaded = true;
 
       this.Customer.searchReservationsByCustomerId(this.current_company.id, customerId).then(results => {
