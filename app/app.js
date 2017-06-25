@@ -44,6 +44,7 @@ import                                         './common/services'
 import                                         './common/directives'
 import profiles                           from './components/profiles'
 import constants                          from './config.constants'
+import                                         'angular-growl-notifications'
 
 const app = angular
   .module('app', [
@@ -78,7 +79,8 @@ const app = angular
     'app.directives',
     chartjs,
     profiles,
-    constants
+    constants,
+    'growlNotifications'
   ])
   .controller('AppCtrl', app_controller)
   .controller('HeaderCtrl', header_controller)

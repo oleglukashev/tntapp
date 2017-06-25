@@ -1,11 +1,17 @@
+import angular from 'angular';
+
 export default class UserMenuCtrl {
-  constructor(Customer, moment, $scope, $rootScope, $mdSidenav) {
+  constructor(User, Customer, moment, $scope, $rootScope, $mdSidenav, $window, AppConstants, $modal) {
     'ngInject';
+
+    this.current_company = User.current_company;
 
     this.moment          = moment;
     this.Customer        = Customer;
     this.$scope          = $scope;
     this.$rootScope      = $rootScope;
+
+    this.$modal          = $modal;
     this.$mdSidenav      = $mdSidenav;
     this.months          = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
 
@@ -25,11 +31,11 @@ export default class UserMenuCtrl {
   openUserMenu(customerId, resetvationPartId) {
     this.closeUserMenu();
 
-    this.Customer.findById(customerId).then(customer => {
+    this.Customer.findById(this.current_company.id, customerId).then(customer => {
       this.$rootScope.userData = customer[0];
       this.$rootScope.userDataLoaded = true;
 
-      this.Customer.searchReservationsByCustomerId(customerId).then(results => {
+      this.Customer.searchReservationsByCustomerId(this.current_company.id, customerId).then(results => {
         this.$rootScope.userReservations = results;
         this.$rootScope.userReservationsLoaded = true;
 

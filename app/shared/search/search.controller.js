@@ -1,6 +1,8 @@
 class SearchCtrl {
-  constructor(Search, Customer, moment, $scope, $state, $rootScope, $stateParams) {
+  constructor(User, Search, Customer, moment, $scope, $state, $rootScope, $stateParams) {
     'ngInject';
+
+    this.current_company = User.current_company;
 
     this.moment        = moment;
     this.$stateParams  = $stateParams;
@@ -35,7 +37,7 @@ class SearchCtrl {
   }
 
   selectedItemChange(item) {
-    this.Customer.searchReservationsByCustomerId(item['value']).then(results => {
+    this.Customer.searchReservationsByCustomerId(this.current_company.id, item['value']).then(results => {
       this.$rootScope.searchResults = results;
       this.$rootScope.searchResultsLoaded = true;
     })
@@ -44,7 +46,7 @@ class SearchCtrl {
   }
 
   loadAll() {
-    this.Customer.getAllForSearch().then(results => {
+    this.Customer.getAllForSearch(this.current_company.id).then(results => {
       this.states = results.map(customer => ({
         value  : customer['id'],
         display: `${customer['first_name']} ${customer['last_name']}`

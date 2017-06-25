@@ -1,66 +1,65 @@
 export default class Customer {
-  constructor(User, $http, $q) {
+  constructor($http, $q) {
     'ngInject';
 
     this.$http           = $http;
     this.$q              = $q;
-    this.current_company = User.current_company;
   }
 
-  getAll() {
+  getAll(company_id) {
     let deferred = this.$q.defer();
 
-    if (!this.current_company) {
+    if (!company_id) {
       return deferred.promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + this.current_company.id + '/customer',
+      url: API_URL + '/company/' + company_id + '/customer',
       method: 'GET',
     }).then((result) => {
       return result.data;
     });
   }
 
-  findById(id) {
+  findById(company_id, id) {
     let deferred = this.$q.defer();
 
-    if (!this.current_company) {
+    if (!company_id) {
       return deferred.promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + this.current_company.id + '/customer/find_by_id/' + id,
+      url: API_URL + '/company/' + company_id + '/customer/' + id,
       method: 'GET',
     }).then((result) => {
       return result.data;
     });
   }
 
-  getAllForSearch() {
+  getAllForSearch(company_id) {
     let deferred = this.$q.defer();
 
-    if (!this.current_company) {
+    if (!company_id) {
       return deferred.promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + this.current_company.id + '/customer/find',
+      url: API_URL + '/company/' + company_id + '/customer/find',
       method: 'POST',
     }).then((result) => {
       return result.data;
     });
   }
 
-  searchReservationsByCustomerId(customerId) {
+  searchReservationsByCustomerId(company_id, customer_id) {
     let deferred = this.$q.defer();
 
-    if (!this.current_company) {
+    if (!company_id) {
       return deferred.promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + this.current_company.id + '/customer/search/' + customerId,
+      url: API_URL + '/company/' + company_id + '/customer/' + customer_id + '/reservations',
       method: 'POST',
     }).then((result) => {
       return result.data;
@@ -85,5 +84,18 @@ export default class Customer {
          download: 'export.csv'
       })[0].click();
     });
+  }
+
+
+  edit(company_id, customer_id, data) {
+    let deferred = this.$q.defer();
+
+    if (!company_id) {
+      return deferred.promise;
+    }
+
+    return this.$http.patch(API_URL + '/company/' + company_id + '/customer/' + customer_id,
+      data
+    ).then((result) => result.data);
   }
 }

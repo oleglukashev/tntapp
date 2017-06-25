@@ -23,7 +23,6 @@
     <li class='dropdown' dropdown>
       <div class='header-account-menu pull-right m-l-sm'>
         <div class='dropdown-toggle clearfix' dropdown-toggle>
-          <div class='header-account-menu__avatar bg-light pull-left'></div>
           <div class='header-account-menu__info pull-left hidden-sm hidden-md m-l-sm'>
             <p class='header-account-menu__name'>{{ header.current_user.first_name }}</p>
             <div class='header-account-menu__info'>
@@ -61,6 +60,18 @@
       </div>
     </li>
   </ul>
+  <growl-notifications ng-if="header.upload_photo_error"></growl-notifications>
+
+  <growl-notification ng-if="header.upload_photo_error" on-close="header.upload_photo_error = ''">
+    Error: {{ header.upload_photo_error }}
+  </growl-notification>
+
+  <button type='button' md-ink-ripple class='header-account-menu__avatar bg-light pull-right' ngf-select="header.uploadPhoto($file, $invalidFiles)" accept="image/*" ngf-pattern="'.png,.jpg'" ngf-max-height="2000" ngf-max-size="1MB" ng-model="picFile" ng-click="upload_photo.upload_photo_error=''" ng-style="{'background-image': header.User.current.photo ? 'url('+header.user_avatar+')' : ''}" ng-class="picFile.progress < 100 ? photo_loading : ''">
+
+    <div layout='row' layout-align='space-around' ng-show='picFile.progress < 100'>
+      <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
+    </div>
+  </button>
 
   <div data-ng-include=" 'search.view.html' " ng-controller='SearchCtrl as search'></div>
 
