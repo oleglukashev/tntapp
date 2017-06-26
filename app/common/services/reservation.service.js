@@ -62,16 +62,15 @@ export default class Reservation {
       }
     }).then((result) => result.data);
   }
+
   createCustomerReservation(company_id, data) {
     if (! company_id) {
       return this.$q.defer().promise;
     }
-    return this.Upload.upload({
+    return this.$http({
       url:  API_URL + '/company/' + company_id + '/reservation?is_customer=true',
       data: data,
-      headers: {
-        Authorization: 'Bearer ' + this.JWT.get()
-      }
+      method: 'POST',
     }).then((result) => result.data);
   }
 
