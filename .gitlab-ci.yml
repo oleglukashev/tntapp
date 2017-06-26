@@ -4,7 +4,7 @@ stages:
 build_and_deploy:staging:
   stage: build_and_deploy
   only:
-    - staging
+    - develop
   environment: staging
   before_script:
     - apt-get update -y && apt-get install openssh-client rsync -y
