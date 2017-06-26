@@ -10,4 +10,15 @@
       </md-menu-item>
     </md-menu-content>
   </md-menu>
+  <div class="pull-right" ng-if="showRightMenu">
+    <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click='page_filter.changeView("list");' ng-class="page_filter.reservations_view || view">
+      <i class="mdi mdi-view-list i-24"></i>
+    </button>
+
+    <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click='page_filter.changeView("calendar");' ng-class="page_filter.reservations_view || view">
+      <i class="mdi mdi-view-module i-24"></i>
+    </button>
+  </div>
 </div>
+
+

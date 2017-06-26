@@ -1,0 +1,44 @@
+
+<div class='panel-body fixing-vertical-alignment' ng-if="tables.includes(reservation_part.table_ids[0])">
+
+  <div class='col-md-2'>
+    <div class='md-list-item-left img-circle m-t-sm grey-100'>
+      <div class='pull-left m-l-sm'>
+        <i ng-class='reservations.ReservationStatus.status_classes[reservation.status]'
+           class='mdi i-20'
+           ng-click='reservations.ReservationStatus.changeTodayIconClass(reservations.current_company.id, reservation, reservation_part)'></i>
+      </div>
+    </div>
+  </div>
+  <div class='col-md-2'>
+    <i class='mdi mdi-clock'></i>
+    {{ reservations.ReservationStatus.parsedDate(reservation_part.date_time) }}
+  </div>
+  <div class='col-md-2'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</div>
+  <div class='col-md-2'>
+    <i class='mdi mdi-account-multiple'></i>
+    <small class='font-thin m-r-xs'>{{ reservation_part.number_of_persons }}x</small>
+  </div>
+  <div class='col-md-2'>
+    <img class='table_icon' src='public/images/table.svg' />
+    <small class='font-thin' ng-bind='reservations.getTableNumbersByTableIds(reservation_part.table_ids).join(", ")'></small>
+  </div>
+  <div class='col-md-2 line-height-58'>
+    {{ (reservation.notes || '&nbsp;') | limitTo: 20 }}{{ reservation.notes.length > 20 ? '...' : '' }}
+
+    <div class='pull-right'>
+      <button md-ink-ripple
+              class='md-btn md-fab m-t-xs m-b-xs no-shadow'
+              ng-disabled='disabled'
+              aria-haspopup='true'
+              aria-expanded='false'
+              aria-disabled='false'
+              ng-click='user.openUserMenu(reservation.customer.id, reservation_part.id)' ng-controller='UserMenuCtrl as user'>
+        <i class='mdi mdi-dots-vertical i-24'></i>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div data-ng-include=" 'user_menu.view.html' " ng-controller='UserMenuCtrl as user'></div>
