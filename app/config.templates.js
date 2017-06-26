@@ -9,7 +9,7 @@ export default function templates($templateCache) {
   $templateCache.put('user_menu.view.html', require('./shared/user_menu/user_menu.view.html'));
   $templateCache.put('profile.view.html', require('./components/dashboard/profile/profile.view.html'));
   $templateCache.put('page_filter.view.html', require('./shared/page_filter/page_filter.view.html'));
-  $templateCache.put('page_filter_settings.view.html', require('./shared/page_filter/settings/page_filter_settings.view.html'));
+  $templateCache.put('page_filter_time_ranges.view.html', require('./shared/page_filter/time_ranges/page_filter_time_ranges.view.html'));
   $templateCache.put('search.view.html', require('./shared/search/search.view.html'));
   $templateCache.put('charts.view.html', require('./components/dashboard/charts/charts.view.html'));
   $templateCache.put('settings_products.new_product.view.html', require('./components/settings/products/settings_products.new_product.view.html'));

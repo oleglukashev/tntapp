@@ -239,7 +239,7 @@
                 <div class='text-center l-h'>PERSOON</div>
               </md-tab-label>
               <md-tab-body>
-                <div class='reservation_person b-t' flex>
+                <div class='md-content-submit reservation_person b-t' flex>
                   <!-- <div class='md-list-item'>
                     <div class='md-list-item-content text-center'>
                       <h4>Persoonsgegevens</h4>
@@ -354,7 +354,7 @@
                   </button>
 
                   <button type='submit'
-                          class='btn btn-lg btn-success text-success w-full no-top-radius md_content_button'
+                          class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
                           ng-class="{ 'disabled': reserv.formIsValid() }"
                           ng-show='reserv.selected_index == 5 && !reserv.success'>
                     <span ng-hide='reserv.is_submitting'>RESERVEER</span>
@@ -415,7 +415,7 @@
           </div>
 
           <button type='button'
-                  class='btn btn-lg btn-success text-success w-full no-top-radius md_content_button'
+                  class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
                   ng-show='reserv.success'
                   ng-click='reserv.$window.location.reload();'>TERUG NAAR OVERZICHT</button>
         </div>

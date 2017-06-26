@@ -11,14 +11,20 @@ export default class PageFilterCtrl {
     });
   }
 
-  openSettings() {
+  openTimeRangeSettings(type, title) {
     let modalInstance = this.$modal.open({
-      templateUrl: 'page_filter_settings.view.html',
-      controller: 'PageFilterSettingsCtrl as page_filter_settings',
+      templateUrl: 'page_filter_time_ranges.view.html',
+      controller: 'PageFilterTimeRangesCtrl as page_filter_time_ranges',
       size: 'md',
       resolve: {
         date: () => {
           return this.date_filter;
+        },
+        type: () => {
+          return type
+        },
+        title: () => {
+          return title;
         }
       }
     });

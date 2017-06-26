@@ -1,12 +1,13 @@
 import angular from 'angular';
 
-export default class PageFilterSettingsCtrl {
-  constructor(date, User, Slider, PageFilterTimeRange, filterFilter, moment, $modalInstance, $window) {
+export default class PageFilterTimeRangesCtrl {
+  constructor(date, type, title, User, Product, Slider, PageFilterTimeRange, filterFilter, moment, $modalInstance, $window) {
     'ngInject';
 
     this.current_company     = User.current_company;
     this.PageFilterTimeRange = PageFilterTimeRange;
     this.Slider              = Slider;
+    this.Product             = Product;
     this.state               = 'list';
     this.date                = date;
     this.moment              = moment;
@@ -14,6 +15,9 @@ export default class PageFilterSettingsCtrl {
     this.filterFilter        = filterFilter;
     this.$modalInstance      = $modalInstance;
     this.slider              = this.Slider.getOptions();
+    this.type                = type;
+    this.title               = title;
+    this.products            = [];
 
     this.loadTimeRange();
   }
@@ -75,12 +79,16 @@ export default class PageFilterSettingsCtrl {
       end_time: this.Slider.from15Min(this.slider.maxValue),
       fixed_date: this.moment(this.form_data.fixed_date).format('YYYY-MM-DD'),
       value: this.form_data.value,
+      type: this.type,
       whole_day: this.form_data.whole_day
+    }
+
+    if (this.type === 'product' && this.form_data.product) {
+      data.product = this.form_data.product.id;
     }
 
     if (this.form_data.id) {
       delete data.id;
-      delete data.type;
 
       this.PageFilterTimeRange
         .update(this.current_company.id, this.form_data.id, data)
@@ -125,18 +133,36 @@ export default class PageFilterSettingsCtrl {
     }
   }
 
+  getProductName(id) {
+    let product = this.filterFilter(this.products, { id: id })[0];
+
+    return product ? product.name : null;
+  }
+
   loadTimeRange() {
     this.is_loaded = false;
 
     this.PageFilterTimeRange
-      .getAll(this.current_company.id, this.moment(this.date).format('YYYY-MM-DD'))
+      .getAll(this.current_company.id, this.moment(this.date).format('YYYY-MM-DD'), this.type)
         .then(
           (time_ranges) => {
             this.is_loaded   = true;
             this.time_ranges = time_ranges;
+
+            if (this.type === 'product') {
+              this.loadProducts();
+            }
           },
           (error) => {
             //nothing
           });
+  }
+
+  loadProducts() {
+    this.Product
+      .getAll(this.current_company.id)
+        .then((products) => {
+          this.products = products; 
+        })
   }
 }

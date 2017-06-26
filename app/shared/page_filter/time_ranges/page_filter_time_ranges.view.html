@@ -1,0 +1,124 @@
+<section class='no-margin page_filter_time_ranges'>
+  <md-toolbar class='blue-grey-900'>
+    <div class='md-toolbar-tools'
+         ng-click='page_filter_time_ranges.closeModal();'
+         ng-show='page_filter_time_ranges.state === "list"'>
+      <i class='mdi mdi-close m-r-sm' />
+      {{ page_filter_time_ranges.title }}
+    </div>
+    <div class='md-toolbar-tools'
+         ng-click='page_filter_time_ranges.setStateToList();'
+         ng-show='page_filter_time_ranges.state === "form"'>
+        <i class='mdi mdi-arrow-left m-r-sm' />
+      {{ page_filter_time_ranges.title }}
+    </div>
+  </md-toolbar>
+  <md-content>
+    <div class='md-content-view' ng-class='page_filter_time_ranges.state === "list" ? "show" : "transparent"'>
+      <div class='wrapper'>
+        <p ng-if='page_filter_time_ranges.type == "overbooking"'>Met overboeken kun je zorgen dat er meer personen toegelaten<br />
+        worden tot je zaak dan er aan tafels beschikbaar is. Kies hieronder<br />
+        je tijdsperiodes waarin je dit wil doen.</p>
+        <p ng-if='page_filter_time_ranges.type == "product"'>Stel hier je openingstijden in voor de zones en producten per dag. Wil je de openingstijden veranderen voor altijd doe dat dan via je instellingen.</p>
+      </div>
+      <table class='table no-margin' ng-show='page_filter_time_ranges.is_loaded'>
+        <thead>
+          <th>Type</th>
+          <th>Waarde</th>
+          <th ng-if='page_filter_time_ranges.type == "product"'>Product</th>
+          <th>Starttijd</th>
+          <th>Eindttijd</th>
+          <th>Hele dag?</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr ng-repeat='time_range in page_filter_time_ranges.time_ranges'>
+            <td class='v-middle'>{{ time_range.type }}</td>
+            <td class='v-middle'>{{ time_range.value ? 'Overboeken' : 'Niet overboeken' }}</td>
+            <td class='v-middle' ng-if='page_filter_time_ranges.type == "product"'>
+              {{ page_filter_time_ranges.getProductName(time_range.product.id); }}
+            </td>
+            <td class='v-middle'>{{ time_range.start_time }}</td>
+            <td class='v-middle'>{{ time_range.end_time }}</td>
+            <td class='v-middle'>{{ time_range.whole_day ? 'Hele dag' : '-' }}</td>
+            <td class='v-middle text-right'>
+              <button md-ink-ripple
+                      class='md-btn md-fab no-shadow'
+                      ng-disabled='disabled'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                      aria-disabled='false'
+                      ng-click='page_filter_time_ranges.edit(time_range)'>
+                  <i class='mdi mdi-pencil i-20'></i>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div layout='row' layout-align='space-around' ng-hide='page_filter_time_ranges.is_loaded'>
+        <md-progress-circular md-mode="indeterminate" md-diameter='24'></md-progress-circular>
+      </div>
+      <div class='wrapper'>
+        <button md-ink-ripple
+                class='md-btn md-flat btn-fw text-success'
+                ng-click='page_filter_time_ranges.add();'>
+          <i class='mdi mdi-plus-circle-outline'></i>
+          NIEUWE TIJDSZONE 
+        </button>
+      </div>
+    </div>
+    
+    <div class='md-content-submit' ng-class='page_filter_time_ranges.state === "form" ? "show" : "transparent"'>
+      <form name='page_filter_time_ranges_form'
+            ng-submit='page_filter_time_ranges.submitForm(page_filter_time_ranges_form.$valid);'>
+        <div class='wrapper' layout='column' layout-align='space-around center'>
+          <div class='w-xl m-b-sm'>
+            <md-datepicker ng-model='page_filter_time_ranges.form_data.fixed_date'></md-datepicker>
+            <p class='no-margin'>Stel hier tijden in om de openingtijden te veranderen (de default vaarde zijn de openingstijden die het product of zone nu neeft.)</p>
+          </div>
+          <rzslider rz-slider-model="page_filter_time_ranges.slider.minValue"
+                    rz-slider-high="page_filter_time_ranges.slider.maxValue"
+                    rz-slider-options="page_filter_time_ranges.slider.options"></rzslider>
+          <div class='w-xl'>
+            <div class='md-form-group no-padder m-b-sm' ng-if='page_filter_time_ranges.type == "product"'>
+              <md-input-container>
+                <md-select required ng-model='page_filter_time_ranges.form_data.product.id' placeholder='Product'>
+                  <md-option ng-value='product.id' ng-repeat='product in page_filter_time_ranges.products'>
+                    {{ product.name }}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <div class='md-form-group no-padder'>
+              <md-checkbox ng-model='page_filter_time_ranges.form_data.value' aria-label='Overboeken'>
+                Overboeken
+              </md-checkbox>
+            </div>
+            <div class='md-form-group no-padder'>
+              <md-checkbox ng-model='page_filter_time_ranges.form_data.whole_day'
+                           ng-change='page_filter_time_ranges.slider.options.disabled = page_filter_time_ranges.form_data.whole_day'
+                           aria-label='Hele dag?'>
+                Hele dag?
+              </md-checkbox>
+            </div>
+
+            <div class='b-a wrapper-sm rounded-sm m-t-sm'>Door deze verandering kunnen eerder geplaatste reserveringen buiten de openingtijden terecht komen</div>
+            <p ng-if='page_filter_time_ranges.form_data.id'
+               class='m-t-md'>
+              <span class='text-danger' ng-click='page_filter_time_ranges.destoyWithConfirm();'>TIJDSZONE VERWIJDEREN</span>
+            </p>
+          </div>
+        </div>
+
+        <button type='submit'
+                class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
+                ng-class="{ 'disabled': !page_filter_time_ranges_form.$valid }">
+          <span ng-hide='page_filter_time_ranges.is_submitting'>OPSLAAN</span>
+          <div layout='row' layout-align='space-around' ng-show='page_filter_time_ranges.is_submitting'>
+            <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
+          </div>
+        </button>
+      </form>
+    </div>
+  </md-content>
+</section>

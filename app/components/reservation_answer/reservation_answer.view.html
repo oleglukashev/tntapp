@@ -6,7 +6,7 @@
     </div>
   </md-toolbar>
   <md-content>
-    <form name='mail_form' ng-submit='antwoord.submitForm(mail_form.$valid, "confirm");'>
+    <form class='md-content-submit' name='mail_form' ng-submit='antwoord.submitForm(mail_form.$valid, "confirm");'>
       <div class='wrapper'>
         <div class='clearfix m-b-lg m-t-sm'>
           <span class='md-list-item-left img-circle grey-100'>
@@ -31,7 +31,7 @@
       </div>
       <button type='submit'
               ng-class="{ 'disabled': !mail_form.$valid }"
-              class='btn btn-lg btn-success text-success w-full no-top-radius md_content_button'>
+              class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
         <span ng-hide='antwoord.is_submitting'>VERSTOOR</span>
         <div layout='row' layout-align='space-around' ng-show='antwoord.is_submitting'>
           <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
