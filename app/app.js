@@ -15,6 +15,7 @@ import angular_translate                  from 'angular-translate'
 import angular_translate_storage_locale   from 'angular-translate-storage-local'
 import angular_translate_storage_cookie   from 'angular-translate-storage-cookie'
 import angular_moment                     from 'angular-moment'
+import dnd                                from 'angular-native-dragdrop'
 import anguar_oclazyLoad                  from 'oclazyload'
 import rzModule                           from 'angularjs-slider'
 import ui_load                            from './common/services/ui-load'
@@ -35,6 +36,7 @@ import dashboard_reservations             from './components/dashboard/reservati
 import reservations                       from './components/reservations'
 import customer_reservation               from './components/customer_reservation'
 import reservation_answer_controller      from './components/reservation_answer/reservation_answer.controller';
+import agenda                             from './components/agenda'
 import settings                           from './components/settings'
 import charts_controller                  from './components/dashboard/charts/charts.controller'
 import auth                               from './components/auth'
@@ -72,6 +74,8 @@ const app = angular
     dashboard,
     customer_reservation,
     reservations,
+    dnd,
+    agenda,
     auth,
     settings,
     rzModule,
@@ -80,7 +84,8 @@ const app = angular
     chartjs,
     profiles,
     constants,
-    'growlNotifications'
+    'growlNotifications',
+    agenda
   ])
   .controller('AppCtrl', app_controller)
   .controller('HeaderCtrl', header_controller)

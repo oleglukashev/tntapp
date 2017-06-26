@@ -1,10 +1,11 @@
 import angular from 'angular';
 
 export default class ProfilesCtrl {
-  constructor(Customer, moment, AppConstants, JWT, $mdSidenav, $rootScope, $scope, $modal) {
+  constructor(User, Customer, moment, AppConstants, JWT, $mdSidenav, $rootScope, $scope, $modal) {
     'ngInject';
 
     this.Customer         = Customer;
+    this.current_company  = User.current_company;
 
     this.customers        = {};
     this.customers_loaded = false;
@@ -17,14 +18,14 @@ export default class ProfilesCtrl {
   }
 
   exportCSV() {
-    this.Customer.exportCSV()
+    this.Customer.exportCSV(this.current_company.id)
       .then(
         (result) => {
         });
   }
 
   loadCustomers() {
-    this.Customer.getAll()
+    this.Customer.getAll(this.current_company.id)
       .then(
         (result) => {
           this.customers = result;

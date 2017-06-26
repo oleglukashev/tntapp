@@ -66,15 +66,15 @@ export default class Customer {
     });
   }
 
-  exportCSV() {
+  exportCSV(company_id) {
     let deferred = this.$q.defer();
 
-    if (!this.current_company) {
+    if (!company_id) {
       return deferred.promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + this.current_company.id + '/customer/csv',
+      url: API_URL + '/company/' + company_id + '/customer/csv',
       method: 'GET',
     }).then((result) => {
       var anchor = angular.element('<a/>');

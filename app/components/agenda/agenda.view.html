@@ -1,0 +1,98 @@
+<div class="wrapper agenda"
+     layout='row'
+     layout-align='space-around'
+     ng-hide='agenda.is_loaded'>
+  <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+</div>
+
+<div ng-show='agenda.is_loaded' class='col-lg-8 col-md-8 col-sm-8'>
+
+  <div ng-init="showRightMenu = true; view = agenda.reservations_view" data-ng-include=" 'page_filter.view.html' " ng-controller='PageFilterCtrl as page_filter'></div>
+
+  <button ng-click='agenda.openReservation()' md-ink-ripple class='panel-add-button md-btn md-fab m-b orange'>
+    <i class='mdi mdi-plus i-24'></i>
+  </button>
+
+  <script type="text/ng-template" id="reservationContent.html">
+    <div ng-include=" 'dashboard.reservation.view.html' "></div>
+  </script>
+
+  <accordion class='agenda' close-others='false'>
+    <accordion-group ng-repeat='zone in agenda.zones' is-open='agenda.opened[$index]'>
+      <accordion-heading>
+        <div class='clearfix'>
+          <div class='pull-left'>
+            {{ zone.name }}
+            <i class='mdi mdi-chevron-down i-24' ng-if="!agenda.opened[$index]"></i>
+            <i class='mdi mdi-chevron-up i-24' ng-if="agenda.opened[$index]"></i>
+          </div>
+        </div>
+      </accordion-heading>
+
+      <div class="list_wrapper" ng-show="agenda.reservations_view == 'list'">
+
+        <div class='panel-heading fixing-padding'>
+          <div class='col-md-2'>Aanwezig</div>
+          <div class='col-md-2'>Tijd</div>
+          <div class='col-md-2'>Naam</div>
+          <div class='col-md-2'>Personen</div>
+          <div class='col-md-2'>Tafel</div>
+          <div class='col-md-2'>Opmerking</div>
+        </div>
+
+        <div ng-repeat='reservation in agenda.reservations' ng-show='agenda.reservations.length'>
+          <div ng-init="reservations = agenda; tables = agenda.getTableIdsByTablesList(agenda.tables_by_zone[zone.id])"
+               data-ng-include=" 'dashboard_reservations.item_full.view.html' "
+               ng-repeat='reservation_part in reservation.reservation_parts'></div>
+        </div>
+
+      </div>
+
+
+      <div class="calendar_wrapper" ng-show="agenda.reservations_view == 'calendar'">
+        <div class="hours-timeline" ng-if="agenda.tables_by_zone[zone.id].length">
+          <div class="hour" ng-repeat="hour in agenda.hours">
+            {{ hour }}:00
+          </div>
+        </div>
+
+        <div class="timeline-wrapper" ng-if="agenda.tables_by_zone[zone.id].length">
+
+          <div class="now" ng-style="{ height: agenda.tables_by_zone[zone.id].length * 30 + 30, left: agenda.now_left_px }" ng-if="agenda.is_today"></div>
+
+          <ul class='tables md-list no-padder no-margin'>
+            <li class='table_item md-list-item no-padder no-margin'
+                ng-repeat="(table_index, table) in agenda.tables_by_zone[zone.id] | orderBy:'position'">
+              <div class='table_item_number pull-left m-t-sm'>
+                {{ table.table_number }}
+              </div>
+              <div class="hours-wrapper">
+                <div class="hour" ng-repeat="hour in agenda.hours">
+                  <div class="quarter" ng-repeat="quarter in [0,1,2,3]" ui-on-drop="agenda.onDrop(zone.id, table.id, table_index, hour, quarter, $data)" ng-class="agenda.getQuarterClass(hour, quarter)"></div>
+                </div>
+
+                <div class="reservation {{ agenda.draggable_class }}" ng-repeat="item in agenda.tables_by_part[table.id]" ui-draggable="true" drag="item.id" ng-style="{ left: item.left, top: item.top || (table_index*30+30) }" ng-class="agenda.draggable_class" data-product-id="{{ item.product_id }}">
+                  <i class="mdi mdi-account-multiple i-20"></i>
+                  <a ng-click='user.openUserMenu(item.customer.id, item.id)' ng-controller='UserMenuCtrl as user'>
+                    {{ item.person_count }}
+                    {{ agenda.products[item.product_id] }}
+                    <strong>
+                      {{ item.customer.last_name }}
+                      {{ item.customer.first_name }}
+                    </strong>
+                  </a>
+
+                </div>
+
+
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </accordion-group>
+  </accordion>
+</div>
+
+<div data-ng-include=" 'user_menu.view.html' " ng-controller='UserMenuCtrl as user'></div>
