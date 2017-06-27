@@ -11,13 +11,11 @@ export default class TimeRange {
       return this.$q.defer().promise;
     }
 
-    let date_param = date ? 'date=' + date  : '';
-    let type_param = type ? 'type=' + type  : '';
-
-    return this.$http({
-        url: API_URL + '/company/' + company_id + '/page_filter/time_range?' + date_param + '&' + type_param,
-        method: 'GET',
-      }).then((result) => result.data);
+    return this.$http.get(API_URL + '/company/' + company_id + '/page_filter/time_range', {
+      params: {
+        date: date,
+        type: type
+      }}).then((result) => result.data);
   }
 
   create(company_id, data) {
