@@ -5,10 +5,20 @@ export default class PageFilterCtrl {
     this.date_filter     = new Date();
     this.$modal          = $modal;
     this.$window         = $window;
+    this.$rootScope      = $rootScope;
+    this.reservations_view = $scope.view;
 
     $scope.$watch('page_filter.date_filter', (date_filter) => {
       $rootScope.$broadcast('PageFilterCtrl.change_date_filter', date_filter);
     });
+
+    $rootScope.$on('PageFilterCtrl.change_view', (obj, view) => {
+      this.reservations_view = view;
+    });
+  }
+
+  changeView(view) {
+    this.$rootScope.$broadcast('PageFilterCtrl.change_view', view);
   }
 
   openSettings() {
