@@ -109,11 +109,10 @@ export default class ReservationsCtrl {
   }
 
   calculateTotalNumberOfPersons() {
-    let that = this;
     this.totalNumberOfPersons = 0;
-    angular.forEach(this.reservations, function(reservation) {
-      angular.forEach(reservation.reservation_parts, function(reservation_part) {
-        that.totalNumberOfPersons = that.totalNumberOfPersons + parseInt(reservation_part.number_of_persons, 10);
+    angular.forEach(this.reservations, (reservation) => {
+      angular.forEach(reservation.reservation_parts, (reservationPart) => {
+        this.totalNumberOfPersons += parseInt(reservationPart.number_of_persons, 10);
       });
     });
   }
