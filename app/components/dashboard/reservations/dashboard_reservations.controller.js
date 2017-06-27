@@ -13,6 +13,9 @@ export default class DashboardReservationsCtrl {
     this.$window            = $window;
     this.moment             = moment;
     this.tables             = [];
+    this.action_required    = [];
+    this.group_this_week    = [];
+    this.today              = [];
 
     $scope.$on('NewReservationCtrl.reload_reservations', () => {
       this.loadReservations();
@@ -123,11 +126,11 @@ export default class DashboardReservationsCtrl {
         .then(
           (reservations) => {
             this.all_reservations   = reservations;
-            this.reservationsLoaded = true;
             this.action_required    = this.ReservationStatus.translateAndcheckStatusForDelay(reservations.action_required);
             this.group_this_week    = this.ReservationStatus.translateAndcheckStatusForDelay(reservations.group_this_week);
             this.today              = this.ReservationStatus.translateAndcheckStatusForDelay(reservations.today);
             this.loadTables();
+            this.reservationsLoaded = true;
             this.$rootScope.$broadcast('reservationsLoaded');
           });
   }
@@ -139,5 +142,9 @@ export default class DashboardReservationsCtrl {
           (result) => {
             this.tables = result;
           });
+  }
+
+  hasReservations() {
+    return this.action_required.length || this.group_this_week.length || this.today.length
   }
 }
