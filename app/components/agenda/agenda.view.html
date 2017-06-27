@@ -69,6 +69,16 @@
           <div class="timeline-wrapper" ng-if="agenda.tables_by_zone[zone.id].length">
 
             <div class="now" ng-style="{ height: agenda.tables_by_zone[zone.id].length * 30 + 30, left: agenda.now_left_px }" ng-if="agenda.is_today"></div>
+                <div class="reservation {{ agenda.draggable_class }}" ng-repeat="item in agenda.tables_by_part[table.id]" ui-draggable="true" drag="item.id" ng-style="{ left: item.left, top: item.top || (table_index*30+30) }" ng-class="agenda.draggable_class" data-product-id="{{ item.product_id }}">
+                  <i class="mdi mdi-account-multiple i-20"></i>
+                  <a ng-click='user.openCustomerMenu(item.customer.id, item.id)' ng-controller='UserMenuCtrl as user'>
+                    {{ item.person_count }}
+                    {{ agenda.products[item.product_id] }}
+                    <strong>
+                      {{ item.customer.last_name }}
+                      {{ item.customer.first_name }}
+                    </strong>
+                  </a>
 
             <ul class='tables md-list no-padder no-margin'>
               <li class='table_item md-list-item no-padder no-margin z-index-1'

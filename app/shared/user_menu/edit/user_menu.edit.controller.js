@@ -12,6 +12,8 @@ export default class UserMenuEditCtrl {
     this.moment               = moment;
     this.submited_success     = false;
 
+    $rootScope.userData = $rootScope.customer_reservations[0].customer;
+
     this.date_options = {
       formatYear: 'yyyy',
       startingDay: 1,

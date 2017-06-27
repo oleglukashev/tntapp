@@ -1,9 +1,12 @@
 class SearchCtrl {
-  constructor(User, Search, Customer, moment, $scope, $state, $rootScope, $stateParams) {
+  constructor(ReservationStatus, Table, User, Search, Customer, moment, filterFilter, $scope, $state, $rootScope, $stateParams) {
     'ngInject';
 
     this.current_company = User.current_company;
 
+    this.ReservationStatus = ReservationStatus;
+    this.Table         = Table;
+    this.filterFilter  = filterFilter;
     this.moment        = moment;
     this.$stateParams  = $stateParams;
     this.$state        = $state;
@@ -13,11 +16,12 @@ class SearchCtrl {
     this.Search        = Search;
     this.Customer      = Customer;
     this.months        = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
+    this.tables        = {};
 
     $rootScope.searchResults       = [];
     $rootScope.searchResultsLoaded = false;
 
-    this.loadAll();
+    this.loadCustomers();
   }
 
   changeClass() {
@@ -37,21 +41,42 @@ class SearchCtrl {
   }
 
   selectedItemChange(item) {
-    this.Customer.searchReservationsByCustomerId(this.current_company.id, item['value']).then(results => {
-      this.$rootScope.searchResults = results;
-      this.$rootScope.searchResultsLoaded = true;
-    })
-    this.$rootScope.searchResultsLoaded = false;
-    this.$state.go('app.search');
+    this.$rootScope.searchResults = [];
+    if (item) {
+      this.Customer.searchReservationsByCustomerId(this.current_company.id, item['value']).then(reservations => {
+        if (reservations.length > 0 && reservations[0].reservation_parts.length > 0) {
+          this.$rootScope.searchResults = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
+          this.$rootScope.dateHeader = this.dateHeader(reservations[0]);
+        }
+        this.$rootScope.searchResultsLoaded = true;
+      })
+      this.$rootScope.searchResultsLoaded = false;
+
+      if (this.$state.$current.name != 'app.search')
+        this.$state.go('app.search');
+    }
   }
 
-  loadAll() {
+  loadCustomers() {
     this.Customer.getAllForSearch(this.current_company.id).then(results => {
       this.states = results.map(customer => ({
         value  : customer['id'],
         display: `${customer['first_name']} ${customer['last_name']}`
       }));
+      this.loadTables();
     })
+  }
+
+  loadTables() {
+    this.Table
+      .getAll(this.current_company.id)
+        .then(tables => {
+          let result = {};
+          this.tables = tables.forEach(table => {
+            result[table.id] = table.table_number;
+          });
+          this.tables = result;
+        });
   }
 
   createFilterFor(query) {
@@ -61,7 +86,22 @@ class SearchCtrl {
   }
 
   parsedDate(date) {
-    return this.moment(date).format('h:mm');
+    return this.moment(date).format('HH:mm');
+  }
+
+  getTableNumbersByTableIds(table_ids) {
+    let result = [];
+    table_ids.forEach(value => {
+      if (this.tables[value]) {
+        result.push(this.tables[value]);
+      }
+    });
+    return result;
+  }
+
+  dateHeader(reservation) {
+    let date = new Date(reservation.reservation_parts[0].date_time);
+    return this.moment(date).format('DD-MM-YYYY');
   }
 }
 

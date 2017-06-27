@@ -58,7 +58,7 @@ export default class ReservationsCtrl {
     return result;
   }
 
-  openUserMenu() {
+  openCustomerMenu() {
     this.$rootScope.$broadcast('UserMenuCtrl');
     this.$mdSidenav('right').toggle();
   }
