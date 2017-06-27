@@ -5317,7 +5317,7 @@ md-menu-content
 
 // dnd
 .dndDraggingSource
-    display none
+  display none
 
 growl-notifications
   position fixed
@@ -5334,3 +5334,25 @@ growl-notifications
 
 .padding-right-25
   padding-right 25px
+
+
+// print reservations
+table.print-reservation
+  th
+    text-align:center;
+  td
+    padding: 10px;
+.print-block
+  .totals
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 16px;
+.print-block
+  display: none;
+
+@media print
+  .panel
+  .page_filter
+    display: none;
+  .print-block
+    display: block;

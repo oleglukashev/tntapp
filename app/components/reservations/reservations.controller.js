@@ -17,6 +17,9 @@ export default class ReservationsCtrl {
 
     this.tables          = [];
 
+    this.totalNumberOfReservations = 0;
+    this.totalNumberOfPersons = 0;
+
     this.date_options    = {
       formatYear: 'yy',
       startingDay: 1,
@@ -91,6 +94,8 @@ export default class ReservationsCtrl {
             this.is_loaded    = true;
             this.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
             this.loadTables();
+            this.totalNumberOfReservations = this.reservations.length;
+            this.calculateTotalNumberOfPersons();
           });
   }
 
@@ -101,5 +106,14 @@ export default class ReservationsCtrl {
           (result) => {
             this.tables = result;
           });
+  }
+
+  calculateTotalNumberOfPersons() {
+    this.totalNumberOfPersons = 0;
+    angular.forEach(this.reservations, (reservation) => {
+      angular.forEach(reservation.reservation_parts, (reservationPart) => {
+        this.totalNumberOfPersons += parseInt(reservationPart.number_of_persons, 10);
+      });
+    });
   }
 }
