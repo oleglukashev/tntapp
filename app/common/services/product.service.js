@@ -20,6 +20,15 @@ export default class Product {
     }).then((result) => result.data);
   }
 
+  delete(company_id, product_id) {
+    if (! company_id) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http.delete(API_URL + '/company/' + company_id + '/products/' + product_id)
+      .then((result) => result.data);
+  }
+
   hidden(company_id, product_id) {
     if (! company_id) {
       return this.$q.defer().promise;

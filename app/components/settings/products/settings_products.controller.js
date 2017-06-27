@@ -19,8 +19,6 @@ export default class SettingsProductsCtrl {
     this.opened          = [true];
     this.days            = ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'];
     this.days_of_week    = [1, 2, 4, 8, 16, 32, 64];
-    this.products_by_day = [];
-    this.products        = [];
     this.products_used   = [];
 
     this.slider = this.Slider.getOptions();
@@ -35,7 +33,7 @@ export default class SettingsProductsCtrl {
         'product_time_range': {
           'startTime'        : this.Slider.from15Min(timeRange.minValue),
           'endTime'          : this.Slider.from15Min(timeRange.maxValue),
-          'product'          : timeRange.productId,
+          'product'          : timeRange.product_id,
           'dayOfWeekBitfield': [this.days_of_week[timeRange.day]],
           'value'            : timeRange.options.disabled ? 0 : 1,
         }
@@ -56,7 +54,7 @@ export default class SettingsProductsCtrl {
       'product_time_range': {
         'startTime'        : this.Slider.from15Min(timeRange.minValue),
         'endTime'          : this.Slider.from15Min(timeRange.maxValue),
-        'product'          : timeRange.productId,
+        'product'          : timeRange.product_id,
         'dayOfWeekBitfield': [this.days_of_week[timeRange.day]],
         'value'            : timeRange.options.disabled ? 1 : 0,
       }
@@ -76,6 +74,7 @@ export default class SettingsProductsCtrl {
     this.Product.getAll(this.current_company.id, true)
       .then(
         (result) => {
+          this.products = {};
           result.map((product) => {
             this.products[product.id] = product;
           });
@@ -89,6 +88,7 @@ export default class SettingsProductsCtrl {
     this.TimeRange.getAll(this.current_company.id)
       .then(
         (ranges) => {
+          this.products_by_day = [];
           this.days.map((day) => {
             if (typeof this.products_by_day[day] !== 'object') {
               this.products_by_day[day] = [];
@@ -96,7 +96,7 @@ export default class SettingsProductsCtrl {
           });
 
           ranges.map((range) => {
-            let product          = this.products[range.productId];
+            let product          = this.products[range.product_id];
             let productStartTime = this.Slider.to15Min('00:00'); //product.start_time
             let productEndTime   = this.Slider.to15Min('23:59', false); //product.end_time
             range.daysOfWeek.map((day) => {
@@ -117,7 +117,7 @@ export default class SettingsProductsCtrl {
               this.products_by_day[this.days[day-1]].push({
                 id        : range.openHourId,
                 day       : day-1,
-                productId : range.productId,
+                product_id : range.productId,
                 id        : range.openHourId,
                 name      : range.name,
                 minValue  : startTime,
@@ -127,7 +127,6 @@ export default class SettingsProductsCtrl {
             });
 
           });
-
           this.redrawSliders();
 
           this.is_loaded = true;
@@ -161,36 +160,38 @@ export default class SettingsProductsCtrl {
     });
 
 
-    modalInstance.result.then((res) => {
-      let productId = 0;
-      this.products.map((product) => {
-        if (product.name == res.productName) productId = product.id;
+    modalInstance.result.then((new_product) => {
+      let product_id = 0;
+      Object.keys(this.products).forEach(key => {
+        let product = this.products[key];
+        if (product.name == new_product.name) product_id = product.id;
       });
-      
-      console.log(productId)
-      if (!productId) {
 
-        this.Product
-          .create(this.current_company.id, {
+      if (product_id == 0) {
+        let data = {
           'product': {
             'startTime'  : '00:00',
             'endTime'    : '23:59',
-            'name'       : res['productName'],
+            'name'       : new_product.name,
+            'icon_class' : new_product.icon,
             'minPersons' : 1
-          }})
-            .then((json) => {
-              console.log(json)
-              this.addTimeRange(res, json.product_id)
-            },
-            (error) => {
-            });
+        }};
+
+        this.Product
+          .create(this.current_company.id, data)
+          .then(
+            product => this.addTimeRange(new_product, product.id),
+            error   => {}
+          );
       } else {
-        this.addTimeRange(res, productId)
+        this.addTimeRange(new_product, product_id)
       }
+
+      this.loadProducts();
     });
   }
 
-  addTimeRange(res, productId) {
+  addTimeRange(res, product_id) {
     this.days.map((day, i) => {
       let arr;
       let data = {};
@@ -213,7 +214,7 @@ export default class SettingsProductsCtrl {
           'product_time_range': {
             'startTime'        : this.Slider.from15Min(arr['minValue']),
             'endTime'          : this.Slider.from15Min(arr['maxValue']),
-            'product'          : productId,
+            'product'          : product_id,
             'dayOfWeekBitfield': this.days_of_week[i],
             'value'            : 1,
           }
@@ -223,8 +224,8 @@ export default class SettingsProductsCtrl {
           .create(this.current_company.id, data)
             .then(() => {
               let product = {
-                id      : productId,
-                name    : res['productName'],
+                id      : product_id,
+                name    : res['name'],
                 minValue: arr['minValue'],
                 maxValue: arr['maxValue'],
                 options : Object.assign({}, this.slider.options)
@@ -238,13 +239,14 @@ export default class SettingsProductsCtrl {
   }
 
   removeProduct(id) {
-    this.TimeRange
+    this.Product
       .delete(this.current_company.id, id )
         .then(() => {
+          this.loadProducts();
           this.days.map((day) => {
             let products_day = this.products_by_day[day];
             for (let i=0; i<products_day.length; i++) {
-              if (products_day[i].productId == id) {
+              if (products_day[i].product_id == id) {
                 products_day.splice(i, 1);
               }
             }
@@ -259,7 +261,6 @@ export default class SettingsProductsCtrl {
       .hidden(this.current_company.id, product_id )
         .then((res) => {
           this.products[product_id].hidden = res.hidden;
-    console.log(this.products[product_id].hidden)
         },
         (error) => {
         });

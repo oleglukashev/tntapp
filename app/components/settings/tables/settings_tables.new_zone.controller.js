@@ -21,7 +21,12 @@ export default class SettingsTablesNewZoneCtrl {
     this.item            = {};
 
     let loadedZones = this.zonesHash();
-    if (loadedZones) this.icons_classes = $.extend(loadedZones, this.icons_classes)
+    if (loadedZones) this.icons_classes = $.extend(loadedZones, this.icons_classes);
+    this.uniq_icons = [...new Set(Object.values(this.icons_classes))];
+  }
+
+  closeModal() {
+    this.$modalInstance.close();
   }
 
   changeClass(className) {
