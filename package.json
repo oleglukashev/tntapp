@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "angular": "^1.6.2",
+    "angular-jwt": "^0.1.9",
     "angular-animate": "^1.6.2",
     "angular-aria": "^1.6.2",
     "angular-bootstrap-npm": "^0.14.3",
@@ -49,10 +50,8 @@
     "angular-ui-router": "^0.4.2",
     "angular-ui-scroll": "^1.6.0",
     "angular-ui-utils": "^0.1.1",
-    "angularjs-slider": "^6.1.2",
     "autoprefixer-loader": "^3.2.0",
     "babel-preset-es2015": "^6.24.1",
-    "chart.js": "^2.5.0",
     "css-loader": "^0.26.2",
     "extended-define-webpack-plugin": "^0.1.3",
     "extract-text-webpack-plugin": "^2.0.0",

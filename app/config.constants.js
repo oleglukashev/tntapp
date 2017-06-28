@@ -3,6 +3,7 @@ import angular from 'angular';
 export default angular.module('app.constants', [])
   .constant('AppConstants', {
     jwtKey: 'jwtToken',
+    jwtRefresh: 'jwtRefresh',
     appName: 'TNT',
     reservationDutchStatuses: {
       'Geannuleerd': 'cancelled',

@@ -17,10 +17,11 @@ export default class User {
     return this.$http({
       url: API_URL + path,
       method: 'POST',
+      skipAuthorization: true,
       data: formData
     }).then(
       (result) => {
-        this.JWT.save(result.data.token);
+        this.JWT.save({ token: result.data.token, refresh_token: result.data.refresh_token });
         return result;
       }
     );
@@ -75,7 +76,6 @@ export default class User {
   verifyAuth() {
     let deferred = this.$q.defer();
 
-    // check for JWT token
     if (!this.JWT.get()) {
       deferred.resolve(false);
       return deferred.promise;
@@ -86,10 +86,7 @@ export default class User {
     } else {
       this.$http({
         url: API_URL + '/user',
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + this.JWT.get()
-        }
+        method: 'GET'
       }).then(
         (result) => {
           this.current = result.data;

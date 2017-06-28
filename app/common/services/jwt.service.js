@@ -6,16 +6,22 @@ export default class JWT {
     this.$window = $window;
   }
 
-  save(token) {
-    this.$window.localStorage.setItem(this.AppConstants.jwtKey, token);
+  save(hash) {
+    this.$window.localStorage.setItem(this.AppConstants.jwtKey, hash.token);
+    this.$window.localStorage.setItem(this.AppConstants.jwtRefresh, hash.refresh_token);
   }
 
   get() {
     return this.$window.localStorage.getItem(this.AppConstants.jwtKey);
   }
 
+  getRefreshToken() {
+    return this.$window.localStorage.getItem(this.AppConstants.jwtRefresh);
+  }
+
   destroy() {
     this.$window.localStorage.removeItem(this.AppConstants.jwtKey);
+    this.$window.localStorage.removeItem(this.AppConstants.jwtRefresh);
   }
 
 }

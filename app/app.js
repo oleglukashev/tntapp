@@ -1,5 +1,6 @@
 import styles                             from './assets/css/app.styl'
 import angular                            from 'angular'
+import angular_jwt                        from 'angular-jwt';
 import angular_animate                    from 'angular-animate'
 import angular_ng_uploader                from 'ng-file-upload'
 import angular_material                   from 'angular-material'
@@ -22,6 +23,7 @@ import ui_load                            from './common/services/ui-load'
 import ui_jq                              from './common/directives/ui-jq'
 import dnd_lists                          from './common/directives/angular-drag-and-drop-lists.directive'
 import main_route                         from './config.router'
+import jwt_config                         from './config.jwt'
 import init_templates                     from './config.templates'
 import app_controller                     from './common/controllers/app.controller'
 import header_controller                  from './shared/header/header.controller'
@@ -50,6 +52,7 @@ import                                         'angular-growl-notifications'
 
 const app = angular
   .module('app', [
+    angular_jwt,
     angular_animate,
     angular_ng_uploader,
     angular_aria,
@@ -87,6 +90,7 @@ const app = angular
     'growlNotifications',
     agenda
   ])
+  .config(jwt_config)
   .controller('AppCtrl', app_controller)
   .controller('HeaderCtrl', header_controller)
   .controller('UserMenuCtrl', user_menu_controller)
