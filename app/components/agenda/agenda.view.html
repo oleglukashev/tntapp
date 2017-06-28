@@ -49,45 +49,54 @@
       </div>
 
 
-      <div class="calendar_wrapper" ng-show="agenda.reservations_view == 'calendar'">
-        <div class="hours-timeline" ng-if="agenda.tables_by_zone[zone.id].length">
-          <div class="hour" ng-repeat="hour in agenda.hours">
-            {{ hour }}:00
+      <div class="tables_wrapper" ng-show="agenda.reservations_view == 'calendar'">
+        <div ng-repeat="(table_index, table) in agenda.tables_by_zone[zone.id] | orderBy:'position'">
+          <div class='table_item_number pull-left m-t-sm' ng-style="{ top: table_index*30 }">
+            {{ table.table_number }}
           </div>
         </div>
+      </div>
 
-        <div class="timeline-wrapper" ng-if="agenda.tables_by_zone[zone.id].length">
+      <div class="calendar_wrapper" ng-show="agenda.reservations_view == 'calendar'">
 
-          <div class="now" ng-style="{ height: agenda.tables_by_zone[zone.id].length * 30 + 30, left: agenda.now_left_px }" ng-if="agenda.is_today"></div>
+        <div class="scroll-wrapper">
+          <div class="hours-timeline" ng-if="agenda.tables_by_zone[zone.id].length">
+            <div class="hour" ng-repeat="hour in agenda.hours">
+              {{ hour }}:00
+            </div>
+          </div>
 
-          <ul class='tables md-list no-padder no-margin'>
-            <li class='table_item md-list-item no-padder no-margin'
-                ng-repeat="(table_index, table) in agenda.tables_by_zone[zone.id] | orderBy:'position'">
-              <div class='table_item_number pull-left m-t-sm'>
-                {{ table.table_number }}
-              </div>
-              <div class="hours-wrapper">
-                <div class="hour" ng-repeat="hour in agenda.hours">
-                  <div class="quarter" ng-repeat="quarter in [0,1,2,3]" ui-on-drop="agenda.onDrop(zone.id, table.id, table_index, hour, quarter, $data)" ng-class="agenda.getQuarterClass(hour, quarter)"></div>
+          <div class="timeline-wrapper" ng-if="agenda.tables_by_zone[zone.id].length">
+
+            <div class="now" ng-style="{ height: agenda.tables_by_zone[zone.id].length * 30 + 30, left: agenda.now_left_px }" ng-if="agenda.is_today"></div>
+
+            <ul class='tables md-list no-padder no-margin'>
+              <li class='table_item md-list-item no-padder no-margin z-index-1'
+                  ng-repeat="(table_index, table) in agenda.tables_by_zone[zone.id] | orderBy:'position'">
+
+                <div class="hours-wrapper">
+                  <div class="hour" ng-repeat="hour in agenda.hours">
+                    <div class="quarter" ng-repeat="quarter in [0,1,2,3]" ui-on-drop="agenda.onDrop(zone.id, table.id, table_index, hour, quarter, $data)" ng-class="agenda.getQuarterClass(hour, quarter)"></div>
+                  </div>
+
+                  <div class="reservation {{ agenda.draggable_class }}" ng-repeat="item in agenda.tables_by_part[table.id]" ui-draggable="true" drag="item.id" ng-style="{ left: item.left, top: item.top || (table_index*30+30) }" ng-class="agenda.draggable_class" data-product-id="{{ item.product_id }}" data-id="{{ item.id }}">
+                    <i class="mdi mdi-account-multiple i-20"></i>
+                    <a ng-click='user.openUserMenu(item.customer.id, item.id)' ng-controller='UserMenuCtrl as user'>
+                      {{ item.number_of_persons }}
+                      {{ agenda.products[item.product_id] }}
+                      <strong>
+                        {{ item.customer.last_name }}
+                        {{ item.customer.first_name }}
+                      </strong>
+                    </a>
+
+                  </div>
+
+
                 </div>
-
-                <div class="reservation {{ agenda.draggable_class }}" ng-repeat="item in agenda.tables_by_part[table.id]" ui-draggable="true" drag="item.id" ng-style="{ left: item.left, top: item.top || (table_index*30+30) }" ng-class="agenda.draggable_class" data-product-id="{{ item.product_id }}">
-                  <i class="mdi mdi-account-multiple i-20"></i>
-                  <a ng-click='user.openUserMenu(item.customer.id, item.id)' ng-controller='UserMenuCtrl as user'>
-                    {{ item.person_count }}
-                    {{ agenda.products[item.product_id] }}
-                    <strong>
-                      {{ item.customer.last_name }}
-                      {{ item.customer.first_name }}
-                    </strong>
-                  </a>
-
-                </div>
-
-
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
