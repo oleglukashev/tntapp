@@ -1,48 +1,56 @@
 <div class='col-lg-6 col-md-6 col-sm-6'>
-  <div class='panel'>
-    <div class='panel-heading'>Actie vereist</div>
-    <div class='md-list'>
-      <div class='wrapper' layout='row' layout-align='space-around' ng-hide='reservations.action_required.length > 0'>
-        <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+  <div class='wrapper' layout='row' layout-align='space-around' ng-hide='reservations.reservationsLoaded'>
+    <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+  </div>
+  
+  <div ng-show='reservations.reservationsLoaded && reservations.hasReservations();'>
+    <div class='panel'>
+      <div class='panel-heading'>Actie vereist</div>
+      <div class='md-list'>
+        <div ng-repeat='reservation in reservations.filtered(reservations.action_required)'>
+          <div class='reservation_action_required md-list-item'
+               data-ng-include=" 'dashboard_reservations.item.view.html' "
+               ng-repeat='reservation_part in reservation.reservation_parts'></div>
+        </div>
       </div>
+    </div>
 
-      <div ng-repeat='reservation in reservations.filtered(reservations.action_required)'>
-        <div class='reservation_action_required md-list-item'
-             data-ng-include=" 'dashboard_reservations.item.view.html' "
-             ng-repeat='reservation_part in reservation.reservation_parts'></div>
+    <div class='panel'>
+      <div class='panel-heading'>Groepen deze week</div>
+      <div class='md-list'>
+        <div ng-repeat='reservation in reservations.filtered(reservations.group_this_week)'>
+          <div class='reservation_group_this_week md-list-item'
+               data-ng-include=" 'dashboard_reservations.item.view.html' "
+               ng-repeat='reservation_part in reservation.reservation_parts'></div>
+        </div>
+      </div>
+    </div>
+
+    <button ng-click='dash.openReservation();' md-ink-ripple class='panel-add-button md-btn md-fab m-b orange'>
+      <i class='mdi mdi-plus i-24'></i>
+    </button>
+
+    <div class='panel'>
+      <div class='panel-heading'>Vandaag</div>
+      <div class='md-list'>
+        <div ng-repeat='reservation in reservations.filtered(reservations.today)'>
+          <div class='reservation_today md-list-item'
+               data-ng-include=" 'dashboard_reservations.item.view.html' "
+               ng-repeat='reservation_part in reservation.reservation_parts'></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class='panel'>
-    <div class='panel-heading'>Groepen deze week</div>
-    <div class='md-list'>
-      <div class='wrapper' layout='row' layout-align='space-around' ng-hide='reservations.group_this_week.length > 0'>
-        <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-      </div>
-
-      <div ng-repeat='reservation in reservations.filtered(reservations.group_this_week)'>
-        <div class='reservation_group_this_week md-list-item'
-             data-ng-include=" 'dashboard_reservations.item.view.html' "
-             ng-repeat='reservation_part in reservation.reservation_parts'></div>
-      </div>
-    </div>
-  </div>
-
-  <button ng-click='dash.openReservation();' md-ink-ripple class='panel-add-button md-btn md-fab m-b orange'>
-    <i class='mdi mdi-plus i-24'></i>
-  </button>
-
-  <div class='panel'>
-    <div class='panel-heading'>Vandaag</div>
-    <div class='md-list'>
-      <div class='wrapper' layout='row' layout-align='space-around' ng-hide='reservations.today.length > 0'>
-        <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-      </div>
-      <div ng-repeat='reservation in reservations.filtered(reservations.today)'>
-        <div class='reservation_today md-list-item'
-             data-ng-include=" 'dashboard_reservations.item.view.html' "
-             ng-repeat='reservation_part in reservation.reservation_parts'></div>
+  <div ng-show='reservations.reservationsLoaded && !reservations.hasReservations();'>
+    <button ng-click='dash.openReservation();' md-ink-ripple class='panel-add-button md-btn md-fab m-b orange'>
+      <i class='mdi mdi-plus i-24'></i>
+    </button>
+    <div class='panel'>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-xl m-t-xxl m-b-xxl text-center'>
+          Je hebt nog geen reserveringen klik op de "+" om je eerste reservering aan te maken
+        </div>
       </div>
     </div>
   </div>
