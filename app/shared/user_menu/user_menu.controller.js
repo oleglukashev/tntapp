@@ -10,7 +10,6 @@ export default class UserMenuCtrl {
     this.Customer        = Customer;
     this.$scope          = $scope;
     this.$rootScope      = $rootScope;
-
     this.$modal          = $modal;
     this.$mdSidenav      = $mdSidenav;
     this.months          = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
@@ -25,6 +24,20 @@ export default class UserMenuCtrl {
     $scope.$on('topic', function (event, arg) {
       alert(arg);
       $scope.receiver = 'got your ' + arg;
+    });
+  }
+
+  openEditModal(user_id) {
+    let modalInstance = this.$modal.open({
+      templateUrl: 'user_menu.edit.view.html',
+      controller: 'UserMenuEditCtrl as edit_user',
+      size: 'md'
+    });
+
+    modalInstance.result.then((selectedItem) => {
+      //success
+    }, () => {
+      // fail
     });
   }
 

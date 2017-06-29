@@ -8,7 +8,7 @@
         <button md-ink-ripple class='pull-right md-btn md-flat btn-fw'>
           <i class='mdi mdi-dots-vertical' ng-style="{'font-size': '26px', height: '26px'}"></i>
         </button>
-        <button md-ink-ripple class='pull-right md-btn md-flat btn-fw'>
+        <button md-ink-ripple class='pull-right md-btn md-flat btn-fw' ng-click='user.openEditModal(userData.id)'>
           <i class='mdi mdi-pencil' ng-style="{'font-size': '26px', height: '26px'}"></i>
         </button>
       </div>
@@ -41,6 +41,7 @@
           <div class="pull-right"><i class="mdi mdi-cloud i-24 text-info padding-right-25"></i></div>
           <h3 class="text-md">{{ userData.primary_phone_number }}</h3>
           <small class="font-thin">Telefoon</small>
+
         </div>
       </div>
       <div class="inset">
@@ -51,6 +52,7 @@
           <div class="pull-right"><i class="mdi mdi-cloud i-24 text-info padding-right-25"></i></div>
           <h3 class="text-md">{{ userData.mail }}</h3>
           <small class="font-thin">E-mail</small>
+
         </div>
       </div>
       <div class="inset" ng-if="currentReservation.notes">
