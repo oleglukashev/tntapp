@@ -33,9 +33,8 @@
     z-index 10
 
 .dragged
-    border-style dashed !important
-    background-color red !important
-
+    z-index -1 !important
+    opacity 0.6
 
 .agenda .on-drag-hover
     border-radius 3px
@@ -43,13 +42,31 @@
     opacity 0.8
     z-index 12
 
-
 .agenda .panel-body
     padding 0
-    overflow-x auto
 
-.calendar_wrapper
+.agenda .tables_wrapper
+    width 48px
+    position fixed
+    background-color #fff
+    z-index 1
+    padding-top 31px
+    border-right solid 1px rgba(0,0,0,0.12)
+
+.agenda .scroll-wrapper
     width 2465px
+
+.agenda .calendar_wrapper
+    overflow-x scroll
+    margin-left 47px
+
+.agenda .calendar_wrapper::-webkit-scrollbar
+    height 10px
+    background-color #fafafa
+
+.agenda .calendar_wrapper::-webkit-scrollbar-thumb
+    border-radius 10px
+    background-color #c1c1c1
 
 .list_wrapper i.mdi
     position initial
@@ -58,10 +75,15 @@
     border-bottom-width 0px
 
 .agenda .table_item_number
-    width 35px
+    width 48px
     text-align center
     padding-right 5px
+    padding-bottom 5px
     opacity 0.4
+    border-bottom solid 0.5px rgba(0, 0, 0, 0.12)
+    height 30px
+    line-height 30px
+    margin 0
 
 accordion.agenda
     i.mdi-chevron-up, i.mdi-chevron-down
@@ -70,7 +92,6 @@ accordion.agenda
         left 5px
 
 .hours-timeline
-    margin-left 35px
     .hour
         padding-left 7px
         padding-right 8px
@@ -83,10 +104,15 @@ accordion.agenda
     border-left 1px #ccc solid
     height 30px
     opacity 0.4
+    z-index 9
 
 .quarter
     width 25px
     float left
     height 30px
+    z-index 9
 .inactive
     background-color #bbb
+
+.z-index-1
+    z-index 1

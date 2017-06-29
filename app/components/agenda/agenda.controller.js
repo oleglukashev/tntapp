@@ -33,7 +33,7 @@ export default class AgendaCtrl {
 
     this.reservations_view  = 'calendar';
 
-    this.left_margin        = 36;
+    this.left_margin        = 0;
     this.top_margin         = 30;
     this.hour_width         = 101;
     this.reservation_height = 30;
@@ -42,10 +42,13 @@ export default class AgendaCtrl {
 
     $rootScope.$on('ANGULAR_DRAG_START', (obj, event) => {
       this.dragged_product = event.target.attributes['data-product-id'].value;
+      console.log(event.target.attributes['data-id'].value);
+      this.draggable_class = 'dragged'
     });
 
     $rootScope.$on('ANGULAR_DRAG_END', () => {
       this.dragged_product = 0;
+      this.draggable_class = ''
     });
 
     $rootScope.$on('PageFilterCtrl.change_view', (obj, view) => {
