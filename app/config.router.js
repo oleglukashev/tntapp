@@ -1,9 +1,5 @@
-import authInterceptor from './config.interceptor'
-
-export default function routes($stateProvider, $urlRouterProvider, $httpProvider) {
+export default function routes($stateProvider, $urlRouterProvider) {
   'ngInject';
-
-  $httpProvider.interceptors.push(authInterceptor);
 
   $stateProvider
     .state('app', {
