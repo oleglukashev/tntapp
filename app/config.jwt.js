@@ -1,4 +1,6 @@
 export default function Config($httpProvider, jwtOptionsProvider) {
+  'ngInject';
+  
   jwtOptionsProvider.config({
     whiteListedDomains: ['tnt.me'],
     tokenGetter: ['jwtHelper', '$http', 'JWT', 'User', function(jwtHelper, $http, JWT, User) {
