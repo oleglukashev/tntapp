@@ -1,15 +1,21 @@
-app.directive('awDatepickerPattern',function() {
+function datepickerPattern() {
+  'ngInject';
+
   return {
     restrict: 'A',
     require: 'ngModel',
-    link: function(scope, elem, attrs, ngModelCtrl) {
+    link: function(scope, elem, attrs, ngModel) {
       var dRegex = new RegExp(attrs.awDatepickerPattern);
 
-      ngModelCtrl.$parsers.unshift(function(value) {
+      ngModel.$parsers.unshift(function(value) {
+        if (!value) {
+          ngModel.$setValidity('date',true);
+          return value;
+        }
 
         if (typeof value === 'string') {
           var isValid = dRegex.test(value);
-          ngModelCtrl.$setValidity('date',isValid);
+          ngModel.$setValidity('date',isValid);
           if (!isValid) {
             return undefined;
           }
@@ -19,5 +25,7 @@ app.directive('awDatepickerPattern',function() {
       });
 
     }
-  };
-});
+  }
+}
+
+export default datepickerPattern;

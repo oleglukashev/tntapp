@@ -28,7 +28,8 @@ export default class UserMenuEditCtrl {
     let userData = this.$rootScope.userData;
     this.is_submitting = true;
 
-    userData.date_of_birth = this.moment(userData.date_of_birth).format('DD-MM-YYYY');
+    if (userData.date_of_birth)
+      userData.date_of_birth = this.moment(userData.date_of_birth).format('DD-MM-YYYY');
 
     let data = {
       first_name: userData.first_name,
