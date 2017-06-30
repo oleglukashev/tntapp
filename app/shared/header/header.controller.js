@@ -10,16 +10,14 @@ export default class HeaderCtrl {
     this.current_company  = User.current_company;
     this.logout           = User.logout.bind(User);
 
-    switch(this.$state.current.name) {
-      case 'app.dashboard': {
-        this.selected_index = 0;
-        break;
-      }
-      case 'app.reservations': {
-        this.selected_index = 1;
-        break;
-      }
+    let states = {
+      'app.dashboard'    : 0,
+      'app.reservations' : 1,
+      'app.agenda'       : 2,
+      'app.profiles'     : 3
     }
+
+    this.selected_index = states[this.$state.current.name];
 
     this.photoPath        = API_URL + '../../../upload/user-photos/';
     this.userPhotoURI     = this.photoPath + this.User.current.photo + '?';

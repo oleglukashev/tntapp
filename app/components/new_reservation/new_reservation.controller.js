@@ -7,10 +7,11 @@ export default class NewReservationCtrl {
 
     this.is_dashboard_page    = $state.current.name == 'app.dashboard';
     this.is_reservations      = $state.current.name == 'app.reservations';
+    this.is_agenda            = $state.current.name == 'app.agenda';
     this.is_customer_reservation = $state.current.name == 'customer_reservation.new';
 
-    this.current_company_id = this.is_dashboard_page || this.is_reservations 
-                              ? User.current_company.id 
+    this.current_company_id = this.is_dashboard_page || this.is_reservations || this.is_agenda
+                              ? User.current_company.id
                               : $stateParams.id;
 
     this.Reservation          = Reservation;
@@ -24,7 +25,7 @@ export default class NewReservationCtrl {
     this.$rootScope           = $rootScope;
     this.filterFilter         = filterFilter;
     this.$window              = $window;
-    
+
     this.moment               = moment;
     this.zones_is_showed      = true;
 
@@ -46,6 +47,8 @@ export default class NewReservationCtrl {
       gender: 'Man',
       social: null
     };
+
+console.log("INCLUDED!!")
 
     //states
     this.additional_is_opened    = false;
@@ -271,11 +274,12 @@ export default class NewReservationCtrl {
     this.reservation.product = null;
     this.products_is_loaded  = false;
     this.products            = [];
-
+console.log("loading products")
     this.Product
       .getAll(this.current_company_id, false)
         .then(
           (result) => {
+            console.log(result)
             this.products = result;
             this.products_is_loaded = true;
           },
@@ -335,7 +339,7 @@ export default class NewReservationCtrl {
   preloadData() {
     this.loadProducts();
 
-    if (this.is_dashboard_page || this.is_reservations) {
+    if (this.is_dashboard_page || this.is_reservations || this.is_agenda) {
       this.loadZones();
       this.loadTables();
     } else {

@@ -42,13 +42,11 @@ export default class AgendaCtrl {
 
     $rootScope.$on('ANGULAR_DRAG_START', (obj, event) => {
       this.dragged_product = event.target.attributes['data-product-id'].value;
-      console.log(event.target.attributes['data-id'].value);
       this.draggable_class = 'dragged'
     });
 
     $rootScope.$on('ANGULAR_DRAG_END', () => {
-      this.dragged_product = 0;
-      this.draggable_class = ''
+      this.dragEnd();
     });
 
     $rootScope.$on('PageFilterCtrl.change_view', (obj, view) => {
@@ -68,7 +66,7 @@ export default class AgendaCtrl {
 
         // scrolling left for now line
         this.$timeout(() => {
-          $('.agenda .panel-body').animate({scrollLeft: this.now_left_px}, "slow");
+          $('.calendar_wrapper').animate({scrollLeft: this.now_left_px}, "slow");
         }, 1000);
       }
     });
@@ -78,6 +76,11 @@ export default class AgendaCtrl {
     });
 
     this.loadZonesAndTables();
+  }
+
+  dragEnd() {
+    this.dragged_product = 0;
+    this.draggable_class = '';
   }
 
   onDrop(zone_id, table_id, table_position, hour, quarter, reservation_part_id) {
