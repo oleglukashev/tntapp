@@ -9,7 +9,10 @@
     <i class='mdi mdi-settings i-24 m-l-md' ng-click='$mdMenu.open($event);' />
     <md-menu-content>
       <md-menu-item>
-        <md-button ng-click='page_filter.openSettings();'>Overboeken aan/uit zetten</md-button>
+        <md-button ng-click='page_filter.openTimeRangeSettings("product", "Openingstijden aanpassen");'>Openingstijden aanpassen</md-button>
+      </md-menu-item>
+      <md-menu-item>
+        <md-button ng-click='page_filter.openTimeRangeSettings("overbooking", "Openingstijden aanpassen");'>Overboeken aan/uit zetten</md-button>
       </md-menu-item>
     </md-menu-content>
   </md-menu>

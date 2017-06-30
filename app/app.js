@@ -31,7 +31,7 @@ import user_menu_controller               from './shared/user_menu/user_menu.con
 import profile_controller                 from './components/dashboard/profile/profile.controller'
 import new_reservation_controller         from './components/new_reservation/new_reservation.controller'
 import page_filter_controller             from './shared/page_filter/page_filter.controller'
-import page_filter_settings_controller    from './shared/page_filter/settings/page_filter_settings.controller'
+import page_filter_time_ranges_controller from './shared/page_filter/time_ranges/page_filter_time_ranges.controller'
 import search                             from './shared/search'
 import dashboard                          from './components/dashboard'
 import dashboard_reservations             from './components/dashboard/reservations/dashboard_reservations.controller'
@@ -100,7 +100,7 @@ const app = angular
   .controller('NewReservationCtrl', new_reservation_controller)
   .controller('DashboardReservationsCtrl', dashboard_reservations)
   .controller('PageFilterCtrl', page_filter_controller)
-  .controller('PageFilterSettingsCtrl', page_filter_settings_controller)
+  .controller('PageFilterTimeRangesCtrl', page_filter_time_ranges_controller)
   .controller('ReservationAnswerCtrl', reservation_answer_controller)
   .config(['$ocLazyLoadProvider', 'MODULE_CONFIG', function ($ocLazyLoadProvider, MODULE_CONFIG) {
     // We configure ocLazyLoad to use the lib script.js as the async loader

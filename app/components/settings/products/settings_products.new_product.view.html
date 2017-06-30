@@ -15,11 +15,8 @@
            md-stretch-tabs
            md-dynamic-height>
     <md-tab>
-
       <md-tab-body>
-
-        <div class='select-product-wrapper reservation_person b-t' flex>
-
+        <div class='md-content-submit select-product-wrapper b-t' flex>
           <div class='md-list-item'>
             <div class='md-list-item-content text-center'>
               <h4>Wat voor soort product wil je toevoegen?</h4>
@@ -54,7 +51,7 @@
             </md-input-container>
           </div>
 
-          <button class='btn btn-lg btn-success text-success no-top-radius md_content_button'
+          <button class='btn btn-lg btn-success text-success no-top-radius md-content-button'
                   ng-class="{ 'disabled': !new_product.item.name }"
                   ng-click='new_product.selectProduct();new_product.tab_index=1'>
             <span ng-hide='new_product.is_submitting'>VERDER</span>
@@ -65,9 +62,7 @@
 
     <md-tab>
       <md-tab-body>
-
-        <div class='select-product-wrapper reservation_person b-t adding-product-wrapper' flex>
-
+        <div class='md-content-submit select-product-wrapper b-t adding-product-wrapper' flex>
           <div class='md-list-item'>
             <div class='md-list-item-content text-center'>
               <h4>Wat zijn je openingstijden voor het <strong>{{ new_product.item.name }}?</strong></h4>
@@ -99,8 +94,7 @@
 
             </div>
           </div>
-
-          <button class='btn btn-lg btn-success text-success no-top-radius md_content_button'
+          <button class='btn btn-lg btn-success text-success no-top-radius md-content-button'
                   ng-class="{ 'disabled': !new_product.item.name }"
                   ng-click='new_product.submitForm();'
                   ng-disabled="new_product.is_submitting">
@@ -110,9 +104,7 @@
             </div>
           </button>
         </div>
-
       </md-tab-body>
     </md-tab>
-
   </md-content>
 </section>

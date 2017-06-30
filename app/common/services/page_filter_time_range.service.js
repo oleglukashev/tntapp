@@ -6,15 +6,16 @@ export default class TimeRange {
     this.$q              = $q;
   }
 
-  getAll(company_id, date) {
+  getAll(company_id, date, type) {
     if (! company_id) {
       return this.$q.defer().promise;
     }
 
-    return this.$http({
-        url: API_URL + '/company/' + company_id + '/page_filter/time_range' + (date ? '?date=' + date : ''),
-        method: 'GET',
-      }).then((result) => result.data);
+    return this.$http.get(API_URL + '/company/' + company_id + '/page_filter/time_range', {
+      params: {
+        date: date,
+        type: type
+      }}).then((result) => result.data);
   }
 
   create(company_id, data) {
