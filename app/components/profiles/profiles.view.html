@@ -25,7 +25,12 @@
           <div class="md-list-item-left char">{{ char }}</div>
             <div ng-repeat="customer in customers | orderBy:'customer.last_name':false" class="customers">
               <div class="md-list-item-content ng-scope">
-                <div class="md-list-item-left img-circle m-t-sm grey-100"></div>
+                <div class="md-list-item-left m-t-sm">
+                  <div class="grey-100 img-circle customer_avatar" ng-hide="customer.photoURI"></div>
+                  <img ng-src="{{ customer.photoURI }}" ng-show="customer.photoURI" class="customer_avatar">
+                </div>
+
+
                 <h3 class="text-md ng-binding customer">{{ customer.last_name }} {{ customer.first_name }}</h3>
                 <div class="pull-right ng-scope">
                   <button md-ink-ripple="" class="md-btn md-fab m-t-xs m-b-xs no-shadow md-ink-ripple" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false" aria-disabled="false" ng-click='user.openUserMenu(customer.id, reservation.pid)' ng-controller='UserMenuCtrl as user'>
