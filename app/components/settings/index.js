@@ -22,13 +22,18 @@ import products_routing       from './products/settings_products.route';
 import products_controller    from './products/settings_products.controller';
 import new_product_controller from './products/settings_products.new_product.controller';
 
-import plugins_routing      from './plugins/settings_plugins.route';
-import plugins_controller   from './plugins/settings_plugins.controller';
+import plugins_routing        from './plugins/settings_plugins.route';
+import plugins_controller     from './plugins/settings_plugins.controller';
+
+import employees_routing         from './employees/settings_employees.route';
+import employees_controller      from './employees/settings_employees.controller';
+import employees_item_controller from './employees/settings_employees.item.controller';
 
 export default angular.module('app.settings', [])
 	.controller('SettingsMailsEditMailCtrl', edit_mail_controller)
   .controller('SettingsTablesNewZoneCtrl', new_zone_controller)
   .controller('SettingsProductsNewProductCtrl', new_product_controller)
+  .controller('SettingsEmployeesItemCtrl', employees_item_controller)
 	.config(routing)
 	.controller('SettingsCtrl', controller)
 	.config(general_routing)
@@ -43,4 +48,6 @@ export default angular.module('app.settings', [])
   .controller('SettingsPluginsCtrl', plugins_controller)
   .config(products_routing)
   .controller('SettingsProductsCtrl', products_controller)
+  .config(employees_routing)
+  .controller('SettingsEmployeesCtrl', employees_controller)
   .name;

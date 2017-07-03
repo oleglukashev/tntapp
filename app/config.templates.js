@@ -24,6 +24,7 @@ export default function templates($templateCache) {
   $templateCache.put('print_reservations.view.html', require('./components/dashboard/reservations/print_reservations.view.html'));
   $templateCache.put('agenda.view.html', require('./components/agenda/agenda.view.html'));
   $templateCache.put('user_menu.edit.view.html', require('./shared/user_menu/edit/user_menu.edit.view.html'));
+  $templateCache.put('settings_employees.item.view.html', require('./components/settings/employees/settings_employees.item.view.html'));
 
   //angular-bootstrap tpls
   $templateCache.put("template/modal/backdrop.html",
