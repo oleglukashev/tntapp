@@ -28,12 +28,16 @@ export default class ProfilesCtrl {
     this.Customer.getAll(this.current_company.id)
       .then(
         (result) => {
-          this.customers = result;
+          result.map(customer => {
+            let first_char = customer.first_name ? customer.first_name[0].toUpperCase() : '#';
+            if (!this.customers[first_char]) this.customers[first_char] = [];
+            this.customers[first_char].push(customer);
+          });
           this.customers_loaded = true;
         });
   }
 
-  openUserMenu() {
+  openCustomerMenu() {
     this.$rootScope.$broadcast('UserMenuCtrl');
     this.$mdSidenav('right').toggle();
   }

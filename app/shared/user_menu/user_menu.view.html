@@ -1,20 +1,24 @@
-<md-sidenav class='md-sidenav-right md-whiteframe-z2 pos-fix' md-component-id='right'ng-swipe-left="user.closeUserMenu()">
+<md-sidenav class='md-sidenav-right md-whiteframe-z2 pos-fix customer-sidenav' md-component-id='right'ng-swipe-left="user.closeCustomerMenu()">
   <md-content>
     <div class='wrapper blue-grey-900'>
       <div class='clear'>
-        <button md-ink-ripple class='md-btn md-flat btn-fw' ng-click='user.closeUserMenu()'>
+        <button md-ink-ripple class='md-btn md-flat btn-fw' ng-click='user.closeCustomerMenu()'>
           <i class='mdi mdi-close i-30' ></i>
         </button>
         <button md-ink-ripple class='pull-right md-btn md-flat btn-fw'>
-          <i class='mdi mdi-dots-vertical' ng-style="{'font-size': '26px', height: '26px'}"></i>
+          <i class='mdi mdi-dots-vertical i-26'></i>
         </button>
         <button md-ink-ripple class='pull-right md-btn md-flat btn-fw' ng-click='user.openEditModal(userData.id)'>
-          <i class='mdi mdi-pencil' ng-style="{'font-size': '26px', height: '26px'}"></i>
+          <i class='mdi mdi-pencil i-26'></i>
         </button>
       </div>
       <h1 class='i-30'>
-      <img ng-src="{{ userData.photoURI }}" ng-if="userData.photoURI" class="customer_avatar m-r-md">
-      {{ userData.first_name }} {{ userData.last_name }}</h1>
+        <img ng-src="{{ userData.photoURI }}" ng-if="userData.photoURI" class="customer_avatar m-r-md" />
+        <span class="user_name">
+          {{ customer_reservations[0].customer.first_name }}
+          {{ customer_reservations[0].customer.last_name }}
+        </span>
+      </h1>
     </div>
 
     <ul class='nav'>
@@ -22,45 +26,57 @@
         <span>Reservering</span>
       </li>
 
-      <div class='inset' ng-if="currentReservation.personCount">
+      <div class='inset' ng-show="current_reservation_part">
         <div class='md-list-item-left'>
           <i class='mdi mdi-attachment icon-muted i-24'></i>
         </div>
         <div class='md-list-item-content'>
-          <h3 class="text-md">{{ user.parsedDate(currentReservation.dateTime) }}</h3>
-          <small class="font-thin">{{ currentReservation.name }}, {{ currentReservation.personCount }} personen</small>
+          <h3 class="text-md">
+            {{ user.parsedDate(current_reservation_part.date_time) }}
+          </h3>
+          <small class="font-thin">
+            {{ current_reservation_part.product.name }},
+            {{ current_reservation_part.number_of_persons }} personen
+          </small>
         </div>
       </div>
 
-      <div class="inset" >
-        <div class="md-list-item-left ">
+      <div class="inset">
+        <div class="md-list-item-left">
           <i class="mdi mdi-phone icon-muted i-24"></i>
         </div>
-        <div class="md-list-item-content" style="overflow:visible">
-
+        <div class="md-list-item-content">
           <div class="pull-right"><i class="mdi mdi-cloud i-24 text-info padding-right-25"></i></div>
-          <h3 class="text-md">{{ userData.primary_phone_number }}</h3>
+          <h3 class="text-md">
+            {{ customer_reservations[0].customer.primary_phone_number }}
+          </h3>
           <small class="font-thin">Telefoon</small>
 
         </div>
       </div>
+
       <div class="inset">
-        <div class="md-list-item-left ">
-          <i class="mdi mdi-email icon-muted i-24" ></i>
+        <div class="md-list-item-left">
+          <i class="mdi mdi-email icon-muted i-24"></i>
         </div>
-        <div class="md-list-item-content" style="overflow:visible">
+        <div class="md-list-item-content">
           <div class="pull-right"><i class="mdi mdi-cloud i-24 text-info padding-right-25"></i></div>
-          <h3 class="text-md">{{ userData.mail }}</h3>
+          <h3 class="text-md">
+            {{ customer_reservations[0].customer.mail }}
+          </h3>
           <small class="font-thin">E-mail</small>
 
         </div>
       </div>
-      <div class="inset" ng-if="currentReservation.notes">
-        <div class="md-list-item-left ">
+
+      <div class="inset" ng-show="current_reservation.notes">
+        <div class="md-list-item-left">
           <i class="mdi mdi-comment-text icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
-          <h3 class="text-md">{{ currentReservation.notes }}</h3>
+          <h3 class="text-md">
+            {{ current_reservation.notes }}
+          </h3>
           <small class="font-thin">Opmerkingen</small>
         </div>
       </div>
@@ -77,41 +93,39 @@
 
       <!-- list -->
 
-      <li ng-class="{active:$state.includes('app.material')}" ng-if="userData.accountURI">
+      <li ng-show="userData.accountURI">
         <ul class="nav nav-sub">
           <li ui-sref-active="active">
-            <a href="{{ userData.accountURI }}" md-ink-ripple  class="text-success" >
-
-              <b><span style="margin-left:56px">PROFIEL BEKIJKEN</span></b>
-
-            </a>
+            <a href="{{ userData.accountURI }}" md-ink-ripple class="text-success fb-button"><span>Profiel bekijken</span></a>
           </li>
         </ul>
       </li>
 
-      <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" ng-if="userReservationsLoaded">
-        <span >Eerdere reserveringen</span>
+      <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" ng-show="customer_reservations.count > 0">
+        <span>Eerdere reserveringen</span>
       </li>
 
-      <li ng-class="{active:$state.includes('app.material')}">
-        <ul class="nav nav-sub">
-          <li ui-sref-active="active" ng-repeat="reservation in userReservations">
-            <a class="inset" md-ink-ripple>
-              <div class="md-list-item-left ">
-                <i class="mdi mdi-book icon-muted i-24"></i>
-              </div>
-              <div class="md-list-item-content">
-                <h3 class="text-md">{{ user.parsedDate(reservation.dateTime) }}</h3>
-                <small class="font-thin">{{ reservation.name }}, {{ reservation.personCount }} personen</small>
-
-                <div class="pull-right review_score" ng-if="reservation.reviewScore != null">
-                  <i class="mdi mdi-star-outline icon-muted i-20"></i>
-                  <small class="font-thin">{{ reservation.reviewScore }}</small>
-                </div>
-              </div>
-            </a>
-          </li>
-        </ul>
+      <li ng-repeat="reservation in customer_reservations">
+        <div class="inset" ng-repeat="reservation_part in reservation.reservation_parts">
+          <div class="md-list-item-left">
+            <i class="mdi mdi-book icon-muted i-24"></i>
+          </div>
+          <div class="md-list-item-content">
+            <h3 class="text-md">
+              {{ user.parsedDate(reservation_part.date_time) }}
+            </h3>
+            <small class="font-thin">
+              {{ reservation_part.product.name }},
+              {{ reservation_part.number_of_persons }} personen
+            </small>
+            <div class="pull-right review_score" ng-if="reservation.reviewScore != null">
+              <i class="mdi mdi-star-outline icon-muted i-20"></i>
+              <small class="font-thin">{{ reservation.reviewScore }}</small>
+            </div>
+          </div>
+        </div>
       </li>
+
+    </ul>
   </md-content>
 </md-sidenav>

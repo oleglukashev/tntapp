@@ -1,5 +1,4 @@
-
-<div class='panel-body fixing-vertical-alignment' ng-if="tables.includes(reservation_part.table_ids[0])">
+<div class='panel-body fixing-vertical-alignment' ng-if="searchFlag || tables.includes(reservation_part.table_ids[0])">
 
   <div class='col-md-2'>
     <div class='md-list-item-left img-circle m-t-sm grey-100'>
@@ -20,7 +19,7 @@
     <small class='font-thin m-r-xs'>{{ reservation_part.number_of_persons }}x</small>
   </div>
   <div class='col-md-2'>
-    <img class='table_icon' src='public/images/table.svg' />
+    <img class='table_icon' src='public/images/table.svg' ng-show="reservation_part.table_ids.length" />
     <small class='font-thin' ng-bind='reservations.getTableNumbersByTableIds(reservation_part.table_ids).join(", ")'></small>
   </div>
   <div class='col-md-2 line-height-58'>
@@ -33,7 +32,7 @@
               aria-haspopup='true'
               aria-expanded='false'
               aria-disabled='false'
-              ng-click='user.openUserMenu(reservation.customer.id, reservation_part.id)' ng-controller='UserMenuCtrl as user'>
+              ng-click='user.openCustomerMenu(reservation.customer.id, reservation_part.id)' ng-controller='UserMenuCtrl as user'>
         <i class='mdi mdi-dots-vertical i-24'></i>
       </button>
     </div>

@@ -5,51 +5,24 @@
   </div>
 
   <div class='col-lg-8 col-md-8 col-sm-8 col-md-offset-1'>
-    <p>{{ searchResults.length }} resultaten <b>{{ searchResults[0]['firstName'] }} {{ searchResults[0]['lastName'] }}</b></p><br>
+    <p>{{ searchResults.length }} resultaten <b>{{ searchResults[0]['customer']['first_name'] }} {{ searchResults[0]['customer']['last_name'] }}</b></p><br>
     <div class='dashboard-ad panel' ng-repeat='reservation in searchResults' ng-if="searchResults">
 
-      <div class='panel-heading'>{{ reservation.pDay }} {{ search.months[reservation.pMonth] }} {{ reservation.pYear }}</div>
+      <div class='panel-heading'>{{ dateHeader }}</div>
 
       <div class='panel-heading fixing-padding'>
         <div class='col-md-2'>Aanwezig</div>
         <div class='col-md-2'>Tijd</div>
         <div class='col-md-2'>Naam</div>
         <div class='col-md-2'>Personen</div>
-        <div class='col-md-4'>Opmerking</div>
+        <div class='col-md-2'>Tafel</div>
+        <div class='col-md-2'>Opmerking</div>
       </div>
 
-      <div class='panel-body fixing-vertical-alignment'>
+      <div ng-init="reservations = search; searchFlag = true"
+           data-ng-include=" 'dashboard_reservations.item_full.view.html' "
+           ng-repeat='reservation_part in reservation.reservation_parts'></div>
 
-        <div class='col-md-2'>
-          <div class='md-list-item-left img-circle m-t-sm grey-100'>
-            <i class="mdi mdi-check i-24"></i>
-          </div>
-        </div>
-        <div class='col-md-2'>
-          <i class='mdi mdi-clock'></i>
-          {{ search.parsedDate(reservation.dateTime) }}
-        </div>
-        <div class='col-md-2'>{{ reservation.lastName }} {{ reservation.firstName }}</div>
-        <div class='col-md-2'>
-          <i class='mdi mdi-account-multiple'></i>
-          <small class='font-thin m-r-xs'>{{ reservation.personCount }}x</small>
-        </div>
-        <div class='col-md-4 line-height-58'>{{ reservation.notes | limitTo: 20 }}{{ reservation.notes.length > 20 ? '...' : '' }}
-
-          <div class='pull-right'>
-            <button md-ink-ripple
-                    class='md-btn md-fab m-t-xs m-b-xs no-shadow'
-                    ng-disabled='disabled'
-                    aria-haspopup='true'
-                    aria-expanded='false'
-                    aria-disabled='false'
-                    ng-click='user.openUserMenu(reservation.id, reservation.pid)' ng-controller='UserMenuCtrl as user'>
-              <i class='mdi mdi-dots-vertical i-24'></i>
-            </button>
-          </div>
-        </div>
-
-      </div>
     </div>
   </div>
 

@@ -1,30 +1,17 @@
 import angular from 'angular';
 
 export default class UserMenuCtrl {
-  constructor(User, Customer, moment, $scope, $rootScope, $mdSidenav, $window, AppConstants, $modal) {
+  constructor(User, Customer, moment, $rootScope, $mdSidenav, $modal) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.current_company.id;
 
-    this.moment          = moment;
-    this.Customer        = Customer;
-    this.$scope          = $scope;
-    this.$rootScope      = $rootScope;
-    this.$modal          = $modal;
-    this.$mdSidenav      = $mdSidenav;
-    this.months          = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
-
-    $rootScope.userData                 = {};
-    $rootScope.userDataLoaded           = false;
-    $rootScope.userReservations         = {};
-    $rootScope.userReservationsLoaded   = false;
-    $rootScope.currentReservation       = {};
-    $rootScope.currentReservationLoaded = false;
-
-    $scope.$on('topic', function (event, arg) {
-      alert(arg);
-      $scope.receiver = 'got your ' + arg;
-    });
+    this.moment     = moment;
+    this.Customer   = Customer;
+    this.$rootScope = $rootScope;
+    this.$mdSidenav = $mdSidenav;
+    this.$modal     = $modal;
+    this.months     = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
   }
 
   openEditModal(user_id) {
@@ -41,43 +28,32 @@ export default class UserMenuCtrl {
     });
   }
 
-  openUserMenu(customerId, resetvationPartId) {
-    this.closeUserMenu();
+  openCustomerMenu(customer_id, reservation_part_id) {
+    this.Customer.searchReservationsByCustomerId(this.current_company_id, customer_id).then(reservations => {
+      this.$rootScope.customer_reservations = reservations;
 
-    this.Customer.findById(this.current_company.id, customerId).then(customer => {
-      this.$rootScope.userData = customer;
-      this.$rootScope.userDataLoaded = true;
+      if (!reservation_part_id && reservations.count > 0 && reservations[0].reservation_parts.count > 0)
+        reservation_part_id = reservations[0].reservation_parts[0].id;
 
-      this.Customer.searchReservationsByCustomerId(this.current_company.id, customerId).then(results => {
-        this.$rootScope.userReservations = results;
-        this.$rootScope.userReservationsLoaded = true;
-
-        results.map((r) => {
-          if (r.pid == resetvationPartId) {
-            this.$rootScope.currentReservation = r;
-            this.$rootScope.currentReservationLoaded = true;
-          }
-        })
-
-      })
-      this.$rootScope.userReservationsLoaded = false;
-
+      reservations.forEach((reservation) => {
+        reservation.reservation_parts.forEach((part) => {
+          if (part.id == reservation_part_id)
+            this.$rootScope.current_reservation_part = part;
+        });
+      });
     })
 
-    this.$rootScope.userDataLoaded = false;
-    this.$rootScope.userReservationsLoaded = false;
-    this.$rootScope.currentReservationLoaded = false;
     this.$mdSidenav('right').open()
   }
 
-  closeUserMenu() {
+  closeCustomerMenu() {
     this.$mdSidenav('right').close()
   }
 
   parsedDate(date) {
     const day   = this.moment(date).format('D');
     const month = this.moment(date).format('M');
-    const other = this.moment(date).format('YYYY h:mm');
+    const other = this.moment(date).format('YYYY HH:mm');
     return `${day} ${this.months[month]} ${other}`;
   }
 }

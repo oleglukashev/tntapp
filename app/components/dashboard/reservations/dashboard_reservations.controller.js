@@ -24,11 +24,6 @@ export default class DashboardReservationsCtrl {
     this.loadReservations();
   }
 
-  openUserMenu() {
-    this.$rootScope.$broadcast('UserMenuCtrl');
-    this.$mdSidenav('right').toggle();
-  }
-
   filtered(array) {
     if (!this.date_filter) {
       return array;
@@ -54,7 +49,7 @@ export default class DashboardReservationsCtrl {
     return result;
   }
 
-  openUserMenu() {
+  openCustomerMenu() {
     this.$rootScope.$broadcast('UserMenuCtrl');
     this.$mdSidenav('right').toggle();
   }
