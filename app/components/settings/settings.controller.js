@@ -12,7 +12,8 @@ export default class SettingsCtrl {
         'OPENINGSTIJDEN/PRODUCTEN' : 'app.settings.products',
         'PLEKKEN VRIJHOUDEN'       : 'app.settings.limits',
         'TAFELS'                   : 'app.settings.tables',
-        'PLUGINS'                  : 'app.settings.plugins'
+        'PLUGINS'                  : 'app.settings.plugins',
+        'MEDEWERKERS'              : 'app.settings.employees'
     };
   }
 }
