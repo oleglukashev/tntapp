@@ -1,11 +1,12 @@
 import angular from 'angular';
 
 export default class AgendaCtrl {
-  constructor(User, Zone, Table, TimeRange, Product, Reservation, ReservationStatus, ReservationPart, filterFilter, $scope, $rootScope, $modal, moment, $timeout) {
+  constructor(User, Settings, Zone, Table, TimeRange, Product, Reservation, ReservationStatus, ReservationPart, filterFilter, $scope, $rootScope, $modal, moment, $timeout) {
     'ngInject';
 
     this.current_company = User.current_company;
 
+    this.Settings        = Settings;
     this.Table           = Table;
     this.Zone            = Zone;
     this.Product         = Product;
@@ -35,10 +36,12 @@ export default class AgendaCtrl {
 
     this.left_margin        = 0;
     this.top_margin         = 30;
-    this.hour_width         = 101;
+    this.hour_width         = 100;
     this.reservation_height = 30;
     this.now_left_px        = this.left_margin + (new Date()).getHours() * this.hour_width +
       (new Date()).getMinutes() / 60 * this.hour_width;
+
+    this.reservation_block_width = this.hour_width * 1.5;
 
     $rootScope.$on('ANGULAR_DRAG_START', (obj, event) => {
       this.dragged_product = event.target.attributes['data-product-id'].value;
@@ -75,6 +78,7 @@ export default class AgendaCtrl {
       this.loadReservations();
     });
 
+    this.loadGeneralSettings();
     this.loadZonesAndTables();
   }
 
@@ -226,6 +230,19 @@ export default class AgendaCtrl {
         },
         (error) => {
         });
+  }
+
+  loadGeneralSettings() {
+    this.Settings.getGeneralSettings(this.current_company.id)
+      .then(general_settings => {
+          this.general_settings = general_settings;
+          this.reservation_block_width = this.hour_width / 60 * general_settings.bezettings_minuten;
+          if (general_settings.show_timetable_first) {
+            this.reservations_view = "list";
+          } else {
+            this.reservations_view = "calendar";
+          }
+      });
   }
 
   getTableIdsByTablesList(tables_list) {
