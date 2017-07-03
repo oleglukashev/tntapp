@@ -40,13 +40,4 @@ export default class TimeRange {
       data: data
     }).then((result) => result.data);
   }
-
-  delete(company_id, range_id) {
-    if (! company_id) {
-      return this.$q.defer().promise;
-    }
-
-    return this.$http.post(API_URL + '/company/' + company_id + '/settings/time_ranges/delete/' + range_id)
-      .then((result) => result.data);
-  }
 }

@@ -70,12 +70,12 @@
                   </md-menu-item>
 
                   <md-menu-item>
-                    <md-button ng-click='products_settings.hidden(product.productId)' ng-if="!products_settings.products[product.productId].hidden">Verberg</md-button>
-                    <md-button ng-click='products_settings.hidden(product.productId)' ng-if="products_settings.products[product.productId].hidden">Tonen</md-button>
+                    <md-button ng-click='products_settings.hidden(product.product_id)' ng-if="!products_settings.products[product.product_id].hidden">Verberg</md-button>
+                    <md-button ng-click='products_settings.hidden(product.product_id)' ng-if="products_settings.products[product.product_id].hidden">Tonen</md-button>
                   </md-menu-item>
 
                   <md-menu-item>
-                    <md-button ng-click='products_settings.removeProduct(product.productId)' class="remove-button">Product verwijderen</md-button>
+                    <md-button ng-click='products_settings.removeProduct(product.product_id)' class="remove-button">Product verwijderen</md-button>
                   </md-menu-item>
 
                 </md-menu-content>
