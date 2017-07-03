@@ -1,4 +1,4 @@
-<div class='panel-body fixing-vertical-alignment' ng-if="searchFlag || tables.includes(reservation_part.table_ids[0])">
+<div class='panel-body fixing-vertical-alignment reservation_full_wrapper' ng-if="searchFlag || tables.includes(reservation_part.table_ids[0])">
 
   <div class='col-md-2'>
     <div class='md-list-item-left img-circle m-t-sm grey-100'>
@@ -18,16 +18,17 @@
     <i class='mdi mdi-account-multiple'></i>
     <small class='font-thin m-r-xs'>{{ reservation_part.number_of_persons }}x</small>
   </div>
-  <div class='col-md-2'>
+  <div class='col-md-1'>
     <img class='table_icon' src='public/images/table.svg' ng-show="reservation_part.table_ids.length" />
     <small class='font-thin' ng-bind='reservations.getTableNumbersByTableIds(reservation_part.table_ids).join(", ")'></small>
   </div>
-  <div class='col-md-2 line-height-58'>
+  <div class='col-md-2 description'>
     {{ (reservation.notes || '&nbsp;') | limitTo: 20 }}{{ reservation.notes.length > 20 ? '...' : '' }}
-
+  </div>
+  <div class='col-md-1'>
     <div class='pull-right'>
       <button md-ink-ripple
-              class='md-btn md-fab m-t-xs m-b-xs no-shadow'
+              class='md-btn md-fab m-t-xs m-b-xs m-r-n-sm no-shadow'
               ng-disabled='disabled'
               aria-haspopup='true'
               aria-expanded='false'

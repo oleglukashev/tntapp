@@ -36,8 +36,8 @@
           <div class='col-md-2'>Tijd</div>
           <div class='col-md-2'>Naam</div>
           <div class='col-md-2'>Personen</div>
-          <div class='col-md-2'>Tafel</div>
-          <div class='col-md-2'>Opmerking</div>
+          <div class='col-md-1'>Tafel</div>
+          <div class='col-md-3'>Opmerking</div>
         </div>
 
         <div ng-repeat='reservation in agenda.reservations' ng-show='agenda.reservations.length'>
@@ -69,16 +69,6 @@
           <div class="timeline-wrapper" ng-if="agenda.tables_by_zone[zone.id].length">
 
             <div class="now" ng-style="{ height: agenda.tables_by_zone[zone.id].length * 30 + 30, left: agenda.now_left_px }" ng-if="agenda.is_today"></div>
-                <div class="reservation {{ agenda.draggable_class }}" ng-repeat="item in agenda.tables_by_part[table.id]" ui-draggable="true" drag="item.id" ng-style="{ left: item.left, top: item.top || (table_index*30+30) }" ng-class="agenda.draggable_class" data-product-id="{{ item.product_id }}">
-                  <i class="mdi mdi-account-multiple i-20"></i>
-                  <a ng-click='user.openCustomerMenu(item.customer.id, item.id)' ng-controller='UserMenuCtrl as user'>
-                    {{ item.person_count }}
-                    {{ agenda.products[item.product_id] }}
-                    <strong>
-                      {{ item.customer.last_name }}
-                      {{ item.customer.first_name }}
-                    </strong>
-                  </a>
 
             <ul class='tables md-list no-padder no-margin'>
               <li class='table_item md-list-item no-padder no-margin z-index-1'
@@ -89,7 +79,7 @@
                     <div class="quarter" ng-repeat="quarter in [0,1,2,3]" ui-on-drop="agenda.onDrop(zone.id, table.id, table_index, hour, quarter, $data)" ng-class="agenda.getQuarterClass(hour, quarter)"></div>
                   </div>
 
-                  <div class="reservation" ng-repeat="item in agenda.tables_by_part[table.id]" ui-on-drop="" ui-draggable="true" drag="item.id" ng-style="{ left: item.left, top: item.top || (table_index*30+30) }" on-drop-failure="agenda.dragEnd()" ng-class="agenda.draggable_class" data-product-id="{{ item.product_id }}" data-id="{{ item.id }}">
+                  <div class="reservation" ng-repeat="item in agenda.tables_by_part[table.id]" ui-on-drop="" ui-draggable="true" drag="item.id" ng-style="{ left: item.left, top: item.top || (table_index*30+30), width: agenda.reservation_block_width }" on-drop-failure="agenda.dragEnd()" ng-class="agenda.draggable_class" data-product-id="{{ item.product_id }}" data-id="{{ item.id }}">
                     <i class="mdi mdi-account-multiple i-20"></i>
                     <a ng-click='user.openUserMenu(item.customer.id, item.id)' ng-controller='UserMenuCtrl as user'>
                       {{ item.number_of_persons }}
