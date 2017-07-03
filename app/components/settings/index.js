@@ -29,6 +29,9 @@ import employees_routing         from './employees/settings_employees.route';
 import employees_controller      from './employees/settings_employees.controller';
 import employees_item_controller from './employees/settings_employees.item.controller';
 
+import themes_routing         from './themes/settings_themes.route';
+import themes_controller      from './themes/settings_themes.controller';
+
 export default angular.module('app.settings', [])
 	.controller('SettingsMailsEditMailCtrl', edit_mail_controller)
   .controller('SettingsTablesNewZoneCtrl', new_zone_controller)
@@ -50,4 +53,6 @@ export default angular.module('app.settings', [])
   .controller('SettingsProductsCtrl', products_controller)
   .config(employees_routing)
   .controller('SettingsEmployeesCtrl', employees_controller)
+  .config(themes_routing)
+  .controller('SettingsThemesCtrl', themes_controller)
   .name;

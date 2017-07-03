@@ -1,0 +1,38 @@
+.theme-images
+  .theme-images-default,
+  .theme-images-aqua,
+  .theme-images-lego,
+  .theme-images-chocolate
+    width 113px
+    height 180px
+    background-repeat no-repeat
+    background-position 0 0
+   
+  .theme-images-default
+    background-image url('../../../public/images/themes/default.png');
+  .theme-images-aqua
+    background-image url('../../../public/images/themes/aqua.png');
+  .theme-images-lego
+    background-image url('../../../public/images/themes/lego.png');
+  .theme-images-chocolate
+    background-image url('../../../public/images/themes/chocolate.png');
+
+@media only screen and (-Webkit-min-device-pixel-ratio: 1.5),
+only screen and (-moz-min-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min-device-pixel-ratio: 1.5)
+  .theme-images
+    .theme-images-default,
+    .theme-images-aqua,
+    .theme-images-lego,
+    .theme-images-chocolate
+      background-size 113px 180px
+
+    .theme-images-default
+      background-image url('../../../public/images/themes/default@2x.png');
+    .theme-images-aqua
+      background-image url('../../../public/images/themes/aqua@2x.png');
+    .theme-images-lego
+      background-image url('../../../public/images/themes/lego@2x.png');
+    .theme-images-chocolate
+      background-image url('../../../public/images/themes/chocolate@2x.png');

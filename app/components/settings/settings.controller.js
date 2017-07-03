@@ -11,9 +11,10 @@ export default class SettingsCtrl {
         'MAILS'                    : 'app.settings.mails',
         'OPENINGSTIJDEN/PRODUCTEN' : 'app.settings.products',
         'PLEKKEN VRIJHOUDEN'       : 'app.settings.limits',
+        'MEDEWERKERS'              : 'app.settings.employees',
         'TAFELS'                   : 'app.settings.tables',
         'PLUGINS'                  : 'app.settings.plugins',
-        'MEDEWERKERS'              : 'app.settings.employees'
+        "KLEUREN TEMA'S"           : 'app.settings.themes'
     };
   }
 }

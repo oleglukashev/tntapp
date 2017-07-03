@@ -64,6 +64,17 @@ export default class Settings {
     }).then((result) => result.data);
   }
 
+  getThemeSettings(company_id) {
+    if (! company_id) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: API_URL + '/company/' + company_id + '/settings/theme',
+      method: 'GET',
+    }).then((result) => result.data);
+  }
+
   updateGeneralSettings(company_id, data) {
     if (! company_id) {
       return this.$q.defer().promise;
@@ -119,6 +130,18 @@ export default class Settings {
 
     return this.$http({
       url: API_URL + '/company/' + company_id + '/settings/plugins/update_tnr_sync_token',
+      method: 'PATCH',
+      data: data
+    }).then((result) => result.data);
+  }
+
+  updateThemeSettings(company_id, data) {
+    if (! company_id) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: API_URL + '/company/' + company_id + '/settings/theme',
       method: 'PATCH',
       data: data
     }).then((result) => result.data);

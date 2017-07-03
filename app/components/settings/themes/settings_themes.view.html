@@ -1,0 +1,24 @@
+<div class='panel'>
+  <div class='panel-heading'>Kleuren thema's</div>
+  <div class='wrapper'
+       layout='row'
+       layout-align='space-around'
+       ng-hide='themes_settings.is_loaded'>
+    <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
+  </div>
+  <div class='panel-body' ng-show='themes_settings.is_loaded'>
+    <p>U kunt een reserveer-widget en een reserveer-tag op uw WordPress website plaatsen. Hiervoor moet eerst de TheNextTable plugin geinstalleerd worden.</p>
+    <div class='row'>
+      <div class='md-form-group no-padder'>          
+        <md-radio-group class='theme-images'
+                        ng-change='themes_settings.submitForm();'
+                        ng-model='themes_settings.plugin_theme_name'>
+          <div class='col-md-3 col-xs-6' ng-repeat='theme in themes_settings.themes'>
+            <div class='theme-images-{{ theme.toLowerCase() }}'></div>
+            <md-radio-button ng-value='theme' class="inline md-success">{{ theme }}</md-radio-button>
+          </div>
+        </div>
+      </md-radio-group>
+    </div>
+  </div>
+</div>
