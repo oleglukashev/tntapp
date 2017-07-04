@@ -16,8 +16,10 @@ export default class PageFilterTimeRangesCtrl {
     this.$modalInstance      = $modalInstance;
     this.slider              = this.Slider.getOptions();
     this.type                = type;
+    this.value_label         = type == 'product' ? 'Opened' : 'Overboeken'
     this.title               = title;
     this.products            = [];
+
 
     this.loadTimeRange();
   }
