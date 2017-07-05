@@ -1,10 +1,14 @@
 import angular from 'angular';
 
 export default class UserMenuCtrl {
-  constructor(User, Customer, moment, $rootScope, $mdSidenav, $modal) {
+  constructor(User, CustomerNote, CustomerPreference, CustomerAllergies, Customer, moment, $rootScope, $mdSidenav, $modal) {
     'ngInject';
 
     this.current_company_id = User.current_company.id;
+
+    this.CustomerNote       = CustomerNote;
+    this.CustomerPreference = CustomerPreference;
+    this.CustomerAllergies  = CustomerAllergies;
 
     this.moment     = moment;
     this.Customer   = Customer;
@@ -29,6 +33,25 @@ export default class UserMenuCtrl {
   }
 
   openCustomerMenu(customer_id, reservation_part_id) {
+    this.CustomerPreference.getAll(this.current_company_id, customer_id)
+    .then(preferences => {
+      this.$rootScope.customer_preferences = preferences;
+    });
+
+    this.CustomerNote.getAll(this.current_company_id, customer_id)
+    .then(notes => {
+      this.$rootScope.customer_notes = notes;
+    });
+
+    this.CustomerAllergies.getAll(this.current_company_id, customer_id)
+    .then(allergies => {
+      this.$rootScope.customer_allergies = allergies;
+    });
+
+    this.Customer.findById(this.current_company_id, customer_id).then(customer => {
+      this.$rootScope.customer = customer;
+    })
+
     this.Customer.searchReservationsByCustomerId(this.current_company_id, customer_id).then(reservations => {
       this.$rootScope.customer_reservations = reservations;
 

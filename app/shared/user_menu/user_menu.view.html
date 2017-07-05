@@ -8,12 +8,12 @@
         <button md-ink-ripple class='pull-right md-btn md-flat btn-fw'>
           <i class='mdi mdi-dots-vertical i-26'></i>
         </button>
-        <button md-ink-ripple class='pull-right md-btn md-flat btn-fw' ng-click='user.openEditModal(userData.id)'>
+        <button md-ink-ripple class='pull-right md-btn md-flat btn-fw' ng-click='user.openEditModal(customer.id)'>
           <i class='mdi mdi-pencil i-26'></i>
         </button>
       </div>
       <h1 class='i-30'>
-        <img ng-src="{{ userData.photoURI }}" ng-if="userData.photoURI" class="customer_avatar m-r-md" />
+        <img ng-src="{{ customer.photoURI }}" ng-if="customer.photoURI" class="customer_avatar m-r-md" />
         <span class="user_name">
           {{ customer_reservations[0].customer.first_name }}
           {{ customer_reservations[0].customer.last_name }}
@@ -81,22 +81,59 @@
         </div>
       </div>
 
-      <div class="inset" ng-if="userData.averageReviewScore">
+      <div class="inset" ng-repeat="note in customer_notes">
+        <div class="md-list-item-left">
+          <i class="mdi mdi-information-outline icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">
+            {{ note.note }}
+          </h3>
+          <small class="font-thin">Opmerkingen</small>
+        </div>
+      </div>
+
+      <div class="inset" ng-repeat="allergy in customer_allergies">
+        <div class="md-list-item-left">
+          <i class="mdi mdi-information-outline icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">
+            {{ allergy.allergy }}
+          </h3>
+          <small class="font-thin">Allergieën</small>
+        </div>
+      </div>
+
+      <div class="inset" ng-repeat="preference in customer_preferences">
+        <div class="md-list-item-left">
+          <i class="mdi mdi-information-outline icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">
+            {{ preference.name }}
+            {{ preference.value }}
+          </h3>
+          <small class="font-thin">Voorkeuren</small>
+        </div>
+      </div>
+
+      <div class="inset" ng-if="customer_reservations[0].customer.average_rating">
         <div class="md-list-item-left ">
           <i class="mdi mdi-star-outline icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
-          <h3 class="text-md">{{ userData.averageReviewScore }}</h3>
+          <h3 class="text-md">{{ customer_reservations[0].customer.average_rating }}</h3>
           <small class="font-thin">Gemidelde rating</small>
         </div>
       </div>
 
       <!-- list -->
 
-      <li ng-show="userData.accountURI">
+      <li ng-show="customer.accountURI">
         <ul class="nav nav-sub">
           <li ui-sref-active="active">
-            <a href="{{ userData.accountURI }}" md-ink-ripple class="text-success fb-button"><span>Profiel bekijken</span></a>
+            <a href="{{ customer.accountURI }}" md-ink-ripple class="text-success fb-button"><span>Profiel bekijken</span></a>
           </li>
         </ul>
       </li>

@@ -5073,6 +5073,66 @@ a.text-#000000:hover
   width 13px
 
 
+.box-line
+  position relative
+  display block
+  color default_color
+  width 92%
+  height 32px
+  text-align left
+  margin 5px 0 5px 2%
+  background-color #fff
+  vertical-align top
+  border 1px solid default_border_color
+  padding-top 2px
+  overflow hidden
+  float left
+
+  span
+    padding 3px 10px
+    overflow hidden
+    display block
+
+  &:hover
+    background-color #edf1f2
+
+  &.disabled
+    pointer-events none
+    cursor not-allowed
+    opacity .65
+
+  &.active
+    border-color green_color
+
+    .box_active_icon
+      display block
+
+  .box_icon
+    display block
+    font-size 26px
+    line-height 26px
+    margin 35px 0 5px
+
+  .box_active_icon
+    display none
+    position absolute
+    width 16px
+    height 16px
+    top -8px
+    right -8px
+    line-height 16px
+    border-radius 50%
+    background-color green_color
+    color #fff
+
+
+
+
+
+
+
+
+
 .box
   position relative
   display inline-block

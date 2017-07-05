@@ -16,6 +16,9 @@ import SliderService              from './slider.service';
 import CustomerService            from './customer.service'
 import ReservationPartService     from './reservation_part.service'
 import EmployeeService            from './employee.service'
+import CustomerNoteService        from './customer_note.service'
+import CustomerPreferenceService  from './customer_preference.service'
+import CustomerAllergiesService   from './customer_allergies.service'
 
 export default angular.module('app.services', [])
   .service('User', UserService)
@@ -35,4 +38,7 @@ export default angular.module('app.services', [])
   .service('Customer', CustomerService)
   .service('ReservationPart', ReservationPartService)
   .service('Employee', EmployeeService)
+  .service('CustomerNote', CustomerNoteService)
+  .service('CustomerPreference', CustomerPreferenceService)
+  .service('CustomerAllergies', CustomerAllergiesService)
   .name;
