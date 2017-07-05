@@ -143,7 +143,7 @@ export default class UserMenuEditCtrl {
     } else {
       this.CustomerNote.create(this.current_company.id, this.$rootScope.userData.id, data)
         .then((result) => {
-          this.$rootScope.customer_notes = this.notes;
+          this.$rootScope.customer_notes.push(result);
           this.closeModal();
         },
         (error) => {
@@ -174,7 +174,7 @@ export default class UserMenuEditCtrl {
     } else {
       this.CustomerPreference.create(this.current_company.id, this.$rootScope.userData.id, data)
         .then((result) => {
-          this.$rootScope.customer_preferences = this.preferences;
+          this.$rootScope.customer_preferences.push(result);
           this.closeModal();
         },
         (error) => {
@@ -204,7 +204,7 @@ export default class UserMenuEditCtrl {
     } else {
       this.CustomerAllergies.create(this.current_company.id, this.$rootScope.userData.id, data)
         .then((result) => {
-          this.$rootScope.customer_allergies = this.allergies;
+          this.$rootScope.customer_allergies.push(result);
           this.closeModal();
         },
         (error) => {
