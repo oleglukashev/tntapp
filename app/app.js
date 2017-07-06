@@ -2,6 +2,7 @@ import styles                             from './assets/css/app.styl'
 import angular                            from 'angular'
 import angular_jwt                        from 'angular-jwt';
 import angular_animate                    from 'angular-animate'
+import angular_loading_bar                from 'angular-loading-bar'
 import angular_ng_uploader                from 'ng-file-upload'
 import angular_material                   from 'angular-material'
 import angular_aria                       from 'angular-aria'
@@ -89,7 +90,8 @@ const app = angular
     profiles,
     constants,
     'growlNotifications',
-    edit_user
+    edit_user,
+    angular_loading_bar,
   ])
   .config(jwt_config)
   .controller('AppCtrl', app_controller)

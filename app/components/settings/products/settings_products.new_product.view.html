@@ -108,13 +108,10 @@
             </div>
           </div>
           <button class='btn btn-lg btn-success text-success no-top-radius md-content-button'
-                  ng-class="{ 'disabled': !new_product.item.name }"
+                  ng-class="{ 'disabled': !new_product.item.name || new_product.is_submitting }"
                   ng-click='new_product.submitForm();'
                   ng-disabled="new_product.is_submitting">
-            <span ng-hide='new_product.is_submitting'>VOLTOOIEN</span>
-            <div layout='row' layout-align='space-around' ng-show='new_product.is_submitting'>
-              <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
-            </div>
+            <span>VOLTOOIEN</span>
           </button>
         </div>
       </md-tab-body>

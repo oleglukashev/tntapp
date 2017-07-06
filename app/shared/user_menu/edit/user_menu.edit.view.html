@@ -86,12 +86,9 @@
           </div>
 
           <button type='submit'
-                  ng-class="{ 'disabled': !edit_user_form.$valid }"
+                  ng-class="{ 'disabled': !edit_user_form.$valid || edit_user.is_submitting }"
                   class='btn btn-lg btn-success text-success w-full no-top-radius'>
-            <span ng-hide='edit_user.is_submitting'>OPSLAAN</span>
-            <div layout='row' layout-align='space-around' ng-show='edit_user.is_submitting'>
-              <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
-            </div>
+            <span>OPSLAAN</span>
           </button>
         </form>
 
@@ -143,13 +140,10 @@
         </div>
 
         <button type='submit'
-                ng-class="{ 'disabled': !user_notes_form.$valid }"
+                ng-class="{ 'disabled': !user_notes_form.$valid || edit_user.notes_is_submitting }"
                 ng-click="edit_user.submitNoteForm(user_notes_form.$valid)"
                 class='btn btn-lg btn-success text-success w-full no-top-radius'>
-          <span ng-hide='edit_user.notes_is_submitting'>OPSLAAN</span>
-          <div layout='row' layout-align='space-around' ng-show='edit_user.notes_is_submitting'>
-            <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
-          </div>
+          <span>OPSLAAN</span>
         </button>
 
       </md-tab-body>
@@ -205,13 +199,10 @@
         </div>
 
         <button type='submit'
-                ng-class="{ 'disabled': !user_preferences_form.$valid }"
+                ng-class="{ 'disabled': !user_preferences_form.$valid || edit_user.preferences_is_submitting }"
                 ng-click="edit_user.submitPreferenceForm(user_preferences_form.$valid)"
                 class='btn btn-lg btn-success text-success w-full no-top-radius'>
-          <span ng-hide='edit_user.preferences_is_submitting'>OPSLAAN</span>
-          <div layout='row' layout-align='space-around' ng-show='edit_user.preferences_is_submitting'>
-            <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
-          </div>
+          <span>OPSLAAN</span>
         </button>
 
 
@@ -263,13 +254,10 @@
         </div>
 
         <button type='submit'
-                ng-class="{ 'disabled': !user_allergies_form.$valid }"
+                ng-class="{ 'disabled': !user_allergies_form.$valid || edit_user.allergies_is_submitting }"
                 ng-click="edit_user.submitAllergiesForm(user_allergies_form.$valid)"
                 class='btn btn-lg btn-success text-success w-full no-top-radius'>
-          <span ng-hide='edit_user.allergies_is_submitting'>OPSLAAN</span>
-          <div layout='row' layout-align='space-around' ng-show='edit_user.allergies_is_submitting'>
-            <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
-          </div>
+          <span>OPSLAAN</span>
         </button>
 
 

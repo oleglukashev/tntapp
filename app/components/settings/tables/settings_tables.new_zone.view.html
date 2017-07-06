@@ -62,12 +62,9 @@
       </div>
 
       <button class='btn btn-lg btn-success text-success no-top-radius md-content-button'
-              ng-class="{ 'disabled': !new_zone_form.$valid }"
+              ng-class="{ 'disabled': !new_zone_form.$valid || new_zone.is_submitting }"
               ng-click='new_zone.submitForm();'>
-        <span ng-hide='new_zone.is_submitting'>OPSLAAN</span>
-        <div layout='row' layout-align='space-around' ng-show='new_zone.is_submitting'>
-          <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
-        </div>
+        <span>OPSLAAN</span>
       </button>
     </div>
   </md-content>

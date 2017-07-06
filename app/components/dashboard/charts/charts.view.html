@@ -5,9 +5,6 @@
         Reserveringen
       </div>
       <div class='panel-body relative'>
-        <div class='wrapper'  layout='row' layout-sm='column' layout-align='space-around' ng-hide='charts.graphs.doughnut_values'>
-          <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-        </div>
 
         <canvas id="doughnut" class="chart chart-doughnut"
           chart-data="charts.graphs.doughnut_values" chart-labels="charts.graphs.doughnut_keys">
@@ -25,10 +22,6 @@
         Deze week
       </div>
       <div class='panel-body'>
-
-        <div class='wrapper'  layout='row' layout-sm='column' layout-align='space-around' ng-hide='charts.graphs.day_guests_arr.length > 0'>
-          <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-        </div>
 
         <div ng-if="charts.graphs.day_guests_arr" ui-jq="plot" ui-options="
           [

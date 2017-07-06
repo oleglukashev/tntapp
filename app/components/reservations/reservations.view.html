@@ -1,10 +1,6 @@
 <div class='clearfix'>
   <div class='col-lg-8 col-md-8 col-sm-8'>
     <div data-ng-include=" 'page_filter.view.html' " ng-controller='PageFilterCtrl as page_filter'></div>
-    
-    <div class='wrapper' layout='row' layout-align='space-around' ng-hide='reservations.is_loaded'>
-      <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-    </div>
 
     <div ng-show='reservations.is_loaded && reservations.reservations.length'>
       <button ng-click='reservations.openReservation();'
