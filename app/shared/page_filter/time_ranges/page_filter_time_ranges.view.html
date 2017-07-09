@@ -56,19 +56,17 @@
           </tr>
         </tbody>
       </table>
-      <div layout='row' layout-align='space-around' ng-hide='page_filter_time_ranges.is_loaded'>
-        <md-progress-circular md-mode="indeterminate" md-diameter='24'></md-progress-circular>
-      </div>
       <div class='wrapper'>
         <button md-ink-ripple
+                ng-class="{ 'disabled': page_filter_time_ranges.is_loaded }"
                 class='md-btn md-flat btn-fw text-success'
                 ng-click='page_filter_time_ranges.add();'>
           <i class='mdi mdi-plus-circle-outline'></i>
-          NIEUWE TIJDSZONE 
+          NIEUWE TIJDSZONE
         </button>
       </div>
     </div>
-    
+
     <div class='md-content-submit' ng-class='page_filter_time_ranges.state === "form" ? "show" : "transparent"'>
       <form name='page_filter_time_ranges_form'
             ng-submit='page_filter_time_ranges.submitForm(page_filter_time_ranges_form.$valid);'>
@@ -113,11 +111,8 @@
 
         <button type='submit'
                 class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
-                ng-class="{ 'disabled': !page_filter_time_ranges_form.$valid }">
-          <span ng-hide='page_filter_time_ranges.is_submitting'>OPSLAAN</span>
-          <div layout='row' layout-align='space-around' ng-show='page_filter_time_ranges.is_submitting'>
-            <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
-          </div>
+                ng-class="{ 'disabled': !page_filter_time_ranges_form.$valid || page_filter_time_ranges.is_submitting }">
+          <span>OPSLAAN</span>
         </button>
       </form>
     </div>

@@ -1,10 +1,3 @@
-<div class="wrapper agenda"
-     layout='row'
-     layout-align='space-around'
-     ng-hide='agenda.is_loaded'>
-  <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-</div>
-
 <div ng-show='agenda.is_loaded' class='col-lg-8 col-md-8 col-sm-8'>
 
   <div ng-init="showRightMenu = true; view = agenda.reservations_view" data-ng-include=" 'page_filter.view.html' " ng-controller='PageFilterCtrl as page_filter'></div>

@@ -1,11 +1,3 @@
-<div class='wrapper'
-     layout='row'
-     layout-align='space-around'
-     ng-hide='products_settings.is_loaded'>
-  <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-</div>
-
-
 <div ng-show='products_settings.is_loaded'>
   <button ng-click='products_settings.addProduct()' md-ink-ripple class='panel-add-button md-btn md-fab m-b orange'>
     <i class='mdi mdi-plus i-24'></i>

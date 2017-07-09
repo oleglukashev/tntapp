@@ -1,9 +1,5 @@
 <div class='dashboard'>
 
-  <div class='wrapper' layout='row' layout-align='space-around' ng-hide='searchResultsLoaded'>
-    <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-  </div>
-
   <div class='col-lg-8 col-md-8 col-sm-8 col-md-offset-1'>
     <p>{{ searchResults.length }} resultaten <b>{{ searchResults[0]['customer']['first_name'] }} {{ searchResults[0]['customer']['last_name'] }}</b></p><br>
     <div class='dashboard-ad panel' ng-repeat='reservation in searchResults' ng-if="searchResults">

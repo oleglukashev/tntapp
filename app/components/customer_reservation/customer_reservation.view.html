@@ -58,16 +58,6 @@
                       RESERVER MET E-MAIL
                     </a>
                   </div>
-                  <div class='wrapper'
-                       layout='column'
-                       layout-align='space-around center'
-                       ng-hide='reserv.socials_is_loaded'>
-                    <div class='m-t-xxl m-b-xxl'
-                         layout='row'
-                         layout-align='space-around'>
-                      <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-                    </div>
-                  </div>
                 </div>
               </md-tab-body>
             </md-tab>
@@ -177,12 +167,6 @@
                         <p class='no-margin'>{{ product.name }}</p>
                       </label>
                     </div>
-                    <div class='m-t-xxl m-b-xxl'
-                         layout='row'
-                         layout-align='space-around'
-                         ng-hide='reserv.products_is_loaded'>
-                      <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-                    </div>
                   </div>
                 </div>
               </md-tab-body>
@@ -219,12 +203,6 @@
                                ng-model='reserv.reservation.time'
                                uncheckable
                                btn-radio='time_obj.time'>{{ time_obj.time }}</label>
-                      </div>
-                      <div class='m-t-xxl m-b-xxl'
-                           layout='row'
-                           layout-align='space-around'
-                           ng-hide='reserv.time_is_loaded'>
-                        <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
                       </div>
                     </div>
                   </div>
@@ -355,12 +333,9 @@
 
                   <button type='submit'
                           class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
-                          ng-class="{ 'disabled': reserv.formIsValid() }"
+                          ng-class="{ 'disabled': reserv.formIsValid() || reserv.is_submitting }"
                           ng-show='reserv.selected_index == 5 && !reserv.success'>
-                    <span ng-hide='reserv.is_submitting'>RESERVEER</span>
-                    <div layout='row' layout-align='space-around' ng-show='reserv.is_submitting'>
-                      <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
-                    </div>
+                    <span>RESERVEER</span>
                   </button>
                 </div>
               </md-tab-body>

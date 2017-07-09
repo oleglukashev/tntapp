@@ -22,7 +22,7 @@
         </md-input-container>
         <md-input-container class='md-block'>
           <label>Bericht</label>
-          <textarea rows='8' 
+          <textarea rows='8'
                     ng-model='antwoord.form_data.content'
                     md-maxlength='300'
                     required></textarea>
@@ -30,12 +30,9 @@
         <small class='text-muted'>Dit bericht word verstoord via SMS en mail. Uiteraard is het ook nog erg klantvriendelijk om de klant telefonisch te bevestigen dat zijn reservering is geannuleerd.</small>
       </div>
       <button type='submit'
-              ng-class="{ 'disabled': !mail_form.$valid }"
+              ng-class="{ 'disabled': !mail_form.$valid || antwoord.is_submitting }"
               class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
-        <span ng-hide='antwoord.is_submitting'>VERSTUUR</span>
-        <div layout='row' layout-align='space-around' ng-show='antwoord.is_submitting'>
-          <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
-        </div>
+        <span>VERSTUUR</span>
       </button>
     </form>
   </md-content>

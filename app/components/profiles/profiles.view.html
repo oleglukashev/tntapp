@@ -17,9 +17,6 @@
     <div class='panel'>
       <div class='panel-heading'>Profielen</div>
       <div class='md-list'>
-        <div class='wrapper' layout='row' layout-align='space-around' ng-hide='profiles.customers_loaded'>
-          <md-progress-circular md-mode="indeterminate" md-diameter='22'></md-progress-circular>
-        </div>
 
         <div class="md-list-item char_wrapper" ng-repeat="(char, customers) in profiles.customers">
           <div class="md-list-item-left char">{{ char }}</div>
