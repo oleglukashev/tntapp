@@ -16,18 +16,18 @@ export default class SettingsProductsNewProductCtrl {
     this.item             = {};
 
     this.sliderMonFri = {
-        minValue: 1,
-        maxValue: 96,
+        minValue: 0,
+        maxValue: 95,
     };
 
     this.sliderSat = {
-        minValue: 1,
-        maxValue: 96,
+        minValue: 0,
+        maxValue: 95,
     };
 
     this.sliderSun = {
-        minValue: 1,
-        maxValue: 96,
+        minValue: 0,
+        maxValue: 95,
     };
     this.sliders = [
       {
@@ -75,8 +75,8 @@ export default class SettingsProductsNewProductCtrl {
   }
 
   selectProduct() {
-    this.sliderOptions.minLimit = 1;
-    this.sliderOptions.maxLimit = 96;
+    this.sliderOptions.minLimit = 0;
+    this.sliderOptions.maxLimit = 95;
 
     Object.keys(this.products).forEach(key => {
       let product = this.products[key];
