@@ -7,8 +7,8 @@ export default class Table {
     return {
       options: {
         disabled: false,
-        floor: 1,
-        ceil: 96,
+        floor: 0,
+        ceil: 95,
         step: 1,
         minRange: 1,
         pushRange: true,
@@ -31,7 +31,7 @@ export default class Table {
               break;
             }
           }
-          
+
           return Math.floor(val/4) + ':' + min;
         }
       }
@@ -40,7 +40,7 @@ export default class Table {
 
   to15Min(time, round=true) {
     let arr = time.split(':');
-    return arr[0]*4 + (round ? Math.round(arr[1]/15) : Math.floor(arr[1]/15)) || 1;
+    return arr[0]*4 + (round ? Math.round(arr[1]/15) : Math.floor(arr[1]/15)) || 0;
   }
 
   from15Min(min15) {
