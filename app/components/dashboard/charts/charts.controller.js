@@ -1,13 +1,27 @@
 export default class ChartsCtrl {
-  constructor(Charts, $scope) {
+  constructor(Charts, $scope, $compile, $timeout) {
     'ngInject';
 
-    this.doughnut = {};
+    this.charts   = {};
 
-    $scope.$on('reservationsLoaded', function (event, data) {
-      let all_reservations = $scope.$parent.dash.all_reservations;
-      $scope.charts.graphs = Charts.get(all_reservations);
+    this.$timeout = $timeout;
+    this.$compile = $compile;
+    this.$scope   = $scope;
+
+    $scope.$on('reservationsLoaded', (event, all_reservations) => {
+      this.charts.graphs = Charts.get(all_reservations);
     });
+
+    $scope.$on('resizeGraph', () => {
+      this.resizeGraph();
+    });
+
+  }
+
+  resizeGraph() {
+    this.$timeout(() => {
+      this.$compile(angular.element('.deze-week').contents())(this.$scope);
+    }, 100)
   }
 
 }
