@@ -22,8 +22,8 @@
     <img class='table_icon' src='public/images/table.svg' ng-show="reservation_part.table_ids.length" />
     <small class='font-thin' ng-bind='reservations.getTableNumbersByTableIds(reservation_part.table_ids).join(", ")'></small>
   </div>
-  <div class='col-md-2 description'>
-    {{ (reservation.notes || '&nbsp;') | limitTo: 20 }}{{ reservation.notes.length > 20 ? '...' : '' }}
+  <div class='col-md-2 description' title="{{ reservation.notes }}">
+    {{ reservation.notes || '&nbsp;' }}
   </div>
   <div class='col-md-1'>
     <div class='pull-right'>
