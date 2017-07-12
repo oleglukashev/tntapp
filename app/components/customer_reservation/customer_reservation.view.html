@@ -15,7 +15,7 @@
         <div ng-hide='reserv.success'>
           <md-tabs class='reservation_tabs'
                    flex
-                   md-selected='reserv.selected_index'
+                   md-selected='reserv.ReservationLogic.selected_index'
                    md-no-pagination
                    md-stretch-tabs
                    md-dynamic-height>
@@ -122,7 +122,7 @@
                         uncheckable
                         btn-radio='number'>{{ number }}</label>
 
-                      <label ng-click='reserv.triggerChoosePersonCount()'
+                      <label ng-click='reserv.ReservationLogic.triggerChoosePersonCount()'
                              ng-hide='reserv.choose_person_count_is_opened'
                              class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>More...</label>
 
@@ -136,7 +136,7 @@
 
                         <button type='button'
                                 class='btn btn-md btn-success text-success'
-                                ng-click='reserv.triggerChoosePersonCount();reserv.selectTab(3);'>Ok</button>
+                                ng-click='reserv.ReservationLogic.triggerChoosePersonCount();reserv.selectTab(3);'>Ok</button>
                       </div>
                     </div>
                   </div>
@@ -149,7 +149,7 @@
               <md-tab-label>
                 <div class='text-center l-h'><i class='mdi mdi-silverware-variant'></i></div>
                 <div class='text-center l-h'>
-                  <span ng-show='reserv.reservation.product'>{{ reserv.getProductNameByProductId(reserv.reservation.product) }}</span>
+                  <span ng-show='reserv.reservation.product'>{{ reserv.ReservationLogic.getProductNameByProductId(reserv.products, reservation.product) }}</span>
                   <span ng-hide='reserv.reservation.product'>PRODUCT</span>
                 </div>
               </md-tab-label>
@@ -335,7 +335,7 @@
                   <button type='submit'
                           class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
                           ng-class="{ 'disabled': reserv.formIsValid() || reserv.is_submitting }"
-                          ng-show='reserv.selected_index == 5 && !reserv.success'>
+                          ng-show='reserv.ReservationLogic.selected_index == 5 && !reserv.success'>
                     <span>RESERVEER</span>
                   </button>
                 </div>
@@ -357,7 +357,7 @@
               </div>
               <div class="md-list-item-content">
                 <h3 class="text-md">{{ reserv.getReservationDateForSuccess() }} {{ reserv.reservation.time }}</h3>
-                <small class="font-thin">{{ reserv.getProductNameByProductId(reserv.reservation.product) }},  {{ reserv.reservation.person_count }} personen</small>
+                <small class="font-thin">{{ reserv.ReservationLogic.getProductNameByProductId(reserv.products, reserv.reservation.product) }},  {{ reserv.reservation.person_count }} personen</small>
               </div>
             </div>
             <div class="md-list-item inset" ng-if='reserv.socials.settings.phone_number_is_required'>

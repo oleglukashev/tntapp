@@ -8,13 +8,14 @@ export default class ReservationPart {
     this.$q              = $q;
   }
 
-  edit(company_id, reservation_part_id, data) {
+  update(company_id, reservation_part_id, data) {
     if (! company_id) {
       return this.$q.defer().promise;
     }
 
     return this.$http.patch(
-        API_URL + '/company/' + company_id + '/reservation_part/' + reservation_part_id, data
-      ).then((result) => result.data);
+      API_URL + '/company/' + company_id + '/reservation_part/' + reservation_part_id,
+      data
+    ).then((result) => result.data);
   }
 }
