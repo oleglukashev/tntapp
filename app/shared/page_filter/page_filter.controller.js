@@ -1,11 +1,15 @@
 export default class PageFilterCtrl {
-  constructor($window, $rootScope, $scope, $modal) {
+  constructor(User, Reservation, moment, $window, $rootScope, $scope, $modal) {
     'ngInject';
 
+    this.current_company_id  = User.current_company.id;
+
+    this.Reservation     = Reservation;
     this.date_filter     = new Date();
     this.$modal          = $modal;
     this.$window         = $window;
     this.$rootScope      = $rootScope;
+    this.moment          = moment;
     this.reservations_view = $scope.view;
 
     $scope.$watch('page_filter.date_filter', (date_filter) => {
@@ -15,6 +19,14 @@ export default class PageFilterCtrl {
     $rootScope.$on('PageFilterCtrl.change_view', (obj, view) => {
       this.reservations_view = view;
     });
+  }
+
+  exportCSV() {
+    let date = this.moment(this.date_filter).format('YYYY-MM-DD');
+    this.Reservation.exportCSV(this.current_company_id, date)
+      .then(
+        (result) => {
+        });
   }
 
   changeView(view) {

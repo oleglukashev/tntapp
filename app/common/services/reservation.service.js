@@ -24,6 +24,26 @@ export default class Reservation {
     }).then((result) => result.data);
   }
 
+  exportCSV(company_id, date) {
+    let deferred = this.$q.defer();
+
+    if (! company_id) {
+      return deferred.promise;
+    }
+
+    return this.$http({
+      url: API_URL + '/company/' + company_id + '/reservation?date=' + date + '&format=csv',
+      method: 'GET',
+    }).then((result) => {
+      var anchor = angular.element('<a/>');
+      anchor.attr({
+         href: 'data:attachment/csv;charset=utf-8,' + encodeURI(result.data),
+         target: '_blank',
+         download: 'export.csv'
+      })[0].click();
+    });
+  }
+
   getAllGrouped(company_id) {
     let deferred = this.$q.defer();
 
