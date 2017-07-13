@@ -80,9 +80,11 @@
                   </div>
                   <div class='wrapper' layout='column' layout-align='space-around center'>
                     <datepicker ng-change='reserv.selectTab(2)'
-                                datepicker-options='reserv.date_options'
+                                starting-day="1"
+                                show-weeks="false"
                                 ng-model='reserv.reservation.full_date'
                                 min-date='reserv.init_date'
+                                max-date='reserv.max_date'
                                 class='datepicker'></datepicker>
                   </div>
                 </div>

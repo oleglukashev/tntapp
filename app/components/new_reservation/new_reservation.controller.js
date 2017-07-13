@@ -36,7 +36,8 @@ export default class NewReservationCtrl {
       class: 'datepicker'
     };
 
-    this.init_date             = new Date();
+    this.init_date            = new Date();
+    this.max_date             = moment().add(1, 'Y');
     this.format               = 'dd-MM-yyyy';
 
     this.reservation = {
@@ -47,8 +48,6 @@ export default class NewReservationCtrl {
       gender: 'Man',
       social: null
     };
-
-console.log("INCLUDED!!")
 
     //states
     this.additional_is_opened    = false;
@@ -274,12 +273,10 @@ console.log("INCLUDED!!")
     this.reservation.product = null;
     this.products_is_loaded  = false;
     this.products            = [];
-console.log("loading products")
     this.Product
       .getAll(this.current_company_id, false)
         .then(
           (result) => {
-            console.log(result)
             this.products = result;
             this.products_is_loaded = true;
           },
