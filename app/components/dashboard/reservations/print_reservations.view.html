@@ -14,25 +14,23 @@
         <th width="15%">Opmerkingen</th>
         <th width="10%">Phone</th>
         </thead>
-        <tbody>
-            <tr ng-repeat='reservation in reservations.reservations' ng-show='reservations.reservations.length'>
+        <tbody ng-repeat='reservation in reservations.reservations' ng-show='reservations.reservations.length'>
+            <tr ng-repeat='reservation_part in reservation.reservation_parts'>
             <td align="center">
                 <input type="checkbox" />
             </td>
             <td>
-                <div ng-repeat='reservation_part in reservation.reservation_parts'>
+                <div>
                     <small class='font-thin' ng-bind='reservations.getTableNumbersByTableIds(reservation_part.table_ids).join(", ")'></small>
                 </div>
             </td>
             <td ng-bind='reservations.ReservationStatus.parsedDate(reservation_part.date_time)'></td>
             <td>
-                <div ng-repeat='reservation_part in reservation.reservation_parts'>{{ reservation_part.number_of_persons }}</div>
-                </td>
+                {{ reservation_part.number_of_persons }}
+            </td>
             <td><div>{{ reservation.customer.last_name }} {{ reservation.customer.first_name }}</div></td>
             <td>
-                <div ng-repeat='reservation_part in reservation.reservation_parts'>
-                    {{ reservation_part.product.name }}
-                </div>
+                {{ reservation_part.product.name }}
             </td>
             <td><div>{{ reservation.notes }}</div></td>
             <td>{{ reservation.customer.primary_phone_number }}</td>

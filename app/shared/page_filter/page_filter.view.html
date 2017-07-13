@@ -1,13 +1,16 @@
 <div class='page_filter m-b-md clearfix'>
-  <div class='pull-left'>
+  <div class='pull-left m-r-md'>
     <md-datepicker ng-model='page_filter.date_filter'></md-datepicker>
   </div>
-  <div class='pull-left'>
-    <i class='mdi mdi-printer i-24 m-l-md' onclick='window.print();' />
+  <div class='pull-left' ng-hide="showRightMenu">
+    <i class='m-l-none md-icon-button md-button mdi mdi-printer i-24' onclick='window.print();' />
   </div>
   <md-menu>
-    <i class='mdi mdi-settings i-24 m-l-md' ng-click='$mdMenu.open($event);' />
+    <i class='mdi mdi-settings i-24' ng-click='$mdMenu.open($event);' />
     <md-menu-content>
+      <md-menu-item>
+        <md-button ng-click='page_filter.exportCSV();'>CSV export</md-button>
+      </md-menu-item>
       <md-menu-item>
         <md-button ng-click='page_filter.openTimeRangeSettings("product", "Openingstijden aanpassen");'>Openingstijden aanpassen</md-button>
       </md-menu-item>
