@@ -61,7 +61,7 @@ class SearchCtrl {
     this.Customer.getAllForSearch(this.current_company.id).then(results => {
       this.states = results.map(customer => ({
         value  : customer['id'],
-        display: `${customer['first_name']} ${customer['last_name']}`
+        display: `${customer['last_name']} ${customer['first_name']}`
       }));
       this.loadTables();
     })
