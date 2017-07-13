@@ -126,7 +126,7 @@ export default class DashboardReservationsCtrl {
             this.today              = this.ReservationStatus.translateAndcheckStatusForDelay(reservations.today);
             this.loadTables();
             this.reservationsLoaded = true;
-            this.$rootScope.$broadcast('reservationsLoaded');
+            this.$rootScope.$broadcast('reservationsLoaded', reservations);
           });
   }
 
