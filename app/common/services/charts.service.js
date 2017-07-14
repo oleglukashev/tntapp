@@ -7,6 +7,11 @@ export default class Charts {
     this.current_company = User.current_company;
 
     this.reservations = {};
+    this.days_of_week = ['Z','M','D','W','D','V','Z','Z','M','D','W','D','V','Z'];
+    this.Reservation = Reservation;
+  }
+
+  get(reservations) {
     this.charts       = {
       doughnut_keys:  [],
       doughnut_values:[],
@@ -21,11 +26,7 @@ export default class Charts {
       total_guests_w: 0,
       total_guests_d: 0,
     };
-    this.days_of_week = ['Z','M','D','W','D','V','Z','Z','M','D','W','D','V','Z'];
-    this.Reservation = Reservation;
-  }
 
-  get(reservations) {
     this.charts.total_guests_y = reservations.count_per_year;
     this.charts.total_guests_m = reservations.count_per_month;
     this.charts.total_guests_w = reservations.count_per_week;
@@ -39,16 +40,17 @@ export default class Charts {
 
     reservations.today.forEach(reservation => {
       reservation.reservation_parts.forEach(part => {
+        let persons_count = parseInt(part.number_of_persons);
         this.charts.reservations[part.product_id] =
           (this.charts.reservations[part.product_id] || 0) +
-          part.number_of_persons;
+          persons_count;
 
         let date = new Date(part.date_time);
         let day  = Math.floor(date.getTime()/(1000*60*60*24))
-        this.charts.day_guests[day] = (this.charts.day_guests[day] || 0) + part.number_of_persons;
+        this.charts.day_guests[day] = (this.charts.day_guests[day] || 0) + persons_count;
         if (!this.charts.doughnut_by_id[part.product_id]) this.charts.doughnut_by_id[part.product_id]=0;
-        this.charts.doughnut_by_id[part.product_id] += part.number_of_persons;
-        this.charts.total_guests_d += part.number_of_persons;
+        this.charts.doughnut_by_id[part.product_id] += persons_count;
+        this.charts.total_guests_d += persons_count;
       })
     })
     let now  = new Date();

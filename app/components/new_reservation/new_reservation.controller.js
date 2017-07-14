@@ -121,7 +121,8 @@ export default class NewReservationCtrl {
         zipcode: this.reservation.zipcode,
         city: this.reservation.city,
         date_of_birth: this.reservation.date_of_birth,
-        gender: this.reservation.gender
+        gender: this.reservation.gender,
+        regular: 0
       },
       reservation_parts: [{
         datetime: this.reservation.date + " " + this.reservation.time,
