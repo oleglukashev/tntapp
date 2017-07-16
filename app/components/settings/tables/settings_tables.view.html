@@ -43,7 +43,7 @@
         </table>
         <ul class='tables md-list no-padder no-margin' dnd-list='tables_settings.tables_by_zone[zone.id]'>
           <li class='table_item md-list-item clear'
-              ng-repeat="table in tables_settings.tables_by_zone[zone.id] | orderBy:'position'"
+              ng-repeat="table in tables_settings.tables_by_zone[zone.id]"
               dnd-draggable="table"
               dnd-moved="tables_settings.tables_by_zone[zone.id].splice($index, 1)"
               dnd-effect-allowed="move"
