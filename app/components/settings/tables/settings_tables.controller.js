@@ -33,7 +33,7 @@ export default class SettingsTablesCtrl {
     this.Table
       .save(this.current_company.id, { tables: data })
         .then((tables) => {
-        }, 
+        },
         (error) => {
           this.errors = error.data.errors;
         });
@@ -55,6 +55,16 @@ export default class SettingsTablesCtrl {
                   position          : parseInt(item.position),
                   zones             : item.zones
                 }
+              }).sort((a, b) => {
+                let comparison = 0;
+
+                if (a.position > b.position) {
+                  comparison = 1;
+                } else if (b.position > a.position) {
+                  comparison = -1;
+                }
+
+                return comparison;
               });
             });
           });
@@ -118,7 +128,7 @@ export default class SettingsTablesCtrl {
     if (!this.tables_by_zone[id]) {
       this.tables_by_zone[id] = [];
     }
-    
+
     this.tables_by_zone[id].push({
       table_number      : table_number,
       number_of_persons : 0,
@@ -150,13 +160,13 @@ export default class SettingsTablesCtrl {
     angular.forEach(this.getScopeTables().sort((a,b) => a.position - b.position), (item) => {
       if (keep_going) {
         index++;
-        
+
         if (JSON.stringify(item) === JSON.stringify(table)) {
           keep_going = false;
         }
       }
     });
-    
+
     return index;
   }
 
