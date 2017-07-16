@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export default class NewReservationCtrl {
-  constructor(User, Reservation, CustomerCompany, Product, Zone, Table, moment, filterFilter, $state,
+  constructor(User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone, Table, moment, filterFilter, $state,
     $stateParams, $rootScope, $scope, $window, $auth) {
     'ngInject';
 
@@ -19,6 +19,8 @@ export default class NewReservationCtrl {
     this.Product              = Product;
     this.Zone                 = Zone;
     this.Table                = Table;
+    this.Settings             = Settings;
+    this.TimeRange            = TimeRange;
 
     this.$auth                = $auth;
     this.$scope               = $scope;
@@ -280,6 +282,8 @@ export default class NewReservationCtrl {
           (result) => {
             this.products = result;
             this.products_is_loaded = true;
+
+            this.loadTimeRanges();
           },
           (error) => {
           });
@@ -336,6 +340,7 @@ export default class NewReservationCtrl {
 
   preloadData() {
     this.loadProducts();
+    this.loadGeneralSettings();
 
     if (this.is_dashboard_page || this.is_reservations || this.is_agenda) {
       this.loadZones();
@@ -343,6 +348,37 @@ export default class NewReservationCtrl {
     } else {
       this.loadSocialUrls();
     }
+  }
+
+  loadTimeRanges() {
+    this.TimeRange.getAll(this.current_company_id)
+      .then(
+        ranges => {
+          this.open_hours = {};
+          ranges.forEach(range => {
+            if (range.daysOfWeek[0] == this.moment().isoWeekday()) {
+              let currentTime = this.moment();
+              let startTime = this.moment(range.startTime, "HH:mm");
+              let endTime = this.moment(range.endTime, "HH:mm");
+
+              let product_is_active = currentTime.isBetween(startTime, endTime);
+
+              for (let i=0; i<this.products.length; i++) {
+                if (this.products[i].id == range.productId)
+                  this.products[i].hidden = !product_is_active;
+              }
+            }
+          });
+        });
+  }
+
+  loadGeneralSettings() {
+    this.Settings
+      .getGeneralSettings(this.current_company_id)
+        .then(
+          (general_settings) => {
+            this.settings = general_settings;
+          });
   }
 
   getReservationDateForSuccess() {

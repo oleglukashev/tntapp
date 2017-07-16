@@ -75,7 +75,7 @@ export default class SettingsProductsCtrl {
       .then(
         (result) => {
           this.products = {};
-          result.map((product) => {
+          result.forEach((product) => {
             this.products[product.id] = product;
           });
           this.loadTimeRanges();
