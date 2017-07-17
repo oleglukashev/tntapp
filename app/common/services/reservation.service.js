@@ -83,6 +83,17 @@ export default class Reservation {
     }).then((result) => result.data);
   }
 
+  createQuick(company_id, data) {
+    if (! company_id) {
+      return this.$q.defer().promise;
+    }
+    return this.$http({
+      url:  API_URL + '/company/' + company_id + '/reservation/quick',
+      data: data,
+      method: 'POST',
+    }).then((result) => result.data);
+  }
+
   createCustomerReservation(company_id, data) {
     if (! company_id) {
       return this.$q.defer().promise;

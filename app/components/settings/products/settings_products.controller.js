@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export default class SettingsProductsCtrl {
-  constructor(User, Product, TimeRange, Slider, filterFilter, $scope, $timeout, $window, $modal) {
+  constructor(User, Product, TimeRange, Slider, $scope, $timeout, $window, $modal) {
     'ngInject';
 
     this.current_company = User.current_company;
@@ -9,7 +9,6 @@ export default class SettingsProductsCtrl {
     this.Product         = Product;
     this.TimeRange       = TimeRange;
     this.Slider          = Slider;
-    this.filterFilter    = filterFilter;
     this.$modal          = $modal;
     this.$window         = $window;
     this.$scope          = $scope;
