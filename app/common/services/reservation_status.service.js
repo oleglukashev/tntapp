@@ -96,7 +96,7 @@ export default class ReservationStatus {
   checkStatusForDelay(reservation) {
     let now = this.moment().valueOf();
     let reservation_part = reservation.reservation_parts[0];
-    let reservation_time = this.moment(reservation_part.datetime).valueOf();
+    let reservation_time = this.moment(reservation_part.date_time).valueOf();
     let diff_mins = this.moment(reservation_time).diff(this.moment(now), 'minutes');
 
     if (reservation.status === 'confirmed') {

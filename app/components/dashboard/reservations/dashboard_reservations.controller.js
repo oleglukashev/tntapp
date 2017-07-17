@@ -58,10 +58,7 @@ export default class DashboardReservationsCtrl {
     return true;
   }
 
-  answer() {
-    // TEST
-    let reservation = this.action_required[0];
-
+  answer(reservation) {
     let modalInstance = this.$modal.open({
       templateUrl: 'reservation_answer.view.html',
       controller: 'ReservationAnswerCtrl as antwoord',
