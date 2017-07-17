@@ -29,7 +29,7 @@ export default angular.module('app.constants', [])
           disabled: false,
           name    : 'Is NIET aanwezig',
           status  : 'confirmed',
-          class   : 'mdi-checkbox-marked-circle'
+          class   : 'mdi-exclamation'
         },
         {
           disabled: false,
