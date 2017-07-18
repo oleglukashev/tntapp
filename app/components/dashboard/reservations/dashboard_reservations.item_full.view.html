@@ -13,7 +13,11 @@
     <i class='mdi mdi-clock'></i>
     {{ reservations.ReservationStatus.parsedDate(reservation_part.date_time) }}
   </div>
-  <div class='col-md-2'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</div>
+  <div class='col-md-2'>
+    <a ng-click='user.openCustomerMenu(reservation.customer.id, reservation_part.id)' ng-controller='UserMenuCtrl as user'>
+      {{reservation.customer.last_name}} {{reservation.customer.first_name}}
+    </a>
+  </div>
   <div class='col-md-2'>
     <i class='mdi mdi-account-multiple'></i>
     <small class='font-thin m-r-xs'>{{ reservation_part.number_of_persons }}x</small>
