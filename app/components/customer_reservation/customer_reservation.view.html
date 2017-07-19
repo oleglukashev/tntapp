@@ -67,8 +67,8 @@
               <md-tab-label>
                 <div class='text-center l-h'><i class='mdi mdi-calendar'></i></div>
                 <div class='text-center l-h'>
-                  <span ng-show='reserv.reservation.full_date'>{{ reserv.reservation.full_date | date:'d MMMM' }}</span>
-                  <span ng-hide='reserv.reservation.full_date'>DATUM</span>
+                  <span ng-show='reserv.reservation.date'>{{ reserv.reservation.date | date:'d MMMM' }}</span>
+                  <span ng-hide='reserv.reservation.date'>DATUM</span>
                 </div>
               </md-tab-label>
               <md-tab-body>
@@ -79,11 +79,15 @@
                     </div>
                   </div>
                   <div class='wrapper' layout='column' layout-align='space-around center'>
+                    <div class='alert alert-danger' ng-show='reserv.isMoreThatDeadline();'>
+                      Er kan helaas niet meer online gereserveerd worden voor vandaag. Gelieve telefonisch te reserveren.
+                    </div>
+
                     <datepicker ng-change='reserv.selectTab(2)'
                                 starting-day="1"
                                 show-weeks="false"
-                                ng-model='reserv.reservation.full_date'
-                                min-date='reserv.init_date'
+                                ng-model='reserv.reservation.date'
+                                min-date='reserv.initDate()'
                                 max-date='reserv.max_date'
                                 class='datepicker'></datepicker>
                   </div>
@@ -236,9 +240,11 @@
                         <label>E-mail</label>
                         <input type='email' ng-model='reserv.reservation.mail' required />
                       </md-input-container>
-                      <md-input-container class='md-block'>
+                      <md-input-container class='md-block'
+                                          ng-if='reserv.socials.settings.phone_number_is_required'>
                         <label>Telefoonnummer</label>
-                        <input ng-model='reserv.reservation.primary_phone_number' ng-required="reserv.settings.phone_number_is_required" />
+                        <input ng-model='reserv.reservation.primary_phone_number'
+                               ng-required="reserv.settings.phone_number_is_required" />
                       </md-input-container>
                       <md-input-container class='md-block'>
                         <label>Opmerking</label>
@@ -251,7 +257,8 @@
                         </md-radio-group>
                       </div>
                       <div class='md-form-group no-padder'>
-                        <md-checkbox ng-model="reserv.reservation.send_confirmation" aria-label="Inschrijven nieuwsbrief">
+                        <md-checkbox ng-model="reserv.reservation.send_confirmation"
+                                     aria-label="Inschrijven nieuwsbrief">
                           Inschrijven nieuwsbrief
                         </md-checkbox>
                       </div>
@@ -265,7 +272,7 @@
                         <label>Geboortedatum</label>
                         <input class='md-input'
                                ng-focus='reserv.openDatepicker($event)'
-                               ng-model='reserv.reservation.full_date_of_birth'
+                               ng-model='reserv.reservation.date_of_birth'
                                datepicker-popup='{{ reserv.format }}'
                                is-open='reserv.opened'
                                datepicker-options='reserv.date_options'
@@ -299,16 +306,6 @@
                           <md-radio-button value='Vrouw' class="inline md-success">Vrouw</md-radio-button>
                         </md-radio-group>
                       </div>
-                      <!--<button type='button' md-ink-ripple class='md-btn md-flat m-b m-t btn-fw text-success'>-->
-                        <!--<span ng-hide='reserv.reservation.reservation_pdf'>PDF UPLOADEN...</span>-->
-                        <!--<span ng-show='reserv.reservation.reservation_pdf'>{{ reserv.reservation.reservation_pdf }}</span>-->
-                        <!--<input type='file'-->
-                               <!--ngf-select-->
-                               <!--ngf-max-size='2MB'-->
-                               <!--ngf-pattern="'application/pdf'"-->
-                               <!--ng-model='reserv.reservation.reservation_pdf'-->
-                               <!--ngf-model-invalid='errorFile' />-->
-                      <!--</button>-->
                     </div>
                   </div>
                   <div class='wrapper'
@@ -363,7 +360,7 @@
                 <small class="font-thin">{{ reserv.getProductNameByProductId(reserv.reservation.product) }},  {{ reserv.reservation.person_count }} personen</small>
               </div>
             </div>
-            <div class="md-list-item inset">
+            <div class="md-list-item inset" ng-if='reserv.socials.settings.phone_number_is_required'>
               <div class="md-list-item-left ">
                 <i class="mdi mdi-phone icon-muted i-24"></i>
               </div>
