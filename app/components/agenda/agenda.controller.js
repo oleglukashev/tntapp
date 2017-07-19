@@ -1,7 +1,8 @@
 import angular from 'angular';
 
 export default class AgendaCtrl {
-  constructor(User, Settings, Zone, Table, TimeRange, Product, Reservation, ReservationStatus, ReservationPart, filterFilter, $scope, $rootScope, $modal, moment, $timeout) {
+  constructor(User, Settings, Zone, Table, TimeRange, Product, Reservation, ReservationStatus, ReservationPart,
+              filterFilter, $scope, $rootScope, $modal, moment, $timeout, $window) {
     'ngInject';
 
     this.current_company = User.current_company;
@@ -19,6 +20,7 @@ export default class AgendaCtrl {
     this.$modal          = $modal;
     this.$timeout        = $timeout;
     this.$scope          = $scope;
+    this.$window         = $window;
     this.$rootScope      = $rootScope;
     this.is_loaded       = false;
     this.tables_by_zone  = {};
@@ -120,6 +122,30 @@ export default class AgendaCtrl {
       templateUrl: 'dashboard_reservations.new.view.html',
       controller: 'DashboardReservationsReservationCtrl as dash_reserv',
       size: 'md'
+    });
+
+    modalInstance.result.then((selectedItem) => {
+      this.loadReservations();
+    }, () => {
+      this.loadReservations();
+    });
+  }
+
+  openQuickReservation(table_id, hour, quarter) {
+    let modalInstance = this.$modal.open({
+      templateUrl: 'agenda_quick_reservation.view.html',
+      controller: 'AgendaQuickReservationCtrl as quick_reserv',
+      size: 'md',
+      resolve: {
+        datetime: () => {
+          let datetime = this.moment(this.date_filter);
+          datetime.set({ hour: hour, minute: quarter * 15, second: 0})
+          return datetime;
+        },
+        table_id: () => {
+          return table_id;
+        }
+      }
     });
 
     modalInstance.result.then((selectedItem) => {

@@ -72,4 +72,18 @@ export default class Product {
     }).then((result) => result.data);
   }
 
+  getAvailableTablesOfProducts(company_id, date) {
+    let deferred = this.$q.defer();
+
+    if (!(company_id && date)) {
+      return deferred.promise;
+    }
+
+    return this.$http({
+      url: API_URL + '/company/' + company_id + '/product/available_tables_of_products',
+      method: 'POST',
+      data: { date: date }
+    }).then((result) => result.data);
+  }
+
 }

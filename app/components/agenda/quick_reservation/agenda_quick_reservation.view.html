@@ -1,0 +1,54 @@
+<section class='no-margin'>
+  <md-toolbar class='blue-grey-900'>
+    <div class='md-toolbar-tools' ng-click='quick_reserv.closeModal();'>
+      <i class='mdi mdi-arrow-left m-r-sm'></i>
+      Snel reserveren
+    </div>
+  </md-toolbar>
+  <md-content>
+    <form class='md-content-submit' name='quick_reservation_form' ng-submit='quick_reserv.submitForm(quick_reservation_form.$valid);'>
+      <div class='wrapper md-content-submit' layout='column' layout-align='space-around center'>
+        <div class='w-xl'>
+          <md-input-container class='md-block'>
+            <label>Tijd</label>
+            <input ng-model='quick_reserv.reservation.datetime' required />
+          </md-input-container>
+          <md-input-container class='md-block'>
+            <label>Tafelnummer</label>
+            <input ng-model='quick_reserv.reservation.table_id' required />
+          </md-input-container>
+          <md-input-container class='md-block'>
+            <label>Voor- en achternaam</label>
+            <input ng-model='quick_reserv.reservation.name' />
+          </md-input-container>
+          <md-input-container class='md-block'>
+            <label>Aantal personen</label>
+            <input ng-model='quick_reserv.reservation.number_of_persons' required />
+          </md-input-container>
+          <div class='md-form-group'>
+              <md-input-container>
+                <md-select required
+                           ng-disabled='!quick_reserv.availableProducts().length'
+                           ng-model='quick_reserv.reservation.product_id'
+                           placeholder='Product'>
+                  <md-option ng-value='product.id'
+                             ng-repeat='product in quick_reserv.availableProducts()'>
+                    {{ product.name }}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+        </div>
+      
+        <button type='submit'
+                ng-class="{ 'disabled': !quick_reservation_form.$valid }"
+                class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
+          <span ng-hide='quick_reserv.is_submitting'>OPSLAAN</span>
+          <div layout='row' layout-align='space-around' ng-show='quick_reserv.is_submitting'>
+            <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
+          </div>
+        </button>
+      </div>
+    </form>
+  </md-content>
+</section>
