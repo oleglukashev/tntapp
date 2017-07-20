@@ -142,7 +142,7 @@ export default class AgendaCtrl {
           datetime.set({ hour: hour, minute: quarter * 15, second: 0})
           return datetime;
         },
-        table_id: () => {
+        tableId: () => {
           return table_id;
         }
       }
