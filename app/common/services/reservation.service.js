@@ -4,118 +4,119 @@ export default class Reservation {
   constructor(JWT, Upload, moment, $http, $q) {
     'ngInject';
 
-    this.moment          = moment;
-    this.$http           = $http;
-    this.$q              = $q;
-    this.JWT             = JWT;
-    this.Upload          = Upload;
+    this.moment = moment;
+    this.$http = $http;
+    this.$q = $q;
+    this.JWT = JWT;
+    this.Upload = Upload;
   }
 
-  getAll(company_id, date) {
-    let deferred = this.$q.defer();
+  getAll(companyId, date) {
+    const deferred = this.$q.defer();
 
-    if (! company_id) {
+    if (!companyId) {
       return deferred.promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/reservation?date=' + date,
+      url: API_URL + '/company/' + companyId + '/reservation?date=' + date,
       method: 'GET',
     }).then((result) => result.data);
   }
 
-  exportCSV(company_id, date) {
-    let deferred = this.$q.defer();
+  exportCSV(companyId, date) {
+    const deferred = this.$q.defer();
 
-    if (! company_id) {
+    if (!companyId) {
       return deferred.promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/reservation?date=' + date + '&format=csv',
+      url: API_URL + '/company/' + companyId + '/reservation?date=' + date + '&format=csv',
       method: 'GET',
     }).then((result) => {
-      var anchor = angular.element('<a/>');
+      const anchor = angular.element('<a/>');
       anchor.attr({
-         href: 'data:attachment/csv;charset=utf-8,' + encodeURI(result.data),
-         target: '_blank',
-         download: 'export.csv'
+        href: `data:attachment/csv;charset=utf-8,${encodeURI(result.data)}`,
+        target: '_blank',
+        download: 'export.csv',
       })[0].click();
     });
   }
 
-  getAllGrouped(company_id) {
-    let deferred = this.$q.defer();
+  getAllGrouped(companyId) {
+    const deferred = this.$q.defer();
 
-    if (! company_id) {
+    if (!companyId) {
       return deferred.promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/reservation/grouped',
+      url: API_URL + '/company/' + companyId + '/reservation/grouped',
       method: 'GET',
     }).then((result) => result.data);
   }
 
-  getProducts(company_id) {
-    let deferred = this.$q.defer();
+  getProducts(companyId) {
+    const deferred = this.$q.defer();
 
-    if (! company_id) {
+    if (!companyId) {
       return deferred.promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/product',
+      url: API_URL + '/company/' + companyId + '/product',
       method: 'GET',
     }).then((result) => result.data);
   }
 
-  create(company_id, data) {
-    if (! company_id) {
+  getCreateURI(companyId, params) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
-    return this.Upload.upload({
-      url:  API_URL + '/company/' + company_id + '/reservation',
-      data: data,
-      headers: {
-        Authorization: 'Bearer ' + this.JWT.get()
+
+    const uri = API_URL + '/company/' + companyId + '/reservation';
+    const additional = [];
+    params.forEach((param) => {
+      if (Object.values(param)[0]) {
+        additional.push(encodeURIComponent(Object.keys(param)) + '=true'); // adding parameters to query string like 'confirm_mail=true' only if Object.values(param)[0] contains true
       }
+    });
+
+    return [uri, additional.join('&')].join('?');
+  }
+
+  create(companyId, data, params) {
+    return this.Upload.upload({
+      url: this.getCreateURI(companyId, params),
+      data,
+      headers: {
+        Authorization: `Bearer ${this.JWT.get()}`,
+      },
     }).then((result) => result.data);
   }
 
-  createQuick(company_id, data) {
-    if (! company_id) {
+  createQuick(companyId, data) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
+
     return this.$http({
-      url:  API_URL + '/company/' + company_id + '/reservation/quick',
-      data: data,
+      url:  API_URL + '/company/' + companyId + '/reservation/quick',
+      data,
       method: 'POST',
     }).then((result) => result.data);
   }
 
-  createCustomerReservation(company_id, data) {
-    if (! company_id) {
+  updateStatus(companyId, reservationId, data) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
+
     return this.$http({
-      url:  API_URL + '/company/' + company_id + '/reservation?is_customer=true',
-      data: data,
-      method: 'POST',
-    }).then((result) => result.data);
-  }
-
-  updateStatus(company_id, reservation_id, data) {
-    let that = this;
-
-    if (! company_id) {
-      return this.$q.defer().promise;
-    }
-
-    return that.$http({
-      url: API_URL + '/company/' + company_id + '/reservation/' + reservation_id + '/update_status',
+      url: API_URL + '/company/' + companyId + '/reservation/' + reservationId + '/update_status',
       method: 'PATCH',
-      data: data
+      data,
     }).then((result) => result.data);
   }
 }

@@ -19,18 +19,19 @@
                  md-no-pagination
                  md-stretch-tabs
                  md-dynamic-height>
-          
+
           <div data-ng-include=" 'new_reservation.date.view.html' "></div>
 
           <div data-ng-include=" 'new_reservation.person_count.view.html' "></div>
 
           <div data-ng-include=" 'new_reservation.product.view.html' "></div>
-          
+
           <div data-ng-include=" 'new_reservation.time.view.html' "></div>
 
           <div data-ng-include=" 'new_reservation.zone.view.html' "></div>
 
-          <div data-ng-include=" 'new_reservation.person.view.html' "></div>
+          <div data-ng-include=" 'new_reservation.person.view.html' " ng-init="showConfirmEmailCheckbox = true"></div>
+
         </md-tabs>
       </div>
 

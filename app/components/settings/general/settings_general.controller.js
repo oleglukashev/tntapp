@@ -44,7 +44,7 @@ export default class SettingsGeneralCtrl {
 		let data = {
 			bezettings_minuten: this.form_data.bezettings_minuten,
 			limit_type: this.form_data.limit_type,
-			auto_accept_reservation_persion_limit: this.form_data.auto_accept_reservation_persion_limit,
+			auto_accept_reservation_person_limit: this.form_data.auto_accept_reservation_person_limit,
 			phone_number_is_required: this.form_data.phone_number_is_required,
 			quick_reservations_enabled: this.form_data.quick_reservations_enabled,
 			auto_assign_tables_to_frontoffice_reservations: this.form_data.auto_assign_tables_to_frontoffice_reservations,

@@ -149,24 +149,25 @@ export default class NewReservationCtrl {
       data.social_account.type = this.reservation.social;
     }
 
-    let createMethod = null;
-    if (this.is_customer_reservation) {
-      createMethod = this.Reservation.createCustomerReservation(this.current_company_id, data);
-    } else {
-      createMethod = this.Reservation.create(this.current_company_id, data);
-    }
-
     this.$window.localStorage.removeItem('social_account');
 
-    createMethod.then(() => {
-      this.is_submitting = false;
-      this.success = true;
-      this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
-    },
-    (error) => {
-      this.is_submitting = false;
-      this.errors = error;
-    });
+    const params = [];
+    params.push(
+      this.is_customer_reservation ?
+        { is_customer: true } :
+        { confirm_mail: this.confirm_mail },
+    );
+
+    this.Reservation.create(this.current_company_id, data, params)
+      .then(() => {
+        this.is_submitting = false;
+        this.success = true;
+        this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
+      },
+      (error) => {
+        this.is_submitting = false;
+        this.errors = error;
+      });
   }
 
   formIsValid() {
