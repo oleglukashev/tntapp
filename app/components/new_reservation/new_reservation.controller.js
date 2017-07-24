@@ -240,7 +240,7 @@ export default class NewReservationCtrl {
     return false;
   }
 
-  isMoreThatDeadline() {
+  isMoreThanDeadline() {
     if (this.socials && this.socials.settings.reservation_deadline) {
       const now = this.moment();
       const deadline = this.moment(this.socials.settings.reservation_deadline);
@@ -343,7 +343,7 @@ export default class NewReservationCtrl {
   }
 
   selectTab(index) {
-    if (index !== 2 || !this.isMoreThatDeadline()) {
+    if (index !== 2 || !this.isMoreThanDeadline()) {
       this.selected_index = index;
     }
   }
