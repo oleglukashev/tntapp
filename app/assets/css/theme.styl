@@ -1,0 +1,93 @@
+for theme in 'default' 'aqua' 'lego' 'chocolate'
+  .{theme}-theme
+    .text-success,
+    .text-success:hover
+      color lookup(theme + '-success-color')
+
+    .btn-success,
+    .btn-success:focus,
+    .btn-success:active,
+    .btn-success.active,
+    .open .dropdown-toggle.btn-success
+      color #fff
+      background-color lookup(theme + '-success-color')
+      border-color lookup(theme + '-success-color')
+
+    .btn-success:hover
+      color #fff
+      background-color lookup(theme + '-success-color-hover')
+      border-color lookup(theme + '-success-color-hover')
+
+    .btn-success.disabled,
+    .btn-success[disabled]
+      color #fff
+      background-color lookup(theme + '-success-color-disabled')
+      border-color lookup(theme + '-success-color-disabled')
+
+    .panel-add-button
+      background-color lookup(theme + '-primary-color')
+      color #fff
+
+    md-switch &.md-checked .md-thumb,
+    md-switch &.md-checked .md-bar,
+    md-radio-button .md-on,
+    md-checkbox.md-checked .md-icon,
+    .md-datepicker-calendar-pane .md-datepicker-calendar .md-calendar .md-calendar-date.md-calendar-selected-date .md-calendar-date-selection-indicator,
+    md-tabs md-pagination-wrapper md-ink-bar
+    .agenda .quarter.on-drag-hover,
+    .agenda .quarter:hover,
+    .reservation_modal .flex.reservation_zone .tables_boxes label.active,
+    .seats-free .wrapper .table .clickable:hover,
+    .box-line .box_active_icon,
+    .box .box_active_icon
+      background-color lookup(theme + '-success-color')
+
+    md-radio-button,
+    md-checkbox,
+    .agenda .reservation,
+    .profiles .char_wrapper .char,
+    .md-input:focus ~ label,
+    .md-input.focus ~ label
+      color lookup(theme + '-success-color')
+
+    md-checkbox:not(.md-checked) .md-icon,
+    .box-line.active,
+    .box.active,
+    .agenda .reservation,
+    .reservation_modal .flex.reservation_zone .tables_boxes label.active,
+    .md-input:focus,
+    .md-input.focus
+      border-color lookup(theme + '-success-color')
+
+    .header,
+    .profile-wrapper,
+    md-toolbar,
+    .md-sidenav-right > md-content > .wrapper,
+    md-tabs-wrapper
+      background-color lookup(theme + '-theme-color')
+
+    .header-account-menu
+      .header-account-menu-box
+        background-color lookup(theme + '-theme-color')
+
+        li
+          a
+            &:focus,
+            &:hover
+              span, i
+                color lookup(theme + '-primary-color')
+
+
+.btn-default
+  color font-color
+  background-color transparent
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default
+  color font-color
+
+.text-info.active
+  color #fff

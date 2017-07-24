@@ -1,11 +1,12 @@
 import angular from 'angular';
 
 export default class Settings {
-  constructor($http, $q) {
+  constructor($http, $q, $cookieStore) {
     'ngInject';
 
-    this.$http           = $http;
-    this.$q              = $q;
+    this.$http = $http;
+    this.$q = $q;
+    this.$cookieStore = $cookieStore;
   }
 
   getGeneralSettings(company_id) {
@@ -145,5 +146,9 @@ export default class Settings {
       method: 'PATCH',
       data: data
     }).then((result) => result.data);
+  }
+
+  saveThemeToCookie(value) {
+    this.$cookieStore.put('theme', value);
   }
 }

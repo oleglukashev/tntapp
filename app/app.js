@@ -29,7 +29,7 @@ import init_templates                     from './config.templates'
 import app_controller                     from './common/controllers/app.controller'
 import header_controller                  from './shared/header/header.controller'
 import user_menu_controller               from './shared/user_menu/user_menu.controller'
-import profile_controller                 from './components/dashboard/profile/profile.controller'
+import mobile_menu_controller             from './shared/mobile_menu/mobile_menu.controller'
 import new_reservation_controller         from './components/new_reservation/new_reservation.controller'
 import edit_reservation_parts             from './components/reservation_parts/reservation_part.edit.controller'
 import page_filter_controller             from './shared/page_filter/page_filter.controller'
@@ -98,7 +98,7 @@ const app = angular
   .controller('AppCtrl', app_controller)
   .controller('HeaderCtrl', header_controller)
   .controller('UserMenuCtrl', user_menu_controller)
-  .controller('ProfileCtrl', profile_controller)
+  .controller('MobileMenuCtrl', mobile_menu_controller)
   .controller('ChartsCtrl', charts_controller)
   .controller('NewReservationCtrl', new_reservation_controller)
   .controller('ReservationPartEditCtrl', edit_reservation_parts)

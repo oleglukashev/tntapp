@@ -1,6 +1,6 @@
 <section ng-controller='NewReservationCtrl as reserv' class='reservation_modal no-margin'>
   <form ng-submit='reserv.submitForm()'>
-    <md-toolbar class='blue-grey-900'>
+    <md-toolbar>
       <div class='md-toolbar-tools'>
         <div ng-click='dash_reserv.closeModal()' ng-hide='reserv.success'>
           <i class='mdi mdi-arrow-left m-r-sm'></i>
@@ -89,7 +89,7 @@
                       </md-input-container>
 
                       <button type='button'
-                              class='btn btn-md btn-success text-success'
+                              class='btn btn-md btn-success'
                               ng-click='reserv.ReservationLogic.triggerChoosePersonCount();reserv.selectTab(2);'>Ok</button>
                     </div>
                   </div>
@@ -161,7 +161,7 @@
                     <p><small class='text-muted'>{{ reserv.reservation.zone.name }}:</small></p>
                     <label ng-repeat='table_id in reserv.reservation.zone.table_ids'
                            ng-class="{ 'disabled': reserv.ReservationLogic.isDisabledTableByTableId(reserv.tables, table_id) }"
-                           class='btn btn-default block  m-b-xs no-shadow text-success text-left'
+                           class='btn btn-default block m-b-xs no-shadow text-success text-left'
                            ng-model='reserv.reservation.tables_values[table_id]'
                            uncheckable
                            btn-checkbox>
@@ -172,7 +172,7 @@
                            class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>Show zones</label>
 
                     <button type='button'
-                            class='btn btn-md btn-success text-success w-full'
+                            class='btn btn-md btn-success w-full'
                             ng-click='reserv.selectTab(4);'>Ok</button>
                   </div>
                 </div>
@@ -328,7 +328,7 @@
                 </button>
 
                 <button type='submit'
-                        class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
+                        class='btn btn-lg btn-success w-full no-top-radius md-content-button'
                         ng-class="{ 'disabled': reserv.formIsValid() || reserv.is_submitting }"
                         ng-show='reserv.selected_index == 5 && !reserv.success'>
                   <span>RESERVEER</span>

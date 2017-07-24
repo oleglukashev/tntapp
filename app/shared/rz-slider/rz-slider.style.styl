@@ -51,7 +51,6 @@
   border-radius 2px
 .rzslider .rz-selection
   z-index 2
-  background #36b590
   border-radius 2px
 .rzslider .rz-pointer
   top -5px
@@ -59,7 +58,6 @@
   width 12px
   height 12px
   cursor pointer
-  background-color #36b590
   border-radius 12px
 .rzslider .rz-pointer:after
   position absolute
@@ -179,3 +177,10 @@
   right 24px
   bottom auto
   left auto
+
+for theme in 'default' 'aqua' 'lego' 'chocolate'
+  .{theme}-theme
+    .rzslider .rz-selection
+      background-color lookup(theme + '-success-color')
+    .rzslider .rz-pointer
+      background-color lookup(theme + '-success-color')

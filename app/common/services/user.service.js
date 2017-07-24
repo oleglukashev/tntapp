@@ -1,49 +1,47 @@
 export default class User {
-  constructor(JWT, Upload, $http, $state, $q, $location, $window) {
+  constructor(JWT, Upload, Settings, $http, $state, $q, $location, $window, $rootScope) {
     'ngInject';
 
-    this.JWT             = JWT;
-    this.Upload          = Upload;
-    this.$http           = $http;
-    this.$state          = $state;
-    this.$location       = $location;
-    this.$q              = $q;
-    this.$window         = $window;
-    this.current         = null;
+    this.JWT = JWT;
+    this.Upload = Upload;
+    this.Settings = Settings;
+    this.$http = $http;
+    this.$state = $state;
+    this.$location = $location;
+    this.$q = $q;
+    this.$window = $window;
+    this.$rootScope = $rootScope;
+    this.current = null;
     this.current_company = null;
   }
 
   auth(path, formData) {
     return this.$http({
-      url: API_URL + path,
+      url: `${API_URL}${path}`,
       method: 'POST',
       skipAuthorization: true,
-      data: formData
+      data: formData,
     }).then(
       (result) => {
         this.JWT.save({ token: result.data.token, refresh_token: result.data.refresh_token });
         return result;
-      }
+      },
     );
   }
 
   resetPassword(formData) {
     return this.$http({
-      url: API_URL + '/reset_password',
+      url: `${API_URL}/reset_password`,
       method: 'POST',
-      data: formData
-    }).then(
-      (result) => {
-        return result;
-      }
-    );
+      data: formData,
+    }).then(result => result);
   }
 
   setDefaultCompany(id) {
-    this.current_company = this.current.owned_companies.filter((item) => item.id === id)[0];
-    let current_company_id = this.$window.localStorage.getItem('current_company_id');
+    this.current_company = this.current.owned_companies.filter(item => item.id === id)[0];
+    const currentCompanyId = this.$window.localStorage.getItem('current_company_id');
 
-    if (id != current_company_id) {
+    if (id !== currentCompanyId) {
       this.$window.localStorage.setItem('current_company_id', id);
     }
   }
@@ -55,15 +53,15 @@ export default class User {
 
   update(fields) {
     return this.$http({
-      url:  API_URL + '/user',
+      url: `${API_URL}/user`,
       method: 'PUT',
-      data: { user: fields }
+      data: { user: fields },
     }).then(
       (result) => {
         this.current = result.data;
         return result.data;
-      }
-    )
+      },
+    );
   }
 
   logout() {
@@ -74,7 +72,7 @@ export default class User {
   }
 
   verifyAuth() {
-    let deferred = this.$q.defer();
+    const deferred = this.$q.defer();
 
     if (!this.JWT.get()) {
       deferred.resolve(false);
@@ -85,36 +83,37 @@ export default class User {
       deferred.resolve(true);
     } else {
       this.$http({
-        url: API_URL + '/user',
-        method: 'GET'
+        url: `${API_URL}/user`,
+        method: 'GET',
       }).then(
         (result) => {
           this.current = result.data;
 
-          let current_company_id = parseInt(this.$window.localStorage.getItem('current_company_id'));
-          let available_ids      = this.current.owned_companies.map((item) => item.id);
+          let currentCompanyId = parseInt(this.$window.localStorage.getItem('current_company_id'), 10);
+          const availableIds = this.current.owned_companies.map(item => item.id);
 
-          if (! current_company_id || ! available_ids.includes(current_company_id)) {
-            current_company_id = this.current.owned_companies[0].id;
+          if (!currentCompanyId || !availableIds.includes(currentCompanyId)) {
+            currentCompanyId = this.current.owned_companies[0].id;
           }
 
-          this.setDefaultCompany(current_company_id);
+          this.setDefaultCompany(currentCompanyId);
+          this.loadTheme();
 
           deferred.resolve(true);
         },
-        (error) => {
+        () => {
           this.JWT.destroy();
           this.removeDefaultCompany();
           deferred.resolve(false);
-        }
-      )
+        },
+      );
     }
 
     return deferred.promise;
   }
 
   ensureAuthForClosedPages() {
-    let deferred = this.$q.defer();
+    const deferred = this.$q.defer();
 
     this.verifyAuth().then((authValid) => {
       if (authValid === true) {
@@ -129,7 +128,7 @@ export default class User {
   }
 
   ensureAuthForLoginPages() {
-    let deferred = this.$q.defer();
+    const deferred = this.$q.defer();
 
     this.verifyAuth().then((authValid) => {
       if (authValid === true) {
@@ -143,47 +142,52 @@ export default class User {
     return deferred.promise;
   }
 
-  findById(company_id, id) {
-    if (! company_id) {
+  findById(companyId, id) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/customer/find_by_id/' + id,
+      url: `${API_URL}/company/${companyId}/customer/find_by_id/${id}`,
       method: 'GET',
-    }).then((result) => {
-      return result.data;
-    });
+    }).then(result => result.data);
   }
 
-  uploadPhoto(user_id, file) {
-    file.upload = this.Upload.upload({
-      url:  API_URL + '/company/' + this.current_company.id + '/user/' + user_id + '/upload',
+  uploadPhoto(userId, file) {
+    return this.Upload.upload({
+      url: `${API_URL}/company/${this.current_company.id}/user/${userId}/upload`,
       data: { photo: file },
       headers: {
-        Authorization: 'Bearer ' + this.JWT.get()
-      }
+        Authorization: `Bearer ${this.JWT.get()}`,
+      },
     });
-
-    return file.upload;
   }
 
-  getPhoto(user_id) {
-
-    let deferred = this.$q.defer();
+  getPhoto(userId) {
+    const deferred = this.$q.defer();
 
     if (!this.current_company) {
       return deferred.promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + this.current_company.id + '/user/' + user_id + '/photo?' + new Date().getTime(),
+      url: `${API_URL}/company/${this.current_company.id}/user/${userId}/photo?${new Date().getTime()}`,
       method: 'GET',
       headers: {
-        Authorization: 'Bearer ' + this.JWT.get()
-      }
-    }).then((result) => {
-      return result.data;
-    });
+        Authorization: `Bearer ${this.JWT.get()}`,
+      },
+    }).then(result => result.data);
+  }
+
+  loadTheme() {
+    this.Settings
+      .getThemeSettings(this.current_company.id).then(
+        (result) => {
+          if (result.plugin_theme_name) {
+            const themeClass = `${result.plugin_theme_name.toLowerCase()}-theme`;
+            this.Settings.saveThemeToCookie(themeClass);
+            this.$rootScope.$broadcast('AppCtrl.change_plugin_theme_name', themeClass);
+          }
+        });
   }
 }

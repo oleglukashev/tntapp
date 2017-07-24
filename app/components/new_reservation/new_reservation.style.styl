@@ -1,38 +1,20 @@
-green_color = #36b590
-default_color = #58666e
-
 .reservation_modal
   md-content
     padding-bottom 0
     height auto
-    min-height 520px
+    min-height modal-height
     
     md-tabs.reservation_tabs
-      border-radius 0
-
       md-tabs-wrapper
-        background-color #263238
-
         md-tabs-canvas
-          height 56px
+          height new-reserv-tab-height
 
           md-pagination-wrapper
-            height 56px
-            width 100%
+            height new-reserv-tab-height
 
             md-tab-item.md-tab
               width 16.66%
-              height 56px
-              padding 5px 0
-              font-size 16px
-              line-height 30px
-
-              &.md-active
-                color #fff
-
-            md-ink-bar
-              height 4px
-              background-color green_color
+              height new-reserv-tab-height
 
       md-tabs-content-wrapper
         md-tab-content
@@ -69,11 +51,9 @@ default_color = #58666e
                   label.active
                     background-color #fff
                     border-color #dee5e7
-                    color default_color
+                    color font-color
                 .tables_boxes
                   label.active
-                    background-color green_color
-                    border-color green_color
                     color #fff !important
 
     @media (max-width 600px)

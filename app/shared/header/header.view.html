@@ -1,6 +1,8 @@
 <!-- navbar header -->
 <div class='header-mobile navbar-header visible-xs'>
-  <button class='header-mobile__menu pull-left visible-xs' ng-click='profile.openMenu()' ng-controller='ProfileCtrl as profile'>
+  <button class='header-mobile__menu pull-left visible-xs'
+          ng-controller='MobileMenuCtrl as mobile_menu'
+          ng-click='mobile_menu.openMenu()'>
     <i class='mdi mdi-format-align-justify'></i>
   </button>
   <!-- brand -->
@@ -33,7 +35,7 @@
         </div>
 
         <!-- dropdown -->
-        <ul class="header-account-menu-box dropdown-menu animated blue-grey-900">
+        <ul class="header-account-menu-box dropdown-menu animated">
           <li ng-repeat='company in header.current_user.owned_companies'>
             <a href='#' ng-click='header.setDefaultCompany(company.id)'>
               <span>{{ company.name }}</span>

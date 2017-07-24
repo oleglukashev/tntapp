@@ -1,0 +1,200 @@
+md-input-container
+  padding-bottom 0
+  margin-bottom 0
+
+  label,
+  .md-placeholder
+    color rgba(0,0,0,0.26)
+
+  [ng-messages]
+    div
+      color rgb(244,67,54)
+      font-size 12px
+      line-height 14px
+
+  &.md-input-invalid
+    &.md-input-focused
+      label
+        color rgb(244,67,54)
+
+    .md-input
+      border-color rgb(244,67,54)
+
+
+.md-backdrop.md-opaque
+  background none
+
+.md-sidenav-right
+  top 72px
+
+.md-sidenav-right,
+.md-sidenav-left
+  md-content
+    .wrapper
+      color #fff
+
+md-toolbar
+  color #fff
+  border-radius 6px 6px 0 0
+
+md-content
+  height modal-height
+  border-radius 0 0 6px 6px
+  background-color #fff
+
+  .md-content-view
+    overflow-y auto
+    height 100%
+    height modal-height
+
+  .md-content-submit
+    padding-bottom 46px
+    position relative
+    height modal-height
+
+    .md-content-button
+      position absolute
+      width 100%
+      left 0
+      bottom 0
+
+@media (max-width 768px)
+  md-toolbar
+    border-radius 0
+
+  md-content
+    border-radius 0
+
+
+md-input-container
+  input
+    font-size 16px
+
+md-select
+  padding 0
+
+  md-select-value
+    display -webkit-box
+    display -webkit-flex
+    display flex
+    -webkit-box-align center
+    -webkit-align-items center
+    align-items center
+    padding 2px 2px 1px
+    border-bottom-width 1px
+    border-bottom-style solid
+    background-color transparent
+    position relative
+    box-sizing content-box
+    min-width 54px
+    min-height 26px
+    -webkit-box-flex 1
+    -webkit-flex-grow 1
+    flex-grow 1
+    border-bottom-color rgba(0,0,0,0.12)
+
+    .md-text
+      font-size 16px
+
+    .md-select-icon
+      display block
+      -webkit-box-align end
+      -webkit-align-items flex-end
+      align-items flex-end
+      text-align end
+      width 24px
+      margin 0 4px
+      -webkit-transform translate3d(0,-2px,0)
+      transform translate3d(0,-2px,0)
+      font-size 1.2rem
+
+      &:after
+        display block
+        content '\25BC'
+        position relative
+        top 2px
+        speak none
+        font-size 13px
+        -webkit-transform scaleY(.5) scaleX(1)
+        transform scaleY(.5) scaleX(1)
+
+.md-select-menu-container,
+md-menu-content
+  background-color #fff
+
+md-switch
+  .md-bar
+    background-color #9e9e9e
+  .md-thumb
+    background-color #fff
+  &.md-checked
+    .md-bar
+      opacity 0.7
+
+md-radio-button
+  margin 8px 8px 8px 0
+
+md-checkbox
+  margin 8px 8px 8px 0
+
+  &.md-checked
+    .md-icon
+      border-color transparent
+
+      &:after
+        border-color #fff
+
+.md-form-group
+  padding 10px 0
+
+md-menu-content
+  background-color #fff
+
+.md-datepicker-calendar-pane
+  border-color #fff
+  z-index 1050
+
+  .md-datepicker-input-mask
+    display none
+  .md-datepicker-calendar
+    background-color #fff
+
+    .md-calendar-day-header
+      background #fff
+      color font-color
+
+    .md-calendar
+      tr:last-child
+        td
+          border-bottom-color: rgb(238,238,238);
+
+      .md-calendar-date
+        &:hover,
+        &.md-calendar-date-today
+          .md-calendar-date-selection-indicator
+            background-color #edf1f2
+            color font-color
+
+        &.md-calendar-selected-date
+          .md-calendar-date-selection-indicator
+            color #fff
+
+md-tabs
+  border-radius 0
+
+  md-tabs-wrapper
+    md-tabs-canvas
+      md-pagination-wrapper
+        width 100%
+
+        md-tab-item.md-tab
+          padding 5px 0
+          font-size 16px
+          line-height 30px
+          color muted-color
+
+          &.md-active
+            color #fff
+
+        md-ink-bar
+          height 4px

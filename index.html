@@ -9,9 +9,8 @@
   <link rel='stylesheet' href='public/assets/app.min.css' type='text/css' />
 
 </head>
-<body ng-controller='AppCtrl'>
+<body ng-controller='AppCtrl as app' ng-class='app.theme_class'>
   <div class='app' id='app' ui-view></div>
-
   <script src='vendor/jquery/jquery/dist/jquery.js'></script>
   <script src='public/assets/vendor.min.js'></script>
   <script src='public/assets/app.min.js'></script>

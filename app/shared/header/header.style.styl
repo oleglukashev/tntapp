@@ -1,11 +1,8 @@
-green_color = #36b590
-
 .header
   position fixed
   top 0
   width 100%
   height 72px
-  background-color #263238
   box-shadow 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)
   border-radius 0
   margin 0
@@ -29,7 +26,6 @@ green_color = #36b590
   md-tabs.header-menu
     width 590px
     float left
-    border-radius 0
 
     md-tabs-canvas
       height 72px
@@ -40,9 +36,9 @@ green_color = #36b590
         md-tab-item
           line-height 52px
           padding 10px 15px
-          color #b7bbbd
           font-weight bold
           letter-spacing 0.7px
+          font-size 14px
 
           &:first-child
             margin-left 0
@@ -50,11 +46,6 @@ green_color = #36b590
         @media (min-width 962px)
           md-tab-item
             margin-left 26px
-
-    md-ink-bar
-      height 4px
-      background-color green_color
-
 
   .header-search
     height 42px
@@ -124,7 +115,6 @@ green_color = #36b590
       padding 6px 0 12px
       border-width 0
       border-radius 0 0 2px 2px
-      background-color #263238
 
       li
         a
@@ -135,15 +125,13 @@ green_color = #36b590
           &:hover
             background-color transparent !important
 
-            span, i
-              color #fc6a35
-
-          span
+          span, i
             color #d9d2d2
+          
+          span
             text-transform uppercase
 
           i
-            color #d9d2d2
             line-height 23px
             font-size 16px
 
