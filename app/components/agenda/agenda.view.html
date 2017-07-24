@@ -72,7 +72,7 @@
                     <div class="quarter"
                          ng-repeat="quarter in [0,1,2,3]"
                          ui-on-drop="agenda.onDrop(zone.id, table.id, table_index, hour, quarter, $data)"
-                         ng-click='agenda.openQuickReservation(table.id, hour, quarter)'
+                         ng-click='agenda.openQuickReservation(table.id, table.table_number, hour, quarter)'
                          ng-class="agenda.getQuarterClass(hour, quarter)"></div>
                   </div>
 
