@@ -23,8 +23,8 @@
             <md-tab-label>
               <div class='text-center l-h'><i class='mdi mdi-calendar'></i></div>
               <div class='text-center l-h'>
-                <span ng-show='reserv.reservation.full_date'>{{ reserv.reservation.full_date | date:'d MMMM' }}</span>
-                <span ng-hide='reserv.reservation.full_date'>DATUM</span>
+                <span ng-show='reserv.reservation.date'>{{ reserv.reservation.date | date:'d MMMM' }}</span>
+                <span ng-hide='reserv.reservation.date'>DATUM</span>
               </div>
             </md-tab-label>
             <md-tab-body>
@@ -39,7 +39,7 @@
                               starting-day="1"
                               show-weeks="false"
                               datepicker-options='reserv.date_options'
-                              ng-model='reserv.reservation.full_date'
+                              ng-model='reserv.reservation.date'
                               min-date='reserv.init_date'
                               max-date='reserv.max_date'
                               class='datepicker'></datepicker>
@@ -270,7 +270,7 @@
                       <label>Geboortedatum</label>
                       <input class='md-input'
                              ng-focus='reserv.openDatepicker($event)'
-                             ng-model='reserv.reservation.full_date_of_birth'
+                             ng-model='reserv.reservation.date_of_birth'
                              datepicker-popup='{{ reserv.format }}'
                              is-open='reserv.opened'
                              datepicker-options='reserv.date_options'
