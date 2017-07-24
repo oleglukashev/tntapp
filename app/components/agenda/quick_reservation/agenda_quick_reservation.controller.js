@@ -1,5 +1,5 @@
 export default class AgendaQuickReservationCtrl {
-  constructor(User, Product, Reservation, tableId, datetime, filterFilter,
+  constructor(User, Product, Reservation, tableId, tableNumber, datetime, filterFilter,
     moment, $window, $modalInstance) {
     'ngInject';
 
@@ -15,6 +15,7 @@ export default class AgendaQuickReservationCtrl {
     this.reservation = {
       datetime: this.moment(datetime).format('YYYY-MM-DD HH:mm:ss'),
       number_of_persons: 1,
+      table_number: tableNumber,
       table_id: tableId,
     };
 

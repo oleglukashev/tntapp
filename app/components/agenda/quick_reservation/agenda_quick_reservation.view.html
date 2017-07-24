@@ -11,11 +11,15 @@
         <div class='w-xl'>
           <md-input-container class='md-block'>
             <label>Tijd</label>
-            <input ng-model='quick_reserv.reservation.datetime' required />
+            <input ng-value='quick_reserv.moment(quick_reserv.reservation.datetime).format("DD MMM YYYY HH:mm")'
+                   disabled
+                   required />
           </md-input-container>
           <md-input-container class='md-block'>
             <label>Tafelnummer</label>
-            <input ng-model='quick_reserv.reservation.table_id' required />
+            <input ng-value='quick_reserv.reservation.table_number'
+                   disabled
+                   required />
           </md-input-container>
           <md-input-container class='md-block'>
             <label>Voor- en achternaam</label>

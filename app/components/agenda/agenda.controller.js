@@ -131,21 +131,20 @@ export default class AgendaCtrl {
     });
   }
 
-  openQuickReservation(table_id, hour, quarter) {
-    let modalInstance = this.$modal.open({
+  openQuickReservation(tableId, tableNumber, hour, quarter) {
+    const modalInstance = this.$modal.open({
       templateUrl: 'agenda_quick_reservation.view.html',
       controller: 'AgendaQuickReservationCtrl as quick_reserv',
       size: 'md',
       resolve: {
         datetime: () => {
-          let datetime = this.moment(this.date_filter);
-          datetime.set({ hour: hour, minute: quarter * 15, second: 0})
+          const datetime = this.moment(this.date_filter);
+          datetime.set({hour: hour, minute: quarter * 15, second: 0 });
           return datetime;
         },
-        tableId: () => {
-          return table_id;
-        }
-      }
+        tableNumber: () => tableNumber,
+        tableId: () => tableId,
+      },
     });
 
     modalInstance.result.then((selectedItem) => {
