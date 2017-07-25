@@ -5,7 +5,7 @@
     <div ng-show='reservations.is_loaded && reservations.reservations.length'>
       <button ng-click='reservations.openReservation();'
               md-ink-ripple
-              class='panel-add-button md-btn md-fab m-b m-t-n-md orange'>
+              class='panel-add-button md-btn md-fab m-b m-t-n-md'>
         <i class='mdi mdi-plus i-24'></i>
       </button>
 
@@ -25,7 +25,7 @@
     <div ng-show='reservations.is_loaded && !reservations.reservations.length'>
       <button ng-click='reservations.openReservation();'
               md-ink-ripple
-              class='panel-add-button md-btn md-fab m-b m-t-n-md orange'>
+              class='panel-add-button md-btn md-fab m-b m-t-n-md'>
         <i class='mdi mdi-plus i-24'></i>
       </button>
 
@@ -39,7 +39,6 @@
     </div>
   </div>
 
-  <div data-ng-include=" 'profile.view.html' " ng-controller='ProfileCtrl as profile'></div>
   <div data-ng-include=" 'user_menu.view.html' " ng-controller='UserMenuCtrl as user'></div>
 </div>
 <div data-ng-include=" 'print_reservations.view.html' "></div>

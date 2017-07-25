@@ -1636,7 +1636,6 @@
 .md-input:focus,
 .md-input.focus {
     padding-bottom: 1px;
-    border-color: #36b590;
     border-bottom-width: 2px;
 }
 
@@ -1644,7 +1643,6 @@
 .md-input.focus ~ label {
     top: 0 !important;
     font-size: 0.85em !important;
-    color: #36b590;
     opacity: 1;
 }
 

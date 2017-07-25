@@ -6,10 +6,8 @@ export default function routes($stateProvider, $urlRouterProvider) {
       abstract: true,
       templateUrl: 'app.html',
       resolve: {
-        auth: function(User) {
-          return User.ensureAuthForClosedPages();
-        }
-      }
+        auth: User => User.ensureAuthForClosedPages(),
+      },
     });
 
   $urlRouterProvider.otherwise('/');
