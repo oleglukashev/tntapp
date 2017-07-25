@@ -33,6 +33,7 @@ export default class NewReservationCtrl {
 
     this.moment = moment;
     this.zones_is_showed = true;
+    this.selected_index = 0;
 
     this.date_options = {
       formatYear: 'yy',

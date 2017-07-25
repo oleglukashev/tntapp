@@ -15,7 +15,7 @@
       <div ng-hide='reserv.success'>
         <md-tabs class='reservation_tabs'
                  flex
-                 md-selected='reserv.ReservationLogic.selected_index'
+                 md-selected='reserv.selected_index'
                  md-no-pagination
                  md-stretch-tabs
                  md-dynamic-height>
@@ -330,7 +330,7 @@
                 <button type='submit'
                         class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
                         ng-class="{ 'disabled': reserv.formIsValid() || reserv.is_submitting }"
-                        ng-show='reserv.ReservationLogic.selected_index == 5 && !reserv.success'>
+                        ng-show='reserv.selected_index == 5 && !reserv.success'>
                   <span>RESERVEER</span>
                 </button>
               </div>

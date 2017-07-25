@@ -3,8 +3,6 @@ export default class ReservationLogic {
     'ngInject';
 
     this.filterFilter = filterFilter;
-
-    this.selected_index = 0;
   }
 
   getProductNameByProductId(products, productId) {

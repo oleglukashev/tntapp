@@ -12,7 +12,7 @@
       <div ng-hide='reserv.success'>
         <md-tabs class='reservation_tabs'
                  flex
-                 md-selected='reserv.ReservationLogic.selected_index'
+                 md-selected='reserv.selected_index'
                  md-no-pagination
                  md-stretch-tabs
                  md-dynamic-height>
@@ -32,7 +32,7 @@
                   </div>
                 </div>
                 <div class='wrapper' layout='column' layout-align='space-around center'>
-                  <datepicker ng-change='reserv.ReservationLogic.selectTab(1)'
+                  <datepicker ng-change='reserv.selectTab(1)'
                               starting-day="1"
                               show-weeks="false"
                               ng-model='reserv.reservation_part.date'
@@ -65,7 +65,7 @@
                 <div class='wrapper' layout='column' layout-align='space-around center'>
                   <div class='w-lg'>
                     <label ng-repeat='number in [1,2,3,4,5,6,7,8,9,10]'
-                      ng-click='reserv.ReservationLogic.selectTab(2)'
+                      ng-click='reserv.selectTab(2)'
                       ng-class="{ 'btn-success': reserv.reservation_part.person_count == number }"
                       class='btn btn-default btn-sm font-bold m-xs text-success'
                       ng-model='reserv.reservation_part.person_count'
@@ -86,7 +86,7 @@
 
                       <button type='button'
                               class='btn btn-md btn-success text-success'
-                              ng-click='reserv.ReservationLogic.triggerChoosePersonCount();reserv.ReservationLogic.selectTab(2);'>Ok</button>
+                              ng-click='reserv.ReservationLogic.triggerChoosePersonCount();reserv.selectTab(2);'>Ok</button>
                     </div>
                   </div>
                 </div>
@@ -113,7 +113,7 @@
                 <div class='wrapper'>
                   <div class='text-center' ng-show='reserv.products_is_loaded'>
                     <label ng-repeat='product in reserv.products'
-                           ng-click='reserv.ReservationLogic.selectTab(3)'
+                           ng-click='reserv.selectTab(3)'
                            class='box'
                            ng-model='reserv.reservation_part.product'
                            uncheckable
@@ -170,7 +170,7 @@
 
                     <button type='button'
                             class='btn btn-md btn-success text-success w-full'
-                            ng-click='reserv.ReservationLogic.selectTab(4);'>Ok</button>
+                            ng-click='reserv.selectTab(4);'>Ok</button>
                   </div>
                 </div>
 
@@ -201,7 +201,7 @@
                   <div class='w-xl'>
                     <div class='text-center' ng-show='reserv.time_is_loaded'>
                       <label ng-repeat='time_obj in reserv.available_time'
-                             ng-click='reserv.ReservationLogic.selectTab(5)'
+                             ng-click='reserv.selectTab(5)'
                              ng-class="{ 'btn-success': reserv.reservation_part.time == time_obj.time }"
                              class='btn btn-default btn-lg m-xs m-l-none no-shadow text-success'
                              ng-model='reserv.reservation_part.time'

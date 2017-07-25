@@ -21,6 +21,7 @@ export default class ReservationPartEditCtrl {
 
     this.moment               = moment;
     this.zones_is_showed      = true;
+    this.selected_index = 0;
 
     this.init_date            = moment().subtract(1, 'Y');
     this.max_date             = moment().add(1, 'Y');
@@ -216,4 +217,7 @@ export default class ReservationPartEditCtrl {
           });
   }
 
+  selectTab(index) {
+    this.selected_index = index;
+  }
 }
