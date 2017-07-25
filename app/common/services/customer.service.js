@@ -86,7 +86,6 @@ export default class Customer {
     });
   }
 
-
   edit(company_id, customer_id, data) {
     let deferred = this.$q.defer();
 
@@ -95,6 +94,18 @@ export default class Customer {
     }
 
     return this.$http.patch(API_URL + '/company/' + company_id + '/customer/' + customer_id,
+      data
+    ).then((result) => result.data);
+  }
+
+  setRegular(company_id, customer_id, data) {
+    let deferred = this.$q.defer();
+
+    if (!company_id) {
+      return deferred.promise;
+    }
+
+    return this.$http.patch(API_URL + '/company/' + company_id + '/customer/' + customer_id + '/set_regular',
       data
     ).then((result) => result.data);
   }

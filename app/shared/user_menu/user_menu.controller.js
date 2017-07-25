@@ -18,6 +18,29 @@ export default class UserMenuCtrl {
     this.months     = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
   }
 
+  openEditReservationModal(reservation, reservation_part) {
+    let modalInstance = this.$modal.open({
+      templateUrl: 'reservation_part.edit.view.html',
+      controller: 'ReservationPartEditCtrl as reserv',
+      size: 'md',
+      resolve: {
+        reservation: () => {
+          return reservation;
+        },
+        reservation_part: () => {
+          return reservation_part;
+        },
+      }
+    });
+
+    modalInstance.result.then((selectedItem) => {
+      //success
+      this.loadCustomerReservations(reservation.customer.id, reservation_part.id);
+    }, () => {
+      // fail
+    });
+  }
+
   openEditModal(user_id) {
     let modalInstance = this.$modal.open({
       templateUrl: 'user_menu.edit.view.html',
@@ -29,6 +52,28 @@ export default class UserMenuCtrl {
       //success
     }, () => {
       // fail
+    });
+  }
+
+  toggleStar(customer) {
+    let data = {
+      first_name: customer.first_name,
+      last_name: customer.last_name,
+      primary_phone_number: customer.primary_phone_number,
+      secondary_phone_number: customer.secondary_phone_number,
+      street: customer.street,
+      house_number: customer.house_number,
+      zipcode: customer.zipcode,
+      city: customer.city,
+      mail: customer.mail,
+      date_of_birth: customer.date_of_birth,
+      gender: customer.gender,
+      averageRating: customer.average_rating,
+      regular: !customer.regular
+    };
+
+    this.Customer.edit(this.current_company_id, customer.id, data).then(customer => {
+      this.$rootScope.customer = customer;
     });
   }
 
@@ -52,6 +97,12 @@ export default class UserMenuCtrl {
       this.$rootScope.customer = customer;
     })
 
+    this.loadCustomerReservations(customer_id, reservation_part_id);
+
+    this.$mdSidenav('right').open()
+  }
+
+  loadCustomerReservations(customer_id, reservation_part_id) {
     this.Customer.searchReservationsByCustomerId(this.current_company_id, customer_id).then(reservations => {
       this.$rootScope.customer_reservations = reservations;
 
@@ -65,8 +116,6 @@ export default class UserMenuCtrl {
         });
       });
     })
-
-    this.$mdSidenav('right').open()
   }
 
   closeCustomerMenu() {

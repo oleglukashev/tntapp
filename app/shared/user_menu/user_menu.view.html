@@ -5,15 +5,16 @@
         <button md-ink-ripple class='md-btn md-flat btn-fw' ng-click='user.closeCustomerMenu()'>
           <i class='mdi mdi-close i-30' ></i>
         </button>
-        <button md-ink-ripple class='pull-right md-btn md-flat btn-fw'>
-          <i class='mdi mdi-dots-vertical i-26'></i>
-        </button>
         <button md-ink-ripple class='pull-right md-btn md-flat btn-fw' ng-click='user.openEditModal(customer.id)'>
           <i class='mdi mdi-pencil i-26'></i>
+        </button>
+        <button md-ink-ripple class='pull-right md-btn md-flat btn-fw' ng-class="customer.regular ? 'star_active' : ''" ng-click='user.toggleStar(customer)'>
+          <i class='mdi mdi-star i-26'></i>
         </button>
       </div>
       <h1 class='i-30'>
         <img ng-src="{{ customer.photoURI }}" ng-if="customer.photoURI" class="customer_avatar m-r-md" />
+        <i ng-hide="customer.photoURI" class="customer_avatar customer_empty_avatar m-r-xs mdi mdi-account i-24"></i>
         <span class="user_name">
           {{ customer_reservations[0].customer.last_name }}
           {{ customer_reservations[0].customer.first_name }}
@@ -41,12 +42,11 @@
         </div>
       </div>
 
-      <div class="inset">
+      <div class="inset" ng-if="customer_reservations[0].customer.primary_phone_number">
         <div class="md-list-item-left">
           <i class="mdi mdi-phone icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
-          <div class="pull-right"><i class="mdi mdi-cloud i-24 text-info padding-right-25"></i></div>
           <h3 class="text-md">
             {{ customer_reservations[0].customer.primary_phone_number }}
           </h3>
@@ -60,7 +60,6 @@
           <i class="mdi mdi-email icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
-          <div class="pull-right"><i class="mdi mdi-cloud i-24 text-info padding-right-25"></i></div>
           <h3 class="text-md">
             {{ customer_reservations[0].customer.mail }}
           </h3>
@@ -143,7 +142,9 @@
       </li>
 
       <li ng-repeat="reservation in customer_reservations">
-        <div class="inset" ng-repeat="reservation_part in reservation.reservation_parts">
+        <a md-ink-ripple
+           ng-repeat="reservation_part in reservation.reservation_parts"
+           ng-click="user.openEditReservationModal(reservation, reservation_part)">
           <div class="md-list-item-left">
             <i class="mdi mdi-book icon-muted i-24"></i>
           </div>
@@ -160,7 +161,7 @@
               <small class="font-thin">{{ reservation.reviewScore }}</small>
             </div>
           </div>
-        </div>
+        </a>
       </li>
 
     </ul>

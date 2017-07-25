@@ -93,17 +93,17 @@ export default class AgendaCtrl {
     let tables = this.tables_by_part;
 
     let data = {
-        part_id : reservation_part_id,
-        tijdstip: this.moment(this.date_filter).format('YYYY-MM-DD') + ' ' + hour + ':' + quarter * 15 + ':00',
-        tafels  : [table_id]
-     };
+      part_id : reservation_part_id,
+      datetime: this.moment(this.date_filter).format('YYYY-MM-DD') + ' ' + hour + ':' + quarter * 15 + ':00',
+      tables  : [table_id]
+    };
 
     for (let table in tables) {
       for (let i=0; i<tables[table].length; i++) {
         let item = tables[table][i];
         if (item.id == reservation_part_id) {
 
-          this.ReservationPart.edit(this.current_company.id, reservation_part_id, data).then(() => {
+          this.ReservationPart.update(this.current_company.id, reservation_part_id, data).then(() => {
             let left = this.left_margin + hour * this.hour_width + quarter * this.hour_width / 4;
             let top = this.top_margin + table_position * this.reservation_height;
             item.left = left;

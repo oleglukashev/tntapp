@@ -1,8 +1,8 @@
 import angular from 'angular';
 
 export default class NewReservationCtrl {
-  constructor(User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone, Table,
-    moment, filterFilter, $state, $stateParams, $rootScope, $scope, $window, $auth) {
+  constructor(User, Reservation, ReservationLogic, Settings, TimeRange, CustomerCompany, Product,
+    Zone, Table, moment, filterFilter, $state, $stateParams, $rootScope, $scope, $window, $auth) {
     'ngInject';
 
     this.is_dashboard_page = $state.current.name === 'app.dashboard';
@@ -17,6 +17,7 @@ export default class NewReservationCtrl {
     }
 
     this.Reservation = Reservation;
+    this.ReservationLogic = ReservationLogic;
     this.CustomerCompany = CustomerCompany;
     this.Product = Product;
     this.Zone = Zone;
@@ -96,10 +97,6 @@ export default class NewReservationCtrl {
 
   triggerAdditionalInfo() {
     this.additional_is_opened = !this.additional_is_opened;
-  }
-
-  triggerChoosePersonCount() {
-    this.choose_person_count_is_opened = !this.choose_person_count_is_opened;
   }
 
   submitForm() {
@@ -210,36 +207,6 @@ export default class NewReservationCtrl {
     return false;
   }
 
-  getPersonCountByTableId(tableId) {
-    const table = this.filterFilter(this.tables, { id: tableId })[0];
-
-    if (table) {
-      return table.number_of_persons;
-    }
-
-    return null;
-  }
-
-  getTableNumberByTableId(tableId) {
-    const table = this.filterFilter(this.tables, { id: tableId })[0];
-
-    if (table) {
-      return table.table_number;
-    }
-
-    return null;
-  }
-
-  isDisabledTableByTableId(tableId) {
-    const table = this.filterFilter(this.tables, { id: tableId })[0];
-
-    if (table) {
-      return table.hidden === true;
-    }
-
-    return false;
-  }
-
   isMoreThanDeadline() {
     if (this.socials && this.socials.settings.reservation_deadline) {
       const now = this.moment();
@@ -249,16 +216,6 @@ export default class NewReservationCtrl {
     }
 
     return false;
-  }
-
-  getProductNameByProductId(productId) {
-    const product = this.filterFilter(this.products, { id: productId })[0];
-
-    if (product) {
-      return product.name;
-    }
-
-    return null;
   }
 
   reservationDateFormat(format) {

@@ -31,6 +31,7 @@ import header_controller                  from './shared/header/header.controlle
 import user_menu_controller               from './shared/user_menu/user_menu.controller'
 import profile_controller                 from './components/dashboard/profile/profile.controller'
 import new_reservation_controller         from './components/new_reservation/new_reservation.controller'
+import edit_reservation_parts             from './components/reservation_parts/reservation_part.edit.controller'
 import page_filter_controller             from './shared/page_filter/page_filter.controller'
 import page_filter_time_ranges_controller from './shared/page_filter/time_ranges/page_filter_time_ranges.controller'
 import search                             from './shared/search'
@@ -100,6 +101,7 @@ const app = angular
   .controller('ProfileCtrl', profile_controller)
   .controller('ChartsCtrl', charts_controller)
   .controller('NewReservationCtrl', new_reservation_controller)
+  .controller('ReservationPartEditCtrl', edit_reservation_parts)
   .controller('DashboardReservationsCtrl', dashboard_reservations)
   .controller('PageFilterCtrl', page_filter_controller)
   .controller('PageFilterTimeRangesCtrl', page_filter_time_ranges_controller)
