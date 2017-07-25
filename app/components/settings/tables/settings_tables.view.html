@@ -56,7 +56,7 @@
                        class='text-center w-40'
                        name='table_number_{{$index}}'
                        ng-model='tables_settings.tables_by_zone[zone.id][$index].table_number'
-                       ng-change='tables_settings.submitForm();'
+                       ng-blur='tables_settings.submitForm();'
                        required
                        ng-maxlength='3'
                        minlength='1'
