@@ -15,7 +15,7 @@
     </div>
     <div class='settings_add_items'>
       <div class='clearfix'>
-        <label ng-repeat="(zone, className) in new_zone.icons_classes"
+        <label ng-repeat="(zone, className) in new_zone.iconsClasses"
                ng-class="{ 'disabled': new_zone.zonesNames().includes(zone) }"
                ng-click='new_zone.changeClass(className)'
                class='box'
@@ -23,7 +23,7 @@
                uncheckable
                btn-radio='zone'>
           <i class='box_active_icon mdi mdi-check'></i>
-          <i class='box_icon mdi {{ new_zone.icons_classes[zone] }}'></i>
+          <i class='box_icon mdi {{ new_zone.iconsClasses[zone] }}'></i>
           <p class='no-margin'>{{ zone }}</p>
         </label>
       </div>

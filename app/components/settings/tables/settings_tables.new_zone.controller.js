@@ -1,28 +1,20 @@
 export default class SettingsTablesNewZoneCtrl {
-  constructor(User, Zone, zones, $scope, $modalInstance) {
+  constructor(User, Zone, AppConstants, zones, $scope, $modalInstance) {
     'ngInject';
 
     this.current_company = User.current_company;
 
-    this.Zone          = Zone;
-    this.zones         = zones;
-    this.$scope        = $scope;
-    this.default_zones = ['Bar', 'Meeting room', 'Lounge', 'Restaurant', 'Terras', 'Zaal'];
-    this.icons_classes = {
-      'Bar'          : 'mdi-martini',
-      'Lounge'       : 'mdi-food',
-      'Meeting room' : 'mdi-google-circles-communities',
-      'Restaurant'   : 'mdi-silverware-variant',
-      'Terras'       : 'mdi-beach',
-      'Zaal'         : 'mdi-food-fork-drink'
-    }
-    this.empty_mdi_class = 'mdi-close';
-    this.$modalInstance  = $modalInstance;
-    this.item            = {};
+    this.Zone = Zone;
+    this.zones = zones;
+    this.$scope = $scope;
+    this.iconsClasses = AppConstants.zonesClasses;
+    this.emptyMdiClass = AppConstants.emptyClass;
+    this.$modalInstance = $modalInstance;
+    this.item = {};
 
-    let loadedZones = this.zonesHash();
-    if (loadedZones) this.icons_classes = $.extend(loadedZones, this.icons_classes);
-    this.uniq_icons = [...new Set(Object.values(this.icons_classes))];
+    const loadedZones = this.zonesHash();
+    if (loadedZones) this.iconsClasses = $.extend(loadedZones, this.iconsClasses);
+    this.uniq_icons = [...new Set(Object.values(this.iconsClasses))];
   }
 
   closeModal() {
@@ -35,7 +27,7 @@ export default class SettingsTablesNewZoneCtrl {
 
   submitForm() {
     this.is_submitting = true;
-    this.errors        = [];
+    this.errors = [];
 
     this.Zone
       .create(this.current_company.id, this.item)
@@ -50,13 +42,16 @@ export default class SettingsTablesNewZoneCtrl {
   }
 
   zonesNames() {
-    return this.zones.map((item) => item.name);
+    return this.zones.map((item) => {
+      return item.name;
+    });
   }
 
   zonesHash() {
-    let zones = {};
+    const zones = {};
     this.zones.map((item) => {
-      zones[item.name] = (item.icon_class ? item.icon_class : this.icons_classes[item.name]) || this.empty_mdi_class;
+      zones[item.name] = (item.icon_class ? item.icon_class :
+        this.iconsClasses[item.name]) || this.emptyMdiClass;
     });
     return zones;
   }

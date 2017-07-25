@@ -1,26 +1,24 @@
-import angular from 'angular';
-
 export default class Charts {
-  constructor(User, Reservation) {
+  constructor(User, Reservation, AppConstants) {
     'ngInject';
 
     this.current_company = User.current_company;
 
     this.reservations = {};
-    this.days_of_week = ['Z','M','D','W','D','V','Z','Z','M','D','W','D','V','Z'];
+    this.letterOfWeek = AppConstants.letterOfWeek;
     this.Reservation = Reservation;
   }
 
   get(reservations) {
-    this.charts       = {
-      doughnut_keys:  [],
-      doughnut_values:[],
+    this.charts = {
+      doughnut_keys: [],
+      doughnut_values: [],
       doughnut_by_id: [],
-      products:       {},
-      reservations:   {},
-      day_guests:     {},
+      products: {},
+      reservations: {},
+      day_guests: {},
       day_guests_arr: [0],
-      week_axis:      [],
+      week_axis: [],
       total_guests_y: 0,
       total_guests_m: 0,
       total_guests_w: 0,
@@ -31,37 +29,40 @@ export default class Charts {
     this.charts.total_guests_m = reservations.count_per_month;
     this.charts.total_guests_w = reservations.count_per_week;
 
-    let count_per_days = {};
+    const mSecInDay = 1000 * 60 * 60 * 24;
+    const countPerDays = {};
 
     if (!reservations.count_by_week) reservations.count_by_week = [];
     if (!reservations.today) reservations.today = [];
 
-    reservations.count_by_week.forEach(n => { count_per_days[n['pday']] = n['cnt'] })
+    reservations.count_by_week.forEach((n) => { countPerDays[n.pday] = n.cnt; });
 
-    reservations.today.forEach(reservation => {
-      reservation.reservation_parts.forEach(part => {
-        let persons_count = parseInt(part.number_of_persons);
+    reservations.today.forEach((reservation) => {
+      reservation.reservation_parts.forEach((part) => {
+        const personsCount = parseInt(part.number_of_persons, 10);
         this.charts.reservations[part.product_id] =
           (this.charts.reservations[part.product_id] || 0) +
-          persons_count;
+          personsCount;
 
-        let date = new Date(part.date_time);
-        let day  = Math.floor(date.getTime()/(1000*60*60*24))
-        this.charts.day_guests[day] = (this.charts.day_guests[day] || 0) + persons_count;
-        if (!this.charts.doughnut_by_id[part.product_id]) this.charts.doughnut_by_id[part.product_id]=0;
-        this.charts.doughnut_by_id[part.product_id] += persons_count;
-        this.charts.total_guests_d += persons_count;
-      })
-    })
-    let now  = new Date();
-    let today = Math.floor(now.getTime()/(1000*60*60*24));
+        const date = new Date(part.date_time);
+        const day = Math.floor(date.getTime() / mSecInDay);
+        this.charts.day_guests[day] = (this.charts.day_guests[day] || 0) + personsCount;
+        if (!this.charts.doughnut_by_id[part.product_id]) {
+          this.charts.doughnut_by_id[part.product_id] = 0;
+        }
+        this.charts.doughnut_by_id[part.product_id] += personsCount;
+        this.charts.total_guests_d += personsCount;
+      });
+    });
+    const now = new Date();
+    const today = Math.floor(now.getTime() / mSecInDay);
 
-    let x=0;
-    for (let i=today-6;i<=today;i++) {
-      let day = new Date(i*1000*60*60*24);
-      this.charts.day_guests_arr.push( [x, count_per_days[day.getDate()] || 0] );
-      this.charts.week_axis.push( [x, this.days_of_week[day.getDay()]] );
-      x++;
+    let x = 0;
+    for (let i = today - 6; i <= today; i += 1) {
+      const day = new Date(i * mSecInDay);
+      this.charts.day_guests_arr.push([x, countPerDays[day.getDate()] || 0]);
+      this.charts.week_axis.push([x, this.letterOfWeek[day.getDay()]]);
+      x += 1;
     }
 
     return this.getProducts();
@@ -72,13 +73,13 @@ export default class Charts {
       .getProducts(this.current_company.id)
         .then(
           (products) => {
-            products.forEach(product => {
-              this.charts.products[product['id']] = product['name'];
+            products.forEach((product) => {
+              this.charts.products[product.id] = product.name;
             });
 
-            this.charts.doughnut_by_id.forEach((person_count, product_id) => {
-              this.charts.doughnut_keys.push(this.charts.products[product_id]);
-              this.charts.doughnut_values.push(person_count);
+            this.charts.doughnut_by_id.forEach((personCount, productId) => {
+              this.charts.doughnut_keys.push(this.charts.products[productId]);
+              this.charts.doughnut_values.push(personCount);
             });
           });
 
