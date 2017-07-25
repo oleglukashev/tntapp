@@ -63,11 +63,25 @@ export default class ReservationStatus {
     }
 
     return this.edit(company_id, reservation.id, data)
-      .then(() => {
-        reservation.status = status;
+      .then((response) => {
+        reservation.status = this.dutch_statuses[response.status];
         reservation = this.checkStatusForDelay(reservation);
         return reservation;
       },
+      (error) => {
+        this.errors = error.data.errors;
+      });
+  }
+
+  sendMail(company_id, reservation, data) {
+    let deferred = this.$q.defer();
+
+    if (! company_id) {
+      return deferred.promise;
+    }
+
+    return this.$http.post(API_URL + '/company/' + company_id + '/reservation/' + reservation.id + '/send_mail', data)
+      .then((result) => result.data,
       (error) => {
         this.errors = error.data.errors;
       });

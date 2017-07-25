@@ -17,7 +17,7 @@ export default class ReservationsAnswerCtrl {
     this.$modalInstance.dismiss('cancel');
   }
 
-  submitForm(is_valid, state) {
+  submitForm(is_valid) {
     this.is_submitting = true;
 
     if (!is_valid) {
@@ -25,7 +25,7 @@ export default class ReservationsAnswerCtrl {
     }
 
     this.ReservationStatus
-      .changeStatus(this.current_company.id, this.reservation, 'request', this.form_data)
+      .sendMail(this.current_company.id, this.reservation, this.form_data)
         .then(
           (result) => {
             this.is_submitting = false;
