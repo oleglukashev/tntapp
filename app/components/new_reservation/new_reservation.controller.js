@@ -235,7 +235,7 @@ export default class NewReservationCtrl {
     if (this.canLoadTime()) {
       const companyId = this.current_company_id;
       const product = this.reservation.product;
-      const reservationDate = this.moment(this.reservation.date);
+      const reservationDate = this.moment(this.reservation.date).format('YYYY-MM-DD HH:mm:ss');
 
       this.Product
         .getAvailableTables(companyId, product, reservationDate).then(
