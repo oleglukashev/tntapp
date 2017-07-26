@@ -135,17 +135,16 @@ export default class NewReservationCtrl {
     };
 
     const socialAccount = JSON.parse(this.$window.localStorage.getItem('social_account'));
-
     if (this.reservation.social && socialAccount) {
       data.social_account = socialAccount;
       data.social_account.type = this.reservation.social;
     }
 
-    let createMethod = this.Reservation.create(this.current_company_id, data);
-
+    let createMethod = null;
     if (this.is_customer_reservation) {
-      const companyId = this.current_company_id;
-      createMethod = this.Reservation.createCustomerReservation(companyId, data);
+      createMethod = this.Reservation.createCustomerReservation(this.current_company_id, data);
+    } else {
+      createMethod = this.Reservation.create(this.current_company_id, data);
     }
 
     this.$window.localStorage.removeItem('social_account');
