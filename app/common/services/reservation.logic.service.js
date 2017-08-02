@@ -23,10 +23,15 @@ export default class ReservationLogic {
     return table ? table.number_of_persons : null;
   }
 
-  isDisabledTableByTableId(tables, tableId) {
+  isDisabledTableByTableId(tables, occupiedTables, tableId) {
     const table = this.filterFilter(tables, { id: tableId })[0];
+    let result = table ? table.hidden === true : false;
 
-    return table ? table.hidden === true : false;
+    if (!result) {
+      result = typeof occupiedTables[tableId] !== 'undefined';
+    }
+
+    return result;
   }
 
   triggerChoosePersonCount() {

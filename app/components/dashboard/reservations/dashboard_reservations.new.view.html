@@ -135,6 +135,43 @@
 
           <md-tab>
             <md-tab-label>
+              <div class='text-center l-h'><i class='mdi mdi-clock'></i></div>
+              <div class='text-center l-h'>
+                <span ng-show='reserv.reservation.time'>
+                  {{ reserv.reservation.time }}
+                </span>
+                <span ng-hide='reserv.reservation.time'>TIJDSTIP</span>
+              </div>
+            </md-tab-label>
+            <md-tab-body>
+              <div class='b-t' flex>
+                <div class='md-list-item'>
+                  <div class='md-list-item-content text-center'>
+                    <h4>Beschikbare tijden</h4>
+                  </div>
+                </div>
+
+                <div class='wrapper' layout='column' layout-align='space-around center'>
+                  <div class='w-xl'>
+                    <div class='text-center' ng-show='reserv.time_is_loaded'>
+                      <label ng-repeat='time_obj in reserv.available_time'
+                             ng-click='reserv.selectTab(4)'
+                             ng-class="{ 'btn-success': reserv.reservation.time == time_obj.time,
+                                         'disabled': reserv.timeIsDisabled(time_obj)}"
+                             class='btn btn-default btn-lg m-xs m-l-none no-shadow text-success'
+                             ng-model='reserv.reservation.time'
+                             uncheckable
+                             btn-radio='time_obj.time'>{{ time_obj.time }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </md-tab-body>
+          </md-tab>
+
+
+          <md-tab>
+            <md-tab-label>
               <div class='text-center l-h'><i class='mdi mdi-border-horizontal'></i></div>
               <div class='text-center l-h'>
                 <span>ZONE</span>
@@ -157,10 +194,10 @@
                     </div>
                   </div>
 
-                  <div class='tables_boxes' ng-hide='reserv.zones_is_showed'>
+                  <div class='tables_boxes' ng-hide='reserv.zones_is_showed || !reserv.tablesDataIsLoaded()'>
                     <p><small class='text-muted'>{{ reserv.reservation.zone.name }}:</small></p>
                     <label ng-repeat='table_id in reserv.reservation.zone.table_ids'
-                           ng-class="{ 'disabled': reserv.ReservationLogic.isDisabledTableByTableId(reserv.tables, table_id) }"
+                           ng-class="{ 'disabled': reserv.ReservationLogic.isDisabledTableByTableId(reserv.tables, reserv.occupied_tables, table_id) }"
                            class='btn btn-default block m-b-xs no-shadow text-success text-left'
                            ng-model='reserv.reservation.tables_values[table_id]'
                            uncheckable
@@ -173,7 +210,7 @@
 
                     <button type='button'
                             class='btn btn-md btn-success w-full'
-                            ng-click='reserv.selectTab(4);'>Ok</button>
+                            ng-click='reserv.selectTab(5);'>Ok</button>
                   </div>
                 </div>
 
@@ -181,42 +218,6 @@
             </md-tab-body>
           </md-tab>
 
-
-          <md-tab>
-            <md-tab-label>
-              <div class='text-center l-h'><i class='mdi mdi-clock'></i></div>
-              <div class='text-center l-h'>
-                <span ng-show='reserv.reservation.time'>
-                  {{ reserv.reservation.time }}
-                </span>
-                <span ng-hide='reserv.reservation.time'>TIJDSTIP</span>
-              </div>
-            </md-tab-label>
-            <md-tab-body>
-              <div class='b-t' flex>
-                <div class='md-list-item'>
-                  <div class='md-list-item-content text-center'>
-                    <h4>Beschikbare tijden</h4>
-                  </div>
-                </div>
-
-                <div class='wrapper' layout='column' layout-align='space-around center'>
-                  <div class='w-xl'>
-                    <div class='text-center' ng-show='reserv.time_is_loaded'>
-                      <label ng-repeat='time_obj in reserv.available_time'
-                             ng-click='reserv.selectTab(5)'
-                             ng-class="{ 'btn-success': reserv.reservation.time == time_obj.time,
-                                         'disabled': reserv.timeIsDisabled(time_obj)}"
-                             class='btn btn-default btn-lg m-xs m-l-none no-shadow text-success'
-                             ng-model='reserv.reservation.time'
-                             uncheckable
-                             btn-radio='time_obj.time'>{{ time_obj.time }}</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </md-tab-body>
-          </md-tab>
 
 
           <md-tab>

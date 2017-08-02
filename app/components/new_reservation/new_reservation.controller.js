@@ -76,6 +76,14 @@ export default class NewReservationCtrl {
       this.loadTime();
     });
 
+    if (!this.is_customer_reservation) {
+      $scope.$watchCollection('reserv.reservation.time', () => {
+        if (this.reservation.time) {
+          this.loadOccupiedTables();
+        }
+      });
+    }
+
     $scope.$watchCollection('reserv.reservation.tables_values', () => {
       const that = this;
       this.reservation.tables = [];
@@ -92,8 +100,6 @@ export default class NewReservationCtrl {
       this.reservation.time = null;
       this.preloadData();
     });
-
-    this.preloadData();
   }
 
   triggerAdditionalInfo() {
@@ -172,22 +178,19 @@ export default class NewReservationCtrl {
   }
 
   timeIsDisabled(timeObj) {
+    const notEnoughSeats = this.reservation.person_count > timeObj.available_seat_count ||
+                          this.reservation.person_count > timeObj.max_personen_voor_tafels;
+
     if (this.reservation.person_count > timeObj.max_personen_voor_tafels ||
         !timeObj.is_open ||
-        timeObj.time_is_past) {
+        timeObj.time_is_past ||
+        (notEnoughSeats && !timeObj.can_overbook)) {
       return true;
     }
 
-    if (this.is_customer_reservation) {
-      const notEnoughRoom = (this.reservation.person_count > timeObj.available_seat_count ||
-                              this.reservation.person_count > timeObj.max_personen_voor_tafels) &&
-                              !timeObj.can_overbook;
-
-      if (notEnoughRoom || timeObj.more_than_deadline) {
-        return true;
-      }
+    if (this.is_customer_reservation && timeObj.more_than_deadline) {
+      return true;
     }
-
 
     if (this.current_product) {
       const reservationDateStr = this.reservationDateFormat('YYYY-MM-DD');
@@ -258,7 +261,9 @@ export default class NewReservationCtrl {
           this.products = result;
           this.products_is_loaded = true;
 
-          this.loadTimeRanges();
+          if (this.products.length > 0) {
+            this.loadTimeRanges();
+          }
         },
         () => {
         });
@@ -280,15 +285,35 @@ export default class NewReservationCtrl {
   }
 
   loadTables() {
+    this.tables_is_loaded = false;
     this.tables = [];
 
     this.Table
       .getAll(this.current_company_id).then(
         (result) => {
           this.tables = result;
+          this.tables_is_loaded = true;
         },
         () => {
         });
+  }
+
+  loadOccupiedTables() {
+    this.occupied_tables = [];
+    this.occupied_tables_is_loaded = false;
+    const datetime = `${this.moment(this.reservation.date).format('DD-MM-YYYY')} ${this.reservation.time}`;
+
+    this.Table
+      .getOccupiedTables(this.current_company_id, { datetime: datetime, part_id: null }).then(
+        (result) => {
+          this.occupied_tables = result;
+          this.occupied_tables_is_loaded = true;
+        },
+        () => {});
+  }
+
+  tablesDataIsLoaded() {
+    return this.tables_is_loaded && this.occupied_tables_is_loaded;
   }
 
   loadSocialUrls() {
