@@ -1,5 +1,5 @@
 export default class ReservationLogic {
-  constructor(filterFilter, $state) {
+  constructor(filterFilter) {
     'ngInject';
 
     this.filterFilter = filterFilter;
@@ -33,7 +33,7 @@ export default class ReservationLogic {
     const table = this.filterFilter(tables, { id: tableId })[0];
     let result = table ? table.hidden === true : false;
 
-    if (!result) {
+    if (!result && occupiedTables) {
       result = typeof occupiedTables[tableId] !== 'undefined';
     }
 
@@ -42,5 +42,15 @@ export default class ReservationLogic {
 
   triggerChoosePersonCount() {
     this.choose_person_count_is_opened = !this.choose_person_count_is_opened;
+  }
+
+  openedTimeRangePeriod(availableTime) {
+    if (!availableTime.length) return [];
+
+    const openedTimes = this.filterFilter(availableTime, { is_open: true });
+    const min = openedTimes[0].time;
+    const max = openedTimes[openedTimes.length - 1].time;
+
+    return this.filterFilter(availableTime, item => item.time >= min && item.time <= max);
   }
 }

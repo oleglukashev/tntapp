@@ -355,7 +355,6 @@ export default class NewReservationCtrl {
     this.TimeRange.getAll(this.current_company_id)
       .then(
         (ranges) => {
-          this.open_hours = {};
           ranges.forEach((range) => {
             if (range.daysOfWeek[0] === this.moment().isoWeekday()) {
               const currentTime = this.moment();

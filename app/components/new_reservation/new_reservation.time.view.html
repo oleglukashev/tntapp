@@ -19,7 +19,7 @@
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <div class='w-xl'>
           <div class='text-center' ng-show='reserv.time_is_loaded'>
-            <label ng-repeat='time_obj in reserv.available_time'
+            <label ng-repeat='time_obj in reserv.ReservationLogic.openedTimeRangePeriod(reserv.available_time)'
                    ng-click='reserv.selectTab(reserv.pagination["time"])'
                    ng-class="{ 'btn-success': reserv.reservation.time == time_obj.time,
                                'disabled': reserv.timeIsDisabled(time_obj)}"

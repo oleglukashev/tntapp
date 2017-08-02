@@ -133,6 +133,9 @@ const app = angular
       url: API_URL + '/auth/twitter'
     });
   }])
+  .config(($mdDateLocaleProvider) => {
+    $mdDateLocaleProvider.firstDayOfWeek = 1;
+  })
   .config(['$translateProvider', ($translateProvider) => {
     // Register a loader for the static files
     // So, the module will search missing translation tables under the specified urls.
