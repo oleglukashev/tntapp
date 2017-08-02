@@ -35,16 +35,19 @@ export default class ReservationPartEditCtrl {
     let time = datetime[1].split(':');
 
     this.reservation_part = {
+      old_tables_values: {},
       tables_values: {},
       full_date: datetime[0],
       date: datetime[0],
       person_count: parseInt(current_reservation_part.number_of_persons),
       product: current_reservation_part.product.id,
+      old_time: [time[0], time[1]].join(':'),
       time: [time[0], time[1]].join(':'),
     };
 
     current_reservation_part.table_ids.forEach(table_id => {
       this.reservation_part.tables_values[table_id] = true;
+      this.reservation_part.old_tables_values[table_id] = true;
     });
 
     $scope.$watchCollection('reserv.reservation_part.product', () => {
@@ -66,11 +69,13 @@ export default class ReservationPartEditCtrl {
       this.preloadData();
     });
 
-    $scope.$watch('reserv.reservation_part.full_date_of_birth', () => {
-      this.reservation_part.date_of_birth = this.moment(this.reservation_part.full_date_of_birth).format('DD-MM-YYYY');
-    });
-
-    this.preloadData();
+    if (!this.is_customer_reservation) {
+      $scope.$watchCollection('reserv.reservation_part.time', () => {
+        if (this.reservation_part.time) {
+          this.loadOccupiedTables();
+        }
+      });
+    }
   }
 
   submitForm() {
@@ -102,6 +107,35 @@ export default class ReservationPartEditCtrl {
         this.is_submitting = false;
         this.errors = error;
       });
+  }
+
+  timeIsDisabled(timeObj) {
+    const notEnoughSeats = this.reservation_part.person_count > timeObj.available_seat_count ||
+                          this.reservation_part.person_count > timeObj.max_personen_voor_tafels;
+
+    if (this.reservation_part.person_count > timeObj.max_personen_voor_tafels ||
+        !timeObj.is_open ||
+        timeObj.time_is_past ||
+        (notEnoughSeats && !timeObj.can_overbook)) {
+      return true;
+    }
+
+    if (this.current_product) {
+      const reservationDateStr = this.reservationDateFormat('YYYY-MM-DD');
+      const objTime = this.moment(`${reservationDateStr} ${timeObj.time}`);
+      const startProductTime = this.moment(`${reservationDateStr} ${this.current_product.start_time}`);
+      const endProductTime = this.moment(`${reservationDateStr} ${this.current_product.end_time}`);
+
+      if (objTime <= endProductTime &&
+          objTime >= startProductTime &&
+          this.current_product.max_person_count &&
+          ((this.current_product.max_person_count < this.reservation_part.person_count) ||
+          this.current_product.min_person_count > this.reservation_part.person_count)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   formIsValid() {
@@ -208,6 +242,20 @@ export default class ReservationPartEditCtrl {
         });
   }
 
+  loadOccupiedTables() {
+    this.occupied_tables = [];
+    this.occupied_tables_is_loaded = false;
+    const datetime = `${this.moment(this.reservation_part.date).format('DD-MM-YYYY')} ${this.reservation_part.time}`;
+
+    this.Table
+      .getOccupiedTables(this.current_company_id, { datetime: datetime, part_id: null }).then(
+        (result) => {
+          this.occupied_tables = result;
+          this.occupied_tables_is_loaded = true;
+        },
+        () => {});
+  }
+
   loadGeneralSettings() {
     this.Settings
       .getGeneralSettings(this.current_company_id)
@@ -219,5 +267,9 @@ export default class ReservationPartEditCtrl {
 
   selectTab(index) {
     this.selected_index = index;
+  }
+
+  reservationDateFormat(format) {
+    return this.moment(this.reservation_part.date).format(format);
   }
 }
