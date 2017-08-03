@@ -1,0 +1,28 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-calendar'></i></div>
+    <div class='text-center l-h'>
+      <span ng-show='reserv.reservation_part.date'>{{ reserv.reservation_part.date | date:'d MMMM' }}</span>
+      <span ng-hide='reserv.reservation_part.date'>DATUM</span>
+    </div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='b-t' flex>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4>Kies een datum</h4>
+        </div>
+      </div>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <datepicker ng-change='reserv.selectTab(1)'
+                    starting-day="1"
+                    show-weeks="false"
+                    datepicker-options='reserv.date_options'
+                    ng-model='reserv.reservation_part.date'
+                    min-date='reserv.init_date'
+                    max-date='reserv.max_date'
+                    class='datepicker'></datepicker>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>

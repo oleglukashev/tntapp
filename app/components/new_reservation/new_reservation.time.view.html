@@ -1,0 +1,35 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-clock'></i></div>
+    <div class='text-center l-h'>
+      <span ng-show='reserv.reservation.time'>
+        {{ reserv.reservation.time }}
+      </span>
+      <span ng-hide='reserv.reservation.time'>TIJDSTIP</span>
+    </div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='b-t' flex>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4>Beschikbare tijden</h4>
+        </div>
+      </div>
+
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-xl'>
+          <div class='text-center' ng-show='reserv.time_is_loaded'>
+            <label ng-repeat='time_obj in reserv.available_time'
+                   ng-click='reserv.selectTab(reserv.pagination["time"])'
+                   ng-class="{ 'btn-success': reserv.reservation.time == time_obj.time,
+                               'disabled': reserv.timeIsDisabled(time_obj)}"
+                   class='btn btn-default btn-lg m-xs m-l-none no-shadow text-success'
+                   ng-model='reserv.reservation.time'
+                   uncheckable
+                   btn-radio='time_obj.time'>{{ time_obj.time }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>

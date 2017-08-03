@@ -1,0 +1,47 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-account-multiple'></i></div>
+    <div class='text-center l-h'>
+      <span ng-show='reserv.reservation.person_count'>
+        {{ reserv.reservation.person_count }} PERSONEN
+      </span>
+      <span ng-hide='reserv.reservation.person_count'>AANTAL</span>
+    </div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='reservation_person_count b-t' flex>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4>Aantal personen</h4>
+        </div>
+      </div>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-lg'>
+          <label ng-repeat='number in [1,2,3,4,5,6,7,8,9,10]'
+            ng-click='reserv.selectTab(reserv.pagination["person_count"])'
+            ng-class="{ 'btn-success': reserv.reservation.person_count == number }"
+            class='btn btn-default btn-sm font-bold m-xs text-success'
+            ng-model='reserv.reservation.person_count'
+            uncheckable
+            btn-radio='number'>{{ number }}</label>
+
+          <label ng-click='reserv.ReservationLogic.triggerChoosePersonCount()'
+                 ng-hide='reserv.ReservationLogic.choose_person_count_is_opened'
+                 class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>More...</label>
+
+          <div class='m-t-md' ng-show='reserv.ReservationLogic.choose_person_count_is_opened'>
+            <md-input-container class='md-block'>
+              <label>Aantal personen</label>
+              <input type='number'
+                     class='md-input'
+                     ng-model='reserv.reservation.person_count' required />
+            </md-input-container>
+            <button type='button'
+                    class='btn btn-md btn-success text-success'
+                    ng-click='reserv.ReservationLogic.triggerChoosePersonCount();reserv.selectTab(reserv.pagination["person_count"]);'>Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>

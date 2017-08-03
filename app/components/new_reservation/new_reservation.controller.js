@@ -10,12 +10,6 @@ export default class NewReservationCtrl {
     this.is_agenda = $state.current.name === 'app.agenda';
     this.is_customer_reservation = $state.current.name === 'customer_reservation.new';
 
-    if (this.is_dashboard_page || this.is_reservations || this.is_agenda) {
-      this.current_company_id = User.current_company.id;
-    } else {
-      this.current_company_id = $stateParams.id;
-    }
-
     this.Reservation = Reservation;
     this.ReservationLogic = ReservationLogic;
     this.CustomerCompany = CustomerCompany;
@@ -24,6 +18,14 @@ export default class NewReservationCtrl {
     this.Table = Table;
     this.Settings = Settings;
     this.TimeRange = TimeRange;
+
+    if (this.is_customer_reservation) {
+      this.current_company_id = $stateParams.id;
+      this.pagination = this.ReservationLogic.pagination.customer;
+    } else {
+      this.current_company_id = User.current_company.id;
+      this.pagination = this.ReservationLogic.pagination.backend;
+    }
 
     this.$auth = $auth;
     this.$scope = $scope;
@@ -69,11 +71,11 @@ export default class NewReservationCtrl {
         this.current_product = this.filterFilter(this.products, { id: product })[0];
       }
 
-      this.loadTime();
+      this.clearAndLoadTime();
     });
 
     $scope.$watchCollection('reserv.reservation.person_count', () => {
-      this.loadTime();
+      this.clearAndLoadTime();
     });
 
     if (!this.is_customer_reservation) {
@@ -98,8 +100,9 @@ export default class NewReservationCtrl {
     $scope.$watch('reserv.reservation.date', () => {
       this.reservation.person_count = null;
       this.reservation.time = null;
-      this.preloadData();
     });
+
+    this.preloadData();
   }
 
   triggerAdditionalInfo() {
@@ -178,13 +181,10 @@ export default class NewReservationCtrl {
   }
 
   timeIsDisabled(timeObj) {
-    const notEnoughSeats = this.reservation.person_count > timeObj.available_seat_count ||
-                          this.reservation.person_count > timeObj.max_personen_voor_tafels;
-
     if (this.reservation.person_count > timeObj.max_personen_voor_tafels ||
         !timeObj.is_open ||
         timeObj.time_is_past ||
-        (notEnoughSeats && !timeObj.can_overbook)) {
+        (this.reservation.person_count > timeObj.available_seat_count && !timeObj.can_overbook)) {
       return true;
     }
 
@@ -248,6 +248,11 @@ export default class NewReservationCtrl {
           () => {
           });
     }
+  }
+
+  clearAndLoadTime() {
+    this.reservation.time = null;
+    this.loadTime();
   }
 
   loadProducts() {

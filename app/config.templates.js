@@ -27,6 +27,18 @@ export default function templates($templateCache) {
   $templateCache.put('user_menu.edit.view.html', require('./shared/user_menu/edit/user_menu.edit.view.html'));
   $templateCache.put('settings_employees.item.view.html', require('./components/settings/employees/settings_employees.item.view.html'));
   $templateCache.put('agenda_quick_reservation.view.html', require('./components/agenda/quick_reservation/agenda_quick_reservation.view.html'));
+  $templateCache.put('new_reservation.date.view.html', require('./components/new_reservation/new_reservation.date.view.html'));
+  $templateCache.put('new_reservation.person_count.view.html', require('./components/new_reservation/new_reservation.person_count.view.html'));
+  $templateCache.put('new_reservation.product.view.html', require('./components/new_reservation/new_reservation.product.view.html'));
+  $templateCache.put('new_reservation.time.view.html', require('./components/new_reservation/new_reservation.time.view.html'));
+  $templateCache.put('new_reservation.zone.view.html', require('./components/new_reservation/new_reservation.zone.view.html'));
+  $templateCache.put('new_reservation.person.view.html', require('./components/new_reservation/new_reservation.person.view.html'));
+  $templateCache.put('new_reservation.type.view.html', require('./components/new_reservation/new_reservation.type.view.html'));
+  $templateCache.put('reservation_part.date.view.html', require('./components/reservation_parts/reservation_part.date.view.html'));
+  $templateCache.put('reservation_part.person_count.view.html', require('./components/reservation_parts/reservation_part.person_count.view.html'));
+  $templateCache.put('reservation_part.product.view.html', require('./components/reservation_parts/reservation_part.product.view.html'));
+  $templateCache.put('reservation_part.time.view.html', require('./components/reservation_parts/reservation_part.time.view.html'));
+  $templateCache.put('reservation_part.zone.view.html', require('./components/reservation_parts/reservation_part.zone.view.html'));
 
   //angular-bootstrap tpls
   $templateCache.put("template/modal/backdrop.html",

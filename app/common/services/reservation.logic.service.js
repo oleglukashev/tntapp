@@ -1,8 +1,14 @@
 export default class ReservationLogic {
-  constructor(filterFilter) {
+  constructor(filterFilter, $state) {
     'ngInject';
 
     this.filterFilter = filterFilter;
+    this.choose_person_count_is_opened = false;
+
+    this.pagination = {
+      customer: { type: 1, date: 2, person_count: 3, product: 4, time: 5, person: 6 },
+      backend: { date: 1, person_count: 2, product: 3, time: 4, zone: 5, person: 6 },
+    };
   }
 
   getProductNameByProductId(products, productId) {
@@ -37,5 +43,4 @@ export default class ReservationLogic {
   triggerChoosePersonCount() {
     this.choose_person_count_is_opened = !this.choose_person_count_is_opened;
   }
-
 }
