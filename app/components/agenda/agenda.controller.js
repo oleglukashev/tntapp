@@ -66,6 +66,7 @@ export default class AgendaCtrl {
     $rootScope.$on('PageFilterCtrl.change_view', (obj, view) => {
       this.loadReservations();
       this.reservations_view = view;
+      this.scrollToNow();
     });
 
     $scope.$on('PageFilterCtrl.change_date_filter', (event, date) => {
@@ -78,10 +79,7 @@ export default class AgendaCtrl {
       if (this.moment().format('YYYY-MM-DD') === this.moment(date).format('YYYY-MM-DD')) {
         this.is_today = true;
 
-        // scrolling left for now line
-        this.$timeout(() => {
-          $('.calendar_wrapper').animate({ scrollLeft: this.now_left_px }, 'slow');
-        }, 1000);
+        this.scrollToNow();
       }
     });
 
@@ -93,9 +91,13 @@ export default class AgendaCtrl {
     this.loadZonesAndTables();
   }
 
+  // scrolling left for now line
   scrollToNow(index) {
-    if (this.moment().format('YYYY-MM-DD') === this.moment(this.date_filter).format('YYYY-MM-DD')) {
-      $(`.calendar_wrapper:eq(${index})`).animate({ scrollLeft: this.now_left_px }, 'slow');
+    if (this.is_today) {
+      const eq = index === undefined ? '' : `:eq(${index})`;
+      this.$timeout(() => {
+        $(`.calendar_wrapper${eq}`).animate({ scrollLeft: this.now_left_px }, 'slow');
+      }, 500);
     }
   }
 
