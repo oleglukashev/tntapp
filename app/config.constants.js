@@ -129,6 +129,30 @@ export default angular.module('app.constants', [])
       cancelled: 'mdi-close',
       request: 'mdi-star-outline',
     },
+    letterOfWeek: ['Z', 'M', 'D', 'W', 'D', 'V', 'Z'],
+    dayOfWeek: ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'],
+    mailStatuses: {
+      na_bezoek: 'Mail na bezoek',
+      reservering_bevestigd: 'Bevestigingsmail',
+      reservering_niet_mogelijk: 'Reservering niet mogelijk',
+      reservering_ontvangen: 'Aanvraag',
+    },
+    productsClasses: {
+      Lunch: 'mdi-silverware-variant',
+      Brunch: 'mdi-martini',
+      Ontbijt: 'mdi-food-fork-drink',
+      Diner: 'mdi-beach',
+      Borrel: 'mdi-food-fork-drink',
+    },
+    zonesClasses: {
+      Bar: 'mdi-martini',
+      Lounge: 'mdi-food',
+      'Meeting room': 'mdi-google-circles-communities',
+      Restaurant: 'mdi-silverware-variant',
+      Terras: 'mdi-beach',
+      Zaal: 'mdi-food-fork-drink',
+    },
+    emptyClass: 'mdi-close',
   })
   .constant('JQ_CONFIG', {
     easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],

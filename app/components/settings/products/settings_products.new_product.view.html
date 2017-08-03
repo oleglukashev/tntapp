@@ -1,8 +1,8 @@
 <section class='no-margin new_item_wrapper'>
   <md-toolbar>
     <div class='md-toolbar-tools'>
-      <i class='mdi mdi-close m-r-sm' ng-click='new_product.closeModal()' ng-if="new_product.tab_index==0"></i>
-      <i class='mdi mdi-arrow-left m-r-sm' ng-click='new_product.tab_index=0' ng-if="new_product.tab_index==1"></i>
+      <i class='mdi mdi-close m-r-sm' ng-click='new_product.closeModal()' ng-if="new_product.tabIndex==0"></i>
+      <i class='mdi mdi-arrow-left m-r-sm' ng-click='new_product.tabIndex=0' ng-if="new_product.tabIndex==1"></i>
       Product toevoegen
     </div>
   </md-toolbar>
@@ -10,7 +10,7 @@
 
   <md-tabs class='reservation_tabs product_tabs'
            flex
-           md-selected='new_product.tab_index'
+           md-selected='new_product.tabIndex'
            md-no-pagination
            md-stretch-tabs
            md-dynamic-height>
@@ -24,7 +24,7 @@
           </div>
           <div class='settings_add_items'>
             <div class='clearfix'>
-              <label ng-repeat="(product, className) in new_product.icons_classes"
+              <label ng-repeat="(product, className) in new_product.iconsClasses"
                      ng-class="{ 'disabled': new_product.productsNames().includes(product) }"
                      ng-click='new_product.changeClass(className)'
                      class='box'
@@ -32,7 +32,7 @@
                      uncheckable
                      btn-radio='product'>
                 <i class='box_active_icon mdi mdi-check'></i>
-                <i class='box_icon mdi {{ new_product.icons_classes[product] }}'></i>
+                <i class='box_icon mdi {{ new_product.iconsClasses[product] }}'></i>
                 <p class='no-margin'>{{ product }}</p>
               </label>
             </div>
@@ -56,7 +56,7 @@
             <md-input-container ng-show="new_product.add_name_is_opened" class="m-t-n-s">
               <label>ICON</label>
               <md-select ng-model="new_product.item.icon_class" required>
-                <md-option ng-repeat="icon_class in new_product.uniq_icons" ng-value="icon_class">
+                <md-option ng-repeat="icon_class in new_product.uniqIcons" ng-value="icon_class">
                   <i class="mdi {{ icon_class }} i-24"></i>
                 </md-option>
               </md-select>
@@ -66,7 +66,7 @@
 
           <button class='btn btn-lg btn-success text-success no-top-radius md_content_button'
                   ng-class="{ 'disabled': !new_product_form.$valid }"
-                  ng-click='new_product.selectProduct();new_product.tab_index=1'>
+                  ng-click='new_product.selectProduct();new_product.tabIndex=1'>
             <span ng-hide='new_product.is_submitting'>VERDER</span>
           </button>
         </div>

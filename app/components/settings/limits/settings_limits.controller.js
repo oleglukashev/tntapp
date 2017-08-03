@@ -1,104 +1,97 @@
 import angular from 'angular';
 
 export default class SettingsLimitsCtrl {
-  constructor(User, Settings, moment, $window) {
+  constructor(User, Settings, AppConstants, moment, $window) {
     'ngInject';
 
     this.current_company = User.current_company;
 
-    this.Settings         = Settings;
-    this.moment           = moment;
-    this.is_loaded        = false;
-    this.$window          = $window;
+    this.Settings = Settings;
+    this.moment = moment;
+    this.is_loaded = false;
+    this.$window = $window;
 
-    this.days             = ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'];
-    this.limit            = 1;
+    this.days = AppConstants.dayOfWeek;
+    this.limit = 1;
 
     this.loadLimits();
-    this.limits           = {};
+    this.limits = {};
   }
 
   loadLimits() {
-  	this.Settings
-  		.getLimitsSettings(this.current_company.id)
-  			.then(
+    this.Settings
+      .getLimitsSettings(this.current_company.id)
+        .then(
           (limits) => {
             this.is_loaded = true;
-            this.times 		 = limits.times;
+            this.times = limits.times;
             this.setLimits(limits.limits);
-  				});
+          });
   }
 
-  saveLimitByTimeAndDay(time, day_of_week) {
-  	let new_value = this.getChangedValue(time, day_of_week);
-		let data = [this.buildLimit(time, day_of_week, new_value)];
+  saveLimitByTimeAndDay(time, dayOfWeek) {
+    const newValue = this.getChangedValue(time, dayOfWeek);
+    const data = [this.buildLimit(time, dayOfWeek, newValue)];
 
-  	this.setLimit(time, day_of_week, new_value);
-  	this.saveLimit(data);
+    this.setLimit(time, dayOfWeek, newValue);
+    this.saveLimit(data);
   }
 
   saveLimitByTime(time) {
-  	let data = [];
-  	let that = this;
-  	
-  	angular.forEach(that.days, (day, day_of_week) => {
-  		let new_value = that.getChangedValue(time, day_of_week);
+    const data = [];
 
-  		that.setLimit(time, day_of_week, new_value);
-  		data.push(that.buildLimit(time, day_of_week, new_value));
+    angular.forEach(this.days, (day, dayOfWeek) => {
+      const newValue = this.getChangedValue(time, dayOfWeek);
+
+      this.setLimit(time, dayOfWeek, newValue);
+      data.push(this.buildLimit(time, dayOfWeek, newValue));
     });
 
-    that.saveLimit(data);
+    this.saveLimit(data);
   }
 
-  saveLimitByDay(day_of_week) {
-  	let data = [];
-  	let that = this;
-  	
-  	angular.forEach(that.times, (time) => {
-  		let new_value = that.getChangedValue(time, day_of_week);
+  saveLimitByDay(dayOfWeek) {
+    const data = [];
 
-  		that.setLimit(time, day_of_week, new_value);
-  		data.push(that.buildLimit(time, day_of_week, new_value));
+    angular.forEach(this.times, (time) => {
+      const newValue = this.getChangedValue(time, dayOfWeek);
+
+      this.setLimit(time, dayOfWeek, newValue);
+      data.push(this.buildLimit(time, dayOfWeek, newValue));
     });
 
-    that.saveLimit(data);
+    this.saveLimit(data);
   }
 
-  getChangedValue(time, day_of_week) {
-    return this.limits[day_of_week] && this.limits[day_of_week][time] ? null : this.limit
+  getChangedValue(time, dayOfWeek) {
+    return this.limits[dayOfWeek] && this.limits[dayOfWeek][time] ? null : this.limit;
   }
 
   saveLimit(data) {
-  	this.Settings
-  		.saveLimitsSettings(this.current_company.id, data)
-  			.then(
-          (limit) => {
-            //nothing
-  				});
+    this.Settings
+      .saveLimitsSettings(this.current_company.id, data)
+        .then(() => {});
   }
 
-  setLimit(time, day_of_week, limit) {
-  	if (! this.limits[day_of_week]) {
-  		this.limits[day_of_week] = {};
-  	}
+  setLimit(time, dayOfWeek, limit) {
+    if (!this.limits[dayOfWeek]) {
+      this.limits[dayOfWeek] = {};
+    }
 
-  	this.limits[day_of_week][time] = limit;
+    this.limits[dayOfWeek][time] = limit;
   }
 
   setLimits(limits) {
-  	let that = this;
-
-  	angular.forEach(limits, (limit) => {
-  		that.setLimit(limit.time, limit.day_of_week, limit.limit);
+    angular.forEach(limits, (limit) => {
+      this.setLimit(limit.time, limit.day_of_week, limit.limit);
     });
   }
 
-  buildLimit(time, day_of_week, limit) {
-  	return {
-			dayOfWeek: day_of_week,
-			time: time,
-			limit: limit
-		}
+  buildLimit(time, dayOfWeek, limit) {
+    return {
+      dayOfWeek: dayOfWeek,
+      time: time,
+      limit: limit,
+    };
   }
 }

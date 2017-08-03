@@ -1,40 +1,37 @@
 export default class SettingsMailsEditMailCtrl {
-  constructor(User, item, Settings, $modalInstance) {
+  constructor(User, AppConstants, item, Settings, $modalInstance) {
     'ngInject';
 
     this.current_company = User.current_company;
-    this.Settings       = Settings;
-    this.$modalInstance = $modalInstance
+    this.Settings = Settings;
+    this.$modalInstance = $modalInstance;
 
-    this.form_data      = item;
-    this.types          = {
-      'na_bezoek'                 :'Mail ne bezoek',
-      'reservering_bevestigd'     :'Bevestigingsmail',
-      'reservering_niet_mogelijk' :'Reservering niet mogelijk',
-      'reservering_ontvangen'     :'Aanvraag'
-    }
+    this.form_data = item;
+    this.statuses = AppConstants.mailStatuses;
   }
 
-  submitForm(is_valid) {
-    if (!is_valid) {
+  submitForm(isValid) {
+    if (!isValid) {
       return false;
     }
 
     this.is_submitting = true;
-    
-    let data = {
+
+    const data = {
       title: this.form_data.title,
-      content: this.form_data.content
-    }
+      content: this.form_data.content,
+    };
 
     this.Settings
       .updateMailtext(this.current_company.id, this.form_data.id, data)
-        .then((mail) => {
+        .then(() => {
           this.is_submitting = false;
           this.$modalInstance.dismiss('cancel');
-        }, (error) => {
+        }, () => {
           // nothing
         });
+
+    return true;
   }
 
   closeModal() {

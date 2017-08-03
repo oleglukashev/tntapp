@@ -1,60 +1,47 @@
 export default class SettingsProductsNewProductCtrl {
-  constructor(User, TimeRange, prosucts_used, products, Slider, $timeout, $rootScope, $scope, $modalInstance) {
+  constructor(User, TimeRange, AppConstants, products, Slider, $timeout, $rootScope,
+    $scope, $modalInstance) {
     'ngInject';
 
     this.current_company = User.current_company;
 
-    this.User             = User;
-    this.Slider           = Slider;
-    this.prosucts_used    = prosucts_used;
-    this.products         = products;
-    this.tab_index        = 0;
-    this.$timeout         = $timeout;
-    this.$rootScope       = $rootScope;
-    this.$scope           = $scope;
-    this.default_products = ['Lunch', 'Brunch', 'Ontbijt', 'Diner', 'Borrel'];
-    this.item             = {};
+    this.User = User;
+    this.Slider = Slider;
+    this.products = products;
+    this.tabIndex = 0;
+    this.$timeout = $timeout;
+    this.$rootScope = $rootScope;
+    this.$scope = $scope;
+    this.item = {};
 
     this.sliderMonFri = {
-        minValue: 0,
-        maxValue: 95,
+      minValue: 0,
+      maxValue: 95,
     };
 
-    this.sliderSat = {
-        minValue: 0,
-        maxValue: 95,
-    };
+    this.sliderSat = Object.assign({}, this.sliderMonFri);
+    this.sliderSun = Object.assign({}, this.sliderMonFri);
 
-    this.sliderSun = {
-        minValue: 0,
-        maxValue: 95,
-    };
     this.sliders = [
       {
-        name   : 'Maandag t/m vrijdag',
-        slider : this.sliderMonFri
+        name: 'Maandag t/m vrijdag',
+        slider: this.sliderMonFri,
       },
       {
-        name   : 'Zaterdag',
-        slider : this.sliderSat
+        name: 'Zaterdag',
+        slider: this.sliderSat,
       },
       {
-        name   : 'Zondag',
-        slider : this.sliderSun
+        name: 'Zondag',
+        slider: this.sliderSun,
       },
     ];
-    this.icons_classes    = {
-      'Lunch'   : 'mdi-silverware-variant',
-      'Brunch'  : 'mdi-martini',
-      'Ontbijt' : 'mdi-food-fork-drink',
-      'Diner'   : 'mdi-beach',
-      'Borrel'  : 'mdi-food-fork-drink'
-    }
+    this.iconsClasses = AppConstants.productsClasses;
 
-    let loadedProducts = this.productsHash();
-    if (loadedProducts) this.icons_classes = $.extend(loadedProducts, this.icons_classes)
+    const loadedProducts = this.productsHash();
+    if (loadedProducts) this.iconsClasses = $.extend(loadedProducts, this.iconsClasses);
 
-    this.uniq_icons = [...new Set(Object.values(this.icons_classes))];
+    this.uniqIcons = [...new Set(Object.values(this.iconsClasses))];
 
     this.$modalInstance = $modalInstance;
 
@@ -78,11 +65,11 @@ export default class SettingsProductsNewProductCtrl {
     this.sliderOptions.minLimit = 0;
     this.sliderOptions.maxLimit = 95;
 
-    Object.keys(this.products).forEach(key => {
-      let product = this.products[key];
-      if (this.item.name == product.name) {
-        let startTime = this.Slider.to15Min('00:00'); //product.start_time
-        let endTime = this.Slider.to15Min('23:59', false); //product.end_time
+    Object.keys(this.products).forEach((key) => {
+      const product = this.products[key];
+      if (this.item.name === product.name) {
+        const startTime = this.Slider.to15Min('00:00'); // product.start_time
+        const endTime = this.Slider.to15Min('23:59', false); // product.end_time
 
         this.sliderMonFri.minValue = startTime;
         this.sliderMonFri.maxValue = endTime;
@@ -99,32 +86,33 @@ export default class SettingsProductsNewProductCtrl {
   }
 
   productsNames() {
-    let products = [];
-    Object.keys(this.products).map(key => {
-      let product = this.products[key];
-      products.push(product.name)
+    const products = [];
+    Object.keys(this.products).map((key) => {
+      const product = this.products[key];
+      products.push(product.name);
     });
     return products;
   }
 
   productsHash() {
-    let products = {};
-    Object.keys(this.products).forEach(key => {
-      let item = this.products[key];
-      products[item.name] = (item.icon_class ? item.icon_class : this.icons_classes[item.name]) || this.empty_mdi_class;
+    const products = {};
+    Object.keys(this.products).forEach((key) => {
+      const item = this.products[key];
+      products[item.name] = (item.icon_class ? item.icon_class :
+        this.iconsClasses[item.name]) || this.empty_mdi_class;
     });
     return products;
   }
 
   submitForm() {
     this.is_submitting = true;
-    this.errors        = [];
+    this.errors = [];
     this.$modalInstance.close({
-      name        : this.item.name,
-      icon        : this.item.icon_class,
+      name: this.item.name,
+      icon: this.item.icon_class,
       sliderMonFri: this.sliderMonFri,
-      sliderSat   : this.sliderSat,
-      sliderSun   : this.sliderSun
+      sliderSat: this.sliderSat,
+      sliderSun: this.sliderSun,
     });
   }
 }
