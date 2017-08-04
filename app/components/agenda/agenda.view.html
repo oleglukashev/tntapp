@@ -76,6 +76,7 @@
                   <div class='reservation'
                        ng-repeat='item in agenda.tables_by_part[table.id]'
                        ui-on-drop=''
+                       drop-channel='resize'
                        ui-draggable='true'
                        drag='item.id'
                        ng-style='agenda.reservationBlockStyle(table_index, item)'
