@@ -64,9 +64,11 @@ export default class AgendaCtrl {
     });
 
     $rootScope.$on('PageFilterCtrl.change_view', (obj, view) => {
-      this.loadReservations();
-      this.reservations_view = view;
-      this.scrollToNow();
+      if (this.reservations_view !== view) {
+        this.loadReservations();
+        this.reservations_view = view;
+        this.scrollToNow();
+      }
     });
 
     $scope.$on('PageFilterCtrl.change_date_filter', (event, date) => {
@@ -312,11 +314,9 @@ export default class AgendaCtrl {
       .then((generalSettings) => {
         this.general_settings = generalSettings;
         this.reservation_block_width = (this.hour_width / 60) * generalSettings.bezettings_minuten;
-        if (generalSettings.show_timetable_first) {
-          this.reservations_view = 'list';
-        } else {
-          this.reservations_view = 'calendar';
-        }
+
+        const view = (generalSettings.show_timetable_first ? 'list' : 'calendar');
+        this.$rootScope.$broadcast('PageFilterCtrl.change_view', view);
       });
   }
 
