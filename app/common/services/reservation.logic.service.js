@@ -48,9 +48,14 @@ export default class ReservationLogic {
     if (!availableTime.length) return [];
 
     const openedTimes = this.filterFilter(availableTime, { is_open: true });
-    const min = openedTimes[0].time;
-    const max = openedTimes[openedTimes.length - 1].time;
 
-    return this.filterFilter(availableTime, item => item.time >= min && item.time <= max);
+    if (openedTimes.length > 0) {
+      const min = openedTimes[0].time;
+      const max = openedTimes[openedTimes.length - 1].time;
+
+      return this.filterFilter(availableTime, item => item.time >= min && item.time <= max);
+    } else {
+      return [];
+    }
   }
 }
