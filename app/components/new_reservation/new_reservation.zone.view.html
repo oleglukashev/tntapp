@@ -1,0 +1,47 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-border-horizontal'></i></div>
+    <div class='text-center l-h'>
+      <span>ZONE</span>
+    </div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='reservation_zone b-t' flex>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4>Welk tafel komt de klant te zitten?</h4>
+        </div>
+      </div>
+      <div class='wrapper' ng-show='reserv.zones_is_loaded'>
+        <div class='zones_boxes clearfix text-center' ng-show='reserv.zones_is_showed'>
+          <div ng-repeat="zone in reserv.zones"
+               ng-click='reserv.setZone(zone);'
+               class='box'>
+            <i class='box_icon mdi mdi-martini'></i>
+            <p class='no-margin'>{{ zone.name }}</p>
+          </div>
+        </div>
+
+        <div class='tables_boxes' ng-hide='reserv.zones_is_showed || !reserv.tablesDataIsLoaded()'>
+          <p><small class='text-muted'>{{ reserv.reservation.zone.name }}:</small></p>
+          <label ng-repeat='table_id in reserv.reservation.zone.table_ids'
+                 ng-class="{ 'disabled': reserv.ReservationLogic.isDisabledTableByTableId(reserv.tables, reserv.occupied_tables, table_id) }"
+                 class='btn btn-default block m-b-xs no-shadow text-success text-left'
+                 ng-model='reserv.reservation.tables_values[table_id]'
+                 uncheckable
+                 btn-checkbox>
+            <span class='m-r-lg'>Tafel {{ reserv.ReservationLogic.getTableNumberByTableId(reserv.tables, table_id) }}</span><span>{{ reserv.ReservationLogic.getPersonCountByTableId(reserv.tables, table_id) }} personen</span>
+          </label>
+
+          <label ng-click='reserv.zones_is_showed = true'
+                 class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>Show zones</label>
+
+          <button type='button'
+                  class='btn btn-md btn-success w-full'
+                  ng-click='reserv.selectTab(reserv.pagination["zone"]);'>Ok</button>
+        </div>
+      </div>
+
+    </div>
+  </md-tab-body>
+</md-tab>

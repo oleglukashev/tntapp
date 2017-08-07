@@ -3,6 +3,12 @@ export default class ReservationLogic {
     'ngInject';
 
     this.filterFilter = filterFilter;
+    this.choose_person_count_is_opened = false;
+
+    this.pagination = {
+      customer: { type: 1, date: 2, person_count: 3, product: 4, time: 5, person: 6 },
+      backend: { date: 1, person_count: 2, product: 3, time: 4, zone: 5, person: 6 },
+    };
   }
 
   getProductNameByProductId(products, productId) {
@@ -23,14 +29,28 @@ export default class ReservationLogic {
     return table ? table.number_of_persons : null;
   }
 
-  isDisabledTableByTableId(tables, tableId) {
+  isDisabledTableByTableId(tables, occupiedTables, tableId) {
     const table = this.filterFilter(tables, { id: tableId })[0];
+    let result = table ? table.hidden === true : false;
 
-    return table ? table.hidden === true : false;
+    if (!result && occupiedTables) {
+      result = typeof occupiedTables[tableId] !== 'undefined';
+    }
+
+    return result;
   }
 
   triggerChoosePersonCount() {
     this.choose_person_count_is_opened = !this.choose_person_count_is_opened;
   }
 
+  openedTimeRangePeriod(availableTime) {
+    if (!availableTime.length) return [];
+
+    const openedTimes = this.filterFilter(availableTime, { is_open: true });
+    const min = openedTimes[0].time;
+    const max = openedTimes[openedTimes.length - 1].time;
+
+    return this.filterFilter(availableTime, item => item.time >= min && item.time <= max);
+  }
 }
