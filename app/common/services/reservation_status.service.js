@@ -96,7 +96,7 @@ export default class ReservationStatus {
           });
         break;
       case 'delayed':
-      case 'expected':
+      case 'expected', 'confirmed':
         this.setPresent(current_company_id, reservation.id, true)
           .then(() => {
             this.changeStatus(current_company_id, reservation, 'present')
