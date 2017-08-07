@@ -12,7 +12,7 @@
           <h4>Welk tafel komt de klant te zitten?</h4>
         </div>
       </div>
-      <div class='wrapper' ng-show='reserv.zones_is_loaded'>
+      <div class='wrapper' ng-show='reserv.zones_is_loaded && reserv.tablesDataIsLoaded()'>
         <div class='zones_boxes clearfix text-center' ng-show='reserv.zones_is_showed'>
           <div ng-repeat="zone in reserv.zones"
                ng-click='reserv.setZone(zone);'
@@ -22,7 +22,7 @@
           </div>
         </div>
 
-        <div class='tables_boxes' ng-hide='reserv.zones_is_showed || !reserv.tablesDataIsLoaded()'>
+        <div class='tables_boxes' ng-hide='reserv.zones_is_showed'>
           <p><small class='text-muted'>{{ reserv.reservation.zone.name }}:</small></p>
           <label ng-repeat='table_id in reserv.reservation.zone.table_ids'
                  ng-class="{ 'disabled': reserv.ReservationLogic.isDisabledTableByTableId(reserv.tables, reserv.occupied_tables, table_id) }"
