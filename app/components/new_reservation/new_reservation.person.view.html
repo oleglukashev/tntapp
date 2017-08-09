@@ -34,6 +34,11 @@
               Inschrijven nieuwsbrief
             </md-checkbox>
           </div>
+          <div class='md-form-group no-padder' ng-if='showConfirmEmailCheckbox'>
+            <md-checkbox ng-model="reserv.confirm_mail" ng-checked="true" aria-label="Bevestiging mailen">
+              Bevestiging mailen
+            </md-checkbox>
+          </div>
         </div>
         <div class='w-xl' ng-show='reserv.additional_is_opened'>
           <md-input-container class='md-block'>
