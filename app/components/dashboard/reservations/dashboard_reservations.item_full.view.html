@@ -3,9 +3,9 @@
   <div class='col-md-2'>
     <div class='md-list-item-left img-circle m-t-sm grey-100'>
       <div class='pull-left m-l-sm'>
-        <i ng-class='reservations.ReservationStatus.status_classes[reservation.status]'
+        <i ng-class='reservations.ReservationStatus.getIcon(reservation)'
            class='mdi i-20'
-           ng-click='reservations.ReservationStatus.changeTodayIconClass(reservations.current_company.id, reservation, reservation_part)'></i>
+           ng-click='reservations.ReservationStatus.setPresent(reservations.current_company.id, reservation, !reservation.is_present)'></i>
       </div>
     </div>
   </div>

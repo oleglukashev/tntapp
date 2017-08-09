@@ -74,10 +74,23 @@ export default class ReservationsCtrl {
       size: 'md'
     });
 
-    modalInstance.result.then((selectedItem) => {
-      //success
+    modalInstance.result.then(() => {
     }, () => {
-      // fail
+    });
+  }
+
+  answer(reservation) {
+    const modalInstance = this.$modal.open({
+      templateUrl: 'reservation_answer.view.html',
+      controller: 'ReservationAnswerCtrl as antwoord',
+      size: 'md',
+      resolve: {
+        reservation: () => reservation,
+      },
+    });
+
+    modalInstance.result.then(() => {
+    }, () => {
     });
   }
 

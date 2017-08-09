@@ -5,15 +5,16 @@ export default angular.module('app.constants', [])
     jwtKey: 'jwtToken',
     jwtRefresh: 'jwtRefresh',
     appName: 'TNT',
+    late_minutes: 15,
     themes: ['Default', 'Aqua', 'Lego', 'Chocolate'],
     reservationDutchStatuses: {
       Geannuleerd: 'cancelled',
       Bevestigd: 'confirmed',
       Aanvraag: 'request',
-      Reservering: 'present',
+      Reservering: 'reservation',
     },
     reservationMenuStatuses: {
-      present: [
+      reservation: [
         {
           disabled: true,
           name: 'Aanvraag',
@@ -25,12 +26,6 @@ export default angular.module('app.constants', [])
           name: 'Bevestig',
           status: 'confirmed',
           class: 'mdi-checkbox-blank-circle-outline',
-        },
-        {
-          disabled: false,
-          name: 'Is NIET aanwezig',
-          status: 'confirmed',
-          class: 'mdi-exclamation',
         },
         {
           disabled: false,
@@ -55,12 +50,6 @@ export default angular.module('app.constants', [])
         },
         {
           disabled: false,
-          name: 'Is aanwezig',
-          status: 'present',
-          class: 'mdi-checkbox-marked-circle',
-        },
-        {
-          disabled: false,
           name: 'Annuleer',
           status: 'cancelled',
           class: 'mdi-close-circle',
@@ -79,12 +68,6 @@ export default angular.module('app.constants', [])
           name: 'Bevestig',
           status: 'confirmed',
           class: 'mdi-checkbox-blank-circle-outline',
-        },
-        {
-          disabled: true,
-          name: 'Is aanwezig',
-          status: 'present',
-          class: 'mdi-checkbox-marked-circle',
         },
         {
           disabled: true,
@@ -108,12 +91,6 @@ export default angular.module('app.constants', [])
           class: 'mdi-checkbox-blank-circle-outline',
         },
         {
-          disabled: true,
-          name: 'Is aanwezig',
-          status: 'present',
-          class: 'mdi-checkbox-marked-circle',
-        },
-        {
           disabled: false,
           name: 'Annuleer',
           status: 'cancelled',
@@ -121,10 +98,12 @@ export default angular.module('app.constants', [])
         },
       ],
     },
-    reservationStatusClasses: {
+    reservationPresentClasses: {
       expected: 'mdi-clock',
       present: 'mdi-check',
       delayed: 'mdi-exclamation',
+    },
+    reservationStatusClasses: {
       confirmed: 'mdi-checkbox-blank-circle-outline',
       cancelled: 'mdi-close',
       request: 'mdi-star-outline',
