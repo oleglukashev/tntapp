@@ -29,7 +29,7 @@ export default class Table {
   }
 
   save(companyId, data) {
-    if (!company_id) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
