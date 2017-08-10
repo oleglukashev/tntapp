@@ -34,8 +34,8 @@ export default class AgendaQuickReservationCtrl {
       const timeObj = this.filterFilter(this.available_time[productId], { time: this.datetime.format('HH:mm') })[0];
 
       if (product && timeObj && !this.timeIsDisabled(timeObj, product) &&
-        !availableProductIds[productId]) {
-        availableProductIds.push(productId);
+        !availableProductIds.includes(parseInt(productId))) {
+        availableProductIds.push(parseInt(productId));
       }
     });
 
@@ -49,8 +49,9 @@ export default class AgendaQuickReservationCtrl {
     const endProductTime = this.moment(`${dateString} ${product.end_time}`);
 
     if (this.reservation.number_of_persons > timeObj.max_personen_voor_tafels ||
-        timeObj.is_closed ||
-        timeObj.time_is_past) {
+        !timeObj.is_open ||
+        timeObj.time_is_past ||
+        (this.reservation.number_of_persons > timeObj.available_seat_count && !timeObj.can_overbook)) {
       return true;
     }
 
