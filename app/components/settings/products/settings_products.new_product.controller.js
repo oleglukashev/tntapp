@@ -69,7 +69,7 @@ export default class SettingsProductsNewProductCtrl {
       const product = this.products[key];
       if (this.item.name === product.name) {
         const startTime = this.Slider.to15Min('00:00'); // product.start_time
-        const endTime = this.Slider.to15Min('23:59', false); // product.end_time
+        const endTime = this.Slider.to15Min('23:45', false); // product.end_time
 
         this.sliderMonFri.minValue = startTime;
         this.sliderMonFri.maxValue = endTime;

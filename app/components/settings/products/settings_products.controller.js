@@ -94,7 +94,7 @@ export default class SettingsProductsCtrl {
 
           ranges.map((range) => {
             const productStartTime = this.Slider.to15Min('00:00'); // product.start_time
-            const productEndTime = this.Slider.to15Min('23:59', false); // product.end_time
+            const productEndTime = this.Slider.to15Min('23:45', false); // product.end_time
             range.daysOfWeek.map((day) => {
               const rangeStartTime = this.Slider.to15Min(range.startTime);
               const rangeEndTime = this.Slider.to15Min(range.endTime, false);
@@ -154,7 +154,7 @@ export default class SettingsProductsCtrl {
         const data = {
           product: {
             startTime: '00:00',
-            endTime: '23:59',
+            endTime: '23:45',
             name: newProduct.name,
             icon_class: newProduct.icon,
             minPersons: 1,
