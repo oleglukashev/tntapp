@@ -1,37 +1,31 @@
 export default class ReservationsAnswerCtrl {
-  constructor(User, ReservationStatus, reservation, today_reservation, group_this_week_reservation,
-    action_required_reservations, $modalInstance, $window) {
+  constructor(User, ReservationStatus, reservation, $modalInstance, $window) {
     'ngInject';
 
-    this.current_company              = User.current_company;
-    this.$modalInstance               = $modalInstance;
-    this.reservation                  = reservation;
-    this.$window                      = $window;
-    this.ReservationStatus            = ReservationStatus;
-    this.today_reservation            = today_reservation;
-    this.group_this_week_reservation  = group_this_week_reservation;
-    this.action_required_reservations = action_required_reservations;
+    this.current_company = User.current_company;
+    this.$modalInstance = $modalInstance;
+    this.reservation = reservation;
+    this.$window = $window;
+    this.ReservationStatus = ReservationStatus;
   }
 
   closeModal() {
     this.$modalInstance.dismiss('cancel');
   }
 
-  submitForm(is_valid) {
+  submitForm(isValid) {
     this.is_submitting = true;
 
-    if (!is_valid) {
+    if (!isValid) {
       return false;
     }
 
-    this.ReservationStatus
-      .sendMail(this.current_company.id, this.reservation, this.form_data)
-        .then(
-          (result) => {
-            this.is_submitting = false;
-            this.closeModal();
-          }, (error) => {
-            // error
-          });
+    return this.ReservationStatus
+      .sendMail(this.current_company.id, this.reservation, this.form_data).then(
+        () => {
+          this.is_submitting = false;
+          this.closeModal();
+        }, () => {
+        });
   }
 }

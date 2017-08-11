@@ -1,140 +1,132 @@
-import angular from 'angular';
-
 export default class ReservationStatus {
-  constructor(AppConstants, Upload, User, moment, $http, $q, $window) {
+  constructor(AppConstants, Upload, User, moment, $http, $q, $window, $rootScope) {
     'ngInject';
 
-    this.$http               = $http;
-    this.$q                  = $q;
-    this.$window             = $window;
-    this.moment              = moment;
-    this.AppConstants        = AppConstants;
-    this.Upload              = Upload;
-    this.status_classes      = this.AppConstants.reservationStatusClasses;
-    this.dutch_statuses      = this.AppConstants.reservationDutchStatuses;
-    this.right_menu          = this.AppConstants.reservationMenuStatuses;
-    this.right_menu.delayed  = this.right_menu.confirmed;
+    this.$http = $http;
+    this.$q = $q;
+    this.$window = $window;
+    this.$rootScope = $rootScope;
+    this.moment = moment;
+    this.AppConstants = AppConstants;
+    this.Upload = Upload;
+    this.status_classes = this.AppConstants.reservationStatusClasses;
+    this.dutch_statuses = this.AppConstants.reservationDutchStatuses;
+    this.right_menu = this.AppConstants.reservationMenuStatuses;
+    this.right_menu.delayed = this.right_menu.confirmed;
     this.right_menu.expected = this.right_menu.present;
   }
 
-  edit(company_id, reservation_id, data) {
-    let deferred = this.$q.defer();
+  edit(companyId, reservationId, data) {
+    const deferred = this.$q.defer();
 
-    if (! company_id) {
+    if (!companyId) {
       return deferred.promise;
     }
 
-    return this.$http.post(API_URL + '/company/' + company_id + '/reservation/edit/' + reservation_id + '/status',
-      data
-    ).then((result) => result.data);
+    return this.$http.post(`${API_URL}/company/${companyId}/reservation/edit/${reservationId}/status`,
+      data,
+    ).then(result => result.data);
   }
 
-  setPresent(company_id, reservation_id, present=true) {
-    let deferred = this.$q.defer();
-    let present_url = (present ? 'set_present' : 'unset_present');
+  updatePresent(companyId, reservationId, present = true) {
+    const deferred = this.$q.defer();
+    const presentUrl = (present ? 'set_present' : 'unset_present');
 
-    if (! company_id) {
+    if (!companyId) {
       return deferred.promise;
     }
 
-    return this.$http.get(
-      API_URL + '/company/' + company_id + '/reservation/' + present_url + '/' + reservation_id
-    ).then((result) => result.data);
+    return this.$http.patch(`${API_URL}/company/${companyId}/reservation/${presentUrl}/${reservationId}`)
+      .then(result => result.data);
   }
 
-  changeStatus(company_id, reservation, status, mail) {
-    let dutch_status;
-    let deferred = this.$q.defer();
+  changeStatus(companyId, reservation, status, mail) {
+    let dutchStatus = null;
+    const deferred = this.$q.defer();
 
-    if (! company_id) {
+    if (!companyId) {
       return deferred.promise;
     }
 
-    Object.keys(this.dutch_statuses).map((du, en) => {
-      if (this.dutch_statuses[du] == status) dutch_status = du;
-    })
+    Object.keys(this.dutch_statuses).forEach((du) => {
+      if (this.dutch_statuses[du] === status) {
+        dutchStatus = du;
+      }
+    });
 
     let data = {
-      status: dutch_status
-    }
+      status: dutchStatus,
+    };
 
     if (mail) {
       data = Object.assign(data, mail);
     }
 
-    return this.edit(company_id, reservation.id, data)
+    return this.edit(companyId, reservation.id, data)
       .then((response) => {
-        reservation.status = this.dutch_statuses[response.status];
-        reservation = this.checkStatusForDelay(reservation);
-        return reservation;
+        const currentReservation = reservation;
+        currentReservation.status = this.dutch_statuses[response.status];
+        return currentReservation;
       },
       (error) => {
         this.errors = error.data.errors;
       });
   }
 
-  sendMail(company_id, reservation, data) {
-    let deferred = this.$q.defer();
+  sendMail(companyId, reservation, data) {
+    const deferred = this.$q.defer();
 
-    if (! company_id) {
+    if (!companyId) {
       return deferred.promise;
     }
 
-    return this.$http.post(API_URL + '/company/' + company_id + '/reservation/' + reservation.id + '/send_mail', data)
-      .then((result) => result.data,
-      (error) => {
-        this.errors = error.data.errors;
-      });
-  }
-
-  changeTodayIconClass(current_company_id, reservation, reservation_part) {
-    switch (reservation.status) {
-      case 'present':
-        this.setPresent(current_company_id, reservation.id, false)
-          .then(() => {
-            this.changeStatus(current_company_id, reservation, 'confirmed')
-          });
-        break;
-      case 'delayed':
-      case 'expected', 'confirmed':
-        this.setPresent(current_company_id, reservation.id, true)
-          .then(() => {
-            this.changeStatus(current_company_id, reservation, 'present')
-          });
-        break;
-      default:
-    }
-
-  }
-
-  checkStatusForDelay(reservation) {
-    let now = this.moment().valueOf();
-    let reservation_part = reservation.reservation_parts[0];
-    let reservation_time = this.moment(reservation_part.date_time).valueOf();
-    let diff_mins = this.moment(reservation_time).diff(this.moment(now), 'minutes');
-
-    if (reservation.status === 'confirmed') {
-      if (diff_mins >=0 && diff_mins <= 60) {
-        reservation.status = 'expected';
-      } else if (diff_mins <= 0) {
-        reservation.status = 'delayed';
-      }
-    }
-
-    return reservation;
+    return this.$http.post(`${API_URL}/company/${companyId}/reservation/${reservation.id}/send_mail`, data)
+      .then(result => result.data,
+        (error) => {
+          this.errors = error.data.errors;
+        });
   }
 
   translateAndcheckStatusForDelay(reservations) {
-    reservations.map((reservation) => {
-      if (this.dutch_statuses[reservation.status])
+    for (let reservation of reservations) {
+      if (this.dutch_statuses[reservation.status]) {
         reservation.status = this.dutch_statuses[reservation.status]; // translate to eng
-        reservation = this.checkStatusForDelay(reservation);
-    });
+      }
+    }
 
     return reservations;
   }
 
   parsedDate(date) {
     return this.moment(date).format('HH:mm');
+  }
+
+  getIcon(reservation) {
+    const now = this.moment().valueOf();
+    const reservationPart = reservation.reservation_parts[0];
+    const reservationTime = this.moment(reservationPart.date_time).valueOf();
+    const diffMins = this.moment(reservationTime).diff(this.moment(now), 'minutes');
+
+    if (reservation.is_present) {
+      return this.AppConstants.reservationPresentClasses.present;
+    }
+
+    if (diffMins >= -this.AppConstants.late_minutes &&
+      diffMins <= this.AppConstants.late_minutes + 30) {
+      return this.AppConstants.reservationPresentClasses.expected;
+    } else if (diffMins <= -this.AppConstants.late_minutes) {
+      return this.AppConstants.reservationPresentClasses.delayed;
+    }
+
+    return this.AppConstants.reservationStatusClasses[reservation.status];
+  }
+
+  setPresent(companyId, reservation, isPresent) {
+    this.updatePresent(companyId, reservation.id, isPresent)
+      .then(() => {
+        const currentReservation = reservation;
+        currentReservation.is_present = !reservation.is_present;
+        this.$rootScope.$broadcast('ReservationStatus.change_is_present', currentReservation);
+      });
   }
 }
