@@ -4,7 +4,7 @@ export default class ReservationsCtrl {
   constructor(User, Table, Reservation, ReservationStatus, moment, filterFilter, $mdSidenav, $scope, $rootScope, $modal, $window) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
     this.Reservation     = Reservation;
     this.ReservationStatus = ReservationStatus;
     this.Table           = Table;
@@ -96,12 +96,12 @@ export default class ReservationsCtrl {
 
   changeStatus(reservation, status) {
     this.ReservationStatus
-      .changeStatus(this.current_company.id, reservation, status);
+      .changeStatus(this.current_company_id, reservation, status);
   }
 
   loadReservations() {
     this.Reservation
-      .getAll(this.current_company.id, this.moment(this.date_filter).format('YYYY-MM-DD'))
+      .getAll(this.current_company_id, this.moment(this.date_filter).format('YYYY-MM-DD'))
         .then(
           (reservations) => {
             this.is_loaded    = true;
@@ -114,7 +114,7 @@ export default class ReservationsCtrl {
 
   loadTables() {
     this.Table
-      .getAll(this.current_company.id)
+      .getAll(this.current_company_id)
         .then(
           (result) => {
             this.tables = result;

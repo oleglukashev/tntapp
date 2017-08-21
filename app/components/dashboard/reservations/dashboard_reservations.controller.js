@@ -5,7 +5,7 @@ export default class DashboardReservationsCtrl {
     $rootScope, $mdSidenav, $modal, $window) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
     this.Reservation = Reservation;
     this.ReservationStatus = ReservationStatus;
     this.Table = Table;
@@ -76,7 +76,7 @@ export default class DashboardReservationsCtrl {
 
   changeStatus(currentReservation, status) {
     this.ReservationStatus
-      .changeStatus(this.current_company.id, currentReservation, status).then((reservation) => {
+      .changeStatus(this.current_company_id, currentReservation, status).then((reservation) => {
         const datetime = reservation.reservation_parts[0];
         const actionRequiredHasReservation =
           this.filterFilter(this.action_required, { id: reservation.id })[0];
@@ -100,7 +100,7 @@ export default class DashboardReservationsCtrl {
 
   loadReservations() {
     this.Reservation
-      .getAllGrouped(this.current_company.id).then(
+      .getAllGrouped(this.current_company_id).then(
         (reservations) => {
           this.all_reservations = reservations;
           this.action_required = this.ReservationStatus.translateAndcheckStatusForDelay(reservations.action_required);
@@ -114,7 +114,7 @@ export default class DashboardReservationsCtrl {
 
   loadTables() {
     this.Table
-      .getAll(this.current_company.id).then(
+      .getAll(this.current_company_id).then(
         (result) => {
           this.tables = result;
         });

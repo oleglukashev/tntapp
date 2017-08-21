@@ -2,7 +2,7 @@ export default class SettingsProductsCtrl {
   constructor(User, Product, AppConstants, TimeRange, Slider, $scope, $timeout, $window, $modal) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
 
     this.Product = Product;
     this.TimeRange = TimeRange;
@@ -37,7 +37,7 @@ export default class SettingsProductsCtrl {
       };
 
       this.TimeRange
-        .edit(this.current_company.id, timeRange.id, data)
+        .edit(this.current_company_id, timeRange.id, data)
           .then(() => {
           },
           () => {
@@ -58,7 +58,7 @@ export default class SettingsProductsCtrl {
     };
 
     this.TimeRange
-      .edit(this.current_company.id, timeRange.id, data)
+      .edit(this.current_company_id, timeRange.id, data)
         .then(() => {
         },
         () => {
@@ -68,7 +68,7 @@ export default class SettingsProductsCtrl {
   }
 
   loadProducts() {
-    this.Product.getAll(this.current_company.id, true)
+    this.Product.getAll(this.current_company_id, true)
       .then(
         (result) => {
           this.products = {};
@@ -82,7 +82,7 @@ export default class SettingsProductsCtrl {
   }
 
   loadTimeRanges() {
-    this.TimeRange.getAll(this.current_company.id)
+    this.TimeRange.getAll(this.current_company_id)
       .then(
         (ranges) => {
           this.products_by_day = [];
@@ -162,7 +162,7 @@ export default class SettingsProductsCtrl {
         };
 
         this.Product
-          .create(this.current_company.id, data)
+          .create(this.current_company_id, data)
           .then(
             product => this.addTimeRange(newProduct, product.id),
           );
@@ -205,7 +205,7 @@ export default class SettingsProductsCtrl {
       };
 
       this.TimeRange
-        .create(this.current_company.id, data)
+        .create(this.current_company_id, data)
           .then(() => {
             const product = {
               id: productId,
@@ -224,7 +224,7 @@ export default class SettingsProductsCtrl {
 
   removeProduct(id) {
     this.Product
-      .delete(this.current_company.id, id)
+      .delete(this.current_company_id, id)
         .then(() => {
           this.loadProducts();
           this.days.map((day) => {
@@ -242,7 +242,7 @@ export default class SettingsProductsCtrl {
 
   hidden(productId) {
     this.Product
-      .hidden(this.current_company.id, productId)
+      .hidden(this.current_company_id, productId)
         .then((res) => {
           this.products[productId].hidden = res.hidden;
         },

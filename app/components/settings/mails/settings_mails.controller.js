@@ -2,7 +2,7 @@ export default class SettingsMailsCtrl {
   constructor(User, AppConstants, Settings, filterFilter, $scope, $modal) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
 
     this.$scope = $scope;
     this.$modal = $modal;
@@ -17,7 +17,7 @@ export default class SettingsMailsCtrl {
 
   loadMailsSettings() {
     this.Settings
-      .getMailsSettings(this.current_company.id)
+      .getMailsSettings(this.current_company_id)
         .then(
           (mailsSettings) => {
             this.mails_settings_is_loaded = true;
@@ -28,7 +28,7 @@ export default class SettingsMailsCtrl {
 
   loadMailsTextsSettings() {
     this.Settings
-      .getMailsTextsSettings(this.current_company.id)
+      .getMailsTextsSettings(this.current_company_id)
         .then(
           (mailsSettings) => {
             this.mails_texts_settings_is_loaded = true;
@@ -39,7 +39,7 @@ export default class SettingsMailsCtrl {
 
   submitMailsSettingsForm() {
     this.Settings
-      .updateMailsSettings(this.current_company.id, this.mails_settings_form_data)
+      .updateMailsSettings(this.current_company_id, this.mails_settings_form_data)
         .then(() => {
         });
   }

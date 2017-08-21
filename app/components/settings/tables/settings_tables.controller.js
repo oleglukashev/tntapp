@@ -4,7 +4,7 @@ export default class SettingsTablesCtrl {
   constructor(User, Zone, Table, filterFilter, $scope, $window, $modal) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
 
     this.Table          = Table;
     this.Zone           = Zone;
@@ -31,7 +31,7 @@ export default class SettingsTablesCtrl {
     });
 
     this.Table
-      .save(this.current_company.id, { tables: data })
+      .save(this.current_company_id, { tables: data })
         .then((tables) => {
         },
         (error) => {
@@ -41,7 +41,7 @@ export default class SettingsTablesCtrl {
 
   loadTables() {
     this.Table
-      .getAll(this.current_company.id)
+      .getAll(this.current_company_id)
         .then(
           (tables) => {
             this.is_loaded      = true;
@@ -71,7 +71,7 @@ export default class SettingsTablesCtrl {
   }
 
   loadZonesAndTables() {
-    this.Zone.getAll(this.current_company.id)
+    this.Zone.getAll(this.current_company_id)
       .then(
         (result) => {
           this.zones = result;
@@ -106,7 +106,7 @@ export default class SettingsTablesCtrl {
 
     if (zone) {
       this.Zone
-        .delete(this.current_company.id, zone.id)
+        .delete(this.current_company_id, zone.id)
           .then(
             (result) => {
               delete this.tables_by_zone[zone.id];

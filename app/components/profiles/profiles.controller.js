@@ -5,7 +5,7 @@ export default class ProfilesCtrl {
     'ngInject';
 
     this.Customer         = Customer;
-    this.current_company  = User.current_company;
+    this.current_company_id  = User.getCompanyId();
 
     this.customers        = {};
     this.customers_loaded = false;
@@ -18,14 +18,14 @@ export default class ProfilesCtrl {
   }
 
   exportCSV() {
-    this.Customer.exportCSV(this.current_company.id)
+    this.Customer.exportCSV(this.current_company_id)
       .then(
         (result) => {
         });
   }
 
   loadCustomers() {
-    this.Customer.getAll(this.current_company.id)
+    this.Customer.getAll(this.current_company_id)
       .then(
         (result) => {
           result.map(customer => {

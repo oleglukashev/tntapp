@@ -3,7 +3,7 @@ export default class AgendaQuickReservationCtrl {
     moment, $window, $modalInstance) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
     this.datetime = datetime;
     this.Product = Product;
     this.Reservation = Reservation;
@@ -78,7 +78,7 @@ export default class AgendaQuickReservationCtrl {
       number_of_persons: this.reservation.number_of_persons,
     };
 
-    this.Reservation.createQuick(this.current_company.id, data)
+    this.Reservation.createQuick(this.current_company_id, data)
       .then(() => {
         this.is_submitting = false;
         this.success = true;
@@ -94,7 +94,7 @@ export default class AgendaQuickReservationCtrl {
     this.products = [];
 
     this.Product
-      .getAll(this.current_company.id).then(
+      .getAll(this.current_company_id).then(
         (result) => {
           this.products = result;
           this.loadAvailableTablesOfProducts();
@@ -105,7 +105,7 @@ export default class AgendaQuickReservationCtrl {
 
   loadAvailableTablesOfProducts() {
     this.Product
-      .getAvailableTablesOfProducts(this.current_company.id, this.datetime.format('YYYY-MM-DD')).then(
+      .getAvailableTablesOfProducts(this.current_company_id, this.datetime.format('YYYY-MM-DD')).then(
         (result) => {
           this.available_time = result;
         },

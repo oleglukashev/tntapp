@@ -2,7 +2,7 @@ export default class PageFilterCtrl {
   constructor(User, Reservation, moment, $window, $rootScope, $scope, $modal) {
     'ngInject';
 
-    this.current_company_id  = User.current_company.id;
+    this.current_company_id = User.getCompanyId();
 
     this.Reservation     = Reservation;
     this.date_filter     = new Date();

@@ -2,7 +2,7 @@ class SearchCtrl {
   constructor(ReservationStatus, Table, User, Search, Customer, moment, filterFilter, $scope, $state, $rootScope, $stateParams) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
 
     this.ReservationStatus = ReservationStatus;
     this.Table         = Table;
@@ -43,7 +43,7 @@ class SearchCtrl {
   selectedItemChange(item) {
     this.$rootScope.searchResults = [];
     if (item) {
-      this.Customer.searchReservationsByCustomerId(this.current_company.id, item['value']).then(reservations => {
+      this.Customer.searchReservationsByCustomerId(this.current_company_id, item['value']).then(reservations => {
         if (reservations.length > 0 && reservations[0].reservation_parts.length > 0) {
           this.$rootScope.searchResults = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
           this.$rootScope.dateHeader = this.dateHeader(reservations[0]);
@@ -58,7 +58,7 @@ class SearchCtrl {
   }
 
   loadCustomers() {
-    this.Customer.getAllForSearch(this.current_company.id).then(results => {
+    this.Customer.getAllForSearch(this.current_company_id).then(results => {
       this.states = results.map(customer => ({
         value  : customer['id'],
         display: `${customer['last_name']} ${customer['first_name']}`
@@ -69,7 +69,7 @@ class SearchCtrl {
 
   loadTables() {
     this.Table
-      .getAll(this.current_company.id)
+      .getAll(this.current_company_id)
         .then(tables => {
           let result = {};
           this.tables = tables.forEach(table => {

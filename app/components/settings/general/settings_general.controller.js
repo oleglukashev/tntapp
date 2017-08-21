@@ -2,7 +2,7 @@ export default class SettingsGeneralCtrl {
   constructor(User, Settings, moment, $scope) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
 
     this.$scope 	 = $scope;
     this.Settings  = Settings;
@@ -31,7 +31,7 @@ export default class SettingsGeneralCtrl {
 
   loadGeneralSettings() {
   	this.Settings
-  		.getGeneralSettings(this.current_company.id)
+  		.getGeneralSettings(this.current_company_id)
   			.then(
           (general_settings) => {
             this.is_loaded = true;
@@ -62,7 +62,7 @@ export default class SettingsGeneralCtrl {
 
 
 		this.Settings
-			.updateGeneralSettings(this.current_company.id, data)
+			.updateGeneralSettings(this.current_company_id, data)
 	      .then((general_settings) => {
 	        
 	      });

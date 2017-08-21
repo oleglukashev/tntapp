@@ -3,7 +3,7 @@ export default class AgendaCtrl {
     ReservationPart, filterFilter, $scope, $rootScope, $modal, moment, $timeout) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
 
     this.Settings = Settings;
     this.Table = Table;
@@ -128,7 +128,7 @@ export default class AgendaCtrl {
                 duration_minutes: difference * 15,
               };
 
-              this.ReservationPart.update(this.current_company.id, reservationPartId, data)
+              this.ReservationPart.update(this.current_company_id, reservationPartId, data)
               .then(() => {
                 item.width = (difference * this.hour_width) / 4;
                 this.dragEnd();
@@ -141,7 +141,7 @@ export default class AgendaCtrl {
               tables: [tableId],
             };
 
-            this.ReservationPart.update(this.current_company.id, reservationPartId, data)
+            this.ReservationPart.update(this.current_company_id, reservationPartId, data)
             .then((part) => {
               const left = this.left_margin + (hour * this.hour_width)
                 + ((quarter * this.hour_width) / 4);
@@ -211,7 +211,7 @@ export default class AgendaCtrl {
 
   loadTables() {
     this.Table
-      .getAll(this.current_company.id)
+      .getAll(this.current_company_id)
         .then(
           (tables) => {
             this.tables = tables;
@@ -234,7 +234,7 @@ export default class AgendaCtrl {
   }
 
   loadTimeRanges() {
-    this.TimeRange.getAll(this.current_company.id)
+    this.TimeRange.getAll(this.current_company_id)
       .then(
         (ranges) => {
           ranges.forEach((range) => {
@@ -252,7 +252,7 @@ export default class AgendaCtrl {
   }
 
   loadReservations() {
-    this.Reservation.getAll(this.current_company.id, this.moment(this.date_filter).format('YYYY-MM-DD'))
+    this.Reservation.getAll(this.current_company_id, this.moment(this.date_filter).format('YYYY-MM-DD'))
       .then(
         (reservations) => {
           this.tables_by_part = [];
@@ -277,7 +277,7 @@ export default class AgendaCtrl {
   }
 
   loadProducts() {
-    this.Product.getAll(this.current_company.id)
+    this.Product.getAll(this.current_company_id)
       .then(
         (products) => {
           products.forEach((product) => {
@@ -299,7 +299,7 @@ export default class AgendaCtrl {
   }
 
   loadZonesAndTables() {
-    this.Zone.getAll(this.current_company.id)
+    this.Zone.getAll(this.current_company_id)
       .then(
         (result) => {
           this.zones = result;
@@ -310,7 +310,7 @@ export default class AgendaCtrl {
   }
 
   loadGeneralSettings() {
-    this.Settings.getGeneralSettings(this.current_company.id)
+    this.Settings.getGeneralSettings(this.current_company_id)
       .then((generalSettings) => {
         this.general_settings = generalSettings;
         this.reservation_block_width = (this.hour_width / 60) * generalSettings.bezettings_minuten;

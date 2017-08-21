@@ -2,7 +2,7 @@ export default class SettingsEmployeesCtrl {
   constructor(User, Employee, filterFilter, $modal) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
 
     this.filterFilter = filterFilter;
     this.Employee     = Employee;
@@ -52,7 +52,7 @@ export default class SettingsEmployeesCtrl {
 
   loadEmployees() {
     this.Employee
-      .getAll(this.current_company.id)
+      .getAll(this.current_company_id)
         .then(
           (employees) => {
             this.is_loaded = true;

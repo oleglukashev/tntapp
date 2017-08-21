@@ -4,7 +4,7 @@ export default class SettingsLimitsCtrl {
   constructor(User, Settings, AppConstants, moment, $window) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
 
     this.Settings = Settings;
     this.moment = moment;
@@ -20,7 +20,7 @@ export default class SettingsLimitsCtrl {
 
   loadLimits() {
     this.Settings
-      .getLimitsSettings(this.current_company.id)
+      .getLimitsSettings(this.current_company_id)
         .then(
           (limits) => {
             this.is_loaded = true;
@@ -69,7 +69,7 @@ export default class SettingsLimitsCtrl {
 
   saveLimit(data) {
     this.Settings
-      .saveLimitsSettings(this.current_company.id, data)
+      .saveLimitsSettings(this.current_company_id, data)
         .then(() => {});
   }
 

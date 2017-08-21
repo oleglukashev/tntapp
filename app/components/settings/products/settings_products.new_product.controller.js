@@ -3,7 +3,7 @@ export default class SettingsProductsNewProductCtrl {
     $scope, $modalInstance) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
 
     this.User = User;
     this.Slider = Slider;

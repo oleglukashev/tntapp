@@ -2,7 +2,7 @@ export default class SettingsThemesCtrl {
   constructor(User, Settings, AppConstants, $rootScope, $cookieStore) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
     this.Settings = Settings;
     this.$rootScope = $rootScope;
     this.$cookieStore = $cookieStore;
@@ -18,12 +18,12 @@ export default class SettingsThemesCtrl {
     this.Settings.saveThemeToCookie(themeClass);
     this.$rootScope.$broadcast('AppCtrl.change_plugin_theme_name', themeClass);
     this.Settings
-      .updateThemeSettings(this.current_company.id, { plugin_theme_name: this.plugin_theme_name });
+      .updateThemeSettings(this.current_company_id, { plugin_theme_name: this.plugin_theme_name });
   }
 
   loadTheme() {
     this.Settings
-      .getThemeSettings(this.current_company.id).then(
+      .getThemeSettings(this.current_company_id).then(
         (result) => {
           this.is_loaded = true;
 

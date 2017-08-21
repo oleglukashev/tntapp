@@ -4,7 +4,7 @@ export default class PageFilterTimeRangesCtrl {
   constructor(date, type, title, User, Product, Slider, PageFilterTimeRange, filterFilter, moment, $modalInstance, $window) {
     'ngInject';
 
-    this.current_company     = User.current_company;
+    this.current_company_id = User.getCompanyId();
     this.PageFilterTimeRange = PageFilterTimeRange;
     this.Slider              = Slider;
     this.Product             = Product;
@@ -61,7 +61,7 @@ export default class PageFilterTimeRangesCtrl {
       let index = this.time_ranges.indexOf(time_range);
 
       this.PageFilterTimeRange
-        .destroy(this.current_company.id, time_range.id)
+        .destroy(this.current_company_id, time_range.id)
           .then((result) => {
             this.time_ranges.splice(index, 1);
             this.setStateToList();
@@ -93,7 +93,7 @@ export default class PageFilterTimeRangesCtrl {
       delete data.id;
 
       this.PageFilterTimeRange
-        .update(this.current_company.id, this.form_data.id, data)
+        .update(this.current_company_id, this.form_data.id, data)
           .then((result) => {
             this.is_submitting = false;
             let time_range     = this.filterFilter(this.time_ranges, { id: this.form_data.id })[0];
@@ -112,7 +112,7 @@ export default class PageFilterTimeRangesCtrl {
           });
     } else {
       this.PageFilterTimeRange
-        .create(this.current_company.id, data)
+        .create(this.current_company_id, data)
           .then((result) => {
             this.is_submitting = false;
 
@@ -145,7 +145,7 @@ export default class PageFilterTimeRangesCtrl {
     this.is_loaded = false;
 
     this.PageFilterTimeRange
-      .getAll(this.current_company.id, this.moment(this.date).format('YYYY-MM-DD'), this.type)
+      .getAll(this.current_company_id, this.moment(this.date).format('YYYY-MM-DD'), this.type)
         .then(
           (time_ranges) => {
             this.is_loaded   = true;
@@ -162,7 +162,7 @@ export default class PageFilterTimeRangesCtrl {
 
   loadProducts() {
     this.Product
-      .getAll(this.current_company.id)
+      .getAll(this.current_company_id)
         .then((products) => {
           this.products = products; 
         })

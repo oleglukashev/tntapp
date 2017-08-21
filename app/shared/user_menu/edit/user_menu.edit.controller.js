@@ -4,7 +4,7 @@ export default class UserMenuEditCtrl {
   constructor(User, Customer, CustomerNote, CustomerPreference, CustomerAllergies, $rootScope, $modalInstance, moment, $modal) {
     'ngInject';
 
-    this.current_company      = User.current_company;
+    this.current_company_id = User.getCompanyId();
     this.Customer             = Customer;
     this.CustomerNote         = CustomerNote;
     this.CustomerPreference   = CustomerPreference;
@@ -33,7 +33,7 @@ export default class UserMenuEditCtrl {
   }
 
   loadNotes() {
-    this.CustomerNote.getAll(this.current_company.id, this.$rootScope.userData.id)
+    this.CustomerNote.getAll(this.current_company_id, this.$rootScope.userData.id)
       .then((notes) => {
         this.notes = notes;
       },
@@ -42,7 +42,7 @@ export default class UserMenuEditCtrl {
   }
 
   loadPreferences() {
-    this.CustomerPreference.getAll(this.current_company.id, this.$rootScope.userData.id)
+    this.CustomerPreference.getAll(this.current_company_id, this.$rootScope.userData.id)
       .then((preferences) => {
         this.preferences = preferences;
       },
@@ -51,7 +51,7 @@ export default class UserMenuEditCtrl {
   }
 
   loadAllergies() {
-    this.CustomerAllergies.getAll(this.current_company.id, this.$rootScope.userData.id)
+    this.CustomerAllergies.getAll(this.current_company_id, this.$rootScope.userData.id)
       .then((allergies) => {
         this.allergies = allergies;
       },
@@ -60,7 +60,7 @@ export default class UserMenuEditCtrl {
   }
 
   deleteNote(index) {
-    this.CustomerNote.delete(this.current_company.id, this.$rootScope.userData.id, this.notes[index].id)
+    this.CustomerNote.delete(this.current_company_id, this.$rootScope.userData.id, this.notes[index].id)
       .then((result) => {
         this.notes.splice(index, 1);
       },
@@ -69,7 +69,7 @@ export default class UserMenuEditCtrl {
   }
 
   deletePreference(index) {
-    this.CustomerPreference.delete(this.current_company.id, this.$rootScope.userData.id, this.preferences[index].id)
+    this.CustomerPreference.delete(this.current_company_id, this.$rootScope.userData.id, this.preferences[index].id)
       .then((result) => {
         this.preferences.splice(index, 1);
       },
@@ -78,7 +78,7 @@ export default class UserMenuEditCtrl {
   }
 
   deleteAllergy(index) {
-    this.CustomerAllergies.delete(this.current_company.id, this.$rootScope.userData.id, this.allergies[index].id)
+    this.CustomerAllergies.delete(this.current_company_id, this.$rootScope.userData.id, this.allergies[index].id)
       .then((result) => {
         this.allergies.splice(index, 1);
       },
@@ -112,7 +112,7 @@ export default class UserMenuEditCtrl {
       averageRating: userData.average_rating
     };
 
-    this.Customer.edit(this.current_company.id, userData.id, data)
+    this.Customer.edit(this.current_company_id, userData.id, data)
       .then((result) => {
         userData = Object.assign(data, userData);
         this.closeModal();
@@ -133,7 +133,7 @@ export default class UserMenuEditCtrl {
     };
 
     if (this.note.id) {
-      this.CustomerNote.update(this.current_company.id, this.$rootScope.userData.id, this.note.id, data)
+      this.CustomerNote.update(this.current_company_id, this.$rootScope.userData.id, this.note.id, data)
         .then((result) => {
           this.$rootScope.customer_notes = this.notes;
           this.closeModal();
@@ -141,7 +141,7 @@ export default class UserMenuEditCtrl {
         (error) => {
         });
     } else {
-      this.CustomerNote.create(this.current_company.id, this.$rootScope.userData.id, data)
+      this.CustomerNote.create(this.current_company_id, this.$rootScope.userData.id, data)
         .then((result) => {
           this.$rootScope.customer_notes.push(result);
           this.closeModal();
@@ -164,7 +164,7 @@ export default class UserMenuEditCtrl {
     };
 
     if (this.preference.id) {
-      this.CustomerPreference.update(this.current_company.id, this.$rootScope.userData.id, this.preference.id, data)
+      this.CustomerPreference.update(this.current_company_id, this.$rootScope.userData.id, this.preference.id, data)
         .then((result) => {
           this.$rootScope.customer_preferences = this.preferences;
           this.closeModal();
@@ -172,7 +172,7 @@ export default class UserMenuEditCtrl {
         (error) => {
         });
     } else {
-      this.CustomerPreference.create(this.current_company.id, this.$rootScope.userData.id, data)
+      this.CustomerPreference.create(this.current_company_id, this.$rootScope.userData.id, data)
         .then((result) => {
           this.$rootScope.customer_preferences.push(result);
           this.closeModal();
@@ -194,7 +194,7 @@ export default class UserMenuEditCtrl {
     };
 
     if (this.allergy.id) {
-      this.CustomerAllergies.update(this.current_company.id, this.$rootScope.userData.id, this.allergy.id, data)
+      this.CustomerAllergies.update(this.current_company_id, this.$rootScope.userData.id, this.allergy.id, data)
         .then((result) => {
           this.$rootScope.customer_allergies = this.allergies;
           this.closeModal();
@@ -202,7 +202,7 @@ export default class UserMenuEditCtrl {
         (error) => {
         });
     } else {
-      this.CustomerAllergies.create(this.current_company.id, this.$rootScope.userData.id, data)
+      this.CustomerAllergies.create(this.current_company_id, this.$rootScope.userData.id, data)
         .then((result) => {
           this.$rootScope.customer_allergies.push(result);
           this.closeModal();

@@ -23,7 +23,7 @@ export default class NewReservationCtrl {
       this.current_company_id = $stateParams.id;
       this.pagination = this.ReservationLogic.pagination.customer;
     } else {
-      this.current_company_id = User.current_company.id;
+      this.current_company_id = User.getCompanyId();
       this.pagination = this.ReservationLogic.pagination.backend;
     }
 

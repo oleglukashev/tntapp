@@ -8,6 +8,7 @@ export default class HeaderCtrl {
     this.User             = User;
     this.current_user     = User.current;
     this.current_company  = User.current_company;
+    this.current_company_id = User.getCompanyId();
     this.logout           = User.logout.bind(User);
 
     let states = {

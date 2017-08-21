@@ -4,7 +4,7 @@ export default class UserMenuCtrl {
   constructor(User, CustomerNote, CustomerPreference, CustomerAllergies, Customer, moment, $rootScope, $mdSidenav, $modal) {
     'ngInject';
 
-    this.current_company_id = User.current_company.id;
+    this.current_company_id = User.getCompanyId();
 
     this.CustomerNote       = CustomerNote;
     this.CustomerPreference = CustomerPreference;

@@ -2,17 +2,17 @@ export default class SettingsPluginsCtrl {
   constructor(User, Settings) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
     this.Settings        = Settings;
     this.is_loaded       = false;
-    this.iframe_widget   = '<iframe src="http://thenexttable.com/thenexttable-embed/iframe.php?rid=' + this.current_company.id + '" style="display: block; margin: 0 auto;" frameborder="0" seamless="seamless" height="440px;" width="300px;"></iframe>'
+    this.iframe_widget   = '<iframe src="http://thenexttable.com/thenexttable-embed/iframe.php?rid=' + this.current_company_id + '" style="display: block; margin: 0 auto;" frameborder="0" seamless="seamless" height="440px;" width="300px;"></iframe>'
 
     this.loadPluginsSettings();
   }
 
   loadPluginsSettings() {
     this.Settings
-      .getPluginsSettings(this.current_company.id)
+      .getPluginsSettings(this.current_company_id)
         .then(
           (plugins_settings) => {
             this.is_loaded       = true;
@@ -24,7 +24,7 @@ export default class SettingsPluginsCtrl {
 
   submitForm() {
     this.Settings
-      .updateTnrSyncTokenSettings(this.current_company.id, { tnr_sync_token: this.tnr_sync_token })
+      .updateTnrSyncTokenSettings(this.current_company_id, { tnr_sync_token: this.tnr_sync_token })
         .then(
           (plugins_settings) => {
             //nothing

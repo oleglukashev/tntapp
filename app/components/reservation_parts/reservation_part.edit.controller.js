@@ -6,7 +6,7 @@ export default class ReservationPartEditCtrl {
     reservation_part) {
     'ngInject';
 
-    this.current_company_id = User.current_company.id;
+    this.current_company_id = User.getCompanyId();
 
     this.ReservationPart      = ReservationPart;
     this.ReservationLogic     = ReservationLogic;

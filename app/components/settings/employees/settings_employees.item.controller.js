@@ -2,7 +2,7 @@ export default class SettingsEmployeesItemCtrl {
   constructor(User, Employee, item, items, $modalInstance, $mdDialog) {
     'ngInject';
 
-    this.current_company = User.current_company;
+    this.current_company_id = User.getCompanyId();
     this.item            = item;
     this.items           = items;
     this.Employee        = Employee;
@@ -34,7 +34,7 @@ export default class SettingsEmployeesItemCtrl {
     }
 
     this.Employee
-      .create(this.current_company.id, data)
+      .create(this.current_company_id, data)
         .then(
           (employee) => {
             this.is_submitting = false;
@@ -54,7 +54,7 @@ export default class SettingsEmployeesItemCtrl {
     }
     
     this.Employee
-      .update(this.current_company.id, this.item.id, data)
+      .update(this.current_company_id, this.item.id, data)
         .then(
           () => {
             this.is_submitting = false;
@@ -69,7 +69,7 @@ export default class SettingsEmployeesItemCtrl {
   destroy() {
     this.is_submitting = true;
     this.Employee
-      .destroy(this.current_company.id, this.item.id)
+      .destroy(this.current_company_id, this.item.id)
         .then(
           () => {
             this.is_submitting = false;

@@ -53,6 +53,10 @@ export default class User {
     }
   }
 
+  getCompanyId() {
+    return this.current_company ? this.current_company.id : null;
+  }
+
   removeDefaultCompany() {
     this.current_company = null;
     this.$window.localStorage.removeItem('current_company_id');
@@ -97,14 +101,17 @@ export default class User {
           this.current = result.data;
 
           let currentCompanyId = parseInt(this.$window.localStorage.getItem('current_company_id'), 10);
-          const availableIds = this.current.owned_companies.map(item => item.id);
 
-          if (!currentCompanyId || !availableIds.includes(currentCompanyId)) {
-            currentCompanyId = this.current.owned_companies[0].id;
+          if (this.current.owned_companies.length) {
+            const availableIds = this.current.owned_companies.map(item => item.id);
+
+            if (!currentCompanyId || !availableIds.includes(currentCompanyId)) {
+              currentCompanyId = this.current.owned_companies[0].id;
+            }
+
+            this.setDefaultCompany(currentCompanyId);
+            this.loadTheme();
           }
-
-          this.setDefaultCompany(currentCompanyId);
-          this.loadTheme();
 
           deferred.resolve(true);
         },
