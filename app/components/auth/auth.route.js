@@ -37,5 +37,16 @@ export default function routes($stateProvider, $httpProvider) {
         controller: 'AuthCtrl',
         controllerAs: 'auth',
         template: require('./auth.reset_password.view.html')
-    });
+    })
+
+    .state('auth_admin', {
+      templateUrl: 'login.html',
+    })
+
+    .state('auth_admin.login_via_admin', {
+      url: '/login_via_admin/:token',
+      controller: 'AuthCtrl',
+      controllerAs: 'auth',
+      template: require('./auth.admin_view.html')
+    })
 }

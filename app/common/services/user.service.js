@@ -29,6 +29,13 @@ export default class User {
     );
   }
 
+  authViaAdmin(token) {
+    this.current = null;
+    this.JWT.destroy();
+    this.removeDefaultCompany();
+    this.JWT.save({ token: token, refresh_token: token });
+  }
+
   resetPassword(formData) {
     return this.$http({
       url: `${API_URL}/reset_password`,

@@ -1,10 +1,11 @@
 class AuthCtrl {
-  constructor(User, $state, $stateParams) {
+  constructor(User, $state, $stateParams, $window) {
     'ngInject';
 
     this.User = User;
     this.$state = $state;
     this.$stateParams = $stateParams;
+    this.$window = $window;
     this.authType = $state.current.name.replace('auth.', '');
   }
 
@@ -48,6 +49,9 @@ class AuthCtrl {
   submitForm() {
     if (this.authType === 'reset_password') {
       this.sendResetPasswordForm();
+    } else if (this.$state.current.name === 'auth_admin.login_via_admin') {
+      this.User.authViaAdmin(this.$stateParams.token);
+      this.$state.go('app.dashboard');
     } else {
       let path = '/authenticate_check';
 
