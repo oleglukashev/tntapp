@@ -90,9 +90,6 @@ export default class Reservation {
     return this.Upload.upload({
       url: this.getCreateURI(companyId, params),
       data,
-      headers: {
-        Authorization: `Bearer ${this.JWT.get()}`,
-      },
     }).then((result) => result.data);
   }
 
