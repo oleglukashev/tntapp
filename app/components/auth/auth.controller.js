@@ -13,22 +13,20 @@ class AuthCtrl {
     this.isSubmitting = true;
 
     this.User.auth(path, this.formData).then(
-      (result) => {
+      () => {
         this.$state.go('app.dashboard');
       },
       (error) => {
         this.isSubmitting = false;
 
-        if (this.authType == 'login') {
+        if (this.authType === 'login') {
           this.errors = error.data;
-        } else if (this.authType == 'reset_password_finish') {
-          if (error.data.message) {
-            this.errors = [error.data];
-          } else {
-            this.errors = [error.data.error];
-          }
         } else {
           this.errors = error.data.errors;
+
+          if (error.data.message) {
+            this.errors = [error.data];
+          }
         }
       });
   }
@@ -37,11 +35,11 @@ class AuthCtrl {
     this.isSubmitting = true;
 
     this.User.resetPassword(this.formData).then(
-      (result) => {
+      () => {
         this.isSubmitting = false;
-        this.success      = true;
+        this.success = true;
       },
-      (error) => {
+      () => {
         this.isSubmitting = false;
       });
   }
@@ -57,8 +55,8 @@ class AuthCtrl {
 
       if (this.authType === 'register') {
         path = '/register';
-      } else if (this.authType === 'reset_password_finish') {
-        path = '/reset_password/' + this.$stateParams.id + '/' + this.$stateParams.token;
+      } else if (this.authType === 'reset_password_finish' || this.authType === 'activate') {
+        path = `/reset_password/${this.$stateParams.id}/${this.$stateParams.token}`;
       }
 
       this.sendAuthForm(path);
