@@ -115,10 +115,9 @@ export default class NewReservationCtrl {
 
     const data = {
       language: this.reservation.language,
-      // TODO: try to find solution for send boolean instead string('1' and '0')
-      send_confirmation: this.reservation.send_confirmation ? '1' : '0',
+      send_confirmation: this.reservation.send_confirmation,
       notes: this.reservation.notes,
-      is_group: this.reservation.is_group ? '1' : '0',
+      is_group: this.reservation.is_group,
       company_name: this.reservation.company_name,
       customer: {
         last_name: name.split(' ').splice(1).join(' '),
