@@ -95,7 +95,7 @@
 		  		<h3 class='no-margin text-md'>Reserveringsdeadline</h3>
 		  		<small class='text-muted'>(HH:MM; laat leeg voor geen deadline)</small>
 	  		</div>
-	  		<div class='pull-right'>
+	  		<div class='pull-right' ng-show='general_settings.form_data.enable_deadline'>
           <div class='md-form-group no-padder'>
   					<md-input-container class='pull-right no-margin'>
 		          <md-select ng-model='general_settings.form_data.reservation_deadline_minutes'
@@ -118,6 +118,12 @@
   					</md-input-container>
           </div>
 	  		</div>
+        <div class='pull-right m-r-sm'>
+          <div class='md-form-group no-padder'>
+            <md-switch ng-model='general_settings.form_data.enable_deadline'
+                       ng-change='general_settings.submitForm()'></md-switch>
+          </div>
+        </div>
 	  	</div>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
