@@ -15,7 +15,6 @@ export default class UserMenuCtrl {
     this.$rootScope = $rootScope;
     this.$mdSidenav = $mdSidenav;
     this.$modal     = $modal;
-    this.months     = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
   }
 
   openEditReservationModal(reservation, reservation_part) {
@@ -123,9 +122,6 @@ export default class UserMenuCtrl {
   }
 
   parsedDate(date) {
-    const day   = this.moment(date).format('D');
-    const month = this.moment(date).format('M');
-    const other = this.moment(date).format('YYYY HH:mm');
-    return `${day} ${this.months[month]} ${other}`;
+    return this.moment(date).locale('nl').format('D MMMM YYYY HH:mm');
   }
 }
