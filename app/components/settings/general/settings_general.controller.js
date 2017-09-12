@@ -55,6 +55,7 @@ export default class SettingsGeneralCtrl {
       allow_facebook_login: this.form_data.allow_facebook_login,
       enable_product_limits: this.form_data.enable_product_limits,
       send_mail_after_visit: this.form_data.send_mail_after_visit,
+      booking_api: this.form_data.booking_api,
     };
 
     if (this.form_data.enable_deadline) {
