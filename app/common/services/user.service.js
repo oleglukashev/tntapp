@@ -46,6 +46,21 @@ export default class User {
 
   setDefaultCompany(id) {
     this.current_company = this.current.owned_companies.filter(item => item.id === id)[0];
+
+    if (this.current.owned_companies.length > 0) {
+      const scopeOfCompanies = this.current.owned_companies.filter(item => item.id === id);
+
+      if (scopeOfCompanies.length > 0) {
+        this.current_company = scopeOfCompanies[0];
+      }
+    } else if (this.current.company_roles.length > 0) {
+      const scopeOfCompanies = this.current.company_roles.filter(item => item.id === id);
+
+      if (scopeOfCompanies.length > 0) {
+        this.current_company = scopeOfCompanies[0].company;
+      }
+    }
+
     const currentCompanyId = this.$window.localStorage.getItem('current_company_id');
 
     if (id !== currentCompanyId) {
