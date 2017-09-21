@@ -13,15 +13,26 @@
         <form name='employee_form' ng-submit='employee.submitForm();'>
           <div class='wrapper'>
             <div ng-if='!employee.item.id'>
-              <md-input-container class='md-block' ng-class="{ 'md-input-invalid': employee.errors.children.name.errors }">
-                <label>Voor -en achternaam</label>
-                <input name='name' ng-model='employee.item.name' required />
-                <div ng-messages='employee_form.name.$error'>
+              <md-input-container class='md-block' ng-class="{ 'md-input-invalid': employee.errors.children.first_name.errors }">
+                <label>Voornaam</label>
+                <input name='first_name' ng-model='employee.item.first_name' required />
+                <div ng-messages='employee_form.first_name.$error'>
                   <div ng-message='required'>This is required!</div>
                 </div>
-                <div ng-messages='employee_form.name.$error'
-                     ng-show='employee.errors.children.name.errors'>
-                  <div ng-repeat='error in employee.errors.children.name.errors'>{{ error }}</div>
+                <div ng-messages='employee_form.first_name.$error'
+                     ng-show='employee.errors.children.first_name.errors'>
+                  <div ng-repeat='error in employee.errors.children.first_name.errors'>{{ error }}</div>
+                </div>
+              </md-input-container>
+              <md-input-container class='md-block' ng-class="{ 'md-input-invalid': employee.errors.children.last_name.errors }">
+                <label>Achternaam</label>
+                <input name='lats_name' ng-model='employee.item.last_name' required />
+                <div ng-messages='employee_form.last_name.$error'>
+                  <div ng-message='required'>This is required!</div>
+                </div>
+                <div ng-messages='employee_form.last_name.$error'
+                     ng-show='employee.errors.children.last_name.errors'>
+                  <div ng-repeat='error in employee.errors.children.last_name.errors'>{{ error }}</div>
                 </div>
               </md-input-container>
               <md-input-container class='md-block' ng-class="{ 'md-input-invalid': employee.errors.children.email.errors }">
