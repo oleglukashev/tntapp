@@ -45,22 +45,7 @@ export default class User {
   }
 
   setDefaultCompany(id) {
-    this.current_company = this.current.owned_companies.filter(item => item.id === id)[0];
-
-    if (this.current.owned_companies.length > 0) {
-      const scopeOfCompanies = this.current.owned_companies.filter(item => item.id === id);
-
-      if (scopeOfCompanies.length > 0) {
-        this.current_company = scopeOfCompanies[0];
-      }
-    } else if (this.current.company_roles.length > 0) {
-      const scopeOfCompanies = this.current.company_roles.filter(item => item.id === id);
-
-      if (scopeOfCompanies.length > 0) {
-        this.current_company = scopeOfCompanies[0].company;
-      }
-    }
-
+    this.current_company = this.getCompany(id);
     const currentCompanyId = this.$window.localStorage.getItem('current_company_id');
 
     if (id !== currentCompanyId) {
@@ -70,6 +55,26 @@ export default class User {
 
   getCompanyId() {
     return this.current_company ? this.current_company.id : null;
+  }
+
+  getCompany(id) {
+    let result = null;
+
+    if (this.current.owned_companies.length > 0) {
+      const scopeOfCompanies = this.current.owned_companies.filter(item => item.id === id);
+
+      if (scopeOfCompanies.length > 0) {
+        result = scopeOfCompanies[0];
+      }
+    } else if (this.current.company_roles.length > 0) {
+      const scopeOfCompanies = this.current.company_roles.filter(item => item.id === id);
+
+      if (scopeOfCompanies.length > 0) {
+        result = scopeOfCompanies[0].company;
+      }
+    }
+
+    return result;
   }
 
   removeDefaultCompany() {
@@ -122,6 +127,12 @@ export default class User {
 
             if (!currentCompanyId || !availableIds.includes(currentCompanyId)) {
               currentCompanyId = this.current.owned_companies[0].id;
+
+              if (this.current.owned_companies.length > 0) {
+                currentCompanyId = this.current.owned_companies[0].id;
+              } else if (this.current.company_roles.length > 0) {
+                currentCompanyId = this.current.company_roles[0].company.id;
+              }
             }
 
             this.setDefaultCompany(currentCompanyId);
