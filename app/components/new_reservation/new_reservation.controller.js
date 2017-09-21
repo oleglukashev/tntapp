@@ -99,6 +99,7 @@ export default class NewReservationCtrl {
 
     $scope.$watch('reserv.reservation.date', () => {
       this.reservation.person_count = null;
+      this.reservation.product = null;
       this.reservation.time = null;
     });
 
