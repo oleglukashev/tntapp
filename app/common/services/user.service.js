@@ -57,24 +57,22 @@ export default class User {
     return this.current_company ? this.current_company.id : null;
   }
 
-  getCompany(id) {
-    let result = null;
+  getCompanies() {
+    let result = [];
 
-    if (this.current.owned_companies.length > 0) {
-      const scopeOfCompanies = this.current.owned_companies.filter(item => item.id === id);
+    for (let company_data of this.current.company_roles) {
+      result.push(company_data.company);
+    }
 
-      if (scopeOfCompanies.length > 0) {
-        result = scopeOfCompanies[0];
-      }
-    } else if (this.current.company_roles.length > 0) {
-      const scopeOfCompanies = this.current.company_roles.filter(item => item.id === id);
-
-      if (scopeOfCompanies.length > 0) {
-        result = scopeOfCompanies[0].company;
-      }
+    for (let company of this.current.owned_companies) {
+      result.push(company);
     }
 
     return result;
+  }
+
+  getCompany(id) {
+    return this.getCompanies().filter(item => item.id === id)[0];
   }
 
   removeDefaultCompany() {
@@ -103,7 +101,7 @@ export default class User {
   }
 
   verifyAuth() {
-    const deferred = this.$q.defer();
+    let deferred = this.$q.defer();
 
     if (!this.JWT.get()) {
       deferred.resolve(false);
@@ -121,18 +119,11 @@ export default class User {
           this.current = result.data;
 
           let currentCompanyId = parseInt(this.$window.localStorage.getItem('current_company_id'), 10);
+          const availableIds = this.getCompanies().map(item => item.id);
 
-          if (this.current.owned_companies.length) {
-            const availableIds = this.current.owned_companies.map(item => item.id);
-
+          if (availableIds.length) {
             if (!currentCompanyId || !availableIds.includes(currentCompanyId)) {
-              currentCompanyId = this.current.owned_companies[0].id;
-
-              if (this.current.owned_companies.length > 0) {
-                currentCompanyId = this.current.owned_companies[0].id;
-              } else if (this.current.company_roles.length > 0) {
-                currentCompanyId = this.current.company_roles[0].company.id;
-              }
+              currentCompanyId = availableIds[0];
             }
 
             this.setDefaultCompany(currentCompanyId);

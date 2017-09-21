@@ -36,7 +36,7 @@
 
         <!-- dropdown -->
         <ul class="header-account-menu-box dropdown-menu animated">
-          <li ng-repeat='company in header.getCompanies()'>
+          <li ng-repeat='company in header.User.getCompanies()'>
             <a href='#' ng-click='header.setDefaultCompany(company.id)'>
               <span>{{ company.name }}</span>
               <i ng-show='company.id === header.current_company_id' class='mdi mdi-check pull-right'></i>

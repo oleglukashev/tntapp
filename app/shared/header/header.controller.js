@@ -56,20 +56,6 @@ export default class HeaderCtrl {
     }
   }
 
-  getCompanies() {
-    let result = [];
-
-    for (let company_data of this.current_user.company_roles) {
-      result.push(company_data.company);
-    }
-
-    for (let company of this.current_user.owned_companies) {
-      result.push(company);
-    }
-
-    return result;
-  }
-
   setDefaultCompany(id) {
     this.User.setDefaultCompany(id);
     this.$state.reload();
