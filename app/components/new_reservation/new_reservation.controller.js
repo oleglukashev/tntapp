@@ -122,6 +122,15 @@ export default class NewReservationCtrl {
       this.reservation.reservation_parts = [this.current_part];
     }
 
+    this.reservation.reservation_parts.forEach((part) => {
+      data.reservation_parts.push({
+        datetime: `${this.dateFormat(part.date, 'DD-MM-YYYY')} ${part.time}`,
+        number_of_persons: part.number_of_persons,
+        product: part.product,
+        tables: part.tables,
+      });
+    });
+
     const socialAccount = JSON.parse(this.$window.localStorage.getItem('social_account'));
     if (this.reservation.social && socialAccount) {
       data.social_account = socialAccount;
