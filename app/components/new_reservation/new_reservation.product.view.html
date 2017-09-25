@@ -2,8 +2,8 @@
   <md-tab-label>
     <div class='text-center l-h'><i class='mdi mdi-silverware-variant'></i></div>
     <div class='text-center l-h'>
-      <span ng-show='reserv.reservation.product'>{{ reserv.ReservationLogic.getProductNameByProductId(reserv.products, reserv.reservation.product) }}</span>
-      <span ng-hide='reserv.reservation.product'>PRODUCT</span>
+      <span ng-show='reserv.current_part.product'>{{ reserv.ReservationLogic.getProductNameByProductId(reserv.products, reserv.current_part.product) }}</span>
+      <span ng-hide='reserv.current_part.product'>PRODUCT</span>
     </div>
   </md-tab-label>
   <md-tab-body>
@@ -16,9 +16,9 @@
       <div class='wrapper'>
         <div class='text-center' ng-show='reserv.products_is_loaded'>
           <label ng-repeat='product in reserv.products'
-                 ng-click='reserv.selectTab(reserv.pagination["product"])'
+                 ng-change='reserv.changeProductPostProcess()'
                  class='box'
-                 ng-model='reserv.reservation.product'
+                 ng-model='reserv.current_part.product'
                  uncheckable
                  btn-radio='product.id'>
             <i class='box_active_icon mdi mdi-check'></i>

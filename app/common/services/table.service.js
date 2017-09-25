@@ -1,9 +1,12 @@
+import angular from 'angular';
+
 export default class Table {
-  constructor($http, $q) {
+  constructor($http, $q, filterFilter) {
     'ngInject';
 
     this.$http = $http;
     this.$q = $q;
+    this.filterFilter = filterFilter;
   }
 
   getAll(companyId) {
@@ -38,5 +41,19 @@ export default class Table {
       method: 'POST',
       data: data,
     }).then(result => result.data);
+  }
+
+  getTableNumbersByTableIds(tables, tableIds) {
+    const result = [];
+
+    angular.forEach(tableIds, (value) => {
+      const table = this.filterFilter(tables, { id: value })[0];
+
+      if (table) {
+        result.push(table.table_number);
+      }
+    }, result);
+
+    return result;
   }
 }

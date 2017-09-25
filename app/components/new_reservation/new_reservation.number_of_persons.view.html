@@ -2,10 +2,10 @@
   <md-tab-label>
     <div class='text-center l-h'><i class='mdi mdi-account-multiple'></i></div>
     <div class='text-center l-h'>
-      <span ng-show='reserv.reservation.person_count'>
-        {{ reserv.reservation.person_count }} PERSONEN
+      <span ng-show='reserv.current_part.number_of_persons'>
+        {{ reserv.current_part.number_of_persons }} PERSONEN
       </span>
-      <span ng-hide='reserv.reservation.person_count'>AANTAL</span>
+      <span ng-hide='reserv.current_part.number_of_persons'>AANTAL</span>
     </div>
   </md-tab-label>
   <md-tab-body>
@@ -18,27 +18,32 @@
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <div class='w-lg'>
           <label ng-repeat='number in [1,2,3,4,5,6,7,8,9,10]'
-            ng-click='reserv.selectTab(reserv.pagination["person_count"])'
-            ng-class="{ 'btn-success': reserv.reservation.person_count == number }"
+            ng-change='reserv.changeNumberOfPersonsPostProcess()'
+            ng-class="{ 'btn-success': reserv.current_part.number_of_persons == number }"
             class='btn btn-default btn-sm font-bold m-xs text-success'
-            ng-model='reserv.reservation.person_count'
+            ng-model='reserv.current_part.number_of_persons'
             uncheckable
             btn-radio='number'>{{ number }}</label>
 
-          <label ng-click='reserv.ReservationLogic.triggerChoosePersonCount()'
-                 ng-hide='reserv.ReservationLogic.choose_person_count_is_opened'
+          <label ng-click='reserv.ReservationLogic.triggerChooseNumberOfPersons()'
+                 ng-hide='reserv.ReservationLogic.choose_number_of_persons_is_opened'
                  class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>More...</label>
 
-          <div class='m-t-md' ng-show='reserv.ReservationLogic.choose_person_count_is_opened'>
+          <div class='m-t-md' ng-show='reserv.ReservationLogic.choose_number_of_persons_is_opened'>
             <md-input-container class='md-block'>
               <label>Aantal personen</label>
               <input type='number'
                      class='md-input'
-                     ng-model='reserv.reservation.person_count' required />
+                     ng-model='reserv.current_part.number_of_persons' required />
             </md-input-container>
             <button type='button'
                     class='btn btn-md btn-success text-success'
-                    ng-click='reserv.ReservationLogic.triggerChoosePersonCount();reserv.selectTab(reserv.pagination["person_count"]);'>Ok</button>
+                    ng-click='reserv.ReservationLogic.triggerChooseNumberOfPersons();reserv.selectTab(reserv.pagination.number_of_persons);'>Ok</button>
+          </div>
+          <div class='md-form-group no-padder' ng-if='!reserv.is_customer_reservation'>
+            <md-checkbox ng-model="reserv.reservation.group" aria-label="Group?">
+              Group?
+            </md-checkbox>
           </div>
         </div>
       </div>

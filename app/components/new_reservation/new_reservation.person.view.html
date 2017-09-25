@@ -121,8 +121,8 @@
 
       <button type='submit'
               class='btn btn-lg btn-success w-full no-top-radius md-content-button'
-              ng-class="{ 'disabled': reserv.formIsValid() || reserv.is_submitting }"
-              ng-show='reserv.selected_index == 5 && !reserv.success'>
+              ng-class="{ 'disabled': !reserv.formIsValid() || reserv.is_submitting }"
+              ng-show='reserv.isPersonTab() && !reserv.success'>
         <span>RESERVEER</span>
       </button>
     </div>

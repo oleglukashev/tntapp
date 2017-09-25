@@ -1,0 +1,45 @@
+<md-tab ng-disabled="!reserv.reservation.group">
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-account-multiple'></i></div>
+    <div class='text-center l-h'>GROUP</div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='b-t' flex>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4>Groups</h4>
+        </div>
+      </div>
+      <div class='wrapper'>
+        <label ng-repeat='part in reserv.reservation.reservation_parts'
+               class='btn btn-default block m-b-xs no-shadow text-success text-left'
+               ng-click='reserv.selectPart()'
+               ng-model='reserv.current_part'
+               btn-radio='part'>
+          <span class='m-r-lg'>
+            <i class='mdi mdi-clock'></i>
+            {{ reserv.dateFormat(part.date, 'DD.MM.YY') }} {{ part.time }}
+          </span>
+          <span class='m-r-lg' ng-show='part.number_of_persons'>
+            <i class='mdi mdi-account-multiple'></i>
+            <small class='font-thin m-r-xs'>{{ part.number_of_persons }}x</small>
+          </span>
+          <span class='m-r-lg' ng-show='part.product'>
+            <i class='mdi mdi-silverware-variant'></i>
+            <small class='font-thin'>{{ reserv.ReservationLogic.getProductNameByProductId(reserv.products, part.product) }}</small>
+          </span>
+          <span class='m-r-lg' ng-show='part.tables.length'>
+            <img class='table_icon' src='public/images/table.svg' />
+            <small class='font-thin' ng-bind='reserv.Table.getTableNumbersByTableIds(reserv.tables, part.tables).join(", ")'></small>
+          </span>
+          <div class='pull-right'>
+            <i class='mdi mdi-delete' ng-click='reserv.removePart($event, $index);'></i>
+          </div>
+        </label>
+
+        <label ng-click='reserv.addPart()'
+               class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>Add groep</label>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>

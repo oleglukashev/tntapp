@@ -3,11 +3,11 @@ export default class ReservationLogic {
     'ngInject';
 
     this.filterFilter = filterFilter;
-    this.choose_person_count_is_opened = false;
+    this.choose_number_of_persons_is_opened = false;
 
     this.pagination = {
-      customer: { type: 1, date: 2, person_count: 3, product: 4, time: 5, person: 6 },
-      backend: { date: 1, person_count: 2, product: 3, time: 4, zone: 5, person: 6 },
+      customer: { type: 1, date: 2, number_of_persons: 3, product: 4, time: 5, person: 6 },
+      backend: { date: 1, number_of_persons: 2, product: 3, time: 4, zone: 5, group: 6, person: 7 },
     };
   }
 
@@ -40,8 +40,8 @@ export default class ReservationLogic {
     return result;
   }
 
-  triggerChoosePersonCount() {
-    this.choose_person_count_is_opened = !this.choose_person_count_is_opened;
+  triggerChooseNumberOfPersons() {
+    this.choose_number_of_persons_is_opened = !this.choose_number_of_persons_is_opened;
   }
 
   openedTimeRangePeriod(availableTime) {
