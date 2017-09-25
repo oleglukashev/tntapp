@@ -2,10 +2,10 @@
   <md-tab-label>
     <div class='text-center l-h'><i class='mdi mdi-clock'></i></div>
     <div class='text-center l-h'>
-      <span ng-show='reserv.reservation.time'>
-        {{ reserv.reservation.time }}
+      <span ng-show='reserv.current_part.time'>
+        {{ reserv.current_part.time }}
       </span>
-      <span ng-hide='reserv.reservation.time'>TIJDSTIP</span>
+      <span ng-hide='reserv.current_part.time'>TIJDSTIP</span>
     </div>
   </md-tab-label>
   <md-tab-body>
@@ -18,13 +18,19 @@
 
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <div class='w-xl'>
-          <div class='text-center' ng-show='reserv.time_is_loaded'>
-            <label ng-repeat='time_obj in reserv.ReservationLogic.openedTimeRangePeriod(reserv.available_time)'
-                   ng-click='reserv.selectTab(reserv.pagination["time"])'
-                   ng-class="{ 'btn-success': reserv.reservation.time == time_obj.time,
+          <!-- <div class='md-form-group no-padder'>
+            <md-radio-group ng-model="reserv.current_part.time_type">
+              <md-radio-button value='single' class='inline md-success'>Single</md-radio-button>
+              <md-radio-button value='range' class='inline md-success'>Range</md-radio-button>
+            </md-radio-group>
+          </div> -->
+          <div class='text-center' ng-show='reserv.current_part.time_is_loaded'>
+            <label ng-repeat='time_obj in reserv.ReservationLogic.openedTimeRangePeriod(reserv.current_part.available_time)'
+                   ng-change='reserv.changeTimePostProcess()'
+                   ng-class="{ 'btn-success': reserv.current_part.time == time_obj.time,
                                'disabled': reserv.timeIsDisabled(time_obj)}"
                    class='btn btn-default btn-lg m-xs m-l-none no-shadow text-success'
-                   ng-model='reserv.reservation.time'
+                   ng-model='reserv.current_part.time'
                    uncheckable
                    btn-radio='time_obj.time'>{{ time_obj.time }}</label>
           </div>
