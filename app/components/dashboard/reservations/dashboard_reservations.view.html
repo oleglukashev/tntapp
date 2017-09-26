@@ -33,7 +33,8 @@
         <div ng-repeat='reservation in reservations.filtered(reservations.today)'>
           <div class='reservation_today md-list-item'
                data-ng-include=" 'dashboard_reservations.item.view.html' "
-               ng-repeat='reservation_part in reservation.reservation_parts'></div>
+               ng-repeat='reservation_part in reservation.reservation_parts'
+               ng-if='reservations.Reservation.isEqualDate(reservation_part.date_time, new Date())'></div>
         </div>
       </div>
     </div>

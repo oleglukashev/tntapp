@@ -170,6 +170,10 @@ export default class NewReservationCtrl {
         !this.reservation.mail) {
         result = false;
       }
+
+      if (!this.is_customer_reservation && !part.tables.length) {
+        result = false;
+      }
     });
 
     return result;

@@ -116,4 +116,8 @@ export default class Reservation {
       data,
     }).then((result) => result.data);
   }
+
+  isEqualDate(part_date_time, date_time) {
+    return this.moment(part_date_time).format('DD-MM-YYYY') === this.moment(date_time).format('DD-MM-YYYY');
+  }
 }
