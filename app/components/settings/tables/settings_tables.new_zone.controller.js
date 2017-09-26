@@ -2,7 +2,7 @@ export default class SettingsTablesNewZoneCtrl {
   constructor(User, Zone, AppConstants, zones, $scope, $modalInstance) {
     'ngInject';
 
-    this.current_company = User.getCompanyId();
+    this.current_company_id = User.getCompanyId();
 
     this.Zone = Zone;
     this.zones = zones;
