@@ -26,7 +26,7 @@ export default class Table {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/table/occupied?datetime=${data.datetime}&part_id=${data.part_id}`,
+      url: `${API_URL}/company/${companyId}/table/occupied?datetime=${data.date_time}&part_id=${data.part_id}`,
       method: 'GET',
     }).then(result => result.data);
   }
