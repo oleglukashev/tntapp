@@ -25,7 +25,7 @@
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <div class='w-xl'>
             <div class='text-center' ng-show='reserv.current_part.time_is_loaded'>
-              <div class='md-form-group no-padder' ng-if='reserv.reservation.group'>
+              <div class='md-form-group no-padder' ng-if='reserv.reservation.is_group'>
               <md-radio-group ng-model="reserv.current_part.time_type">
                 <md-radio-button value='single' class='inline md-success'>Single</md-radio-button>
                 <md-radio-button value='range' class='inline md-success'>Range</md-radio-button>
