@@ -118,7 +118,7 @@ export default class NewReservationCtrl {
       reservation_parts: [],
     };
 
-    if (!this.reservation.group && parts.length > 1) {
+    if (!this.reservation.is_group && parts.length > 1) {
       this.reservation.reservation_parts = [this.current_part];
     }
 
@@ -353,7 +353,9 @@ export default class NewReservationCtrl {
   }
 
   canLoadTime() {
-    return this.current_part.product && this.current_part.number_of_persons && this.current_part.date;
+    return this.current_part.product &&
+           this.current_part.number_of_persons &&
+           this.current_part.date;
   }
 
   preloadData() {
