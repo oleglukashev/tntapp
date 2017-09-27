@@ -16,9 +16,13 @@
                ng-click='reserv.selectPart()'
                ng-model='reserv.current_part'
                btn-radio='part'>
-          <span class='m-r-lg'>
+          <span class='m-r-lg' ng-if='part.time_type == "single"'>
             <i class='mdi mdi-clock'></i>
             {{ reserv.dateFormat(part.date, 'DD.MM.YY') }} {{ part.time }}
+          </span>
+          <span class='m-r-lg' ng-if='part.time_type == "range"'>
+            <i class='mdi mdi-clock'></i>
+            {{ reserv.dateFormat(part.date, 'DD.MM.YY') }} {{ part.start_date_time }} - {{ part.end_date_time }}
           </span>
           <span class='m-r-lg' ng-show='part.number_of_persons'>
             <i class='mdi mdi-account-multiple'></i>

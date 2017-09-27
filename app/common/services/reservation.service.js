@@ -117,7 +117,12 @@ export default class Reservation {
     }).then((result) => result.data);
   }
 
-  isEqualDate(part_date_time, date_time) {
-    return this.moment(part_date_time).format('DD-MM-YYYY') === this.moment(date_time).format('DD-MM-YYYY');
+  isEqualDateOfPart(part, dateTime) {
+    let partDateTime = part.date_time;
+
+    if (!partDateTime) {
+      partDateTime = part.start_date_time;
+    }
+    return this.moment(partDateTime).format('DD-MM-YYYY') === this.moment(dateTime).format('DD-MM-YYYY');
   }
 }

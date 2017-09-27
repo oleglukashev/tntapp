@@ -41,7 +41,8 @@
       <i class='mdi mdi-account-multiple'></i>
       <small class='font-thin m-r-xs'>{{ reservation_part.number_of_persons }}x</small>
       <i class='mdi mdi-clock'></i>
-      <small class='font-thin m-r-xs' ng-bind='reservations.ReservationStatus.parsedDate(reservation_part.date_time)'></small>
+      <small class='font-thin m-r-xs' ng-if='reservation_part.date_time'>{{ reservations.ReservationStatus.parsedDate(reservation_part.date_time) }}</small>
+      <small class='font-thin m-r-xs' ng-if='reservation_part.start_date_time'>{{ reservations.ReservationStatus.parsedDate(reservation_part.start_date_time) }} - {{ reservations.ReservationStatus.parsedDate(reservation_part.end_date_time) }}</small>
       <span ng-show='reservations.getTableNumbersByTableIds(reservation_part.table_ids).length'>
         <img class='table_icon' src='public/images/table.svg' />
         <small class='font-thin' ng-bind='reservations.getTableNumbersByTableIds(reservation_part.table_ids).join(", ")'></small>

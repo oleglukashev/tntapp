@@ -34,7 +34,7 @@
           <div class='reservation_today md-list-item'
                data-ng-include=" 'dashboard_reservations.item.view.html' "
                ng-repeat='reservation_part in reservation.reservation_parts'
-               ng-if='reservations.Reservation.isEqualDate(reservation_part.date_time, reservations.moment())'></div>
+               ng-if='reservations.Reservation.isEqualDateOfPart(reservation_part, reservations.moment())'></div>
         </div>
       </div>
     </div>
