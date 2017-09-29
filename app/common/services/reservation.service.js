@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export default class Reservation {
-  constructor(JWT, Upload, moment, $http, $q) {
+  constructor(JWT, Upload, moment, $http, $q, filterFilter) {
     'ngInject';
 
     this.moment = moment;
@@ -9,6 +9,27 @@ export default class Reservation {
     this.$q = $q;
     this.JWT = JWT;
     this.Upload = Upload;
+
+    this.filterFilter = filterFilter;
+    this.choose_number_of_persons_is_opened = false;
+    this.moment = moment;
+
+    this.pagination = {
+      customer: { type: 1, date: 2, number_of_persons: 3, product: 4, time: 5, person: 6 },
+      backend: { date: 1, number_of_persons: 2, product: 3, time: 4, zone: 5, group: 6, person: 7 },
+      edit: { date: 1, number_of_persons: 2, product: 3, zone: 4 },
+    };
+
+    this.init_date = new Date();
+    this.max_date = this.moment().add(1, 'Y');
+    this.format = 'dd-MM-yyyy';
+
+    this.date_options = {
+      formatYear: 'yy',
+      startingDay: 1,
+      showWeeks: false,
+      class: 'datepicker',
+    };
   }
 
   getAll(companyId, date) {
@@ -124,5 +145,50 @@ export default class Reservation {
       partDateTime = part.start_date_time;
     }
     return this.moment(partDateTime).format('DD-MM-YYYY') === this.moment(dateTime).format('DD-MM-YYYY');
+  }
+
+  getProductNameByProductId(products, productId) {
+    const product = this.filterFilter(products, { id: productId })[0];
+    return product ? product.name : null;
+  }
+
+  getTableNumberByTableId(tables, tableId) {
+    const table = this.filterFilter(tables, { id: tableId })[0];
+    return table ? table.table_number : null;
+  }
+
+  getPersonCountByTableId(tables, tableId) {
+    const table = this.filterFilter(tables, { id: tableId })[0];
+    return table ? table.number_of_persons : null;
+  }
+
+  isDisabledTableByTableId(tables, occupiedTables, tableId) {
+    const table = this.filterFilter(tables, { id: tableId })[0];
+    let result = table ? table.hidden === true : false;
+
+    if (!result && occupiedTables) {
+      result = typeof occupiedTables[tableId] !== 'undefined';
+    }
+
+    return result;
+  }
+
+  triggerChooseNumberOfPersons() {
+    this.choose_number_of_persons_is_opened = !this.choose_number_of_persons_is_opened;
+  }
+
+  openedTimeRangePeriod(availableTime) {
+    if (!availableTime.length) return [];
+
+    const openedTimes = this.filterFilter(availableTime, { is_open: true });
+
+    if (openedTimes.length > 0) {
+      const min = openedTimes[0].time;
+      const max = openedTimes[openedTimes.length - 1].time;
+
+      return this.filterFilter(availableTime, item => item.time >= min && item.time <= max);
+    }
+
+    return [];
   }
 }

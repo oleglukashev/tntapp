@@ -26,7 +26,7 @@ export default class UserMenuCtrl {
         reservation: () => {
           return reservation;
         },
-        reservation_part: () => {
+        reservationPart: () => {
           return reservation_part;
         },
       }

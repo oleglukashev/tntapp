@@ -35,11 +35,6 @@ export default function templates($templateCache) {
   $templateCache.put('new_reservation.person.view.html', require('./components/new_reservation/new_reservation.person.view.html'));
   $templateCache.put('new_reservation.type.view.html', require('./components/new_reservation/new_reservation.type.view.html'));
   $templateCache.put('new_reservation.group.view.html', require('./components/new_reservation/new_reservation.group.view.html'));
-  $templateCache.put('reservation_part.date.view.html', require('./components/reservation_parts/reservation_part.date.view.html'));
-  $templateCache.put('reservation_part.person_count.view.html', require('./components/reservation_parts/reservation_part.person_count.view.html'));
-  $templateCache.put('reservation_part.product.view.html', require('./components/reservation_parts/reservation_part.product.view.html'));
-  $templateCache.put('reservation_part.time.view.html', require('./components/reservation_parts/reservation_part.time.view.html'));
-  $templateCache.put('reservation_part.zone.view.html', require('./components/reservation_parts/reservation_part.zone.view.html'));
 
   //angular-bootstrap tpls
   $templateCache.put("template/modal/backdrop.html",

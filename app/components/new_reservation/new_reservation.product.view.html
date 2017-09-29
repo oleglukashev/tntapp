@@ -2,7 +2,7 @@
   <md-tab-label>
     <div class='text-center l-h'><i class='mdi mdi-silverware-variant'></i></div>
     <div class='text-center l-h'>
-      <span ng-show='reserv.current_part.product'>{{ reserv.ReservationLogic.getProductNameByProductId(reserv.products, reserv.current_part.product) }}</span>
+      <span ng-show='reserv.current_part.product'>{{ reserv.Reservation.getProductNameByProductId(reserv.products, reserv.current_part.product) }}</span>
       <span ng-hide='reserv.current_part.product'>PRODUCT</span>
     </div>
   </md-tab-label>

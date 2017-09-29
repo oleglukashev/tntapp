@@ -15,12 +15,12 @@
       </div>
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <datepicker ng-change='reserv.changeDatePostProcess()'
-                    starting-day="1"
-                    show-weeks="false"
-                    datepicker-options='reserv.date_options'
+                    starting-day='1'
+                    show-weeks='false'
+                    datepicker-options='reserv.Reservation.date_options'
                     ng-model='reserv.current_part.date'
-                    min-date='reserv.init_date'
-                    max-date='reserv.max_date'
+                    min-date='reserv.Reservation.init_date'
+                    max-date='reserv.Reservation.max_date'
                     class='datepicker'></datepicker>
       </div>
     </div>

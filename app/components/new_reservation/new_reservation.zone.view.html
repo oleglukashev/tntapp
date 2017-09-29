@@ -26,12 +26,12 @@
           <p><small class='text-muted'>{{ reserv.current_part.zone.name }}:</small></p>
           <label ng-repeat='table_id in reserv.current_part.zone.table_ids'
                  ng-change='reserv.changeTableValuesPostProcess()'
-                 ng-class="{ 'disabled': reserv.ReservationLogic.isDisabledTableByTableId(reserv.tables, reserv.current_part.occupied_tables, table_id) }"
+                 ng-class="{ 'disabled': reserv.Reservation.isDisabledTableByTableId(reserv.tables, reserv.current_part.occupied_tables, table_id) }"
                  class='btn btn-default block m-b-xs no-shadow text-success text-left'
                  ng-model='reserv.current_part.tables_values[table_id]'
                  uncheckable
                  btn-checkbox>
-            <span class='m-r-lg'>Tafel {{ reserv.ReservationLogic.getTableNumberByTableId(reserv.tables, table_id) }}</span><span>{{ reserv.ReservationLogic.getPersonCountByTableId(reserv.tables, table_id) }} personen</span>
+            <span class='m-r-lg'>Tafel {{ reserv.Reservation.getTableNumberByTableId(reserv.tables, table_id) }}</span><span>{{ reserv.Reservation.getPersonCountByTableId(reserv.tables, table_id) }} personen</span>
           </label>
 
           <label ng-click='reserv.current_part.zones_is_showed = true'
@@ -39,10 +39,10 @@
 
           <button type='button'
                   class='btn btn-md btn-success w-full'
+                  ng-hide='reserv.current_part.id'
                   ng-click='reserv.selectTab(reserv.pagination.zone);'>Ok</button>
         </div>
       </div>
-
     </div>
   </md-tab-body>
 </md-tab>

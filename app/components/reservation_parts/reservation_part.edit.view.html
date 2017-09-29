@@ -17,21 +17,21 @@
                  md-stretch-tabs
                  md-dynamic-height>
           
-          <div data-ng-include=" 'reservation_part.date.view.html' "></div>
+          <!-- <div data-ng-include=" 'new_reservation.date.view.html' "></div> -->
 
-          <div data-ng-include=" 'reservation_part.person_count.view.html' "></div>
+          <div data-ng-include=" 'new_reservation.number_of_persons.view.html' "></div>
 
-          <div data-ng-include=" 'reservation_part.product.view.html' "></div>
+          <div data-ng-include=" 'new_reservation.product.view.html' "></div>
 
-          <div data-ng-include=" 'reservation_part.time.view.html' "></div>
+          <!-- <div data-ng-include=" 'reservation_part.time.view.html' "></div> -->
           
-          <div data-ng-include=" 'reservation_part.zone.view.html' "></div>
+          <div data-ng-include=" 'new_reservation.zone.view.html' "></div>
         </md-tabs>
         <button type='submit'
-                class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
-                ng-class="{ 'disabled': reserv.formIsValid() || reserv.is_submitting }">
-          <span>RESERVEER</span>
-        </button>
+                class='btn btn-lg btn-success w-full no-top-radius md-content-button'
+                ng-class="{ 'disabled': !reserv.formIsValid() || reserv.is_submitting }">
+        <span>RESERVEER</span>
+      </button>
 
       </div>
 
