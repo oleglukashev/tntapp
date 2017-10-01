@@ -85,10 +85,6 @@ class SearchCtrl {
     }
   }
 
-  parsedDate(date) {
-    return this.moment(date).format('HH:mm');
-  }
-
   getTableNumbersByTableIds(table_ids) {
     let result = [];
     table_ids.forEach(value => {

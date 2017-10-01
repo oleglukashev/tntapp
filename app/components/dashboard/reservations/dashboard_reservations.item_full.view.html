@@ -1,7 +1,8 @@
 <div class='panel-body fixing-vertical-alignment reservation_full_wrapper' ng-if="searchFlag || tables.includes(reservation_part.table_ids[0])">
 
   <div class='col-md-2'>
-    <div class='md-list-item-left img-circle m-t-sm grey-100'>
+    <div ng-class='reservations.ReservationStatus.getIconColor(reservation)'
+         class='md-list-item-left img-circle m-t-sm'>
       <div class='pull-left m-l-sm'>
         <i ng-class='reservations.ReservationStatus.getIcon(reservation)'
            class='mdi i-20'
@@ -11,7 +12,8 @@
   </div>
   <div class='col-md-2'>
     <i class='mdi mdi-clock'></i>
-    {{ reservations.ReservationStatus.parsedDate(reservation_part.date_time) }}
+    <small ng-if='reservation_part.date_time'>{{ reservations.moment(reservation_part.date_time).format('DD.MM.YYYY HH:mm') }}</small>
+    <small ng-if='reservation_part.start_date_time'>{{ reservations.moment(reservation_part.start_date_time).format('DD.MM.YYYY') }} {{ reservations.moment(reservation_part.start_date_time).format('HH:mm') }} - {{ reservations.moment(reservation_part.end_date_time).format('HH:mm') }}</small>
   </div>
   <div class='col-md-2'>
     <a ng-click='user.openCustomerMenu(reservation.customer.id, reservation_part.id)' ng-controller='UserMenuCtrl as user'>

@@ -97,10 +97,6 @@ export default class ReservationStatus {
     return reservations;
   }
 
-  parsedDate(date) {
-    return this.moment(date).format('HH:mm');
-  }
-
   getIcon(reservation) {
     const now = this.moment().valueOf();
     const reservationPart = reservation.reservation_parts[0];
