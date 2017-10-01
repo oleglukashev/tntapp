@@ -31,7 +31,7 @@
                 <md-radio-button value='range' class='inline md-success'>Range</md-radio-button>
               </md-radio-group>
             </div>
-            <label ng-repeat='time_obj in reserv.Reservation.openedTimeRangePeriod(reserv.current_part.available_time)'
+            <label ng-repeat='time_obj in reserv.Reservation.openedTimeRangePeriod(reserv.current_part.available_time, reserv.current_part.date)'
                    ng-if='reserv.current_part.time_type == "single"'
                    ng-change='reserv.changeTimePostProcess(time_obj.time)'
                    ng-class="{ 'btn-success': reserv.current_part.time == time_obj.time,
@@ -41,7 +41,7 @@
                    uncheckable
                    btn-radio='time_obj.time'>{{ time_obj.time }}</label>
 
-            <label ng-repeat='time_obj in reserv.Reservation.openedTimeRangePeriod(reserv.current_part.available_time)'
+            <label ng-repeat='time_obj in reserv.Reservation.openedTimeRangePeriod(reserv.current_part.available_time, reserv.current_part.date)'
                    ng-if='reserv.current_part.time_type == "range"'
                    ng-change='reserv.changeTimePostProcess(time_obj.time)'
                    ng-class="{ 'btn-success': reserv.current_part.time_range[time_obj.time],
