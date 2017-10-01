@@ -177,7 +177,7 @@ export default class Reservation {
     this.choose_number_of_persons_is_opened = !this.choose_number_of_persons_is_opened;
   }
 
-  openedTimeRangePeriod(availableTime) {
+  openedTimeRangePeriod(availableTime, date) {
     if (!availableTime.length) return [];
 
     const openedTimes = this.filterFilter(availableTime, { is_open: true });
@@ -185,8 +185,12 @@ export default class Reservation {
     if (openedTimes.length > 0) {
       const min = openedTimes[0].time;
       const max = openedTimes[openedTimes.length - 1].time;
+      const now = this.moment();
+      const formatedDate = this.moment(date).format('YYYY-MM-DD');
 
-      return this.filterFilter(availableTime, item => item.time >= min && item.time <= max);
+      return this.filterFilter(availableTime, item => item.time >= min &&
+        item.time <= max &&
+        this.moment(`${formatedDate} ${item.time}`) >= now);
     }
 
     return [];
