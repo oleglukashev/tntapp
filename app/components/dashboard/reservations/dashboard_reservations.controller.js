@@ -83,7 +83,7 @@ export default class DashboardReservationsCtrl {
 
         if (reservation.status === 'request' &&
             datetime &&
-            this.moment(datetime).format('YYYY-MM-DD') === this.moment().format('YYYY-MM-DD')) {
+            this.moment(datetime) >= this.moment()) {
           if (!actionRequiredHasReservation) {
             this.action_required.push(reservation);
           }

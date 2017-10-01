@@ -121,6 +121,19 @@ export default class ReservationStatus {
     return this.AppConstants.reservationStatusClasses[reservation.status];
   }
 
+  getIconColor(reservation) {
+    const colors = {
+      'mdi-star-outline': 'yellow-100',
+      'mdi-checkbox-blank-circle-outline': 'orange-100',
+      'mdi-check': 'green-100',
+      'mdi-close': 'red-100',
+      'mdi-exclamation': 'red-500',
+      'mdi-clock': 'orange-500',
+    };
+
+    return colors[this.getIcon(reservation)];
+  }
+
   setPresent(companyId, reservation, isPresent) {
     this.updatePresent(companyId, reservation.id, isPresent)
       .then(() => {
