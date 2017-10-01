@@ -1,5 +1,6 @@
 <div ng-class='reservation.status'>
-  <div class='md-list-item-left img-circle m-t-sm grey-100'>
+  <div ng-class='reservations.ReservationStatus.getIconColor(reservation)'
+       class='md-list-item-left img-circle m-t-sm'>
     <div class='pull-left m-l-sm'>
       <i ng-class='reservations.ReservationStatus.getIcon(reservation)'
          class='mdi i-20'
