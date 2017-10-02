@@ -96,6 +96,8 @@ export default class UserMenuEditCtrl {
 
     if (userData.date_of_birth)
       userData.date_of_birth = this.moment(userData.date_of_birth).format('DD-MM-YYYY');
+    else
+      userData.date_of_birth = null;
 
     let data = {
       first_name: userData.first_name,
@@ -115,6 +117,7 @@ export default class UserMenuEditCtrl {
     this.Customer.edit(this.current_company_id, userData.id, data)
       .then((result) => {
         userData = Object.assign(data, userData);
+        this.$rootScope.$broadcast('ProfilesCtrl.reload_customers');
         this.closeModal();
       },
       (error) => {
