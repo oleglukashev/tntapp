@@ -77,6 +77,7 @@ export default class NewReservationCtrl {
     this.is_submitting = true;
     const name = this.reservation.name || '';
     const parts = this.reservation.reservation_parts;
+    const dateOfBirth = this.reservation.date_of_birth ? this.moment(this.reservation.date_of_birth).format('DD-MM-YYYY') : undefined;
 
     const data = {
       language: this.reservation.language,
@@ -95,7 +96,7 @@ export default class NewReservationCtrl {
         house_number: this.reservation.house_number,
         zipcode: this.reservation.zipcode,
         city: this.reservation.city,
-        date_of_birth: this.moment(this.reservation.date_of_birth).format('DD-MM-YYYY'),
+        date_of_birth: dateOfBirth,
         gender: this.reservation.gender,
         regular: 0,
       },
