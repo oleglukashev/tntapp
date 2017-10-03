@@ -170,6 +170,22 @@
             </div>
           </div>
         </a>
+
+        <a md-ink-ripple
+           ng-if="reservation.reservation_p_d_f"
+           ng-click="user.loadPDF(reservation.id)">
+          <div class="md-list-item-left">
+            <i class="mdi mdi-attachment icon-muted i-24"></i>
+          </div>
+          <div class="md-list-item-content">
+            <h3 class="text-md">
+              PDF for {{ user.parsedDate(reservation_part.date_time) }}
+            </h3>
+            <small class="font-thin">
+              Load PDF file
+            </small>
+          </div>
+        </a>
       </li>
 
     </ul>

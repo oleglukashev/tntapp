@@ -45,6 +45,26 @@ export default class Reservation {
     }).then((result) => result.data);
   }
 
+  getPDF(companyId, reservationId) {
+    const deferred = this.$q.defer();
+
+    if (!(companyId || reservationId)) {
+      return deferred.promise;
+    }
+
+    return this.$http({
+      url: API_URL + '/company/' + companyId + '/reservation/' + reservationId + '/get_pdf',
+      method: 'GET',
+    }).then((result) => {
+      const anchor = angular.element('<a/>');
+      anchor.attr({
+        href: encodeURI(result.data),
+        target: '_blank',
+        download: 'export.pdf',
+      })[0].click();
+    });
+  }
+
   exportCSV(companyId, date) {
     const deferred = this.$q.defer();
 

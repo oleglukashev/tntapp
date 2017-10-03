@@ -1,11 +1,12 @@
 import angular from 'angular';
 
 export default class UserMenuCtrl {
-  constructor(User, CustomerNote, CustomerPreference, CustomerAllergies, Customer, moment, $rootScope, $mdSidenav, $modal) {
+  constructor(User, Reservation, CustomerNote, CustomerPreference, CustomerAllergies, Customer, moment, $rootScope, $mdSidenav, $modal) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
+    this.Reservation        = Reservation;
     this.CustomerNote       = CustomerNote;
     this.CustomerPreference = CustomerPreference;
     this.CustomerAllergies  = CustomerAllergies;
@@ -15,6 +16,12 @@ export default class UserMenuCtrl {
     this.$rootScope = $rootScope;
     this.$mdSidenav = $mdSidenav;
     this.$modal     = $modal;
+  }
+
+  loadPDF(reservation_id) {
+    this.Reservation
+      .getPDF(this.current_company_id, reservation_id)
+      .then();
   }
 
   openEditReservationModal(reservation, reservation_part) {
