@@ -7,7 +7,7 @@ export default class UserMenuCtrl {
   ) {
     'ngInject';
 
-    this.current_company_id = User.getCompanyId();
+    this.currentCompanyId = User.getCompanyId();
 
     this.Reservation = Reservation;
     this.CustomerNote = CustomerNote;
@@ -23,7 +23,7 @@ export default class UserMenuCtrl {
 
   loadPDF(reservationId) {
     this.Reservation
-      .getPDF(this.current_company_id, reservationId)
+      .getPDF(this.currentCompanyId, reservationId)
       .then();
   }
 
@@ -81,28 +81,28 @@ export default class UserMenuCtrl {
       regular: !customer.regular,
     };
 
-    this.Customer.edit(this.current_company_id, customer.id, data).then((responseCustomer) => {
+    this.Customer.edit(this.currentCompanyId, customer.id, data).then((responseCustomer) => {
       this.$rootScope.customer = responseCustomer;
     });
   }
 
   openCustomerMenu(customerId, reservationPartId) {
-    this.CustomerPreference.getAll(this.current_company_id, customerId)
+    this.CustomerPreference.getAll(this.currentCompanyId, customerId)
       .then((preferences) => {
         this.$rootScope.customer_preferences = preferences;
       });
 
-    this.CustomerNote.getAll(this.current_company_id, customerId)
+    this.CustomerNote.getAll(this.currentCompanyId, customerId)
       .then((notes) => {
         this.$rootScope.customer_notes = notes;
       });
 
-    this.CustomerAllergies.getAll(this.current_company_id, customerId)
+    this.CustomerAllergies.getAll(this.currentCompanyId, customerId)
       .then((allergies) => {
         this.$rootScope.customer_allergies = allergies;
       });
 
-    this.Customer.findById(this.current_company_id, customerId).then((customer) => {
+    this.Customer.findById(this.currentCompanyId, customerId).then((customer) => {
       this.$rootScope.customer = customer;
     });
 
@@ -112,7 +112,7 @@ export default class UserMenuCtrl {
   }
 
   loadCustomerReservations(customerId, reservationPartId) {
-    this.Customer.searchReservationsByCustomerId(this.current_company_id, customerId)
+    this.Customer.searchReservationsByCustomerId(this.currentCompanyId, customerId)
       .then((reservations) => {
         this.$rootScope.customer_reservations = reservations;
 
