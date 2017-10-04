@@ -189,7 +189,7 @@ export default class AgendaCtrl {
       },
     });
 
-    modalInstance.result.then((selectedItem) => {
+    modalInstance.result.then(() => {
       this.loadReservations();
     }, () => {
       this.loadReservations();
@@ -199,24 +199,23 @@ export default class AgendaCtrl {
   getQuarterClass(hour, quarter) {
     const timePart = (hour * 4) + quarter;
     if (this.open_hours[this.dragged_product] && (
-        timePart < this.open_hours[this.dragged_product].start ||
-        timePart > this.open_hours[this.dragged_product].end
-      )) {
+      timePart < this.open_hours[this.dragged_product].start ||
+      timePart > this.open_hours[this.dragged_product].end
+    )) {
       return 'inactive';
     }
     return '';
   }
 
   loadTables() {
-    this.Table
-      .getAll(this.current_company_id)
-        .then(
-          (tables) => {
-            this.tables = tables;
-            this.is_loaded = true;
+    this.Table.getAll(this.current_company_id)
+      .then(
+        (tables) => {
+          this.tables = tables;
+          this.is_loaded = true;
 
-            this.zones.forEach((zone) => {
-              this.tables_by_zone[zone.id] = this.filterFilter(tables, { zones: zone.id })
+          this.zones.forEach((zone) => {
+            this.tables_by_zone[zone.id] = this.filterFilter(tables, { zones: zone.id })
               .map((item) => {
                 return {
                   id: item.id,
@@ -226,9 +225,9 @@ export default class AgendaCtrl {
                   zones: item.zones,
                 };
               });
-            });
-            this.loadTimeRanges();
           });
+          this.loadTimeRanges();
+        });
   }
 
   loadTimeRanges() {

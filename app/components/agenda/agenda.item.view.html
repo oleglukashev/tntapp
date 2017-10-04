@@ -4,7 +4,11 @@
     <div class='pull-left m-l-sm'>
       <i ng-class='item.icon'
          class='mdi i-20'
+<<<<<<< HEAD
          ng-click='agenda.setPresent(item.reservation)'></i>
+=======
+         ng-click='agenda.setPresent(item.reservation, !item.reservation.is_present)'></i>
+>>>>>>> add sort to agenda
     </div>
   </div>
 </td>
@@ -13,12 +17,16 @@
   {{ item.general_date_time }}
 </td>
 <td>
+<<<<<<< HEAD
   {{ item.product_name }}
 </td>
 <td>
   {{ item.last_name }}
   <br />
   {{ item.first_name }}
+=======
+  {{ item.name }}
+>>>>>>> add sort to agenda
 </td>
 <td>
   <i class='mdi mdi-account-multiple'></i>
