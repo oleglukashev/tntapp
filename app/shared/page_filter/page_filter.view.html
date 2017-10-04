@@ -1,5 +1,5 @@
 <div class='page_filter m-b-md clearfix'>
-  <div class='pull-left m-r-md'>
+  <div class='pull-left m-r-md' ng-if='!hideDatePicker'>
     <md-datepicker ng-model='page_filter.date_filter'></md-datepicker>
   </div>
   <span class='no-margin md-icon-button md-button mdi mdi-printer i-24'
