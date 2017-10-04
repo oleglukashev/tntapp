@@ -46,6 +46,7 @@ import charts_controller                  from './components/dashboard/charts/ch
 import auth                               from './components/auth'
 import satellizer                         from 'satellizer'
 import chartjs                            from 'angular-chart.js'
+import                                         './common/filters/capitalize'
 import                                         './common/services'
 import                                         './common/directives'
 import profiles                           from './components/profiles'
@@ -87,6 +88,7 @@ const app = angular
     rzModule,
     'app.services',
     'app.directives',
+    'app.filters',
     chartjs,
     profiles,
     constants,

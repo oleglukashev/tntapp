@@ -85,7 +85,11 @@
                        data-product-id='{{ item.product_id }}'
                        data-id='{{ item.id }}'
                        drag-channel='move'>
-                    <i class='mdi mdi-account-multiple i-20'></i>
+                    <i class='mdi i-20'
+                       ng-class='agenda.ReservationStatus.getIcon(item.reservation)'
+                       ng-click='agenda.ReservationStatus.setPresent(agenda.current_company_id, item.reservation, !item.reservation.is_present); agenda.loadReservations()'
+                       title='{{ item.status | capitalize }}'
+                    ></i>
                     <a ng-click='user.openCustomerMenu(item.customer.id, item.id)' ng-controller='UserMenuCtrl as user'>
                       {{ item.number_of_persons }}
                       {{ agenda.products[item.product_id] }}

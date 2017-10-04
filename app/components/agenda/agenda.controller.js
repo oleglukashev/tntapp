@@ -266,6 +266,8 @@ export default class AgendaCtrl {
                   part.left = this.timeToCoords(part.date_time);
                   part.width = this.durationToWidth(part.duration_minutes);
                   part.customer = reservation.customer;
+                  part.status = reservation.status;
+                  part.reservation = reservation;
                   this.tables_by_part[tableId].push(part);
                 });
               }
