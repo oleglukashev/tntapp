@@ -14,11 +14,13 @@
       <div class='panel'>
         <div class='panel-heading'>Vandaag</div>
         <div class='md-list'>
-          <div ng-repeat='reservation in reservations.reservations' ng-show='reservations.reservations.length'>
-            <div class='md-list-item'
+          <div class='b-b'
+               ng-repeat='reservation in reservations.reservations' ng-show='reservations.reservations.length'>
+            <div class='md-list-item b-b-none'
                  data-ng-include=" 'dashboard_reservations.item.view.html' "
-                 ng-repeat='reservation_part in reservation.reservation_parts'
-                 ng-if='reservations.Reservation.isEqualDateOfPart(reservation_part, reservations.moment())'></div>
+                 ng-repeat='reservation_part in reservations.ReservationPart.partsByDate(reservation.reservation_parts, reservations.date_filter)'
+                 ng-init='hideIcon = $index > 0'
+                 ng-class='{ "p-t-none": $index > 0 }'></div>
           </div>
         </div>
       </div>

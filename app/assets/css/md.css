@@ -1476,30 +1476,19 @@
     position: relative;
     display: block;
     padding: 16px;
-
-
 }
 
 .md-list-focus:active {
     background-color: #f9f7f5;
-
-
 }
 
 .md-list-focus:focus {
     background-color: #f9f7f5;
-
-
 }
 
 .icon-muted {
     color: #d0d0d0;
-
 }
-
-
-
-
 
 .md-list-item:after {
     position: absolute;
@@ -1508,6 +1497,10 @@
     left: 0;
     border-bottom: 1px solid #dee5e7;
     content: "";
+}
+
+.md-list-item.b-b-none:after {
+    border-bottom: none;
 }
 
 .md-list-item:last-child.md-list-item:after {

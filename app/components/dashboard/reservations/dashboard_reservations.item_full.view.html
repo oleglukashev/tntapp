@@ -1,14 +1,15 @@
-<div class='panel-body fixing-vertical-alignment reservation_full_wrapper' ng-if="searchFlag || tables.includes(reservation_part.table_ids[0])">
-
+<div class='panel-body fixing-vertical-alignment reservation_full_wrapper' ng-if="searchFlag">
   <div class='col-md-2'>
-    <div ng-class='reservations.ReservationStatus.getIconColor(reservation)'
-         class='md-list-item-left img-circle m-t-sm'>
+    <div ng-if='!hideIcon'
+         ng-class='reservations.ReservationStatus.getIconColor(reservation)'
+         class='md-list-item-left img-circle'>
       <div class='pull-left m-l-sm'>
         <i ng-class='reservations.ReservationStatus.getIcon(reservation)'
            class='mdi i-20'
            ng-click='reservations.ReservationStatus.setPresent(reservations.current_company_id, reservation, !reservation.is_present)'></i>
       </div>
     </div>
+    <div ng-if='hideIcon' class='md-list-item-left'></div>
   </div>
   <div class='col-md-2'>
     <i class='mdi mdi-clock'></i>

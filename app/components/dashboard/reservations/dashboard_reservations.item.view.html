@@ -1,11 +1,14 @@
 <div ng-class='reservation.status'>
-  <div ng-class='reservations.ReservationStatus.getIconColor(reservation)'
+  <div ng-if='!hideIcon'
+       ng-class='reservations.ReservationStatus.getIconColor(reservation)'
        class='md-list-item-left img-circle m-t-sm'>
     <div class='pull-left m-l-sm'>
       <i ng-class='reservations.ReservationStatus.getIcon(reservation)'
          class='mdi i-20'
          ng-click='reservations.ReservationStatus.setPresent(reservations.current_company_id, reservation, !reservation.is_present)'></i>
     </div>
+  </div>
+  <div ng-if='hideIcon' class='md-list-item-left m-t-sm'>
   </div>
   <div class='pull-right'>
     <md-menu>

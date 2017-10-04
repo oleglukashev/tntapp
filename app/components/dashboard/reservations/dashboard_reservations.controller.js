@@ -1,13 +1,14 @@
 import angular from 'angular';
 
 export default class DashboardReservationsCtrl {
-  constructor(User, Reservation, ReservationStatus, Table, filterFilter, moment, $scope,
+  constructor(User, Reservation, ReservationStatus, ReservationPart, Table, filterFilter, moment, $scope,
     $rootScope, $mdSidenav, $modal, $window) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.Reservation = Reservation;
     this.ReservationStatus = ReservationStatus;
+    this.ReservationPart = ReservationPart;
     this.Table = Table;
     this.filterFilter = filterFilter;
     this.$rootScope = $rootScope;

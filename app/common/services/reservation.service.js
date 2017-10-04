@@ -165,15 +165,6 @@ export default class Reservation {
     }).then(result => result.data);
   }
 
-  isEqualDateOfPart(part, dateTime) {
-    let partDateTime = part.date_time;
-
-    if (!partDateTime) {
-      partDateTime = part.start_date_time;
-    }
-    return this.moment(partDateTime).format('DD-MM-YYYY') === this.moment(dateTime).format('DD-MM-YYYY');
-  }
-
   getProductNameByProductId(products, productId) {
     const product = this.filterFilter(products, { id: productId })[0];
     return product ? product.name : null;
