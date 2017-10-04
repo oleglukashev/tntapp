@@ -35,6 +35,7 @@ export default function templates($templateCache) {
   $templateCache.put('new_reservation.person.view.html', require('./components/new_reservation/new_reservation.person.view.html'));
   $templateCache.put('new_reservation.type.view.html', require('./components/new_reservation/new_reservation.type.view.html'));
   $templateCache.put('new_reservation.group.view.html', require('./components/new_reservation/new_reservation.group.view.html'));
+  $templateCache.put('agenda.item.view.html', require('./components/agenda/agenda.item.view.html'));
 
   //angular-bootstrap tpls
   $templateCache.put("template/modal/backdrop.html",

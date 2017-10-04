@@ -18,25 +18,43 @@
         </div>
       </accordion-heading>
 
-      <div class='list_wrapper' ng-show='agenda.reservations_view == "list"'>
-
-        <div class='panel-heading fixing-padding'>
-          <div class='col-md-2'>Aanwezig</div>
-          <div class='col-md-2'>Tijd</div>
-          <div class='col-md-2'>Naam</div>
-          <div class='col-md-2'>Personen</div>
-          <div class='col-md-1'>Tafel</div>
-          <div class='col-md-3'>Opmerking</div>
-        </div>
-
-        <div ng-repeat='reservation in agenda.reservations' ng-show='agenda.reservations.length'>
-          <div ng-init='reservations = agenda; tables = agenda.getTableIdsByTablesList(agenda.tables_by_zone[zone.id])'
-               data-ng-include=" 'dashboard_reservations.item_full.view.html' "
-               ng-repeat='reservation_part in reservation.reservation_parts'></div>
-        </div>
-
+      <div grid-data
+           grid-options='agenda.getTableOptions(zone)'
+           grid-actions='agenda.gridActions'
+           ng-show='agenda.reservations_view == "list"'>
+        <table class='table m-b-none'>
+          <thead>
+            <tr>
+                <th>Aanwezig</th>
+                <th sortable='time' class="sortable">
+                  Tijd
+                  <span class='arrow ascent'></span>
+                  <span class='arrow descent'></span>
+                </th>
+                <th sortable='name' class="sortable">
+                  Naam
+                  <span class='arrow ascent'></span>
+                  <span class='arrow descent'></span>
+                </th>
+                <th sortable='number_of_persons' class="sortable">
+                  Personen
+                  <span class='arrow ascent'></span>
+                  <span class='arrow descent'></span>
+                </th>
+                <th sortable='tables' class="sortable">
+                  Tafel
+                  <span class='arrow ascent'></span>
+                  <span class='arrow descent'></span>
+                </th>
+                <th class='text-right'>Opmerking</th>
+                <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr grid-item data-ng-include=" 'agenda.item.view.html' "></tr>
+          </tbody>
+        </table>
       </div>
-
 
       <div class='tables_wrapper' ng-show='agenda.reservations_view == "calendar"' ng-if='agenda.tables_by_zone[zone.id].length'>
         <div ng-repeat='(table_index, table) in agenda.tables_by_zone[zone.id] | orderBy:"position"'>
@@ -50,7 +68,7 @@
 
         <div class='scroll-wrapper'>
           <div class='hours-timeline' ng-if='agenda.tables_by_zone[zone.id].length'>
-            <div class='hour' ng-repeat='hour in agenda.hours'>
+            <div class='hour' ng-repeat='hour in agenda.Agenda.hours'>
               {{ hour }}:00
             </div>
           </div>
@@ -64,7 +82,7 @@
                   ng-repeat="(table_index, table) in agenda.tables_by_zone[zone.id] | orderBy:'position'">
 
                 <div class="hours-wrapper">
-                  <div class="hour" ng-repeat="hour in agenda.hours">
+                  <div class="hour" ng-repeat="hour in agenda.Agenda.hours">
                     <div class="quarter"
                          ng-repeat="quarter in [0,1,2,3]"
                          ui-on-drop="agenda.onDrop(table.id, table_index, hour, quarter, $data)"
@@ -87,7 +105,7 @@
                        drag-channel='move'>
                     <i class='mdi i-20'
                        ng-class='agenda.ReservationStatus.getIcon(item.reservation)'
-                       ng-click='agenda.setPresent(item)'
+                       ng-click='agenda.setPresent(item.reservation)'
                        title='{{ agenda.ReservationStatus.getStatus(item.reservation) | capitalize }}'
                     ></i>
                     <a ng-click='user.openCustomerMenu(item.customer.id, item.id)' ng-controller='UserMenuCtrl as user'>

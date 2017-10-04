@@ -138,7 +138,7 @@ export default class ReservationStatus {
   }
 
   setPresent(companyId, reservation, isPresent) {
-    this.updatePresent(companyId, reservation.id, isPresent)
+    return this.updatePresent(companyId, reservation.id, isPresent)
       .then(() => {
         const currentReservation = reservation;
         currentReservation.is_present = !reservation.is_present;

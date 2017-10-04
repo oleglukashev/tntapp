@@ -1,0 +1,41 @@
+<td>
+  <div ng-class='item.icon_color'
+       class='md-list-item-left img-circle'>
+    <div class='pull-left m-l-sm'>
+      <i ng-class='item.icon'
+         class='mdi i-20'
+         ng-click='agenda.setPresent(item.reservation)'></i>
+    </div>
+  </div>
+</td>
+<td>
+  <i class='mdi mdi-clock'></i>
+  {{ item.general_date_time }}
+</td>
+<td>
+  {{ item.name }}
+</td>
+<td>
+  <i class='mdi mdi-account-multiple'></i>
+  {{ item.number_of_persons }}x
+</td>
+<td>
+  <span ng-show='item.table_ids'>
+    <img class='table_icon' src='public/images/table.svg' />
+    {{ item.table_ids }}
+  </span>
+</td>
+<td>{{ item.notes }}</td>
+<td>
+  <div class='pull-right'>
+    <button md-ink-ripple
+            class='md-btn md-fab m-t-xs m-b-xs m-r-n-sm no-shadow'
+            ng-disabled='disabled'
+            aria-haspopup='true'
+            aria-expanded='false'
+            aria-disabled='false'
+            ng-click='user.openCustomerMenu(item.customer_id, part.id)' ng-controller='UserMenuCtrl as user'>
+      <i class='mdi mdi-dots-vertical i-24'></i>
+    </button>
+  </div>
+</td>
