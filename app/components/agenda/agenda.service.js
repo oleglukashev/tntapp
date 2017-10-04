@@ -13,7 +13,7 @@ export default class Agenda {
     });
   }
 
-  getData(reservations, zone) {
+  getData(reservations, tables, zone) {
     const result = [];
 
     this.getPartsByZone(reservations, zone).forEach((part) => {
@@ -23,10 +23,12 @@ export default class Agenda {
         id: part.id,
         icon_color: this.ReservationStatus.getIconColor(reservation),
         icon: this.ReservationStatus.getIcon(reservation),
+        product_name: part.product.name,
         general_date_time: this.generalDateTime(part),
-        name: `${reservation.customer.last_name} ${reservation.customer.first_name}`,
+        last_name: reservation.customer.last_name,
+        first_name: reservation.customer.first_name,
         number_of_persons: part.number_of_persons,
-        table_ids: part.table_ids.join(', '),
+        table_ids: this.Table.getTableNumbersByTableIds(tables, part.table_ids).join(', '),
         notes: `${reservation.notes || ''}`,
         customer_id: reservation.customer.id,
         reservation: reservation,

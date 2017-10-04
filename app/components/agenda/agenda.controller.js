@@ -271,7 +271,11 @@ export default class AgendaCtrl {
               }
             });
           });
-          this.setTableOptions();
+
+          if (this.tables) {
+            this.setTableOptions();
+          }
+
           this.loadProducts();
           this.is_loaded = true;
         });
@@ -349,7 +353,7 @@ export default class AgendaCtrl {
 
   setTableOptions() {
     this.zones.forEach((zone) => {
-      this.tableOptions[zone.id].data = this.Agenda.getData(this.reservations, zone);
+      this.tableOptions[zone.id].data = this.Agenda.getData(this.reservations, this.tables, zone);
     });
   }
 
