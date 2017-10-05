@@ -97,24 +97,31 @@ export default class ReservationStatus {
     return reservations;
   }
 
-  getIcon(reservation) {
+  getStatus(reservation) {
     const now = this.moment().valueOf();
     const reservationPart = reservation.reservation_parts[0];
     const reservationTime = this.moment(reservationPart.date_time).valueOf();
     const diffMins = this.moment(reservationTime).diff(this.moment(now), 'minutes');
 
     if (reservation.is_present) {
-      return this.AppConstants.reservationPresentClasses.present;
+      return 'present';
     }
 
     if (diffMins >= -this.AppConstants.late_minutes &&
       diffMins <= this.AppConstants.late_minutes + 30) {
-      return this.AppConstants.reservationPresentClasses.expected;
+      return 'expected';
     } else if (diffMins <= -this.AppConstants.late_minutes) {
-      return this.AppConstants.reservationPresentClasses.delayed;
+      return 'delayed';
     }
 
-    return this.AppConstants.reservationStatusClasses[reservation.status];
+    return reservation.status;
+  }
+
+  getIcon(reservation) {
+    const status = this.getStatus(reservation);
+
+    return this.AppConstants.reservationPresentClasses[status] ||
+           this.AppConstants.reservationStatusClasses[status];
   }
 
   getIconColor(reservation) {

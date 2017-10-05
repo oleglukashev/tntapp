@@ -88,7 +88,7 @@
                     <i class='mdi i-20'
                        ng-class='agenda.ReservationStatus.getIcon(item.reservation)'
                        ng-click='agenda.setPresent(item)'
-                       title='{{ item.status | capitalize }}'
+                       title='{{ agenda.ReservationStatus.getStatus(item.reservation) | capitalize }}'
                     ></i>
                     <a ng-click='user.openCustomerMenu(item.customer.id, item.id)' ng-controller='UserMenuCtrl as user'>
                       {{ item.number_of_persons }}
