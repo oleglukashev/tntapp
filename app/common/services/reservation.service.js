@@ -15,9 +15,15 @@ export default class Reservation {
     this.moment = moment;
 
     this.pagination = {
-      customer: { type: 1, date: 2, number_of_persons: 3, product: 4, time: 5, person: 6 },
-      backend: { date: 1, number_of_persons: 2, product: 3, time: 4, zone: 5, group: 6, person: 7 },
-      edit: { date: 1, number_of_persons: 2, product: 3, zone: 4 },
+      customer: {
+        type: 1, date: 2, number_of_persons: 3, product: 4, time: 5, person: 6,
+      },
+      backend: {
+        date: 1, number_of_persons: 2, product: 3, time: 4, zone: 5, group: 6, person: 7,
+      },
+      edit: {
+        date: 1, number_of_persons: 2, product: 3, zone: 4,
+      },
     };
 
     this.init_date = new Date();
@@ -40,9 +46,9 @@ export default class Reservation {
     }
 
     return this.$http({
-      url: API_URL + '/company/' + companyId + '/reservation?date=' + date,
+      url: `${API_URL}/company/${companyId}/reservation?date=${date}`,
       method: 'GET',
-    }).then((result) => result.data);
+    }).then(result => result.data);
   }
 
   getPDF(companyId, reservationId) {
@@ -53,7 +59,7 @@ export default class Reservation {
     }
 
     return this.$http({
-      url: API_URL + '/company/' + companyId + '/reservation/' + reservationId + '/get_pdf',
+      url: `${API_URL}/company/${companyId}/reservation/${reservationId}/get_pdf`,
       method: 'GET',
     }).then((result) => {
       const anchor = angular.element('<a/>');
@@ -73,7 +79,7 @@ export default class Reservation {
     }
 
     return this.$http({
-      url: API_URL + '/company/' + companyId + '/reservation?date=' + date + '&format=csv',
+      url: `${API_URL}/company/${companyId}/reservation?date=${date}&format=csv`,
       method: 'GET',
     }).then((result) => {
       const anchor = angular.element('<a/>');
@@ -93,9 +99,9 @@ export default class Reservation {
     }
 
     return this.$http({
-      url: API_URL + '/company/' + companyId + '/reservation/grouped',
+      url: `${API_URL}/company/${companyId}/reservation/grouped`,
       method: 'GET',
-    }).then((result) => result.data);
+    }).then(result => result.data);
   }
 
   getProducts(companyId) {
@@ -106,9 +112,9 @@ export default class Reservation {
     }
 
     return this.$http({
-      url: API_URL + '/company/' + companyId + '/product',
+      url: `${API_URL}/company/${companyId}/product`,
       method: 'GET',
-    }).then((result) => result.data);
+    }).then(result => result.data);
   }
 
   getCreateURI(companyId, params) {
@@ -116,11 +122,12 @@ export default class Reservation {
       return this.$q.defer().promise;
     }
 
-    const uri = API_URL + '/company/' + companyId + '/reservation';
+    const uri = `${API_URL}/company/${companyId}/reservation`;
     const additional = [];
     params.forEach((param) => {
       if (Object.values(param)[0]) {
-        additional.push(encodeURIComponent(Object.keys(param)) + '=true'); // adding parameters to query string like 'confirm_mail=true' only if Object.values(param)[0] contains true
+        const encodedParam = encodeURIComponent(Object.keys(param));
+        additional.push(`${encodedParam}=true`); // adding parameters to query string like 'confirm_mail=true' only if Object.values(param)[0] contains true
       }
     });
 
@@ -131,7 +138,7 @@ export default class Reservation {
     return this.Upload.upload({
       url: this.getCreateURI(companyId, params),
       data,
-    }).then((result) => result.data);
+    }).then(result => result.data);
   }
 
   createQuick(companyId, data) {
@@ -140,10 +147,10 @@ export default class Reservation {
     }
 
     return this.$http({
-      url:  API_URL + '/company/' + companyId + '/reservation/quick',
+      url: `${API_URL}/company/${companyId}/reservation/quick`,
       data,
       method: 'POST',
-    }).then((result) => result.data);
+    }).then(result => result.data);
   }
 
   updateStatus(companyId, reservationId, data) {
@@ -152,10 +159,10 @@ export default class Reservation {
     }
 
     return this.$http({
-      url: API_URL + '/company/' + companyId + '/reservation/' + reservationId + '/update_status',
+      url: `${API_URL}/company/${companyId}/reservation/${reservationId}/update_status`,
       method: 'PATCH',
       data,
-    }).then((result) => result.data);
+    }).then(result => result.data);
   }
 
   isEqualDateOfPart(part, dateTime) {
