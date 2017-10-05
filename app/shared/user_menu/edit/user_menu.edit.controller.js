@@ -1,20 +1,23 @@
 import angular from 'angular';
 
 export default class UserMenuEditCtrl {
-  constructor(User, Customer, CustomerNote, CustomerPreference, CustomerAllergies, $rootScope, $modalInstance, moment, $modal) {
+  constructor(
+    User, Customer, CustomerNote, CustomerPreference, CustomerAllergies, $rootScope, $modalInstance,
+    moment, $modal,
+  ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
-    this.Customer             = Customer;
-    this.CustomerNote         = CustomerNote;
-    this.CustomerPreference   = CustomerPreference;
-    this.CustomerAllergies    = CustomerAllergies;
+    this.Customer = Customer;
+    this.CustomerNote = CustomerNote;
+    this.CustomerPreference = CustomerPreference;
+    this.CustomerAllergies = CustomerAllergies;
 
-    this.$rootScope           = $rootScope;
-    this.$modalInstance       = $modalInstance;
-    this.$modal               = $modal;
-    this.moment               = moment;
-    this.submited_success     = false;
+    this.$rootScope = $rootScope;
+    this.$modalInstance = $modalInstance;
+    this.$modal = $modal;
+    this.moment = moment;
+    this.submited_success = false;
 
     this.note = {};
 
@@ -24,7 +27,7 @@ export default class UserMenuEditCtrl {
       formatYear: 'yyyy',
       startingDay: 1,
       showWeeks: false,
-      class: 'datepicker'
+      class: 'datepicker',
     };
 
     this.loadNotes();
@@ -34,72 +37,97 @@ export default class UserMenuEditCtrl {
 
   loadNotes() {
     this.CustomerNote.getAll(this.current_company_id, this.$rootScope.userData.id)
-      .then((notes) => {
-        this.notes = notes;
-      },
-      (error) => {
-      });
+      .then(
+        (notes) => {
+          this.notes = notes;
+        },
+        () => {
+        },
+      );
   }
 
   loadPreferences() {
     this.CustomerPreference.getAll(this.current_company_id, this.$rootScope.userData.id)
-      .then((preferences) => {
-        this.preferences = preferences;
-      },
-      (error) => {
-      });
+      .then(
+        (preferences) => {
+          this.preferences = preferences;
+        },
+        () => {
+        },
+      );
   }
 
   loadAllergies() {
     this.CustomerAllergies.getAll(this.current_company_id, this.$rootScope.userData.id)
-      .then((allergies) => {
-        this.allergies = allergies;
-      },
-      (error) => {
-      });
+      .then(
+        (allergies) => {
+          this.allergies = allergies;
+        },
+        () => {
+        },
+      );
   }
 
   deleteNote(index) {
-    this.CustomerNote.delete(this.current_company_id, this.$rootScope.userData.id, this.notes[index].id)
-      .then((result) => {
-        this.notes.splice(index, 1);
-      },
-      (error) => {
-      });
+    this.CustomerNote.delete(
+      this.current_company_id,
+      this.$rootScope.userData.id,
+      this.notes[index].id,
+    )
+      .then(
+        () => {
+          this.notes.splice(index, 1);
+        },
+        () => {
+        },
+      );
   }
 
   deletePreference(index) {
-    this.CustomerPreference.delete(this.current_company_id, this.$rootScope.userData.id, this.preferences[index].id)
-      .then((result) => {
-        this.preferences.splice(index, 1);
-      },
-      (error) => {
-      });
+    this.CustomerPreference.delete(
+      this.current_company_id,
+      this.$rootScope.userData.id,
+      this.preferences[index].id,
+    )
+      .then(
+        () => {
+          this.preferences.splice(index, 1);
+        },
+        () => {
+        },
+      );
   }
 
   deleteAllergy(index) {
-    this.CustomerAllergies.delete(this.current_company_id, this.$rootScope.userData.id, this.allergies[index].id)
-      .then((result) => {
-        this.allergies.splice(index, 1);
-      },
-      (error) => {
-      });
+    this.CustomerAllergies.delete(
+      this.current_company_id,
+      this.$rootScope.userData.id,
+      this.allergies[index].id,
+    )
+      .then(
+        () => {
+          this.allergies.splice(index, 1);
+        },
+        () => {
+        },
+      );
   }
 
-  submitForm(is_valid) {
-    if (!is_valid) {
+  submitForm(isValid) {
+    if (!isValid) {
       return false;
     }
 
     let userData = this.$rootScope.userData;
     this.is_submitting = true;
 
-    if (userData.date_of_birth)
+    if (userData.date_of_birth) {
       userData.date_of_birth = this.moment(userData.date_of_birth).format('DD-MM-YYYY');
-    else
+    } else {
       userData.date_of_birth = null;
+    }
 
-    let data = {
+    const data = {
       first_name: userData.first_name,
       last_name: userData.last_name,
       primary_phone_number: userData.primary_phone_number,
@@ -111,107 +139,136 @@ export default class UserMenuEditCtrl {
       mail: userData.mail,
       date_of_birth: userData.date_of_birth,
       gender: userData.gender,
-      averageRating: userData.average_rating
+      averageRating: userData.average_rating,
     };
 
     this.Customer.edit(this.current_company_id, userData.id, data)
-      .then((result) => {
-        userData = Object.assign(data, userData);
-        this.$rootScope.$broadcast('ProfilesCtrl.reload_customers');
-        this.closeModal();
-      },
-      (error) => {
-      });
+      .then(
+        () => {
+          userData = Object.assign(data, userData);
+          this.$rootScope.$broadcast('ProfilesCtrl.reload_customers');
+          this.closeModal();
+        },
+        () => {
+        },
+      );
   }
 
-  submitNoteForm(is_valid) {
-    if (!is_valid) {
+  submitNoteForm(isValid) {
+    if (!isValid) {
       return false;
     }
 
     this.notes_is_submitting = true;
 
-    let data = {
-      note: this.note.note
+    const data = {
+      note: this.note.note,
     };
 
     if (this.note.id) {
-      this.CustomerNote.update(this.current_company_id, this.$rootScope.userData.id, this.note.id, data)
-        .then((result) => {
-          this.$rootScope.customer_notes = this.notes;
-          this.closeModal();
-        },
-        (error) => {
-        });
+      this.CustomerNote.update(
+        this.current_company_id,
+        this.$rootScope.userData.id,
+        this.note.id,
+        data,
+      )
+        .then(
+          () => {
+            this.$rootScope.customer_notes = this.notes;
+            this.closeModal();
+          },
+          () => {
+          },
+        );
     } else {
       this.CustomerNote.create(this.current_company_id, this.$rootScope.userData.id, data)
-        .then((result) => {
-          this.$rootScope.customer_notes.push(result);
-          this.closeModal();
-        },
-        (error) => {
-        });
+        .then(
+          (result) => {
+            this.$rootScope.customer_notes.push(result);
+            this.closeModal();
+          },
+          () => {
+          },
+        );
     }
   }
 
-  submitPreferenceForm(is_valid) {
-    if (!is_valid) {
+  submitPreferenceForm(isValid) {
+    if (!isValid) {
       return false;
     }
 
     this.preferences_is_submitting = true;
 
-    let data = {
-      name : this.preference.name,
+    const data = {
+      name: this.preference.name,
       value: this.preference.value,
     };
 
     if (this.preference.id) {
-      this.CustomerPreference.update(this.current_company_id, this.$rootScope.userData.id, this.preference.id, data)
-        .then((result) => {
-          this.$rootScope.customer_preferences = this.preferences;
-          this.closeModal();
-        },
-        (error) => {
-        });
+      this.CustomerPreference.update(
+        this.current_company_id,
+        this.$rootScope.userData.id,
+        this.preference.id,
+        data,
+      )
+        .then(
+          () => {
+            this.$rootScope.customer_preferences = this.preferences;
+            this.closeModal();
+          },
+          () => {
+          },
+        );
     } else {
       this.CustomerPreference.create(this.current_company_id, this.$rootScope.userData.id, data)
-        .then((result) => {
-          this.$rootScope.customer_preferences.push(result);
-          this.closeModal();
-        },
-        (error) => {
-        });
+        .then(
+          (result) => {
+            this.$rootScope.customer_preferences.push(result);
+            this.closeModal();
+          },
+          () => {
+          },
+        );
     }
   }
 
-  submitAllergiesForm(is_valid) {
-    if (!is_valid) {
+  submitAllergiesForm(isValid) {
+    if (!isValid) {
       return false;
     }
 
     this.allergies_is_submitting = true;
 
-    let data = {
-      allergy: this.allergy.allergy
+    const data = {
+      allergy: this.allergy.allergy,
     };
 
     if (this.allergy.id) {
-      this.CustomerAllergies.update(this.current_company_id, this.$rootScope.userData.id, this.allergy.id, data)
-        .then((result) => {
-          this.$rootScope.customer_allergies = this.allergies;
-          this.closeModal();
-        },
-        (error) => {
-        });
+      this.CustomerAllergies.update(
+        this.current_company_id,
+        this.$rootScope.userData.id,
+        this.allergy.id,
+        data,
+      )
+        .then(
+          () => {
+            this.$rootScope.customer_allergies = this.allergies;
+            this.closeModal();
+          },
+          () => {
+          },
+        );
     } else {
       this.CustomerAllergies.create(this.current_company_id, this.$rootScope.userData.id, data)
-        .then((result) => {
-          this.$rootScope.customer_allergies.push(result);
-          this.closeModal();
-        },
-        (error) => {
-        });
+        .then(
+          (result) => {
+            this.$rootScope.customer_allergies.push(result);
+            this.closeModal();
+          },
+          () => {
+          },
+        );
     }
   }
 
@@ -219,15 +276,15 @@ export default class UserMenuEditCtrl {
     this.$modalInstance.dismiss('cancel');
   }
 
-  openNotesModal(user_id) {
-    let modalInstance = this.$modal.open({
+  openNotesModal() {
+    const modalInstance = this.$modal.open({
       templateUrl: 'user_menu.notes.view.html',
       controller: 'UserMenuNotesCtrl as user_notes',
-      size: 'md'
+      size: 'md',
     });
 
-    modalInstance.result.then((selectedItem) => {
-      //success
+    modalInstance.result.then(() => {
+      // success
     }, () => {
       // fail
     });
