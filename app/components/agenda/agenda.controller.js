@@ -332,17 +332,6 @@ export default class AgendaCtrl {
     return result;
   }
 
-  getTableNumbersByTableIds(tableIds) {
-    const result = [];
-    tableIds.forEach((value) => {
-      const table = this.filterFilter(this.tables, { id: value });
-      if (table) {
-        result.push(table[0].table_number);
-      }
-    }, result);
-    return result;
-  }
-
   reservationBlockStyle(tableIndex, item) {
     return {
       left: item.left,
@@ -358,6 +347,14 @@ export default class AgendaCtrl {
     };
   }
 
+  setPresent(item) {
+    this.ReservationStatus.setPresent(
+      this.current_company_id,
+      item.reservation,
+      !item.reservation.is_present,
+    );
+  }
+
   // if we will need validation
   // dropValidate(hour, quarter) {
   //   let timePart = hour*4 + quarter;
@@ -371,5 +368,4 @@ export default class AgendaCtrl {
   //     }
   //   }
   // }
-
 }

@@ -87,7 +87,7 @@
                        drag-channel='move'>
                     <i class='mdi i-20'
                        ng-class='agenda.ReservationStatus.getIcon(item.reservation)'
-                       ng-click='agenda.ReservationStatus.setPresent(agenda.current_company_id, item.reservation, !item.reservation.is_present); agenda.loadReservations()'
+                       ng-click='agenda.setPresent(item)'
                        title='{{ item.status | capitalize }}'
                     ></i>
                     <a ng-click='user.openCustomerMenu(item.customer.id, item.id)' ng-controller='UserMenuCtrl as user'>
