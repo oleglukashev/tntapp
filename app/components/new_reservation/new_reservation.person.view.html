@@ -9,15 +9,21 @@
         <div class='w-xl'>
           <md-input-container class='md-block'>
             <label>Voor- en achternaam</label>
-            <input ng-model='reserv.reservation.name' required />
+            <input ng-model='reserv.reservation.name'
+                   ng-change='reserv.changeInputPostProcess()'
+                   required />
           </md-input-container>
           <md-input-container class='md-block'>
             <label>E-mail</label>
-            <input type='email' ng-model='reserv.reservation.mail' required />
+            <input type='email' ng-model='reserv.reservation.mail'
+                   ng-change='reserv.changeInputPostProcess()'
+                   required />
           </md-input-container>
           <md-input-container class='md-block'>
             <label>Telefoonnummer</label>
-            <input ng-model='reserv.reservation.primary_phone_number' ng-required="reserv.settings.phone_number_is_required" />
+            <input ng-model='reserv.reservation.primary_phone_number'
+                   ng-required='reserv.settings.phone_number_is_required'
+                   ng-change='reserv.changeInputPostProcess()' />
           </md-input-container>
           <md-input-container class='md-block'>
             <label>Opmerking</label>
@@ -118,10 +124,16 @@
             MINDER VELDEN
           </span>
       </button>
-
+      <div class='wrapper red-300 layout-align-space-around-center layout-column' ng-show='reserv.errors.length'>
+        <div class='w-xl'>
+          <div ng-repeat='error in reserv.errors'>
+            {{ error }}
+          </div>
+        </div>
+      </div>
       <button type='submit'
               class='btn btn-lg btn-success w-full no-top-radius md-content-button'
-              ng-class="{ 'disabled': !reserv.formIsValid() || reserv.is_submitting }"
+              ng-class="{ 'disabled': reserv.errors.length || reserv.is_submitting }"
               ng-show='reserv.isPersonTab() && !reserv.success'>
         <span>RESERVEER</span>
       </button>

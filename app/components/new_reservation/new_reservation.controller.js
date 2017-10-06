@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export default class NewReservationCtrl {
-  constructor(User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone,
+  constructor(User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone, NewReservation,
     Table, moment, filterFilter, $state, $stateParams, $rootScope, $scope, $window, $auth) {
     'ngInject';
 
@@ -11,6 +11,7 @@ export default class NewReservationCtrl {
     this.is_customer_reservation = $state.current.name === 'customer_reservation.new';
 
     this.Reservation = Reservation;
+    this.NewReservation = NewReservation;
     this.CustomerCompany = CustomerCompany;
     this.Product = Product;
     this.Zone = Zone;
@@ -34,6 +35,7 @@ export default class NewReservationCtrl {
 
     this.moment = moment;
     this.selected_index = 0;
+    this.errors = [];
 
     this.reservation = {
       language: 'NL',
@@ -63,6 +65,7 @@ export default class NewReservationCtrl {
     const newPart = this.getNewReservationPart();
     newPart.date = new Date();
     this.reservation.reservation_parts.push(newPart);
+    this.validForm();
   }
 
   removePart(e, index) {
@@ -102,10 +105,6 @@ export default class NewReservationCtrl {
       },
       reservation_parts: [],
     };
-
-    if (!this.reservation.is_group && parts.length > 1) {
-      this.reservation.reservation_parts = [this.current_part];
-    }
 
     this.reservation.reservation_parts.forEach((part) => {
       const dataPart = {
@@ -149,23 +148,6 @@ export default class NewReservationCtrl {
         this.is_submitting = false;
         this.errors = error;
       });
-  }
-
-  formIsValid() {
-    let result = true;
-
-    this.reservation.reservation_parts.forEach((part) => {
-      if (!part.date ||
-        !part.number_of_persons ||
-        (!part.time && !part.start_date_time) ||
-        !part.product ||
-        !this.reservation.name ||
-        !this.reservation.mail) {
-        result = false;
-      }
-    });
-
-    return result;
   }
 
   openDatepicker() {
@@ -362,6 +344,7 @@ export default class NewReservationCtrl {
     this.Settings.getGeneralSettings(this.current_company_id).then(
       (generalSettings) => {
         this.settings = generalSettings;
+        this.validForm();
       });
   }
 
@@ -391,11 +374,13 @@ export default class NewReservationCtrl {
     this.current_part.product = null;
     this.current_part.time = null;
     this.clearCurrentPartTimeRange();
+    this.validForm();
     this.selectTab(this.pagination.date);
   }
 
   changeNumberOfPersonsPostProcess() {
     this.clearAndLoadTime();
+    this.validForm();
     this.selectTab(this.pagination.number_of_persons);
   }
 
@@ -408,6 +393,7 @@ export default class NewReservationCtrl {
     }
 
     this.clearAndLoadTime();
+    this.validForm();
     this.selectTab(this.pagination.product);
   }
 
@@ -430,6 +416,8 @@ export default class NewReservationCtrl {
       !this.is_customer_reservation) {
       this.loadOccupiedTables();
     }
+
+    this.validForm();
   }
 
   changeTableValuesPostProcess() {
@@ -441,6 +429,17 @@ export default class NewReservationCtrl {
         that.current_part.tables.push(key);
       }
     });
+
+    this.validForm();
+  }
+
+  changeInputPostProcess() {
+    this.validForm();
+  }
+
+  changeIsGroupPostProcess() {
+    this.reservation.reservation_parts = [this.current_part];
+    this.validForm();
   }
 
   getNewReservationPart() {
@@ -472,6 +471,11 @@ export default class NewReservationCtrl {
     this.current_part.start_date_time = null;
     this.current_part.end_date_time = null;
     this.current_part.time_range = {};
+  }
+
+  validForm() {
+    this.errors = this.NewReservation
+      .validForm(this.reservation, this.settings.phone_number_is_required);
   }
 }
 

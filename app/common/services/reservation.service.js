@@ -22,7 +22,7 @@ export default class Reservation {
         date: 1, number_of_persons: 2, product: 3, time: 4, zone: 5, group: 6, person: 7,
       },
       edit: {
-        date: 1, number_of_persons: 2, product: 3, zone: 4,
+        number_of_persons: 1, product: 2, zone: 3,
       },
     };
 

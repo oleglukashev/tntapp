@@ -19,6 +19,7 @@ import EmployeeService from './employee.service';
 import CustomerNoteService from './customer_note.service';
 import CustomerPreferenceService from './customer_preference.service';
 import CustomerAllergiesService from './customer_allergies.service';
+import newReservationService from '../../components/new_reservation/new_reservation.service';
 
 export default angular.module('app.services', [])
   .service('User', UserService)
@@ -41,4 +42,5 @@ export default angular.module('app.services', [])
   .service('CustomerNote', CustomerNoteService)
   .service('CustomerPreference', CustomerPreferenceService)
   .service('CustomerAllergies', CustomerAllergiesService)
+  .service('NewReservation', newReservationService)
   .name;
