@@ -72,19 +72,6 @@ export default class ReservationsCtrl {
       .changeStatus(this.current_company_id, reservation, status);
   }
 
-  getTableNumbersByTableIds(tableIds) {
-    const result = [];
-
-    tableIds.forEach((value) => {
-      const table = this.filterFilter(this.tables, { id: value })[0];
-      if (table) {
-        result.push(table.table_number);
-      }
-    });
-
-    return result;
-  }
-
   loadReservations() {
     this.Reservation
       .getAll(this.current_company_id).then(

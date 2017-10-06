@@ -25,8 +25,8 @@
     <small class='font-thin m-r-xs'>{{ reservation_part.number_of_persons }}x</small>
   </div>
   <div class='col-md-1'>
-    <img class='table_icon' src='public/images/table.svg' ng-show="reservation_part.table_ids.length" />
-    <small class='font-thin' ng-bind='reservations.getTableNumbersByTableIds(reservation_part.table_ids).join(", ")'></small>
+    <img class='table_icon' src='public/images/table.svg' ng-show='reservation_part.table_ids.length' />
+    <small class='font-thin' ng-bind='reservations.Table.getTableNumbersByTableIds(reservations.tables, reservation_part.table_ids).join(", ")'></small>
   </div>
   <div class='col-md-2 description' title="{{ reservation.notes }}">
     {{ reservation.notes || '&nbsp;' }}
