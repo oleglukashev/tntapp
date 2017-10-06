@@ -1,5 +1,6 @@
-<td>
+<td ng-class='{"b-t-none p-t-none": item.not_first_part}'>
   <div ng-class='item.icon_color'
+       ng-hide='item.not_first_part'
        class='md-list-item-left img-circle'>
     <div class='pull-left m-l-sm'>
       <i ng-class='item.icon'
@@ -8,33 +9,34 @@
     </div>
   </div>
 </td>
-<td>
+<td ng-class='{"b-t-none p-t-none": item.not_first_part}'>
   <i class='mdi mdi-clock'></i>
   {{ item.general_date_time }}
 </td>
-<td>
+<td ng-class='{"b-t-none p-t-none": item.not_first_part}'>
   {{ item.product_name }}
 </td>
-<td>
+<td ng-class='{"b-t-none p-t-none": item.not_first_part}'>
   {{ item.last_name }}
   <br />
   {{ item.first_name }}
 </td>
-<td>
+<td ng-class='{"b-t-none p-t-none": item.not_first_part}'>
   <i class='mdi mdi-account-multiple'></i>
   {{ item.number_of_persons }}x
 </td>
-<td>
+<td ng-class='{"b-t-none p-t-none": item.not_first_part}'>
   <span ng-show='item.table_ids'>
     <img class='table_icon' src='public/images/table.svg' />
     {{ item.table_ids }}
   </span>
 </td>
-<td>{{ item.notes }}</td>
-<td>
+<td ng-class='{"b-t-none p-t-none": item.not_first_part}'>{{ item.notes }}</td>
+<td ng-class='{"b-t-none p-t-none": item.not_first_part}'>
   <div class='pull-right'>
     <button md-ink-ripple
             class='md-btn md-fab m-t-xs m-b-xs m-r-n-sm no-shadow'
+            ng-class='{"m-t-none p-t-none m-b-none p-b-none": item.not_first_part}'
             ng-disabled='disabled'
             aria-haspopup='true'
             aria-expanded='false'

@@ -15,6 +15,7 @@ export default class Agenda {
 
   getData(reservations, tables, zone) {
     const result = [];
+    const reservationIds = [];
 
     this.getPartsByZone(reservations, zone).forEach((part) => {
       const reservation = this.ReservationPart.reservationByPart(reservations, part);
@@ -32,7 +33,12 @@ export default class Agenda {
         notes: `${reservation.notes || ''}`,
         customer_id: reservation.customer.id,
         reservation: reservation,
+        not_first_part: reservationIds.includes(reservation.id),
       });
+
+      if (!reservationIds.includes(reservation.id)) {
+        reservationIds.push(reservation.id);
+      }
     });
 
     return result;

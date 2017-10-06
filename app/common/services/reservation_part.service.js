@@ -1,9 +1,10 @@
 export default class ReservationPart {
-  constructor(User, $http, $q) {
+  constructor(User, $http, $q, moment) {
     'ngInject';
 
     this.$http = $http;
     this.$q = $q;
+    this.moment = moment;
   }
 
   update(companyId, reservationPartId, data) {
@@ -41,5 +42,16 @@ export default class ReservationPart {
     });
 
     return result;
+  }
+
+  partsByDate(parts, date) {
+    return parts.filter((part) => {
+      const generalDateTime = (part.start_date_time && part.end_date_time) ?
+        part.start_date_time :
+        part.date_time;
+
+      return this.moment(generalDateTime).format('YYYY-MM-DD') ===
+             this.moment(date).format('YYYY-MM-DD');
+    });
   }
 }
