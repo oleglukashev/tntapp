@@ -40,20 +40,6 @@ export default class DashboardReservationsCtrl {
                                             this.moment(this.date_filter).format('YYYY-MM-DD'));
   }
 
-  getTableNumbersByTableIds(tableIds) {
-    const result = [];
-
-    angular.forEach(tableIds, (value) => {
-      const table = this.filterFilter(this.tables, { id: value })[0];
-
-      if (table) {
-        result.push(table.table_number);
-      }
-    }, result);
-
-    return result;
-  }
-
   openCustomerMenu() {
     this.$rootScope.$broadcast('UserMenuCtrl');
     this.$mdSidenav('right').toggle();

@@ -1,6 +1,8 @@
 <div class='clearfix'>
   <div class='col-lg-8 col-md-8 col-sm-8'>
-    <div data-ng-include=" 'page_filter.view.html' " ng-controller='PageFilterCtrl as page_filter'></div>
+    <div data-ng-include=" 'page_filter.view.html' "
+         ng-init='hideDatePicker = true;'
+         ng-controller='PageFilterCtrl as page_filter'></div>
 
     <div ng-show='reservations.is_loaded && reservations.reservations.length'>
       <button ng-click='reservations.openReservation();'
@@ -10,13 +12,13 @@
       </button>
 
       <div class='panel'>
-        <div class='panel-heading'>Reserveringen</div>
+        <div class='panel-heading'>Vandaag</div>
         <div class='md-list'>
           <div ng-repeat='reservation in reservations.reservations' ng-show='reservations.reservations.length'>
             <div class='md-list-item'
                  data-ng-include=" 'dashboard_reservations.item.view.html' "
                  ng-repeat='reservation_part in reservation.reservation_parts'
-                 ng-if='reservations.Reservation.isEqualDateOfPart(reservation_part, reservations.date_filter)'></div>
+                 ng-if='reservations.Reservation.isEqualDateOfPart(reservation_part, reservations.moment())'></div>
           </div>
         </div>
       </div>

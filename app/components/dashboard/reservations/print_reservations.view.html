@@ -21,7 +21,7 @@
             </td>
             <td>
                 <div>
-                    <small class='font-thin' ng-bind='reservations.getTableNumbersByTableIds(reservation_part.table_ids).join(", ")'></small>
+                    <small class='font-thin'>{{ reservations.Table.getTableNumbersByTableIds(reservations.tables, reservation_part.table_ids).join(', ') }}</small>
                 </div>
             </td>
             <td>{{ reservations.moment(reservation_part.date_time).format('HH:mm') }}</td>
