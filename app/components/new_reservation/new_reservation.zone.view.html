@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class='wrapper' ng-show='reserv.zones_is_loaded && reserv.tablesDataIsLoaded()'>
-        <div class='zones_boxes clearfix text-center' ng-show='reserv.current_part.zones_is_showed'>
+        <div class='zones_boxes clearfix text-center m-b-sm' ng-show='reserv.current_part.zones_is_showed'>
           <div ng-repeat="zone in reserv.zones"
                ng-click='reserv.setZone(zone);'
                class='box'>
@@ -36,12 +36,12 @@
 
           <label ng-click='reserv.current_part.zones_is_showed = true'
                  class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>Show zones</label>
-
-          <button type='button'
-                  class='btn btn-md btn-success w-full'
-                  ng-hide='reserv.current_part.id'
-                  ng-click='reserv.selectTab(reserv.pagination.zone);'>Next</button>
         </div>
+
+        <button type='button'
+                class='btn btn-md btn-success w-full'
+                ng-hide='reserv.current_part.id'
+                ng-click='reserv.selectTab(reserv.pagination.zone);'>Next</button>
       </div>
     </div>
   </md-tab-body>

@@ -1,6 +1,6 @@
 export default class AgendaCtrl {
   constructor(User, Settings, Zone, Table, TimeRange, Product, Reservation, ReservationStatus,
-    ReservationPart, filterFilter, $scope, $rootScope, $modal, moment, $timeout) {
+    Agenda, ReservationPart, filterFilter, $scope, $rootScope, $modal, moment, $timeout) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -11,6 +11,7 @@ export default class AgendaCtrl {
     this.Product = Product;
     this.TimeRange = TimeRange;
     this.Reservation = Reservation;
+    this.Agenda = Agenda;
     this.ReservationPart = ReservationPart;
     this.ReservationStatus = ReservationStatus;
     this.filterFilter = filterFilter;
@@ -27,10 +28,7 @@ export default class AgendaCtrl {
     this.products = {};
     this.open_hours = {};
 
-    // generating array from 00 to 23
-    this.hours = Array.from(Array(24).keys()).map((h) => {
-      return (h < 10) ? `0${h.toString()}` : h.toString();
-    });
+    this.tableOptions = {};
 
     this.draggable_class = '';
     this.channel = '';
@@ -273,6 +271,11 @@ export default class AgendaCtrl {
               }
             });
           });
+
+          if (this.tables) {
+            this.setTableOptions();
+          }
+
           this.loadProducts();
           this.is_loaded = true;
         });
@@ -305,6 +308,9 @@ export default class AgendaCtrl {
       .then(
         (result) => {
           this.zones = result;
+          this.zones.forEach((zone) => {
+            this.tableOptions[zone.id] = { data: [] };
+          });
           this.loadTables();
         },
         () => {
@@ -322,14 +328,8 @@ export default class AgendaCtrl {
       });
   }
 
-  getTableIdsByTablesList(tablesList) {
-    const result = [];
-    if (tablesList) {
-      tablesList.forEach((table) => {
-        result.push(table.id);
-      });
-    }
-    return result;
+  getTableIdsByTablesList(list) {
+    return list.map(item => item.id);
   }
 
   reservationBlockStyle(tableIndex, item) {
@@ -347,25 +347,23 @@ export default class AgendaCtrl {
     };
   }
 
-  setPresent(item) {
-    this.ReservationStatus.setPresent(
-      this.current_company_id,
-      item.reservation,
-      !item.reservation.is_present,
-    );
+  getTableOptions(zone) {
+    return this.tableOptions[zone.id];
   }
 
-  // if we will need validation
-  // dropValidate(hour, quarter) {
-  //   let timePart = hour*4 + quarter;
+  setTableOptions() {
+    this.zones.forEach((zone) => {
+      this.tableOptions[zone.id].data = this.Agenda.getData(this.reservations, this.tables, zone);
+    });
+  }
 
-  //   if (this.open_hours[this.dragged_product]) {
-  //     if (timePart >= this.open_hours[this.dragged_product].start &&
-  //         timePart <= this.open_hours[this.dragged_product].end) {
-  //       return "true";
-  //     } else {
-  //       return "true";
-  //     }
-  //   }
-  // }
+  setPresent(reservation) {
+    this.ReservationStatus.setPresent(
+      this.current_company_id,
+      reservation,
+      !reservation.is_present,
+    ).then(() => {
+      this.setTableOptions();
+    });
+  }
 }
