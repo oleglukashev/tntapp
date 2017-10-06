@@ -477,5 +477,10 @@ export default class NewReservationCtrl {
     this.errors = this.NewReservation
       .validForm(this.reservation, this.settings.phone_number_is_required);
   }
+
+  numberOfPersonsMoreThanTableSeats() {
+    return this.current_part.number_of_persons >
+           this.Reservation.generalNumberOfPersons(this.tables, this.current_part.tables);
+  }
 }
 

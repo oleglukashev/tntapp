@@ -37,7 +37,12 @@
           <label ng-click='reserv.current_part.zones_is_showed = true'
                  class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>Show zones</label>
         </div>
-
+        <div class='wrapper orange-500 layout-align-space-around-center layout-column'
+             ng-show='reserv.numberOfPersonsMoreThanTableSeats() && reserv.current_part.tables.length'>
+          <div class='w-xl'>
+            NUMBER OF PERSONS is more than available seats
+          </div>
+        </div>
         <button type='button'
                 class='btn btn-md btn-success w-full'
                 ng-hide='reserv.current_part.id'

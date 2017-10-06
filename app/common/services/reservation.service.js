@@ -195,6 +195,17 @@ export default class Reservation {
     this.choose_number_of_persons_is_opened = !this.choose_number_of_persons_is_opened;
   }
 
+  generalNumberOfPersons(tables, tableIds) {
+    let result = 0;
+
+    tableIds.forEach((tableId) => {
+      const numberOfPersons = this.getPersonCountByTableId(tables, tableId);
+      if (numberOfPersons) result += numberOfPersons;
+    });
+
+    return result;
+  }
+
   openedTimeRangePeriod(availableTime, date) {
     if (!availableTime.length) return [];
 

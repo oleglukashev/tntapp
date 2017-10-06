@@ -40,13 +40,18 @@
                     class='btn btn-md btn-success text-success'
                     ng-click='reserv.Reservation.triggerChooseNumberOfPersons();reserv.selectTab(reserv.pagination.number_of_persons);'>Ok</button>
           </div>
-
           <div class='md-form-group no-padder' ng-if='!reserv.is_customer_reservation'>
             <md-checkbox ng-model="reserv.reservation.is_group"
                          ng-change='reserv.changeIsGroupPostProcess()'
                          aria-label="Group?">
               Group?
             </md-checkbox>
+          </div>
+          <div class='wrapper orange-500 layout-align-space-around-center layout-column'
+             ng-show='reserv.numberOfPersonsMoreThanTableSeats() && reserv.current_part.tables.length'>
+            <div class='w-xl'>
+              NUMBER OF PERSONS is more than available seats
+            </div>
           </div>
         </div>
       </div>
