@@ -42,7 +42,9 @@
           </div>
 
           <div class='md-form-group no-padder' ng-if='!reserv.is_customer_reservation'>
-            <md-checkbox ng-model="reserv.reservation.is_group" aria-label="Group?">
+            <md-checkbox ng-model="reserv.reservation.is_group"
+                         ng-change='reserv.changeIsGroupPostProcess()'
+                         aria-label="Group?">
               Group?
             </md-checkbox>
           </div>

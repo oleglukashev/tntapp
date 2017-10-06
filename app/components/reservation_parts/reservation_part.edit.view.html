@@ -27,9 +27,16 @@
           
           <div data-ng-include=" 'new_reservation.zone.view.html' "></div>
         </md-tabs>
+        <div class='wrapper red-300 layout-align-space-around-center layout-column' ng-show='reserv.errors.length'>
+          <div class='w-xl'>
+            <div ng-repeat='error in reserv.errors'>
+              {{ error }}
+            </div>
+          </div>
+        </div>
         <button type='submit'
                 class='btn btn-lg btn-success w-full no-top-radius md-content-button'
-                ng-class="{ 'disabled': !reserv.formIsValid() || reserv.is_submitting }">
+                ng-class="{ 'disabled': reserv.errors.length || reserv.is_submitting }">
         <span>RESERVEER</span>
       </button>
 

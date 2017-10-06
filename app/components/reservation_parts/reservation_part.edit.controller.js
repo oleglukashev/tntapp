@@ -22,6 +22,7 @@ export default class ReservationPartEditCtrl {
 
     this.moment = moment;
     this.selected_index = 0;
+    this.errors = [];
 
     this.pagination = this.Reservation.pagination.edit;
     this.reservation = reservation;
@@ -55,6 +56,7 @@ export default class ReservationPartEditCtrl {
     });
 
     this.preloadData();
+    this.validForm();
   }
 
   submitForm() {
@@ -139,10 +141,6 @@ export default class ReservationPartEditCtrl {
     }
 
     return false;
-  }
-
-  formIsValid() {
-    return this.current_part.date && this.current_part.product && this.current_part.number_of_persons;
   }
 
   setZone(zone) {
@@ -285,11 +283,13 @@ export default class ReservationPartEditCtrl {
     this.current_part.product = null;
     this.current_part.time = null;
     this.clearCurrentPartTimeRange();
+    this.validForm();
     this.selectTab(this.pagination.date);
   }
 
   changeNumberOfPersonsPostProcess() {
     this.clearAndLoadTime();
+    this.validForm();
     this.selectTab(this.pagination.number_of_persons);
   }
 
@@ -302,6 +302,7 @@ export default class ReservationPartEditCtrl {
     }
 
     this.clearAndLoadTime();
+    this.validForm();
     this.selectTab(this.pagination.product);
   }
 
@@ -309,5 +310,17 @@ export default class ReservationPartEditCtrl {
     this.current_part.start_date_time = null;
     this.current_part.end_date_time = null;
     this.current_part.time_range = {};
+  }
+
+  validForm() {
+    const errors = [];
+    const generalDateTime = this.ReservationPart.generalDateTime(this.current_part);
+
+    if (!this.current_part.date) errors.push('DATE not found');
+    if (!this.current_part.number_of_persons) errors.push('NUMBER OF PERSONS not found');
+    //if (!generalDateTime) errors.push('TIJDSTIP not found');
+    if (!this.current_part.product) errors.push('PRODUCT not found');
+
+    this.errors = errors;
   }
 }

@@ -46,12 +46,14 @@ export default class ReservationPart {
 
   partsByDate(parts, date) {
     return parts.filter((part) => {
-      const generalDateTime = (part.start_date_time && part.end_date_time) ?
-        part.start_date_time :
-        part.date_time;
-
-      return this.moment(generalDateTime).format('YYYY-MM-DD') ===
+      return this.moment(this.generalDateTime(part)).format('YYYY-MM-DD') ===
              this.moment(date).format('YYYY-MM-DD');
     });
+  }
+
+  generalDateTime(part) {
+    return (part.start_date_time && part.end_date_time) ?
+      part.start_date_time :
+      part.time;
   }
 }
