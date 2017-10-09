@@ -6,7 +6,7 @@
     </div>
   </md-tab-label>
   <md-tab-body>
-    <div class='reservation_zone b-t' flex>
+    <div class='md-content-submit reservation_zone b-t' flex>
       <div class='md-list-item'>
         <div class='md-list-item-content text-center'>
           <h4>Welk tafel komt de klant te zitten?</h4>
@@ -44,7 +44,7 @@
           </div>
         </div>
         <button type='button'
-                class='btn btn-md btn-success w-full'
+                class='btn btn-lg btn-success w-full no-top-radius md-content-button'
                 ng-hide='reserv.current_part.id'
                 ng-click='reserv.selectTab(reserv.pagination.zone);'>Next</button>
       </div>
