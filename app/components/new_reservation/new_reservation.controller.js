@@ -155,14 +155,10 @@ export default class NewReservationCtrl {
   }
 
   timeIsDisabled(timeObj) {
-    if (this.current_part.number_of_persons > timeObj.max_personen_voor_tafels ||
-        !timeObj.is_open ||
+    if (!timeObj.is_open ||
         timeObj.time_is_past ||
-        (this.current_part.number_of_persons > timeObj.available_seat_count && !timeObj.can_overbook)) {
-      return true;
-    }
-
-    if (this.is_customer_reservation && timeObj.more_than_deadline) {
+        !this.isEnoughSeats(timeObj) ||
+        (this.is_customer_reservation && timeObj.more_than_deadline)) {
       return true;
     }
 
@@ -481,6 +477,20 @@ export default class NewReservationCtrl {
   numberOfPersonsMoreThanTableSeats() {
     return this.current_part.number_of_persons >
            this.Reservation.generalNumberOfPersons(this.tables, this.current_part.tables);
+  }
+
+  isEnoughSeats(timeObj) {
+    return (this.current_part.number_of_persons <= timeObj.max_personen_voor_tafels &&
+           this.current_part.number_of_persons <= timeObj.available_seat_count) ||
+           timeObj.can_overbook;
+  }
+
+  disableReason(timeObj) {
+    let result = '';
+    if (!timeObj.is_open || timeObj.time_is_past) result = 'Product unavailable this time';
+    if (!this.isEnoughSeats(timeObj)) result = 'Not enough available seats';
+    if (this.is_customer_reservation && timeObj.more_than_deadline) result = 'Deadline time';
+    return result;
   }
 }
 
