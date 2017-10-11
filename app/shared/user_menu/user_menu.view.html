@@ -34,11 +34,8 @@
           <i class='mdi mdi-attachment icon-muted i-24'></i>
         </div>
         <div class='md-list-item-content'>
-          <h3 class="text-md" ng-if='current_reservation_part.date_time'>
+          <h3 class="text-md">
             {{ user.parsedDate(current_reservation_part.date_time) }}
-          </h3>
-          <h3 class="text-md" ng-if='current_reservation_part.start_date_time'>
-            {{ user.parsedDate(current_reservation_part.start_date_time) }} - {{ user.parsedDate(current_reservation_part.end_date_time) }}
           </h3>
           <small class="font-thin">
             {{ current_reservation_part.product.name }},
@@ -154,11 +151,8 @@
             <i class="mdi mdi-book icon-muted i-24"></i>
           </div>
           <div class="md-list-item-content">
-            <h3 class="text-md" ng-if='reservation_part.date_time'>
+            <h3 class="text-md">
               {{ user.parsedDate(reservation_part.date_time) }}
-            </h3>
-            <h3 class="text-md" ng-if='reservation_part.start_date_time'>
-              {{ user.parsedDate(reservation_part.start_date_time) }} - {{ user.parsedDate(reservation_part.end_date_time) }}
             </h3>
             <small class="font-thin">
               {{ reservation_part.product.name }},

@@ -25,7 +25,7 @@ export default class Agenda {
         icon_color: this.ReservationStatus.getIconColor(reservation),
         icon: this.ReservationStatus.getIcon(reservation),
         product_name: part.product.name,
-        general_date_time: this.generalFormattedDateTime(part),
+        date_time: this.moment(part.date_time).format('DD.MM.YYYY HH:mm'),
         last_name: reservation.customer.last_name,
         first_name: reservation.customer.first_name,
         number_of_persons: part.number_of_persons,
@@ -57,15 +57,5 @@ export default class Agenda {
     });
 
     return result;
-  }
-
-  generalFormattedDateTime(part) {
-    if (part.start_date_time && part.end_date_time) {
-      let str = `${this.moment(part.start_date_time).format('DD.MM.YYYY')}`;
-      str += ` ${this.moment(part.start_date_time).format('HH:mm')} - ${this.moment(part.end_date_time).format('HH:mm')}`;
-      return str;
-    }
-
-    return this.moment(part.date_time).format('DD.MM.YYYY HH:mm');
   }
 }

@@ -45,8 +45,7 @@
       <i class='mdi mdi-account-multiple'></i>
       <small class='font-thin m-r-xs'>{{ reservation_part.number_of_persons }}x</small>
       <i class='mdi mdi-clock'></i>
-      <small class='font-thin m-r-xs' ng-if='reservation_part.date_time'>{{ reservations.moment(reservation_part.date_time).format('DD.MM.YYYY HH:mm') }}</small>
-      <small class='font-thin m-r-xs' ng-if='reservation_part.start_date_time'>{{ reservations.moment(reservation_part.start_date_time).format('DD.MM.YYYY') }} {{ reservations.moment(reservation_part.start_date_time).format('HH:mm') }} - {{ reservations.moment(reservation_part.end_date_time).format('HH:mm') }}</small>
+      <small class='font-thin m-r-xs'>{{ reservations.moment(reservation_part.date_time).format('DD.MM.YYYY HH:mm') }}</small>
       <!-- Optimize it -->
       <span class='m-r-xs'
             ng-show='reservations.Table.getTableNumbersByTableIds(reservations.tables, reservation_part.table_ids).length'>
