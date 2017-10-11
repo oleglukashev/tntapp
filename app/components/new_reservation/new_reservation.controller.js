@@ -107,20 +107,12 @@ export default class NewReservationCtrl {
     };
 
     this.reservation.reservation_parts.forEach((part) => {
-      const dataPart = {
+      data.reservation_parts.push({
         number_of_persons: part.number_of_persons,
         product: part.product,
         tables: part.tables,
-      };
-
-      if (part.time_type === 'single') {
-        dataPart.date_time = `${this.moment(part.date).format('DD-MM-YYYY')} ${part.time}`;
-      } else {
-        dataPart.start_date_time = `${this.moment(part.date).format('DD-MM-YYYY')} ${part.start_date_time}`;
-        dataPart.end_date_time = `${this.moment(part.date).format('DD-MM-YYYY')} ${part.end_date_time}`;
-      }
-
-      data.reservation_parts.push(dataPart);
+        date_time: `${this.moment(part.date).format('DD-MM-YYYY')} ${part.time}`,
+      });
     });
 
     const socialAccount = JSON.parse(this.$window.localStorage.getItem('social_account'));
@@ -217,7 +209,6 @@ export default class NewReservationCtrl {
 
   clearAndLoadTime() {
     this.current_part.time = null;
-    this.clearCurrentPartTimeRange();
     this.loadTime();
   }
 
@@ -284,12 +275,7 @@ export default class NewReservationCtrl {
   loadOccupiedTables() {
     this.current_part.occupied_tables = [];
     this.current_part.occupied_tables_is_loaded = false;
-    let time = this.current_part.time;
-
-    if (this.current_part.time_type === 'range') {
-      time = this.current_part.start_date_time;
-    }
-
+    const time = this.current_part.time;
     const dateTime = `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${time}`;
 
     this.Table
@@ -369,7 +355,6 @@ export default class NewReservationCtrl {
     this.current_part.number_of_persons = null;
     this.current_part.product = null;
     this.current_part.time = null;
-    this.clearCurrentPartTimeRange();
     this.validForm();
     this.selectTab(this.pagination.date);
   }
@@ -393,26 +378,11 @@ export default class NewReservationCtrl {
     this.selectTab(this.pagination.product);
   }
 
-  changeTimePostProcess(time) {
-    if (this.current_part.time_type === 'single') {
-      this.selectTab(this.pagination.time);
-    } else {
-      // 2 - start_time and end_time
-      if (Object.keys(this.current_part.time_range).length > 2) {
-        this.clearCurrentPartTimeRange();
-        this.current_part.time_range[time] = true;
-      }
-
-      const keys = Object.keys(this.current_part.time_range).sort();
-      if (keys.length) { this.current_part.start_date_time = keys[0]; }
-      if (keys.length === 2) { this.current_part.end_date_time = keys[1]; }
-    }
-
-    if ((this.current_part.time || this.current_part.start_date_time) &&
-      !this.is_customer_reservation) {
+  changeTimePostProcess() {
+    this.selectTab(this.pagination.time);
+    if (this.current_part.time && !this.is_customer_reservation) {
       this.loadOccupiedTables();
     }
-
     this.validForm();
   }
 
@@ -445,10 +415,6 @@ export default class NewReservationCtrl {
       inner_id: innerId,
       date: null,
       time: null,
-      start_date_time: null,
-      end_date_time: null,
-      time_range: {},
-      time_type: 'single',
       number_of_persons: null,
       product: null,
       tables: [],
@@ -461,12 +427,6 @@ export default class NewReservationCtrl {
 
   isPersonTab() {
     return this.selected_index === this.pagination.person - 1;
-  }
-
-  clearCurrentPartTimeRange() {
-    this.current_part.start_date_time = null;
-    this.current_part.end_date_time = null;
-    this.current_part.time_range = {};
   }
 
   validForm() {

@@ -38,17 +38,10 @@ export default class ReservationPartEditCtrl {
       product: reservationPart.product.id,
       old_time: reservationPart.date_time ? this.moment(reservationPart.date_time).format('HH:mm') : null,
       time: reservationPart.date_time ? this.moment(reservationPart.date_time).format('HH:mm') : null,
-      old_start_date_time: reservationPart.start_date_time ? this.moment(reservationPart.start_date_time).format('HH:mm') : null,
-      start_date_time: reservationPart.start_date_time ? this.moment(reservationPart.start_date_time).format('HH:mm') : null,
-      old_end_date_time: reservationPart.end_date_time ? this.moment(reservationPart.end_date_time).format('HH:mm') : null,
-      end_date_time: reservationPart.end_date_time ? this.moment(reservationPart.end_date_time).format('HH:mm') : null,
       time_range: {},
       time_type: reservationPart.date_time ? 'single' : 'range',
       zones_is_showed: true,
     };
-
-    this.current_part.time_range[this.current_part.start_date_time] = true;
-    this.current_part.time_range[this.current_part.end_date_time] = true;
 
     reservationPart.table_ids.forEach((tableId) => {
       this.current_part.tables_values[tableId] = true;
@@ -74,14 +67,8 @@ export default class ReservationPartEditCtrl {
       product_id: this.current_part.product,
       tables: this.current_part.tables,
       part_id: this.current_part.id,
+      date_time: `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${this.current_part.date.time}`,
     };
-
-    if (this.current_part.time_type === 'single') {
-      this.current_part.date_time = `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${this.current_part.date.time}`;
-    } else {
-      this.current_part.start_date_time = `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${this.current_part.date.start_date_time}`;
-      this.current_part.end_date_time = `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${this.current_part.date.end_date_time}`;
-    }
 
     this.ReservationPart.update(this.current_company_id, this.current_part.id, data)
       .then(() => {
@@ -102,11 +89,8 @@ export default class ReservationPartEditCtrl {
     timeAvailableSeats = timeObj.available_seat_count;
     maxPearsonsPerTable = timeObj.max_personen_voor_tafels;
 
-    if ((this.current_part.old_time === timeObj.time ||
-        this.current_part.old_start_date_time === timeObj.time ||
-        this.current_part.old_end_date_time === timeObj.time) &&
+    if (this.current_part.old_time === timeObj.time &&
         this.current_part.old_date === this.current_part.date) {
-
       const usedTables = this.filterFilter(this.tables, (item) => {
         return Object.keys(this.current_part.old_tables_values).includes(String(item.id));
       });
@@ -175,7 +159,6 @@ export default class ReservationPartEditCtrl {
 
   clearAndLoadTime() {
     this.current_part.time = null;
-    this.clearCurrentPartTimeRange();
     this.loadTime();
   }
 
@@ -241,12 +224,7 @@ export default class ReservationPartEditCtrl {
   loadOccupiedTables() {
     this.current_part.occupied_tables = [];
     this.current_part.occupied_tables_is_loaded = false;
-    let time = this.current_part.time;
-
-    if (this.current_part.time_type === 'range') {
-      time = this.current_part.start_date_time;
-    }
-
+    const time = this.current_part.time;
     const dateTime = `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${time}`;
 
     this.Table
@@ -274,15 +252,13 @@ export default class ReservationPartEditCtrl {
   }
 
   getPartDate(part) {
-    const dateTime = part.date_time || part.start_date_time;
-    return this.moment(dateTime).format('YYYY-MM-DD');
+    return this.moment(part.date_time).format('YYYY-MM-DD');
   }
 
   changeDatePostProcess() {
     this.current_part.number_of_persons = null;
     this.current_part.product = null;
     this.current_part.time = null;
-    this.clearCurrentPartTimeRange();
     this.validForm();
     this.selectTab(this.pagination.date);
   }
@@ -306,19 +282,10 @@ export default class ReservationPartEditCtrl {
     this.selectTab(this.pagination.product);
   }
 
-  clearCurrentPartTimeRange() {
-    this.current_part.start_date_time = null;
-    this.current_part.end_date_time = null;
-    this.current_part.time_range = {};
-  }
-
   validForm() {
     const errors = [];
-    const generalDateTime = this.ReservationPart.generalDateTime(this.current_part);
-
     if (!this.current_part.date) errors.push('DATE not found');
     if (!this.current_part.number_of_persons) errors.push('NUMBER OF PERSONS not found');
-    //if (!generalDateTime) errors.push('TIJDSTIP not found');
     if (!this.current_part.product) errors.push('PRODUCT not found');
 
     this.errors = errors;

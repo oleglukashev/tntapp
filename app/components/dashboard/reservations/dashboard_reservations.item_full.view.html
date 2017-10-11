@@ -13,8 +13,7 @@
   </div>
   <div class='col-md-2'>
     <i class='mdi mdi-clock'></i>
-    <small ng-if='reservation_part.date_time'>{{ reservations.moment(reservation_part.date_time).format('DD.MM.YYYY HH:mm') }}</small>
-    <small ng-if='reservation_part.start_date_time'>{{ reservations.moment(reservation_part.start_date_time).format('DD.MM.YYYY') }} {{ reservations.moment(reservation_part.start_date_time).format('HH:mm') }} - {{ reservations.moment(reservation_part.end_date_time).format('HH:mm') }}</small>
+    <small>{{ reservations.moment(reservation_part.date_time).format('DD.MM.YYYY HH:mm') }}</small>
   </div>
   <div class='col-md-2'>
     <a ng-click='user.openCustomerMenu(reservation.customer.id, reservation_part.id)' ng-controller='UserMenuCtrl as user'>

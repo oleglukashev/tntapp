@@ -45,8 +45,11 @@ export default class Reservation {
       return deferred.promise;
     }
 
+    let dateParam = '';
+    if (date) dateParam = `date=${date}`;
+
     return this.$http({
-      url: `${API_URL}/company/${companyId}/reservation?date=${date}`,
+      url: `${API_URL}/company/${companyId}/reservation?${dateParam}`,
       method: 'GET',
     }).then(result => result.data);
   }
