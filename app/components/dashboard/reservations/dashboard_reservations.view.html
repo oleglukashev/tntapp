@@ -3,45 +3,62 @@
   <div ng-show='reservations.reservationsLoaded && reservations.hasReservations();'>
     <div class='panel'>
       <div class='panel-heading'>Actie vereist</div>
-      <div class='md-list'>
+      <md-list class='no-padder'
+               ng-show='reservations.filtered(reservations.action_required).length'>
         <div class='b-b' ng-repeat='reservation in reservations.filtered(reservations.action_required)'>
-          <div class='reservation_action_required md-list-item b-b-none'
+          <md-list-item class='reservation_today md-2-line md-no-proxy b-b-none'
+               ng-class='{"active": reservations.active_part == reservation_part.id}'
                data-ng-include=" 'dashboard_reservations.item.view.html' "
+               ng-repeat='reservation_part in reservations.ReservationPart.partsByDate(reservation.reservation_parts, reservations.moment())'
                ng-init='hideIcon = $index > 0'
-               ng-class='{ "p-t-none": $index > 0 }'
-               ng-repeat='reservation_part in reservation.reservation_parts'></div>
+               ng-click='reservations.active_part = reservation_part.id'
+               md-ink-ripple></md-list-item>
         </div>
-      </div>
+      </md-list>
+      <div class='md-padding'
+           ng-hide='reservations.filtered(reservations.action_required).length'>Leeg</div>
     </div>
 
     <div class='panel'>
       <div class='panel-heading'>Groepen deze week</div>
-      <div class='md-list'>
+      <md-list class='no-padder'
+               ng-show='reservations.filtered(reservations.group_this_week).length'>
         <div class='b-b' ng-repeat='reservation in reservations.filtered(reservations.group_this_week)'>
-          <div class='reservation_group_this_week md-list-item b-b-none'
+          <md-list-item class='reservation_today md-2-line md-no-proxy b-b-none'
+               ng-class='{"active": reservations.active_part == reservation_part.id}'
                data-ng-include=" 'dashboard_reservations.item.view.html' "
+               ng-repeat='reservation_part in reservations.ReservationPart.partsByDate(reservation.reservation_parts, reservations.moment())'
                ng-init='hideIcon = $index > 0'
-               ng-class='{ "p-t-none": $index > 0 }'
-               ng-repeat='reservation_part in reservation.reservation_parts'></div>
+               ng-click='reservations.active_part = reservation_part.id'
+               md-ink-ripple></md-list-item>
         </div>
-      </div>
+      </md-list>
+      <div class='md-padding'
+           ng-hide='reservations.filtered(reservations.group_this_week).length'>Leeg</div>
     </div>
 
-    <button ng-click='dash.openReservation();' md-ink-ripple class='panel-add-button md-btn md-fab m-b'>
+    <button ng-click='dash.openReservation()'
+            class='panel-add-button md-btn md-fab m-b'
+            md-ink-ripple>
       <i class='mdi mdi-plus i-24'></i>
     </button>
 
     <div class='panel'>
       <div class='panel-heading'>Vandaag</div>
-      <div class='md-list'>
+      <md-list class='no-padder'
+               ng-show='reservations.filtered(reservations.today).length'>
         <div class='b-b' ng-repeat='reservation in reservations.filtered(reservations.today)'>
-          <div class='reservation_today md-list-item b-b-none'
+          <md-list-item class='reservation_today md-2-line md-no-proxy b-b-none'
+               ng-class='{"active": reservations.active_part == reservation_part.id}'
                data-ng-include=" 'dashboard_reservations.item.view.html' "
                ng-repeat='reservation_part in reservations.ReservationPart.partsByDate(reservation.reservation_parts, reservations.moment())'
                ng-init='hideIcon = $index > 0'
-               ng-class='{ "p-t-none": $index > 0 }'></div>
+               ng-mouseup='reservations.active_part = reservation_part.id'
+               md-ink-ripple></md-list-item>
         </div>
-      </div>
+      </md-list>
+      <div class='md-padding'
+           ng-hide='reservations.filtered(reservations.today).length'>Leeg</div>
     </div>
   </div>
 
