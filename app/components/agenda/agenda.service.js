@@ -32,7 +32,7 @@ export default class Agenda {
         table_ids: this.Table.getTableNumbersByTableIds(tables, part.table_ids).join(', '),
         notes: `${reservation.notes || ''}`,
         customer_id: reservation.customer.id,
-        reservation: reservation,
+        reservation,
         not_first_part: reservationIds.includes(reservation.id),
       });
 

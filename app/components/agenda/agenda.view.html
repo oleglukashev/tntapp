@@ -26,27 +26,27 @@
           <thead>
             <tr>
                 <th>Aanwezig</th>
-                <th sortable='time' class="sortable">
+                <th sortable='time' class='sortable'>
                   Tijd
                   <span class='arrow ascent'></span>
                   <span class='arrow descent'></span>
                 </th>
-                <th sortable='product_name' class="sortable">
+                <th sortable='product_name' class='sortable'>
                   Product
                   <span class='arrow ascent'></span>
                   <span class='arrow descent'></span>
                 </th>
-                <th sortable='name' class="sortable">
+                <th sortable='name' class='sortable'>
                   Naam
                   <span class='arrow ascent'></span>
                   <span class='arrow descent'></span>
                 </th>
-                <th sortable='number_of_persons' class="sortable">
+                <th sortable='number_of_persons' class='sortable'>
                   Personen
                   <span class='arrow ascent'></span>
                   <span class='arrow descent'></span>
                 </th>
-                <th sortable='tables' class="sortable">
+                <th sortable='tables' class='sortable'>
                   Tafel
                   <span class='arrow ascent'></span>
                   <span class='arrow descent'></span>
@@ -62,14 +62,14 @@
       </div>
 
       <div class='tables_wrapper' ng-show='agenda.reservations_view == "calendar"' ng-if='agenda.tables_by_zone[zone.id].length'>
-        <div ng-repeat='(table_index, table) in agenda.tables_by_zone[zone.id] | orderBy:"position"'>
-          <div class='table_item_number pull-left m-t-sm' ng-style='{ top: table_index * agenda.reservation_height }'>
+        <div ng-repeat='(tableIndex, table) in agenda.tables_by_zone[zone.id] | orderBy:"position"'>
+          <div class='table_item_number pull-left m-t-sm' ng-style='{ top: tableIndex * agenda.reservation_height }'>
             {{ table.table_number }}
           </div>
         </div>
       </div>
 
-      <div class='calendar_wrapper' ng-show='agenda.reservations_view == "calendar"'>
+      <div class='calendar_wrapper' ng-show='agenda.reservations_view == "calendar"' data-zone-id='{{ zone.id }}'>
 
         <div class='scroll-wrapper'>
           <div class='hours-timeline' ng-if='agenda.tables_by_zone[zone.id].length'>
@@ -83,42 +83,45 @@
             <div class='now' ng-style='agenda.nowLineStyle(zone.id)' ng-if='agenda.is_today'></div>
 
             <ul class='tables md-list no-padder no-margin'>
-              <li class='table_item md-list-item no-padder no-margin z-index-1'
-                  ng-repeat="(table_index, table) in agenda.tables_by_zone[zone.id] | orderBy:'position'">
+              <li class='table_item md-list-item no-padder no-margin z-index1'
+                  ng-repeat='(tableIndex, table) in agenda.tables_by_zone[zone.id] | orderBy:"position"'>
 
-                <div class="hours-wrapper">
-                  <div class="hour" ng-repeat="hour in agenda.Agenda.hours">
-                    <div class="quarter"
-                         ng-repeat="quarter in [0,1,2,3]"
-                         ui-on-drop="agenda.onDrop(table.id, table_index, hour, quarter, $data)"
+                <div class='hours-wrapper'>
+                  <div class='hour' ng-repeat='hour in agenda.Agenda.hours'>
+                    <div class='quarter'
+                         data-hour='{{ hour }}'
+                         data-quarter='{{ quarter }}'
+                         data-zone-id='{{ zone.id }}'
+                         ng-repeat='quarter in [0,1,2,3]'
+                         ui-on-drop='agenda.onDrop(table.id, tableIndex, hour, quarter, $data)'
                          ng-click='agenda.openQuickReservation(table.id, table.table_number, hour, quarter)'
-                         ng-class="agenda.getQuarterClass(hour, quarter)"
+                         ng-class='agenda.getQuarterClass(hour, quarter)'
                          drop-channel='move,resize'></div>
                   </div>
 
                   <div class='reservation'
-                       ng-repeat='item in agenda.tables_by_part[table.id]'
+                       ng-repeat='(partId, part) in agenda.partsByTable[table.id]'
                        ui-on-drop=''
                        drop-channel='resize'
                        ui-draggable='true'
-                       drag='item.id'
-                       ng-style='agenda.reservationBlockStyle(table_index, item)'
+                       drag='partId'
+                       ng-style='agenda.reservationBlockStyle(tableIndex, part)'
                        on-drop-failure='agenda.dragEnd()'
                        ng-class='agenda.draggable_class'
-                       data-product-id='{{ item.product_id }}'
-                       data-id='{{ item.id }}'
+                       data-product-id='{{ part.product_id }}'
+                       data-id='{{ partId }}'
                        drag-channel='move'>
                     <i class='mdi i-20'
-                       ng-class='agenda.ReservationStatus.getIcon(item.reservation)'
-                       ng-click='agenda.setPresent(item.reservation)'
-                       title='{{ agenda.ReservationStatus.getStatus(item.reservation) | capitalize }}'
+                       ng-class='agenda.ReservationStatus.getIcon(part.reservation)'
+                       ng-click='agenda.setPresent(part.reservation)'
+                       title='{{ agenda.ReservationStatus.getStatus(part.reservation) | capitalize }}'
                     ></i>
-                    <a ng-click='user.openCustomerMenu(item.customer.id, item.id)' ng-controller='UserMenuCtrl as user'>
-                      {{ item.number_of_persons }}
-                      {{ agenda.products[item.product_id] }}
+                    <a ng-click='user.openCustomerMenu(part.customer.id, partId)' ng-controller='UserMenuCtrl as user'>
+                      {{ part.number_of_persons }}
+                      {{ agenda.products[part.product_id] }}
                       <strong>
-                        {{ item.customer.last_name }}
-                        {{ item.customer.first_name }}
+                        {{ part.customer.last_name }}
+                        {{ part.customer.first_name }}
                       </strong>
                     </a>
                     <div class='resizer' ui-draggable='true' drag-channel='resize'></div>

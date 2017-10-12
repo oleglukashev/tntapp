@@ -1,6 +1,8 @@
 export default class AgendaCtrl {
-  constructor(User, Settings, Zone, Table, TimeRange, Product, Reservation, ReservationStatus,
-    Agenda, ReservationPart, filterFilter, $scope, $rootScope, $modal, moment, $timeout) {
+  constructor(
+    User, Settings, Zone, Table, TimeRange, Product, Reservation, ReservationStatus,
+    Agenda, ReservationPart, filterFilter, $scope, $rootScope, $modal, moment, $timeout,
+  ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -24,13 +26,13 @@ export default class AgendaCtrl {
     this.tables_by_zone = {};
     this.errors = [];
     this.opened = [true];
-    this.tables_by_part = {};
+    this.partsByTable = {};
     this.products = {};
     this.open_hours = {};
 
     this.tableOptions = {};
 
-    this.draggable_class = '';
+    this.draggableClass = '';
     this.channel = '';
 
     this.reservations_view = 'calendar';
@@ -46,19 +48,15 @@ export default class AgendaCtrl {
     this.reservation_block_width = this.hour_width * 1.5;
 
     $rootScope.$on('ANGULAR_DRAG_START', (obj, event, channel) => {
-      if (!this.channel) {
-        this.channel = channel;
-      }
-
-      if (channel === 'move' && event.target.attributes['data-product-id']) {
-        this.dragged_product = event.target.attributes['data-product-id'].value;
-      }
-
-      this.draggable_class = 'dragged';
+      this.dragStart(event, channel);
     });
 
     $rootScope.$on('ANGULAR_DRAG_END', () => {
       this.dragEnd();
+    });
+
+    $rootScope.$on('ANGULAR_HOVER', (obj, event) => {
+      this.dragHover(obj, event);
     });
 
     $rootScope.$on('PageFilterCtrl.change_view', (obj, view) => {
@@ -101,61 +99,132 @@ export default class AgendaCtrl {
     }
   }
 
-  dragEnd() {
-    this.dragged_product = 0;
-    this.draggable_class = '';
+  dragHover(obj, event) {
+    const quarter = $(event.target);
+    const part = $(this.itemMoveEvent.target);
+
+    // when moving item on other zone
+    if (this.itemShadowZone !== quarter.data('zoneId')) {
+      this.calendarWrapper = quarter.closest('.calendar_wrapper');
+      this.dragStart(this.itemMoveEvent, 'move', this.calendarWrapper);
+    }
+    const left = ((quarter.data('hour') * this.hour_width) +
+      ((quarter.data('quarter') * this.hour_width) / 4)) -
+      ((this.offsetHours * this.hour_width) + ((this.offsetQuarters * this.hour_width) / 4));
+    const top = quarter.offset().top - this.calendarWrapper.offset().top;
+
+    part.addClass('z-index-1');
+
+    this.itemShadow.css({ left, top });
   }
 
-  onDrop(tableId, tablePosition, hour, quarter, reservationPartId) {
-    const tables = this.tables_by_part;
+  dragStart(event, channel, calendarWrapper) {
+    if (!this.channel) {
+      this.channel = channel;
+    }
 
-    for (const table in tables) {
-      for (let i = 0; i < tables[table].length; i += 1) {
-        const item = tables[table][i];
-        if (item.id === reservationPartId) {
+    if (channel === 'move') {
+      const part = $(event.target);
 
-          if (this.channel === 'resize') {
-            const difference = (((hour * 4) + quarter) - ((this.moment(item.date_time).get('hour') * 4) +
-              (this.moment(item.date_time).get('minute') / 15)));
+      this.calendarWrapper = calendarWrapper || part.closest('.calendar_wrapper');
 
-            if ((difference * this.hour_width) / 4 > this.minimal_width) {
-              const data = {
-                part_id: reservationPartId,
-                datetime: this.moment(this.date_filter).format('YYYY-MM-DD') + ' ' + this.moment(item.date_time).format('HH') + ':' + this.moment(item.date_time).format('mm') + ':00',
-                tables: Object.values(item.table_ids),
-                duration_minutes: difference * 15,
-              };
+      const wrapperScrollX = this.calendarWrapper.scrollLeft() - this.calendarWrapper.offset().left;
+      const mouseX = event.originalEvent.pageX;
+      const clickedX = wrapperScrollX + mouseX;
+      const clickedXPartOffset = Math.floor((
+        clickedX - part.position().left) / (this.hour_width / 4));
 
-              this.ReservationPart.update(this.current_company_id, reservationPartId, data)
-              .then(() => {
-                item.width = (difference * this.hour_width) / 4;
-                this.dragEnd();
-              });
-            }
-          } else if (this.channel === 'move') {
+      if (!calendarWrapper) {
+        this.offsetHours = Math.floor(clickedXPartOffset / 4);
+        this.offsetQuarters = clickedXPartOffset % 4;
+      }
+
+      part.removeClass('z-index-1');
+
+      // creating shadow
+      if (this.itemShadow) {
+        this.itemShadow.remove();
+      }
+      this.itemShadow = part.clone().appendTo(this.calendarWrapper);
+      this.itemShadow.removeClass('reservation').addClass('reservationShadow');
+      this.itemShadowZone = this.calendarWrapper.data('zoneId');
+      this.itemMoveEvent = event;
+
+      if (event.target.attributes['data-product-id']) {
+        this.draggedProduct = event.target.attributes['data-product-id'].value;
+      }
+    }
+
+    this.draggableClass = 'dragged';
+  }
+
+  dragEnd() {
+    const part = $(this.itemMoveEvent.target);
+    part.removeClass('z-index-1');
+    this.itemShadow.remove();
+    this.draggedProduct = 0;
+    this.draggableClass = '';
+  }
+
+  onDrop(targetTableId, tablePosition, hour, quarter, reservationPartId) {
+    const tables = this.partsByTable;
+    const dateFilter = this.moment(this.date_filter);
+
+    Object.keys(tables).forEach((tableId) => {
+      if (tables[tableId][reservationPartId]) {
+        const part = tables[tableId][reservationPartId];
+        const dateTime = this.moment(part.date_time);
+
+        if (this.channel === 'resize') {
+          const difference = (((hour * 4) + quarter) - ((dateTime.get('hour') * 4) +
+            (dateTime.get('minute') / 15)));
+
+          if ((difference * this.hour_width) / 4 > this.minimal_width) {
             const data = {
               part_id: reservationPartId,
-              datetime: this.moment(this.date_filter).format('YYYY-MM-DD') + ' ' + hour + ':' + (quarter * 15) + ':00',
-              tables: [tableId],
+              datetime: `${dateFilter.format('YYYY-MM-DD')} ${dateTime.format('HH')}:${dateTime.format('mm')}:00`,
+              tables: Object.values(part.table_ids),
+              duration_minutes: difference * 15,
             };
 
             this.ReservationPart.update(this.current_company_id, reservationPartId, data)
-            .then((part) => {
-              const left = this.left_margin + (hour * this.hour_width)
-                + ((quarter * this.hour_width) / 4);
-              const top = this.top_margin + (tablePosition * this.reservation_height);
-              item.left = left;
-              item.top = top;
-              item.date_time = part.date_time;
-              item.table_ids = part.table_ids;
-
-              if (!tables[tableId]) tables[tableId] = [];
-              tables[tableId].push(tables[table].splice(i, 1)[0]);
-            });
+              .then(() => {
+                part.width = (difference * this.hour_width) / 4;
+                this.dragEnd();
+              });
           }
+        } else if (this.channel === 'move') {
+          const fullDateTime = `${dateFilter.format('YYYY-MM-DD')} ${hour}:${(quarter * 15)}:00`;
+          const newDateTime = this.moment(fullDateTime).subtract({
+            hours: this.offsetHours,
+            minutes: this.offsetQuarters * 15,
+          });
+          const data = {
+            part_id: reservationPartId,
+            datetime: newDateTime.format('YYYY-MM-DD HH:mm:00'),
+            tables: [targetTableId],
+          };
+
+          this.ReservationPart.update(this.current_company_id, reservationPartId, data)
+            .then((loadedPart) => {
+              const newHour = newDateTime.format('HH');
+              const newQuarter = Math.floor(newDateTime.format('mm') / 15);
+              const left = this.left_margin + (newHour * this.hour_width)
+                + ((newQuarter * this.hour_width) / 4);
+              const top = this.top_margin + (tablePosition * this.reservation_height);
+
+              part.left = left;
+              part.top = top;
+              part.date_time = loadedPart.date_time;
+              part.table_ids = Object.values(part.table_ids);
+
+              if (!tables[targetTableId]) tables[targetTableId] = {};
+              tables[targetTableId][reservationPartId] = part;
+              delete tables[tableId][reservationPartId];
+            });
         }
       }
-    }
+    });
     this.channel = '';
   }
 
@@ -181,7 +250,7 @@ export default class AgendaCtrl {
       resolve: {
         datetime: () => {
           const datetime = this.moment(this.date_filter);
-          datetime.set({hour: hour, minute: quarter * 15, second: 0 });
+          datetime.set({ hour, minute: quarter * 15, second: 0 });
           return datetime;
         },
         tableNumber: () => tableNumber,
@@ -198,9 +267,9 @@ export default class AgendaCtrl {
 
   getQuarterClass(hour, quarter) {
     const timePart = (hour * 4) + quarter;
-    if (this.open_hours[this.dragged_product] && (
-      timePart < this.open_hours[this.dragged_product].start ||
-      timePart > this.open_hours[this.dragged_product].end
+    if (this.open_hours[this.draggedProduct] && (
+      timePart < this.open_hours[this.draggedProduct].start ||
+      timePart > this.open_hours[this.draggedProduct].end
     )) {
       return 'inactive';
     }
@@ -232,52 +301,52 @@ export default class AgendaCtrl {
 
   loadTimeRanges() {
     this.TimeRange.getAll(this.current_company_id)
-      .then(
-        (ranges) => {
-          ranges.forEach((range) => {
-            if (range.daysOfWeek[0] === this.current_day) {
-              const startTime = range.startTime.split(':');
-              const endTime = range.endTime.split(':');
-              this.open_hours[range.productId] = {
-                start: (startTime[0] * 4) + (startTime[1] / 15),
-                end: (endTime[0] * 4) + (endTime[1] / 15),
-              };
-            }
-          });
-          this.loadReservations();
+      .then((ranges) => {
+        ranges.forEach((range) => {
+          if (range.daysOfWeek[0] === this.current_day) {
+            const startTime = range.startTime.split(':');
+            const endTime = range.endTime.split(':');
+            this.open_hours[range.productId] = {
+              start: (startTime[0] * 4) + (startTime[1] / 15),
+              end: (endTime[0] * 4) + (endTime[1] / 15),
+            };
+          }
         });
+        this.loadReservations();
+      });
   }
 
   loadReservations() {
     this.Reservation.getAll(this.current_company_id, this.moment(this.date_filter).format('YYYY-MM-DD'))
-      .then(
-        (reservations) => {
-          this.tables_by_part = [];
-          this.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
-          reservations.forEach((reservation) => {
-            const parts = reservation.reservation_parts;
-            parts.forEach((part) => {
-              if (this.moment(this.date_filter).startOf('day').isSame(this.moment(part.date_time).startOf('day'))) {
-                part.table_ids.forEach((tableId) => {
-                  if (!this.tables_by_part[tableId]) this.tables_by_part[tableId] = [];
-                  part.left = this.timeToCoords(part.date_time);
-                  part.width = this.durationToWidth(part.duration_minutes);
-                  part.customer = reservation.customer;
-                  part.status = reservation.status;
-                  part.reservation = reservation;
-                  this.tables_by_part[tableId].push(part);
-                });
-              }
-            });
+      .then((reservations) => {
+        this.partsByTable = {};
+        this.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
+        reservations.forEach((reservation) => {
+          const parts = reservation.reservation_parts;
+          parts.forEach((part) => {
+            if (this.moment(this.date_filter).startOf('day')
+              .isSame(this.moment(part.date_time).startOf('day'))
+            ) {
+              part.table_ids.forEach((tableId) => {
+                if (!this.partsByTable[tableId]) this.partsByTable[tableId] = {};
+                part.left = this.timeToCoords(part.date_time);
+                part.width = this.durationToWidth(part.duration_minutes);
+                part.customer = reservation.customer;
+                part.status = reservation.status;
+                part.reservation = reservation;
+                this.partsByTable[tableId][part.id] = part;
+              });
+            }
           });
-
-          if (this.tables) {
-            this.setTableOptions();
-          }
-
-          this.loadProducts();
-          this.is_loaded = true;
         });
+
+        if (this.tables) {
+          this.setTableOptions();
+        }
+
+        this.loadProducts();
+        this.is_loaded = true;
+      });
   }
 
   loadProducts() {
@@ -312,8 +381,8 @@ export default class AgendaCtrl {
           });
           this.loadTables();
         },
-        () => {
-        });
+        () => {},
+      );
   }
 
   loadGeneralSettings() {
