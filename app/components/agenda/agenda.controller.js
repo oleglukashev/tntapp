@@ -1,8 +1,8 @@
 export default class AgendaCtrl {
   constructor(
-    User, Settings, Zone, Table, TimeRange, Product, Reservation, ReservationStatus,
-    Agenda, ReservationPart, filterFilter, $scope, $rootScope, $modal, moment, $timeout,
-  ) {
+    User, Settings, Zone, Table, TimeRange, Product, AgendaFactory, ReservationStatusMenu,
+    Reservation, ReservationStatus, Agenda, ReservationPart, filterFilter, $scope, $rootScope,
+    $modal, moment, $timeout) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -13,7 +13,6 @@ export default class AgendaCtrl {
     this.Product = Product;
     this.TimeRange = TimeRange;
     this.Reservation = Reservation;
-    this.Agenda = Agenda;
     this.ReservationPart = ReservationPart;
     this.ReservationStatus = ReservationStatus;
     this.filterFilter = filterFilter;
@@ -87,6 +86,8 @@ export default class AgendaCtrl {
 
     this.loadGeneralSettings();
     this.loadZonesAndTables();
+    AgendaFactory(this);
+    ReservationStatusMenu(this);
   }
 
   // scrolling left for now line
@@ -421,7 +422,7 @@ export default class AgendaCtrl {
 
   setTableOptions() {
     this.zones.forEach((zone) => {
-      this.tableOptions[zone.id].data = this.Agenda.getData(this.reservations, this.tables, zone);
+      this.tableOptions[zone.id].data = this.getData(zone);
     });
   }
 

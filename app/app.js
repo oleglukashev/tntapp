@@ -31,7 +31,7 @@ import mainRoute from './config.router';
 import jwtConfig from './config.jwt';
 import initTemplates from './config.templates';
 import editReservationParts from './components/reservation_parts/reservation_part.edit.controller';
-import search from './shared/search';
+import search from './components/search';
 import dashboard from './components/dashboard';
 import dashboardReservations from './components/dashboard/reservations/dashboard_reservations.controller';
 import reservations from './components/reservations';
@@ -45,6 +45,7 @@ import reservationAnswerController from './components/reservation_answer/reserva
 import chartsController from './components/dashboard/charts/charts.controller';
 import pageFilterController from './shared/page_filter/page_filter.controller';
 import pageFilterTimeRangesController from './shared/page_filter/time_ranges/page_filter_time_ranges.controller';
+import searchHeaderController from './components/search/search.header.controller';
 import agenda from './components/agenda';
 import settings from './components/settings';
 import auth from './components/auth';
@@ -61,9 +62,9 @@ angular
     angularMessages, angularResource, angularSanitize, angularTouch, angularUiRouter,
     angularUiBootstrap, angularTranslate, angularTranslateStorageLocale,
     angularTranslateStorageCookie, angularMoment, angularMaterial, uiLoad, anguarOclazyLoad, uiJq,
-    dndLists, satellizer, search, dashboard, customerReservation, reservations, dnd, agenda, auth,
-    settings, rzModule, chartjs, profiles, constants, editUser, angularLoadingBar, dataGrid,
-    'app.services', 'app.directives', 'app.filters', 'growlNotifications',
+    dndLists, satellizer, search, dashboard, customerReservation,
+    reservations, dnd, agenda, auth, settings, rzModule, chartjs, profiles, constants, editUser,
+    angularLoadingBar, dataGrid, 'app.services', 'app.directives', 'app.filters', 'growlNotifications',
   ])
   .config(jwtConfig)
   .controller('AppCtrl', appController)
@@ -77,6 +78,7 @@ angular
   .controller('PageFilterCtrl', pageFilterController)
   .controller('PageFilterTimeRangesCtrl', pageFilterTimeRangesController)
   .controller('ReservationAnswerCtrl', reservationAnswerController)
+  .controller('SearchHeaderCtrl', searchHeaderController)
   .config(['$ocLazyLoadProvider', 'MODULE_CONFIG', ($ocLazyLoadProvider, MODULE_CONFIG) => {
     // We configure ocLazyLoad to use the lib script.js as the async loader
     $ocLazyLoadProvider.config({

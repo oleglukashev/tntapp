@@ -10,14 +10,13 @@ export default function templates($templateCache) {
   $templateCache.put('mobile_menu.view.html', require('./shared/mobile_menu/mobile_menu.view.html'));
   $templateCache.put('page_filter.view.html', require('./shared/page_filter/page_filter.view.html'));
   $templateCache.put('page_filter_time_ranges.view.html', require('./shared/page_filter/time_ranges/page_filter_time_ranges.view.html'));
-  $templateCache.put('search.view.html', require('./shared/search/search.view.html'));
+  $templateCache.put('search.view.html', require('./components/search/search.view.html'));
   $templateCache.put('charts.view.html', require('./components/dashboard/charts/charts.view.html'));
   $templateCache.put('settings_products.new_product.view.html', require('./components/settings/products/settings_products.new_product.view.html'));
   $templateCache.put('settings_mails.edit_mail.view.html', require('./components/settings/mails/settings_mails.edit_mail.view.html'));
   $templateCache.put('settings_tables.new_zone.view.html', require('./components/settings/tables/settings_tables.new_zone.view.html'));
   $templateCache.put('dashboard_reservations.view.html', require('./components/dashboard/reservations/dashboard_reservations.view.html'));
   $templateCache.put('dashboard_reservations.item.view.html', require('./components/dashboard/reservations/dashboard_reservations.item.view.html'));
-  $templateCache.put('dashboard_reservations.item_full.view.html', require('./components/dashboard/reservations/dashboard_reservations.item_full.view.html'));
   $templateCache.put('dashboard_reservations.new.view.html', require('./components/dashboard/reservations/dashboard_reservations.new.view.html'));
   $templateCache.put('reservation_part.edit.view.html', require('./components/reservation_parts/reservation_part.edit.view.html'));
   $templateCache.put('rzSliderTpl.html', require('./shared/rz-slider/rz-slider.view.html'));
@@ -36,6 +35,8 @@ export default function templates($templateCache) {
   $templateCache.put('new_reservation.type.view.html', require('./components/new_reservation/new_reservation.type.view.html'));
   $templateCache.put('new_reservation.group.view.html', require('./components/new_reservation/new_reservation.group.view.html'));
   $templateCache.put('agenda.item.view.html', require('./components/agenda/agenda.item.view.html'));
+  $templateCache.put('reservation_status_menu.view.html', require('./shared/reservation_status_menu/reservation_status_menu.view.html'));
+
 
   //angular-bootstrap tpls
   $templateCache.put("template/modal/backdrop.html",

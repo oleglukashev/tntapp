@@ -1,8 +1,6 @@
-import angular from 'angular';
-
 export default class DashboardReservationsCtrl {
-  constructor(User, Reservation, ReservationStatus, ReservationPart, Table, filterFilter, moment, $scope,
-    $rootScope, $mdSidenav, $modal, $window) {
+  constructor(User, Reservation, ReservationStatus, ReservationStatusMenu, ReservationPart, Table,
+    filterFilter, moment, $scope, $rootScope, $mdSidenav, $modal, $window) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -30,6 +28,7 @@ export default class DashboardReservationsCtrl {
     });
 
     this.loadReservations();
+    ReservationStatusMenu(this);
   }
 
   filtered(array) {
@@ -44,45 +43,6 @@ export default class DashboardReservationsCtrl {
   openCustomerMenu() {
     this.$rootScope.$broadcast('UserMenuCtrl');
     this.$mdSidenav('right').toggle();
-  }
-
-  answer(reservation) {
-    const modalInstance = this.$modal.open({
-      templateUrl: 'reservation_answer.view.html',
-      controller: 'ReservationAnswerCtrl as antwoord',
-      size: 'md',
-      resolve: {
-        reservation: () => reservation,
-      },
-    });
-
-    modalInstance.result.then(() => {
-    }, () => {
-    });
-  }
-
-  changeStatus(currentReservation, status) {
-    this.ReservationStatus
-      .changeStatus(this.current_company_id, currentReservation, status).then((reservation) => {
-        const datetime = reservation.reservation_parts[0];
-        const actionRequiredHasReservation =
-          this.filterFilter(this.action_required, { id: reservation.id })[0];
-
-        if (reservation.status === 'request' &&
-            datetime &&
-            this.moment(datetime) >= this.moment()) {
-          if (!actionRequiredHasReservation) {
-            this.action_required.push(reservation);
-          }
-        } else {
-          const index = this.action_required.map(item => item.id).indexOf(reservation.id);
-
-          if (actionRequiredHasReservation) {
-            this.action_required.splice(index, 1);
-          }
-        }
-      }, () => {
-      });
   }
 
   loadReservations() {

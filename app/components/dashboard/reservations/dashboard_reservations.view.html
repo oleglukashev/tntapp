@@ -11,7 +11,7 @@
                data-ng-include=" 'dashboard_reservations.item.view.html' "
                ng-repeat='reservation_part in reservations.ReservationPart.partsByDate(reservation.reservation_parts, reservations.moment())'
                ng-init='hideIcon = $index > 0'
-               ng-click='reservations.active_part = reservation_part.id'
+               ng-mouseup='reservations.active_part = reservation_part.id'
                md-ink-ripple></md-list-item>
         </div>
       </md-list>
@@ -29,7 +29,7 @@
                data-ng-include=" 'dashboard_reservations.item.view.html' "
                ng-repeat='reservation_part in reservations.ReservationPart.partsByDate(reservation.reservation_parts, reservations.moment())'
                ng-init='hideIcon = $index > 0'
-               ng-click='reservations.active_part = reservation_part.id'
+               ng-mouseup='reservations.active_part = reservation_part.id'
                md-ink-ripple></md-list-item>
         </div>
       </md-list>
