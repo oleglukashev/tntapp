@@ -1,7 +1,7 @@
 export default class AgendaCtrl {
   constructor(
-    User, Settings, Zone, Table, TimeRange, Product, AgendaFactory, ReservationStatusMenu,
-    Reservation, ReservationStatus, Agenda, ReservationPart, filterFilter, $scope, $rootScope,
+    User, Settings, Zone, Table, TimeRange, Product, AgendaItemFactory, ReservationStatusMenu,
+    Reservation, ReservationStatus, ReservationPart, filterFilter, $scope, $rootScope,
     $modal, moment, $timeout) {
     'ngInject';
 
@@ -35,6 +35,10 @@ export default class AgendaCtrl {
     this.channel = '';
 
     this.reservations_view = 'calendar';
+
+    this.hours = Array.from(Array(24).keys()).map((h) => {
+      return (h < 10) ? `0${h.toString()}` : h.toString();
+    });
 
     this.left_margin = 0;
     this.top_margin = 30;
@@ -86,7 +90,7 @@ export default class AgendaCtrl {
 
     this.loadGeneralSettings();
     this.loadZonesAndTables();
-    AgendaFactory(this);
+    AgendaItemFactory(this);
     ReservationStatusMenu(this);
   }
 
@@ -426,13 +430,28 @@ export default class AgendaCtrl {
     });
   }
 
-  setPresent(reservation) {
-    this.ReservationStatus.setPresent(
-      this.current_company_id,
-      reservation,
-      !reservation.is_present,
-    ).then(() => {
-      this.setTableOptions();
+  getData(zone) {
+    const result = [];
+
+    this.getPartsByZone(zone).forEach((part) => {
+      result.push(this.rowPart(part));
     });
+
+    return result;
+  }
+
+  getPartsByZone(zone) {
+    const result = [];
+    const parts = this.ReservationPart.partsByReservations(this.reservations);
+
+    parts.forEach((part) => {
+      part.table_ids.forEach((tableId) => {
+        if (zone.table_ids.includes(tableId) && !result.includes(part)) {
+          result.push(part);
+        }
+      });
+    });
+
+    return result;
   }
 }

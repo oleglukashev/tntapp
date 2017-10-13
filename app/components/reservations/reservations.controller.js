@@ -2,7 +2,8 @@ import angular from 'angular';
 
 export default class ReservationsCtrl {
   constructor(User, Table, Reservation, ReservationPart, ReservationStatusMenu, ReservationStatus,
-    moment, filterFilter, $mdSidenav, $scope, $rootScope, $modal, $window) {
+    moment, filterFilter, $mdSidenav, $scope, $rootScope, $modal, $window,
+    DashboardReservationsItemFactory) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -18,6 +19,7 @@ export default class ReservationsCtrl {
     this.$modal = $modal;
 
     this.tables = [];
+    this.data = [];
 
     this.totalNumberOfReservations = 0;
     this.totalNumberOfPersons = 0;
@@ -31,6 +33,7 @@ export default class ReservationsCtrl {
 
     this.loadReservations();
     ReservationStatusMenu(this);
+    DashboardReservationsItemFactory(this);
   }
 
   openCustomerMenu() {
@@ -80,6 +83,7 @@ export default class ReservationsCtrl {
         (reservations) => {
           this.is_loaded = true;
           this.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
+          this.setData();
           this.loadTables();
           this.totalNumberOfReservations = this.reservations.length;
           this.calculateTotalNumberOfPersons();
@@ -101,5 +105,20 @@ export default class ReservationsCtrl {
         this.totalNumberOfPersons += parseInt(reservationPart.number_of_persons, 10);
       });
     });
+  }
+
+  setData() {
+    const result = [];
+
+    this.reservations.forEach((reservation) => {
+      reservation.reservation_parts.forEach((part) => {
+        if (this.moment(part.date_time).format('YYYY-MM-DD') ===
+            this.moment().format('YYYY-MM-DD')) {
+          result.push(this.rowPart(part, reservation));
+        }
+      });
+    });
+
+    this.data = result;
   }
 }

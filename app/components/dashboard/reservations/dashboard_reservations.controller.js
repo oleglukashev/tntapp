@@ -1,6 +1,7 @@
 export default class DashboardReservationsCtrl {
-  constructor(User, Reservation, ReservationStatus, ReservationStatusMenu, ReservationPart, Table,
-    filterFilter, moment, $scope, $rootScope, $mdSidenav, $modal, $window) {
+  constructor(User, Reservation, ReservationStatus, DashboardReservationsItemFactory,
+    ReservationStatusMenu, ReservationPart, Table, filterFilter, moment, $scope,
+    $rootScope, $mdSidenav, $modal, $window) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -29,15 +30,7 @@ export default class DashboardReservationsCtrl {
 
     this.loadReservations();
     ReservationStatusMenu(this);
-  }
-
-  filtered(array) {
-    if (!this.date_filter) {
-      return array;
-    }
-
-    return this.filterFilter(array, item => this.moment(item.datetime).format('YYYY-MM-DD') ===
-                                            this.moment(this.date_filter).format('YYYY-MM-DD'));
+    DashboardReservationsItemFactory(this);
   }
 
   openCustomerMenu() {
@@ -50,13 +43,25 @@ export default class DashboardReservationsCtrl {
       .getAllGrouped(this.current_company_id).then(
         (reservations) => {
           this.all_reservations = reservations;
-          this.action_required = this.ReservationStatus.translateAndcheckStatusForDelay(reservations.action_required);
-          this.group_this_week = this.ReservationStatus.translateAndcheckStatusForDelay(reservations.group_this_week);
-          this.today = this.ReservationStatus.translateAndcheckStatusForDelay(reservations.today);
+          this.setData();
           this.loadTables();
           this.reservationsLoaded = true;
           this.$rootScope.$broadcast('reservationsLoaded', reservations);
         });
+  }
+
+  setData() {
+    ['action_required', 'group_this_week', 'today'].forEach((item) => {
+      const result = [];
+      const tempData = this.ReservationStatus.translateAndcheckStatusForDelay(this.all_reservations[item]);
+      tempData.forEach((reservation) => {
+        reservation.reservation_parts.forEach((part) => {
+          result.push(this.rowPart(part, reservation));
+        });
+      });
+
+      this[item] = result;
+    });
   }
 
   loadTables() {

@@ -9,15 +9,15 @@
     <i class='mdi mdi-dots-vertical i-24'></i>
   </button>
   <md-menu-content width='4' class='reservation_menu'>
-    <md-menu-item ng-repeat='menu in controller.ReservationStatus.right_menu[reservation.status]'>
-      <md-button ng-click='controller.changeStatus(reservation, menu.status)'
+    <md-menu-item ng-repeat='menu in controller.ReservationStatus.right_menu[item.reservation.status]'>
+      <md-button ng-click='controller.changeStatus(item.reservation, menu.status, callback)'
                  ng-disabled='menu.disabled'>
         <i class='mdi i-24 mdi-with-button-padding' ng-class='menu.class'></i>
         <span class='menu_name'>{{ menu.name }}</span>
       </md-button>
     </md-menu-item>
     <md-menu-item>
-      <md-button ng-click='controller.answer(reservation);'>
+      <md-button ng-click='controller.answer(item.reservation);'>
         <i class='mdi i-24 mdi-reply' />
         <span class='menu_name'>Antwoord</span>
       </md-button>

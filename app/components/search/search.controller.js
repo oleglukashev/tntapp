@@ -1,6 +1,6 @@
 class SearchCtrl {
-  constructor(Table, User, SearchFactory, Customer, ReservationPart, ReservationStatus,
-    ReservationStatusMenu, moment, $scope, $state, $rootScope, $stateParams) {
+  constructor(Table, User, AgendaItemFactory, Customer, ReservationPart, ReservationStatus,
+    ReservationStatusMenu, moment, $state, $rootScope, $stateParams) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -8,13 +8,10 @@ class SearchCtrl {
     this.Table = Table;
     this.moment = moment;
     this.$rootScope = $rootScope;
-    this.$scope = $scope;
     this.$stateParams = $stateParams;
-    this.$scope.class = 'collapse';
     this.Customer = Customer;
     this.ReservationPart = ReservationPart;
     this.ReservationStatus = ReservationStatus;
-    this.months = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
     this.tables = [];
     this.tableOptions = {};
     this.dateTimes = [];
@@ -31,7 +28,7 @@ class SearchCtrl {
       this.tableOptions[dateTime] = { data: [] };
     });
 
-    SearchFactory(this);
+    AgendaItemFactory(this);
     ReservationStatusMenu(this);
     this.setTableOptions();
     this.loadTables();
@@ -55,6 +52,29 @@ class SearchCtrl {
       this.tableOptions[dateTimeString].data =
         this.getData(dateTimeString);
     });
+  }
+
+  getData(dateTimeString) {
+    const result = [];
+
+    this.getPartsByDate(dateTimeString).forEach((part) => {
+      result.push(this.rowPart(part));
+    });
+
+    return result;
+  }
+
+  getPartsByDate(dateTimeString) {
+    const result = [];
+    const parts = this.ReservationPart.partsByReservations(this.reservations);
+
+    parts.forEach((part) => {
+      if (this.moment(part.date_time).format('YYYY-MM-DD') === dateTimeString) {
+        result.push(part);
+      }
+    });
+
+    return result;
   }
 }
 

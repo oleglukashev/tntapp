@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 class SearchHeaderCtrl {
-  constructor(Customer, Search, User, SearchFactory, moment, ReservationStatus,
+  constructor(Customer, Search, User, moment, ReservationStatus,
     $state, $scope, $rootScope) {
     'ngInject';
 
@@ -16,10 +16,6 @@ class SearchHeaderCtrl {
     this.ReservationStatus = ReservationStatus;
     this.Search = Search;
     this.states = [];
-    this.$rootScope.searchReservations = {
-      reservations: [],
-      tableOptions: {},
-    };
 
     this.loadCustomers();
   }

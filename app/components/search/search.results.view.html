@@ -41,11 +41,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr grid-item
-              data-ng-include=" 'agenda.item.view.html' "
+          <tr data-ng-include=" 'agenda.item.view.html' "
               ng-click='user.openCustomerMenu(item.customer_id, part.id)'
               ng-controller='UserMenuCtrl as user'
               ng-repeat='(index, item) in data = filtered | startFrom:(paginationOptions.currentPage-1)*paginationOptions.itemsPerPage | limitTo:paginationOptions.itemsPerPage track by $index'
+              ng-class='item.reservation.status'
               ng-init='controller = search;'></tr>
         </tbody>
       </table>

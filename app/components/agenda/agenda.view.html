@@ -60,6 +60,7 @@
                 ng-click='user.openCustomerMenu(item.customer_id, part.id)'
                 ng-controller='UserMenuCtrl as user'
                 ng-repeat='(index, item) in data = filtered | startFrom:(paginationOptions.currentPage-1)*paginationOptions.itemsPerPage | limitTo:paginationOptions.itemsPerPage track by $index'
+                ng-class='item.reservation.status'
                 ng-init='controller = agenda;'></tr>
           </tbody>
         </table>

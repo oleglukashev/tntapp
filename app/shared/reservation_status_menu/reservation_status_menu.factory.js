@@ -24,6 +24,9 @@ export default function reservationStatusMenu(ReservationStatus, filterFilter, m
               }
             }
           }
+
+          if (that.setTableOptions) that.setTableOptions();
+          if (that.setData) that.setData();
         }, () => {});
     };
 
