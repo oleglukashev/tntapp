@@ -58,9 +58,11 @@
           <tbody>
             <tr data-ng-include=" 'agenda.item.view.html' "
                 ng-click='user.openCustomerMenu(item.customer_id, part.id)'
+                ng-class='{"active": agenda.active_part == item.id,
+                           "cancelled": item.reservation.status == "cancelled"}'
                 ng-controller='UserMenuCtrl as user'
                 ng-repeat='(index, item) in data = filtered | startFrom:(paginationOptions.currentPage-1)*paginationOptions.itemsPerPage | limitTo:paginationOptions.itemsPerPage track by $index'
-                ng-class='item.reservation.status'
+                ng-mouseup='agenda.active_part = item.id'
                 ng-init='controller = agenda;'></tr>
           </tbody>
         </table>
