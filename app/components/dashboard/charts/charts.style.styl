@@ -47,24 +47,14 @@
   position relative
 
 .dashboard-reservation
-  padding 0px 0
-  .chart_container
-    margin 10px 0
-    .dashboard-reservation__chart
-      display inline-block
-      margin-bottom 10px
-      & > div
-        position relative
-        text-align center
-        div
-          position relative
-          z-index 1
-          font-size 16px
-      canvas
-        position absolute
-        top 0
-        left 0
-        z-index 0
-    .dashboard-reservation__title
+  .dashboard-reservation__chart
+    canvas
+      position relative
+      top -85px
+    div[ui-jq='easyPieChart']
+      margin 0 auto
+    div
       font-size 16px
+  .dashboard-reservation__title
+    font-size 16px
 
