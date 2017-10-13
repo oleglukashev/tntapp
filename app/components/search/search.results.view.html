@@ -1,0 +1,57 @@
+<div class='col-lg-8 col-md-8 col-sm-8 col-md-offset-1'>
+  <p>{{ search.reservations.length }} resultaten <b>{{ search.reservations[0].customer.first_name }} {{ search.reservations[0].customer.last_name }}</b></p><br>
+  <div class='dashboard-ad panel'
+       ng-repeat='dateTime in search.dateTimes'
+       ng-if='search.reservations.length'>
+    <div class='panel-heading'>{{ search.moment(dateTime).lang('nl').format('DD MMM') }}</div>
+    <div grid-data
+         grid-options='search.getTableOptions(dateTime)'
+         grid-actions='search.gridActions'>
+      <table class='table m-b-none'>
+        <thead>
+          <tr>
+              <th>Aanwezig</th>
+              <th sortable='time' class="sortable">
+                Tijd
+                <span class='arrow ascent'></span>
+                <span class='arrow descent'></span>
+              </th>
+              <th sortable='product_name' class="sortable">
+                Product
+                <span class='arrow ascent'></span>
+                <span class='arrow descent'></span>
+              </th>
+              <th sortable='name' class="sortable">
+                Naam
+                <span class='arrow ascent'></span>
+                <span class='arrow descent'></span>
+              </th>
+              <th sortable='number_of_persons' class="sortable">
+                Personen
+                <span class='arrow ascent'></span>
+                <span class='arrow descent'></span>
+              </th>
+              <th sortable='tables' class="sortable">
+                Tafel
+                <span class='arrow ascent'></span>
+                <span class='arrow descent'></span>
+              </th>
+              <th class='text-right'>Opmerking</th>
+              <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-include=" 'agenda.item.view.html' "
+              ng-click='user.openCustomerMenu(item.customer_id, part.id)'
+              ng-class='{"active": search.active_part == item.id,
+                         "cancelled": item.reservation.status == "cancelled"}'
+              ng-controller='UserMenuCtrl as user'
+              ng-repeat='(index, item) in data = filtered | startFrom:(paginationOptions.currentPage-1)*paginationOptions.itemsPerPage | limitTo:paginationOptions.itemsPerPage track by $index'
+              ng-mouseup='search.active_part = item.id'
+              ng-init='controller = search;'></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div data-ng-include=" 'user_menu.view.html' " ng-controller='UserMenuCtrl as user'></div>

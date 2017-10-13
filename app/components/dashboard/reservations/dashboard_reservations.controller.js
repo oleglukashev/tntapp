@@ -1,7 +1,6 @@
-import angular from 'angular';
-
 export default class DashboardReservationsCtrl {
-  constructor(User, Reservation, ReservationStatus, ReservationPart, Table, filterFilter, moment, $scope,
+  constructor(User, Reservation, ReservationStatus, DashboardReservationsItemFactory,
+    ReservationStatusMenu, ReservationPart, Table, filterFilter, moment, $scope,
     $rootScope, $mdSidenav, $modal, $window) {
     'ngInject';
 
@@ -30,15 +29,8 @@ export default class DashboardReservationsCtrl {
     });
 
     this.loadReservations();
-  }
-
-  filtered(array) {
-    if (!this.date_filter) {
-      return array;
-    }
-
-    return this.filterFilter(array, item => this.moment(item.datetime).format('YYYY-MM-DD') ===
-                                            this.moment(this.date_filter).format('YYYY-MM-DD'));
+    ReservationStatusMenu(this);
+    DashboardReservationsItemFactory(this);
   }
 
   openCustomerMenu() {
@@ -46,57 +38,30 @@ export default class DashboardReservationsCtrl {
     this.$mdSidenav('right').toggle();
   }
 
-  answer(reservation) {
-    const modalInstance = this.$modal.open({
-      templateUrl: 'reservation_answer.view.html',
-      controller: 'ReservationAnswerCtrl as antwoord',
-      size: 'md',
-      resolve: {
-        reservation: () => reservation,
-      },
-    });
-
-    modalInstance.result.then(() => {
-    }, () => {
-    });
-  }
-
-  changeStatus(currentReservation, status) {
-    this.ReservationStatus
-      .changeStatus(this.current_company_id, currentReservation, status).then((reservation) => {
-        const datetime = reservation.reservation_parts[0];
-        const actionRequiredHasReservation =
-          this.filterFilter(this.action_required, { id: reservation.id })[0];
-
-        if (reservation.status === 'request' &&
-            datetime &&
-            this.moment(datetime) >= this.moment()) {
-          if (!actionRequiredHasReservation) {
-            this.action_required.push(reservation);
-          }
-        } else {
-          const index = this.action_required.map(item => item.id).indexOf(reservation.id);
-
-          if (actionRequiredHasReservation) {
-            this.action_required.splice(index, 1);
-          }
-        }
-      }, () => {
-      });
-  }
-
   loadReservations() {
     this.Reservation
       .getAllGrouped(this.current_company_id).then(
         (reservations) => {
           this.all_reservations = reservations;
-          this.action_required = this.ReservationStatus.translateAndcheckStatusForDelay(reservations.action_required);
-          this.group_this_week = this.ReservationStatus.translateAndcheckStatusForDelay(reservations.group_this_week);
-          this.today = this.ReservationStatus.translateAndcheckStatusForDelay(reservations.today);
+          this.setData();
           this.loadTables();
           this.reservationsLoaded = true;
           this.$rootScope.$broadcast('reservationsLoaded', reservations);
         });
+  }
+
+  setData() {
+    ['action_required', 'group_this_week', 'today'].forEach((item) => {
+      const result = [];
+      const tempData = this.ReservationStatus.translateAndcheckStatusForDelay(this.all_reservations[item]);
+      tempData.forEach((reservation) => {
+        reservation.reservation_parts.forEach((part) => {
+          result.push(this.rowPart(part, reservation));
+        });
+      });
+
+      this[item] = result;
+    });
   }
 
   loadTables() {

@@ -1,8 +1,8 @@
 export default class AgendaCtrl {
   constructor(
-    User, Settings, Zone, Table, TimeRange, Product, Reservation, ReservationStatus,
-    Agenda, ReservationPart, filterFilter, $scope, $rootScope, $modal, moment, $timeout,
-  ) {
+    User, Settings, Zone, Table, TimeRange, Product, AgendaItemFactory, ReservationStatusMenu,
+    Reservation, ReservationStatus, ReservationPart, filterFilter, $scope, $rootScope,
+    $modal, moment, $timeout) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -13,7 +13,6 @@ export default class AgendaCtrl {
     this.Product = Product;
     this.TimeRange = TimeRange;
     this.Reservation = Reservation;
-    this.Agenda = Agenda;
     this.ReservationPart = ReservationPart;
     this.ReservationStatus = ReservationStatus;
     this.filterFilter = filterFilter;
@@ -36,6 +35,10 @@ export default class AgendaCtrl {
     this.channel = '';
 
     this.reservations_view = 'calendar';
+
+    this.hours = Array.from(Array(24).keys()).map((h) => {
+      return (h < 10) ? `0${h.toString()}` : h.toString();
+    });
 
     this.left_margin = 0;
     this.top_margin = 30;
@@ -87,6 +90,8 @@ export default class AgendaCtrl {
 
     this.loadGeneralSettings();
     this.loadZonesAndTables();
+    AgendaItemFactory(this);
+    ReservationStatusMenu(this);
   }
 
   // scrolling left for now line
@@ -421,17 +426,32 @@ export default class AgendaCtrl {
 
   setTableOptions() {
     this.zones.forEach((zone) => {
-      this.tableOptions[zone.id].data = this.Agenda.getData(this.reservations, this.tables, zone);
+      this.tableOptions[zone.id].data = this.getData(zone);
     });
   }
 
-  setPresent(reservation) {
-    this.ReservationStatus.setPresent(
-      this.current_company_id,
-      reservation,
-      !reservation.is_present,
-    ).then(() => {
-      this.setTableOptions();
+  getData(zone) {
+    const result = [];
+
+    this.getPartsByZone(zone).forEach((part) => {
+      result.push(this.rowPart(part));
     });
+
+    return result;
+  }
+
+  getPartsByZone(zone) {
+    const result = [];
+    const parts = this.ReservationPart.partsByReservations(this.reservations);
+
+    parts.forEach((part) => {
+      part.table_ids.forEach((tableId) => {
+        if (zone.table_ids.includes(tableId) && !result.includes(part)) {
+          result.push(part);
+        }
+      });
+    });
+
+    return result;
   }
 }

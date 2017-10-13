@@ -7,5 +7,8 @@ export default function routes($stateProvider) {
       controller: 'SearchCtrl',
       controllerAs: 'search',
       template: require('./search.results.view.html'),
-    })
+      params: {
+        reservations: null,
+      },
+    });
 }

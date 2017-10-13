@@ -1,63 +1,39 @@
 <div class='md-avatar'>
   <div ng-if='!hideIcon'
-       ng-class='reservations.ReservationStatus.getIconColor(reservation)'
+       ng-class='item.icon_color'
        class='md-list-item-left img-circle'>
     <div class='pull-left m-l-sm'>
-      <i ng-class='reservations.ReservationStatus.getIcon(reservation)'
+      <i ng-class='item.icon'
          class='mdi i-20'
-         ng-click='reservations.ReservationStatus.setPresent(reservations.current_company_id, reservation, !reservation.is_present)'></i>
+         ng-click='reservations.setPresent(item.reservation)'></i>
     </div>
   </div>
   <div ng-if='hideIcon' class='md-list-item-left'>
   </div>
 </div>
 <div class='md-list-item-text'>
-  <div class='pull-right'>
-    <md-menu>
-      <button md-ink-ripple
-            class='md-icon-button md-button'
-            ng-disabled='disabled'
-            aria-haspopup='true'
-            aria-expanded='false'
-            aria-disabled='false'
-            ng-click='$mdMenu.open($event);'>
-        <i class='mdi mdi-dots-vertical i-24'></i>
-      </button>
-      <md-menu-content width="4" class="reservation_menu">
-        <md-menu-item ng-repeat="menu in reservations.ReservationStatus.right_menu[reservation.status]">
-          <md-button ng-click='reservations.changeStatus(reservation, menu.status);' ng-disabled="menu.disabled">
-            <i class='mdi i-24 mdi-with-button-padding' ng-class="menu.class"></i>
-            <span class="menu_name">{{ menu.name }}</span>
-          </md-button>
-        </md-menu-item>
-        <md-menu-item>
-          <md-button ng-click='reservations.answer(reservation);'>
-            <i class='mdi i-24 mdi-reply' />
-            <span class="menu_name">Antwoord</span>
-          </md-button>
-        </md-menu-item>
-      </md-menu-content>
-    </md-menu>
-  </div>
+  <div class='pull-right'
+       data-ng-include=" 'reservation_status_menu.view.html' "
+       ng-init='controller = reservations;'></div>
+  
   <div class='md-list-item-content'
-       ng-click='user.openCustomerMenu(reservation.customer.id, reservation_part.id)'
+       ng-click='user.openCustomerMenu(item.reservation.customer.id, item.id)'
        ng-controller='UserMenuCtrl as user'>
-    <h3 class='text-md'>{{reservation.customer.last_name}} {{reservation.customer.first_name}}</h3>
+    <h3 class='text-md'>{{ item.last_name }} {{ item.first_name }}</h3>
     <div>
       <i class='mdi mdi-account-multiple'></i>
-      <small class='font-thin m-r-xs'>{{ reservation_part.number_of_persons }}x</small>
+      <small class='font-thin m-r-xs'>{{ item.number_of_persons }}x</small>
       <i class='mdi mdi-clock'></i>
-      <small class='font-thin m-r-xs'>{{ reservations.moment(reservation_part.date_time).format('DD.MM.YYYY HH:mm') }}</small>
-      <span class='m-r-xs'
-            ng-show='reservations.Table.getTableNumbersByTableIds(reservations.tables, reservation_part.table_ids).length'>
+      <small class='font-thin m-r-xs'>{{ item.date_time }}</small>
+      <span class='m-r-xs' ng-show='item.table_ids'>
         <img class='table_icon' src='public/images/table.svg' />
-        <small class='font-thin'>{{ reservations.Table.getTableNumbersByTableIds(reservations.tables, reservation_part.table_ids).join(", ") }}</small>
+        {{ item.table_ids }}
       </span>
       <i class='mdi mdi-silverware-variant'></i>
-      <small class='font-thin m-r-xs'>{{ reservation_part.product.name }}</small>
+      <small class='font-thin m-r-xs'>{{ item.product_name }}</small>
     </div>
-    <small class='font-thin' ng-if='reservation.notes'>
-      {{ reservation.notes | limitTo: 50 }}{{ reservation.notes.length > 50 ? '...' : '' }}
+    <small class='font-thin' ng-if='item.notes'>
+      {{ item.notes }}
     </small>
   </div>
 </div>
