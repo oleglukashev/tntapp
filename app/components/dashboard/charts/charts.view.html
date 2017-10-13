@@ -6,13 +6,28 @@
       </div>
       <div class='panel-body relative'>
 
-        <canvas id="doughnut" class="chart chart-doughnut"
-          chart-data="charts.charts.graphs.doughnut_values" chart-labels="charts.charts.graphs.doughnut_keys">
-        </canvas>
-
-        <div class="total_today">
-          {{ charts.charts.graphs.total_guests_d }}
-        </div>
+          <div class='col-xs-6 text-center m-t-sm' ng-repeat='(productId, guests) in charts.charts.graphs.guests_by_product'>
+            <div class='dashboard-reservation__chart'>
+              <div ui-jq='easyPieChart' ui-options='{
+                        percent: charts.charts.getPercent(charts.charts.graphs.total_guests_d.guests_by_product[0],
+                        charts.charts.graphs.guests_by_product[productId]),
+                        lineWidth: 2,
+                        trackColor: "#787878",
+                        barColor: "#f6f6f6",
+                        scaleColor: false,
+                        size: 84,
+                        rotate: 90,
+                        lineCap: "butt"
+                      }'>
+                <div>
+                  <span>{{ guests }}</span>
+                </div>
+              </div>
+            </div>
+            <div class='dashboard-reservation__title m-t-sm m-b-sm'>
+              {{ charts.charts.graphs.products[productId] }}
+            </div>
+          </div>
 
       </div>
     </div>

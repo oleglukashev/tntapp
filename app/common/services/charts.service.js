@@ -4,16 +4,11 @@ export default class Charts {
 
     this.current_company = User.current_company;
 
-    this.reservations = {};
     this.letterOfWeek = AppConstants.letterOfWeek;
     this.Reservation = Reservation;
-  }
 
-  get(reservations) {
     this.charts = {
-      doughnut_keys: [],
-      doughnut_values: [],
-      doughnut_by_id: [],
+      guests_by_product: { 0: 0 },
       products: {},
       reservations: {},
       day_guests: {},
@@ -22,9 +17,10 @@ export default class Charts {
       total_guests_y: 0,
       total_guests_m: 0,
       total_guests_w: 0,
-      total_guests_d: 0,
     };
+  }
 
+  get(reservations) {
     this.charts.total_guests_y = reservations.count_per_year;
     this.charts.total_guests_m = reservations.count_per_month;
     this.charts.total_guests_w = reservations.count_per_week;
@@ -47,11 +43,11 @@ export default class Charts {
         const date = new Date(part.date_time);
         const day = Math.floor(date.getTime() / mSecInDay);
         this.charts.day_guests[day] = (this.charts.day_guests[day] || 0) + personsCount;
-        if (!this.charts.doughnut_by_id[part.product_id]) {
-          this.charts.doughnut_by_id[part.product_id] = 0;
+        if (!this.charts.guests_by_product[part.product_id]) {
+          this.charts.guests_by_product[part.product_id] = 0;
         }
-        this.charts.doughnut_by_id[part.product_id] += personsCount;
-        this.charts.total_guests_d += personsCount;
+        this.charts.guests_by_product[part.product_id] += personsCount;
+        this.charts.guests_by_product[0] += personsCount;
       });
     });
     const now = new Date();
@@ -68,22 +64,24 @@ export default class Charts {
     return this.getProducts();
   }
 
+  getPercent(totalGuests, guestsCount) {
+    if (!totalGuests) {
+      return 0;
+    }
+
+    return 100 - ((guestsCount / totalGuests) * 100);
+  }
+
   getProducts() {
     this.Reservation
       .getProducts(this.current_company.id)
-        .then(
-          (products) => {
-            products.forEach((product) => {
-              this.charts.products[product.id] = product.name;
-            });
-
-            this.charts.doughnut_by_id.forEach((personCount, productId) => {
-              this.charts.doughnut_keys.push(this.charts.products[productId]);
-              this.charts.doughnut_values.push(personCount);
-            });
-          });
+      .then((products) => {
+        products.forEach((product) => {
+          this.charts.products[product.id] = product.name;
+        });
+        this.charts.products[0] = 'Totaal';
+      });
 
     return this.charts;
   }
-
 }
