@@ -127,8 +127,8 @@ export default class ReservationStatus {
   getIconColor(reservation) {
     const colors = {
       'mdi-star-outline': 'yellow-100',
-      'mdi-checkbox-blank-circle-outline': 'orange-100',
-      'mdi-check': 'green-100',
+      'mdi-checkbox-blank-circle-outline': 'orange-500',
+      'mdi-check': 'teal',
       'mdi-close': 'red-100',
       'mdi-exclamation': 'red-500',
       'mdi-clock': 'orange-500',
