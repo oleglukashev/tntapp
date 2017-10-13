@@ -1342,8 +1342,9 @@
 }
 
 .red,
-.red-500,
+.red-200,
 .red-300,
+.red-500,
 .red-600,
 .red-700,
 .red-A200,
@@ -1469,6 +1470,10 @@
 
 .orange-A700 {
     color: #000000;
+}
+
+.red-color-200 {
+    color: #ef9a9a;
 }
 
 .md-list {

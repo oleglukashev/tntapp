@@ -12,15 +12,15 @@ export default class NewReservation {
         prefix = `part ${index + 1}: `;
       }
 
-      if (!part.date) errors.push(`${prefix}DATE not found`);
-      if (!part.number_of_persons) errors.push(`${prefix}NUMBER OF PERSONS not found`);
-      if (!part.time) errors.push(`${prefix}TIJDSTIP not found`);
-      if (!part.product) errors.push(`${prefix}PRODUCT not found`);
+      if (!part.date) errors.push(`${prefix}date is verplicht`);
+      if (!part.number_of_persons) errors.push(`${prefix}number of persons is verplicht`);
+      if (!part.time) errors.push(`${prefix}tijdstip is verplicht`);
+      if (!part.product) errors.push(`${prefix}product is verplicht`);
     });
 
-    if (!reservation.name) errors.push('VOOR- EN ACHTERNAAM not found');
-    if (!reservation.mail) errors.push('MAIL not found');
-    if (phoneNumberIsRequired && !reservation.primary_phone_number) errors.push('TELEFOONNUMMER not found');
+    if (!reservation.name) errors.push('naam is verplicht');
+    if (!reservation.mail) errors.push('email adres is verplicht');
+    if (phoneNumberIsRequired && !reservation.primary_phone_number) errors.push('telefoonnummer is verplciht');
 
     return errors;
   }

@@ -34,6 +34,8 @@
               <label>Aantal personen</label>
               <input type='number'
                      class='md-input'
+                     ng-required='false'
+                     ng-change='reserv.changeNumberOfPersonsInputPostProcess()'
                      ng-model='reserv.current_part.number_of_persons' required />
             </md-input-container>
             <button type='button'

@@ -65,7 +65,6 @@ export default class NewReservationCtrl {
     const newPart = this.getNewReservationPart();
     newPart.date = new Date();
     this.reservation.reservation_parts.push(newPart);
-    this.validForm();
   }
 
   removePart(e, index) {
@@ -77,10 +76,14 @@ export default class NewReservationCtrl {
   }
 
   submitForm() {
+    this.validForm();
+    if (this.errors.length) return false;
+
     this.is_submitting = true;
     const name = this.reservation.name || '';
-    const parts = this.reservation.reservation_parts;
-    const dateOfBirth = this.reservation.date_of_birth ? this.moment(this.reservation.date_of_birth).format('DD-MM-YYYY') : undefined;
+    const dateOfBirth = this.reservation.date_of_birth ?
+      this.moment(this.reservation.date_of_birth).format('DD-MM-YYYY') :
+      undefined;
 
     const data = {
       language: this.reservation.language,
@@ -140,6 +143,8 @@ export default class NewReservationCtrl {
         this.is_submitting = false;
         this.errors = error;
       });
+
+    return true;
   }
 
   openDatepicker() {
@@ -147,10 +152,7 @@ export default class NewReservationCtrl {
   }
 
   timeIsDisabled(timeObj) {
-    if (!timeObj.is_open ||
-        timeObj.time_is_past ||
-        !this.isEnoughSeats(timeObj) ||
-        (this.is_customer_reservation && timeObj.more_than_deadline)) {
+    if (!timeObj.is_open || !this.isEnoughSeats(timeObj)) {
       return true;
     }
 
@@ -326,7 +328,6 @@ export default class NewReservationCtrl {
     this.Settings.getGeneralSettings(this.current_company_id).then(
       (generalSettings) => {
         this.settings = generalSettings;
-        this.validForm();
       });
   }
 
@@ -355,14 +356,17 @@ export default class NewReservationCtrl {
     this.current_part.number_of_persons = null;
     this.current_part.product = null;
     this.current_part.time = null;
-    this.validForm();
     this.selectTab(this.pagination.date);
   }
 
   changeNumberOfPersonsPostProcess() {
-    this.clearAndLoadTime();
-    this.validForm();
+    this.changeNumberOfPersonsInputPostProcess();
     this.selectTab(this.pagination.number_of_persons);
+  }
+
+  changeNumberOfPersonsInputPostProcess() {
+    this.current_part.product = null;
+    this.clearAndLoadTime();
   }
 
   changeProductPostProcess() {
@@ -374,7 +378,6 @@ export default class NewReservationCtrl {
     }
 
     this.clearAndLoadTime();
-    this.validForm();
     this.selectTab(this.pagination.product);
   }
 
@@ -383,7 +386,6 @@ export default class NewReservationCtrl {
     if (this.current_part.time && !this.is_customer_reservation) {
       this.loadOccupiedTables();
     }
-    this.validForm();
   }
 
   changeTableValuesPostProcess() {
@@ -395,17 +397,10 @@ export default class NewReservationCtrl {
         that.current_part.tables.push(key);
       }
     });
-
-    this.validForm();
-  }
-
-  changeInputPostProcess() {
-    this.validForm();
   }
 
   changeIsGroupPostProcess() {
     this.reservation.reservation_parts = [this.current_part];
-    this.validForm();
   }
 
   getNewReservationPart() {
@@ -445,12 +440,26 @@ export default class NewReservationCtrl {
            timeObj.can_overbook;
   }
 
-  disableReason(timeObj) {
-    let result = '';
-    if (!timeObj.is_open || timeObj.time_is_past) result = 'Product unavailable this time';
-    if (!this.isEnoughSeats(timeObj)) result = 'Not enough available seats';
-    if (this.is_customer_reservation && timeObj.more_than_deadline) result = 'Deadline time';
-    return result;
+  openedTimeRangePeriod() {
+    const availableTime = this.current_part.available_time;
+    if (!availableTime.length) return [];
+
+    const date = this.current_part.date;
+    const openedTimes = this.filterFilter(availableTime, { is_open: true });
+
+    if (openedTimes.length > 0) {
+      const min = openedTimes[0].time;
+      const max = openedTimes[openedTimes.length - 1].time;
+      const now = this.moment();
+      const formatedDate = this.moment(date).format('YYYY-MM-DD');
+
+      return this.filterFilter(availableTime, item => item.time >= min &&
+        item.time <= max &&
+        this.moment(`${formatedDate} ${item.time}`) >= now &&
+        (this.is_customer_reservation ? !item.more_than_deadline : true));
+    }
+
+    return [];
   }
 }
 
