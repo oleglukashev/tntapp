@@ -1,32 +1,41 @@
-.agenda .reservation
-    height 30px
-    border-width 1px
-    border-style solid
-    border-radius 3px
-    position absolute
-    cursor move
-    background-color #ffffff
-    z-index 9
-    overflow hidden
-    i.mdi
-        position relative
-        top 1px
-        left 5px
-        padding 0 7px 0 5px
-    a
-        position relative
-        top -2px
-        strong
-            font-size 16px
-            font-weight normal
-    .resizer
-        position absolute
-        top 0
-        right 0
-        width 10px
+.agenda
+    .reservation
         height 30px
-        background-color transparent
-        cursor col-resize
+        border-width 1px
+        border-style solid
+        border-radius 3px
+        position absolute
+        cursor move
+        background-color #ffffff
+        z-index 9
+        overflow hidden
+        i.mdi
+            position relative
+            top 1px
+            left 5px
+            padding 0 7px 0 5px
+        a
+            position relative
+            top -2px
+            strong
+                font-size 16px
+                font-weight normal
+        .resizer
+            position absolute
+            top 0
+            right 0
+            width 10px
+            height 30px
+            background-color transparent
+            cursor col-resize
+    .reservationShadow
+        position absolute
+        border-radius 3px
+        background-color #ccc
+        opacity 0.3
+        z-index 0
+        left 0
+        top 0
 
 .timeline-wrapper
     position relative
@@ -69,6 +78,7 @@
 .agenda .calendar_wrapper
     overflow-x scroll
     margin-left 47px
+    position relative
 
 .agenda .calendar_wrapper::-webkit-scrollbar
     height 10px
@@ -133,8 +143,11 @@ accordion.agenda
 .inactive
     background-color #bbb
 
-.z-index-1
+.z-index1
     z-index 1
+
+.z-index-1
+    z-index -1 !important
 
 for theme in 'default' 'aqua' 'lego' 'chocolate'
   .{theme}-theme

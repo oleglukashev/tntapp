@@ -16,7 +16,6 @@ import angularTranslate from 'angular-translate';
 import angularTranslateStorageLocale from 'angular-translate-storage-local';
 import angularTranslateStorageCookie from 'angular-translate-storage-cookie';
 import angularMoment from 'angular-moment';
-import dnd from 'angular-native-dragdrop';
 import anguarOclazyLoad from 'oclazyload';
 import rzModule from 'angularjs-slider';
 import satellizer from 'satellizer';
@@ -24,6 +23,7 @@ import chartjs from 'angular-chart.js';
 import 'angular-growl-notifications';
 import dataGrid from './common/services/data-grid';
 
+import dnd from './shared/dnd';
 import uiLoad from './common/services/ui-load';
 import uiJq from './common/directives/ui-jq';
 import dndLists from './common/directives/angular-drag-and-drop-lists.directive';
