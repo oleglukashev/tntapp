@@ -1,7 +1,9 @@
 export default class DashboardReservationsCtrl {
-  constructor(User, Reservation, ReservationStatus, DashboardReservationsItemFactory,
+  constructor(
+    User, Reservation, ReservationStatus, DashboardReservationsItemFactory,
     ReservationStatusMenu, ReservationPart, Table, filterFilter, moment, $scope,
-    $rootScope, $mdSidenav, $modal, $window) {
+    $rootScope, $mdSidenav, $modal, $window,
+  ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();

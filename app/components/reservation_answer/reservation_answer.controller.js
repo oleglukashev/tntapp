@@ -1,5 +1,5 @@
 export default class ReservationsAnswerCtrl {
-  constructor(User, ReservationStatus, reservation, $modalInstance, $window) {
+  constructor(User, ReservationStatus, reservation, $modalInstance, $window, Confirm) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -7,6 +7,7 @@ export default class ReservationsAnswerCtrl {
     this.reservation = reservation;
     this.$window = $window;
     this.ReservationStatus = ReservationStatus;
+    this.Confirm = Confirm;
   }
 
   closeModal() {
@@ -21,11 +22,9 @@ export default class ReservationsAnswerCtrl {
     }
 
     return this.ReservationStatus
-      .sendMail(this.current_company_id, this.reservation, this.form_data).then(
-        () => {
-          this.is_submitting = false;
-          this.closeModal();
-        }, () => {
-        });
+      .sendMail(this.current_company_id, this.reservation, this.form_data).then(() => {
+        this.is_submitting = false;
+        this.closeModal();
+      }, () => {});
   }
 }

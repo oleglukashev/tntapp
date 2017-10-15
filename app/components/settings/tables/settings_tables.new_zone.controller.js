@@ -1,24 +1,21 @@
 export default class SettingsTablesNewZoneCtrl {
-  constructor(User, Zone, AppConstants, zones, $scope, $modalInstance) {
+  constructor(User, Zone, AppConstants, zones, $scope, $modalInstance, Confirm) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
+    this.Confirm = Confirm;
     this.Zone = Zone;
     this.zones = zones;
     this.$scope = $scope;
+    this.$modalInstance = $modalInstance;
     this.iconsClasses = AppConstants.zonesClasses;
     this.emptyMdiClass = AppConstants.emptyClass;
-    this.$modalInstance = $modalInstance;
     this.item = {};
 
     const loadedZones = this.zonesHash();
     if (loadedZones) this.iconsClasses = $.extend(loadedZones, this.iconsClasses);
     this.uniq_icons = [...new Set(Object.values(this.iconsClasses))];
-  }
-
-  closeModal() {
-    this.$modalInstance.close();
   }
 
   changeClass(className) {
@@ -31,20 +28,20 @@ export default class SettingsTablesNewZoneCtrl {
 
     this.Zone
       .create(this.current_company_id, this.item)
-        .then((zone) => {
+      .then(
+        (zone) => {
           this.is_submitting = false;
           this.zones.push(zone);
           this.$modalInstance.dismiss('cancel');
         },
         (error) => {
           this.errors = error.data.errors;
-        });
+        },
+      );
   }
 
   zonesNames() {
-    return this.zones.map((item) => {
-      return item.name;
-    });
+    return this.zones.map(item => item.name);
   }
 
   zonesHash() {

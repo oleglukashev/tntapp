@@ -1,5 +1,8 @@
 export default class SettingsProductsCtrl {
-  constructor(User, Product, AppConstants, TimeRange, Slider, $scope, $timeout, $window, $modal) {
+  constructor(
+    User, Product, AppConstants, TimeRange, Slider, $scope, $timeout, $window,
+    $modal,
+  ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -38,10 +41,10 @@ export default class SettingsProductsCtrl {
 
       this.TimeRange
         .edit(this.current_company_id, timeRange.id, data)
-          .then(() => {
-          },
-          () => {
-          });
+        .then(
+          () => {},
+          () => {},
+        );
     }
   }
 
@@ -59,10 +62,10 @@ export default class SettingsProductsCtrl {
 
     this.TimeRange
       .edit(this.current_company_id, timeRange.id, data)
-        .then(() => {
-        },
-        () => {
-        });
+      .then(
+        () => {},
+        () => {},
+      );
 
     timeRange.options.disabled = !timeRange.options.disabled;
   }
@@ -77,8 +80,8 @@ export default class SettingsProductsCtrl {
           });
           this.loadTimeRanges();
         },
-        () => {
-        });
+        () => {},
+      );
   }
 
   loadTimeRanges() {
@@ -125,8 +128,8 @@ export default class SettingsProductsCtrl {
 
           this.is_loaded = true;
         },
-        () => {
-        });
+        () => {},
+      );
   }
 
   addProduct() {
@@ -135,9 +138,7 @@ export default class SettingsProductsCtrl {
       controller: 'SettingsProductsNewProductCtrl as new_product',
       size: 'md',
       resolve: {
-        products: () => {
-          return this.products;
-        },
+        products: () => this.products,
       },
     });
 
@@ -163,9 +164,7 @@ export default class SettingsProductsCtrl {
 
         this.Product
           .create(this.current_company_id, data)
-          .then(
-            product => this.addTimeRange(newProduct, product.id),
-          );
+          .then(product => this.addTimeRange(newProduct, product.id));
       } else {
         this.addTimeRange(newProduct, productId);
       }
@@ -206,7 +205,8 @@ export default class SettingsProductsCtrl {
 
       this.TimeRange
         .create(this.current_company_id, data)
-          .then(() => {
+        .then(
+          () => {
             const product = {
               id: productId,
               name: res.name,
@@ -217,15 +217,16 @@ export default class SettingsProductsCtrl {
 
             this.products_by_day[day].push(product);
           },
-          () => {
-          });
+          () => {},
+        );
     });
   }
 
   removeProduct(id) {
     this.Product
       .delete(this.current_company_id, id)
-        .then(() => {
+      .then(
+        () => {
           this.loadProducts();
           this.days.map((day) => {
             const productsDay = this.products_by_day[day];
@@ -236,18 +237,19 @@ export default class SettingsProductsCtrl {
             }
           });
         },
-        () => {
-        });
+        () => {},
+      );
   }
 
   hidden(productId) {
     this.Product
       .hidden(this.current_company_id, productId)
-        .then((res) => {
+      .then(
+        (res) => {
           this.products[productId].hidden = res.hidden;
         },
-        () => {
-        });
+        () => {},
+      );
   }
 
   redrawSliders() {

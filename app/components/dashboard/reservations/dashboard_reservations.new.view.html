@@ -1,14 +1,15 @@
 <section ng-controller='NewReservationCtrl as reserv' class='reservation_modal no-margin'>
   <form ng-submit='reserv.submitForm()'>
     <md-toolbar>
-      <div class='md-toolbar-tools'>
-        <div ng-click='dash_reserv.closeModal()' ng-hide='reserv.success'>
-          <i class='mdi mdi-arrow-left m-r-sm'></i>
-          Reserveren
-        </div>
-        <div ng-show='reserv.success'>
-          Nieuwe reservering
-        </div>
+      <div class="md-toolbar-tools" ng-hide='reserv.success'>
+        <h2 md-truncate flex>Reserveren</h2>
+        <md-button class="md-icon-button" ng-click='dash_reserv.Confirm.onCloseModal(dash_reserv.$modalInstance);' md-no-ink>
+          <i class='mdi mdi-close m-r-sm i-24'></i>
+        </md-button>
+      </div>
+
+      <div class="md-toolbar-tools" ng-show='reserv.success'>
+        <h2 md-truncate flex>Nieuwe reservering</h2>
       </div>
     </md-toolbar>
     <md-content>

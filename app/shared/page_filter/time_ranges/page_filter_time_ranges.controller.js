@@ -1,53 +1,54 @@
-import angular from 'angular';
-
 export default class PageFilterTimeRangesCtrl {
-  constructor(date, type, title, User, Product, Slider, PageFilterTimeRange, filterFilter, moment, $modalInstance, $window) {
+  constructor(
+    date, type, title, User, Product, Slider, PageFilterTimeRange,
+    filterFilter, moment, $modalInstance, $window, Confirm,
+  ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
+    this.Confirm = Confirm;
     this.PageFilterTimeRange = PageFilterTimeRange;
-    this.Slider              = Slider;
-    this.Product             = Product;
-    this.state               = 'list';
-    this.date                = date;
-    this.moment              = moment;
-    this.$window             = $window;
-    this.filterFilter        = filterFilter;
-    this.$modalInstance      = $modalInstance;
-    this.slider              = this.Slider.getOptions();
-    this.type                = type;
-    this.value_label         = type == 'product' ? 'Opened' : 'Overboeken'
-    this.title               = title;
-    this.products            = [];
-
+    this.Slider = Slider;
+    this.Product = Product;
+    this.state = 'list';
+    this.date = date;
+    this.moment = moment;
+    this.$window = $window;
+    this.filterFilter = filterFilter;
+    this.$modalInstance = $modalInstance;
+    this.slider = this.Slider.getOptions();
+    this.type = type;
+    this.value_label = type === 'product' ? 'Opened' : 'Overboeken';
+    this.title = title;
+    this.products = [];
 
     this.loadTimeRange();
   }
 
   setStateToList() {
-    this.state                   = 'list';
-    this.form_data               = {};
+    this.state = 'list';
+    this.form_data = {};
     this.slider.options.disabled = false;
   }
 
-  edit(time_range) {
-    this.state     = 'form';
-    this.form_data = time_range;
+  edit(timeRange) {
+    this.state = 'form';
+    this.form_data = timeRange;
 
-    if (time_range.whole_day) {
-      this.slider.options.disabled = true
+    if (timeRange.whole_day) {
+      this.slider.options.disabled = true;
     }
 
-    this.slider.minValue = this.Slider.to15Min(time_range.start_time);
-    this.slider.maxValue = this.Slider.to15Min(time_range.end_time);
+    this.slider.minValue = this.Slider.to15Min(timeRange.start_time);
+    this.slider.maxValue = this.Slider.to15Min(timeRange.end_time);
   }
 
   add() {
-    this.state     = 'form';
+    this.state = 'form';
     this.form_data = {
       whole_day: false,
       fixed_date: this.date,
-      value: true
+      value: true,
     };
 
     this.slider.minValue = this.Slider.to15Min('09:00');
@@ -55,35 +56,35 @@ export default class PageFilterTimeRangesCtrl {
   }
 
   destroy() {
-    let time_range = this.filterFilter(this.time_ranges, { id: this.form_data.id})[0];
+    const timeRange = this.filterFilter(this.timeRanges, { id: this.form_data.id })[0];
 
-    if (time_range) {
-      let index = this.time_ranges.indexOf(time_range);
+    if (timeRange) {
+      const index = this.timeRanges.indexOf(timeRange);
 
       this.PageFilterTimeRange
-        .destroy(this.current_company_id, time_range.id)
-          .then((result) => {
-            this.time_ranges.splice(index, 1);
-            this.setStateToList();
-          })
+        .destroy(this.current_company_id, timeRange.id)
+        .then(() => {
+          this.timeRanges.splice(index, 1);
+          this.setStateToList();
+        });
     }
   }
 
-  submitForm(is_valid) {
+  submitForm(isValid) {
     this.is_submitting = true;
 
-    if (!is_valid) {
+    if (!isValid) {
       return false;
     }
 
-    let data = {
+    const data = {
       start_time: this.Slider.from15Min(this.slider.minValue),
       end_time: this.Slider.from15Min(this.slider.maxValue),
       fixed_date: this.moment(this.form_data.fixed_date).format('YYYY-MM-DD'),
       value: this.form_data.value,
       type: this.type,
-      whole_day: this.form_data.whole_day
-    }
+      whole_day: this.form_data.whole_day,
+    };
 
     if (this.type === 'product' && this.form_data.product) {
       data.product = this.form_data.product.id;
@@ -94,34 +95,34 @@ export default class PageFilterTimeRangesCtrl {
 
       this.PageFilterTimeRange
         .update(this.current_company_id, this.form_data.id, data)
-          .then((result) => {
-            this.is_submitting = false;
-            let time_range     = this.filterFilter(this.time_ranges, { id: this.form_data.id })[0];
+        .then(() => {
+          this.is_submitting = false;
+          const timeRange = this.filterFilter(this.timeRanges, { id: this.form_data.id })[0];
 
-            if (time_range) {
-              time_range.start_time = this.Slider.from15Min(this.slider.minValue);
-              time_range.end_time   = this.Slider.from15Min(this.slider.maxValue);
+          if (timeRange) {
+            timeRange.start_time = this.Slider.from15Min(this.slider.minValue);
+            timeRange.end_time = this.Slider.from15Min(this.slider.maxValue);
 
-              if (this.form_data.fixed_date != this.moment(this.date).format('YYYY-MM-DD')) {
-                let index = this.time_ranges.indexOf(time_range);
-                this.time_ranges.splice(index, 1);
-              }
+            if (this.form_data.fixed_date !== this.moment(this.date).format('YYYY-MM-DD')) {
+              const index = this.timeRanges.indexOf(timeRange);
+              this.timeRanges.splice(index, 1);
             }
+          }
 
-            this.setStateToList();
-          });
+          this.setStateToList();
+        });
     } else {
       this.PageFilterTimeRange
         .create(this.current_company_id, data)
-          .then((result) => {
-            this.is_submitting = false;
+        .then((result) => {
+          this.is_submitting = false;
 
-            if (this.form_data.fixed_date == this.date) {
-              this.time_ranges.push(result);
-            }
+          if (this.form_data.fixed_date === this.date) {
+            this.timeRanges.push(result);
+          }
 
-            this.setStateToList();
-          });
+          this.setStateToList();
+        });
     }
   }
 
@@ -136,7 +137,7 @@ export default class PageFilterTimeRangesCtrl {
   }
 
   getProductName(id) {
-    let product = this.filterFilter(this.products, { id: id })[0];
+    const product = this.filterFilter(this.products, { id })[0];
 
     return product ? product.name : null;
   }
@@ -146,25 +147,24 @@ export default class PageFilterTimeRangesCtrl {
 
     this.PageFilterTimeRange
       .getAll(this.current_company_id, this.moment(this.date).format('YYYY-MM-DD'), this.type)
-        .then(
-          (time_ranges) => {
-            this.is_loaded   = true;
-            this.time_ranges = time_ranges;
+      .then(
+        (timeRanges) => {
+          this.is_loaded = true;
+          this.timeRanges = timeRanges;
 
-            if (this.type === 'product') {
-              this.loadProducts();
-            }
-          },
-          (error) => {
-            //nothing
-          });
+          if (this.type === 'product') {
+            this.loadProducts();
+          }
+        },
+        () => {},
+      );
   }
 
   loadProducts() {
     this.Product
       .getAll(this.current_company_id)
-        .then((products) => {
-          this.products = products; 
-        })
+      .then((products) => {
+        this.products = products;
+      });
   }
 }

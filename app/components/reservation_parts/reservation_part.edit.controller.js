@@ -1,7 +1,9 @@
 export default class ReservationPartEditCtrl {
-  constructor(User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone,
+  constructor(
+    User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone,
     Table, moment, filterFilter, $rootScope, $window, $scope, $modalInstance, reservation,
-    reservationPart) {
+    reservationPart, Confirm,
+  ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -13,6 +15,7 @@ export default class ReservationPartEditCtrl {
     this.Table = Table;
     this.Settings = Settings;
     this.TimeRange = TimeRange;
+    this.Confirm = Confirm;
 
     this.$window = $window;
     this.$scope = $scope;
@@ -33,8 +36,8 @@ export default class ReservationPartEditCtrl {
       tables_values: {},
       old_date: this.getPartDate(reservationPart),
       date: this.getPartDate(reservationPart),
-      old_number_of_persons: parseInt(reservationPart.number_of_persons),
-      number_of_persons: parseInt(reservationPart.number_of_persons),
+      old_number_of_persons: parseInt(reservationPart.number_of_persons, 10),
+      number_of_persons: parseInt(reservationPart.number_of_persons, 10),
       product: reservationPart.product.id,
       old_time: reservationPart.date_time ? this.moment(reservationPart.date_time).format('HH:mm') : null,
       time: reservationPart.date_time ? this.moment(reservationPart.date_time).format('HH:mm') : null,
@@ -71,15 +74,17 @@ export default class ReservationPartEditCtrl {
     };
 
     this.ReservationPart.update(this.current_company_id, this.current_part.id, data)
-      .then(() => {
-        this.is_submitting = false;
-        this.$modalInstance.close();
-        this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
-      },
-      (error) => {
-        this.is_submitting = false;
-        this.errors = error;
-      });
+      .then(
+        () => {
+          this.is_submitting = false;
+          this.$modalInstance.close();
+          this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
+        },
+        (error) => {
+          this.is_submitting = false;
+          this.errors = error;
+        },
+      );
   }
 
   timeIsDisabled(timeObj) {
@@ -91,12 +96,11 @@ export default class ReservationPartEditCtrl {
 
     if (this.current_part.old_time === timeObj.time &&
         this.current_part.old_date === this.current_part.date) {
-      const usedTables = this.filterFilter(this.tables, (item) => {
-        return Object.keys(this.current_part.old_tables_values).includes(String(item.id));
-      });
+      const usedTables = this.filterFilter(this.tables, item =>
+        Object.keys(this.current_part.old_tables_values).includes(String(item.id)));
 
       const usedTablesPersonCount = usedTables.map(item => item.number_of_persons)
-        .reduce((sum, valie) => parseInt(sum) + parseInt(valie), 0);
+        .reduce((sum, valie) => parseInt(sum, 10) + parseInt(valie, 10), 0);
 
       timeAvailableSeats += usedTablesPersonCount;
       maxPearsonsPerTable += usedTablesPersonCount;
@@ -172,7 +176,8 @@ export default class ReservationPartEditCtrl {
         this.products_is_loaded = true;
         this.loadTimeRanges();
       },
-      () => {});
+      () => {},
+    );
   }
 
   loadZones() {
@@ -184,7 +189,8 @@ export default class ReservationPartEditCtrl {
         this.zones = result;
         this.zones_is_loaded = true;
       },
-      () => {});
+      () => {},
+    );
   }
 
   loadTables() {
@@ -196,29 +202,29 @@ export default class ReservationPartEditCtrl {
         this.tables = result;
         this.tables_is_loaded = true;
       },
-      () => {});
+      () => {},
+    );
   }
 
   loadTimeRanges() {
     this.TimeRange.getAll(this.current_company_id)
-      .then(
-        (ranges) => {
-          this.open_hours = {};
-          ranges.forEach((range) => {
-            if (range.daysOfWeek[0] === this.moment(this.current_part.date).isoWeekday()) {
-              const currentTime = this.moment();
-              const startTime = this.moment(range.startTime, 'HH:mm');
-              const endTime = this.moment(range.endTime, 'HH:mm');
-              const productIsActive = currentTime.isBetween(startTime, endTime);
+      .then((ranges) => {
+        this.open_hours = {};
+        ranges.forEach((range) => {
+          if (range.daysOfWeek[0] === this.moment(this.current_part.date).isoWeekday()) {
+            const currentTime = this.moment();
+            const startTime = this.moment(range.startTime, 'HH:mm');
+            const endTime = this.moment(range.endTime, 'HH:mm');
+            const productIsActive = currentTime.isBetween(startTime, endTime);
 
-              this.products.forEach((product) => {
-                if (product.id === range.productId) {
-                  product.hidden = !productIsActive;
-                }
-              });
-            }
-          });
+            this.products.forEach((product) => {
+              if (product.id === range.productId) {
+                product.hidden = !productIsActive;
+              }
+            });
+          }
         });
+      });
   }
 
   loadOccupiedTables() {
@@ -233,7 +239,8 @@ export default class ReservationPartEditCtrl {
           this.current_part.occupied_tables = result;
           this.current_part.occupied_tables_is_loaded = true;
         },
-        () => {});
+        () => {},
+      );
   }
 
   tablesDataIsLoaded() {
@@ -241,10 +248,9 @@ export default class ReservationPartEditCtrl {
   }
 
   loadGeneralSettings() {
-    this.Settings.getGeneralSettings(this.current_company_id).then(
-      (generalSettings) => {
-        this.settings = generalSettings;
-      });
+    this.Settings.getGeneralSettings(this.current_company_id).then((generalSettings) => {
+      this.settings = generalSettings;
+    });
   }
 
   selectTab(index) {

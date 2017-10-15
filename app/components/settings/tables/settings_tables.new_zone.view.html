@@ -1,8 +1,10 @@
 <section class='no-margin new_item_wrapper'>
   <md-toolbar>
     <div class='md-toolbar-tools'>
-      <i class='mdi mdi-close m-r-sm' ng-click='new_zone.closeModal()'></i>
-      Zone toevoegen
+      <h2 md-truncate flex>Zone toevoegen</h2>
+      <md-button class="md-icon-button" ng-click='new_zone.Confirm.onCloseModal(new_zone.$modalInstance);' md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
     </div>
   </md-toolbar>
   <md-content>

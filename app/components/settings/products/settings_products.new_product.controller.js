@@ -1,10 +1,13 @@
 export default class SettingsProductsNewProductCtrl {
-  constructor(User, TimeRange, AppConstants, products, Slider, $timeout, $rootScope,
-    $scope, $modalInstance) {
+  constructor(
+    User, TimeRange, AppConstants, products, Slider, $timeout, $rootScope,
+    $scope, $modalInstance, Confirm,
+  ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
+    this.Confirm = Confirm;
     this.User = User;
     this.Slider = Slider;
     this.products = products;
