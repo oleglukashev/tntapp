@@ -2,27 +2,15 @@ export default class HeaderCtrl {
   constructor(User, $state, $timeout) {
     'ngInject';
 
-    this.$state           = $state;
-    this.$timeout         = $timeout;
-
-    this.User             = User;
-    this.current_user     = User.current;
-    this.current_company  = User.current_company;
+    this.$state = $state;
+    this.$timeout = $timeout;
+    this.User = User;
+    this.current_user = User.current;
+    this.current_company = User.current_company;
     this.current_company_id = User.getCompanyId();
-    this.logout           = User.logout.bind(User);
-
-    let states = {
-      'app.dashboard'    : 0,
-      'app.reservations' : 1,
-      'app.agenda'       : 2,
-      'app.profiles'     : 3
-    }
-
-    this.selected_index = states[this.$state.current.name];
-
-    this.photoPath        = API_URL + '../../../upload/user-photos/';
-    this.userPhotoURI     = this.photoPath + this.User.current.photo + '?';
-
+    this.logout = User.logout.bind(User);
+    this.photoPath = `${API_URL}../../../upload/user-photos/`;
+    this.userPhotoURI = `${this.photoPath}${this.User.current.photo}?`;
     this.loadPhoto();
   }
 
@@ -47,17 +35,32 @@ export default class HeaderCtrl {
       }, (evt) => {
         // Math.min is to fix IE which reports 200% sometimes
         file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-      })
+      });
     }
 
     if (errFiles[0]) {
-      this.upload_photo_error = ''
-      this.upload_photo_error = errFiles[0].$error + ' ' +  errFiles[0].$errorParam;
+      this.upload_photo_error = '';
+      this.upload_photo_error = `${errFiles[0].$error} ${errFiles[0].$errorParam}`;
     }
   }
 
   setDefaultCompany(id) {
     this.User.setDefaultCompany(id);
     this.$state.reload();
+  }
+
+  isActiveState(state) {
+    return this.$state.current.name === state;
+  }
+
+  isDiactiveState() {
+    const states = [
+      'app.dashboard',
+      'app.reservations',
+      'app.agenda',
+      'app.profiles',
+    ];
+
+    return !states.includes(this.$state.current.name);
   }
 }

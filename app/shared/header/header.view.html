@@ -15,12 +15,15 @@
   <div class='header-logo pull-left'>
     <a href='#'></a>
   </div>
-  <md-tabs class='header-menu' md-selected='header.selected_index'>
-    <md-tab ui-sref='app.dashboard'>Dashboard</md-tab>
-    <md-tab ui-sref='app.reservations'>Vandaag</md-tab>
-    <md-tab ui-sref='app.agenda'>Agenda</md-tab>
-    <md-tab ui-sref='app.profiles'>Profielen</md-tab>
-  </md-tabs>
+  <div class='header-menu'>
+    <md-tabs md-no-ink='true' class='header-menu-wrapper'>
+      <md-tab md-active='header.isDiactiveState()'></md-tab>
+      <md-tab md-active='header.isActiveState("app.dashboard")' ui-sref='app.dashboard'>Dashboard</md-tab>
+      <md-tab md-active='header.isActiveState("app.reservations")' ui-sref='app.reservations'>Vandaag</md-tab>
+      <md-tab md-active='header.isActiveState("app.agenda")' ui-sref='app.agenda'>Agenda</md-tab>
+      <md-tab md-active='header.isActiveState("app.profiles")' ui-sref='app.profiles'>Profielen</md-tab>
+    </md-tabs>
+  </div>
   <ul class='nav navbar-nav hidden-xs navbar-right'>
     <li class='dropdown' dropdown>
       <div class='header-account-menu pull-right m-l-sm'>
