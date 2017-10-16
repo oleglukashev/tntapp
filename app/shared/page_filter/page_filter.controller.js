@@ -1,10 +1,9 @@
 export default class PageFilterCtrl {
-  constructor(User, Reservation, moment, $window, $rootScope, $scope, $modal, Confirm) {
+  constructor(User, Reservation, moment, $window, $rootScope, $scope, $modal) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
-    this.Confirm = Confirm;
     this.Reservation = Reservation;
     this.dateFilter = new Date();
     this.$modal = $modal;

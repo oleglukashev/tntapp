@@ -1,5 +1,5 @@
 export default class ReservationsAnswerCtrl {
-  constructor(User, ReservationStatus, reservation, $modalInstance, $window, Confirm) {
+  constructor(User, ReservationStatus, reservation, $modalInstance, $window) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -7,7 +7,6 @@ export default class ReservationsAnswerCtrl {
     this.reservation = reservation;
     this.$window = $window;
     this.ReservationStatus = ReservationStatus;
-    this.Confirm = Confirm;
   }
 
   closeModal() {

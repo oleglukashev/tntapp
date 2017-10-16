@@ -1,10 +1,9 @@
 export default class SettingsTablesNewZoneCtrl {
-  constructor(User, Zone, AppConstants, zones, $scope, $modalInstance, Confirm) {
+  constructor(User, Zone, AppConstants, zones, $scope, $modalInstance) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
-    this.Confirm = Confirm;
     this.Zone = Zone;
     this.zones = zones;
     this.$scope = $scope;
@@ -16,6 +15,10 @@ export default class SettingsTablesNewZoneCtrl {
     const loadedZones = this.zonesHash();
     if (loadedZones) this.iconsClasses = $.extend(loadedZones, this.iconsClasses);
     this.uniq_icons = [...new Set(Object.values(this.iconsClasses))];
+  }
+
+  closeModal() {
+    this.$modalInstance.close();
   }
 
   changeClass(className) {

@@ -1,8 +1,7 @@
 export default class SettingsEmployeesItemCtrl {
-  constructor(User, Employee, item, items, $modalInstance, Confirm) {
+  constructor(User, Employee, item, items, $modalInstance) {
     'ngInject';
 
-    this.Confirm = Confirm;
     this.current_company_id = User.getCompanyId();
     this.item = item;
     this.items = items;
@@ -12,6 +11,10 @@ export default class SettingsEmployeesItemCtrl {
 
   submitForm() {
     this.createEmployee();
+  }
+
+  closeModal() {
+    this.$modalInstance.dismiss('cancel');
   }
 
   createEmployee() {

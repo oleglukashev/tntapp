@@ -1,10 +1,9 @@
 export default class SettingsMailsEditMailCtrl {
-  constructor(User, AppConstants, item, Settings, $modalInstance, Confirm) {
+  constructor(User, AppConstants, item, Settings, $modalInstance) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.Settings = Settings;
-    this.Confirm = Confirm;
     this.$modalInstance = $modalInstance;
 
     this.form_data = item;

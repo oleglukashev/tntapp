@@ -1,12 +1,11 @@
 export default class PageFilterTimeRangesCtrl {
   constructor(
     date, type, title, User, Product, Slider, PageFilterTimeRange,
-    filterFilter, moment, $modalInstance, $window, Confirm,
+    filterFilter, moment, $modalInstance, $window,
   ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
-    this.Confirm = Confirm;
     this.PageFilterTimeRange = PageFilterTimeRange;
     this.Slider = Slider;
     this.Product = Product;
