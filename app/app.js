@@ -43,7 +43,6 @@ import mobileMenuController from './shared/mobile_menu/mobile_menu.controller';
 import newReservationController from './components/new_reservation/new_reservation.controller';
 import reservationAnswerController from './components/reservation_answer/reservation_answer.controller';
 import chartsController from './components/dashboard/charts/charts.controller';
-import pageFilterController from './shared/page_filter/page_filter.controller';
 import pageFilterTimeRangesController from './shared/page_filter/time_ranges/page_filter_time_ranges.controller';
 import searchHeaderController from './components/search/search.header.controller';
 import agenda from './components/agenda';
@@ -75,7 +74,6 @@ angular
   .controller('NewReservationCtrl', newReservationController)
   .controller('ReservationPartEditCtrl', editReservationParts)
   .controller('DashboardReservationsCtrl', dashboardReservations)
-  .controller('PageFilterCtrl', pageFilterController)
   .controller('PageFilterTimeRangesCtrl', pageFilterTimeRangesController)
   .controller('ReservationAnswerCtrl', reservationAnswerController)
   .controller('SearchHeaderCtrl', searchHeaderController)

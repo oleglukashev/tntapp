@@ -2,8 +2,8 @@ import angular from 'angular';
 
 export default class ReservationsCtrl {
   constructor(User, Table, Reservation, ReservationPart, ReservationStatusMenu, ReservationStatus,
-    moment, filterFilter, $mdSidenav, $scope, $rootScope, $modal, $window,
-    DashboardReservationsItemFactory) {
+    PageFilterFactory, moment, filterFilter, $mdSidenav, $scope, $rootScope, $modal, $window,
+    DashboardReservationsItemFactory, Product, Zone) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -11,6 +11,8 @@ export default class ReservationsCtrl {
     this.ReservationPart = ReservationPart;
     this.ReservationStatus = ReservationStatus;
     this.Table = Table;
+    this.Product = Product;
+    this.Zone = Zone;
 
     this.$rootScope = $rootScope;
     this.moment = moment;
@@ -20,6 +22,7 @@ export default class ReservationsCtrl {
 
     this.tables = [];
     this.data = [];
+    this.reservations = [];
 
     this.totalNumberOfReservations = 0;
     this.totalNumberOfPersons = 0;
@@ -31,9 +34,13 @@ export default class ReservationsCtrl {
       this.loadReservations();
     });
 
-    this.loadReservations();
     ReservationStatusMenu(this);
     DashboardReservationsItemFactory(this);
+    PageFilterFactory(this);
+
+    this.loadTables();
+    this.loadProducts();
+    this.loadReservations();
   }
 
   openCustomerMenu() {
@@ -84,10 +91,22 @@ export default class ReservationsCtrl {
           this.is_loaded = true;
           this.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
           this.setData();
-          this.loadTables();
           this.totalNumberOfReservations = this.reservations.length;
           this.calculateTotalNumberOfPersons();
         });
+  }
+
+  loadProducts() {
+    this.Product.getAll(this.current_company_id).then(
+      (products) => {
+        this.products = products;
+        this.products.forEach((product) => {
+          this.filter_params.push({
+            name: 'product',
+            value: product.name,
+          });
+        });
+      });
   }
 
   loadTables() {
@@ -109,8 +128,8 @@ export default class ReservationsCtrl {
 
   setData() {
     const result = [];
-
-    this.reservations.forEach((reservation) => {
+    const reservations = this.applyFilterToReservations();
+    reservations.forEach((reservation) => {
       reservation.reservation_parts.forEach((part) => {
         if (this.moment(part.date_time).format('YYYY-MM-DD') ===
             this.moment().format('YYYY-MM-DD')) {

@@ -1,5 +1,19 @@
 <div class='col-lg-8 col-md-8 col-sm-8 col-md-offset-1'>
-  <p>{{ search.reservations.length }} resultaten <b>{{ search.reservations[0].customer.first_name }} {{ search.reservations[0].customer.last_name }}</b></p><br>
+  
+  <div class='clearfix m-b-md'>
+    <div class='pull-left m-t-sm m-r-sm'>
+      <p>{{ search.reservations.length }} resultaten <b>{{ search.reservations[0].customer.first_name }} {{ search.reservations[0].customer.last_name }}</b></p>
+    </div>
+
+    <div class='page_filter pull-left'>
+      <div class='pull-left'
+           ng-init='controller = search'
+           data-ng-include=" 'page_filter.print.view.html' "></div>
+    </div>
+  </div>
+
+
+
   <div class='dashboard-ad panel'
        ng-repeat='dateTime in search.dateTimes'
        ng-if='search.reservations.length'>

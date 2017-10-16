@@ -1,6 +1,19 @@
 <div ng-show='agenda.is_loaded' class='col-lg-8 col-md-8 col-sm-8'>
 
-  <div ng-init='showRightMenu = true; view = agenda.reservations_view' data-ng-include=" 'page_filter.view.html' " ng-controller='PageFilterCtrl as page_filter'></div>
+  <div class='page_filter m-b-md clearfix'>
+    <div class='pull-left'
+         ng-init='controller = agenda'
+         data-ng-include=" 'page_filter.date.view.html' "></div>
+    <div class='pull-left'
+         ng-init='controller = agenda'
+         data-ng-include=" 'page_filter.settings.view.html' "></div>
+    <div class='pull-left'
+         ng-init='controller = agenda'
+         data-ng-include=" 'page_filter.filter.view.html' "></div>
+    <div class='pull-right'
+         ng-init='controller = agenda'
+         data-ng-include=" 'page_filter.change_view.view.html' "></div>
+  </div>
 
   <button ng-click='agenda.openReservation()' md-ink-ripple class='panel-add-button md-btn md-fab m-b'>
     <i class='mdi mdi-plus i-24'></i>
@@ -21,7 +34,7 @@
       <div grid-data
            grid-options='agenda.getTableOptions(zone)'
            grid-actions='agenda.gridActions'
-           ng-show='agenda.reservations_view == "list"'>
+           ng-show='agenda.view_type == "list"'>
         <table class='table m-b-none'>
           <thead>
             <tr>
@@ -68,7 +81,7 @@
         </table>
       </div>
 
-      <div class='tables_wrapper' ng-show='agenda.reservations_view == "calendar"' ng-if='agenda.tables_by_zone[zone.id].length'>
+      <div class='tables_wrapper' ng-show='agenda.view_type == "calendar"' ng-if='agenda.tables_by_zone[zone.id].length'>
         <div ng-repeat='(tableIndex, table) in agenda.tables_by_zone[zone.id] | orderBy:"position"'>
           <div class='table_item_number pull-left m-t-sm' ng-style='{ top: tableIndex * agenda.reservation_height }'>
             {{ table.table_number }}
@@ -76,19 +89,15 @@
         </div>
       </div>
 
-      <div class='calendar_wrapper' ng-show='agenda.reservations_view == "calendar"' data-zone-id='{{ zone.id }}'>
-
+      <div class='calendar_wrapper' ng-show='agenda.view_type == "calendar"' data-zone-id='{{ zone.id }}'>
         <div class='scroll-wrapper'>
           <div class='hours-timeline' ng-if='agenda.tables_by_zone[zone.id].length'>
             <div class='hour' ng-repeat='hour in agenda.hours'>
               {{ hour }}:00
             </div>
           </div>
-
           <div class='timeline-wrapper' ng-if='agenda.tables_by_zone[zone.id].length'>
-
             <div class='now' ng-style='agenda.nowLineStyle(zone.id)' ng-if='agenda.is_today'></div>
-
             <ul class='tables md-list no-padder no-margin'>
               <li class='table_item md-list-item no-padder no-margin z-index1'
                   ng-repeat='(tableIndex, table) in agenda.tables_by_zone[zone.id] | orderBy:"position"'>
@@ -125,7 +134,7 @@
                     ></i>
                     <a ng-click='user.openCustomerMenu(part.customer.id, partId)' ng-controller='UserMenuCtrl as user'>
                       {{ part.number_of_persons }}
-                      {{ agenda.products[part.product_id] }}
+                      {{ part.product.name }}
                       <strong>
                         {{ part.customer.last_name }}
                         {{ part.customer.first_name }}
