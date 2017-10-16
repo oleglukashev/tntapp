@@ -8,7 +8,6 @@ export default function templates($templateCache) {
   $templateCache.put('login.html', require('./components/layout/login.html'));
   $templateCache.put('user_menu.view.html', require('./shared/user_menu/user_menu.view.html'));
   $templateCache.put('mobile_menu.view.html', require('./shared/mobile_menu/mobile_menu.view.html'));
-  $templateCache.put('page_filter.view.html', require('./shared/page_filter/page_filter.view.html'));
   $templateCache.put('page_filter_time_ranges.view.html', require('./shared/page_filter/time_ranges/page_filter_time_ranges.view.html'));
   $templateCache.put('search.view.html', require('./components/search/search.view.html'));
   $templateCache.put('charts.view.html', require('./components/dashboard/charts/charts.view.html'));
@@ -21,7 +20,7 @@ export default function templates($templateCache) {
   $templateCache.put('reservation_part.edit.view.html', require('./components/reservation_parts/reservation_part.edit.view.html'));
   $templateCache.put('rzSliderTpl.html', require('./shared/rz-slider/rz-slider.view.html'));
   $templateCache.put('reservation_answer.view.html', require('./components/reservation_answer/reservation_answer.view.html'));
-  $templateCache.put('print_reservations.view.html', require('./components/dashboard/reservations/print_reservations.view.html'));
+  $templateCache.put('reservations.print.view.html', require('./components/reservations/reservations.print.view.html'));
   $templateCache.put('agenda.view.html', require('./components/agenda/agenda.view.html'));
   $templateCache.put('user_menu.edit.view.html', require('./shared/user_menu/edit/user_menu.edit.view.html'));
   $templateCache.put('settings_employees.item.view.html', require('./components/settings/employees/settings_employees.item.view.html'));
@@ -36,6 +35,15 @@ export default function templates($templateCache) {
   $templateCache.put('new_reservation.group.view.html', require('./components/new_reservation/new_reservation.group.view.html'));
   $templateCache.put('agenda.item.view.html', require('./components/agenda/agenda.item.view.html'));
   $templateCache.put('reservation_status_menu.view.html', require('./shared/reservation_status_menu/reservation_status_menu.view.html'));
+
+  $templateCache.put('page_filter.date.view.html', require('./shared/page_filter/page_filter.date.view.html'));
+  $templateCache.put('page_filter.print.view.html', require('./shared/page_filter/page_filter.print.view.html'));
+  $templateCache.put('page_filter.change_view.view.html', require('./shared/page_filter/page_filter.change_view.view.html'));
+  $templateCache.put('page_filter.settings.view.html', require('./shared/page_filter/page_filter.settings.view.html'));
+  $templateCache.put('page_filter.profile_settings.view.html', require('./shared/page_filter/page_filter.profile_settings.view.html'));
+  $templateCache.put('page_filter.search_settings.view.html', require('./shared/page_filter/page_filter.search_settings.view.html'));
+  $templateCache.put('page_filter.filter.view.html', require('./shared/page_filter/page_filter.filter.view.html'));
+  $templateCache.put('page_filter.sort.view.html', require('./shared/page_filter/page_filter.sort.view.html'));
 
 
   //angular-bootstrap tpls

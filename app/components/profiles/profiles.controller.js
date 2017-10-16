@@ -1,7 +1,8 @@
 import angular from 'angular';
 
 export default class ProfilesCtrl {
-  constructor(User, Customer, moment, AppConstants, JWT, $mdSidenav, $rootScope, $scope, $modal) {
+  constructor(User, Customer, moment, AppConstants, JWT, $mdSidenav, $rootScope, $scope, $modal,
+    PageFilterFactory) {
     'ngInject';
 
     this.Customer = Customer;
@@ -18,11 +19,7 @@ export default class ProfilesCtrl {
     });
 
     this.loadCustomers();
-  }
-
-  exportCSV() {
-    this.Customer.exportCSV(this.current_company_id)
-      .then(() => {});
+    PageFilterFactory(this);
   }
 
   loadCustomers() {

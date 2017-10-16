@@ -1,19 +1,11 @@
-<div class='profile_menu m-b-md clearfix'>
-  <md-menu>
-    <i class='mdi mdi-settings i-24 m-l-md' ng-click='$mdMenu.open($event);' />
-    <md-menu-content>
-      <md-menu-item>
-        <md-button ng-click='profiles.exportCSV();'>CSV export</md-button>
-      </md-menu-item>
-      <md-menu-item>
-        <md-button ng-click=''>Profiel samenvoegen</md-button>
-      </md-menu-item>
-    </md-menu-content>
-  </md-menu>
-</div>
-
 <div class='profiles'>
   <div class='col-lg-10 col-md-10 col-sm-10'>
+    <div class='page_filter m-b-md clearfix'>
+      <div class='pull-left'
+           ng-init='controller = profiles'
+           data-ng-include=" 'page_filter.profile_settings.view.html' "></div>
+    </div>
+
     <div class='panel'>
       <div class='panel-heading'>Profielen</div>
       <div class='md-list'>

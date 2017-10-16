@@ -1,4 +1,4 @@
-export default class PageFilterTimeRangesCtrl {
+export default class PageFiltertime_rangesCtrl {
   constructor(
     date, type, title, User, Product, Slider, PageFilterTimeRange,
     filterFilter, moment, $modalInstance, $window,
@@ -55,15 +55,15 @@ export default class PageFilterTimeRangesCtrl {
   }
 
   destroy() {
-    const timeRange = this.filterFilter(this.timeRanges, { id: this.form_data.id })[0];
+    const timeRange = this.filterFilter(this.time_ranges, { id: this.form_data.id })[0];
 
     if (timeRange) {
-      const index = this.timeRanges.indexOf(timeRange);
+      const index = this.time_ranges.indexOf(timeRange);
 
       this.PageFilterTimeRange
         .destroy(this.current_company_id, timeRange.id)
         .then(() => {
-          this.timeRanges.splice(index, 1);
+          this.time_ranges.splice(index, 1);
           this.setStateToList();
         });
     }
@@ -96,15 +96,15 @@ export default class PageFilterTimeRangesCtrl {
         .update(this.current_company_id, this.form_data.id, data)
         .then(() => {
           this.is_submitting = false;
-          const timeRange = this.filterFilter(this.timeRanges, { id: this.form_data.id })[0];
+          const timeRange = this.filterFilter(this.time_ranges, { id: this.form_data.id })[0];
 
           if (timeRange) {
             timeRange.start_time = this.Slider.from15Min(this.slider.minValue);
             timeRange.end_time = this.Slider.from15Min(this.slider.maxValue);
 
             if (this.form_data.fixed_date !== this.moment(this.date).format('YYYY-MM-DD')) {
-              const index = this.timeRanges.indexOf(timeRange);
-              this.timeRanges.splice(index, 1);
+              const index = this.time_ranges.indexOf(timeRange);
+              this.time_ranges.splice(index, 1);
             }
           }
 
@@ -117,7 +117,7 @@ export default class PageFilterTimeRangesCtrl {
           this.is_submitting = false;
 
           if (this.form_data.fixed_date === this.date) {
-            this.timeRanges.push(result);
+            this.time_ranges.push(result);
           }
 
           this.setStateToList();
@@ -147,9 +147,9 @@ export default class PageFilterTimeRangesCtrl {
     this.PageFilterTimeRange
       .getAll(this.current_company_id, this.moment(this.date).format('YYYY-MM-DD'), this.type)
       .then(
-        (timeRanges) => {
+        (time_ranges) => {
           this.is_loaded = true;
-          this.timeRanges = timeRanges;
+          this.time_ranges = time_ranges;
 
           if (this.type === 'product') {
             this.loadProducts();
