@@ -224,8 +224,8 @@ export default class AgendaCtrl {
               part.table_ids = Object.values(part.table_ids);
 
               if (!tables[targetTableId]) tables[targetTableId] = {};
-              tables[targetTableId][reservationPartId] = part;
               delete tables[tableId][reservationPartId];
+              tables[targetTableId][reservationPartId] = part;
             });
         }
       }
@@ -327,22 +327,24 @@ export default class AgendaCtrl {
         this.partsByTable = {};
         this.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
         reservations.forEach((reservation) => {
-          const parts = reservation.reservation_parts;
-          parts.forEach((part) => {
-            if (this.moment(this.date_filter).startOf('day')
-              .isSame(this.moment(part.date_time).startOf('day'))
-            ) {
-              part.table_ids.forEach((tableId) => {
-                if (!this.partsByTable[tableId]) this.partsByTable[tableId] = {};
-                part.left = this.timeToCoords(part.date_time);
-                part.width = this.durationToWidth(part.duration_minutes);
-                part.customer = reservation.customer;
-                part.status = reservation.status;
-                part.reservation = reservation;
-                this.partsByTable[tableId][part.id] = part;
-              });
-            }
-          });
+          if (reservation.status !== 'cancelled') {
+            const parts = reservation.reservation_parts;
+            parts.forEach((part) => {
+              if (this.moment(this.date_filter).startOf('day')
+                .isSame(this.moment(part.date_time).startOf('day'))
+              ) {
+                part.table_ids.forEach((tableId) => {
+                  if (!this.partsByTable[tableId]) this.partsByTable[tableId] = {};
+                  part.left = this.timeToCoords(part.date_time);
+                  part.width = this.durationToWidth(part.duration_minutes);
+                  part.customer = reservation.customer;
+                  part.status = reservation.status;
+                  part.reservation = reservation;
+                  this.partsByTable[tableId][part.id] = part;
+                });
+              }
+            });
+          }
         });
 
         if (this.tables) {
