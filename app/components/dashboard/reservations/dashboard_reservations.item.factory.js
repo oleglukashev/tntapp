@@ -16,15 +16,5 @@ export default function DashboardReservationsItemFactory() {
         reservation: reservation,
       };
     };
-
-    that.setPresent = (reservation) => {
-      that.ReservationStatus.setPresent(
-        that.current_company_id,
-        reservation,
-        !reservation.is_present,
-      ).then(() => {
-        that.setData();
-      });
-    };
   };
 }

@@ -36,5 +36,16 @@ export default function reservationStatusMenu(ReservationStatus, filterFilter, m
       modalInstance.result.then(() => {
       }, () => {});
     };
+
+    that.setPresent = (reservation) => {
+      that.ReservationStatus.setPresent(
+        that.current_company_id,
+        reservation,
+        !reservation.is_present,
+      ).then(() => {
+        if (that.setTableOptions) that.setTableOptions();
+        if (that.setData) that.setData();
+      });
+    };
   };
 }
