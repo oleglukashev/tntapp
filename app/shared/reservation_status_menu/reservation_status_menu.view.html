@@ -12,14 +12,35 @@
     <md-menu-item ng-repeat='menu in controller.ReservationStatus.right_menu[item.reservation.status]'>
       <md-button ng-click='controller.changeStatus(item.reservation, menu.status, callback)'
                  ng-disabled='menu.disabled'>
-        <i class='mdi i-24 mdi-with-button-padding' ng-class='menu.class'></i>
-        <span class='menu_name'>{{ menu.name }}</span>
+        <md-icon>
+          <i class='mdi mdi-with-button-padding' ng-class='menu.class'></i>
+        </md-icon>
+        <span>{{ menu.name }}</span>
       </md-button>
     </md-menu-item>
+    <md-menu-item ng-if='!item.reservation.is_present'>
+      <md-button ng-click='controller.setPresent(item.reservation)'>
+        <md-icon>
+          <i class='mdi mdi-check' />
+        </md-icon>
+        <span>Aanwezig</span>
+      </md-button>
+    </md-menu-item>
+    <md-menu-item ng-if='item.reservation.is_present'>
+      <md-button ng-click='controller.setPresent(item.reservation)'>
+        <md-icon>
+          <i class='mdi mdi-exclamation' />
+        </md-icon>
+        <span>Niet aanwezig</span>
+      </md-button>
+    </md-menu-item>
+    <md-menu-divider role='separator'></md-menu-divider>
     <md-menu-item>
       <md-button ng-click='controller.answer(item.reservation);'>
-        <i class='mdi i-24 mdi-reply' />
-        <span class='menu_name'>Antwoord</span>
+        <md-icon>
+          <i class='mdi mdi-reply' />
+        </md-icon>
+        <span>Antwoord</span>
       </md-button>
     </md-menu-item>
   </md-menu-content>
