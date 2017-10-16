@@ -1,5 +1,5 @@
 export default class SettingsEmployeesItemCtrl {
-  constructor(User, Employee, item, items, $modalInstance, $mdDialog) {
+  constructor(User, Employee, item, items, $modalInstance) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -7,19 +7,14 @@ export default class SettingsEmployeesItemCtrl {
     this.items = items;
     this.Employee = Employee;
     this.$modalInstance = $modalInstance;
-    this.$mdDialog = $mdDialog;
+  }
+
+  submitForm() {
+    this.createEmployee();
   }
 
   closeModal() {
     this.$modalInstance.dismiss('cancel');
-  }
-
-  submitForm() {
-    if (this.item.id) {
-      this.updateEmployee();
-    } else {
-      this.createEmployee();
-    }
   }
 
   createEmployee() {
@@ -42,7 +37,8 @@ export default class SettingsEmployeesItemCtrl {
         (error) => {
           this.is_submitting = false;
           this.errors = error.data.errors;
-        });
+        },
+      );
   }
 
   updateEmployee() {
@@ -61,7 +57,8 @@ export default class SettingsEmployeesItemCtrl {
         (error) => {
           this.is_submitting = false;
           this.errors = error.data.errors;
-        });
+        },
+      );
   }
 
   destroy() {
@@ -75,7 +72,8 @@ export default class SettingsEmployeesItemCtrl {
         },
         () => {
           this.is_submitting = false;
-        });
+        },
+      );
   }
 
   showConfirm() {

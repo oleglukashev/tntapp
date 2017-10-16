@@ -1,7 +1,8 @@
 export default class DashboardReservationsReservationCtrl {
-  constructor($modalInstance, $rootScope) {
+  constructor($modalInstance, Confirm) {
     'ngInject';
 
+    this.Confirm = Confirm;
     this.$modalInstance = $modalInstance;
   }
 

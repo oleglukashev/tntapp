@@ -1,16 +1,15 @@
 <section class='no-margin page_filter_time_ranges'>
   <md-toolbar>
-    <div class='md-toolbar-tools'
-         ng-click='page_filter_time_ranges.closeModal();'
-         ng-show='page_filter_time_ranges.state === "list"'>
-      <i class='mdi mdi-close m-r-sm' />
-      {{ page_filter_time_ranges.title }}
-    </div>
-    <div class='md-toolbar-tools'
-         ng-click='page_filter_time_ranges.setStateToList();'
-         ng-show='page_filter_time_ranges.state === "form"'>
-        <i class='mdi mdi-arrow-left m-r-sm' />
-      {{ page_filter_time_ranges.title }}
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex>
+        <i class='mdi mdi-arrow-left m-r-sm'
+           ng-click='page_filter_time_ranges.setStateToList();'
+           ng-show='page_filter_time_ranges.state === "form"'></i>
+        {{ page_filter_time_ranges.title }}
+      </h2>
+      <md-button md-no-ink class="md-icon-button" ng-click='page_filter_time_ranges.closeModal();'>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
     </div>
   </md-toolbar>
   <md-content>

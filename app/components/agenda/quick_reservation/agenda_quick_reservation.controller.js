@@ -1,10 +1,13 @@
 export default class AgendaQuickReservationCtrl {
-  constructor(User, Product, Reservation, tableId, tableNumber, datetime, filterFilter,
-    moment, $window, $modalInstance) {
+  constructor(
+    User, Product, Reservation, tableId, tableNumber, datetime, filterFilter,
+    moment, $window, $modalInstance, Confirm,
+  ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.datetime = datetime;
+    this.Confirm = Confirm;
     this.Product = Product;
     this.Reservation = Reservation;
     this.filterFilter = filterFilter;
@@ -34,8 +37,8 @@ export default class AgendaQuickReservationCtrl {
       const timeObj = this.filterFilter(this.available_time[productId], { time: this.datetime.format('HH:mm') })[0];
 
       if (product && timeObj && !this.timeIsDisabled(timeObj, product) &&
-        !availableProductIds.includes(parseInt(productId))) {
-        availableProductIds.push(parseInt(productId));
+        !availableProductIds.includes(parseInt(productId, 10))) {
+        availableProductIds.push(parseInt(productId, 10));
       }
     });
 
@@ -51,7 +54,8 @@ export default class AgendaQuickReservationCtrl {
     if (this.reservation.number_of_persons > timeObj.max_personen_voor_tafels ||
         !timeObj.is_open ||
         timeObj.time_is_past ||
-        (this.reservation.number_of_persons > timeObj.available_seat_count && !timeObj.can_overbook)) {
+        (this.reservation.number_of_persons > timeObj.available_seat_count &&
+          !timeObj.can_overbook)) {
       return true;
     }
 
@@ -79,15 +83,17 @@ export default class AgendaQuickReservationCtrl {
     };
 
     this.Reservation.createQuick(this.current_company_id, data)
-      .then(() => {
-        this.is_submitting = false;
-        this.success = true;
-        this.closeModal();
-      },
-      (error) => {
-        this.is_submitting = false;
-        this.errors = error;
-      });
+      .then(
+        () => {
+          this.is_submitting = false;
+          this.success = true;
+          this.closeModal();
+        },
+        (error) => {
+          this.is_submitting = false;
+          this.errors = error;
+        },
+      );
   }
 
   loadProducts() {
@@ -100,7 +106,8 @@ export default class AgendaQuickReservationCtrl {
           this.loadAvailableTablesOfProducts();
         },
         () => {
-        });
+        },
+      );
   }
 
   loadAvailableTablesOfProducts() {
@@ -110,6 +117,7 @@ export default class AgendaQuickReservationCtrl {
           this.available_time = result;
         },
         () => {
-        });
+        },
+      );
   }
 }

@@ -4,16 +4,16 @@ export default class PageFilterCtrl {
 
     this.current_company_id = User.getCompanyId();
 
-    this.Reservation     = Reservation;
-    this.date_filter     = new Date();
-    this.$modal          = $modal;
-    this.$window         = $window;
-    this.$rootScope      = $rootScope;
-    this.moment          = moment;
+    this.Reservation = Reservation;
+    this.dateFilter = new Date();
+    this.$modal = $modal;
+    this.$window = $window;
+    this.$rootScope = $rootScope;
+    this.moment = moment;
     this.reservations_view = $scope.view;
 
-    $scope.$watch('page_filter.date_filter', (date_filter) => {
-      $rootScope.$broadcast('PageFilterCtrl.change_date_filter', date_filter);
+    $scope.$watch('page_filter.date_filter', (dateFilter) => {
+      $rootScope.$broadcast('PageFilterCtrl.change_dateFilter', dateFilter);
     });
 
     $rootScope.$on('PageFilterCtrl.change_view', (obj, view) => {
@@ -22,11 +22,9 @@ export default class PageFilterCtrl {
   }
 
   exportCSV() {
-    let date = this.moment(this.date_filter).format('YYYY-MM-DD');
+    const date = this.moment(this.dateFilter).format('YYYY-MM-DD');
     this.Reservation.exportCSV(this.current_company_id, date)
-      .then(
-        (result) => {
-        });
+      .then(() => {});
   }
 
   changeView(view) {
@@ -34,25 +32,19 @@ export default class PageFilterCtrl {
   }
 
   openTimeRangeSettings(type, title) {
-    let modalInstance = this.$modal.open({
+    const modalInstance = this.$modal.open({
       templateUrl: 'page_filter_time_ranges.view.html',
       controller: 'PageFilterTimeRangesCtrl as page_filter_time_ranges',
       size: 'md',
       resolve: {
-        date: () => {
-          return this.date_filter;
-        },
-        type: () => {
-          return type
-        },
-        title: () => {
-          return title;
-        }
-      }
+        date: () => this.dateFilter,
+        type: () => type,
+        title: () => title,
+      },
     });
 
-    modalInstance.result.then((selectedItem) => {
-      //success
+    modalInstance.result.then(() => {
+      // success
     }, () => {
       // fail
     });

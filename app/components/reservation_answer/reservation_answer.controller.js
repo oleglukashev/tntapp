@@ -21,11 +21,9 @@ export default class ReservationsAnswerCtrl {
     }
 
     return this.ReservationStatus
-      .sendMail(this.current_company_id, this.reservation, this.form_data).then(
-        () => {
-          this.is_submitting = false;
-          this.closeModal();
-        }, () => {
-        });
+      .sendMail(this.current_company_id, this.reservation, this.form_data).then(() => {
+        this.is_submitting = false;
+        this.closeModal();
+      }, () => {});
   }
 }

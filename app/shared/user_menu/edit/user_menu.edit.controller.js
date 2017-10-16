@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 export default class UserMenuEditCtrl {
   constructor(
     User, Customer, CustomerNote, CustomerPreference, CustomerAllergies, $rootScope, $modalInstance,

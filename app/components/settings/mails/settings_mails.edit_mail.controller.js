@@ -24,12 +24,10 @@ export default class SettingsMailsEditMailCtrl {
 
     this.Settings
       .updateMailtext(this.current_company_id, this.form_data.id, data)
-        .then(() => {
-          this.is_submitting = false;
-          this.$modalInstance.dismiss('cancel');
-        }, () => {
-          // nothing
-        });
+      .then(() => {
+        this.is_submitting = false;
+        this.closeModal();
+      }, () => {});
 
     return true;
   }

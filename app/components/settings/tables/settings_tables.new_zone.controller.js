@@ -7,9 +7,9 @@ export default class SettingsTablesNewZoneCtrl {
     this.Zone = Zone;
     this.zones = zones;
     this.$scope = $scope;
+    this.$modalInstance = $modalInstance;
     this.iconsClasses = AppConstants.zonesClasses;
     this.emptyMdiClass = AppConstants.emptyClass;
-    this.$modalInstance = $modalInstance;
     this.item = {};
 
     const loadedZones = this.zonesHash();
@@ -31,20 +31,20 @@ export default class SettingsTablesNewZoneCtrl {
 
     this.Zone
       .create(this.current_company_id, this.item)
-        .then((zone) => {
+      .then(
+        (zone) => {
           this.is_submitting = false;
           this.zones.push(zone);
           this.$modalInstance.dismiss('cancel');
         },
         (error) => {
           this.errors = error.data.errors;
-        });
+        },
+      );
   }
 
   zonesNames() {
-    return this.zones.map((item) => {
-      return item.name;
-    });
+    return this.zones.map(item => item.name);
   }
 
   zonesHash() {

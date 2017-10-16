@@ -2,10 +2,10 @@
   <form ng-submit='reserv.submitForm()'>
     <md-toolbar class='blue-grey-900'>
       <div class='md-toolbar-tools'>
-        <div ng-click='dash_reserv.closeModal()'>
-          <i class='mdi mdi-arrow-left m-r-sm'></i>
-          Reserveren
-        </div>
+        <h2 md-truncate flex>Reserveren</h2>
+        <md-button class="md-icon-button" ng-click='reserv.Confirm.onCloseModal(reserv.$modalInstance);' md-no-ink>
+          <i class='mdi mdi-close m-r-sm i-24'></i>
+        </md-button>
       </div>
     </md-toolbar>
     <md-content>
@@ -16,15 +16,11 @@
                  md-no-pagination
                  md-stretch-tabs
                  md-dynamic-height>
-          
-          <!-- <div data-ng-include=" 'new_reservation.date.view.html' "></div> -->
 
           <div data-ng-include=" 'new_reservation.number_of_persons.view.html' "></div>
 
           <div data-ng-include=" 'new_reservation.product.view.html' "></div>
 
-          <!-- <div data-ng-include=" 'reservation_part.time.view.html' "></div> -->
-          
           <div data-ng-include=" 'new_reservation.zone.view.html' "></div>
         </md-tabs>
         <div class='wrapper red-300 layout-align-space-around-center layout-column' ng-show='reserv.errors.length'>
