@@ -13,6 +13,18 @@ export default class ReservationsAnswerCtrl {
     this.$modalInstance.dismiss('cancel');
   }
 
+  cancelWithoutMail() {
+    this.is_submitting = true;
+    this.closeModal();
+
+    return this.ReservationStatus
+      .changeStatus(this.current_company_id, this.reservation, 'cancelled').then(
+        () => {
+          this.is_submitting = false;
+        }, () => {
+        });
+  }
+
   submitForm(isValid) {
     this.is_submitting = true;
 
