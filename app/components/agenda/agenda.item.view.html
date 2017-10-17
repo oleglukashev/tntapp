@@ -1,36 +1,36 @@
-<td ng-class='{"b-t-none p-t-none": item.reservation.id === data[index - 1].reservation.id}'>
+<td ng-class='{"b-t-none p-t-none": hideIcon}'>
   <div ng-class='item.icon_color'
-       ng-hide='item.reservation.id === data[index - 1].reservation.id'
+       ng-hide='hideIcon'
        class='md-list-item-left img-circle'>
     <div class='pull-left m-l-sm'>
       <i ng-class='item.icon' class='mdi i-20'></i>
     </div>
   </div>
 </td>
-<td ng-class='{"b-t-none p-t-none": item.reservation.id === data[index - 1].reservation.id}'>
+<td ng-class='{"b-t-none p-t-none": hideIcon}'>
   <i class='mdi mdi-clock'></i>
   {{ item.date_time }}
 </td>
-<td ng-class='{"b-t-none p-t-none": item.reservation.id === data[index - 1].reservation.id}'>
+<td ng-class='{"b-t-none p-t-none": hideIcon}'>
   {{ item.product_name }}
 </td>
-<td ng-class='{"b-t-none p-t-none": item.reservation.id === data[index - 1].reservation.id}'>
+<td ng-class='{"b-t-none p-t-none": hideIcon}'>
   {{ item.last_name }}
   <br />
   {{ item.first_name }}
 </td>
-<td ng-class='{"b-t-none p-t-none": item.reservation.id === data[index - 1].reservation.id}'>
+<td ng-class='{"b-t-none p-t-none": hideIcon}'>
   <i class='mdi mdi-account-multiple'></i>
   {{ item.number_of_persons }}x
 </td>
-<td ng-class='{"b-t-none p-t-none": item.reservation.id === data[index - 1].reservation.id}'>
+<td ng-class='{"b-t-none p-t-none": hideIcon}'>
   <span ng-show='item.table_ids'>
     <img class='table_icon' src='public/images/table.svg' />
     {{ item.table_ids }}
   </span>
 </td>
-<td ng-class='{"b-t-none p-t-none": item.reservation.id === data[index - 1].reservation.id}'>{{ item.notes }}</td>
-<td ng-class='{"b-t-none p-t-none": item.reservation.id === data[index - 1].reservation.id}'>
+<td ng-class='{"b-t-none p-t-none": hideIcon}'>{{ item.notes }}</td>
+<td ng-class='{"b-t-none p-t-none": hideIcon}'>
   <div class='pull-right'
        data-ng-include=" 'reservation_status_menu.view.html' "
        ng-init='controller = controller;'></div>

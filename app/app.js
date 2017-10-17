@@ -21,7 +21,6 @@ import rzModule from 'angularjs-slider';
 import satellizer from 'satellizer';
 import chartjs from 'angular-chart.js';
 import 'angular-growl-notifications';
-import dataGrid from './common/services/data-grid';
 
 import dnd from './shared/dnd';
 import uiLoad from './common/services/ui-load';
@@ -63,7 +62,7 @@ angular
     angularTranslateStorageCookie, angularMoment, angularMaterial, uiLoad, anguarOclazyLoad, uiJq,
     dndLists, satellizer, search, dashboard, customerReservation,
     reservations, dnd, agenda, auth, settings, rzModule, chartjs, profiles, constants, editUser,
-    angularLoadingBar, dataGrid, 'app.services', 'app.directives', 'app.filters', 'growlNotifications',
+    angularLoadingBar, 'app.services', 'app.directives', 'app.filters', 'growlNotifications',
   ])
   .config(jwtConfig)
   .controller('AppCtrl', appController)

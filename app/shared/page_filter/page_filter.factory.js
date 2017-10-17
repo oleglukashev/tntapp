@@ -1,11 +1,53 @@
-export default function PageFilterFactory(AppConstants, Reservation, Customer, $modal, moment, filterFilter) {
+export default function PageFilterFactory(AppConstants, Reservation, Customer, $modal, $filter, moment, filterFilter) {
   return (that) => {
     const instance = that;
 
     instance.view_type = 'calendar';
     instance.date_filter = new Date();
     instance.filter_params = [];
+    instance.sort_params = [{
+      name: 'Naam A-Z',
+      value: 'last_name',
+      reverse: false,
+    },
+    {
+      name: 'Naam Z-A',
+      value: 'last_name',
+      reverse: true,
+    },
+    {
+      name: 'Datum oplopend',
+      value: 'date',
+      reverse: false,
+    },
+    {
+      name: 'Datum aflopend',
+      value: 'date',
+      reverse: true,
+    },
+    {
+      name: 'Aantal personen oplopend',
+      value: 'number_of_persons',
+      reverse: false,
+    },
+    {
+      name: 'Aantal personen aflopend',
+      value: 'number_of_persons',
+      reverse: true,
+    },
+    {
+      name: 'Status',
+      value: 'reservation.status',
+      reverse: false,
+    },
+    {
+      name: 'Tafel',
+      value: 'table_ids',
+      reverse: false,
+    }];
+
     instance.filters = [];
+    instance.sort = instance.sort_params[0];
 
     Object.keys(AppConstants.reservationDutchStatuses).forEach((item) => {
       const filterItem = {
@@ -66,8 +108,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer, $
     instance.changeFilterPostProcess = () => {
       if (instance.reservations.length) {
         if (instance.setData) instance.setData();
-        if (instance.setTableOptions) instance.setTableOptions();
-        if (instance.setTableOptions) instance.setGraphData();
+        if (instance.setGraphData) instance.setGraphData();
       }
     };
 
@@ -88,6 +129,10 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer, $
       });
 
       return result.filter((value, index) => result.indexOf(value) === index);
+    };
+
+    instance.applySort = (parts) => {
+      return $filter('orderBy')(parts, instance.sort.value, instance.sort.reverse);
     };
   };
 }

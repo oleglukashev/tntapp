@@ -10,6 +10,9 @@
     <div class='pull-left'
          ng-init='controller = agenda'
          data-ng-include=" 'page_filter.filter.view.html' "></div>
+    <div class='page_sort pull-left'
+         ng-init='controller = agenda'
+         data-ng-include=" 'page_filter.sort.view.html' "></div>
     <div class='pull-right'
          ng-init='controller = agenda'
          data-ng-include=" 'page_filter.change_view.view.html' "></div>
@@ -31,57 +34,35 @@
         </div>
       </accordion-heading>
 
-      <div grid-data
-           grid-options='agenda.getTableOptions(zone)'
-           grid-actions='agenda.gridActions'
-           ng-show='agenda.view_type == "list"'>
-        <table class='table m-b-none'>
-          <thead>
-            <tr>
-                <th>Aanwezig</th>
-                <th sortable='time' class='sortable'>
-                  Tijd
-                  <span class='arrow ascent'></span>
-                  <span class='arrow descent'></span>
-                </th>
-                <th sortable='product_name' class='sortable'>
-                  Product
-                  <span class='arrow ascent'></span>
-                  <span class='arrow descent'></span>
-                </th>
-                <th sortable='name' class='sortable'>
-                  Naam
-                  <span class='arrow ascent'></span>
-                  <span class='arrow descent'></span>
-                </th>
-                <th sortable='number_of_persons' class='sortable'>
-                  Personen
-                  <span class='arrow ascent'></span>
-                  <span class='arrow descent'></span>
-                </th>
-                <th sortable='tables' class='sortable'>
-                  Tafel
-                  <span class='arrow ascent'></span>
-                  <span class='arrow descent'></span>
-                </th>
-                <th class='text-right'>Opmerking</th>
-                <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr data-ng-include=" 'agenda.item.view.html' "
-                ng-click='user.openCustomerMenu(item.customer_id, part.id)'
-                ng-class='{"active": agenda.active_part == item.id,
-                           "cancelled": item.reservation.status == "cancelled"}'
-                ng-controller='UserMenuCtrl as user'
-                ng-repeat='(index, item) in data = filtered | startFrom:(paginationOptions.currentPage-1)*paginationOptions.itemsPerPage | limitTo:paginationOptions.itemsPerPage track by $index'
-                ng-mouseup='agenda.active_part = item.id'
-                ng-init='controller = agenda;'></tr>
-          </tbody>
-        </table>
-      </div>
+      <table class='table m-b-none' ng-show='agenda.view_type == "list"'>
+        <thead>
+          <tr>
+              <th>Aanwezig</th>
+              <th>Tijd</th>
+              <th>Product</th>
+              <th>Naam</th>
+              <th>Personen</th>
+              <th>Tafel</th>
+              <th class='text-right'>Opmerking</th>
+              <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-include=" 'agenda.item.view.html' "
+              ng-click='user.openCustomerMenu(item.customer_id, part.id)'
+              ng-class='{"active": agenda.active_part == item.id,
+                         "cancelled": item.reservation.status == "cancelled"}'
+              ng-controller='UserMenuCtrl as user'
+              ng-repeat='item in data = agenda.data[zone.id]'
+              ng-mouseup='agenda.active_part = item.id'
+              ng-init='controller = agenda;hideIcon = item.reservation.id === data[$index - 1].reservation.id;'>
+              </tr>
+        </tbody>
+      </table>
 
-      <div class='tables_wrapper' ng-show='agenda.view_type == "calendar"' ng-if='agenda.tables_by_zone[zone.id].length'>
+      <div class='tables_wrapper'
+           ng-show='agenda.view_type == "calendar"'
+           ng-if='agenda.tables_by_zone[zone.id].length'>
         <div ng-repeat='(tableIndex, table) in agenda.tables_by_zone[zone.id] | orderBy:"position"'>
           <div class='table_item_number pull-left m-t-sm' ng-style='{ top: tableIndex * agenda.reservation_height }'>
             {{ table.table_number }}

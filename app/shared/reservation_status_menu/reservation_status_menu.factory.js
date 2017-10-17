@@ -2,28 +2,30 @@ export default function reservationStatusMenu(ReservationStatus, filterFilter, m
   'ngInject';
 
   return (that) => {
-    that.changeStatus = (currentReservation, status) => {
+    const instance = that;
+
+    instance.changeStatus = (currentReservation, status) => {
       ReservationStatus
-        .changeStatus(that.current_company_id, currentReservation, status).then((reservation) => {
-          if (typeof that.action_required !== 'undefined') {
+        .changeStatus(instance.current_company_id, currentReservation, status).then((reservation) => {
+          if (typeof instance.action_required !== 'undefined') {
             const reservations = ReservationStatus
-              .translateAndcheckStatusForDelay(that.all_reservations.action_required);
+              .translateAndcheckStatusForDelay(instance.all_reservations.action_required);
             const actionRequiredReservation = filterFilter(reservations, { id: reservation.id })[0];
 
             if (reservation.status === 'request') {
               if (!actionRequiredReservation) reservations.push(reservation);
             } else {
-              const index = that.action_required.map(item => item.id).indexOf(reservation.id);
+              const index = instance.action_required.map(item => item.id).indexOf(reservation.id);
               if (actionRequiredReservation) reservations.splice(index, 1);
             }
           }
 
-          if (that.setTableOptions) that.setTableOptions();
-          if (that.setData) that.setData();
+          if (instance.setData) instance.setData();
+          if (instance.setGraphData) instance.setGraphData();
         }, () => {});
     };
 
-    that.answer = (reservation) => {
+    instance.answer = (reservation) => {
       const modalInstance = $modal.open({
         templateUrl: 'reservation_answer.view.html',
         controller: 'ReservationAnswerCtrl as antwoord',
@@ -37,14 +39,14 @@ export default function reservationStatusMenu(ReservationStatus, filterFilter, m
       }, () => {});
     };
 
-    that.setPresent = (reservation) => {
-      that.ReservationStatus.setPresent(
-        that.current_company_id,
+    instance.setPresent = (reservation) => {
+      instance.ReservationStatus.setPresent(
+        instance.current_company_id,
         reservation,
         !reservation.is_present,
       ).then(() => {
-        if (that.setTableOptions) that.setTableOptions();
-        if (that.setData) that.setData();
+        if (instance.setData) instance.setData();
+        if (instance.setGraphData) instance.setGraphData();
       });
     };
   };

@@ -138,6 +138,6 @@ export default class ReservationsCtrl {
       });
     });
 
-    this.data = result;
+    this.data = this.applySort(result);
   }
 }
