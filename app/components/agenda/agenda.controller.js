@@ -30,8 +30,7 @@ export default class AgendaCtrl {
     this.products = [];
     this.reservations = [];
     this.open_hours = {};
-
-    this.tableOptions = {};
+    this.data = {};
 
     this.draggableClass = '';
     this.channel = '';
@@ -309,7 +308,7 @@ export default class AgendaCtrl {
 
         if (this.tables) {
           this.setGraphData();
-          this.setTableOptions();
+          this.setData();
         }
 
         this.is_loaded = true;
@@ -347,7 +346,7 @@ export default class AgendaCtrl {
         (result) => {
           this.zones = result;
           this.zones.forEach((zone) => {
-            this.tableOptions[zone.id] = { data: [] };
+            this.data[zone.id] = { data: [] };
           });
           this.loadTables();
         },
@@ -410,42 +409,30 @@ export default class AgendaCtrl {
     });
   }
 
-  getTableOptions(zone) {
-    return this.tableOptions[zone.id];
-  }
-
-  setTableOptions() {
+  setData() {
+    this.data = {};
     this.zones.forEach((zone) => {
-      this.tableOptions[zone.id].data = this.getData(zone);
+      this.data[zone.id] = this.getDataByZone(zone);
     });
   }
 
-  getData(zone) {
+  getDataByZone(zone) {
     const result = [];
     const reservations = this.applyFilterToReservations();
-    const parts = this.getPartsByReservationsAndZone(reservations, zone);
-    parts.forEach((part) => {
-      if (this.moment(part.date_time).format('YYYY-MM-DD') ===
-        this.moment(this.date_filter).format('YYYY-MM-DD')) {
-        result.push(this.rowPart(part));
-      }
-    });
 
-    return result;
-  }
-
-  getPartsByReservationsAndZone(reservations, zone) {
-    const result = [];
-    const parts = this.ReservationPart.partsByReservations(reservations);
-
-    parts.forEach((part) => {
-      part.table_ids.forEach((tableId) => {
-        if (zone.table_ids.includes(tableId) && !result.includes(part)) {
-          result.push(part);
-        }
+    reservations.forEach((reservation) => {
+      reservation.reservation_parts.forEach((part) => {
+        part.table_ids.forEach((tableId) => {
+          if (zone.table_ids.includes(tableId) &&
+             !result.includes(part) &&
+             (this.moment(part.date_time).format('YYYY-MM-DD') ===
+              this.moment(this.date_filter).format('YYYY-MM-DD'))) {
+            result.push(this.rowPart(part, reservation));
+          }
+        });
       });
     });
 
-    return result;
+    return this.applySort(result);
   }
 }

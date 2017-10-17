@@ -6,7 +6,7 @@
       <md-list class='no-padder'
                ng-show='reservations.action_required.length'>
         <div class='b-b'>
-          <md-list-item class='reservation_today md-2-line md-no-proxy b-b-none'
+          <md-list-item class='reservation_today md-2-line md-no-proxy'
                ng-class='{"active": reservations.active_part == item.id, 
                           "cancelled": item.reservation.status == "cancelled"}'
                data-ng-include=" 'dashboard_reservations.item.view.html' "
@@ -25,7 +25,7 @@
       <md-list class='no-padder'
                ng-show='reservations.group_this_week.length'>
         <div class='b-b'>
-          <md-list-item class='reservation_today md-2-line md-no-proxy b-b-none'
+          <md-list-item class='reservation_today md-2-line md-no-proxy'
                ng-class='{"active": reservations.active_part == item.id, 
                           "cancelled": item.reservation.status == "cancelled"}'
                data-ng-include=" 'dashboard_reservations.item.view.html' "
@@ -50,7 +50,7 @@
       <md-list class='no-padder'
                ng-show='reservations.ReservationPart.partsByDate(reservations.today, reservations.moment()).length'>
         <div class='b-b'>
-          <md-list-item class='reservation_today md-2-line md-no-proxy b-b-none'
+          <md-list-item class='reservation_today md-2-line md-no-proxy'
                ng-class='{"active": reservations.active_part == item.id, 
                           "cancelled": item.reservation.status == "cancelled"}'
                data-ng-include=" 'dashboard_reservations.item.view.html' "

@@ -1,0 +1,11 @@
+<i class='mdi md-icon-button md-button mdi-sort m-l-md m-r-none i-24 pull-left'></i>
+<md-select class='pull-left'
+           ng-change='controller.changeFilterPostProcess()'
+           ng-model='controller.sort'>
+  <md-optgroup label='Filter de reservering'>
+    <md-option ng-value='item'
+               ng-repeat='item in controller.sort_params'>
+      {{ item.name }}
+    </md-option>
+  </md-optgroup>
+</md-select>

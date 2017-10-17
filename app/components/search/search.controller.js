@@ -1,11 +1,13 @@
 class SearchCtrl {
-  constructor(Table, User, AgendaItemFactory, Customer, ReservationPart, ReservationStatus,
-    ReservationStatusMenu, moment, $state, $rootScope, $stateParams) {
+  constructor(Table, User, AgendaItemFactory, Customer, Product, ReservationPart,
+    ReservationStatus, PageFilterFactory, ReservationStatusMenu, moment, $state,
+    $rootScope, $stateParams) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
     this.Table = Table;
+    this.Product = Product;
     this.moment = moment;
     this.$rootScope = $rootScope;
     this.$stateParams = $stateParams;
@@ -13,7 +15,8 @@ class SearchCtrl {
     this.ReservationPart = ReservationPart;
     this.ReservationStatus = ReservationStatus;
     this.tables = [];
-    this.tableOptions = {};
+    this.products = [];
+    this.data = {};
     this.dateTimes = [];
 
     this.reservations = this.$stateParams.reservations || [];
@@ -24,14 +27,12 @@ class SearchCtrl {
       .map(part => this.moment(part.date_time).format('YYYY-MM-DD'))
       .filter((v, i, a) => a.indexOf(v) === i);
 
-    this.dateTimes.forEach((dateTime) => {
-      this.tableOptions[dateTime] = { data: [] };
-    });
-
     AgendaItemFactory(this);
     ReservationStatusMenu(this);
-    this.setTableOptions();
+    PageFilterFactory(this);
+    this.setData();
     this.loadTables();
+    this.loadProducts();
   }
 
   loadTables() {
@@ -43,38 +44,40 @@ class SearchCtrl {
       }, () => {});
   }
 
-  getTableOptions(dateTimeString) {
-    return this.tableOptions[dateTimeString];
+  loadProducts() {
+    this.Product.getAll(this.current_company_id).then(
+      (products) => {
+        this.products = products;
+        this.products.forEach((product) => {
+          this.filter_params.push({
+            name: 'product',
+            value: product.name,
+          });
+        });
+      });
   }
 
-  setTableOptions() {
+  setData() {
+    this.data = {};
     this.dateTimes.forEach((dateTimeString) => {
-      this.tableOptions[dateTimeString].data =
-        this.getData(dateTimeString);
+      this.data[dateTimeString] =
+        this.getDataByDateTime(dateTimeString);
     });
   }
 
-  getData(dateTimeString) {
+  getDataByDateTime(dateTimeString) {
     const result = [];
+    const reservations = this.applyFilterToReservations();
 
-    this.getPartsByDate(dateTimeString).forEach((part) => {
-      result.push(this.rowPart(part));
+    reservations.forEach((reservation) => {
+      reservation.reservation_parts.forEach((part) => {
+        if (this.moment(part.date_time).format('YYYY-MM-DD') === dateTimeString) {
+          result.push(this.rowPart(part, reservation));
+        }
+      });
     });
 
-    return result;
-  }
-
-  getPartsByDate(dateTimeString) {
-    const result = [];
-    const parts = this.ReservationPart.partsByReservations(this.reservations);
-
-    parts.forEach((part) => {
-      if (this.moment(part.date_time).format('YYYY-MM-DD') === dateTimeString) {
-        result.push(part);
-      }
-    });
-
-    return result;
+    return this.applySort(result);
   }
 }
 
