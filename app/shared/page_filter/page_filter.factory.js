@@ -1,4 +1,5 @@
-export default function PageFilterFactory(AppConstants, Reservation, Customer, $modal, $filter, moment, filterFilter) {
+export default function PageFilterFactory(AppConstants, Reservation, Customer,
+  $modal, $filter, moment, filterFilter) {
   return (that) => {
     const instance = that;
 
