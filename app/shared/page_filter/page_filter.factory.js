@@ -1,5 +1,7 @@
 export default function PageFilterFactory(AppConstants, Reservation, Customer,
   $modal, $filter, moment, filterFilter) {
+  'ngInject';
+
   return (that) => {
     const instance = that;
 
