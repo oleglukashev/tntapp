@@ -9,8 +9,8 @@ export default class Confirm {
     const confirm = this.$mdDialog.confirm()
       .title('Verwijderen')
       .textContent('De huidige werk is niet afgerond en word daarom niet opgeslagen')
-      .ok('Terug')
-      .cancel('Verwijderen');
+      .ok('Verwijderen')
+      .cancel('Terug');
 
     this.$mdDialog.show(confirm).then(() => {
       $modalInstance.close();

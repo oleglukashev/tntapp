@@ -1,15 +1,14 @@
-import angular from 'angular';
-
 export default class UserMenuCtrl {
   constructor(
-    User, Reservation, CustomerNote, CustomerPreference, CustomerAllergies, Customer, moment,
-    $rootScope, $mdSidenav, $modal,
-  ) {
+    User, Reservation, ReservationStatus, ReservationPart, CustomerNote, CustomerPreference,
+    CustomerAllergies, Customer, moment, $rootScope, $mdSidenav, $modal) {
     'ngInject';
 
     this.currentCompanyId = User.getCompanyId();
 
     this.Reservation = Reservation;
+    this.ReservationStatus = ReservationStatus;
+    this.ReservationPart = ReservationPart;
     this.CustomerNote = CustomerNote;
     this.CustomerPreference = CustomerPreference;
     this.CustomerAllergies = CustomerAllergies;
@@ -19,6 +18,8 @@ export default class UserMenuCtrl {
     this.$rootScope = $rootScope;
     this.$mdSidenav = $mdSidenav;
     this.$modal = $modal;
+
+    this.$rootScope.reservations = [];
   }
 
   loadPDF(reservationId) {
@@ -33,21 +34,14 @@ export default class UserMenuCtrl {
       controller: 'ReservationPartEditCtrl as reserv',
       size: 'md',
       resolve: {
-        reservation: () => {
-          return reservation;
-        },
-        reservationPart: () => {
-          return reservationPart;
-        },
+        reservation: () => reservation,
+        reservationPart: () => reservationPart,
       },
     });
 
     modalInstance.result.then(() => {
-      // success
       this.loadCustomerReservations(reservation.customer.id, reservationPart.id);
-    }, () => {
-      // fail
-    });
+    }, () => {});
   }
 
   openEditModal() {
@@ -57,11 +51,7 @@ export default class UserMenuCtrl {
       size: 'md',
     });
 
-    modalInstance.result.then(() => {
-      // success
-    }, () => {
-      // fail
-    });
+    modalInstance.result.then(() => {}, () => {});
   }
 
   toggleStar(customer) {
@@ -81,8 +71,8 @@ export default class UserMenuCtrl {
       regular: !customer.regular,
     };
 
-    this.Customer.edit(this.currentCompanyId, customer.id, data).then((responseCustomer) => {
-      this.$rootScope.customer = responseCustomer;
+    this.Customer.edit(this.currentCompanyId, customer.id, data).then((customer) => {
+      this.$rootScope.customer = customer;
     });
   }
 
@@ -107,24 +97,19 @@ export default class UserMenuCtrl {
     });
 
     this.loadCustomerReservations(customerId, reservationPartId);
-
     this.$mdSidenav('right').open();
   }
 
   loadCustomerReservations(customerId, reservationPartId) {
     this.Customer.searchReservationsByCustomerId(this.currentCompanyId, customerId)
       .then((reservations) => {
-        this.$rootScope.customer_reservations = reservations;
-
-        if (!reservationPartId && reservations.count > 0 &&
-          reservations[0].reservation_parts.count > 0) {
-          reservationPartId = reservations[0].reservation_parts[0].id;
-        }
+        this.$rootScope.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
 
         reservations.forEach((reservation) => {
           reservation.reservation_parts.forEach((part) => {
             if (part.id === reservationPartId) {
-              this.$rootScope.current_reservation_part = part;
+              this.$rootScope.current_part = part;
+              this.$rootScope.current_reservation = reservation;
             }
           });
         });
@@ -137,5 +122,9 @@ export default class UserMenuCtrl {
 
   parsedDate(date) {
     return this.moment(date).locale('nl').format('D MMMM YYYY HH:mm');
+  }
+
+  getPartByReservations() {
+    return this.ReservationPart.partsByReservations(this.$rootScope.reservations);
   }
 }

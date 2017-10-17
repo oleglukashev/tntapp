@@ -19,7 +19,7 @@ export default class UserMenuEditCtrl {
 
     this.note = {};
 
-    $rootScope.userData = $rootScope.customer_reservations[0].customer;
+    this.$rootScope.userData = this.$rootScope.customer;
 
     this.date_options = {
       formatYear: 'yyyy',
@@ -39,8 +39,7 @@ export default class UserMenuEditCtrl {
         (notes) => {
           this.notes = notes;
         },
-        () => {
-        },
+        () => {},
       );
   }
 
@@ -50,8 +49,7 @@ export default class UserMenuEditCtrl {
         (preferences) => {
           this.preferences = preferences;
         },
-        () => {
-        },
+        () => {},
       );
   }
 
@@ -61,8 +59,7 @@ export default class UserMenuEditCtrl {
         (allergies) => {
           this.allergies = allergies;
         },
-        () => {
-        },
+        () => {},
       );
   }
 
@@ -76,8 +73,7 @@ export default class UserMenuEditCtrl {
         () => {
           this.notes.splice(index, 1);
         },
-        () => {
-        },
+        () => {},
       );
   }
 
@@ -91,8 +87,7 @@ export default class UserMenuEditCtrl {
         () => {
           this.preferences.splice(index, 1);
         },
-        () => {
-        },
+        () => {},
       );
   }
 
@@ -106,8 +101,7 @@ export default class UserMenuEditCtrl {
         () => {
           this.allergies.splice(index, 1);
         },
-        () => {
-        },
+        () => {},
       );
   }
 
@@ -147,8 +141,7 @@ export default class UserMenuEditCtrl {
           this.$rootScope.$broadcast('ProfilesCtrl.reload_customers');
           this.closeModal();
         },
-        () => {
-        },
+        () => {},
       );
   }
 
@@ -175,8 +168,7 @@ export default class UserMenuEditCtrl {
             this.$rootScope.customer_notes = this.notes;
             this.closeModal();
           },
-          () => {
-          },
+          () => {},
         );
     } else {
       this.CustomerNote.create(this.current_company_id, this.$rootScope.userData.id, data)
@@ -185,8 +177,7 @@ export default class UserMenuEditCtrl {
             this.$rootScope.customer_notes.push(result);
             this.closeModal();
           },
-          () => {
-          },
+          () => {},
         );
     }
   }
@@ -215,8 +206,7 @@ export default class UserMenuEditCtrl {
             this.$rootScope.customer_preferences = this.preferences;
             this.closeModal();
           },
-          () => {
-          },
+          () => {},
         );
     } else {
       this.CustomerPreference.create(this.current_company_id, this.$rootScope.userData.id, data)
@@ -225,8 +215,7 @@ export default class UserMenuEditCtrl {
             this.$rootScope.customer_preferences.push(result);
             this.closeModal();
           },
-          () => {
-          },
+          () => {},
         );
     }
   }
@@ -254,8 +243,7 @@ export default class UserMenuEditCtrl {
             this.$rootScope.customer_allergies = this.allergies;
             this.closeModal();
           },
-          () => {
-          },
+          () => {},
         );
     } else {
       this.CustomerAllergies.create(this.current_company_id, this.$rootScope.userData.id, data)
@@ -264,8 +252,7 @@ export default class UserMenuEditCtrl {
             this.$rootScope.customer_allergies.push(result);
             this.closeModal();
           },
-          () => {
-          },
+          () => {},
         );
     }
   }
@@ -281,10 +268,6 @@ export default class UserMenuEditCtrl {
       size: 'md',
     });
 
-    modalInstance.result.then(() => {
-      // success
-    }, () => {
-      // fail
-    });
+    modalInstance.result.then(() => {}, () => {});
   }
 }

@@ -8,19 +8,25 @@
         <button md-ink-ripple class='md-btn md-flat btn-fw' ng-click='user.closeCustomerMenu()'>
           <i class='mdi mdi-close i-30' ></i>
         </button>
-        <button md-ink-ripple class='pull-right md-btn md-flat btn-fw' ng-click='user.openEditModal(customer.id)'>
+        <button md-ink-ripple
+                class='pull-right md-btn md-flat btn-fw'
+                ng-click='user.openEditModal(customer.id)'>
           <i class='mdi mdi-pencil i-26'></i>
         </button>
-        <button md-ink-ripple class='pull-right md-btn md-flat btn-fw' ng-class="customer.regular ? 'star_active' : ''" ng-click='user.toggleStar(customer)'>
+        <button md-ink-ripple
+                class='pull-right md-btn md-flat btn-fw'
+                ng-class="customer.regular ? 'star_active' : ''"
+                ng-click='user.toggleStar(customer)'>
           <i class='mdi mdi-star i-26'></i>
         </button>
       </div>
       <h1 class='i-30'>
-        <img ng-src="{{ customer.photoURI }}" ng-if="customer.photoURI" class="customer_avatar m-r-md" />
-        <i ng-hide="customer.photoURI" class="customer_avatar customer_empty_avatar m-r-xs mdi mdi-account i-24"></i>
-        <span class="user_name">
-          {{ customer_reservations[0].customer.last_name }}
-          {{ customer_reservations[0].customer.first_name }}
+        <img ng-src='{{ customer.photoURI }}' ng-if='customer.photoURI' class='customer_avatar m-r-md' />
+        <i ng-hide='customer.photoURI'
+           class='customer_avatar customer_empty_avatar m-r-xs mdi mdi-account i-24'></i>
+        <span class='user_name'>
+          {{ customer.last_name }}
+          {{ customer.first_name }}
         </span>
       </h1>
     </div>
@@ -30,28 +36,28 @@
         <span>Reservering</span>
       </li>
 
-      <div class='inset' ng-show="current_reservation_part">
+      <div class='inset' ng-if='current_part'>
         <div class='md-list-item-left'>
           <i class='mdi mdi-attachment icon-muted i-24'></i>
         </div>
         <div class='md-list-item-content'>
           <h3 class="text-md">
-            {{ user.parsedDate(current_reservation_part.date_time) }}
+            {{ user.parsedDate(current_part.date_time) }}
           </h3>
           <small class="font-thin">
-            {{ current_reservation_part.product.name }},
-            {{ current_reservation_part.number_of_persons }} personen
+            {{ current_part.product.name }},
+            {{ current_part.number_of_persons }} personen
           </small>
         </div>
       </div>
 
-      <div class="inset" ng-if="customer_reservations[0].customer.primary_phone_number">
+      <div class="inset" ng-if='customer.primary_phone_number'>
         <div class="md-list-item-left">
           <i class="mdi mdi-phone icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
           <h3 class="text-md">
-            {{ customer_reservations[0].customer.primary_phone_number }}
+            {{ customer.primary_phone_number }}
           </h3>
           <small class="font-thin">Telefoon</small>
 
@@ -64,14 +70,14 @@
         </div>
         <div class="md-list-item-content">
           <h3 class="text-md">
-            {{ customer_reservations[0].customer.mail }}
+            {{ customer.mail }}
           </h3>
           <small class="font-thin">E-mail</small>
 
         </div>
       </div>
 
-      <div class="inset" ng-show="current_reservation.notes">
+      <div class="inset" ng-if='current_reservation.notes'>
         <div class="md-list-item-left">
           <i class="mdi mdi-comment-text icon-muted i-24"></i>
         </div>
@@ -83,7 +89,7 @@
         </div>
       </div>
 
-      <div class="inset" ng-repeat="note in customer_notes">
+      <div class="inset" ng-repeat='note in customer_notes'>
         <div class="md-list-item-left">
           <i class="mdi mdi-information-outline icon-muted i-24"></i>
         </div>
@@ -95,7 +101,7 @@
         </div>
       </div>
 
-      <div class="inset" ng-repeat="allergy in customer_allergies">
+      <div class="inset" ng-repeat='allergy in customer_allergies'>
         <div class="md-list-item-left">
           <i class="mdi mdi-information-outline icon-muted i-24"></i>
         </div>
@@ -107,7 +113,7 @@
         </div>
       </div>
 
-      <div class="inset" ng-repeat="preference in customer_preferences">
+      <div class="inset" ng-repeat='preference in customer_preferences'>
         <div class="md-list-item-left">
           <i class="mdi mdi-information-outline icon-muted i-24"></i>
         </div>
@@ -120,61 +126,64 @@
         </div>
       </div>
 
-      <div class="inset" ng-if="customer_reservations[0].customer.average_rating">
+      <div class="inset" ng-if='customer.average_rating'>
         <div class="md-list-item-left ">
           <i class="mdi mdi-star-outline icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
-          <h3 class="text-md">{{ customer_reservations[0].customer.average_rating }}</h3>
+          <h3 class="text-md">{{ customer.average_rating }}</h3>
           <small class="font-thin">Gemidelde rating</small>
         </div>
       </div>
 
       <!-- list -->
 
-      <li ng-show="customer.accountURI">
+      <li ng-if='customer.accountURI'>
         <ul class="nav nav-sub">
           <li ui-sref-active="active">
-            <a href="{{ customer.accountURI }}" md-ink-ripple class="text-success fb-button"><span>Profiel bekijken</span></a>
+            <a ng-href='customer.accountURI' md-ink-ripple class='text-success fb-button'>
+              <span>Profiel bekijken</span>
+            </a>
           </li>
         </ul>
       </li>
 
-      <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" ng-show="customer_reservations.count > 0">
+      <li class='hidden-folded padder m-t m-b-sm text-muted text-xs'
+          ng-show='user.getPartByReservations().length'>
         <span>Eerdere reserveringen</span>
       </li>
 
-      <li ng-repeat="reservation in customer_reservations">
+      <li ng-repeat='reservation in reservations'>
         <a md-ink-ripple
-           ng-repeat="reservation_part in reservation.reservation_parts"
-           ng-click="user.openEditReservationModal(reservation, reservation_part)">
+           ng-repeat='part in reservation.reservation_parts'
+           ng-click='user.openEditReservationModal(reservation, part)'>
           <div class="md-list-item-left">
             <i class="mdi mdi-book icon-muted i-24"></i>
           </div>
           <div class="md-list-item-content">
             <h3 class="text-md">
-              {{ user.parsedDate(reservation_part.date_time) }}
+              {{ user.parsedDate(part.date_time) }}
             </h3>
             <small class="font-thin">
-              {{ reservation_part.product.name }},
-              {{ reservation_part.number_of_persons }} personen
+              {{ part.product.name }},
+              {{ part.number_of_persons }} personen
             </small>
-            <div class="pull-right review_score" ng-if="reservation.reviewScore != null">
-              <i class="mdi mdi-star-outline icon-muted i-20"></i>
-              <small class="font-thin">{{ reservation.reviewScore }}</small>
+            <div class='pull-right review_score' ng-if='reservation.reviewScore != null'>
+              <i class='mdi mdi-star-outline icon-muted i-20'></i>
+              <small class='font-thin'>{{ reservation.reviewScore }}</small>
             </div>
           </div>
         </a>
 
         <a md-ink-ripple
-           ng-if="reservation.reservation_pdf"
-           ng-click="user.loadPDF(reservation.id)">
+           ng-if='reservation.reservation_pdf'
+           ng-click='user.loadPDF(reservation.id)'>
           <div class="md-list-item-left">
             <i class="mdi mdi-attachment icon-muted i-24"></i>
           </div>
           <div class="md-list-item-content">
             <h3 class="text-md">
-              PDF for {{ user.parsedDate(reservation_part.date_time) }}
+              PDF for {{ user.parsedDate(part.date_time) }}
             </h3>
             <small class="font-thin">
               Load PDF file

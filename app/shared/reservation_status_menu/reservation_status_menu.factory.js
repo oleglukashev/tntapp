@@ -49,5 +49,9 @@ export default function reservationStatusMenu(ReservationStatus, filterFilter, m
         if (instance.setGraphData) instance.setGraphData();
       });
     };
+
+    instance.editPart = (part) => {
+      
+    };
   };
 }
