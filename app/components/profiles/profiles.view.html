@@ -8,28 +8,37 @@
 
     <div class='panel'>
       <div class='panel-heading'>Profielen</div>
-      <div class='md-list'>
-        <div class="md-list-item char_wrapper" ng-repeat="(char, customers) in profiles.customers">
-          <div class="md-list-item-left char">{{ char }}</div>
-            <div ng-repeat="customer in customers | orderBy:'customer.last_name':false" class="customers">
-              <div class="md-list-item-content ng-scope">
-                <div class="md-list-item-left m-t-sm">
-                  <div class="grey-100 img-circle customer_avatar" ng-hide="customer.photoURI"></div>
-                  <img ng-src="{{ customer.photoURI }}" ng-show="customer.photoURI" class="customer_avatar">
-                </div>
-
-                <h3 class="text-md ng-binding customer">{{ customer.last_name }} {{ customer.first_name }}</h3>
-                <div class="pull-right ng-scope">
-                  <button md-ink-ripple="" class="md-btn md-fab m-t-xs m-b-xs no-shadow md-ink-ripple" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false" aria-disabled="false" ng-click='user.openCustomerMenu(customer.id, reservation.pid)' ng-controller='UserMenuCtrl as user'>
-                    <i class="mdi mdi-dots-vertical i-24"></i>
-                    <div class="md-ripple-container"></div>
-                  </button>
-
-                </div>
-              </div>
+      <md-list class='no-padder'>
+        <div class='char_wrapper' ng-repeat='(char, customers) in profiles.customers'>
+          <div class='md-list-item-left char'>{{ char }}</div>
+          <md-list-item ng-click='user.openCustomerMenu(customer.id, reservation.pid)'
+                        ng-class='{"active": profiles.active_profile == customer.id}'
+                        ng-controller='UserMenuCtrl as user'
+                        ng-repeat="customer in customers | orderBy:'customer.last_name':false"
+                        ng-mouseup='profiles.active_profile = customer.id'
+                        class='md-2-line md-no-proxy b-b-none m-l-xxl'>
+            <div class='md-avatar'>
+              <div class='grey-100 img-circle customer_avatar' ng-hide='customer.photoURI'></div>
+              <img ng-src='customer.photoURI' ng-show='customer.photoURI' class='customer_avatar' />
             </div>
+            <div class='md-list-item-text'>
+              <h3>{{ customer.last_name }} {{ customer.first_name }}</h3>
+            </div>
+            <div class='pull-right'>
+              <button md-ink-ripple
+                      class='md-icon-button md-button'
+                      ng-disabled='disabled'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                      aria-disabled='false'
+                      ng-click='user.openCustomerMenu(customer.id, reservation.pid)'>
+                <i class='mdi mdi-dots-vertical i-24'></i>
+              </button>
+            </div>
+    
+          </md-list-item>
         </div>
-      </div>
+      </md-list>
     </div>
   </div>
 </div>
