@@ -5,17 +5,15 @@
       <div class='panel-heading'>Actie vereist</div>
       <md-list class='no-padder'
                ng-show='reservations.action_required.length'>
-        <div class='b-b'>
-          <md-list-item class='reservation_today md-2-line md-no-proxy'
-               ng-class='{"active": reservations.active_part == item.id, 
-                          "cancelled": item.reservation.status == "cancelled",
-                          "b-b-none": item.reservation.id === data[$index + 1].reservation.id}'
-               data-ng-include=" 'dashboard_reservations.item.view.html' "
-               ng-repeat='item in data = reservations.action_required'
-               ng-init='hideIcon = item.reservation.id === data[$index - 1].reservation.id'
-               ng-mouseup='reservations.active_part = item.id'
-               md-ink-ripple></md-list-item>
-        </div>
+        <md-list-item class='reservation_today md-2-line md-no-proxy'
+             ng-class='{"active": reservations.active_part == item.id, 
+                        "cancelled": item.reservation.status == "cancelled",
+                        "b-b-none": item.reservation.id === data[$index + 1].reservation.id}'
+             data-ng-include=" 'dashboard_reservations.item.view.html' "
+             ng-repeat='item in data = reservations.action_required'
+             ng-init='hideIcon = item.reservation.id === data[$index - 1].reservation.id'
+             ng-mouseup='reservations.active_part = item.id'
+             md-ink-ripple></md-list-item>
       </md-list>
       <div class='md-padding'
            ng-hide='reservations.action_required.length'>Leeg</div>
@@ -25,17 +23,15 @@
       <div class='panel-heading'>Groepen deze week</div>
       <md-list class='no-padder'
                ng-show='reservations.group_this_week.length'>
-        <div class='b-b'>
-          <md-list-item class='reservation_today md-2-line md-no-proxy'
-               ng-class='{"active": reservations.active_part == item.id, 
-                          "cancelled": item.reservation.status == "cancelled",
-                          "b-b-none": item.reservation.id === data[$index + 1].reservation.id}'
-               data-ng-include=" 'dashboard_reservations.item.view.html' "
-               ng-repeat='item in data = reservations.group_this_week'
-               ng-init='hideIcon = item.reservation.id === data[$index - 1].reservation.id'
-               ng-mouseup='reservations.active_part = item.id'
-               md-ink-ripple></md-list-item>
-        </div>
+        <md-list-item class='reservation_today md-2-line md-no-proxy'
+             ng-class='{"active": reservations.active_part == item.id, 
+                        "cancelled": item.reservation.status == "cancelled",
+                        "b-b-none": item.reservation.id === data[$index + 1].reservation.id}'
+             data-ng-include=" 'dashboard_reservations.item.view.html' "
+             ng-repeat='item in data = reservations.group_this_week'
+             ng-init='hideIcon = item.reservation.id === data[$index - 1].reservation.id'
+             ng-mouseup='reservations.active_part = item.id'
+             md-ink-ripple></md-list-item>
       </md-list>
       <div class='md-padding'
            ng-hide='reservations.group_this_week.length'>Leeg</div>
@@ -51,17 +47,15 @@
       <div class='panel-heading'>Vandaag</div>
       <md-list class='no-padder'
                ng-show='reservations.ReservationPart.partsByDate(reservations.today, reservations.moment()).length'>
-        <div class='b-b'>
-          <md-list-item class='reservation_today md-2-line md-no-proxy'
-               ng-class='{"active": reservations.active_part == item.id, 
-                          "cancelled": item.reservation.status == "cancelled",
-                          "b-b-none": item.reservation.id === data[$index + 1].reservation.id}'
-               data-ng-include=" 'dashboard_reservations.item.view.html' "
-               ng-repeat='item in data = reservations.ReservationPart.partsByDate(reservations.today, reservations.moment())'
-               ng-init='hideIcon = item.reservation.id === data[$index - 1].reservation.id'
-               ng-mouseup='reservations.active_part = item.id'
-               md-ink-ripple></md-list-item>
-        </div>
+        <md-list-item class='reservation_today md-2-line md-no-proxy'
+             ng-class='{"active": reservations.active_part == item.id, 
+                        "cancelled": item.reservation.status == "cancelled",
+                        "b-b-none": item.reservation.id === data[$index + 1].reservation.id}'
+             data-ng-include=" 'dashboard_reservations.item.view.html' "
+             ng-repeat='item in data = reservations.ReservationPart.partsByDate(reservations.today, reservations.moment())'
+             ng-init='hideIcon = item.reservation.id === data[$index - 1].reservation.id'
+             ng-mouseup='reservations.active_part = item.id'
+             md-ink-ripple></md-list-item>
       </md-list>
       <div class='md-padding'
            ng-hide='reservations.ReservationPart.partsByDate(reservations.today, reservations.moment()).length'>Leeg</div>

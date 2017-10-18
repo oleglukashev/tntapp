@@ -91,7 +91,7 @@ md-select
     -webkit-box-flex 1
     -webkit-flex-grow 1
     flex-grow 1
-    border-bottom-color #929292
+    border-bottom-color border-color
 
     .md-text
       font-size 16px
@@ -207,7 +207,10 @@ md-tabs
 
 md-list-item
   font-size 16px
-  border-bottom 1px solid #929292
+  border-bottom 1px solid border-color
+
+  &:last-of-type
+    border-width 0
 
   &.active
     background-color list-item-active-color
