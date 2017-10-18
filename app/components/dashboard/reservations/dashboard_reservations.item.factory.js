@@ -1,4 +1,6 @@
 export default function DashboardReservationsItemFactory(AppConstants) {
+  'ngInject';
+
   return (that) => {
     const instance = that;
 

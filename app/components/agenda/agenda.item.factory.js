@@ -1,4 +1,6 @@
 export default function AgendaItemFactory(AppConstants) {
+  'ngInject';
+
   return (that) => {
     const instance = that;
 
