@@ -6,7 +6,9 @@ export default class Charts {
 
     this.letterOfWeek = AppConstants.letterOfWeek;
     this.Reservation = Reservation;
+  }
 
+  get(reservations) {
     this.charts = {
       guests_by_product: { 0: 0 },
       products: {},
@@ -18,9 +20,7 @@ export default class Charts {
       total_guests_m: 0,
       total_guests_w: 0,
     };
-  }
 
-  get(reservations) {
     this.charts.total_guests_y = reservations.count_per_year;
     this.charts.total_guests_m = reservations.count_per_month;
     this.charts.total_guests_w = reservations.count_per_week;
