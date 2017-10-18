@@ -180,7 +180,7 @@ export default class Reservation {
 
   getPersonCountByTableId(tables, tableId) {
     const table = this.filterFilter(tables, { id: tableId })[0];
-    return table ? table.number_of_persons : null;
+    return table ? parseInt(table.number_of_persons) : null;
   }
 
   isDisabledTableByTableId(tables, occupiedTables, tableId) {
