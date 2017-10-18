@@ -16,7 +16,7 @@
     <a href='#'></a>
   </div>
   <div class='header-menu'>
-    <md-tabs md-no-ink='true' class='header-menu-wrapper'>
+    <md-tabs md-no-ink='true' class='header-menu-wrapper' ng-click='header.hideRightSidebar()'>
       <md-tab md-active='header.isDiactiveState()'></md-tab>
       <md-tab md-active='header.isActiveState("app.dashboard")' ui-sref='app.dashboard'>Dashboard</md-tab>
       <md-tab md-active='header.isActiveState("app.reservations")' ui-sref='app.reservations'>Vandaag</md-tab>
