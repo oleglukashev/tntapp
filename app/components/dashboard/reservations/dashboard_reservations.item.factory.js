@@ -1,12 +1,13 @@
-export default function DashboardReservationsItemFactory() {
+export default function DashboardReservationsItemFactory(AppConstants) {
   return (that) => {
     const instance = that;
 
     instance.rowPart = (part, reservation) => {
       return {
         id: part.id,
-        icon_color: instance.ReservationStatus.getIconColor(reservation),
-        icon: instance.ReservationStatus.getIcon(reservation),
+        dutch_status: AppConstants.reservationStatuses[reservation.status],
+        icon_color: instance.ReservationStatus.getIconColor(part, reservation),
+        icon: instance.ReservationStatus.getIcon(part, reservation),
         product_name: part.product.name,
         date_time: instance.moment(part.date_time).format('DD.MM.YYYY HH:mm'),
         last_name: reservation.customer.last_name,

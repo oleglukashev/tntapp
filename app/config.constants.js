@@ -7,11 +7,15 @@ export default angular.module('app.constants', [])
     appName: 'TNT',
     late_minutes: 15,
     themes: ['Default', 'Aqua', 'Lego', 'Chocolate'],
+    reservationStatuses: {
+      cancelled: 'Geannuleerd',
+      confirmed: 'Bevestigd',
+      request: 'Aanvraag',
+    },
     reservationDutchStatuses: {
       Geannuleerd: 'cancelled',
       Bevestigd: 'confirmed',
       Aanvraag: 'request',
-      Reservering: 'reservation',
     },
     reservationMenuStatuses: {
       reservation: [

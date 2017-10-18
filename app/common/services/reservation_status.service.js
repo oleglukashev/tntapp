@@ -97,34 +97,28 @@ export default class ReservationStatus {
     return reservations;
   }
 
-  getStatus(reservation) {
+  getIcon(part, reservation) {
+    let status = reservation.status;
     const now = this.moment().valueOf();
-    const reservationPart = reservation.reservation_parts[0];
-    const reservationTime = this.moment(reservationPart.date_time).valueOf();
+    const reservationTime = this.moment(part.date_time).valueOf();
     const diffMins = this.moment(reservationTime).diff(this.moment(now), 'minutes');
 
     if (reservation.is_present) {
-      return 'present';
+      status = 'present';
     }
 
     if (diffMins >= -this.AppConstants.late_minutes &&
       diffMins <= this.AppConstants.late_minutes + 30) {
-      return 'expected';
+      status = 'expected';
     } else if (diffMins <= -this.AppConstants.late_minutes) {
-      return 'delayed';
+      status = 'delayed';
     }
-
-    return reservation.status;
-  }
-
-  getIcon(reservation) {
-    const status = this.getStatus(reservation);
 
     return this.AppConstants.reservationPresentClasses[status] ||
            this.AppConstants.reservationStatusClasses[status];
   }
 
-  getIconColor(reservation) {
+  getIconColor(part, reservation) {
     const colors = {
       'mdi-star-outline': 'yellow-100',
       'mdi-checkbox-blank-circle-outline': 'orange-500',
@@ -134,7 +128,7 @@ export default class ReservationStatus {
       'mdi-clock': 'orange-500',
     };
 
-    return colors[this.getIcon(reservation)];
+    return colors[this.getIcon(part, reservation)];
   }
 
   setPresent(companyId, reservation, isPresent) {
