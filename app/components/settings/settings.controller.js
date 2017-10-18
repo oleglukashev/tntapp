@@ -12,7 +12,7 @@ export default class SettingsCtrl {
       'OPENINGSTIJDEN/PRODUCTEN': 'app.settings.products',
       'PLEKKEN VRIJHOUDEN': 'app.settings.limits',
       'MEDEWERKERS': 'app.settings.employees',
-      'TAFELS': 'app.settings.tables',
+      'TAFELS/ZONES': 'app.settings.tables',
       'PLUGINS': 'app.settings.plugins',
       "KLEUREN THEMA'S": 'app.settings.themes',
     };
