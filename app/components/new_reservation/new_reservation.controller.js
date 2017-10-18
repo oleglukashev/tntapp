@@ -174,6 +174,18 @@ export default class NewReservationCtrl {
     return false;
   }
 
+  disabledTimes() {
+    const result = [];
+
+    this.openedTimeRangePeriod().forEach((item) => {
+      if (this.timeIsDisabled(item)) {
+        result.push(item);
+      }
+    });
+
+    return result;
+  }
+
   isMoreThanDeadline() {
     if (this.socials && this.socials.settings.reservation_deadline) {
       const now = this.moment();
