@@ -15,6 +15,10 @@
           <h4>Aantal personen</h4>
         </div>
       </div>
+      <div class='wrapper orange-500 layout-align-space-around-center layout-column'
+           ng-show='reserv.numberOfPersonsMoreThanTableSeats() && reserv.current_part.tables.length'>
+        <div class='w-xl'>NUMBER OF PERSONS is more than available seats</div>
+      </div>
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <div class='w-lg'>
           <label ng-repeat='number in [1,2,3,4,5,6,7,8,9,10]'
@@ -48,12 +52,6 @@
                          aria-label="Group?">
               Group?
             </md-checkbox>
-          </div>
-          <div class='wrapper orange-500 layout-align-space-around-center layout-column'
-             ng-show='reserv.numberOfPersonsMoreThanTableSeats() && reserv.current_part.tables.length'>
-            <div class='w-xl'>
-              NUMBER OF PERSONS is more than available seats
-            </div>
           </div>
         </div>
       </div>
