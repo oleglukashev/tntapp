@@ -1,9 +1,10 @@
 export default class HeaderCtrl {
-  constructor(User, $state, $timeout) {
+  constructor(User, $state, $timeout, $mdSidenav) {
     'ngInject';
 
     this.$state = $state;
     this.$timeout = $timeout;
+    this.$mdSidenav = $mdSidenav;
     this.User = User;
     this.current_user = User.current;
     this.current_company = User.current_company;
@@ -12,6 +13,10 @@ export default class HeaderCtrl {
     this.photoPath = `${API_URL}../../../upload/user-photos/`;
     this.userPhotoURI = `${this.photoPath}${this.User.current.photo}?`;
     this.loadPhoto();
+  }
+
+  hideRightSidebar() {
+    this.$mdSidenav('right').close();
   }
 
   loadPhoto() {
