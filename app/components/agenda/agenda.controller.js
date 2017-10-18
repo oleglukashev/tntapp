@@ -72,6 +72,8 @@ export default class AgendaCtrl {
     this.loadGeneralSettings();
     this.loadZonesAndTables();
     this.loadProducts();
+
+    this.changeDateFilterPostProcess();
   }
 
   // scrolling left for now line
