@@ -5,6 +5,12 @@ export default function AgendaItemFactory(AppConstants, ReservationStatus) {
     const instance = that;
 
     instance.rowPart = (part, reservation) => {
+      if (!reservation.customer) {
+        reservation.customer = {
+          last_name: 'undefined',
+        };
+      }
+
       const name = reservation.customer.last_name ?
         `${reservation.customer.first_name} ${reservation.customer.last_name}` :
         reservation.customer.first_name;
@@ -14,7 +20,7 @@ export default function AgendaItemFactory(AppConstants, ReservationStatus) {
         icon_color: ReservationStatus.getIconColor(part, reservation),
         dutch_status: AppConstants.reservationDutchStatuses[reservation.status],
         icon: ReservationStatus.getIcon(part, reservation),
-        product_name: part.product.name,
+        product_name: part.product ? part.product.name : undefined,
         date_time: instance.moment(part.date_time).format('DD.MM.YYYY HH:mm'),
         number_of_persons: part.number_of_persons,
         table_ids: instance.Table.getTableNumbersByTableIds(instance.tables, part.table_ids).join(', '),

@@ -43,10 +43,12 @@ export default class Charts {
         const date = new Date(part.date_time);
         const day = Math.floor(date.getTime() / mSecInDay);
         this.charts.day_guests[day] = (this.charts.day_guests[day] || 0) + personsCount;
-        if (!this.charts.guests_by_product[part.product_id]) {
-          this.charts.guests_by_product[part.product_id] = 0;
+        if (part.product_id) {
+          if (!this.charts.guests_by_product[part.product_id]) {
+            this.charts.guests_by_product[part.product_id] = 0;
+          }
+          this.charts.guests_by_product[part.product_id] += personsCount;
         }
-        this.charts.guests_by_product[part.product_id] += personsCount;
         this.charts.guests_by_product[0] += personsCount;
       });
     });
@@ -77,7 +79,9 @@ export default class Charts {
       .getProducts(this.current_company.id)
       .then((products) => {
         products.forEach((product) => {
-          this.charts.products[product.id] = product.name;
+          if (product.id) {
+            this.charts.products[product.id] = product.name;
+          }
         });
         this.charts.products[0] = 'Totaal';
       });

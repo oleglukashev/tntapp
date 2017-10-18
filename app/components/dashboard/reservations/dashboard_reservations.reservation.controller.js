@@ -6,7 +6,11 @@ export default class DashboardReservationsReservationCtrl {
     this.$modalInstance = $modalInstance;
   }
 
-  closeModal() {
-    this.$modalInstance.dismiss('cancel');
+  closeModalOrConfirm(noConfirm) {
+    if (noConfirm) {
+      this.$modalInstance.dismiss('cancel');
+    } else {
+      this.Confirm.onCloseModal(this.$modalInstance);
+    }
   }
 }

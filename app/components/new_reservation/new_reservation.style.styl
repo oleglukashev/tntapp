@@ -1,7 +1,9 @@
 .reservation_modal
   md-content
     padding-bottom 0
-    
+    height auto
+    min-height modal-height
+
     md-tabs.reservation_tabs
       md-tabs-wrapper
         md-tabs-canvas
@@ -17,7 +19,8 @@
       md-tabs-content-wrapper
         md-tab-content
           min-height 464px
-
+          .walk-in-wrapper
+            min-height 520px !important
           .reservation_person,
           .reservation_zone,
           .reservation_group
@@ -26,7 +29,6 @@
             & > button[type='submit']
               position absolute
               bottom 0
-
             & > button[type='button']
               position absolute
               bottom 46px
@@ -77,3 +79,8 @@
 .time_item
   display inline-block
   margin 5px 5px 5px 0
+
+for theme in 'default' 'aqua' 'lego' 'chocolate'
+  .{theme}-theme
+    .walk-in-wrapper
+      border-top 56px lookup(theme + '-theme-color') solid

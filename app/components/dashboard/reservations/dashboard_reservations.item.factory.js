@@ -20,7 +20,7 @@ export default function DashboardReservationsItemFactory(AppConstants, Reservati
         icon_color: ReservationStatus.getIconColor(part, reservation),
         dutch_status: AppConstants.reservationDutchStatuses[reservation.status],
         icon: ReservationStatus.getIcon(part, reservation),
-        product_name: part.product.name,
+        product_name: part.product ? part.product.name : undefined,
         date_time: instance.moment(part.date_time).format('DD.MM.YYYY HH:mm'),
         number_of_persons: part.number_of_persons,
         table_ids: instance.Table.getTableNumbersByTableIds(instance.tables, part.table_ids).join(', '),

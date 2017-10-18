@@ -1,0 +1,37 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-format-list-bulleted-type'></i></div>
+    <div class='text-center l-h'>
+      <span ng-show='reserv.reservation.social'>{{ reserv.reservation.social }}</span>
+      <span ng-hide='reserv.reservation.social'>TYPE</span>
+    </div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='b-t' flex ng-show='reserv.socials_is_loaded'>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4>Reserveer nu direct bij {{ reserv.socials.restaurant_name }} met onderstaande reserveringsknop</h4>
+        </div>
+      </div>
+      <div class='md-list text-center'>
+        <a ng-if='reserv.socials.allow_facebook_login'
+           class='md-list-item text-success text-md'
+           ng-click='reserv.authenticate("facebook");'>
+          <i class='mdi mdi-facebook m-r-lg' />
+          RESERVER MET FACEBOOK
+        </a>
+        <a ng-if='reserv.socials.allow_twitter_login'
+           class='md-list-item text-success text-md'
+           ng-click='reserv.authenticate("twitter");'>
+          <i class='mdi mdi-twitter m-r-lg' />
+          RESERVER MET TWITTER
+        </a>
+        <a class='md-list-item text-success text-md'
+           ng-click='reserv.authenticate("email");'>
+          <i class='mdi mdi-email m-r-lg' />
+          RESERVER MET E-MAIL
+        </a>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>
