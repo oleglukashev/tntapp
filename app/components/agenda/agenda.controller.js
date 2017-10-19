@@ -65,6 +65,10 @@ export default class AgendaCtrl {
       this.loadReservations();
     });
 
+    $scope.$on('$viewContentLoaded', () => {
+      this.scrollToNow();
+    });
+
     AgendaItemFactory(this);
     PageFilterFactory(this);
     ReservationStatusMenu(this);
@@ -74,7 +78,6 @@ export default class AgendaCtrl {
     this.loadProducts();
 
     this.changeDateFilterPostProcess();
-    this.scrollToNow();
   }
 
   // scrolling left for now line
@@ -83,7 +86,7 @@ export default class AgendaCtrl {
       const eq = index === undefined ? '' : `:eq(${index})`;
       this.$timeout(() => {
         $(`.calendar_wrapper${eq}`).animate({ scrollLeft: this.now_left_px }, 'slow');
-      }, 500);
+      }, 1500);
     }
   }
 
