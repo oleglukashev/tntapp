@@ -16,8 +16,10 @@ export default class SettingsProductsCtrl {
     this.$timeout = $timeout;
     this.is_loaded = false;
     this.errors = [];
-    this.opened = [true];
     this.days = AppConstants.dayOfWeek;
+    this.opened = {};
+    this.opened[this.days[0]] = true;
+    this.data = {};
     this.days_of_week = [1, 2, 4, 8, 16, 32, 64];
     this.products_used = [];
 
@@ -26,9 +28,8 @@ export default class SettingsProductsCtrl {
     this.loadProducts();
   }
 
-  sliderChanged(day, id) {
-    if (!this.products_by_day[day][id].options.disabled) {
-      const timeRange = this.products_by_day[day][id];
+  sliderChanged(id, timeRange) {
+    if (!timeRange.options.disabled) {
       const data = {
         product_time_range: {
           startTime: this.Slider.from15Min(timeRange.minValue),
@@ -40,16 +41,17 @@ export default class SettingsProductsCtrl {
       };
 
       this.TimeRange
-        .edit(this.current_company_id, timeRange.id, data)
+        .edit(this.current_company_id, id, data)
         .then(
           () => {},
           () => {},
         );
+
+      this.calculateMinMax();
     }
   }
 
-  closeToday(day, id) {
-    const timeRange = this.products_by_day[day][id];
+  closeToday(id, timeRange) {
     const data = {
       product_time_range: {
         startTime: this.Slider.from15Min(timeRange.minValue),
@@ -61,13 +63,14 @@ export default class SettingsProductsCtrl {
     };
 
     this.TimeRange
-      .edit(this.current_company_id, timeRange.id, data)
+      .edit(this.current_company_id, id, data)
       .then(
         () => {},
         () => {},
       );
 
     timeRange.options.disabled = !timeRange.options.disabled;
+    this.calculateMinMax();
   }
 
   loadProducts() {
@@ -88,10 +91,14 @@ export default class SettingsProductsCtrl {
     this.TimeRange.getAll(this.current_company_id)
       .then(
         (ranges) => {
-          this.products_by_day = [];
+          this.data = {};
           this.days.map((day) => {
-            if (typeof this.products_by_day[day] !== 'object') {
-              this.products_by_day[day] = [];
+            if (typeof this.data[day] === 'undefined') {
+              this.data[day] = {
+                min_time: null,
+                max_time: null,
+                time_ranges: {},
+              };
             }
           });
 
@@ -110,18 +117,18 @@ export default class SettingsProductsCtrl {
               // options.minLimit = productStartTime;
               // options.maxLimit = productEndTime;
               if (!range.value) options.disabled = true; // disabled ?
-
               this.products_used[range.name] = 1;
-
-              this.products_by_day[this.days[day - 1]].push({
-                id: range.openHourId,
+              const dayData = this.data[this.days[day - 1]]
+              dayData.time_ranges[range.openHourId] = {
                 day: day - 1,
                 product_id: range.productId,
                 name: range.name,
                 minValue: startTime,
                 maxValue: endTime,
                 options,
-              });
+              };
+
+              this.calculateMinMax(dayData);
             });
           });
           this.redrawSliders();
@@ -206,20 +213,23 @@ export default class SettingsProductsCtrl {
       this.TimeRange
         .create(this.current_company_id, data)
         .then(
-          () => {
-            const product = {
-              id: productId,
-              name: res.name,
+          (timeRange) => {
+            const newTimeRange = {
+              id: timeRange.id,
+              product_id: timeRange.product.id,
+              name: timeRange.product.name,
               minValue: arr.minValue,
               maxValue: arr.maxValue,
               options: Object.assign({}, this.slider.options),
             };
 
-            this.products_by_day[day].push(product);
+            this.data[day].time_ranges[timeRange.id] = newTimeRange;
           },
           () => {},
         );
     });
+
+    this.calculateMinMax();
   }
 
   removeProduct(id) {
@@ -229,16 +239,18 @@ export default class SettingsProductsCtrl {
         () => {
           this.loadProducts();
           this.days.map((day) => {
-            const productsDay = this.products_by_day[day];
-            for (let i = 0; i < productsDay.length; i += 1) {
-              if (productsDay[i].product_id === id) {
-                productsDay.splice(i, 1);
+            const timeRangesByDay = this.data[day].time_ranges;
+            for (let i = 0; i < timeRangesByDay.length; i += 1) {
+              if (timeRangesByDay[i].product_id === id) {
+                timeRangesByDay.splice(i, 1);
               }
             }
           });
         },
         () => {},
       );
+
+    this.calculateMinMax();
   }
 
   hidden(productId) {
@@ -250,12 +262,32 @@ export default class SettingsProductsCtrl {
         },
         () => {},
       );
+
+    this.calculateMinMax();
   }
 
   redrawSliders() {
     // force redraw slider after loading
     this.$timeout(() => {
       this.$scope.$broadcast('rzSliderForceRender');
+    });
+  }
+
+  calculateMinMax() {
+    Object.keys(this.data).forEach((day) => {
+      const dayData = this.data[day];
+      const minArray = [];
+      const maxArray = [];
+
+      Object.keys(dayData.time_ranges).forEach((id) => {
+        if (!dayData.time_ranges[id].options.disabled) {
+          minArray.push(dayData.time_ranges[id].minValue);
+          maxArray.push(dayData.time_ranges[id].maxValue);
+        }
+      });
+
+      dayData.min_time = minArray.length ? Math.min.apply(null, minArray) : null;
+      dayData.max_time = maxArray.length ? Math.max.apply(null, maxArray) : null;
     });
   }
 }

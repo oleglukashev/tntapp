@@ -39,11 +39,13 @@ export default class Table {
   }
 
   to15Min(time, round=true) {
+    if (time === null) return null;
     let arr = time.split(':');
     return arr[0]*4 + (round ? Math.round(arr[1]/15) : Math.floor(arr[1]/15)) || 0;
   }
 
   from15Min(min15) {
+    if (min15 === null) return null;
     let hours = this.to2Digits(Math.floor(min15/4));
     let mins  = this.to2Digits((min15%4)*15);
     return [hours,mins].join(':');

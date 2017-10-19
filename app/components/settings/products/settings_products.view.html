@@ -4,7 +4,9 @@
   </button>
 
   <accordion class='products_tables' close-others='true'>
-    <accordion-group ng-repeat='day in products_settings.days' is-open='products_settings.opened[$index]' ng-click="products_settings.redrawSliders()">
+    <accordion-group ng-repeat='(day, day_data) in products_settings.data'
+                     is-open='products_settings.opened[day]'
+                     ng-click="products_settings.redrawSliders()">
       <accordion-heading>
         <div class='clearfix'>
 
@@ -14,8 +16,8 @@
               <col width='34%'>
               <thead>
                 <th class="day-of-week">{{ day }}</th>
-                <th class="nine-o-clock">9:00</th>
-                <th class="twenty-four-o-clock">23:45</th>
+                <th class="nine-o-clock">{{ products_settings.Slider.from15Min(day_data.min_time) }}</th>
+                <th class="twenty-four-o-clock">{{ products_settings.Slider.from15Min(day_data.max_time) }}</th>
               </thead>
             </table>
 
@@ -26,20 +28,18 @@
       <form name='tables_form' ng-submit='products_settings.submitForm();'>
         <ul class='tables md-list no-padder no-margin'>
           <li class='table_item_li md-list-item clear'
-              ng-repeat="product in products_settings.products_by_day[day] track by $index">
-
-
+              ng-repeat='(id, time_range) in day_data.time_ranges'>
             <div class='table_item_product pull-left m-t-sm'>
-              {{ product.name }}
+              {{ time_range.name }}
             </div>
 
             <div class='table_item_slider pull-left m-t-sm'>
 
               <rzslider
-                rz-slider-model="products_settings.products_by_day[day][$index].minValue"
-                rz-slider-high="products_settings.products_by_day[day][$index].maxValue"
-                rz-slider-options="products_settings.products_by_day[day][$index].options"
-                ng-click="products_settings.sliderChanged(day, $index)"
+                rz-slider-model='time_range.minValue'
+                rz-slider-high='time_range.maxValue'
+                rz-slider-options='time_range.options'
+                ng-click='products_settings.sliderChanged(id, time_range)'
               ></rzslider>
 
             </div>
@@ -57,17 +57,22 @@
                 <md-menu-content width="4">
 
                   <md-menu-item>
-                    <md-button ng-click='products_settings.closeToday(day, $index)' ng-if="!products_settings.products_by_day[day][$index].options.disabled">Vandaag sluiten</md-button>
-                    <md-button ng-click='products_settings.closeToday(day, $index)' ng-if="products_settings.products_by_day[day][$index].options.disabled">Vandaag openen</md-button>
+                    <md-button ng-click='products_settings.closeToday(id, time_range)'
+                               ng-if='!time_range.options.disabled'>Vandaag sluiten</md-button>
+                    <md-button ng-click='products_settings.closeToday(id, time_range)'
+                               ng-if='time_range.options.disabled'>Vandaag openen</md-button>
                   </md-menu-item>
 
                   <md-menu-item>
-                    <md-button ng-click='products_settings.hidden(product.product_id)' ng-if="!products_settings.products[product.product_id].hidden">Verberg</md-button>
-                    <md-button ng-click='products_settings.hidden(product.product_id)' ng-if="products_settings.products[product.product_id].hidden">Tonen</md-button>
+                    <md-button ng-click='products_settings.hidden(time_range.product_id)'
+                               ng-if='!products_settings.products[time_range.product_id].hidden'>Verberg</md-button>
+                    <md-button ng-click='products_settings.hidden(time_range.product_id)'
+                               ng-if='products_settings.products[time_range.product_id].hidden'>Tonen</md-button>
                   </md-menu-item>
 
                   <md-menu-item>
-                    <md-button ng-click='products_settings.removeProduct(product.product_id)' class="remove-button">Product verwijderen</md-button>
+                    <md-button ng-click='products_settings.removeProduct(time_range.product_id)'
+                               class='remove-button'>Product verwijderen</md-button>
                   </md-menu-item>
 
                 </md-menu-content>
