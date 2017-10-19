@@ -4,7 +4,8 @@
   <md-select multiple
              class='pull-left'
              ng-change='controller.changeFilterPostProcess()'
-             ng-model='controller.filters'>
+             ng-model='controller.filters'
+             ng-model-options="{ trackBy: '$value.value' }">
     <md-option ng-value='item'
                ng-repeat='item in controller.filter_params'>
       {{ item.name }}: {{ item.value }}
