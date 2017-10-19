@@ -45,7 +45,7 @@ export default class AgendaCtrl {
     this.reservation_height = 30;
     this.minimal_width = this.hour_width / 2;
     this.now_left_px = this.left_margin + ((new Date()).getHours() * this.hour_width) +
-      (((new Date()).getMinutes() / 60) * this.hour_width);
+      ((((new Date()).getMinutes() / 60) * this.hour_width) - this.hour_width);
 
     this.reservation_block_width = this.hour_width * 1.5;
 
@@ -74,6 +74,7 @@ export default class AgendaCtrl {
     this.loadProducts();
 
     this.changeDateFilterPostProcess();
+    this.scrollToNow();
   }
 
   // scrolling left for now line
@@ -382,7 +383,7 @@ export default class AgendaCtrl {
   nowLineStyle(zoneId) {
     return {
       height: (this.tables_by_zone[zoneId].length * this.top_margin) + this.reservation_height,
-      left: this.now_left_px,
+      left: this.now_left_px + this.hour_width,
     };
   }
 
