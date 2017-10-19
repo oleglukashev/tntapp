@@ -6,6 +6,7 @@ export default class NewReservation {
   validForm(reservation, phoneNumberIsRequired) {
     const errors = [];
     let prefix = '';
+    const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     reservation.reservation_parts.forEach((part, index) => {
       if (reservation.reservation_parts.length > 1) {
@@ -20,11 +21,16 @@ export default class NewReservation {
 
     if (!reservation.name) {
       errors.push('naam is verplicht');
-    } else if (reservation.name.length < 2) {
+    } else if (reservation.name.split(' ').length < 2) {
       errors.push('naam niet vol');
     }
 
-    if (!reservation.mail) errors.push('email adres is verplicht');
+    if (!reservation.mail) {
+      errors.push('email adres is verplicht');
+    } else if (!emailRe.test(reservation.mail)) {
+      errors.push('email adres niet vol');
+    }
+
     if (phoneNumberIsRequired && !reservation.primary_phone_number) errors.push('telefoonnummer is verplciht');
 
     return errors;
