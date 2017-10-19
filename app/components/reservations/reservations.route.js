@@ -4,8 +4,11 @@ export default function routes($stateProvider) {
   $stateProvider
     .state('app.reservations', {
       url: '/reservations',
+      params: {
+        productId: 0,
+      },
       template: require('./reservations.view.html'),
       controller: 'ReservationsCtrl',
-      controllerAs: 'reservations'
-    })
+      controllerAs: 'reservations',
+    });
 }

@@ -1,5 +1,5 @@
 export default class ChartsCtrl {
-  constructor(Charts, $scope, $compile, $timeout) {
+  constructor(Charts, $scope, $compile, $timeout, $state) {
     'ngInject';
 
     this.charts = {};
@@ -7,6 +7,7 @@ export default class ChartsCtrl {
     this.$timeout = $timeout;
     this.$compile = $compile;
     this.$scope = $scope;
+    this.$state = $state;
 
     $scope.$on('reservationsLoaded', (event, allReservations) => {
       this.charts.graphs = Charts.get(allReservations);
@@ -15,6 +16,12 @@ export default class ChartsCtrl {
 
     $scope.$on('resizeGraph', () => {
       this.resizeGraph();
+    });
+  }
+
+  showReservations(productId) {
+    this.$state.go('app.reservations', {
+      productId,
     });
   }
 

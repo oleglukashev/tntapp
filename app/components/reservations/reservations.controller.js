@@ -1,9 +1,11 @@
 import angular from 'angular';
 
 export default class ReservationsCtrl {
-  constructor(User, Table, Reservation, ReservationPart, ReservationStatusMenu, ReservationStatus,
+  constructor(
+    User, Table, Reservation, ReservationPart, ReservationStatusMenu, ReservationStatus,
     PageFilterFactory, moment, filterFilter, $mdSidenav, $scope, $rootScope, $modal, $window,
-    DashboardReservationsItemFactory, Product, Zone) {
+    DashboardReservationsItemFactory, Product, Zone, $state,
+  ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -26,6 +28,7 @@ export default class ReservationsCtrl {
 
     this.totalNumberOfReservations = 0;
     this.totalNumberOfPersons = 0;
+    this.paramProduct = $state.params.productId;
 
     this.opened = false;
     this.$window = $window;
@@ -86,35 +89,46 @@ export default class ReservationsCtrl {
 
   loadReservations() {
     this.Reservation
-      .getAll(this.current_company_id).then(
-        (reservations) => {
-          this.is_loaded = true;
-          this.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
-          this.setData();
-          this.totalNumberOfReservations = this.reservations.length;
-          this.calculateTotalNumberOfPersons();
-        });
+      .getAll(this.current_company_id).then((reservations) => {
+        this.is_loaded = true;
+        this.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
+        this.setData();
+        this.totalNumberOfReservations = this.reservations.length;
+        this.calculateTotalNumberOfPersons();
+      });
   }
 
   loadProducts() {
-    this.Product.getAll(this.current_company_id).then(
-      (products) => {
-        this.products = products;
-        this.products.forEach((product) => {
-          this.filter_params.push({
-            name: 'product',
-            value: product.name,
-          });
+    this.Product.getAll(this.current_company_id).then((products) => {
+      this.products = products;
+      this.products.forEach((product) => {
+        this.filter_params.push({
+          name: 'product',
+          value: product.name,
         });
       });
+
+      this.filterURIParams();
+    });
   }
 
   loadTables() {
     this.Table.getAll(this.current_company_id)
-      .then(
-        (result) => {
-          this.tables = result;
-        });
+      .then((result) => {
+        this.tables = result;
+      });
+  }
+
+  filterURIParams() {
+    if (this.paramProduct) {
+      const product = this.filterFilter(this.products, { id: this.paramProduct })[0];
+      if (product) {
+        this.filters = [{
+          name: 'product',
+          value: product.name,
+        }];
+      }
+    }
   }
 
   calculateTotalNumberOfPersons() {
