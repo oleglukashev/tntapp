@@ -93,7 +93,7 @@ export default class NewReservationCtrl {
       company_name: this.reservation.company_name,
       reservation_pdf: this.reservation.pdfFile,
       customer: {
-        last_name: name.split(' ').splice(1).join(' '),
+        last_name: name.split(' ')[1],
         first_name: name.split(' ')[0],
         primary_phone_number: this.reservation.primary_phone_number,
         mail: this.reservation.mail,

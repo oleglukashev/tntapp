@@ -19,7 +19,7 @@
                         class='md-2-line md-no-proxy b-b-none m-l-xxl'>
             <div class='md-avatar'>
               <div class='grey-100 img-circle customer_avatar' ng-hide='customer.photoURI'></div>
-              <img ng-src='customer.photoURI' ng-show='customer.photoURI' class='customer_avatar' />
+              <img ng-src='{{ customer.photoURI }}' ng-show='customer.photoURI' class='customer_avatar' />
             </div>
             <div class='md-list-item-text'>
               <h3>{{ customer.last_name }} {{ customer.first_name }}</h3>

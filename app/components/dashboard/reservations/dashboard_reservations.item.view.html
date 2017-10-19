@@ -18,7 +18,7 @@
   <div class='md-list-item-content'
        ng-click='user.openCustomerMenu(item.reservation.customer.id, item.id)'
        ng-controller='UserMenuCtrl as user'>
-    <h3 class='text-md'>{{ item.last_name }} {{ item.first_name }}</h3>
+    <h3 class='text-md'>{{ item.name }}</h3>
     <div>
       <i class='mdi mdi-account-multiple'></i>
       <span class='font-thin m-r-xs'>{{ item.number_of_persons }}x</span>

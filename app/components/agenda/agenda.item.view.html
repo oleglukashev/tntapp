@@ -8,27 +8,12 @@
     </div>
   </div>
 </td>
+<td ng-class='{"b-t-none p-t-none": hideIcon}'><i class='mdi mdi-clock'></i>{{ item.date_time }}</td>
+<td ng-class='{"b-t-none p-t-none": hideIcon}'>{{ item.product_name }}</td>
+<td ng-class='{"b-t-none p-t-none": hideIcon}'>{{ item.name }}</td>
+<td ng-class='{"b-t-none p-t-none": hideIcon}'><i class='mdi mdi-account-multiple'></i>{{ item.number_of_persons }}x</td>
 <td ng-class='{"b-t-none p-t-none": hideIcon}'>
-  <i class='mdi mdi-clock'></i>
-  {{ item.date_time }}
-</td>
-<td ng-class='{"b-t-none p-t-none": hideIcon}'>
-  {{ item.product_name }}
-</td>
-<td ng-class='{"b-t-none p-t-none": hideIcon}'>
-  {{ item.last_name }}
-  <br />
-  {{ item.first_name }}
-</td>
-<td ng-class='{"b-t-none p-t-none": hideIcon}'>
-  <i class='mdi mdi-account-multiple'></i>
-  {{ item.number_of_persons }}x
-</td>
-<td ng-class='{"b-t-none p-t-none": hideIcon}'>
-  <span ng-show='item.table_ids'>
-    <img class='table_icon' src='public/images/table.svg' />
-    {{ item.table_ids }}
-  </span>
+  <span ng-show='item.table_ids'><img class='table_icon' src='public/images/table.svg' />{{ item.table_ids }}</span>
 </td>
 <td ng-class='{"b-t-none p-t-none": hideIcon}'>{{ item.notes }}</td>
 <td ng-class='{"b-t-none p-t-none": hideIcon}'>

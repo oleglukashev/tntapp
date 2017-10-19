@@ -18,7 +18,12 @@ export default class NewReservation {
       if (!part.product) errors.push(`${prefix}product is verplicht`);
     });
 
-    if (!reservation.name) errors.push('naam is verplicht');
+    if (!reservation.name) {
+      errors.push('naam is verplicht');
+    } else if (reservation.name.length < 2) {
+      errors.push('naam niet vol');
+    }
+
     if (!reservation.mail) errors.push('email adres is verplicht');
     if (phoneNumberIsRequired && !reservation.primary_phone_number) errors.push('telefoonnummer is verplciht');
 
