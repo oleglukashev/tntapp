@@ -1,10 +1,15 @@
 export default class ReservationsAnswerCtrl {
-  constructor(User, ReservationStatus, reservation, $modalInstance, $window) {
+  constructor(
+    User, ReservationStatus, reservation, $modalInstance,
+    $rootScope, $window, isCancellingReservation,
+  ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.$modalInstance = $modalInstance;
     this.reservation = reservation;
+    this.isCancellingReservation = isCancellingReservation;
+    this.$rootScope = $rootScope;
     this.$window = $window;
     this.ReservationStatus = ReservationStatus;
   }
@@ -13,16 +18,16 @@ export default class ReservationsAnswerCtrl {
     this.$modalInstance.dismiss('cancel');
   }
 
-  cancelWithoutMail() {
+  cancelReservation() {
     this.is_submitting = true;
     this.closeModal();
 
     return this.ReservationStatus
-      .changeStatus(this.current_company_id, this.reservation, 'cancelled').then(
-        () => {
-          this.is_submitting = false;
-        }, () => {
-        });
+      .changeStatus(this.current_company_id, this.reservation, 'cancelled').then(() => {
+        this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
+        this.is_submitting = false;
+      }, () => {
+      });
   }
 
   submitForm(isValid) {
@@ -35,7 +40,11 @@ export default class ReservationsAnswerCtrl {
     return this.ReservationStatus
       .sendMail(this.current_company_id, this.reservation, this.form_data).then(() => {
         this.is_submitting = false;
-        this.closeModal();
+        if (this.isCancellingReservation) {
+          this.cancelReservation();
+        } else {
+          this.closeModal();
+        }
       }, () => {});
   }
 }

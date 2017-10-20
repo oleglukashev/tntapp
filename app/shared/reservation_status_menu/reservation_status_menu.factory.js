@@ -10,11 +10,17 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
     instance.status_icon = AppConstants.reservationStatusClasses;
 
     instance.changeStatus = (currentReservation, status) => {
+      if (status === 'cancelled') {
+        instance.answer(currentReservation, true);
+        return;
+      }
+
       ReservationStatus
         .changeStatus(instance.current_company_id, currentReservation, status).then((reservation) => {
           if (typeof instance.action_required !== 'undefined') {
             const reservations = instance.all_reservations.action_required;
             const actionRequiredReservation = filterFilter(reservations, { id: reservation.id })[0];
+
 
             if (reservation.status === 'request') {
               if (!actionRequiredReservation) reservations.push(reservation);
@@ -29,13 +35,14 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
         }, () => {});
     };
 
-    instance.answer = (reservation) => {
+    instance.answer = (reservation, isCancellingReservation) => {
       const modalInstance = $modal.open({
         templateUrl: 'reservation_answer.view.html',
         controller: 'ReservationAnswerCtrl as antwoord',
         size: 'md',
         resolve: {
           reservation: () => reservation,
+          isCancellingReservation: () => isCancellingReservation,
         },
       });
 
