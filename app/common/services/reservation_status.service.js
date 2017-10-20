@@ -9,11 +9,6 @@ export default class ReservationStatus {
     this.moment = moment;
     this.AppConstants = AppConstants;
     this.Upload = Upload;
-    this.status_classes = this.AppConstants.reservationStatusClasses;
-    this.dutch_statuses = this.AppConstants.reservationDutchStatuses;
-    this.right_menu = this.AppConstants.reservationMenuStatuses;
-    this.right_menu.delayed = this.right_menu.confirmed;
-    this.right_menu.expected = this.right_menu.present;
   }
 
   edit(companyId, reservationId, data) {
@@ -28,44 +23,20 @@ export default class ReservationStatus {
     ).then(result => result.data);
   }
 
-  updatePresent(companyId, reservationId, present = true) {
-    const deferred = this.$q.defer();
-    const presentUrl = (present ? 'set_present' : 'unset_present');
-
-    if (!companyId) {
-      return deferred.promise;
-    }
-
-    return this.$http.patch(`${API_URL}/company/${companyId}/reservation/${presentUrl}/${reservationId}`)
-      .then(result => result.data);
-  }
-
   changeStatus(companyId, reservation, status, mail) {
-    let dutchStatus = null;
     const deferred = this.$q.defer();
 
     if (!companyId) {
       return deferred.promise;
     }
 
-    Object.keys(this.dutch_statuses).forEach((du) => {
-      if (this.dutch_statuses[du] === status) {
-        dutchStatus = du;
-      }
-    });
-
-    let data = {
-      status: dutchStatus,
-    };
-
-    if (mail) {
-      data = Object.assign(data, mail);
-    }
+    let data = { status };
+    if (mail) data = Object.assign(data, mail);
 
     return this.edit(companyId, reservation.id, data)
-      .then((response) => {
+      .then((result) => {
         const currentReservation = reservation;
-        currentReservation.status = this.dutch_statuses[response.status];
+        currentReservation.status = result.status;
         return currentReservation;
       },
       (error) => {
@@ -87,35 +58,19 @@ export default class ReservationStatus {
         });
   }
 
-  translateAndcheckStatusForDelay(reservations) {
-    for (let reservation of reservations) {
-      if (this.dutch_statuses[reservation.status]) {
-        reservation.status = this.dutch_statuses[reservation.status]; // translate to eng
-      }
-    }
-
-    return reservations;
-  }
-
   getIcon(part, reservation) {
     let status = reservation.status;
     const now = this.moment().valueOf();
     const reservationTime = this.moment(part.date_time).valueOf();
     const diffMins = this.moment(reservationTime).diff(this.moment(now), 'minutes');
 
-    if (reservation.is_present) {
-      status = 'present';
-    }
-
-    if (diffMins >= -this.AppConstants.late_minutes &&
+    if (reservation.status === 'confirmed' &&
+      diffMins >= -this.AppConstants.late_minutes &&
       diffMins <= this.AppConstants.late_minutes + 30) {
       status = 'expected';
-    } else if (diffMins <= -this.AppConstants.late_minutes) {
-      status = 'delayed';
     }
 
-    return this.AppConstants.reservationPresentClasses[status] ||
-           this.AppConstants.reservationStatusClasses[status];
+    return this.AppConstants.reservationStatusClasses[status];
   }
 
   getIconColor(part, reservation) {
@@ -129,14 +84,5 @@ export default class ReservationStatus {
     };
 
     return colors[this.getIcon(part, reservation)];
-  }
-
-  setPresent(companyId, reservation, isPresent) {
-    return this.updatePresent(companyId, reservation.id, isPresent)
-      .then(() => {
-        const currentReservation = reservation;
-        currentReservation.is_present = !reservation.is_present;
-        this.$rootScope.$broadcast('ReservationStatus.change_is_present', currentReservation);
-      });
   }
 }

@@ -1,7 +1,6 @@
 class SearchCtrl {
   constructor(Table, User, AgendaItemFactory, Customer, Product, ReservationPart,
-    ReservationStatus, PageFilterFactory, ReservationStatusMenu, moment, $state,
-    $rootScope, $stateParams) {
+    PageFilterFactory, ReservationStatusMenu, moment, $state, $rootScope, $stateParams) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -13,7 +12,6 @@ class SearchCtrl {
     this.$stateParams = $stateParams;
     this.Customer = Customer;
     this.ReservationPart = ReservationPart;
-    this.ReservationStatus = ReservationStatus;
     this.tables = [];
     this.products = [];
     this.data = {};

@@ -46,14 +46,12 @@ class SearchHeaderCtrl {
 
   selectedItemChange(item) {
     if (!item) return;
-    let reservations = [];
 
     this
       .Customer
       .searchReservationsByCustomerId(this.current_company_id, item.value)
-      .then((result) => {
-        reservations = this.ReservationStatus.translateAndcheckStatusForDelay(result);
-        this.$state.go('app.search', { reservations: reservations }, { reload: true });
+      .then((reservations) => {
+        this.$state.go('app.search', { reservations }, { reload: true });
       });
   }
 

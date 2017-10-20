@@ -1,4 +1,4 @@
-export default function DashboardReservationsItemFactory(AppConstants) {
+export default function DashboardReservationsItemFactory(AppConstants, ReservationStatus) {
   'ngInject';
 
   return (that) => {
@@ -11,9 +11,9 @@ export default function DashboardReservationsItemFactory(AppConstants) {
 
       return {
         id: part.id,
-        dutch_status: AppConstants.reservationStatuses[reservation.status],
-        icon_color: instance.ReservationStatus.getIconColor(part, reservation),
-        icon: instance.ReservationStatus.getIcon(part, reservation),
+        icon_color: ReservationStatus.getIconColor(part, reservation),
+        dutch_status: AppConstants.reservationDutchStatuses[reservation.status],
+        icon: ReservationStatus.getIcon(part, reservation),
         product_name: part.product.name,
         date_time: instance.moment(part.date_time).format('DD.MM.YYYY HH:mm'),
         number_of_persons: part.number_of_persons,

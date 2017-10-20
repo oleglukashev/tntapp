@@ -7,110 +7,27 @@ export default angular.module('app.constants', [])
     appName: 'TNT',
     late_minutes: 15,
     themes: ['Default', 'Aqua', 'Lego', 'Chocolate'],
-    reservationStatuses: {
-      cancelled: 'Geannuleerd',
+    reservationStatuses: [
+      'confirmed',
+      'request',
+      'present',
+      'delayed',
+      'cancelled',
+    ],
+    reservationDutchStatuses: {
       confirmed: 'Bevestigd',
       request: 'Aanvraag',
-    },
-    reservationDutchStatuses: {
-      Geannuleerd: 'cancelled',
-      Bevestigd: 'confirmed',
-      Aanvraag: 'request',
-    },
-    reservationMenuStatuses: {
-      reservation: [
-        {
-          disabled: true,
-          name: 'Aanvraag',
-          status: 'request',
-          class: 'mdi-star-outline',
-        },
-        {
-          disabled: true,
-          name: 'Bevestig',
-          status: 'confirmed',
-          class: 'mdi-checkbox-blank-circle-outline',
-        },
-        {
-          disabled: false,
-          name: 'Annuleer',
-          status: 'cancelled',
-          class: 'mdi-close-circle',
-        },
-      ],
-
-      confirmed: [
-        {
-          disabled: false,
-          name: 'Aanvraag',
-          status: 'request',
-          class: 'mdi-star-outline',
-        },
-        {
-          disabled: true,
-          name: 'Bevestig',
-          status: 'confirmed',
-          class: 'mdi-checkbox-blank-circle-outline',
-        },
-        {
-          disabled: false,
-          name: 'Annuleer',
-          status: 'cancelled',
-          class: 'mdi-close-circle',
-        },
-      ],
-
-      cancelled: [
-        {
-          disabled: false,
-          name: 'Aanvraag',
-          status: 'request',
-          class: 'mdi-star-outline',
-        },
-        {
-          disabled: false,
-          name: 'Bevestig',
-          status: 'confirmed',
-          class: 'mdi-checkbox-blank-circle-outline',
-        },
-        {
-          disabled: true,
-          name: 'Annuleer',
-          status: 'cancelled',
-          class: 'mdi-close-circle',
-        },
-      ],
-
-      request: [
-        {
-          disabled: true,
-          name: 'Aanvraag',
-          status: 'request',
-          class: 'mdi-star-outline',
-        },
-        {
-          disabled: false,
-          name: 'Bevestig',
-          status: 'confirmed',
-          class: 'mdi-checkbox-blank-circle-outline',
-        },
-        {
-          disabled: false,
-          name: 'Annuleer',
-          status: 'cancelled',
-          class: 'mdi-close-circle',
-        },
-      ],
-    },
-    reservationPresentClasses: {
-      expected: 'mdi-clock',
-      present: 'mdi-check',
-      delayed: 'mdi-exclamation',
+      present: 'Aanwezig',
+      delayed: 'Niet aanwezig',
+      cancelled: 'Geannuleerd',
     },
     reservationStatusClasses: {
       confirmed: 'mdi-checkbox-blank-circle-outline',
       cancelled: 'mdi-close',
       request: 'mdi-star-outline',
+      expected: 'mdi-clock',
+      present: 'mdi-check',
+      delayed: 'mdi-exclamation',
     },
     letterOfWeek: ['Z', 'M', 'D', 'W', 'D', 'V', 'Z'],
     dayOfWeek: ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'],

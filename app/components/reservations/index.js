@@ -8,9 +8,10 @@ import reservationStatusMenuFactory from '../../shared/reservation_status_menu/r
 export default angular.module('app.reservations', [])
   .config(routing)
   .controller('ReservationsCtrl', controller)
-  .factory('DashboardReservationsItemFactory', itemFactroy, ['AppConstants'])
+  .factory('DashboardReservationsItemFactory', itemFactroy,
+    ['AppConstants', 'ReservationStatusMenu'])
   .factory('ReservationStatusMenu', reservationStatusMenuFactory,
     ['ReservationStatus', 'filterFilter', 'moment', '$modal'])
   .factory('PageFilterFactory', pageFilterFactory,
-    ['Reservation', 'Customer', '$modal', 'moment'])
+    ['AppConstants', 'Reservation', 'Customer', '$modal', '$filter', 'moment', 'filterFilter'])
   .name;

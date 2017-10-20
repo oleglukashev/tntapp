@@ -156,18 +156,6 @@ export default class Reservation {
     }).then(result => result.data);
   }
 
-  updateStatus(companyId, reservationId, data) {
-    if (!companyId) {
-      return this.$q.defer().promise;
-    }
-
-    return this.$http({
-      url: `${API_URL}/company/${companyId}/reservation/${reservationId}/update_status`,
-      method: 'PATCH',
-      data,
-    }).then(result => result.data);
-  }
-
   getProductNameByProductId(products, productId) {
     const product = this.filterFilter(products, { id: productId })[0];
     return product ? product.name : null;
