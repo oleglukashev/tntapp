@@ -91,7 +91,7 @@ export default class ReservationsCtrl {
     this.Reservation
       .getAll(this.current_company_id).then((reservations) => {
         this.is_loaded = true;
-        this.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
+        this.reservations = reservations;
         this.setData();
         this.totalNumberOfReservations = this.reservations.length;
         this.calculateTotalNumberOfPersons();

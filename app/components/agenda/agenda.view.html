@@ -110,8 +110,7 @@
                        drag-channel='move'>
                     <i class='mdi i-20'
                        ng-class='agenda.ReservationStatus.getIcon(part, part.reservation)'
-                       ng-click='agenda.setPresent(part.reservation)'
-                       title='{{ agenda.AppConstants.reservationStatuses[part.reservation.status] | capitalize }}'
+                       title='{{ agenda.AppConstants.reservationDutchStatuses[part.reservation.status] }}'
                     ></i>
                     <a ng-click='user.openCustomerMenu(part.customer.id, partId)' ng-controller='UserMenuCtrl as user'>
                       {{ part.number_of_persons }}

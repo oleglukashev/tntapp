@@ -52,10 +52,10 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     instance.filters = [];
     instance.sort = instance.sort_params[0];
 
-    Object.keys(AppConstants.reservationDutchStatuses).forEach((item) => {
+    Object.keys(AppConstants.reservationStatuses).forEach((item) => {
       const filterItem = {
         name: 'status',
-        value: item,
+        value: AppConstants.reservationDutchStatuses[item],
       };
 
       instance.filter_params.push(filterItem);
@@ -74,7 +74,6 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     instance.changeView = (view) => {
       if (instance.view_type !== view) {
         instance.view_type = view;
-        instance.loadReservations();
         instance.scrollToNow();
       }
     };

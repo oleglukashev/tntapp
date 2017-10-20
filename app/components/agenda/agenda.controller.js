@@ -1,8 +1,8 @@
 export default class AgendaCtrl {
   constructor(
     User, Settings, Zone, Table, TimeRange, Product, AgendaItemFactory, PageFilterFactory,
-    ReservationStatusMenu, Reservation, ReservationStatus, ReservationPart, filterFilter,
-    AppConstants, $scope, $rootScope, $modal, moment, $timeout) {
+    ReservationStatusMenu, Reservation, ReservationStatus, ReservationPart, filterFilter, AppConstants, $scope,
+    $rootScope, $modal, moment, $timeout) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -182,6 +182,7 @@ export default class AgendaCtrl {
               .then(() => {
                 part.width = (difference * this.hour_width) / 4;
                 this.dragEnd();
+                this.setData();
               });
           }
         } else if (this.channel === 'move') {
@@ -212,6 +213,7 @@ export default class AgendaCtrl {
               if (!tables[targetTableId]) tables[targetTableId] = {};
               delete tables[tableId][reservationPartId];
               tables[targetTableId][reservationPartId] = part;
+              this.setData();
             });
         }
       }
@@ -310,7 +312,7 @@ export default class AgendaCtrl {
   loadReservations() {
     this.Reservation.getAll(this.current_company_id, this.moment(this.date_filter).format('YYYY-MM-DD'))
       .then((result) => {
-        this.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(result);
+        this.reservations = result;
 
         if (this.tables) {
           this.setGraphData();

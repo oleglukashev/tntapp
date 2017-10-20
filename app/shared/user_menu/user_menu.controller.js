@@ -1,13 +1,12 @@
 export default class UserMenuCtrl {
   constructor(
-    User, Reservation, ReservationStatus, ReservationPart, CustomerNote, CustomerPreference,
+    User, Reservation, ReservationPart, CustomerNote, CustomerPreference,
     CustomerAllergies, Customer, moment, $rootScope, $mdSidenav, $modal) {
     'ngInject';
 
     this.currentCompanyId = User.getCompanyId();
 
     this.Reservation = Reservation;
-    this.ReservationStatus = ReservationStatus;
     this.ReservationPart = ReservationPart;
     this.CustomerNote = CustomerNote;
     this.CustomerPreference = CustomerPreference;
@@ -103,7 +102,7 @@ export default class UserMenuCtrl {
   loadCustomerReservations(customerId, reservationPartId) {
     this.Customer.searchReservationsByCustomerId(this.currentCompanyId, customerId)
       .then((reservations) => {
-        this.$rootScope.reservations = this.ReservationStatus.translateAndcheckStatusForDelay(reservations);
+        this.$rootScope.reservations = reservations;
 
         reservations.forEach((reservation) => {
           reservation.reservation_parts.forEach((part) => {

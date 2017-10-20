@@ -10,7 +10,10 @@ import reservationStatusMenuFactory from '../../shared/reservation_status_menu/r
 export default angular.module('app.search', [uirouter])
   .config(routing)
   .controller('SearchCtrl', controller)
-  .factory('AgendaItemFactory', itemFactory, ['AppConstants'])
-  .factory('ReservationStatusMenu', reservationStatusMenuFactory)
-  .factory('PageFilterFactory', pageFilterFactory)
+  .factory('AgendaItemFactory', itemFactory,
+    ['AppConstants', 'ReservationStatus'])
+  .factory('ReservationStatusMenu', reservationStatusMenuFactory,
+    ['ReservationStatus', 'filterFilter', 'moment', '$modal'])
+  .factory('PageFilterFactory', pageFilterFactory,
+    ['AppConstants', 'Reservation', 'Customer', '$modal', '$filter', 'moment', 'filterFilter'])
   .name;

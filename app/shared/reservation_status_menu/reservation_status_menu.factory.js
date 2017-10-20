@@ -1,15 +1,19 @@
-export default function reservationStatusMenu(ReservationStatus, filterFilter, moment, $modal) {
+export default function reservationStatusMenu(AppConstants, ReservationStatus, filterFilter,
+  moment, $modal) {
   'ngInject';
 
   return (that) => {
     const instance = that;
 
+    instance.statuses = AppConstants.reservationStatuses;
+    instance.dutch_statuses = AppConstants.reservationDutchStatuses;
+    instance.status_icon = AppConstants.reservationStatusClasses;
+
     instance.changeStatus = (currentReservation, status) => {
       ReservationStatus
         .changeStatus(instance.current_company_id, currentReservation, status).then((reservation) => {
           if (typeof instance.action_required !== 'undefined') {
-            const reservations = ReservationStatus
-              .translateAndcheckStatusForDelay(instance.all_reservations.action_required);
+            const reservations = instance.all_reservations.action_required;
             const actionRequiredReservation = filterFilter(reservations, { id: reservation.id })[0];
 
             if (reservation.status === 'request') {
@@ -37,17 +41,6 @@ export default function reservationStatusMenu(ReservationStatus, filterFilter, m
 
       modalInstance.result.then(() => {
       }, () => {});
-    };
-
-    instance.setPresent = (reservation) => {
-      instance.ReservationStatus.setPresent(
-        instance.current_company_id,
-        reservation,
-        !reservation.is_present,
-      ).then(() => {
-        if (instance.setData) instance.setData();
-        if (instance.setGraphData) instance.setGraphData();
-      });
     };
 
     instance.editPart = (part) => {

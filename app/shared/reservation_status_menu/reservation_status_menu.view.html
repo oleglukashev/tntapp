@@ -9,29 +9,14 @@
     <i class='mdi mdi-dots-vertical i-24'></i>
   </button>
   <md-menu-content width='4' class='reservation_menu'>
-    <md-menu-item ng-repeat='menu in controller.ReservationStatus.right_menu[item.reservation.status]'>
-      <md-button ng-click='controller.changeStatus(item.reservation, menu.status, callback)'
-                 ng-disabled='menu.disabled'>
+    <md-menu-item ng-repeat='status in controller.statuses'>
+      <md-button ng-click='controller.changeStatus(item.reservation, status, callback)'
+                 ng-disabled='item.reservation.status == status'>
         <md-icon>
-          <i class='mdi mdi-with-button-padding' ng-class='menu.class'></i>
+          <i class='mdi mdi-with-button-padding'
+             ng-class='controller.status_icon[status]'></i>
         </md-icon>
-        <span>{{ menu.name }}</span>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item ng-if='!item.reservation.is_present'>
-      <md-button ng-click='controller.setPresent(item.reservation)'>
-        <md-icon>
-          <i class='mdi mdi-check' />
-        </md-icon>
-        <span>Aanwezig</span>
-      </md-button>
-    </md-menu-item>
-    <md-menu-item ng-if='item.reservation.is_present'>
-      <md-button ng-click='controller.setPresent(item.reservation)'>
-        <md-icon>
-          <i class='mdi mdi-exclamation' />
-        </md-icon>
-        <span>Niet aanwezig</span>
+        <span>{{ controller.dutch_statuses[status] }}</span>
       </md-button>
     </md-menu-item>
     <md-menu-divider role='separator'></md-menu-divider>

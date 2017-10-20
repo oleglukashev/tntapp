@@ -1,14 +1,13 @@
 export default class DashboardReservationsCtrl {
   constructor(
-    User, Reservation, ReservationStatus, DashboardReservationsItemFactory,
-    ReservationStatusMenu, ReservationPart, Table, filterFilter, moment, $scope,
-    $rootScope, $mdSidenav, $modal, $window,
+    User, Reservation, DashboardReservationsItemFactory, ReservationStatusMenu,
+    ReservationPart, Table, filterFilter, moment, $scope, $rootScope, $mdSidenav,
+    $modal, $window,
   ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.Reservation = Reservation;
-    this.ReservationStatus = ReservationStatus;
     this.ReservationPart = ReservationPart;
     this.Table = Table;
     this.filterFilter = filterFilter;
@@ -24,10 +23,6 @@ export default class DashboardReservationsCtrl {
 
     $scope.$on('NewReservationCtrl.reload_reservations', () => {
       this.loadReservations();
-    });
-
-    $scope.$on('ReservationStatus.change_is_present', (event, reservation) => {
-      this.setPresentForDoubleReservation(reservation);
     });
 
     this.loadReservations();
@@ -55,7 +50,7 @@ export default class DashboardReservationsCtrl {
   setData() {
     ['action_required', 'group_this_week', 'today'].forEach((item) => {
       const result = [];
-      const tempData = this.ReservationStatus.translateAndcheckStatusForDelay(this.all_reservations[item]);
+      const tempData = this.all_reservations[item];
       tempData.forEach((reservation) => {
         reservation.reservation_parts.forEach((part) => {
           result.push(this.rowPart(part, reservation));
@@ -76,16 +71,5 @@ export default class DashboardReservationsCtrl {
 
   hasReservations() {
     return this.action_required.length || this.group_this_week.length || this.today.length;
-  }
-
-  setPresentForDoubleReservation(currentReservation) {
-    for (let partOfReservations of [this.action_required, this.group_this_week, this.today]) {
-      for (let reservation of partOfReservations) {
-        if (reservation.id === currentReservation.id &&
-          reservation.is_present !== currentReservation.is_present) {
-          reservation.is_present = currentReservation.is_present;
-        }
-      }
-    }
   }
 }
