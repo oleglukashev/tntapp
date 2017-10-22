@@ -76,35 +76,20 @@ export default class UserMenuCtrl {
   }
 
   openCustomerMenu(customerId, reservationPartId) {
-    this.CustomerPreference.getAll(this.currentCompanyId, customerId)
-      .then((preferences) => {
-        this.$rootScope.customer_preferences = preferences;
-      });
-
-    this.CustomerNote.getAll(this.currentCompanyId, customerId)
-      .then((notes) => {
-        this.$rootScope.customer_notes = notes;
-      });
-
-    this.CustomerAllergies.getAll(this.currentCompanyId, customerId)
-      .then((allergies) => {
-        this.$rootScope.customer_allergies = allergies;
-      });
-
-    this.Customer.findById(this.currentCompanyId, customerId).then((customer) => {
-      this.$rootScope.customer = customer;
-    });
-
     this.loadCustomerReservations(customerId, reservationPartId);
     this.$mdSidenav('right').open();
   }
 
   loadCustomerReservations(customerId, reservationPartId) {
     this.Customer.searchReservationsByCustomerId(this.currentCompanyId, customerId)
-      .then((reservations) => {
-        this.$rootScope.reservations = reservations;
+      .then((response) => {
+        this.$rootScope.reservations = response.reservations;
+        this.$rootScope.customer_notes = response.notes;
+        this.$rootScope.customer_allergies = response.allergies;
+        this.$rootScope.customer_preferences = response.preferences;
+        this.$rootScope.customer = response.customer;
 
-        reservations.forEach((reservation) => {
+        response.reservations.forEach((reservation) => {
           reservation.reservation_parts.forEach((part) => {
             if (part.id === reservationPartId) {
               this.$rootScope.current_part = part;

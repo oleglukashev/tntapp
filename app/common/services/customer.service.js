@@ -21,21 +21,6 @@ export default class Customer {
     });
   }
 
-  findById(company_id, id) {
-    let deferred = this.$q.defer();
-
-    if (!company_id) {
-      return deferred.promise;
-    }
-
-    return this.$http({
-      url: API_URL + '/company/' + company_id + '/customer/' + id,
-      method: 'GET',
-    }).then((result) => {
-      return result.data;
-    });
-  }
-
   getAllForSearch(company_id) {
     let deferred = this.$q.defer();
 
