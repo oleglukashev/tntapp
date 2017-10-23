@@ -52,7 +52,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     instance.filters = [];
     instance.sort = instance.sort_params[0];
 
-    Object.keys(AppConstants.reservationStatuses).forEach((item) => {
+    Object.values(AppConstants.reservationStatuses).forEach((item) => {
       const filterItem = {
         name: 'status',
         value: AppConstants.reservationDutchStatuses[item],
