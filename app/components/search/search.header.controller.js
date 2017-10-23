@@ -50,8 +50,8 @@ class SearchHeaderCtrl {
     this
       .Customer
       .searchReservationsByCustomerId(this.current_company_id, item.value)
-      .then((reservations) => {
-        this.$state.go('app.search', { reservations }, { reload: true });
+      .then((result) => {
+        this.$state.go('app.search', { reservations: result.reservations }, { reload: true });
       });
   }
 

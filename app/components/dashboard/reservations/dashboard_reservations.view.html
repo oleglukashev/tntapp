@@ -40,6 +40,7 @@
     <button ng-click='dash.openReservation()'
             class='panel-add-button md-btn md-fab m-b'
             md-ink-ripple>
+      <md-tooltip>Nieuwe reservering?</md-tooltip>
       <i class='mdi mdi-plus i-24'></i>
     </button>
 
@@ -64,6 +65,7 @@
 
   <div ng-show='reservations.reservationsLoaded && !reservations.hasReservations();'>
     <button ng-click='dash.openReservation();' md-ink-ripple class='panel-add-button md-btn md-fab m-b'>
+      <md-tooltip>Nieuwe reservering?</md-tooltip>
       <i class='mdi mdi-plus i-24'></i>
     </button>
     <div class='panel'>
