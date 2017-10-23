@@ -25,7 +25,7 @@
     </md-tabs>
   </div>
   <ul class='nav navbar-nav hidden-xs navbar-right'>
-    <li class='dropdown' dropdown>
+    <li class='dropdown' dropdown ng-click='header.hideRightSidebar()'>
       <div class='header-account-menu pull-right m-l-sm'>
         <div class='dropdown-toggle clearfix' dropdown-toggle>
           <div class='header-account-menu__info pull-left hidden-sm hidden-md m-l-sm'>
@@ -34,7 +34,7 @@
               <p>{{ header.current_company.name }}</p>
             </div>
           </div>
-          <b class='pull-right caret m-l-sm m-t' ng-click='header.hideRightSidebar()'></b>
+          <b class='pull-right caret m-l-sm m-t'></b>
         </div>
 
         <!-- dropdown -->
