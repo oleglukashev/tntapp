@@ -1,8 +1,8 @@
 <div class='md-avatar'>
   <div ng-if='!hideIcon'
        ng-class='item.icon_color'
-       class='md-list-item-left img-circle'
-       title='{{ item.dutch_status }}'>
+       class='md-list-item-left img-circle'>
+    <md-tooltip>{{ item.dutch_status }}</md-tooltip>
     <div class='pull-left m-l-sm'>
       <i ng-class='item.icon' class='mdi i-20'></i>
     </div>
