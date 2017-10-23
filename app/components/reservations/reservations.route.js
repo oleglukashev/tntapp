@@ -5,7 +5,7 @@ export default function routes($stateProvider) {
     .state('app.reservations', {
       url: '/reservations',
       params: {
-        productId: 0,
+        productId: null,
       },
       template: require('./reservations.view.html'),
       controller: 'ReservationsCtrl',

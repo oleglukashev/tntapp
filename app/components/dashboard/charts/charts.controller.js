@@ -20,9 +20,8 @@ export default class ChartsCtrl {
   }
 
   showReservations(productId) {
-    this.$state.go('app.reservations', {
-      productId,
-    });
+    const params = productId > 0 ? { productId } : {};
+    this.$state.go('app.reservations', params);
   }
 
   resizeGraph() {
