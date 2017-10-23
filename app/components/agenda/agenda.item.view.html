@@ -1,8 +1,8 @@
 <td ng-class='{"b-t-none p-t-none": hideIcon}'>
   <div ng-class='item.icon_color'
        ng-hide='hideIcon'
-       class='md-list-item-left img-circle'
-       title='{{ item.dutch_status }}'>
+       class='md-list-item-left img-circle'>
+    <md-tooltip>{{ item.dutch_status }}</md-tooltip>
     <div class='pull-left m-l-sm'>
       <i ng-class='item.icon' class='mdi i-20'></i>
     </div>
