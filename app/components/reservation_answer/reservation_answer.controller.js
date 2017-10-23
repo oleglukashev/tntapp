@@ -24,7 +24,7 @@ export default class ReservationsAnswerCtrl {
 
     return this.ReservationStatus
       .changeStatus(this.current_company_id, this.reservation, 'cancelled').then(() => {
-        this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
+        this.$rootScope.$broadcast('NewReservationCtrl.reset_reservation');
         this.is_submitting = false;
       }, () => {
       });

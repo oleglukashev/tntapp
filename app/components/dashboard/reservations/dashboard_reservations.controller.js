@@ -25,6 +25,10 @@ export default class DashboardReservationsCtrl {
       this.loadReservations();
     });
 
+    $scope.$on('NewReservationCtrl.reset_reservation', () => {
+      this.setData();
+    });
+
     this.loadReservations();
     ReservationStatusMenu(this);
     DashboardReservationsItemFactory(this);
