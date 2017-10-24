@@ -30,9 +30,10 @@
                     required></textarea>
         </md-input-container>
         <small class='text-muted'>Dit bericht wordt verstuurd via email. Uiteraard is het extra klantvriendelijk om de gast ook per telefoon op de hoogte te brengen dat de reservering is geannuleerd.</small>
-        <div class="pull-right m-t-lg">
+        <div class='pull-right m-t-lg'
+             ng-if='antwoord.isCancellingReservation'>
           <button class=' text-danger md-btn md-flat btn-fw '
-                  ng-click='antwoord.cancelWithoutMail();'>ANNULEREN ZONDER MAIL</button>
+                  ng-click='antwoord.cancelReservation();'>ANNULEREN ZONDER MAIL</button>
         </div>
       </div>
       <button type='submit'

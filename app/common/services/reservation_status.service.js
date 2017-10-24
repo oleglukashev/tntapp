@@ -18,7 +18,8 @@ export default class ReservationStatus {
       return deferred.promise;
     }
 
-    return this.$http.post(`${API_URL}/company/${companyId}/reservation/edit/${reservationId}/status`,
+    return this.$http.post(
+      `${API_URL}/company/${companyId}/reservation/edit/${reservationId}/status`,
       data,
     ).then(result => result.data);
   }
@@ -34,14 +35,16 @@ export default class ReservationStatus {
     if (mail) data = Object.assign(data, mail);
 
     return this.edit(companyId, reservation.id, data)
-      .then((result) => {
-        const currentReservation = reservation;
-        currentReservation.status = result.status;
-        return currentReservation;
-      },
-      (error) => {
-        this.errors = error.data.errors;
-      });
+      .then(
+        (result) => {
+          const currentReservation = reservation;
+          currentReservation.status = result.status;
+          return currentReservation;
+        },
+        (error) => {
+          this.errors = error.data.errors;
+        },
+      );
   }
 
   sendMail(companyId, reservation, data) {
@@ -52,14 +55,17 @@ export default class ReservationStatus {
     }
 
     return this.$http.post(`${API_URL}/company/${companyId}/reservation/${reservation.id}/send_mail`, data)
-      .then(result => result.data,
+      .then(
+        result => result.data,
         (error) => {
           this.errors = error.data.errors;
-        });
+        },
+      );
   }
 
   getIcon(part, reservation) {
     let status = reservation.status;
+
     const now = this.moment().valueOf();
     const reservationTime = this.moment(part.date_time).valueOf();
     const diffMins = this.moment(reservationTime).diff(this.moment(now), 'minutes');
