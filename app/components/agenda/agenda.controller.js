@@ -430,12 +430,13 @@ export default class AgendaCtrl {
 
     reservations.forEach((reservation) => {
       reservation.reservation_parts.forEach((part) => {
+        const row = this.rowPart(part, reservation);
         part.table_ids.forEach((tableId) => {
           if (zone.table_ids.includes(tableId) &&
-             !result.includes(part) &&
+             !result.includes(row) &&
              (this.moment(part.date_time).format('YYYY-MM-DD') ===
               this.moment(this.date_filter).format('YYYY-MM-DD'))) {
-            result.push(this.rowPart(part, reservation));
+            result.push(row);
           }
         });
       });
