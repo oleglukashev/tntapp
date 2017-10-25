@@ -5,6 +5,12 @@ export default function DashboardReservationsItemFactory(AppConstants, Reservati
     const instance = that;
 
     instance.rowPart = (part, reservation) => {
+      if (!reservation.customer) {
+        reservation.customer = {
+          last_name: 'undefined',
+        };
+      }
+
       const name = reservation.customer.last_name ?
         `${reservation.customer.first_name} ${reservation.customer.last_name}` :
         reservation.customer.first_name;

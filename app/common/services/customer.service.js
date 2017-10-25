@@ -44,7 +44,7 @@ export default class Customer {
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/customer/' + customer_id + '/reservations',
+      url: API_URL + '/company/' + company_id + '/customer/' + customer_id + '/full_data',
       method: 'POST',
     }).then((result) => {
       return result.data;
