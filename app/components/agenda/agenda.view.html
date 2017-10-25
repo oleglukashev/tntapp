@@ -94,7 +94,9 @@
                          ng-repeat='quarter in [0,1,2,3]'
                          ui-on-drop='agenda.onDrop(table.id, tableIndex, hour, quarter, $data)'
                          ng-click='agenda.openQuickReservation(table.id, table.table_number, hour, quarter)'
-                         ng-class='agenda.getQuarterClass(hour, quarter)'
+                         ng-class='agenda.getQuarterClass(hover, hour, quarter)'
+                         ng-mouseenter="hover=true"
+                         ng-mouseleave="hover=false"
                          drop-channel='move,resize'></div>
                   </div>
 
