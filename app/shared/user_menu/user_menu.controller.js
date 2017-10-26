@@ -38,9 +38,7 @@ export default class UserMenuCtrl {
       },
     });
 
-    modalInstance.result.then(() => {
-      this.loadCustomerReservations(reservation.customer.id, reservationPart.id);
-    }, () => {});
+    modalInstance.result.then(() => {}, () => {});
   }
 
   openEditModal() {
@@ -76,11 +74,11 @@ export default class UserMenuCtrl {
   }
 
   openCustomerMenu(customerId, reservationPartId) {
-    this.loadCustomerReservations(customerId, reservationPartId);
+    this.loadCustomerFullData(customerId, reservationPartId);
     this.$mdSidenav('right').open();
   }
 
-  loadCustomerReservations(customerId, reservationPartId) {
+  loadCustomerFullData(customerId, reservationPartId) {
     this.Customer.searchReservationsByCustomerId(this.currentCompanyId, customerId)
       .then((response) => {
         this.$rootScope.reservations = response.reservations;

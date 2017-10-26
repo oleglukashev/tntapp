@@ -12,7 +12,7 @@
   </md-toolbar>
   <md-content>
 
-  <md-tabs class='reservation_tabs product_tabs'
+  <md-tabs class='product_tabs'
            flex
            md-selected='new_product.tabIndex'
            md-no-pagination
@@ -68,7 +68,7 @@
             </form>
           </div>
 
-          <button class='btn btn-lg btn-success text-success no-top-radius md_content_button'
+          <button class='btn btn-lg btn-success text-success no-top-radius md-content-button'
                   ng-class="{ 'disabled': !new_product_form.$valid }"
                   ng-click='new_product.selectProduct();new_product.tabIndex=1'>
             <span ng-hide='new_product.is_submitting'>VERDER</span>

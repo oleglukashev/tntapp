@@ -1,0 +1,46 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'>Voorkeuren</div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='md-content-submit'>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-xl'>
+
+          <label ng-repeat='preference in controller.preferences'
+                 class='btn btn-default block m-b-xs no-shadow text-success text-left'
+                 ng-model='controller.preference'
+                 uncheckable
+                 btn-radio='preference'>
+            <span>{{ preference.name }}</span>
+            <span class='pull-right' ng-click='controller.deletePreference($index)'>
+              <i class='mdi mdi-close i-21'></i>
+            </span>
+          </label>
+
+          <form name='user_preferences_form'>
+            <div class='wrapper'>
+              <md-input-container class='md-block'>
+                <label>Voorkeur</label>
+                <input required ng-model='controller.preference.name' />
+              </md-input-container>
+
+              <md-input-container class='md-block'>
+                <label>Omschrijving</label>
+                <input required ng-model='controller.preference.value' />
+              </md-input-container>
+
+              <input type='hidden' ng-model='controller.preference.id' />
+            </div>
+          </form>
+        </div>
+      </div>
+      <button type='submit'
+            ng-class="{ 'disabled': !user_preferences_form.$valid || controller.preferences_is_submitting }"
+            ng-click='controller.submitPreferenceForm(user_preferences_form.$valid)'
+            class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
+        OPSLAAN
+      </button>
+    </div>
+  </md-tab-body>
+</md-tab>

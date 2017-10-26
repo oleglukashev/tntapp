@@ -45,6 +45,11 @@ export default function templates($templateCache) {
   $templateCache.put('page_filter.filter.view.html', require('./shared/page_filter/page_filter.filter.view.html'));
   $templateCache.put('page_filter.sort.view.html', require('./shared/page_filter/page_filter.sort.view.html'));
 
+  $templateCache.put('reservation_part.reservation.view.html', require('./components/reservation_parts/reservation_part.reservation.view.html'));
+  $templateCache.put('user_menu.main_info.view.html', require('./shared/user_menu/edit/user_menu.main_info.view.html'));
+  $templateCache.put('user_menu.comments.view.html', require('./shared/user_menu/edit/user_menu.comments.view.html'));
+  $templateCache.put('user_menu.preferences.view.html', require('./shared/user_menu/edit/user_menu.preferences.view.html'));
+  $templateCache.put('user_menu.allergies.view.html', require('./shared/user_menu/edit/user_menu.allergies.view.html'));
 
   //angular-bootstrap tpls
   $templateCache.put("template/modal/backdrop.html",

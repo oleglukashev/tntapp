@@ -1,8 +1,6 @@
 .reservation_modal
   md-content
     padding-bottom 0
-    height auto
-    min-height modal-height
     
     md-tabs.reservation_tabs
       md-tabs-wrapper
@@ -18,50 +16,46 @@
 
       md-tabs-content-wrapper
         md-tab-content
-          .flex
-            overflow-y auto
-            height 442px
+          min-height 464px
 
-            &.reservation_person,
-            &.reservation_zone,
-            &.reservation_group
-              padding-bottom 78px
-              height auto
-              min-height 464px
+          .reservation_person,
+          .reservation_zone,
+          .reservation_group
+            padding-bottom 78px
 
-              & > button[type='submit']
-                position absolute
-                bottom 0
+            & > button[type='submit']
+              position absolute
+              bottom 0
 
-              & > button[type='button']
-                position absolute
-                bottom 46px
+            & > button[type='button']
+              position absolute
+              bottom 46px
 
-            &.reservation_person_count
-              .wrapper
-                .w-lg
-                  & > label
-                    padding 12px 0
-                    width 44px
-                    border-radius 50%
-                    border none
-                    box-shadow none
+          .reservation_person_count
+            .wrapper
+              .w-lg
+                & > label
+                  padding 12px 0
+                  width 44px
+                  border-radius 50%
+                  border none
+                  box-shadow none
 
-            &.reservation_zone
-              .wrapper
-                .zones_boxes
-                  label.active
-                    background-color #fff
-                    border-color #dee5e7
-                    color font-color
-                .tables_boxes
-                  label.active
-                    color #fff !important
-
-            &.reservation_group
-              .wrapper
-                label.btn.active
+          .reservation_zone
+            .wrapper
+              .zones_boxes
+                label.active
+                  background-color #fff
+                  border-color #dee5e7
+                  color font-color
+              .tables_boxes
+                label.active
                   color #fff !important
+
+          .reservation_group
+            .wrapper
+              label.btn.active
+                color #fff !important
 
     @media (max-width 600px)
       md-tabs.reservation_tabs
