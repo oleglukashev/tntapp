@@ -63,6 +63,11 @@
               </md-select>
               <div class='md-errors-spacer'></div>
             </md-input-container>
+            <md-input-container class='md-block'>
+              <label>Opmerking</label>
+              <md-icon><i class='mdi mdi-message-text i-20' /></md-icon>
+              <textarea ng-model='reserv.current_part.notes' ng-required='false'></textarea>
+            </md-input-container>
             <div class='wrapper red-300 layout-align-space-around-center layout-column' ng-show='reserv.errors.length'>
               <div class='w-xl'>
                 <div ng-repeat='error in reserv.errors'>

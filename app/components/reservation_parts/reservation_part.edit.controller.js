@@ -45,6 +45,7 @@ export default class ReservationPartEditCtrl {
       old_product: reservationPart.product.id,
       time: this.moment(reservationPart.date_time).format('HH:mm'),
       old_time: this.moment(reservationPart.date_time).format('HH:mm'),
+      notes: reservation.notes,
     };
 
     this.loadGeneralSettings();
@@ -63,6 +64,7 @@ export default class ReservationPartEditCtrl {
       tables: this.current_part.table_ids,
       part_id: this.current_part.id,
       date_time: `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${this.current_part.time}`,
+      notes: this.current_part.notes,
     };
 
     this.ReservationPart.update(this.current_company_id, this.current_part.id, data)
