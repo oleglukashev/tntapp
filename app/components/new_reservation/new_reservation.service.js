@@ -19,11 +19,8 @@ export default class NewReservation {
       if (!part.product) errors.push(`${prefix}product is verplicht`);
     });
 
-    if (!reservation.name) {
-      errors.push('naam is verplicht');
-    } else if (reservation.name.split(' ').length < 2) {
-      errors.push('naam niet vol');
-    }
+    if (!reservation.last_name) errors.push('achternaam is verplicht');
+    if (!reservation.first_name) errors.push('voornaam is verplicht');
 
     if (!reservation.mail) {
       errors.push('email adres is verplicht');

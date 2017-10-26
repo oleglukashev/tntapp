@@ -4,12 +4,16 @@
     <div class='text-center l-h'>PERSOON</div>
   </md-tab-label>
   <md-tab-body>
-    <div class='md-content-submit reservation_person b-t' flex>
+    <div class='md-content-submit reservation_person' flex>
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <div class='w-xl'>
           <md-input-container class='md-block'>
-            <label>Voor- en achternaam</label>
-            <input ng-model='reserv.reservation.name' />
+            <label>Voornaam</label>
+            <input ng-model='reserv.reservation.first_name' />
+          </md-input-container>
+          <md-input-container class='md-block'>
+            <label>Achternaam</label>
+            <input ng-model='reserv.reservation.last_name' />
           </md-input-container>
           <md-input-container class='md-block'>
             <label>E-mail</label>

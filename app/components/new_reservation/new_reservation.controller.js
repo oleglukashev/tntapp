@@ -1,8 +1,9 @@
 import angular from 'angular';
 
 export default class NewReservationCtrl {
-  constructor(User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone, NewReservation,
-    Table, moment, filterFilter, $state, $stateParams, $rootScope, $scope, $window, $auth) {
+  constructor(User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone,
+    NewReservation, Table, moment, filterFilter, $state, $stateParams, $rootScope,
+    $scope, $window, $auth) {
     'ngInject';
 
     this.is_dashboard_page = $state.current.name === 'app.dashboard';
@@ -80,7 +81,6 @@ export default class NewReservationCtrl {
     if (this.errors.length) return false;
 
     this.is_submitting = true;
-    const name = this.reservation.name || '';
     const dateOfBirth = this.reservation.date_of_birth ?
       this.moment(this.reservation.date_of_birth).format('DD-MM-YYYY') :
       undefined;
@@ -93,8 +93,8 @@ export default class NewReservationCtrl {
       company_name: this.reservation.company_name,
       reservation_pdf: this.reservation.pdfFile,
       customer: {
-        last_name: name.split(' ')[1],
-        first_name: name.split(' ')[0],
+        last_name: this.reservation.last_name,
+        first_name: this.reservation.first_name,
         primary_phone_number: this.reservation.primary_phone_number,
         mail: this.reservation.mail,
         secondary_phone_number: this.reservation.secondary_phone_number,
@@ -351,7 +351,8 @@ export default class NewReservationCtrl {
     } else {
       this.$auth.authenticate(provider).then((response) => {
         this.$window.localStorage.setItem('social_account', JSON.stringify(response.data));
-        this.reservation.name = response.data.name;
+        this.reservation.first_name = response.data.name.split(' ')[0];
+        this.reservation.last_name = response.data.name.split(' ')[1] || this.reservation.first_name;
         this.reservation.mail = response.data.email;
         this.reservation.date_of_birth = response.data.date_of_birth;
         this.reservation.primary_phone_number = response.data.primary_phone_number;

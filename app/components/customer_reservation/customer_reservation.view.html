@@ -3,12 +3,13 @@
     <form ng-submit='reserv.submitForm()'>
       <md-toolbar>
         <div class='md-toolbar-tools'>
-          <div ng-hide='reserv.success'>
-            Reserveren
-          </div>
-          <div ng-show='reserv.success'>
-            Nieuwe reservering
-          </div>
+          <h2 md-truncate flex ng-hide='reserv.success'>Reserveren</h2>
+          <h2 md-truncate flex ng-show='reserv.success'>Nieuwe reservering</h2>
+          <md-button class='md-icon-button'
+                     ng-click='reserv.$window.location.reload()'
+                     md-no-ink>
+            <i class='mdi mdi-close m-r-sm i-24'></i>
+          </md-button>
         </div>
       </md-toolbar>
       <md-content>
@@ -78,11 +79,6 @@
               </div>
             </div>
           </div>
-
-          <button type='button'
-                  class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
-                  ng-show='reserv.success'
-                  ng-click='reserv.$window.location.reload();'>TERUG NAAR OVERZICHT</button>
         </div>
       </md-content>
     </form>

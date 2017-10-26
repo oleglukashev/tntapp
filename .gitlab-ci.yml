@@ -17,4 +17,4 @@ build_and_deploy:staging:
     - npm install babel-loader babel-core webpack
   script:
     - npm run build
-    - rsync --rsync-path="doas rsync" -ave ssh --delete * oleglukashev@icarus.thenextsoftware.io:/www/sven.thenexttable/
+    - rsync --rsync-path="doas rsync" -ave ssh --delete * oleglukashev@icarus.thenextsoftware.io:/www/beta.thenexttable/
