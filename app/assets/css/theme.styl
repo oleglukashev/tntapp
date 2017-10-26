@@ -50,7 +50,9 @@ for theme in 'default' 'aqua' 'lego' 'chocolate'
     .agenda .reservation,
     .profiles .char_wrapper .char,
     .md-input:focus ~ label,
-    .md-input.focus ~ label
+    .md-input.focus ~ label,
+    md-select:focus md-select-value ~ label,
+    md-select.focus md-select-value ~ label
       color lookup(theme + '-success-color')
 
     md-checkbox:not(.md-checked) .md-icon,
@@ -60,7 +62,9 @@ for theme in 'default' 'aqua' 'lego' 'chocolate'
     .reservation_modal .flex.reservation_zone .tables_boxes label.active,
     .reservation_modal .flex.reservation_group .wrapper label.btn.active,
     .md-input:focus,
-    .md-input.focus
+    .md-input.focus,
+    md-select:focus md-select-value,
+    md-select.focus md-select-value
       border-color lookup(theme + '-success-color')
 
     .header,

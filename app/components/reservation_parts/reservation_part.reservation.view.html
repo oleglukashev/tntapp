@@ -1,0 +1,83 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'>RESERVERING</div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='md-content-submit b-t' flex>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-xl'>
+          <form ng-submit='reserv.submitPartForm()'>
+            <md-input-container class='md-block'>
+              <label>Datum</label>
+              <md-datepicker ng-model='reserv.current_part.date'
+                             ng-change='reserv.changeDatePostProcess()'></md-datepicker>
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label>Aantal personen</label>
+              <md-icon><i class='mdi mdi-account-multiple i-20' /></md-icon>
+              <input type='number'
+                     ng-model='reserv.current_part.number_of_persons'
+                     ng-change='reserv.changeNumberOfPersonsPostProcess()'
+                     ng-required='false' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label>Product</label>
+              <md-icon><i class='mdi mdi-silverware-variant i-20' /></md-icon>
+              <md-select ng-change='reserv.changeProductPostProcess()'
+                         ng-model='reserv.current_part.product'>
+                <md-option ng-value='item.id' ng-repeat='item in reserv.products'>
+                  {{ item.name }}
+                </md-option>
+              </md-select>
+              <div class='md-errors-spacer'></div>
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label>Tijdstip</label>
+              <md-icon><i class='mdi mdi-clock i-20' /></md-icon>
+              <md-select ng-change='reserv.changeTimePostProcess()'
+                         ng-model='reserv.current_part.time'>
+                <md-option ng-value='item.time'
+                           ng-class="{ 'red-300': reserv.timeIsDisabled(item) }"
+                           ng-repeat='item in reserv.openedTimeRangePeriod()'
+                           ng-disabled='reserv.timeIsDisabled(item) || reserv.timeIsPast(item)'>{{ item.time }}</md-option>
+              </md-select>
+              <div ng-show='reserv.disabledTimes().length'>
+                <i class="mdi mdi-checkbox-blank-circle i-16 red-color-200"></i>
+                – Niet genoeg plaatsen beschikbaar
+              </div>
+              <div class='md-errors-spacer'>
+              </div>
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label>Tafel</label>
+              <md-icon><i class='mdi mdi-border-horizontal i-20' /></md-icon>
+              <md-select multiple
+                         ng-change='reserv.changeFilterPostProcess()'
+                         ng-model='reserv.current_part.table_ids'>
+                <md-optgroup ng-repeat='zone in reserv.zones' label='{{ zone.name }}'>
+                  <md-option ng-value='table_id' ng-repeat='table_id in zone.table_ids'
+                             ng-disabled='reserv.isDisabledTableByTableId(table_id)'>
+                    Tafel {{ reserv.Reservation.getTableNumberByTableId(reserv.tables, table_id) }} - {{ reserv.Reservation.getPersonCountByTableId(reserv.tables, table_id) }} personen
+                  </md-option>
+                </md-optgroup>
+              </md-select>
+              <div class='md-errors-spacer'></div>
+            </md-input-container>
+            <div class='wrapper red-300 layout-align-space-around-center layout-column' ng-show='reserv.errors.length'>
+              <div class='w-xl'>
+                <div ng-repeat='error in reserv.errors'>
+                  {{ error }}
+                </div>
+              </div>
+            </div>
+            <button type='submit'
+                      class='btn btn-lg btn-success w-full no-top-radius md-content-button'
+                      ng-class="{ 'disabled': reserv.errors.length || reserv.is_submitting }">
+              <span>OPSLAAN</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>

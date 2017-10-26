@@ -6,6 +6,7 @@ import itemFactory from './agenda.item.factory';
 import pageFilterFactory from '../../shared/page_filter/page_filter.factory';
 import reservationStatusMenuFactory from '../../shared/reservation_status_menu/reservation_status_menu.factory';
 
+
 export default angular.module('app.agenda', [])
   .config(routing)
   .controller('AgendaCtrl', controller, ['Agenda'])

@@ -1,9 +1,9 @@
+import angular from 'angular';
+
 export default class ReservationPartEditCtrl {
-  constructor(
-    User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone,
-    Table, moment, filterFilter, $rootScope, $window, $scope, $modalInstance, reservation,
-    reservationPart, Confirm,
-  ) {
+  constructor(User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone,
+    Table, moment, filterFilter, $rootScope, $window, $scope, $modalInstance, UserMenuEditFactroy,
+    reservation, reservationPart, Confirm) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -20,6 +20,7 @@ export default class ReservationPartEditCtrl {
     this.$window = $window;
     this.$scope = $scope;
     this.$rootScope = $rootScope;
+    this.$rootScope.userData = this.$rootScope.customer;
     this.filterFilter = filterFilter;
     this.$modalInstance = $modalInstance;
 
@@ -27,50 +28,41 @@ export default class ReservationPartEditCtrl {
     this.selected_index = 0;
     this.errors = [];
 
-    this.pagination = this.Reservation.pagination.edit;
     this.reservation = reservation;
+    this.available_time = [];
 
     this.current_part = {
       id: reservationPart.id,
-      old_tables_values: {},
-      tables_values: {},
-      old_date: this.getPartDate(reservationPart),
-      date: this.getPartDate(reservationPart),
-      old_number_of_persons: parseInt(reservationPart.number_of_persons, 10),
-      number_of_persons: parseInt(reservationPart.number_of_persons, 10),
+      table_ids: reservationPart.table_ids,
+      old_table_ids: reservationPart.table_ids,
+      duration_minutes: reservationPart.duration_minutes,
+      old_duration_minutes: reservationPart.duration_minutes,
+      date: this.moment(reservationPart.date_time).toDate(),
+      old_date: this.moment(reservationPart.date_time).toDate(),
+      number_of_persons: reservationPart.number_of_persons,
+      old_number_of_persons: reservationPart.number_of_persons,
       product: reservationPart.product.id,
-      old_time: reservationPart.date_time ? this.moment(reservationPart.date_time).format('HH:mm') : null,
-      time: reservationPart.date_time ? this.moment(reservationPart.date_time).format('HH:mm') : null,
-      time_range: {},
-      time_type: reservationPart.date_time ? 'single' : 'range',
-      zones_is_showed: true,
+      old_product: reservationPart.product.id,
+      time: this.moment(reservationPart.date_time).format('HH:mm'),
+      old_time: this.moment(reservationPart.date_time).format('HH:mm'),
     };
 
-    reservationPart.table_ids.forEach((tableId) => {
-      this.current_part.tables_values[tableId] = true;
-      this.current_part.old_tables_values[tableId] = true;
-    });
-
-    this.preloadData();
-    this.validForm();
+    this.loadGeneralSettings();
+    UserMenuEditFactroy(this);
+    this.notes = this.$rootScope.customer_notes;
+    this.preferences = this.$rootScope.customer_preferences;
+    this.allergies = this.$rootScope.customer_allergies;
   }
 
-  submitForm() {
+  submitPartForm() {
     this.is_submitting = true;
-    this.current_part.tables = [];
-
-    Object.keys(this.current_part.tables_values).forEach((key) => {
-      if (this.current_part.tables_values[key]) {
-        this.current_part.tables.push(key);
-      }
-    });
 
     const data = {
       number_of_persons: this.current_part.number_of_persons,
       product_id: this.current_part.product,
-      tables: this.current_part.tables,
+      tables: this.current_part.table_ids,
       part_id: this.current_part.id,
-      date_time: `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${this.current_part.date.time}`,
+      date_time: `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${this.current_part.time}`,
     };
 
     this.ReservationPart.update(this.current_company_id, this.current_part.id, data)
@@ -88,33 +80,12 @@ export default class ReservationPartEditCtrl {
   }
 
   timeIsDisabled(timeObj) {
-    let timeAvailableSeats = null;
-    let maxPearsonsPerTable = null;
-
-    timeAvailableSeats = timeObj.available_seat_count;
-    maxPearsonsPerTable = timeObj.max_personen_voor_tafels;
-
-    if (this.current_part.old_time === timeObj.time &&
-        this.current_part.old_date === this.current_part.date) {
-      const usedTables = this.filterFilter(this.tables, item =>
-        Object.keys(this.current_part.old_tables_values).includes(String(item.id)));
-
-      const usedTablesPersonCount = usedTables.map(item => item.number_of_persons)
-        .reduce((sum, valie) => parseInt(sum, 10) + parseInt(valie, 10), 0);
-
-      timeAvailableSeats += usedTablesPersonCount;
-      maxPearsonsPerTable += usedTablesPersonCount;
-    }
-
-    if (this.current_part.number_of_persons > maxPearsonsPerTable ||
-        !timeObj.is_open ||
-        timeObj.time_is_past ||
-        (this.current_part.number_of_persons > timeAvailableSeats && !timeObj.can_overbook)) {
+    if (!timeObj.is_open || !this.isEnoughSeats(timeObj)) {
       return true;
     }
 
     if (this.current_product) {
-      const reservationDateStr = this.moment(this.current_part.date).format('YYYY-MM-DD');
+      const reservationDateStr = this.moment(this.reservation.date).format('YYYY-MM-DD');
       const objTime = this.moment(`${reservationDateStr} ${timeObj.time}`);
       const startProductTime = this.moment(`${reservationDateStr} ${this.current_product.start_time}`);
       const endProductTime = this.moment(`${reservationDateStr} ${this.current_product.end_time}`);
@@ -131,87 +102,72 @@ export default class ReservationPartEditCtrl {
     return false;
   }
 
-  setZone(zone) {
-    this.current_part.zones_is_showed = false;
-    this.current_part.zone = zone;
+  isEnoughSeats(timeObj) {
+    return (this.current_part.number_of_persons <= timeObj.max_personen_voor_tafels &&
+           this.current_part.number_of_persons <= timeObj.available_seat_count) ||
+           timeObj.can_overbook;
   }
 
-  preloadData() {
-    this.loadProducts();
-    this.loadGeneralSettings();
-    this.loadZones();
-    this.loadTables();
-    this.loadTime();
-    this.loadOccupiedTables();
+  disabledTimes() {
+    const result = [];
+
+    this.openedTimeRangePeriod().forEach((item) => {
+      if (this.timeIsDisabled(item)) {
+        result.push(item);
+      }
+    });
+
+    return result;
   }
 
-  loadTime() {
-    this.current_part.time_is_loaded = false;
-    this.current_part.available_time = [];
-
-    const companyId = this.current_company_id;
-    const product = this.current_part.product;
-    const reservationDate = this.moment(this.current_part.date).format('YYYY-MM-DD HH:mm:ss');
-
-    this.Product.getAvailableTables(companyId, product, reservationDate).then(
-      (result) => {
-        this.current_part.available_time = result;
-        this.current_part.time_is_loaded = true;
-      },
-      () => {});
-  }
-
-  clearAndLoadTime() {
-    this.current_part.time = null;
-    this.loadTime();
+  loadGeneralSettings() {
+    this.Settings.getGeneralSettings(this.current_company_id).then(
+      (generalSettings) => {
+        this.settings = generalSettings;
+        this.loadOccupiedTables();
+        this.loadTables();
+        this.loadProducts();
+        this.loadZones();
+      });
   }
 
   loadProducts() {
-    this.products_is_loaded = false;
     this.products = [];
 
     this.Product.getAll(this.current_company_id, false).then(
       (result) => {
         this.products = result;
-        this.products_is_loaded = true;
-        this.loadTimeRanges();
-      },
-      () => {},
-    );
+
+        if (this.products.length > 0) {
+          this.loadTimeRanges();
+        }
+      }, () => {});
   }
 
   loadZones() {
-    this.zones_is_loaded = false;
     this.zones = [];
 
     this.Zone.getAll(this.current_company_id).then(
       (result) => {
         this.zones = result;
-        this.zones_is_loaded = true;
-      },
-      () => {},
-    );
+      }, () => {});
   }
 
   loadTables() {
-    this.tables_is_loaded = false;
     this.tables = [];
 
     this.Table.getAll(this.current_company_id).then(
       (result) => {
         this.tables = result;
-        this.tables_is_loaded = true;
-      },
-      () => {},
-    );
+        this.loadTime();
+      }, () => {});
   }
 
   loadTimeRanges() {
-    this.TimeRange.getAll(this.current_company_id)
-      .then((ranges) => {
-        this.open_hours = {};
+    this.TimeRange.getAll(this.current_company_id).then(
+      (ranges) => {
         ranges.forEach((range) => {
-          if (range.daysOfWeek[0] === this.moment(this.current_part.date).isoWeekday()) {
+          if (range.daysOfWeek[0] === this.moment().isoWeekday()) {
             const currentTime = this.moment();
             const startTime = this.moment(range.startTime, 'HH:mm');
             const endTime = this.moment(range.endTime, 'HH:mm');
@@ -227,73 +183,141 @@ export default class ReservationPartEditCtrl {
       });
   }
 
+  canLoadTime() {
+    return this.current_part.product &&
+           this.current_part.number_of_persons &&
+           this.current_part.date;
+  }
+
+  loadTime() {
+    this.available_time = [];
+
+    if (this.canLoadTime()) {
+      const companyId = this.current_company_id;
+      const product = this.current_part.product;
+      const reservationDate = this.moment(this.current_part.date).format('YYYY-MM-DD HH:mm:ss');
+
+      this.Product.getAvailableTables(companyId, product, reservationDate).then(
+        (result) => {
+          this.available_time = result;
+          const date = this.moment(this.current_part.date).format('YYYY-MM-DD');
+          const currentDateTime = this.moment(`${date} ${this.current_part.time}`);
+          const durationMinutes = this.current_part.duration_minutes || this.settings.bezettings_minuten;
+          this.available_time.forEach((itemObj) => {
+            const itemObjDateTime = this.moment(`${date} ${itemObj.time}`);
+            // 1000 - millisec
+            // 60 - minutes
+            // 15 parts by 15 minutes
+            const absDiffOfMins = Math.abs(itemObjDateTime.diff(currentDateTime) / 1000 / 60);
+            if (Math.round(durationMinutes / 15) >= (Math.abs(absDiffOfMins) / 15)) {
+              this.current_part.table_ids.forEach((tableId) => {
+                const count = this.Reservation.getPersonCountByTableId(this.tables, tableId);
+                itemObj.available_seat_count += count;
+                itemObj.max_personen_voor_tafels += count;
+              });
+              itemObj.available_table_count += this.current_part.table_ids.length;
+            }
+          });
+        }, () => {});
+    }
+  }
+
   loadOccupiedTables() {
-    this.current_part.occupied_tables = [];
-    this.current_part.occupied_tables_is_loaded = false;
-    const time = this.current_part.time;
-    const dateTime = `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${time}`;
+    this.occupied_tables = [];
+    const dateForRequest = this.moment(this.current_part.date).format('DD-MM-YYYY');
+    const dateTime = `${dateForRequest} ${this.current_part.time}`;
 
     this.Table
       .getOccupiedTables(this.current_company_id, { date_time: dateTime, part_id: null }).then(
         (result) => {
-          this.current_part.occupied_tables = result;
-          this.current_part.occupied_tables_is_loaded = true;
-        },
-        () => {},
-      );
+          this.occupied_tables = result;
+          const date = this.moment(this.current_part.date).format('YYYY-MM-DD');
+          const currentDateTime = this.moment(`${date} ${this.current_part.time}`);
+          const durationMinutes = this.current_part.duration_minutes || this.settings.bezettings_minuten;
+          const occupiedTablesClone = angular.copy(result);
+
+          const oldDateTime = this.moment(`${date} ${this.current_part.old_time}`);
+          // 1000 - millisec
+          // 60 - minutes
+          // 15 parts by 15 minutes
+          const absDiffOfMins = Math.abs(oldDateTime.diff(currentDateTime) / 1000 / 60);
+          const theSameDate = this.moment(this.current_part.date).format('YYYY-MM-DD') ===
+            this.moment(this.current_part.old_date).format('YYYY-MM-DD');
+
+          if (Math.round(durationMinutes / 15) >= (Math.abs(absDiffOfMins) / 15)) {
+            Object.keys(occupiedTablesClone).forEach((key) => {
+              if (theSameDate && this.current_part.old_table_ids.includes(parseInt(key))) {
+                delete this.occupied_tables[key];
+              }
+            });
+          }
+
+          if (theSameDate && this.current_part.time === this.current_part.old_time) {
+            this.current_part.table_ids = this.current_part.old_table_ids;
+          }
+        }, () => {});
   }
 
-  tablesDataIsLoaded() {
-    return this.tables_is_loaded && this.current_part.occupied_tables_is_loaded;
+  openedTimeRangePeriod() {
+    const availableTime = this.available_time;
+    if (!availableTime.length) return [];
+    const openedTimes = this.filterFilter(availableTime, { is_open: true });
+
+    if (openedTimes.length > 0) {
+      const min = openedTimes[0].time;
+      const max = openedTimes[openedTimes.length - 1].time;
+
+      return this.filterFilter(availableTime, item => item.time >= min && item.time <= max);
+    }
+
+    return [];
   }
 
-  loadGeneralSettings() {
-    this.Settings.getGeneralSettings(this.current_company_id).then((generalSettings) => {
-      this.settings = generalSettings;
-    });
-  }
-
-  selectTab(index) {
-    this.selected_index = index;
-  }
-
-  getPartDate(part) {
-    return this.moment(part.date_time).format('YYYY-MM-DD');
+  timeIsPast(timeObj) {
+    const date = this.moment(this.current_part.date).format('YYYY-MM-DD');
+    return this.moment(`${date} ${timeObj.time}`) < this.moment();
   }
 
   changeDatePostProcess() {
     this.current_part.number_of_persons = null;
     this.current_part.product = null;
     this.current_part.time = null;
-    this.validForm();
-    this.selectTab(this.pagination.date);
+    this.current_part.table_ids = [];
+  }
+
+  changeTimePostProcess() {
+    this.current_part.table_ids = [];
+    this.loadOccupiedTables();
   }
 
   changeNumberOfPersonsPostProcess() {
+    this.current_part.product = null;
+    this.current_part.table_ids = [];
     this.clearAndLoadTime();
-    this.validForm();
-    this.selectTab(this.pagination.number_of_persons);
   }
 
   changeProductPostProcess() {
-    this.current_part.current_product = null;
-
-    if (this.current_part.product) {
-      const product = this.current_part.product;
-      this.current_part.current_product = this.filterFilter(this.products, { id: product })[0];
-    }
-
+    this.current_part.table_ids = [];
     this.clearAndLoadTime();
-    this.validForm();
-    this.selectTab(this.pagination.product);
   }
 
-  validForm() {
-    const errors = [];
-    if (!this.current_part.date) errors.push('DATE not found');
-    if (!this.current_part.number_of_persons) errors.push('NUMBER OF PERSONS not found');
-    if (!this.current_part.product) errors.push('PRODUCT not found');
+  clearAndLoadTime() {
+    this.current_part.time = null;
+    this.loadTime();
+  }
 
-    this.errors = errors;
+  isDisabledTableByTableId(tableId) {
+    const table = this.filterFilter(this.tables, { id: tableId })[0];
+    let result = table ? table.hidden === true : false;
+
+    if (!result && this.occupied_tables) {
+      result = typeof this.occupied_tables[tableId] !== 'undefined';
+    }
+
+    if (!result && this.current_part.table_ids.includes(tableId)) {
+      result = false;
+    }
+
+    return result;
   }
 }

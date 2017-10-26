@@ -2,6 +2,9 @@ md-input-container
   padding-bottom 0
   margin-bottom 0
 
+  input
+    font-size 16px
+
   label,
   .md-placeholder
     color #929292
@@ -11,6 +14,9 @@ md-input-container
       color rgb(244,67,54)
       font-size 12px
       line-height 14px
+
+  &>md-icon.i-20
+    line-height 20px
 
   &.md-input-invalid
     &.md-input-focused
@@ -38,7 +44,8 @@ md-toolbar
   border-radius 6px 6px 0 0
 
 md-content
-  height modal-height
+  min-height modal-height
+  position relative
   border-radius 0 0 6px 6px
   background-color #fff
 
@@ -48,15 +55,14 @@ md-content
     height modal-height
 
   .md-content-submit
+    min-height modal-height
     padding-bottom 46px
-    position relative
-    height modal-height
 
-    .md-content-button
-      position absolute
-      width 100%
-      left 0
-      bottom 0
+  .md-content-button
+    position absolute
+    width 100%
+    left 0
+    bottom 0
 
 @media (max-width 768px)
   md-toolbar
@@ -64,11 +70,6 @@ md-content
 
   md-content
     border-radius 0
-
-
-md-input-container
-  input
-    font-size 16px
 
 md-select
   padding 0
@@ -129,7 +130,7 @@ md-menu-content
       font-size 24px
 
   md-menu-divider
-    background-color rgba(0, 0, 0, 0.11)
+    background-color rgba(0, 0, 0, 0.12)
 
 md-switch
   .md-bar
@@ -155,6 +156,21 @@ md-checkbox
 
 .md-form-group
   padding 10px 0
+
+md-datepicker
+  &>.md-button.md-datepicker-button
+    padding 0
+    margin 3px 0 0 0
+    width 24px
+    height 24px
+    top 0
+    min-height 0
+
+  &>.md-datepicker-input-container
+    .md-datepicker-input
+      font-size 16px
+      padding 3px 0 4px
+      border-color input-border-color
 
 .md-datepicker-calendar-pane
   border-color #fff
@@ -190,14 +206,18 @@ md-tabs
 
   md-tabs-wrapper
     md-tabs-canvas
+      height tab-height
+
       md-pagination-wrapper
         width 100%
+        height tab-height
 
         md-tab-item.md-tab
           padding 5px 0
           font-size 16px
           line-height 30px
           color muted-color
+          height tab-height
 
           &.md-active
             color #fff
@@ -215,13 +235,18 @@ md-list-item
   &.active
     background-color list-item-active-color
 
+md-icon
+  line-height 24px
+  text-align center
+
+._md-datepicker-floating-label._md-datepicker-has-calendar-icon
+  & >label:not(.md-no-float):not(.md-container-ignore)
+    right 48px
+
 .md-dialog-container
   z-index 1066
   md-dialog
     background-color: #fff
-
-.md-button.md-icon-button.md-datepicker-button
-  margin 0
 
 md-select-menu
   md-content
@@ -230,6 +255,9 @@ md-select-menu
 
       md-option
         color font-color
+
+    md-option[disabled]
+      color #929292
 
   &[multiple]
     md-option.md-checkbox-enabled[selected]

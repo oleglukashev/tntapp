@@ -1,0 +1,84 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'>Algemene</div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='md-content-submit'>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-xl'>
+          <form name='edit_user_form' ng-submit='controller.submitForm(edit_user_form.$valid)'>
+            <div class='wrapper'>
+              <md-input-container class='md-block'>
+                <label>E-mail</label>
+                <input required ng-model="userData.mail" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label>Voornaam</label>
+                <input required ng-model="userData.first_name" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label>Achternaam</label>
+                <input ng-model="userData.last_name" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label>Telefoon</label>
+                <input required ng-model="userData.primary_phone_number" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label>Secundair nummer</label>
+                <input ng-model="userData.secondary_phone_number" />
+              </md-input-container>
+            <md-input-container class='md-block'>
+                <label>Geboortedatum</label>
+                <input
+                   type="text"
+                   class="form-control date-picker"
+                   id="BirthDate"
+                   ng-model="userData.date_of_birth"
+                   datepicker-popup="dd-MM-yyyy"
+                   aw-datepicker-pattern="^(0[1-9]|1\d|2\d|3[01])\-(0[1-9]|1[0-2])\-(19|20)\d{2}$"
+                   is-open="Opened"
+                   ng-click="Opened=true"
+                   datepicker-options='controller.date_options'
+                   show-button-bar='false'
+                   close-text='Close' />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label>Straat</label>
+                <input ng-model="userData.street" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label>Huisnummer</label>
+                <input ng-model="userData.house_number" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label>Postcode</label>
+                <input ng-model="userData.zipcode" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label>Stad</label>
+                <input ng-model="userData.city" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label>Gemiddelde score</label>
+                <input type="number" ng-model="userData.average_rating" ng-pattern="/^[0-9]+(\.[0-9])?$/" step="0.1" />
+              </md-input-container>
+              <div class='md-form-group no-padder'>
+                <md-radio-group ng-model="userData.gender">
+                  <md-radio-button value='Man' class='inline md-success'>Man</md-radio-button>
+                  <md-radio-button value='Vrouw' class='inline md-success'>Vrouw</md-radio-button>
+                </md-radio-group>
+              </div>
+            </div>
+
+            <button type='submit'
+                    ng-class="{ 'disabled': !edit_user_form.$valid || controller.is_submitting }"
+                    class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
+              <span>OPSLAAN</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>
