@@ -33,6 +33,7 @@ export default function templates($templateCache) {
   $templateCache.put('new_reservation.person.view.html', require('./components/new_reservation/new_reservation.person.view.html'));
   $templateCache.put('new_reservation.type.view.html', require('./components/new_reservation/new_reservation.type.view.html'));
   $templateCache.put('new_reservation.group.view.html', require('./components/new_reservation/new_reservation.group.view.html'));
+  $templateCache.put('new_reservation.walk_in.view.html', require('./components/new_reservation/new_reservation.walk_in.view.html'));
   $templateCache.put('agenda.item.view.html', require('./components/agenda/agenda.item.view.html'));
   $templateCache.put('reservation_status_menu.view.html', require('./shared/reservation_status_menu/reservation_status_menu.view.html'));
 

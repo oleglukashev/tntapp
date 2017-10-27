@@ -156,6 +156,18 @@ export default class Reservation {
     }).then(result => result.data);
   }
 
+  createWalkIn(companyId, data) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/reservation/walk_in`,
+      data,
+      method: 'POST',
+    }).then(result => result.data);
+  }
+
   getProductNameByProductId(products, productId) {
     const product = this.filterFilter(products, { id: productId })[0];
     return product ? product.name : null;

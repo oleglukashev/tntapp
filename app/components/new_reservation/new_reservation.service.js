@@ -3,7 +3,7 @@ export default class NewReservation {
     'ngInject';
   }
 
-  validForm(reservation, phoneNumberIsRequired) {
+  validForm(reservation, phoneNumberIsRequired, walkIn) {
     const errors = [];
     let prefix = '';
     const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -13,10 +13,13 @@ export default class NewReservation {
         prefix = `part ${index + 1}: `;
       }
 
-      if (!part.date) errors.push(`${prefix}date is verplicht`);
       if (!part.number_of_persons) errors.push(`${prefix}number of persons is verplicht`);
-      if (!part.time) errors.push(`${prefix}tijdstip is verplicht`);
-      if (!part.product) errors.push(`${prefix}product is verplicht`);
+
+      if (!walkIn) {
+        if (!part.date) errors.push(`${prefix}date is verplicht`);
+        if (!part.time) errors.push(`${prefix}tijdstip is verplicht`);
+        if (!part.product) errors.push(`${prefix}product is verplicht`);
+      }
     });
 
     if (!reservation.last_name) errors.push('achternaam is verplicht');

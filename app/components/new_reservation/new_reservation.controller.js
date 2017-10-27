@@ -1,9 +1,10 @@
 import angular from 'angular';
 
 export default class NewReservationCtrl {
-  constructor(User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone,
-    NewReservation, Table, moment, filterFilter, $state, $stateParams, $rootScope,
-    $scope, $window, $auth) {
+  constructor(
+    User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone, NewReservation,
+    Table, moment, filterFilter, $state, $stateParams, $rootScope, $scope, $window, $auth,
+  ) {
     'ngInject';
 
     this.is_dashboard_page = $state.current.name === 'app.dashboard';
@@ -50,12 +51,21 @@ export default class NewReservationCtrl {
     this.reservation.reservation_parts.push(this.getNewReservationPart());
     this.current_part = this.reservation.reservation_parts[0];
 
+    this.walk_in = Object.assign({}, this.reservation);
+    this.walk_in_part = this.walk_in.reservation_parts[0];
+
     // states
     this.additional_is_opened = false;
     this.is_success = false;
     this.is_submitting = false;
 
     this.preloadData();
+  }
+
+  walkInOrReservationPart() {
+    return this.walk_in.reservation_parts.length
+      ? this.walk_in.reservation_parts
+      : this.reservation.reservation_parts;
   }
 
   triggerAdditionalInfo() {
@@ -74,6 +84,53 @@ export default class NewReservationCtrl {
       this.reservation.reservation_parts.splice(index, 1);
       this.current_part = this.reservation.reservation_parts[0];
     }
+  }
+
+  submitWalkInForm() {
+    const dateTime = `${this.moment().format('DD-MM-YYYY HH:mm')}`;
+
+    this.walk_in_part.date = this.moment().format('DD MMMM YYYY');
+    this.walk_in_part.time = this.moment().format('HH:mm');
+
+    this.validWalkInForm();
+    if (this.errors.length) return false;
+
+    this.is_submitting = true;
+    const data = {
+      language: this.walk_in.language,
+      send_confirmation: this.walk_in.send_confirmation,
+      notes: this.walk_in.notes,
+      customer: {
+        first_name: this.walk_in.first_name,
+        last_name: this.walk_in.last_name,
+        primary_phone_number: this.walk_in.primary_phone_number,
+        mail: this.walk_in.mail,
+      },
+      reservation_parts: [],
+    };
+
+    this.walk_in.reservation_parts.forEach((part) => {
+      data.reservation_parts.push({
+        number_of_persons: part.number_of_persons,
+        tables: part.tables,
+        date_time: dateTime,
+      });
+    });
+
+    this.Reservation.createWalkIn(this.current_company_id, data)
+      .then(
+        () => {
+          this.is_submitting = false;
+          this.success = true;
+          this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
+        },
+        (error) => {
+          this.is_submitting = false;
+          this.errors = error;
+        },
+      );
+
+    return true;
   }
 
   submitForm() {
@@ -127,22 +184,22 @@ export default class NewReservationCtrl {
     this.$window.localStorage.removeItem('social_account');
 
     const params = [];
-    params.push(
-      this.is_customer_reservation ?
-        { is_customer: true } :
-        { confirm_mail: this.confirm_mail },
-    );
+    params.push(this.is_customer_reservation ?
+      { is_customer: true } :
+      { confirm_mail: this.confirm_mail });
 
     this.Reservation.create(this.current_company_id, data, params)
-      .then(() => {
-        this.is_submitting = false;
-        this.success = true;
-        this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
-      },
-      (error) => {
-        this.is_submitting = false;
-        this.errors = error;
-      });
+      .then(
+        () => {
+          this.is_submitting = false;
+          this.success = true;
+          this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
+        },
+        (error) => {
+          this.is_submitting = false;
+          this.errors = error;
+        },
+      );
 
     return true;
   }
@@ -217,7 +274,8 @@ export default class NewReservationCtrl {
           this.current_part.available_time = result;
           this.current_part.time_is_loaded = true;
         },
-        () => {});
+        () => {},
+      );
     }
   }
 
@@ -251,7 +309,8 @@ export default class NewReservationCtrl {
         this.zones = result;
         this.zones_is_loaded = true;
       },
-      () => {});
+      () => {},
+    );
   }
 
   loadTables() {
@@ -263,7 +322,8 @@ export default class NewReservationCtrl {
         this.tables = result;
         this.tables_is_loaded = true;
       },
-      () => {});
+      () => {},
+    );
   }
 
   loadTimeRanges() {
@@ -298,7 +358,8 @@ export default class NewReservationCtrl {
           this.current_part.occupied_tables = result;
           this.current_part.occupied_tables_is_loaded = true;
         },
-        () => {});
+        () => {},
+      );
   }
 
   tablesDataIsLoaded() {
@@ -442,6 +503,11 @@ export default class NewReservationCtrl {
       .validForm(this.reservation, this.settings.phone_number_is_required);
   }
 
+  validWalkInForm() {
+    this.errors = this.NewReservation
+      .validForm(this.walk_in, this.settings.phone_number_is_required, true);
+  }
+
   numberOfPersonsMoreThanTableSeats() {
     return this.current_part.number_of_persons >
            this.Reservation.generalNumberOfPersons(this.tables, this.current_part.tables);
@@ -473,6 +539,21 @@ export default class NewReservationCtrl {
     }
 
     return [];
+  }
+
+  isDisabledTableByTableId(tableId) {
+    const table = this.filterFilter(this.tables, { id: tableId })[0];
+    let result = table ? table.hidden === true : false;
+
+    if (!result && this.occupied_tables) {
+      result = typeof this.occupied_tables[tableId] !== 'undefined';
+    }
+
+    if (!result) {
+      result = false;
+    }
+
+    return result;
   }
 }
 

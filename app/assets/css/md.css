@@ -22,6 +22,10 @@
     font-size: 30px;
 }
 
+.i-40 {
+    font-size: 40px !important;
+}
+
 .md-btn {
     position: relative;
     display: inline-block;

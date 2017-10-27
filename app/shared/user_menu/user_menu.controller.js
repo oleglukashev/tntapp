@@ -74,8 +74,10 @@ export default class UserMenuCtrl {
   }
 
   openCustomerMenu(customerId, reservationPartId) {
-    this.loadCustomerFullData(customerId, reservationPartId);
-    this.$mdSidenav('right').open();
+    if (customerId) {
+      this.loadCustomerFullData(customerId, reservationPartId);
+      this.$mdSidenav('right').open();
+    }
   }
 
   loadCustomerFullData(customerId, reservationPartId) {
