@@ -36,6 +36,21 @@ export default class Customer {
     });
   }
 
+  search(company_id, query) {
+    let deferred = this.$q.defer();
+
+    if (!company_id) {
+      return deferred.promise;
+    }
+
+    return this.$http({
+      url: API_URL + '/company/' + company_id + '/customer/search?query=' + query,
+      method: 'GET',
+    }).then((result) => {
+      return result.data;
+    });
+  }
+
   searchReservationsByCustomerId(company_id, customer_id) {
     let deferred = this.$q.defer();
 

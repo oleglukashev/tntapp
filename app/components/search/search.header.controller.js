@@ -15,18 +15,6 @@ class SearchHeaderCtrl {
     this.Customer = Customer;
     this.ReservationStatus = ReservationStatus;
     this.Search = Search;
-    this.states = [];
-
-    this.loadCustomers();
-  }
-
-  loadCustomers() {
-    this.Customer.getAllForSearch(this.current_company_id).then((results) => {
-      this.states = results.map(customer => ({
-        value: customer.id,
-        display: `${customer.last_name} ${customer.first_name}`,
-      }));
-    });
   }
 
   changeClass() {
@@ -38,10 +26,16 @@ class SearchHeaderCtrl {
     }
   }
 
-  querySearch(query) {
-    if (!query) return;
-    return this.states.filter(this.createFilterFor(query))
-      .sort(this.Search.compare(query, this.Search));
+  search(query) {
+    if (!query) return [];
+    return this.Customer.search(this.current_company_id, query).then((result) => {
+      return result.map((customer) => {
+        return {
+          value: customer.id,
+          display: `${customer.first_name} ${customer.last_name}`,
+        };
+      });
+    });
   }
 
   selectedItemChange(item) {
@@ -53,12 +47,6 @@ class SearchHeaderCtrl {
       .then((result) => {
         this.$state.go('app.search', { reservations: result.reservations }, { reload: true });
       });
-  }
-
-  createFilterFor(query) {
-    return function filterFn(state) {
-      return (angular.lowercase(state.display).indexOf(angular.lowercase(query)) !== -1);
-    };
   }
 }
 
