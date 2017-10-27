@@ -28,7 +28,7 @@
         <img class='table_icon' src='public/images/table.svg' />
         {{ item.table_ids }}
       </span>
-      <i class='mdi mdi-silverware-variant'></i>
+      <i class='mdi mdi-silverware-variant' ng-if='item.product_name'></i>
       <span class='font-thin m-r-xs'>{{ item.product_name }}</span>
     </div>
     <span class='font-thin' ng-if='item.notes'>

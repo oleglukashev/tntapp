@@ -22,12 +22,14 @@ export default class NewReservation {
       }
     });
 
-    if (!reservation.last_name) errors.push('achternaam is verplicht');
-    if (!reservation.first_name) errors.push('voornaam is verplicht');
+    if (!walkIn) {
+      if (!reservation.last_name) errors.push('achternaam is verplicht');
+      if (!reservation.first_name) errors.push('voornaam is verplicht');
+    }
 
-    if (!reservation.mail) {
+    if (!reservation.mail && !walkIn) {
       errors.push('email adres is verplicht');
-    } else if (!emailRe.test(reservation.mail)) {
+    } else if (reservation.mail && !emailRe.test(reservation.mail)) {
       errors.push('email adres niet vol');
     }
 
