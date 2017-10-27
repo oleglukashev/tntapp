@@ -45,7 +45,7 @@
             {{ user.parsedDate(current_part.date_time) }}
           </h3>
           <small class="font-thin">
-            {{ current_part.product.name }},
+            <span ng-if='current_part.product.name'>{{ current_part.product.name }},</span>
             {{ current_part.number_of_persons }} personen
           </small>
         </div>
@@ -165,7 +165,7 @@
               {{ user.parsedDate(part.date_time) }}
             </h3>
             <small class="font-thin">
-              {{ part.product.name }},
+              <span ng-if='part.product.name'>{{ part.product.name }},</span>
               {{ part.number_of_persons }} personen
             </small>
             <div class='pull-right review_score' ng-if='reservation.reviewScore != null'>
