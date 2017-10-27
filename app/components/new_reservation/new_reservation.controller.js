@@ -62,6 +62,12 @@ export default class NewReservationCtrl {
     this.preloadData();
   }
 
+  walkInOrReservationPart() {
+    return this.walk_in.reservation_parts.length
+      ? this.walk_in.reservation_parts
+      : this.reservation.reservation_parts;
+  }
+
   triggerAdditionalInfo() {
     this.additional_is_opened = !this.additional_is_opened;
   }
@@ -81,9 +87,11 @@ export default class NewReservationCtrl {
   }
 
   submitWalkInForm() {
-    const name = this.walk_in.name || '';
-    this.walk_in.first_name = name.split(' ')[0];
-    this.walk_in.last_name = name.split(' ')[1];
+    const dateTime = `${this.moment().format('DD-MM-YYYY HH:mm')}`;
+
+    this.walk_in_part.date = this.moment().format('DD MMMM YYYY');
+    this.walk_in_part.time = this.moment().format('HH:mm');
+
     this.validWalkInForm();
     if (this.errors.length) return false;
 
@@ -105,7 +113,7 @@ export default class NewReservationCtrl {
       data.reservation_parts.push({
         number_of_persons: part.number_of_persons,
         tables: part.tables,
-        date_time: `${this.moment().format('DD-MM-YYYY HH:mm')}`,
+        date_time: dateTime,
       });
     });
 
@@ -531,6 +539,21 @@ export default class NewReservationCtrl {
     }
 
     return [];
+  }
+
+  isDisabledTableByTableId(tableId) {
+    const table = this.filterFilter(this.tables, { id: tableId })[0];
+    let result = table ? table.hidden === true : false;
+
+    if (!result && this.occupied_tables) {
+      result = typeof this.occupied_tables[tableId] !== 'undefined';
+    }
+
+    if (!result) {
+      result = false;
+    }
+
+    return result;
   }
 }
 

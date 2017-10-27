@@ -17,17 +17,25 @@
             <md-input-container class='md-block'>
               <label>Tafel</label>
               <md-icon class="mdi mdi-border-horizontal i-24 m-t-n-xs"></md-icon>
-              <md-select ng-model="reserv.walk_in_part.tables" required multiple>
-                <md-option ng-repeat="table in reserv.tables | orderBy:'table_number'" ng-value="table.id">
-                  Tafel {{ table.table_number }}
-                </md-option>
+              <md-select multiple
+                         ng-model='reserv.walk_in_part.tables'>
+                <md-optgroup ng-repeat='zone in reserv.zones' label='{{ zone.name }}'>
+                  <md-option ng-value='table_id' ng-repeat='table_id in zone.table_ids'
+                             ng-disabled='reserv.isDisabledTableByTableId(table_id)'>
+                    Tafel {{ reserv.Reservation.getTableNumberByTableId(reserv.tables, table_id) }} - {{ reserv.Reservation.getPersonCountByTableId(reserv.tables, table_id) }} personen
+                  </md-option>
+                </md-optgroup>
               </md-select>
             </md-input-container>
           </div>
           <div class='w-xl m-t-md' ng-show='reserv.additional_is_opened'>
             <md-input-container class='md-block'>
-              <label>Voor- en achternaam</label>
-              <input ng-model='reserv.walk_in.name' ng-required='false' />
+              <label>Voornaam</label>
+              <input ng-model='reserv.walk_in.first_name' ng-required='true' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label>Achternaam</label>
+              <input ng-model='reserv.walk_in.last_name' ng-required='true' />
             </md-input-container>
             <md-input-container class='md-block'>
               <label>E-mail</label>
