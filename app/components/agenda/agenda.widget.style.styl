@@ -1,0 +1,59 @@
+md-fab-speed-dial.md-fab-widget
+    z-index 99
+    .md-fab-action-item
+        opacity 1 !important
+    .calendar_wrapper
+        .reservationShadow
+            display none
+    md-fab-trigger[aria-expanded='true']
+        .widget-count
+            right -30px
+    .widget-button
+        position fixed
+        top 50%
+        right -135px !important
+        width 300px !important
+        border-radius 6px !important
+        background-color #fff
+        -webkit-transform rotate(-90deg)
+    .widget-count
+        position fixed
+        top 50%
+        margin-top -130px
+        right 30px
+        font-size 20px
+        background-color #fff
+        width 30px
+        height 30px
+        text-align center
+        border-radius 30px
+        border 1px #ccc solid
+        z-index 100
+        transition all .3s cubic-bezier(.55,0,.55,.2)
+    .widget-time
+        font-size 16px
+        width 40px
+        text-align center
+        padding 3px 5px
+    md-fab-actions
+        position fixed
+        right -260px
+        height 302px !important
+        width 260px !important
+        top 50%
+        margin-top -118px
+        border-top-left-radius 6px
+        border-bottom-left-radius 6px
+        background-color rgb(255, 255, 255)
+        box-shadow rgba(0, 0, 0, 0.26) 0px 2px 5px
+        z-index 99
+        transition all .3s cubic-bezier(.55,0,.55,.2)
+        overflow-y scroll
+        overflow-x hidden
+        .reservation
+            @extend .agenda .reservation
+            width 200px
+            position relative
+            border-width 0
+    md-fab-actions[aria-hidden='false']
+        right 0px !important

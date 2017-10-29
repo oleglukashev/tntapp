@@ -53,7 +53,7 @@ import editUser from './shared/user_menu/edit';
 import './assets/css/app.styl';
 import './common/services';
 import './common/directives';
-import './common/filters/capitalize';
+import './common/filters/order_object_by';
 
 angular
   .module('app', [angularJwt, angularAnimate, angularNgUploader, angularAria, angularCookies,
