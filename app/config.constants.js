@@ -21,6 +21,13 @@ export default angular.module('app.constants', [])
       delayed: 'Niet aanwezig',
       cancelled: 'Geannuleerd',
     },
+    reservationEnglishStatuses: {
+      'Bevestigd': 'confirmed',
+      'Aanvraag': 'request',
+      'Aanwezig': 'present',
+      'Niet aanwezig': 'delayed',
+      'Geannuleerd': 'cancelled',
+    },
     reservationStatusClasses: {
       confirmed: 'mdi-checkbox-blank-circle-outline',
       cancelled: 'mdi-close',
