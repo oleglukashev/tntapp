@@ -173,7 +173,7 @@ export default class AgendaCtrl {
           if ((difference * this.hour_width) / 4 > this.minimal_width) {
             const data = {
               part_id: reservationPartId,
-              datetime: `${dateFilter.format('YYYY-MM-DD')} ${dateTime.format('HH')}:${dateTime.format('mm')}:00`,
+              date_time: `${dateFilter.format('YYYY-MM-DD')} ${dateTime.format('HH')}:${dateTime.format('mm')}:00`,
               tables: Object.values(part.table_ids),
               duration_minutes: difference * 15,
             };
@@ -193,7 +193,7 @@ export default class AgendaCtrl {
           });
           const data = {
             part_id: reservationPartId,
-            datetime: newDateTime.format('YYYY-MM-DD HH:mm:00'),
+            date_time: newDateTime.format('YYYY-MM-DD HH:mm:00'),
             tables: [targetTableId],
           };
 
