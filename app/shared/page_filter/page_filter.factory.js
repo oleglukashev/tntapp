@@ -52,7 +52,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     instance.filters = [];
     instance.sort = instance.sort_params[0];
 
-    Object.values(AppConstants.reservationStatuses).forEach((item) => {
+    AppConstants.reservationStatuses.forEach((item) => {
       const filterItem = {
         name: 'status',
         value: AppConstants.reservationDutchStatuses[item],
@@ -121,7 +121,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
       instance.filters.forEach((filter) => {
         if (filter.name === 'status') {
           result = result.concat(filterFilter(instance.reservations, {
-            status: AppConstants.reservationDutchStatuses[filter.value],
+            status: AppConstants.reservationEnglishStatuses[filter.value],
           }));
         } else if (filter.name === 'product') {
           result = result.concat(instance.reservations.filter((reservation) => {
