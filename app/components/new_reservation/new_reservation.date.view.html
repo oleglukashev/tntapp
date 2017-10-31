@@ -18,6 +18,8 @@
                     starting-day='1'
                     show-weeks='false'
                     datepicker-options='reserv.Reservation.date_options'
+                    date-disabled='reserv.disableDatesWithoutProducts(date, filterDatePicker)'
+                    datepicker-refresh='dateDisablePromise'
                     ng-model='reserv.current_part.date'
                     min-date='reserv.Reservation.init_date'
                     max-date='reserv.Reservation.max_date'
