@@ -2,8 +2,8 @@ import angular from 'angular';
 
 export default class NewReservationCtrl {
   constructor(
-    User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone, NewReservation,
-    Table, moment, filterFilter, $state, $stateParams, $rootScope, $scope, $window, $auth,
+    Customer, User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone, NewReservation,
+    Table, moment, filterFilter, $state, $stateParams, $rootScope, $scope, $window, $auth, $timeout,
   ) {
     'ngInject';
 
@@ -15,6 +15,7 @@ export default class NewReservationCtrl {
     this.Reservation = Reservation;
     this.NewReservation = NewReservation;
     this.CustomerCompany = CustomerCompany;
+    this.Customer = Customer;
     this.Product = Product;
     this.Zone = Zone;
     this.Table = Table;
@@ -34,6 +35,7 @@ export default class NewReservationCtrl {
     this.$rootScope = $rootScope;
     this.filterFilter = filterFilter;
     this.$window = $window;
+    this.$timeout = $timeout;
 
     this.moment = moment;
     this.selected_index = 0;
@@ -60,6 +62,46 @@ export default class NewReservationCtrl {
     this.is_submitting = false;
 
     this.preloadData();
+  }
+
+
+  search(query) {
+    if (!query) return [];
+    return this.Customer.search(this.current_company_id, query).then((result) => {
+      return result.map((customer) => {
+        return {
+          value: customer.id,
+          first_name: customer.first_name,
+          last_name: customer.last_name,
+          mail: customer.mail,
+          primary_phone_number: customer.primary_phone_number,
+          display: `${customer.first_name} ${customer.last_name}`,
+        };
+      });
+    });
+  }
+
+  selectedItemChange(item) {
+    if (item) {
+      this.reservation.mail = item.mail;
+      this.reservation.primary_phone_number = item.primary_phone_number;
+      this.reservation.first_name = item.first_name;
+      this.reservation.last_name = item.last_name;
+
+      this.walk_in.mail = item.mail;
+      this.walk_in.primary_phone_number = item.primary_phone_number;
+      this.walk_in.first_name = item.first_name;
+      this.walk_in.last_name = item.last_name;
+
+      // trying to solve [object Object] bug: https://github.com/angular/material/issues/3760
+      this.$timeout(() => {
+        if (!item.last_name) {
+          this.reservation.last_name = ' ';
+          this.walk_in.last_name = ' ';
+          item.last_name = ' ';
+        }
+      }, 100);
+    }
   }
 
   walkInOrReservationPart() {
