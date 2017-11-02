@@ -1,89 +1,81 @@
-import angular from 'angular';
-
 export default class Product {
   constructor($http, $q) {
     'ngInject';
 
-    this.$http           = $http;
-    this.$q              = $q;
+    this.$http = $http;
+    this.$q = $q;
   }
 
-  create(company_id, data) {
-    if (! company_id) {
+  create(companyId, data) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/products/create',
+      url: `${API_URL}/company/${companyId}/products/create`,
       method: 'POST',
-      data: data
-    }).then((result) => result.data);
+      data,
+    }).then(result => result.data);
   }
 
-  delete(company_id, product_id) {
-    if (! company_id) {
+  delete(companyId, productId) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
-    return this.$http.delete(API_URL + '/company/' + company_id + '/products/' + product_id)
-      .then((result) => result.data);
+    return this.$http.delete(`${API_URL}/company/${companyId}/products/${productId}`)
+      .then(result => result.data);
   }
 
-  hidden(company_id, product_id) {
-    if (! company_id) {
+  hidden(companyId, productId) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
-    return this.$http.post(API_URL + '/company/' + company_id + '/products/hidden/' + product_id)
-      .then((result) => result.data);
+    return this.$http.post(`${API_URL}/company/${companyId}/products/hidden/${productId}`)
+      .then(result => result.data);
   }
 
-  getAll(company_id, with_hidden) {
-    let deferred = this.$q.defer();
-
-    if (! company_id) {
-      return deferred.promise;
+  getAll(companyId, hidden) {
+    if (!companyId) {
+      return this.$q.defer().promise;
     }
 
     return this.$http({
-        url: API_URL + '/company/' + company_id + '/product',
-        method: 'GET',
-      }).then(
-        (result) => {
-          if (with_hidden) {
-            return result.data;
-          } else {
-            return result.data.filter((item) => item.hidden == false);
-          }
-        });
+      url: `${API_URL}/company/${companyId}/product${(hidden ? '?hidden=true' : '')}`,
+      method: 'GET',
+    }).then(
+      (result) => {
+        // TODO remove it and make separate method to get hidden products and not
+        if (hidden) {
+          return result.data;
+        }
+
+        return result.data.filter(item => item.shaded === false);
+      });
   }
 
-  getAvailableTables(company_id, product_id, date) {
-    let deferred = this.$q.defer();
-
-    if (!(company_id && product_id && date)) {
-      return deferred.promise;
+  getAvailableTables(companyId, productId, date) {
+    if (!(companyId && productId && date)) {
+      return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/product/available_tables',
+      url: `${API_URL}/company/${companyId}/product/available_tables`,
       method: 'POST',
-      data: { product_id: product_id, date: date }
-    }).then((result) => result.data);
+      data: { product_id: productId, date },
+    }).then(result => result.data);
   }
 
-  getAvailableTablesOfProducts(company_id, date) {
-    let deferred = this.$q.defer();
-
-    if (!(company_id && date)) {
-      return deferred.promise;
+  getAvailableTablesOfProducts(companyId, date) {
+    if (!(companyId && date)) {
+      return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/product/available_tables_of_products',
+      url: `${API_URL}/company/${companyId}/product/available_tables_of_products`,
       method: 'POST',
-      data: { date: date }
-    }).then((result) => result.data);
+      data: { date },
+    }).then(result => result.data);
   }
-
 }
