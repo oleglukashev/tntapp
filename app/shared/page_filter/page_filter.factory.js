@@ -59,7 +59,6 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
       };
 
       instance.filter_params.push(filterItem);
-      instance.filters.push(filterItem);
     });
 
     instance.exportReservationsCSV = () => {
@@ -129,6 +128,10 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
           }));
         }
       });
+
+      if (!instance.filters.length) {
+        return instance.reservations;
+      }
 
       return result.filter((value, index) => result.indexOf(value) === index);
     };

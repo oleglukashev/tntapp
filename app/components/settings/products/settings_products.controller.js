@@ -1,12 +1,13 @@
 export default class SettingsProductsCtrl {
   constructor(
     User, Product, AppConstants, TimeRange, Slider, $scope, $timeout, $window,
-    $modal,
+    $modal, filterFilter,
   ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
+    this.filterFilter = filterFilter;
     this.Product = Product;
     this.TimeRange = TimeRange;
     this.Slider = Slider;
@@ -103,36 +104,38 @@ export default class SettingsProductsCtrl {
           });
 
           ranges.map((range) => {
-            const productStartTime = this.Slider.to15Min('00:00'); // product.start_time
-            const productEndTime = this.Slider.to15Min('23:45', false); // product.end_time
-            range.daysOfWeek.map((day) => {
-              const rangeStartTime = this.Slider.to15Min(range.startTime);
-              const rangeEndTime = this.Slider.to15Min(range.endTime, false);
+            if (this.products[range.productId]) {
+              const productStartTime = this.Slider.to15Min('00:00'); // product.start_time
+              const productEndTime = this.Slider.to15Min('23:45', false); // product.end_time
+              range.daysOfWeek.map((day) => {
+                const rangeStartTime = this.Slider.to15Min(range.startTime);
+                const rangeEndTime = this.Slider.to15Min(range.endTime, false);
 
-              const startTime = Math.max(productStartTime, rangeStartTime);
-              const endTime = Math.min(productEndTime, rangeEndTime);
+                const startTime = Math.max(productStartTime, rangeStartTime);
+                const endTime = Math.min(productEndTime, rangeEndTime);
 
-              const options = Object.assign({}, this.slider.options);
+                const options = Object.assign({}, this.slider.options);
 
-              // options.minLimit = productStartTime;
-              // options.maxLimit = productEndTime;
-              if (!range.value) options.disabled = true; // disabled ?
-              this.products_used[range.name] = 1;
-              const dayData = this.data[this.days[day - 1]]
-              dayData.time_ranges[range.openHourId] = {
-                day: day - 1,
-                product_id: range.productId,
-                name: range.name,
-                minValue: startTime,
-                maxValue: endTime,
-                options,
-              };
+                // options.minLimit = productStartTime;
+                // options.maxLimit = productEndTime;
+                if (!range.value) options.disabled = true; // disabled ?
+                this.products_used[range.name] = 1;
+                const dayData = this.data[this.days[day - 1]]
+                dayData.time_ranges[range.openHourId] = {
+                  day: day - 1,
+                  product_id: range.productId,
+                  name: range.name,
+                  minValue: startTime,
+                  maxValue: endTime,
+                  options,
+                };
 
-              this.calculateMinMax(dayData);
-            });
+                this.calculateMinMax(dayData);
+              });
+            }
           });
-          this.redrawSliders();
 
+          this.redrawSliders();
           this.is_loaded = true;
         },
         () => {},
@@ -258,7 +261,7 @@ export default class SettingsProductsCtrl {
       .hidden(this.current_company_id, productId)
       .then(
         (res) => {
-          this.products[productId].hidden = res.hidden;
+          this.products[productId].shaded = res.hidden;
         },
         () => {},
       );
