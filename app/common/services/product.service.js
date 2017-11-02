@@ -46,12 +46,7 @@ export default class Product {
       method: 'GET',
     }).then(
       (result) => {
-        // TODO remove it and make separate method to get hidden products and not
-        if (hidden) {
-          return result.data;
-        }
-
-        return result.data.filter(item => item.shaded === false);
+        return result.data;
       });
   }
 
