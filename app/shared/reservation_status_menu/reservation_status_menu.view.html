@@ -6,7 +6,12 @@
         aria-expanded='false'
         aria-disabled='false'
         ng-click='$mdMenu.open($event);'>
-    <i class='mdi mdi-dots-vertical i-24'></i>
+    <i ng-if='agendaIcon'
+       class='mdi i-20'
+       ng-class='controller.ReservationStatus.getIcon(item, item.reservation)'
+       title='{{ agenda.AppConstants.reservationDutchStatuses[part.reservation.status] }}'></i>
+    <i ng-if='!agendaIcon'
+       class='mdi mdi-dots-vertical i-24'></i>
   </button>
   <md-menu-content width='4' class='reservation_menu'>
     <md-menu-item ng-repeat='status in controller.statuses'>
