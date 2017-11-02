@@ -9,37 +9,40 @@ export default class Table {
     this.filterFilter = filterFilter;
   }
 
-  getAll(companyId) {
+  getAll(companyId, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/settings/table`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
   }
 
-  getOccupiedTables(companyId, data) {
+  getOccupiedTables(companyId, data, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/table/occupied?datetime=${data.date_time}&part_id=${data.part_id}`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
   }
 
-  save(companyId, data) {
+  save(companyId, data, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/settings/table/save`,
+      skipAuthorization: skipJwtAuth,
       method: 'POST',
-      data: data,
+      data,
     }).then(result => result.data);
   }
 
