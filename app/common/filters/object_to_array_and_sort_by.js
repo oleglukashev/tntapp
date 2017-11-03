@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export default angular.module('app.filters', [])
-  .filter('orderObjectBy', () =>
+  .filter('objectToArrayAndSortBy', () =>
     (items, field, reverse) => {
       const filtered = [];
       angular.forEach(items, (item) => {

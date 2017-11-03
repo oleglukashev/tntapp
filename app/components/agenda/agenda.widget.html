@@ -12,7 +12,7 @@
 
   <md-fab-actions ng-click="agenda.dontHideWidget($event)">
     <div class='calendar_wrapper'>
-      <div ng-repeat='part in agenda.partsByTable.null | orderObjectBy:"date_time"'>
+      <div ng-repeat='part in agenda.partsByTable.null | objectToArrayAndSortBy:"date_time"'>
         <div class="pull-left widget-time">{{ agenda.moment(part.date_time).format('HH:mm') }}</div>
         <div class='reservation'
              ui-draggable='true'
