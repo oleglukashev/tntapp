@@ -4,6 +4,7 @@ export default class NewReservationCtrl {
   constructor(
     Customer, User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone, NewReservation,
     Table, moment, filterFilter, $state, $stateParams, $rootScope, $scope, $window, $auth, $timeout,
+    $q,
   ) {
     'ngInject';
 
@@ -50,6 +51,8 @@ export default class NewReservationCtrl {
       reservation_parts: [],
     };
 
+    this.time_ranges = [];
+
     this.reservation.reservation_parts.push(this.getNewReservationPart());
     this.current_part = this.reservation.reservation_parts[0];
 
@@ -61,9 +64,11 @@ export default class NewReservationCtrl {
     this.is_success = false;
     this.is_submitting = false;
 
+    this.dateDisableDeferred = $q.defer();
+    $scope.dateDisablePromise = this.dateDisableDeferred.promise;
+
     this.preloadData();
   }
-
 
   search(query) {
     if (!query) return [];
@@ -101,6 +106,18 @@ export default class NewReservationCtrl {
           item.last_name = ' ';
         }
       }, 100);
+    }
+  }
+
+  refreshDatepicker() {
+    this.dateDisableDeferred.notify(new Date().getTime());
+  }
+
+  disableDatesWithoutProducts(date, filterDatePicker) {
+    if (filterDatePicker) {
+      if (this.time_ranges[this.moment(date).isoWeekday()]) {
+        return (Object.keys(this.time_ranges[this.moment(date).isoWeekday()]).length === 0);
+      }
     }
   }
 
@@ -371,8 +388,23 @@ export default class NewReservationCtrl {
   loadTimeRanges() {
     this.TimeRange.getAll(this.current_company_id).then(
       (ranges) => {
+        this.time_ranges = [];
         ranges.forEach((range) => {
-          if (range.daysOfWeek[0] === this.moment().isoWeekday()) {
+          const rangeDayOfWeek = range.daysOfWeek[0];
+          const rangeProduct = this.filterFilter(this.products, { id: range.productId })[0];
+
+          if (!this.time_ranges[rangeDayOfWeek]) {
+            this.time_ranges[rangeDayOfWeek] = {};
+          }
+
+          if (range.value && rangeProduct && !rangeProduct.hidden) {
+            this.time_ranges[rangeDayOfWeek][range.productId] = {
+              startTime: this.moment(range.startTime, 'HH:mm'),
+              endTime: this.moment(range.endTime, 'HH:mm'),
+            };
+          }
+
+          if (rangeDayOfWeek === this.moment().isoWeekday()) {
             const currentTime = this.moment();
             const startTime = this.moment(range.startTime, 'HH:mm');
             const endTime = this.moment(range.endTime, 'HH:mm');
@@ -385,6 +417,7 @@ export default class NewReservationCtrl {
             });
           }
         });
+        this.refreshDatepicker();
       });
   }
 
