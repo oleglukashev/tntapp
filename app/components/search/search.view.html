@@ -1,4 +1,4 @@
-<div id='searchBar' class='animated' ng-class='class'>
+<div class='searchBar animated' ng-class='class'>
   <form ng-submit='$event.preventDefault()'>
     <i class='icon-magnifier i-sm m-r-sm' id='search_icon'></i>
     <md-autocomplete
@@ -8,6 +8,7 @@
         md-items='item in search.search(search.searchText)'
         md-item-text='item.display'
         md-min-length='3'
+        md-menu-container-class='search-suggestions'
         placeholder='Zoek je reservering of persoon...'>
       <md-item-template>
         <span md-highlight-text='search.searchText' md-highlight-flags='^i'>{{item.display}}</span>
