@@ -1,0 +1,42 @@
+<md-fab-speed-dial ng-show='agenda.view_type == "calendar"'
+                   md-direction="left"
+                   md-open="false"
+                   md-is-locked-open='false'
+                   class="md-fling md-fab-top-right md-fab-widget">
+  <md-fab-trigger>
+    <md-button class="md-fab widget-button" md-ink-ripple="false">
+      Reserveringen zonder tafel
+    </md-button>
+    <div class="widget-count" >{{ agenda.getEmptyTableReservations() }}</div>
+  </md-fab-trigger>
+
+  <md-fab-actions ng-click="agenda.dontHideWidget($event)">
+    <div class='calendar_wrapper'>
+      <div ng-repeat='part in agenda.partsByTable.null | objectToArrayAndSortBy:"date_time"'>
+        <div class="pull-left widget-time">{{ agenda.moment(part.date_time).format('HH:mm') }}</div>
+        <div class='reservation'
+             ui-draggable='true'
+             drag='part.id'
+             ng-style='agenda.reservationBlockStyle(tableIndex, part)'
+             on-drop-failure='agenda.dragEnd()'
+             ng-class='agenda.draggable_class'
+             data-product-id='{{ part.product_id }}'
+             data-id='{{ part.id }}'
+             drag-channel='move'>
+          <i class='mdi i-20'
+             ng-class='agenda.ReservationStatus.getIcon(part, part.reservation)'
+             title='{{ agenda.AppConstants.reservationDutchStatuses[part.reservation.status] }}'
+          ></i>
+          <a ng-click='user.openCustomerMenu(part.customer.id, part.id)' ng-controller='UserMenuCtrl as user'>
+            {{ part.number_of_persons }}
+            {{ part.product.name }}
+            <strong>
+              {{ part.customer.last_name }}
+              {{ part.customer.first_name }}
+            </strong>
+          </a>
+        </div>
+      </div>
+    </div>
+  </md-fab-actions>
+</md-fab-speed-dial>

@@ -26,6 +26,7 @@ export default class AgendaCtrl {
     this.errors = [];
     this.opened = [true];
     this.partsByTable = {};
+    this.partsByTable.null = {};
     this.zones = [];
     this.products = [];
     this.reservations = [];
@@ -78,6 +79,10 @@ export default class AgendaCtrl {
     this.loadProducts();
 
     this.changeDateFilterPostProcess();
+  }
+
+  dontHideWidget($event) {
+    $event.stopImmediatePropagation();
   }
 
   // scrolling left for now line
@@ -165,7 +170,6 @@ export default class AgendaCtrl {
       if (tables[tableId][reservationPartId]) {
         const part = tables[tableId][reservationPartId];
         const dateTime = this.moment(part.date_time);
-
         if (this.channel === 'resize') {
           const difference = (((hour * 4) + quarter) - ((dateTime.get('hour') * 4) +
             (dateTime.get('minute') / 15)));
@@ -392,8 +396,13 @@ export default class AgendaCtrl {
     };
   }
 
+  getEmptyTableReservations() {
+    return Object.keys(this.partsByTable.null).length;
+  }
+
   setGraphData() {
     this.partsByTable = {};
+    this.partsByTable.null = {};
     const reservations = this.applyFilterToReservations();
     reservations.forEach((reservation) => {
       if (reservation.status !== 'cancelled') {
@@ -402,15 +411,20 @@ export default class AgendaCtrl {
           if (this.moment(this.date_filter).startOf('day')
             .isSame(this.moment(part.date_time).startOf('day'))
           ) {
-            part.table_ids.forEach((tableId) => {
-              if (!this.partsByTable[tableId]) this.partsByTable[tableId] = {};
-              part.left = this.timeToCoords(part.date_time);
-              part.width = this.durationToWidth(part.duration_minutes);
-              part.customer = reservation.customer;
-              part.status = reservation.status;
-              part.reservation = reservation;
-              this.partsByTable[tableId][part.id] = part;
-            });
+            const procPart = part;
+            procPart.customer = reservation.customer;
+            procPart.status = reservation.status;
+            procPart.reservation = reservation;
+            if (procPart.table_ids.length) {
+              procPart.table_ids.forEach((tableId) => {
+                if (!this.partsByTable[tableId]) this.partsByTable[tableId] = {};
+                procPart.left = this.timeToCoords(part.date_time);
+                procPart.width = this.durationToWidth(part.duration_minutes);
+                this.partsByTable[tableId][part.id] = procPart;
+              });
+            } else {
+              this.partsByTable.null[part.id] = procPart;
+            }
           }
         });
       }
