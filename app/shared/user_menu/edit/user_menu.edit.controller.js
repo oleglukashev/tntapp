@@ -12,7 +12,7 @@ export default class UserMenuEditCtrl {
 
     this.note = {};
 
-    this.$rootScope.userData = this.$rootScope.customer;
+    this.customer = this.$rootScope.customer;
 
     this.date_options = {
       formatYear: 'yyyy',
@@ -21,9 +21,9 @@ export default class UserMenuEditCtrl {
       class: 'datepicker',
     };
 
-    this.notes = this.$rootScope.customer_notes;
-    this.preferences = this.$rootScope.customer_preferences;
-    this.allergies = this.$rootScope.customer_allergies;
+    this.customerNotes = this.$rootScope.customer_notes;
+    this.customerPreferences = this.$rootScope.customer_preferences;
+    this.customerAllergies = this.$rootScope.customer_allergies;
 
     UserMenuEditFactroy(this);
   }

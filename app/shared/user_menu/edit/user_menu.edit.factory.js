@@ -8,11 +8,11 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
     instance.deleteNote = (index) => {
       CustomerNote.delete(
         instance.current_company_id,
-        instance.$rootScope.userData.id,
-        instance.notes[index].id,
+        instance.customer.id,
+        instance.customerNotes[index].id,
       ).then(
         () => {
-          instance.notes.splice(index, 1);
+          instance.customer_notes.splice(index, 1);
           instance.note = null;
         }, () => {},
       );
@@ -21,8 +21,8 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
     instance.deletePreference = (index) => {
       CustomerPreference.delete(
         instance.current_company_id,
-        instance.$rootScope.userData.id,
-        instance.preferences[index].id,
+        instance.customer.id,
+        instance.customerPreferences[index].id,
       ).then(
         () => {
           instance.preferences.splice(index, 1);
@@ -34,8 +34,8 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
     instance.deleteAllergy = (index) => {
       CustomerAllergies.delete(
         instance.current_company_id,
-        instance.$rootScope.userData.id,
-        instance.allergies[index].id,
+        instance.customer.id,
+        instance.customerAllergies[index].id,
       ).then(
         () => {
           instance.allergies.splice(index, 1);
@@ -49,33 +49,33 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
         return false;
       }
 
-      let userData = instance.$rootScope.userData;
+      const customerClone = instance.customer;
       instance.is_submitting = true;
 
-      if (userData.date_of_birth) {
-        userData.date_of_birth = moment(userData.date_of_birth).format('DD-MM-YYYY');
+      if (customerClone.date_of_birth) {
+        customerClone.date_of_birth = moment(customerClone.date_of_birth).format('DD-MM-YYYY');
       } else {
-        userData.date_of_birth = null;
+        customerClone.date_of_birth = null;
       }
 
       const data = {
-        first_name: userData.first_name,
-        last_name: userData.last_name,
-        primary_phone_number: userData.primary_phone_number,
-        secondary_phone_number: userData.secondary_phone_number,
-        street: userData.street,
-        house_number: userData.house_number,
-        zipcode: userData.zipcode,
-        city: userData.city,
-        mail: userData.mail,
-        date_of_birth: userData.date_of_birth,
-        gender: userData.gender,
-        averageRating: userData.average_rating,
+        first_name: customerClone.first_name,
+        last_name: customerClone.last_name,
+        primary_phone_number: customerClone.primary_phone_number,
+        secondary_phone_number: customerClone.secondary_phone_number,
+        street: customerClone.street,
+        house_number: customerClone.house_number,
+        zipcode: customerClone.zipcode,
+        city: customerClone.city,
+        mail: customerClone.mail,
+        date_of_birth: customerClone.date_of_birth,
+        gender: customerClone.gender,
+        averageRating: customerClone.average_rating,
       };
 
-      Customer.edit(instance.current_company_id, userData.id, data).then(
+      Customer.edit(instance.current_company_id, customerClone.id, data).then(
         () => {
-          userData = Object.assign(data, userData);
+          instance.$rootScope.customer = Object.assign(data, customerClone);
           instance.$rootScope.$broadcast('ProfilesCtrl.reload_customers');
           instance.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
           instance.is_submitting = false;
@@ -97,7 +97,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
       if (instance.note.id) {
         CustomerNote.update(
           instance.current_company_id,
-          instance.$rootScope.userData.id,
+          instance.customer.id,
           instance.note.id,
           data,
         ).then(
@@ -108,7 +108,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
           }, () => {},
         );
       } else {
-        CustomerNote.create(instance.current_company_id, instance.$rootScope.userData.id, data)
+        CustomerNote.create(instance.current_company_id, instance.customer.id, data)
           .then(
             (result) => {
               instance.$rootScope.customer_notes.push(result);
@@ -134,7 +134,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
       if (instance.preference.id) {
         CustomerPreference.update(
           instance.current_company_id,
-          instance.$rootScope.userData.id,
+          instance.customer.id,
           instance.preference.id,
           data,
         ).then(
@@ -145,7 +145,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
           }, () => {},
         );
       } else {
-        CustomerPreference.create(instance.current_company_id, instance.$rootScope.userData.id, data)
+        CustomerPreference.create(instance.current_company_id, instance.customer.id, data)
           .then(
             (result) => {
               instance.$rootScope.customer_preferences.push(result);
@@ -170,7 +170,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
       if (instance.allergy.id) {
         CustomerAllergies.update(
           instance.current_company_id,
-          instance.$rootScope.userData.id,
+          instance.customer.id,
           instance.allergy.id,
           data,
         ).then(
@@ -181,7 +181,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
           }, () => {},
         );
       } else {
-        CustomerAllergies.create(instance.current_company_id, instance.$rootScope.userData.id, data)
+        CustomerAllergies.create(instance.current_company_id, instance.customer.id, data)
           .then(
             (result) => {
               instance.$rootScope.customer_allergies.push(result);

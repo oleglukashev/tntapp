@@ -35,6 +35,10 @@ export default class UserMenuCtrl {
       resolve: {
         reservation: () => reservation,
         reservationPart: () => reservationPart,
+        customer: () => this.$rootScope.customer,
+        customerNotes: () => this.$rootScope.customer_notes,
+        customerAllergies: () => this.$rootScope.customer_allergies,
+        customerPreferences: () => this.$rootScope.customer_preferences,
       },
     });
 

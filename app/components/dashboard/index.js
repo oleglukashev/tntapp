@@ -15,6 +15,6 @@ export default angular.module('app.dashboard', [])
   .factory('DashboardReservationsItemFactory', itemFactroy,
     ['AppConstants', 'ReservationStatus'])
   .factory('ReservationStatusMenu', reservationStatusMenuFactory,
-    ['ReservationStatus', 'filterFilter', 'moment', '$modal'])
+    ['ReservationStatus', 'Customer', 'filterFilter', 'moment', '$modal'])
   .factory('UserMenuEditFactroy', userMenuEditFactroy)
   .name;

@@ -14,6 +14,6 @@ export default angular.module('app.agenda', [])
   .factory('AgendaItemFactory', itemFactory,
     ['AppConstants', 'ReservationStatus'])
   .factory('ReservationStatusMenu', reservationStatusMenuFactory,
-    ['ReservationStatus', 'filterFilter', 'moment', '$modal'])
+    ['ReservationStatus', 'Customer', 'filterFilter', 'moment', '$modal'])
   .factory('PageFilterFactory', pageFilterFactory)
   .name;

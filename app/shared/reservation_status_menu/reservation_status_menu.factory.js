@@ -1,5 +1,5 @@
 export default function reservationStatusMenu(
-  AppConstants, ReservationStatus, filterFilter, moment, $modal,
+  AppConstants, ReservationStatus, filterFilter, Customer, moment, $modal,
   Loaded,
 ) {
   'ngInject';
@@ -62,8 +62,25 @@ export default function reservationStatusMenu(
       }, () => {});
     };
 
-    instance.editPart = (part) => {
+    instance.openEditReservationModal = (reservation, reservationPart) => {
+      Customer.searchReservationsByCustomerId(instance.current_company_id, reservation.customer.id)
+        .then((response) => {
+          const modalInstance = $modal.open({
+            templateUrl: 'reservation_part.edit.view.html',
+            controller: 'ReservationPartEditCtrl as reserv',
+            size: 'md',
+            resolve: {
+              reservation: () => reservation,
+              reservationPart: () => reservationPart,
+              customer: () => response.customer,
+              customerNotes: () => response.notes,
+              customerAllergies: () => response.allergies,
+              customerPreferences: () => response.preferences,
+            },
+          });
 
+          modalInstance.result.then(() => {}, () => {});
+        });
     };
   };
 }

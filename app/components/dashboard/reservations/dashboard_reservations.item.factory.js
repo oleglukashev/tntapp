@@ -28,6 +28,7 @@ export default function DashboardReservationsItemFactory(AppConstants, Reservati
         customer_id: reservation.customer.id,
         name,
         reservation,
+        part,
       };
     };
   };
