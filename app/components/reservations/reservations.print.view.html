@@ -15,7 +15,8 @@
         <th width="10%">Phone</th>
         </thead>
         <tbody ng-repeat='reservation in reservations.reservations' ng-show='reservations.reservations.length'>
-            <tr ng-repeat='reservation_part in reservation.reservation_parts'>
+            <tr ng-repeat='reservation_part in reservation.reservation_parts'
+                ng-if='reservation.status !== "cancelled"'>
             <td align="center">
                 <input type="checkbox" />
             </td>
