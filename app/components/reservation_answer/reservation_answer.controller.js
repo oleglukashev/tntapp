@@ -15,7 +15,9 @@ export default class ReservationsAnswerCtrl {
     this.filterFilter = filterFilter;
     this.form_data = {};
 
-    this.loadMailsTextsSettings();
+    if (this.isCancellingReservation) {
+      this.loadMailsTextsSettings();
+    }
   }
 
   closeModal() {
