@@ -12,7 +12,6 @@ export default class NewReservationCtrl {
     this.is_reservations = $state.current.name === 'app.reservations';
     this.is_agenda = $state.current.name === 'app.agenda';
     this.is_customer_reservation = $state.current.name === 'customer_reservation.new';
-
     this.Reservation = Reservation;
     this.NewReservation = NewReservation;
     this.CustomerCompany = CustomerCompany;
@@ -307,7 +306,6 @@ export default class NewReservationCtrl {
     if (this.socials && this.socials.settings.reservation_deadline) {
       const now = this.moment();
       const deadline = this.moment(this.socials.settings.reservation_deadline, 'HH:mm');
-
       if (this.is_customer_reservation && now > deadline) {
         this.Reservation.init_date = this.moment().add(1, 'd');
         this.$mdDialog.show(this.$mdDialog.alert()
@@ -469,6 +467,7 @@ export default class NewReservationCtrl {
     this.loadGeneralSettings();
 
     if (this.is_dashboard_page || this.is_reservations || this.is_agenda) {
+      this.Reservation.init_date = this.moment();
       this.loadZones();
       this.loadTables();
     } else {
