@@ -16,16 +16,18 @@ export default class SettingsGeneralCtrl {
     };
 
     $scope.$watch('general_settings.form_data.reservation_deadline', () => {
-      const reservationDeadline = this.moment(this.form_data.reservation_deadline);
-
-      if (reservationDeadline.isValid()) {
-        this.form_data.reservation_deadline_hours = parseInt(this.moment(this.form_data.reservation_deadline).format('H'));
-        this.form_data.reservation_deadline_minutes = parseInt(this.moment(this.form_data.reservation_deadline).format('m'));
-        this.form_data.enable_deadline = true;
-      } else {
-        this.form_data.reservation_deadline_hours = 0;
-        this.form_data.reservation_deadline_minutes = 0;
-        this.form_data.enable_deadline = false;
+      const reservationDeadLine = this.form_data.reservation_deadline;
+      if (reservationDeadLine) {
+        if (this.moment(reservationDeadLine, 'HH:mm').isValid()) {
+          const time = reservationDeadLine.split(':');
+          this.form_data.reservation_deadline_hours = parseInt(time[0], 10);
+          this.form_data.reservation_deadline_minutes = parseInt(time[1], 10);
+          this.form_data.enable_deadline = true;
+        } else {
+          this.form_data.reservation_deadline_hours = 0;
+          this.form_data.reservation_deadline_minutes = 0;
+          this.form_data.enable_deadline = false;
+        }
       }
     });
 

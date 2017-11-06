@@ -4,7 +4,7 @@ export default class NewReservationCtrl {
   constructor(
     Customer, User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone, NewReservation,
     Table, moment, filterFilter, $state, $stateParams, $rootScope, $scope, $window, $auth, $timeout,
-    $q,
+    $q, $mdDialog,
   ) {
     'ngInject';
 
@@ -37,6 +37,7 @@ export default class NewReservationCtrl {
     this.filterFilter = filterFilter;
     this.$window = $window;
     this.$timeout = $timeout;
+    this.$mdDialog = $mdDialog;
 
     this.moment = moment;
     this.selected_index = 0;
@@ -302,16 +303,20 @@ export default class NewReservationCtrl {
     return result;
   }
 
-  isMoreThanDeadline() {
+  checkDeadline() {
     if (this.socials && this.socials.settings.reservation_deadline) {
       const now = this.moment();
-      const deadline = this.moment(this.socials.settings.reservation_deadline);
-      const str = `${this.moment(this.current_part.date).format('YYYY-MM-DD')} ${deadline.format('HH:mm:ss')}`;
-      const reservationDateDeadline = this.moment(str);
-      return now > reservationDateDeadline;
-    }
+      const deadline = this.moment(this.socials.settings.reservation_deadline, 'HH:mm');
 
-    return false;
+      if (this.is_customer_reservation && now > deadline) {
+        this.Reservation.init_date = this.moment().add(1, 'd');
+        this.$mdDialog.show(this.$mdDialog.alert()
+          .parent(angular.element(document.querySelector('.modal-dialog')))
+          .clickOutsideToClose(true)
+          .textContent('Vandaag nemen wij online geen reserveringen meer aan. Neem telefonisch contact met ons op')
+          .ok('Terug'));
+      }
+    }
   }
 
   setZone(zone) {
@@ -445,13 +450,12 @@ export default class NewReservationCtrl {
     this.CustomerCompany.getSocialUrls(this.current_company_id).then((socials) => {
       this.socials = socials;
       this.socials_is_loaded = true;
+      this.checkDeadline();
     });
   }
 
   selectTab(index) {
-    if (index !== 2 || !this.isMoreThanDeadline()) {
-      this.selected_index = index;
-    }
+    this.selected_index = index;
   }
 
   canLoadTime() {
