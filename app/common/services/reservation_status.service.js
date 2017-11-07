@@ -47,20 +47,24 @@ export default class ReservationStatus {
       );
   }
 
-  sendMail(companyId, reservation, data) {
+  sendMail(companyId, reservation, data, skipJwtAuth) {
     const deferred = this.$q.defer();
 
     if (!companyId) {
       return deferred.promise;
     }
 
-    return this.$http.post(`${API_URL}/company/${companyId}/reservation/${reservation.id}/send_mail`, data)
-      .then(
-        result => result.data,
-        (error) => {
-          this.errors = error.data.errors;
-        },
-      );
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/reservation/${reservation.id}/send_mail`,
+      skipAuthorization: skipJwtAuth,
+      method: 'POST',
+      data,
+    }).then(
+      result => result.data,
+      (error) => {
+        this.errors = error.data.errors;
+      },
+    );
   }
 
   getIcon(part, reservation) {

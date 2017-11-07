@@ -2,54 +2,58 @@ export default class Employee {
   constructor(User, AppConstants, $http, $q) {
     'ngInject';
 
-    this.$http           = $http;
-    this.$q              = $q;
-    this.AppConstants    = AppConstants;
+    this.$http = $http;
+    this.$q = $q;
+    this.AppConstants = AppConstants;
   }
 
-  getAll(company_id) {
-    if (! company_id) {
+  getAll(companyId, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-        url: API_URL + '/company/' + company_id + '/settings/employee',
-        method: 'GET',
-      }).then((result) => result.data);
+      url: `${API_URL}/company/${companyId}/settings/employee`,
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
+    }).then(result => result.data);
   }
 
-  create(company_id, data) {
-    if (! company_id) {
+  create(companyId, data, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-        url: API_URL + '/company/' + company_id + '/settings/employee',
-        method: 'POST',
-        data: data
-      }).then((result) => result.data);
+      url: `${API_URL}/company/${companyId}/settings/employee`,
+      skipAuthorization: skipJwtAuth,
+      method: 'POST',
+      data,
+    }).then(result => result.data);
   }
 
-  update(company_id, id, data) {
-    if (! company_id) {
+  update(companyId, id, data, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-        url: API_URL + '/company/' + company_id + '/settings/employee/' + id,
-        method: 'PATCH',
-        data: data
-      }).then((result) => result.data);
+      url: `${API_URL}/company/${companyId}/settings/employee/${id}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'PATCH',
+      data,
+    }).then(result => result.data);
   }
 
-  destroy(company_id, id) {
-    if (! company_id) {
+  destroy(companyId, id, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-        url: API_URL + '/company/' + company_id + '/settings/employee/' + id,
-        method: 'DELETE'
-      }).then((result) => result.data);
+      url: `${API_URL}/company/${companyId}/settings/employee/${id}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'DELETE',
+    }).then(result => result.data);
   }
 }

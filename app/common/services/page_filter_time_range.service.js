@@ -2,54 +2,58 @@ export default class TimeRange {
   constructor($http, $q) {
     'ngInject';
 
-    this.$http           = $http;
-    this.$q              = $q;
+    this.$http = $http;
+    this.$q = $q;
   }
 
-  getAll(company_id, date, type) {
-    if (! company_id) {
+  getAll(companyId, date, type, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
-    return this.$http.get(API_URL + '/company/' + company_id + '/page_filter/time_range', {
+    return this.$http.get(`${API_URL}/company/${companyId}/page_filter/time_range`, {
       params: {
-        date: date,
-        type: type
-      }}).then((result) => result.data);
+        skipAuthorization: skipJwtAuth,
+        date,
+        type,
+      } }).then(result => result.data);
   }
 
-  create(company_id, data) {
-    if (! company_id) {
+  create(companyId, data, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-        url: API_URL + '/company/' + company_id + '/page_filter/time_range/',
-        method: 'POST',
-        data: data
-      }).then((result) => result.data);
+      url: `${API_URL}/company/${companyId}/page_filter/time_range/`,
+      skipAuthorization: skipJwtAuth,
+      method: 'POST',
+      data,
+    }).then(result => result.data);
   }
 
-  update(company_id, id, data) {
-    if (! company_id) {
+  update(companyId, id, data, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-        url: API_URL + '/company/' + company_id + '/page_filter/time_range/' + id,
-        method: 'PATCH',
-        data: data
-      }).then((result) => result.data);
+      url: `${API_URL}/company/${companyId}/page_filter/time_range/${id}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'PATCH',
+      data,
+    }).then(result => result.data);
   }
 
-  destroy(company_id, id) {
-    if (! company_id) {
+  destroy(companyId, id, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-        url: API_URL + '/company/' + company_id + '/page_filter/time_range/' + id,
-        method: 'DELETE'
-      }).then((result) => result.data);
+      url: `${API_URL}/company/${companyId}/page_filter/time_range/${id}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'DELETE',
+    }).then(result => result.data);
   }
 }

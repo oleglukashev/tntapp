@@ -3,55 +3,56 @@ export default class CustomerPreference {
     'ngInject';
 
     this.$http = $http;
-    this.$q    = $q;
+    this.$q = $q;
   }
 
-  create(company_id, customer_id, data) {
-    if (!company_id || !customer_id) {
+  create(companyId, customerId, data, skipJwtAuth) {
+    if (!companyId || !customerId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/customer/' + customer_id + '/preference',
+      url: `${API_URL}/company/${companyId}/customer/${customerId}/preference`,
+      skipAuthorization: skipJwtAuth,
       method: 'POST',
-      data: data
-    }).then((result) => result.data);
+      data,
+    }).then(result => result.data);
   }
 
-  update(company_id, customer_id, preference_id, data) {
-    let deferred = this.$q.defer();
-
-    if (! company_id || !customer_id || !preference_id) {
-      return deferred.promise;
-    }
-
-    return this.$http.patch(API_URL + '/company/' + company_id + '/customer/' + customer_id + '/preference/' + preference_id,
-      data
-    ).then((result) => result.data);
-  }
-
-  delete(company_id, customer_id, preference_id) {
-    if (! company_id || !customer_id || !preference_id) {
-      return deferred.promise;
-    }
-
-    return this.$http.delete(API_URL + '/company/' + company_id + '/customer/' + customer_id + '/preference/' + preference_id)
-      .then((result) => result.data);
-  }
-
-  getAll(company_id, customer_id) {
-    let deferred = this.$q.defer();
-
-    if (! company_id || !customer_id) {
-      return deferred.promise;
+  update(companyId, customerId, preferenceId, data, skipJwtAuth) {
+    if (!companyId || !customerId || !preferenceId) {
+      return this.$q.defer().promise;
     }
 
     return this.$http({
-        url: API_URL + '/company/' + company_id + '/customer/' + customer_id + '/preference',
-        method: 'GET',
-      }).then(
-        (result) => {
-          return result.data;
-        });
+      url: `${API_URL}/company/${companyId}/customer/${customerId}/preference/${preferenceId}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'PATCH',
+      data,
+    }).then(result => result.data);
+  }
+
+  delete(companyId, customerId, preferenceId, skipJwtAuth) {
+    if (!companyId || !customerId || !preferenceId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/customer/${customerId}/preference/${preferenceId}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'DELETE',
+    }).then(result => result.data);
+  }
+
+  getAll(companyId, customerId, skipJwtAuth) {
+    if (!companyId || !customerId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/customer/${customerId}/preference`,
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
+    }).then(result => result.data);
   }
 }
