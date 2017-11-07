@@ -8,7 +8,7 @@ export default class Confirm {
   onCloseModal($modalInstance) {
     const confirm = this.$mdDialog.confirm()
       .title('Verwijderen')
-      .textContent('De huidige werk is niet afgerond en word daarom niet opgeslagen')
+      .textContent('Het huidige werk is niet afgerond en wordt daarom niet opgeslagen')
       .ok('Verwijderen')
       .cancel('Terug');
 
