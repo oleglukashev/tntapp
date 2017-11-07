@@ -143,9 +143,12 @@ export default class Reservation {
   }
 
   create(companyId, data, params, skipJwtAuth) {
+    const header = skipJwtAuth ? null : { Authorization: `Bearer ${this.JWT.get()}` };
+
     return this.Upload.upload({
       url: this.getCreateURI(companyId, params),
       skipAuthorization: skipJwtAuth,
+      headers: header,
       data,
     }).then(result => result.data);
   }

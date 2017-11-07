@@ -185,12 +185,12 @@ export default class User {
   }
 
   uploadPhoto(userId, file) {
+    const header = skipJwtAuth ? null : { Authorization: `Bearer ${this.JWT.get()}` };
+
     return this.Upload.upload({
       url: `${API_URL}/company/${this.current_company.id}/user/${userId}/upload`,
       data: { photo: file },
-      headers: {
-        Authorization: `Bearer ${this.JWT.get()}`,
-      },
+      headers: header,
     });
   }
 

@@ -1,5 +1,5 @@
 export default class ReservationStatus {
-  constructor(AppConstants, Upload, User, moment, $http, $q, $window, $rootScope) {
+  constructor(AppConstants, User, moment, $http, $q, $window, $rootScope) {
     'ngInject';
 
     this.$http = $http;
@@ -8,7 +8,6 @@ export default class ReservationStatus {
     this.$rootScope = $rootScope;
     this.moment = moment;
     this.AppConstants = AppConstants;
-    this.Upload = Upload;
   }
 
   edit(companyId, reservationId, data) {
