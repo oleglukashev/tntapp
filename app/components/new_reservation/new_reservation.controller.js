@@ -305,9 +305,13 @@ export default class NewReservationCtrl {
   checkDeadline() {
     if (this.socials && this.socials.settings.reservation_deadline) {
       const now = this.moment();
+      const selectedDate = this.moment(this.current_part.date).format('YYYY-MM-DD');
+      const selectedDateTime = this.moment(now.format('HH:mm'), 'HH:mm');
       const deadline = this.moment(this.socials.settings.reservation_deadline, 'HH:mm');
-      if (this.is_customer_reservation && now > deadline) {
-        this.Reservation.init_date = this.moment().add(1, 'd');
+      if (this.is_customer_reservation && selectedDate === now.format('YYYY-MM-DD')
+        && selectedDateTime > deadline) {
+        this.selected_index = 1;
+        this.current_part.date = null;
         this.$mdDialog.show(this.$mdDialog.alert()
           .parent(angular.element(document.querySelector('.modal-dialog')))
           .clickOutsideToClose(true)
@@ -448,12 +452,14 @@ export default class NewReservationCtrl {
     this.CustomerCompany.getSocialUrls(this.current_company_id).then((socials) => {
       this.socials = socials;
       this.socials_is_loaded = true;
-      this.checkDeadline();
     });
   }
 
   selectTab(index) {
     this.selected_index = index;
+    if (index === 2) {
+      this.checkDeadline();
+    }
   }
 
   canLoadTime() {
@@ -467,7 +473,6 @@ export default class NewReservationCtrl {
     this.loadGeneralSettings();
 
     if (this.is_dashboard_page || this.is_reservations || this.is_agenda) {
-      this.Reservation.init_date = this.moment();
       this.loadZones();
       this.loadTables();
     } else {
