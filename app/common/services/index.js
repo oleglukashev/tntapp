@@ -21,6 +21,7 @@ import CustomerPreferenceService from './customer_preference.service';
 import CustomerAllergiesService from './customer_allergies.service';
 import newReservationService from '../../components/new_reservation/new_reservation.service';
 import ConfirmService from './confirm.service';
+import LoadedService from './loaded.service';
 
 export default angular.module('app.services', [])
   .service('User', UserService)
@@ -45,4 +46,5 @@ export default angular.module('app.services', [])
   .service('CustomerAllergies', CustomerAllergiesService)
   .service('NewReservation', newReservationService)
   .service('Confirm', ConfirmService)
+  .service('Loaded', LoadedService)
   .name;
