@@ -13,7 +13,7 @@ export default angular.module('app.dashboard', [])
   .controller('DashboardReservationsCtrl', dashboardReservationsController)
   .controller('DashboardReservationsReservationCtrl', dashboardReservationsReservationController)
   .factory('DashboardReservationsItemFactory', itemFactroy,
-    ['AppConstants', 'ReservationStatus'])
+    ['AppConstants', 'ReservationStatus', '$mdSidenav', '$rootScope'])
   .factory('ReservationStatusMenu', reservationStatusMenuFactory,
     ['ReservationStatus', 'Customer', 'filterFilter', 'moment', '$modal'])
   .factory('UserMenuEditFactroy', userMenuEditFactroy)

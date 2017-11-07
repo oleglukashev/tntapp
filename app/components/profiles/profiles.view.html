@@ -11,9 +11,8 @@
       <md-list class='no-padder'>
         <div class='char_wrapper' ng-repeat='(char, customers) in profiles.customers'>
           <div class='md-list-item-left char'>{{ char }}</div>
-          <md-list-item ng-click='user.openCustomerMenu(customer.id, reservation.pid)'
+          <md-list-item ng-click='profiles.openCustomerMenu(customer.id)'
                         ng-class='{"active": profiles.active_profile == customer.id}'
-                        ng-controller='UserMenuCtrl as user'
                         ng-repeat="customer in customers | orderBy:'customer.last_name':false"
                         ng-mouseup='profiles.active_profile = customer.id'
                         class='md-2-line md-no-proxy b-b-none m-l-xxl'>
@@ -31,7 +30,7 @@
                       aria-haspopup='true'
                       aria-expanded='false'
                       aria-disabled='false'
-                      ng-click='user.openCustomerMenu(customer.id, reservation.pid)'>
+                      ng-click='profiles.openCustomerMenu(customer.id)'>
                 <i class='mdi mdi-dots-vertical i-24'></i>
               </button>
             </div>

@@ -14,7 +14,7 @@ export default angular.module('app.search', [uirouter])
   .controller('SearchCtrl', controller)
   .factory(
     'AgendaItemFactory', itemFactory,
-    ['AppConstants', 'ReservationStatus'],
+    ['AppConstants', 'ReservationStatus', '$mdSidenav', '$rootScope'],
   )
   .factory(
     'ReservationStatusMenu', reservationStatusMenuFactory,

@@ -52,10 +52,9 @@
         </thead>
         <tbody>
           <tr data-ng-include=" 'agenda.item.view.html' "
-              ng-click='user.openCustomerMenu(item.customer_id, part.id)'
+              ng-click='agenda.openCustomerMenu(item.customer_id, item.id)'
               ng-class='{"active": agenda.active_part == item.id,
                          "cancelled": item.reservation.status == "cancelled"}'
-              ng-controller='UserMenuCtrl as user'
               ng-repeat='item in data = agenda.data[zone.id]'
               ng-mouseup='agenda.active_part = item.id'
               ng-init='controller = agenda;hideIcon = item.reservation.id === data[$index - 1].reservation.id;'>
@@ -115,7 +114,7 @@
                        ng-class='agenda.ReservationStatus.getIcon(part, part.reservation)'
                        title='{{ agenda.AppConstants.reservationDutchStatuses[part.reservation.status] }}'
                     ></i>
-                    <a ng-click='user.openCustomerMenu(part.customer.id, partId)' ng-controller='UserMenuCtrl as user'>
+                    <a ng-click='agenda.openCustomerMenu(part.customer.id, partId)'>
                       {{ part.number_of_persons }}
                       {{ part.product.name }}
                       <strong>

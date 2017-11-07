@@ -74,6 +74,14 @@ export default class ReservationPartEditCtrl {
         (reservationPart) => {
           this.is_submitting = false;
           this.$rootScope.current_part = reservationPart;
+          this.$rootScope.reservations.forEach((reservation, reservIndex) => {
+            reservation.reservation_parts.forEach((part, partIndex) => {
+              if (part.id === this.$rootScope.current_part.id) {
+                this.$rootScope.reservations[reservIndex].reservation_parts[partIndex] =
+                  this.$rootScope.current_part;
+              }
+            });
+          });
           this.$modalInstance.close();
           this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
         },

@@ -46,11 +46,6 @@ export default class ReservationsCtrl {
     this.loadReservations();
   }
 
-  openCustomerMenu() {
-    this.$rootScope.$broadcast('UserMenuCtrl');
-    this.$mdSidenav('right').toggle();
-  }
-
   openDatepicker() {
     this.opened = true;
   }

@@ -36,11 +36,6 @@ export default class DashboardReservationsCtrl {
     DashboardReservationsItemFactory(this);
   }
 
-  openCustomerMenu() {
-    this.$rootScope.$broadcast('UserMenuCtrl');
-    this.$mdSidenav('right').toggle();
-  }
-
   loadReservations() {
     this.Reservation
       .getAllGrouped(this.current_company_id).then(

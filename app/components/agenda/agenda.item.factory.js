@@ -1,4 +1,4 @@
-export default function AgendaItemFactory(AppConstants, ReservationStatus) {
+export default function AgendaItemFactory(AppConstants, ReservationStatus, $mdSidenav, $rootScope) {
   'ngInject';
 
   return (that) => {
@@ -30,6 +30,13 @@ export default function AgendaItemFactory(AppConstants, ReservationStatus) {
         reservation,
         part,
       };
+    };
+
+    instance.openCustomerMenu = (customerId, reservationPartId) => {
+      if (customerId) {
+        $rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId, reservationPartId });
+        $mdSidenav('right').open();
+      }
     };
   };
 }

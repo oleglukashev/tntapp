@@ -9,7 +9,7 @@ export default angular.module('app.reservations', [])
   .config(routing)
   .controller('ReservationsCtrl', controller)
   .factory('DashboardReservationsItemFactory', itemFactroy,
-    ['AppConstants', 'ReservationStatusMenu'])
+    ['AppConstants', 'ReservationStatusMenu', '$mdSidenav', '$rootScope'])
   .factory('ReservationStatusMenu', reservationStatusMenuFactory,
     ['ReservationStatus', 'Customer', 'filterFilter', 'moment', '$modal'])
   .factory('PageFilterFactory', pageFilterFactory,
