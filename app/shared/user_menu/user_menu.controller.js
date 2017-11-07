@@ -31,14 +31,6 @@ export default class UserMenuCtrl {
       .then();
   }
 
-  loadReservations() {
-    this.Reservation
-      .getAll(this.currentCompanyId).then(
-        (reservations) => {
-          this.$rootScope.reservations = reservations;
-        });
-  }
-
   openEditReservationModal(reservation, reservationPart) {
     const modalInstance = this.$modal.open({
       templateUrl: 'reservation_part.edit.view.html',
