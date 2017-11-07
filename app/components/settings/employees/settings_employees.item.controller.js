@@ -10,7 +10,11 @@ export default class SettingsEmployeesItemCtrl {
   }
 
   submitForm() {
-    this.createEmployee();
+    if (this.item.id) {
+      this.updateEmployee();
+    } else {
+      this.createEmployee();
+    }
   }
 
   closeModal() {

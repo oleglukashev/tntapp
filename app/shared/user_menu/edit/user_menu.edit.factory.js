@@ -186,7 +186,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
             (result) => {
               instance.$rootScope.customer_allergies.push(result);
               instance.allergy = {};
-              instance.allergies_is_submitting = true;
+              instance.allergies_is_submitting = false;
             }, () => {},
           );
       }

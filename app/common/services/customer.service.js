@@ -20,18 +20,6 @@ export default class Customer {
     }).then(result => result.data);
   }
 
-  getAllForSearch(companyId, skipJwtAuth) {
-    if (!companyId) {
-      return this.$q.defer().promise;
-    }
-
-    return this.$http({
-      url: `${API_URL}/company/${companyId}/customer`,
-      skipAuthorization: skipJwtAuth,
-      method: 'GET',
-    }).then(result => result.data);
-  }
-
   search(companyId, query, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
