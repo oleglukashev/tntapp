@@ -2,18 +2,30 @@ export default function showMore() {
   return {
     restrict: 'A',
     transclude: true,
+    scope: {
+      // FIXME: Trigger all calculations
+      // Useful when (initial) view type switched from `calendar` to `list`
+      // (dimensions of invisible elements is always zero)
+      trigger: '@showMoreTrigger',
+    },
     template: '<div class="show-more"><div class="show-more-collapsed"><div ng-transclude></div></div><a class="show-more-link" ng-click="showMore($event)" ng-show="expandable && !expanded">Meer weergeven</a></div>',
     controller: ['$scope', '$element', '$timeout', ($scope, $element, $timeout) => {
       $scope.expandable = false;
       $scope.expanded = false;
 
-      $timeout(() => {
-        const container = $element.children()[0].firstElementChild;
-        const height = container.firstElementChild.clientHeight;
-        const maxHeight = parseFloat(window.getComputedStyle(container).maxHeight || 62);
+      $scope.$watch('trigger', () => {
+        if ($scope.expanded) {
+          return;
+        }
 
-        $scope.expandable = height > maxHeight;
-      }, 33);
+        $timeout(() => {
+          const container = $element.children()[0].firstElementChild;
+          const height = container.firstElementChild.clientHeight;
+          const maxHeight = parseFloat(window.getComputedStyle(container).maxHeight || 62);
+
+          $scope.expandable = height > maxHeight;
+        }, 33);
+      });
 
       $scope.showMore = ($event) => {
         $event.stopPropagation();
