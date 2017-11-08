@@ -1,7 +1,7 @@
 export default class UserMenuCtrl {
   constructor(
     User, Reservation, ReservationPart, CustomerNote, CustomerPreference,
-    CustomerAllergies, Customer, moment, $rootScope, $mdSidenav, $modal) {
+    CustomerAllergies, Customer, moment, $scope, $rootScope, $mdSidenav, $modal) {
     'ngInject';
 
     this.currentCompanyId = User.getCompanyId();
@@ -18,7 +18,11 @@ export default class UserMenuCtrl {
     this.$mdSidenav = $mdSidenav;
     this.$modal = $modal;
 
-    this.$rootScope.reservations = [];
+    this.clearUserMenuData();
+
+    $scope.$on('UserMenuCtrl.load_full_data', (e, data) => {
+      this.loadCustomerFullData(data.customerId, data.reservationPartId);
+    });
   }
 
   loadPDF(reservationId) {
@@ -35,6 +39,10 @@ export default class UserMenuCtrl {
       resolve: {
         reservation: () => reservation,
         reservationPart: () => reservationPart,
+        customer: () => this.$rootScope.customer,
+        customerNotes: () => this.$rootScope.customer_notes,
+        customerAllergies: () => this.$rootScope.customer_allergies,
+        customerPreferences: () => this.$rootScope.customer_preferences,
       },
     });
 
@@ -73,14 +81,9 @@ export default class UserMenuCtrl {
     });
   }
 
-  openCustomerMenu(customerId, reservationPartId) {
-    if (customerId) {
-      this.loadCustomerFullData(customerId, reservationPartId);
-      this.$mdSidenav('right').open();
-    }
-  }
-
   loadCustomerFullData(customerId, reservationPartId) {
+    this.clearUserMenuData();
+
     this.Customer.searchReservationsByCustomerId(this.currentCompanyId, customerId)
       .then((response) => {
         this.$rootScope.reservations = response.reservations;
@@ -110,5 +113,15 @@ export default class UserMenuCtrl {
 
   getPartByReservations() {
     return this.ReservationPart.partsByReservations(this.$rootScope.reservations);
+  }
+
+  clearUserMenuData() {
+    this.$rootScope.current_part = null;
+    this.$rootScope.current_reservation = null;
+    this.$rootScope.customer = null;
+    this.$rootScope.reservations = [];
+    this.$rootScope.customer_notes = [];
+    this.$rootScope.customer_allergies = [];
+    this.$rootScope.customer_preferences = [];
   }
 }

@@ -3,7 +3,8 @@ import angular from 'angular';
 export default class ReservationPartEditCtrl {
   constructor(User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone,
     Table, moment, filterFilter, $rootScope, $window, $scope, $modalInstance, UserMenuEditFactroy,
-    reservation, reservationPart, Confirm) {
+    reservation, customer, customerNotes, customerPreferences, customerAllergies, reservationPart,
+    Confirm) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -17,10 +18,14 @@ export default class ReservationPartEditCtrl {
     this.TimeRange = TimeRange;
     this.Confirm = Confirm;
 
+    this.customer = customer;
+    this.customerNotes = customerNotes;
+    this.customerPreferences = customerPreferences;
+    this.customerAllergies = customerAllergies;
+
     this.$window = $window;
     this.$scope = $scope;
     this.$rootScope = $rootScope;
-    this.$rootScope.userData = this.$rootScope.customer;
     this.filterFilter = filterFilter;
     this.$modalInstance = $modalInstance;
 
@@ -50,9 +55,6 @@ export default class ReservationPartEditCtrl {
 
     this.loadGeneralSettings();
     UserMenuEditFactroy(this);
-    this.notes = this.$rootScope.customer_notes;
-    this.preferences = this.$rootScope.customer_preferences;
-    this.allergies = this.$rootScope.customer_allergies;
   }
 
   submitPartForm() {
@@ -69,8 +71,17 @@ export default class ReservationPartEditCtrl {
 
     this.ReservationPart.update(this.current_company_id, this.current_part.id, data)
       .then(
-        () => {
+        (reservationPart) => {
           this.is_submitting = false;
+          this.$rootScope.current_part = reservationPart;
+          this.$rootScope.reservations.forEach((reservation, reservIndex) => {
+            reservation.reservation_parts.forEach((part, partIndex) => {
+              if (part.id === this.$rootScope.current_part.id) {
+                this.$rootScope.reservations[reservIndex].reservation_parts[partIndex] =
+                  this.$rootScope.current_part;
+              }
+            });
+          });
           this.$modalInstance.close();
           this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
         },

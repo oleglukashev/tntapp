@@ -35,8 +35,8 @@ export default class ProfilesCtrl {
       });
   }
 
-  openCustomerMenu() {
-    this.$rootScope.$broadcast('UserMenuCtrl');
-    this.$mdSidenav('right').toggle();
+  openCustomerMenu(customerId) {
+    this.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId });
+    this.$mdSidenav('right').open();
   }
 }

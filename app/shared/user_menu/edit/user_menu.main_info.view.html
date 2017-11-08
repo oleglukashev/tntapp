@@ -10,23 +10,23 @@
             <div class='wrapper'>
               <md-input-container class='md-block'>
                 <label>E-mail</label>
-                <input required ng-model="userData.mail" />
+                <input required ng-model="controller.customer.mail" />
               </md-input-container>
               <md-input-container class='md-block'>
                 <label>Voornaam</label>
-                <input required ng-model="userData.first_name" />
+                <input required ng-model="controller.customer.first_name" />
               </md-input-container>
               <md-input-container class='md-block'>
                 <label>Achternaam</label>
-                <input ng-model="userData.last_name" />
+                <input ng-model="controller.customer.last_name" />
               </md-input-container>
               <md-input-container class='md-block'>
                 <label>Telefoon</label>
-                <input required ng-model="userData.primary_phone_number" />
+                <input required ng-model="controller.customer.primary_phone_number" />
               </md-input-container>
               <md-input-container class='md-block'>
                 <label>Secundair nummer</label>
-                <input ng-model="userData.secondary_phone_number" />
+                <input ng-model="controller.customer.secondary_phone_number" />
               </md-input-container>
             <md-input-container class='md-block'>
                 <label>Geboortedatum</label>
@@ -34,7 +34,7 @@
                    type="text"
                    class="form-control date-picker"
                    id="BirthDate"
-                   ng-model="userData.date_of_birth"
+                   ng-model="controller.customer.date_of_birth"
                    datepicker-popup="dd-MM-yyyy"
                    aw-datepicker-pattern="^(0[1-9]|1\d|2\d|3[01])\-(0[1-9]|1[0-2])\-(19|20)\d{2}$"
                    is-open="Opened"
@@ -45,26 +45,26 @@
               </md-input-container>
               <md-input-container class='md-block'>
                 <label>Straat</label>
-                <input ng-model="userData.street" />
+                <input ng-model="controller.customer.street" />
               </md-input-container>
               <md-input-container class='md-block'>
                 <label>Huisnummer</label>
-                <input ng-model="userData.house_number" />
+                <input ng-model="controller.customer.house_number" />
               </md-input-container>
               <md-input-container class='md-block'>
                 <label>Postcode</label>
-                <input ng-model="userData.zipcode" />
+                <input ng-model="controller.customer.zipcode" />
               </md-input-container>
               <md-input-container class='md-block'>
                 <label>Stad</label>
-                <input ng-model="userData.city" />
+                <input ng-model="controller.customer.city" />
               </md-input-container>
               <md-input-container class='md-block'>
                 <label>Gemiddelde score</label>
-                <input type="number" ng-model="userData.average_rating" ng-pattern="/^[0-9]+(\.[0-9])?$/" step="0.1" />
+                <input type="number" ng-model="controller.customer.average_rating" ng-pattern="/^[0-9]+(\.[0-9])?$/" step="0.1" />
               </md-input-container>
               <div class='md-form-group no-padder'>
-                <md-radio-group ng-model="userData.gender">
+                <md-radio-group ng-model="controller.customer.gender">
                   <md-radio-button value='Man' class='inline md-success'>Man</md-radio-button>
                   <md-radio-button value='Vrouw' class='inline md-success'>Vrouw</md-radio-button>
                 </md-radio-group>
