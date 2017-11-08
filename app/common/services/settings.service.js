@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 export default class Settings {
   constructor($http, $q, $cookieStore) {
     'ngInject';
@@ -9,143 +7,155 @@ export default class Settings {
     this.$cookieStore = $cookieStore;
   }
 
-  getGeneralSettings(company_id) {
+  getGeneralSettings(companyId, skipJwtAuth) {
     // need to think how can we optimize this block for each method
-    if (! company_id) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/general',
+      url: `${API_URL}/company/${companyId}/settings/general`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
-    }).then((result) => result.data);
+    }).then(result => result.data);
   }
 
-  getMailsSettings(company_id) {
-    if (! company_id) {
+  getMailsSettings(companyId, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/mails',
+      url: `${API_URL}/company/${companyId}/settings/mails`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
-    }).then((result) => result.data);
+    }).then(result => result.data);
   }
 
-  getMailsTextsSettings(company_id) {
-    if (! company_id) {
+  getMailsTextsSettings(companyId, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/mails_texts',
+      url: `${API_URL}/company/${companyId}/settings/mails_texts`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
-    }).then((result) => result.data);
+    }).then(result => result.data);
   }
 
-  getLimitsSettings(company_id) {
-    if (! company_id) {
+  getLimitsSettings(companyId, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/minimum_seats_free',
+      url: `${API_URL}/company/${companyId}/settings/minimum_seats_free`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
-    }).then((result) => result.data);
+    }).then(result => result.data);
   }
 
-  getPluginsSettings(company_id) {
-    if (! company_id) {
+  getPluginsSettings(companyId, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/plugins',
+      url: `${API_URL}/company/#{companyId}/settings/plugins`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
-    }).then((result) => result.data);
+    }).then(result => result.data);
   }
 
-  getThemeSettings(company_id) {
-    if (! company_id) {
+  getThemeSettings(companyId, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/theme',
+      url: `${API_URL}/company/${companyId}/settings/theme`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
-    }).then((result) => result.data);
+    }).then(result => result.data);
   }
 
-  updateGeneralSettings(company_id, data) {
-    if (! company_id) {
+  updateGeneralSettings(companyId, data, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/general',
+      url: `${API_URL}/company/${companyId}/settings/general`,
+      skipAuthorization: skipJwtAuth,
       method: 'PATCH',
-      data: data
-    }).then((result) => result.data);
+      data,
+    }).then(result => result.data);
   }
 
-  updateMailsSettings(company_id, data) {
-    if (! company_id) {
+  updateMailsSettings(companyId, data, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/mails',
+      url: `${API_URL}/company/${companyId}/settings/mails`,
+      skipAuthorization: skipJwtAuth,
       method: 'PATCH',
-      data: data
-    }).then((result) => result.data);
+      data,
+    }).then(result => result.data);
   }
 
-  updateMailtext(company_id, id, data) {
-    if (! company_id) {
+  updateMailtext(companyId, id, data, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/mails_texts/' + id,
+      url: `${API_URL}/company/${companyId}/settings/mails_texts/${id}`,
+      skipAuthorization: skipJwtAuth,
       method: 'PATCH',
-      data: data
-    }).then((result) => result.data);
+      data,
+    }).then(result => result.data);
   }
 
-  saveLimitsSettings(company_id, data) {
-    if (! company_id) {
+  saveLimitsSettings(companyId, data, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/minimum_seats_free/save',
+      url: `${API_URL}/company/${companyId}/settings/minimum_seats_free/save`,
+      skipAuthorization: skipJwtAuth,
       method: 'POST',
-      data: data
-    }).then((result) => result.data);
+      data,
+    }).then(result => result.data);
   }
 
-  updateTnrSyncTokenSettings(company_id, data) {
-    if (! company_id) {
+  updateTnrSyncTokenSettings(companyId, data, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/plugins/update_tnr_sync_token',
+      url: `${API_URL}/company/${companyId}/settings/plugins/update_tnr_sync_token`,
+      skipAuthorization: skipJwtAuth,
       method: 'PATCH',
-      data: data
-    }).then((result) => result.data);
+      data,
+    }).then(result => result.data);
   }
 
-  updateThemeSettings(company_id, data) {
-    if (! company_id) {
+  updateThemeSettings(companyId, data, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/theme',
+      url: `${API_URL}/company/${companyId}/settings/theme`,
+      skipAuthorization: skipJwtAuth,
       method: 'PATCH',
-      data: data
-    }).then((result) => result.data);
+      data,
+    }).then(result => result.data);
   }
 
   saveThemeToCookie(value) {

@@ -1,43 +1,46 @@
-import angular from 'angular';
-
 export default class TimeRange {
   constructor(User, $http, $q) {
     'ngInject';
 
-    this.$http           = $http;
-    this.$q              = $q;
+    this.$http = $http;
+    this.$q = $q;
   }
 
-  getAll(company_id) {
-    if (! company_id) {
+  getAll(companyId, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-        url: API_URL + '/company/' + company_id + '/settings/time_ranges',
-        method: 'GET',
-      }).then((result) => result.data);
+      url: `${API_URL}/company/${companyId}/settings/time_ranges`,
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
+    }).then(result => result.data);
   }
 
-  edit(company_id, range_id, data) {
-    if (! company_id) {
-      return this.$q.defer().promise;
-    }
-
-    return this.$http.post(API_URL + '/company/' + company_id + '/settings/time_ranges/edit/' + range_id,
-      data
-    ).then((result) => result.data);
-  }
-
-  create(company_id, data) {
-    if (! company_id) {
+  edit(companyId, rangeId, data, skipJwtAuth) {
+    if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/settings/time_ranges/create',
+      url: `${API_URL}/company/${companyId}/settings/time_ranges/edit/${rangeId}`,
+      skipAuthorization: skipJwtAuth,
       method: 'POST',
-      data: data
-    }).then((result) => result.data);
+      data,
+    }).then(result => result.data);
+  }
+
+  create(companyId, data, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/settings/time_ranges/create`,
+      skipAuthorization: skipJwtAuth,
+      method: 'POST',
+      data,
+    }).then(result => result.data);
   }
 }

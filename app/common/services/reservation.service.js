@@ -38,7 +38,7 @@ export default class Reservation {
     };
   }
 
-  getAll(companyId, date) {
+  getAll(companyId, date, skipJwtAuth) {
     const deferred = this.$q.defer();
 
     if (!companyId) {
@@ -50,11 +50,12 @@ export default class Reservation {
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/reservation?${dateParam}`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
   }
 
-  getPDF(companyId, reservationId) {
+  getPDF(companyId, reservationId, skipJwtAuth) {
     const deferred = this.$q.defer();
 
     if (!(companyId || reservationId)) {
@@ -63,6 +64,7 @@ export default class Reservation {
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/reservation/${reservationId}/get_pdf`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then((result) => {
       const anchor = angular.element('<a/>');
@@ -74,7 +76,7 @@ export default class Reservation {
     });
   }
 
-  exportCSV(companyId, date) {
+  exportCSV(companyId, date, skipJwtAuth) {
     const deferred = this.$q.defer();
 
     if (!companyId) {
@@ -83,6 +85,7 @@ export default class Reservation {
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/reservation?date=${date}&format=csv`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then((result) => {
       const anchor = angular.element('<a/>');
@@ -94,7 +97,7 @@ export default class Reservation {
     });
   }
 
-  getAllGrouped(companyId) {
+  getAllGrouped(companyId, skipJwtAuth) {
     const deferred = this.$q.defer();
 
     if (!companyId) {
@@ -103,11 +106,12 @@ export default class Reservation {
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/reservation/grouped`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
   }
 
-  getProducts(companyId) {
+  getProducts(companyId, skipJwtAuth) {
     const deferred = this.$q.defer();
 
     if (!companyId) {
@@ -116,6 +120,7 @@ export default class Reservation {
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/product`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
   }
@@ -137,32 +142,38 @@ export default class Reservation {
     return [uri, additional.join('&')].join('?');
   }
 
-  create(companyId, data, params) {
+  create(companyId, data, params, skipJwtAuth) {
+    const header = skipJwtAuth ? null : { Authorization: `Bearer ${this.JWT.get()}` };
+
     return this.Upload.upload({
       url: this.getCreateURI(companyId, params),
+      skipAuthorization: skipJwtAuth,
+      headers: header,
       data,
     }).then(result => result.data);
   }
 
-  createQuick(companyId, data) {
+  createQuick(companyId, data, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/reservation/quick`,
+      skipAuthorization: skipJwtAuth,
       data,
       method: 'POST',
     }).then(result => result.data);
   }
 
-  createWalkIn(companyId, data) {
+  createWalkIn(companyId, data, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/reservation/walk_in`,
+      skipAuthorization: skipJwtAuth,
       data,
       method: 'POST',
     }).then(result => result.data);

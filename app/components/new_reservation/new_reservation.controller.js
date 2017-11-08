@@ -180,7 +180,7 @@ export default class NewReservationCtrl {
       });
     });
 
-    this.Reservation.createWalkIn(this.current_company_id, data)
+    this.Reservation.createWalkIn(this.current_company_id, data, this.is_customer_reservation)
       .then(
         () => {
           this.is_submitting = false;
@@ -251,7 +251,7 @@ export default class NewReservationCtrl {
       { is_customer: true } :
       { confirm_mail: this.confirm_mail });
 
-    this.Reservation.create(this.current_company_id, data, params)
+    this.Reservation.create(this.current_company_id, data, params, this.is_customer_reservation)
       .then(
         () => {
           this.is_submitting = false;
@@ -339,7 +339,7 @@ export default class NewReservationCtrl {
       const product = this.current_part.product;
       const reservationDate = this.moment(this.current_part.date).format('YYYY-MM-DD HH:mm:ss');
 
-      this.Product.getAvailableTables(companyId, product, reservationDate).then(
+      this.Product.getAvailableTables(companyId, product, reservationDate, this.is_customer_reservation).then(
         (result) => {
           this.current_part.available_time = result;
           this.current_part.time_is_loaded = true;
@@ -358,7 +358,7 @@ export default class NewReservationCtrl {
     this.products_is_loaded = false;
     this.products = [];
 
-    this.Product.getAll(this.current_company_id, false).then(
+    this.Product.getAll(this.current_company_id, false, this.is_customer_reservation).then(
       (result) => {
         this.products = result;
         this.products_is_loaded = true;
@@ -374,7 +374,7 @@ export default class NewReservationCtrl {
     this.zones_is_loaded = false;
     this.zones = [];
 
-    this.Zone.getAll(this.current_company_id).then(
+    this.Zone.getAll(this.current_company_id, this.is_customer_reservation).then(
       (result) => {
         this.zones = result;
         this.zones_is_loaded = true;
@@ -387,7 +387,7 @@ export default class NewReservationCtrl {
     this.tables_is_loaded = false;
     this.tables = [];
 
-    this.Table.getAll(this.current_company_id).then(
+    this.Table.getAll(this.current_company_id, this.is_customer_reservation).then(
       (result) => {
         this.tables = result;
         this.tables_is_loaded = true;
@@ -397,7 +397,7 @@ export default class NewReservationCtrl {
   }
 
   loadTimeRanges() {
-    this.TimeRange.getAll(this.current_company_id).then(
+    this.TimeRange.getAll(this.current_company_id, this.is_customer_reservation).then(
       (ranges) => {
         this.time_ranges = [];
         ranges.forEach((range) => {
@@ -439,7 +439,9 @@ export default class NewReservationCtrl {
     const dateTime = `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${time}`;
 
     this.Table
-      .getOccupiedTables(this.current_company_id, { date_time: dateTime, part_id: null }).then(
+      .getOccupiedTables(this.current_company_id,
+        { date_time: dateTime, part_id: null },
+        this.is_customer_reservation).then(
         (result) => {
           this.current_part.occupied_tables = result;
           this.current_part.occupied_tables_is_loaded = true;
@@ -453,10 +455,11 @@ export default class NewReservationCtrl {
   }
 
   loadSocialUrls() {
-    this.CustomerCompany.getSocialUrls(this.current_company_id).then((socials) => {
-      this.socials = socials;
-      this.socials_is_loaded = true;
-    });
+    this.CustomerCompany.getSocialUrls(this.current_company_id, this.is_customer_reservation)
+      .then((socials) => {
+        this.socials = socials;
+        this.socials_is_loaded = true;
+      });
   }
 
   selectTab(index) {
@@ -485,7 +488,7 @@ export default class NewReservationCtrl {
   }
 
   loadGeneralSettings() {
-    this.Settings.getGeneralSettings(this.current_company_id).then(
+    this.Settings.getGeneralSettings(this.current_company_id, this.is_customer_reservation).then(
       (generalSettings) => {
         this.settings = generalSettings;
       });

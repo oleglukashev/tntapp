@@ -1,5 +1,5 @@
 export default class ReservationStatus {
-  constructor(AppConstants, Upload, User, moment, $http, $q, $window, $rootScope) {
+  constructor(AppConstants, User, moment, $http, $q, $window, $rootScope) {
     'ngInject';
 
     this.$http = $http;
@@ -8,7 +8,6 @@ export default class ReservationStatus {
     this.$rootScope = $rootScope;
     this.moment = moment;
     this.AppConstants = AppConstants;
-    this.Upload = Upload;
   }
 
   edit(companyId, reservationId, data) {
@@ -47,20 +46,24 @@ export default class ReservationStatus {
       );
   }
 
-  sendMail(companyId, reservation, data) {
+  sendMail(companyId, reservation, data, skipJwtAuth) {
     const deferred = this.$q.defer();
 
     if (!companyId) {
       return deferred.promise;
     }
 
-    return this.$http.post(`${API_URL}/company/${companyId}/reservation/${reservation.id}/send_mail`, data)
-      .then(
-        result => result.data,
-        (error) => {
-          this.errors = error.data.errors;
-        },
-      );
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/reservation/${reservation.id}/send_mail`,
+      skipAuthorization: skipJwtAuth,
+      method: 'POST',
+      data,
+    }).then(
+      result => result.data,
+      (error) => {
+        this.errors = error.data.errors;
+      },
+    );
   }
 
   getIcon(part, reservation) {

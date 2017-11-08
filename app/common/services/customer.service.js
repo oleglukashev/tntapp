@@ -1,113 +1,91 @@
+import angular from 'angular';
+
 export default class Customer {
   constructor($http, $q) {
     'ngInject';
 
-    this.$http           = $http;
-    this.$q              = $q;
+    this.$http = $http;
+    this.$q = $q;
   }
 
-  getAll(company_id) {
-    let deferred = this.$q.defer();
-
-    if (!company_id) {
-      return deferred.promise;
+  getAll(companyId, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/customer',
+      url: `${API_URL}/company/${companyId}/customer`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
-    }).then((result) => {
-      return result.data;
-    });
+    }).then(result => result.data);
   }
 
-  getAllForSearch(company_id) {
-    let deferred = this.$q.defer();
-
-    if (!company_id) {
-      return deferred.promise;
+  search(companyId, query, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/customer',
+      url: `${API_URL}/company/${companyId}/customer/search?query=${query}`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
-    }).then((result) => {
-      return result.data;
-    });
+    }).then(result => result.data);
   }
 
-  search(company_id, query) {
-    let deferred = this.$q.defer();
-
-    if (!company_id) {
-      return deferred.promise;
+  searchReservationsByCustomerId(companyId, customerId, skipJwtAuth) {
+    if (!companyId || !customerId) {
+      return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/customer/search?query=' + query,
-      method: 'GET',
-    }).then((result) => {
-      return result.data;
-    });
-  }
-
-  searchReservationsByCustomerId(company_id, customer_id) {
-    let deferred = this.$q.defer();
-
-    if (!company_id) {
-      return deferred.promise;
-    }
-
-    return this.$http({
-      url: API_URL + '/company/' + company_id + '/customer/' + customer_id + '/full_data',
+      url: `${API_URL}/company/${companyId}/customer/${customerId}/full_data`,
+      skipAuthorization: skipJwtAuth,
       method: 'POST',
-    }).then((result) => {
-      return result.data;
-    });
+    }).then(result => result.data);
   }
 
-  exportCSV(company_id) {
-    let deferred = this.$q.defer();
-
-    if (!company_id) {
-      return deferred.promise;
+  exportCSV(companyId, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: API_URL + '/company/' + company_id + '/customer/csv',
+      url: `${API_URL}/company/${companyId}/customer/csv`,
+      skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then((result) => {
-      var anchor = angular.element('<a/>');
+      const anchor = angular.element('<a/>');
       anchor.attr({
-         href: 'data:attachment/csv;charset=utf-8,' + encodeURI(result.data),
-         target: '_blank',
-         download: 'export.csv'
+        href: `data:attachment/csv;charset=utf-8,${encodeURI(result.data)}`,
+        target: '_blank',
+        download: 'export.csv',
       })[0].click();
     });
   }
 
-  edit(company_id, customer_id, data) {
-    let deferred = this.$q.defer();
-
-    if (!company_id) {
-      return deferred.promise;
+  edit(companyId, customerId, data, skipJwtAuth) {
+    if (!companyId || !customerId) {
+      return this.$q.defer().promise;
     }
 
-    return this.$http.patch(API_URL + '/company/' + company_id + '/customer/' + customer_id,
-      data
-    ).then((result) => result.data);
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/customer/${customerId}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'PATCH',
+      data,
+    }).then(result => result.data);
   }
 
-  setRegular(company_id, customer_id, data) {
-    let deferred = this.$q.defer();
-
-    if (!company_id) {
-      return deferred.promise;
+  setRegular(companyId, customerId, data, skipJwtAuth) {
+    if (!companyId || !customerId) {
+      return this.$q.defer().promise;
     }
 
-    return this.$http.patch(API_URL + '/company/' + company_id + '/customer/' + customer_id + '/set_regular',
-      data
-    ).then((result) => result.data);
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/customer/${customerId}/set_regular`,
+      skipAuthorization: skipJwtAuth,
+      method: 'PATCH',
+      data,
+    }).then(result => result.data);
   }
 }
-

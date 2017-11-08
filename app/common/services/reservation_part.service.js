@@ -7,15 +7,17 @@ export default class ReservationPart {
     this.moment = moment;
   }
 
-  update(companyId, reservationPartId, data) {
+  update(companyId, reservationPartId, data, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
-    return this.$http.patch(
-      `${API_URL}/company/${companyId}/reservation_part/${reservationPartId}`,
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/reservation_part/${reservationPartId}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'PATCH',
       data,
-    ).then(result => result.data);
+    }).then(result => result.data);
   }
 
   partsByReservations(reservations) {
