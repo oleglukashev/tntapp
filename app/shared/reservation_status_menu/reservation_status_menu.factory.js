@@ -12,6 +12,7 @@ export default function reservationStatusMenu(
     instance.status_icon = AppConstants.reservationStatusClasses;
 
     instance.changeLoadedStatus = (id, status) => {
+      // FIXME: temporary decision, use data models for reservations
       const item = Loaded.reservations.today.filter(obj => obj.reservation.id === id)[0];
       if (item) {
         item.reservation.status = status;
