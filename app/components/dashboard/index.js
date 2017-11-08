@@ -12,9 +12,13 @@ export default angular.module('app.dashboard', [])
   .controller('DashboardCtrl', controller)
   .controller('DashboardReservationsCtrl', dashboardReservationsController)
   .controller('DashboardReservationsReservationCtrl', dashboardReservationsReservationController)
-  .factory('DashboardReservationsItemFactory', itemFactroy,
-    ['AppConstants', 'ReservationStatus', '$mdSidenav', '$rootScope'])
-  .factory('ReservationStatusMenu', reservationStatusMenuFactory,
-    ['ReservationStatus', 'Customer', 'filterFilter', 'moment', '$modal'])
+  .factory(
+    'DashboardReservationsItemFactory', itemFactroy,
+    ['AppConstants', 'ReservationStatus', '$mdSidenav', '$rootScope'],
+  )
+  .factory(
+    'ReservationStatusMenu', reservationStatusMenuFactory,
+    ['ReservationStatus', 'Customer', 'filterFilter', 'moment', '$modal', 'Loaded'],
+  )
   .factory('UserMenuEditFactroy', userMenuEditFactroy)
   .name;
