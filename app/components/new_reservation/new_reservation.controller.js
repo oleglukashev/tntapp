@@ -72,6 +72,10 @@ export default class NewReservationCtrl {
 
   search(query) {
     if (!query) return [];
+    // Fixing known bug https://github.com/angular/material/issues/3279
+    if (this.temp_query === query) return [];
+    this.temp_query = query;
+
     return this.Customer.search(this.current_company_id, query).then((result) => {
       return result.map((customer) => {
         return {
