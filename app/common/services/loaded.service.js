@@ -1,5 +1,9 @@
+import angular from 'angular';
+
 export default class Loaded {
   constructor($rootScope) {
+    'ngInject';
+
     this.$rootScope = $rootScope;
 
     this.reservations = {
