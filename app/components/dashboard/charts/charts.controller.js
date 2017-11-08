@@ -1,5 +1,5 @@
 export default class ChartsCtrl {
-  constructor(Charts, $scope, $compile, $timeout, $state) {
+  constructor(Charts, $scope, $compile, $timeout, $state, Loaded) {
     'ngInject';
 
     this.charts = {};
@@ -9,8 +9,8 @@ export default class ChartsCtrl {
     this.$scope = $scope;
     this.$state = $state;
 
-    $scope.$on('reservationsLoaded', (event, allReservations) => {
-      this.charts.graphs = Charts.get(allReservations);
+    $scope.$on('reservationsLoaded', () => {
+      this.charts.graphs = Charts.get(Loaded.reservations);
       this.charts.getPercent = Charts.getPercent;
     });
 

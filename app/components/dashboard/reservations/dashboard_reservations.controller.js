@@ -2,12 +2,13 @@ export default class DashboardReservationsCtrl {
   constructor(
     User, Reservation, DashboardReservationsItemFactory, ReservationStatusMenu,
     ReservationPart, Table, filterFilter, moment, $scope, $rootScope, $mdSidenav,
-    $modal, $window,
+    $modal, $window, Loaded,
   ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.Reservation = Reservation;
+    this.Loaded = Loaded;
     this.ReservationPart = ReservationPart;
     this.Table = Table;
     this.filterFilter = filterFilter;
@@ -17,9 +18,10 @@ export default class DashboardReservationsCtrl {
     this.$window = $window;
     this.moment = moment;
     this.tables = [];
-    this.action_required = [];
-    this.group_this_week = [];
-    this.today = [];
+
+    this.action_required = Loaded.reservations.action_required;
+    this.group_this_week = Loaded.reservations.group_this_week;
+    this.today = Loaded.reservations.today;
 
     $scope.$on('NewReservationCtrl.reload_reservations', () => {
       this.loadReservations();
@@ -47,6 +49,10 @@ export default class DashboardReservationsCtrl {
           this.setData();
           this.loadTables();
           this.reservationsLoaded = true;
+          this.Loaded.reservations.count_per_year = reservations.count_per_year;
+          this.Loaded.reservations.count_per_month = reservations.count_per_month;
+          this.Loaded.reservations.count_per_week = reservations.count_per_week;
+          this.Loaded.reservations.count_by_week = reservations.count_by_week;
           this.$rootScope.$broadcast('reservationsLoaded', reservations);
         });
   }
@@ -61,7 +67,7 @@ export default class DashboardReservationsCtrl {
         });
       });
 
-      this[item] = result;
+      this.Loaded.reservations[item] = result;
     });
   }
 
@@ -74,6 +80,8 @@ export default class DashboardReservationsCtrl {
   }
 
   hasReservations() {
-    return this.action_required.length || this.group_this_week.length || this.today.length;
+    return this.Loaded.reservations.action_required.length
+      || this.Loaded.reservations.group_this_week.length
+      || this.Loaded.reservations.today.length;
   }
 }

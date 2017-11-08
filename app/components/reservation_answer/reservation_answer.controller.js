@@ -1,6 +1,8 @@
 export default class ReservationsAnswerCtrl {
-  constructor(User, ReservationStatus, reservation, $modalInstance, Settings,
-    filterFilter, $rootScope, $window, isCancellingReservation) {
+  constructor(
+    User, ReservationStatus, reservation, $modalInstance, Settings,
+    filterFilter, $rootScope, $window, isCancellingReservation, ReservationStatusMenu,
+  ) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -18,6 +20,8 @@ export default class ReservationsAnswerCtrl {
     if (this.isCancellingReservation) {
       this.loadMailsTextsSettings();
     }
+
+    ReservationStatusMenu(this);
   }
 
   closeModal() {
@@ -25,15 +29,8 @@ export default class ReservationsAnswerCtrl {
   }
 
   cancelReservation() {
-    this.is_submitting = true;
     this.closeModal();
-
-    return this.ReservationStatus
-      .changeStatus(this.current_company_id, this.reservation, 'cancelled').then(() => {
-        this.$rootScope.$broadcast('NewReservationCtrl.reset_reservation');
-        this.is_submitting = false;
-      }, () => {
-      });
+    return this.changeStatus(this.reservation, 'cancelled', true);
   }
 
   submitForm(isValid) {

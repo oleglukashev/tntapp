@@ -1,5 +1,7 @@
-export default function reservationStatusMenu(AppConstants, ReservationStatus, filterFilter,
-  moment, $modal) {
+export default function reservationStatusMenu(
+  AppConstants, ReservationStatus, filterFilter, moment, $modal,
+  Loaded,
+) {
   'ngInject';
 
   return (that) => {
@@ -9,14 +11,24 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
     instance.dutch_statuses = AppConstants.reservationDutchStatuses;
     instance.status_icon = AppConstants.reservationStatusClasses;
 
-    instance.changeStatus = (currentReservation, status) => {
-      if (status === 'cancelled') {
+    instance.changeLoadedStatus = (id, status) => {
+      // FIXME: temporary decision, use data models for reservations
+      const item = Loaded.reservations.today.filter(obj => obj.reservation.id === id)[0];
+      if (item) {
+        item.reservation.status = status;
+        Loaded.$rootScope.$broadcast('reservationsLoaded');
+      }
+    };
+
+    instance.changeStatus = (currentReservation, status, hidePopup) => {
+      if (status === 'cancelled' && !hidePopup) {
         instance.answer(currentReservation, true);
         return;
       }
 
       ReservationStatus
         .changeStatus(instance.current_company_id, currentReservation, status).then((reservation) => {
+          instance.changeLoadedStatus(currentReservation.id, status);
           if (typeof instance.action_required !== 'undefined') {
             const reservations = instance.all_reservations.action_required;
             const actionRequiredReservation = filterFilter(reservations, { id: reservation.id })[0];
@@ -51,7 +63,7 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
     };
 
     instance.editPart = (part) => {
-      
+
     };
   };
 }
