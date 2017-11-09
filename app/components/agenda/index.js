@@ -3,6 +3,7 @@ import routing from './agenda.route';
 import controller from './agenda.controller';
 import quickReservationController from './quick_reservation/agenda_quick_reservation.controller';
 import itemFactory from './agenda.item.factory';
+import showMore from '../../common/directives/show-more';
 import pageFilterFactory from '../../shared/page_filter/page_filter.factory';
 import reservationStatusMenuFactory from '../../shared/reservation_status_menu/reservation_status_menu.factory';
 
@@ -16,4 +17,5 @@ export default angular.module('app.agenda', [])
   .factory('ReservationStatusMenu', reservationStatusMenuFactory,
     ['ReservationStatus', 'Customer', 'filterFilter', 'moment', '$modal'])
   .factory('PageFilterFactory', pageFilterFactory)
+  .directive('showMore', showMore)
   .name;
