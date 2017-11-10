@@ -99,32 +99,30 @@
                   </div>
 
                   <div class='reservation'
-                       ng-repeat='(partId, part) in agenda.partsByTable[table.id]'
+                       ng-repeat='item in agenda.filterDataForGraph(zone.id, table.id)'
                        ui-on-drop=''
                        drop-channel='resize'
                        ui-draggable='true'
-                       drag='partId'
-                       ng-style='agenda.reservationBlockStyle(tableIndex, part)'
+                       drag='[item.id, item.reservation_id]'
+                       ng-style='agenda.reservationBlockStyle(tableIndex, item.part)'
                        on-drop-failure='agenda.dragEnd()'
                        ng-class='agenda.draggable_class'
-                       data-product-id='{{ part.product_id }}'
-                       data-id='{{ partId }}'
+                       data-product-id='{{ item.product_id }}'
+                       data-id='{{ item.id }}'
                        drag-channel='move'>
                     <i class='mdi i-20'
-                       ng-class='agenda.ReservationStatus.getIcon(part, part.reservation)'
-                       title='{{ agenda.AppConstants.reservationDutchStatuses[part.reservation.status] }}'
+                       ng-class='agenda.ReservationStatus.getIcon(item.part, item.reservation)'
+                       title='{{ agenda.AppConstants.reservationDutchStatuses[item.reservation.status] }}'
                     ></i>
-                    <a ng-click='agenda.openCustomerMenu(part.customer.id, partId)'>
-                      {{ part.number_of_persons }}
-                      {{ part.product.name }}
+                    <a ng-click='user.openCustomerMenu(item.customer_id, item.id)' ng-controller='UserMenuCtrl as user'>
+                      {{ item.number_of_persons }}
+                      {{ item.product_name }}
                       <strong>
-                        {{ part.customer.last_name }}
-                        {{ part.customer.first_name }}
+                        {{ item.name }}
                       </strong>
                     </a>
                     <div class='resizer' ui-draggable='true' drag-channel='resize'></div>
                   </div>
-
 
                 </div>
               </li>
