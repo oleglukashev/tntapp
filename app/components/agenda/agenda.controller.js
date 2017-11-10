@@ -273,13 +273,14 @@ export default class AgendaCtrl {
     });
   }
 
-  getQuarterClass(hour, quarter) {
+  getQuarterClass(hover, hour, quarter) {
     const timePart = (hour * 4) + quarter;
-    if (this.open_hours[this.draggedProduct] && (
-      timePart < this.open_hours[this.draggedProduct].start ||
-      timePart > this.open_hours[this.draggedProduct].end
-    )) {
-      return 'inactive';
+    if (hover ||
+      (this.open_hours[this.draggedProduct] &&
+      (timePart < this.open_hours[this.draggedProduct].start ||
+      timePart > this.open_hours[this.draggedProduct].end))
+    ) {
+      return 'hover';
     }
     return '';
   }

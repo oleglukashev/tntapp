@@ -94,7 +94,9 @@
                          ng-repeat='quarter in [0,1,2,3]'
                          ui-on-drop='agenda.onDrop(table.id, tableIndex, hour, quarter, $data)'
                          ng-click='agenda.openQuickReservation(table.id, table.table_number, hour, quarter)'
-                         ng-class='agenda.getQuarterClass(hour, quarter)'
+                         ng-class='agenda.getQuarterClass(hover, hour, quarter)'
+                         ng-mouseenter="hover=true"
+                         ng-mouseleave="hover=false"
                          drop-channel='move,resize'></div>
                   </div>
 
@@ -110,10 +112,10 @@
                        data-product-id='{{ item.product_id }}'
                        data-id='{{ item.id }}'
                        drag-channel='move'>
-                    <i class='mdi i-20'
-                       ng-class='agenda.ReservationStatus.getIcon(item.part, item.reservation)'
-                       title='{{ agenda.AppConstants.reservationDutchStatuses[item.reservation.status] }}'
-                    ></i>
+                    <span
+                       data-ng-include=" 'reservation_status_menu.view.html' "
+                       ng-init='controller = agenda; agendaIcon = true'
+                    ></span>
                     <a ng-click='user.openCustomerMenu(item.customer_id, item.id)' ng-controller='UserMenuCtrl as user'>
                       {{ item.number_of_persons }}
                       {{ item.product_name }}
