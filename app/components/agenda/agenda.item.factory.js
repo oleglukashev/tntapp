@@ -23,12 +23,19 @@ export default function AgendaItemFactory(AppConstants, ReservationStatus, $mdSi
         product_name: part.product ? part.product.name : undefined,
         date_time: instance.moment(part.date_time).format('DD.MM.YYYY HH:mm'),
         number_of_persons: part.number_of_persons,
-        table_ids: instance.Table.getTableNumbersByTableIds(instance.tables, part.table_ids).join(', '),
+        table_ids: part.table_ids.length ?
+          instance.Table.getTableNumbersByTableIds(instance.tables, part.table_ids).join(', ') :
+          [],
         notes: `${reservation.notes || ''}`,
         customer_id: reservation.customer.id,
         name,
         reservation,
         part,
+
+        // graph calendar data:
+        source_table_ids: part.table_ids,
+        product_id: part.product ? part.product.id : undefined,
+        reservation_id: reservation.id,
       };
     };
 

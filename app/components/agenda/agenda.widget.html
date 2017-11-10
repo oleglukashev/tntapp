@@ -12,27 +12,25 @@
 
   <md-fab-actions ng-click="agenda.dontHideWidget($event)">
     <div class='calendar_wrapper'>
-      <div ng-repeat='part in agenda.partsByTable.null | objectToArrayAndSortBy:"date_time"'>
-        <div class="pull-left widget-time">{{ agenda.moment(part.date_time).format('HH:mm') }}</div>
+      <div ng-repeat='item in agenda.data.null'>
+        <div class="pull-left widget-time">{{ agenda.moment(item.date_time).format('HH:mm') }}</div>
         <div class='reservation'
              ui-draggable='true'
-             drag='part.id'
-             ng-style='agenda.reservationBlockStyle(tableIndex, part)'
+             drag='[item.id, item.reservation.id]'
              on-drop-failure='agenda.dragEnd()'
              ng-class='agenda.draggable_class'
-             data-product-id='{{ part.product_id }}'
-             data-id='{{ part.id }}'
+             data-product-id='{{ item.product_id }}'
+             data-id='{{ item.id }}'
              drag-channel='move'>
           <i class='mdi i-20'
-             ng-class='agenda.ReservationStatus.getIcon(part, part.reservation)'
-             title='{{ agenda.AppConstants.reservationDutchStatuses[part.reservation.status] }}'
+             ng-class='agenda.ReservationStatus.getIcon(item, item.reservation)'
+             title='{{ agenda.AppConstants.reservationDutchStatuses[item.reservation.status] }}'
           ></i>
-          <a ng-click='agenda.openCustomerMenu(part.customer.id, part.id)'>
-            {{ part.number_of_persons }}
-            {{ part.product.name }}
+          <a ng-click='user.openCustomerMenu(item.customer_id, item.id)' ng-controller='UserMenuCtrl as user'>
+            {{ item.number_of_persons }}
+            {{ item.product_name }}
             <strong>
-              {{ part.customer.last_name }}
-              {{ part.customer.first_name }}
+              {{ item.name }}
             </strong>
           </a>
         </div>
