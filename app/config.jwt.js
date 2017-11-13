@@ -3,10 +3,13 @@ export default function Config($httpProvider, jwtOptionsProvider) {
 
   jwtOptionsProvider.config({
     whiteListedDomains: ['tnt.me', 'thenexttable.com'],
-    tokenGetter: ['jwtHelper', '$http', 'JWT', '$state', (jwtHelper, $http, JWT, $state) => {
+    tokenGetter: ['jwtHelper', '$http', 'JWT', '$state', '$window', (jwtHelper, $http, JWT, $state, $window) => {
       const token = JWT.get();
 
-      const isAuthPage = $state.current.name !== '' && $state.current.name.indexOf('auth') < 0;
+      // TODO find more good solution
+      const isntAuthPage = $state.current.name !== '' &&
+        $state.current.name !== 'customer_reservation.new' &&
+        $state.current.name.indexOf('auth') < 0;
 
       if (token) {
         if (jwtHelper.isTokenExpired(token)) {
@@ -25,19 +28,19 @@ export default function Config($httpProvider, jwtOptionsProvider) {
                 JWT.save({ token: result.data.token, refresh_token: result.data.refresh_token });
                 return JWT.get();
               }, () => {
-                if (isAuthPage) window.location.reload();
+                if (isntAuthPage) $window.location.href = '/';
               },
             );
           }
 
-          if (isAuthPage) window.location.reload();
+          if (isntAuthPage) $window.location.href = '/';
           return null;
         }
 
         return token;
       }
 
-      if (isAuthPage) window.location.reload();
+      if (isntAuthPage) $window.location.href = '/';
       return null;
     }],
   });
