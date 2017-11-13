@@ -5,7 +5,7 @@ export default function showMore() {
     scope: {
       // FIXME: Trigger all calculations
       // Useful when (initial) view type switched from `calendar` to `list`
-      // (dimensions of invisible elements is always zero)
+      // (dimensions of invisible elements are always zero)
       trigger: '@showMoreTrigger',
     },
     template: '<div class="show-more"><div class="show-more-collapsed"><div ng-transclude></div></div><a class="show-more-link" ng-click="showMore($event)" ng-show="expandable && !expanded">Meer weergeven</a></div>',
