@@ -412,24 +412,23 @@ export default class NewReservationCtrl {
             this.time_ranges[rangeDayOfWeek][range.productId] = {
               startTime: this.moment(range.startTime, 'HH:mm'),
               endTime: this.moment(range.endTime, 'HH:mm'),
+              value: range.value,
             };
-          }
-
-          if (rangeDayOfWeek === this.moment().isoWeekday()) {
-            const currentTime = this.moment();
-            const startTime = this.moment(range.startTime, 'HH:mm');
-            const endTime = this.moment(range.endTime, 'HH:mm');
-            const productIsActive = currentTime.isBetween(startTime, endTime);
-
-            this.products.forEach((product) => {
-              if (product.id === range.productId) {
-                product.hidden = !productIsActive;
-              }
-            });
           }
         });
         this.refreshDatepicker();
       });
+  }
+
+  checkProductForTimeRange(productId) {
+    const selectedDayOfWeek = this.moment(this.current_part.date).isoWeekday();
+    if (selectedDayOfWeek) {
+      const isProductEnabledForSelectedDay = this.time_ranges[selectedDayOfWeek][productId];
+      return selectedDayOfWeek &&
+        isProductEnabledForSelectedDay &&
+        isProductEnabledForSelectedDay.value;
+    }
+    return false;
   }
 
   loadOccupiedTables() {
