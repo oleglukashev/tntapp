@@ -9,7 +9,7 @@
     <div class='panel'>
       <div class='panel-heading'>Profielen</div>
       <md-list class='no-padder'>
-        <div class='char_wrapper' ng-repeat='(char, customers) in profiles.customers'>
+        <div class='char_wrapper' ng-repeat='(char, customers) in profiles.customers' scroll-more="profiles.loadCustomers(true)">
           <div class='md-list-item-left char'>{{ char }}</div>
           <md-list-item ng-click='profiles.openCustomerMenu(customer.id)'
                         ng-class='{"active": profiles.active_profile == customer.id}'
@@ -34,7 +34,7 @@
                 <i class='mdi mdi-dots-vertical i-24'></i>
               </button>
             </div>
-    
+
           </md-list-item>
         </div>
       </md-list>

@@ -8,13 +8,13 @@ export default class Customer {
     this.$q = $q;
   }
 
-  getAll(companyId, skipJwtAuth) {
+  getAll(companyId, skipJwtAuth, page = 1) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/customer`,
+      url: `${API_URL}/company/${companyId}/customer?page=${page}`,
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
