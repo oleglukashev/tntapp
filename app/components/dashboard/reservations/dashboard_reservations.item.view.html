@@ -31,8 +31,8 @@
       <i class='mdi mdi-silverware-variant' ng-if='item.product_name'></i>
       <span class='font-thin m-r-xs'>{{ item.product_name }}</span>
     </div>
-    <span class='font-thin' ng-if='item.notes'>
+    <div class='font-thin' ng-if='item.notes' show-more>
       {{ item.notes }}
-    </span>
+    </div>
   </div>
 </div>
