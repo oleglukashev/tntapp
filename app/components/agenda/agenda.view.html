@@ -25,19 +25,10 @@
     <i class='mdi mdi-plus i-24'></i>
   </button>
 
-  <accordion class='agenda' close-others='false'>
-    <accordion-group ng-repeat='zone in agenda.zones' is-open='agenda.opened[$index]'>
-      <accordion-heading>
-        <div class='clearfix' ng-click='agenda.scrollToNow($index)'>
-          <div class='pull-left'>
-            {{ zone.name }}
-            <i class='mdi mdi-chevron-down i-24' ng-if='!agenda.opened[$index]'></i>
-            <i class='mdi mdi-chevron-up i-24' ng-if='agenda.opened[$index]'></i>
-          </div>
-        </div>
-      </accordion-heading>
-
-      <table class='table m-b-none' ng-show='agenda.view_type == "list"'>
+  <div class='panel' ng-show='agenda.view_type == "list"'>
+    <div class='panel-heading'>Reserveringen</div>
+    <div class='panel-body no-padder'>
+      <table class='table m-b-none'>
         <thead>
           <tr>
               <th width='12%'>Aanwezig</th>
@@ -55,15 +46,28 @@
               ng-click='agenda.openCustomerMenu(item.customer_id, item.id)'
               ng-class='{"active": agenda.active_part == item.id,
                          "cancelled": item.reservation.status == "cancelled"}'
-              ng-repeat='item in data = agenda.data[zone.id]'
+              ng-repeat='item in data = agenda.data'
               ng-mouseup='agenda.active_part = item.id'
               ng-init='controller = agenda;hideIcon = item.reservation.id === data[$index - 1].reservation.id;'>
               </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <accordion class='agenda' close-others='false' ng-show='agenda.view_type == "calendar"'>
+    <accordion-group ng-repeat='zone in agenda.zones' is-open='agenda.opened[$index]'>
+      <accordion-heading>
+        <div class='clearfix' ng-click='agenda.scrollToNow($index)'>
+          <div class='pull-left'>
+            {{ zone.name }}
+            <i class='mdi mdi-chevron-down i-24' ng-if='!agenda.opened[$index]'></i>
+            <i class='mdi mdi-chevron-up i-24' ng-if='agenda.opened[$index]'></i>
+          </div>
+        </div>
+      </accordion-heading>
 
       <div class='tables_wrapper'
-           ng-show='agenda.view_type == "calendar"'
            ng-if='agenda.tables_by_zone[zone.id].length'>
         <div ng-repeat='(tableIndex, table) in agenda.tables_by_zone[zone.id] | orderBy:"position"'>
           <div class='table_item_number pull-left m-t-sm' ng-style='{ top: tableIndex * agenda.reservation_height }'>

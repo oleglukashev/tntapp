@@ -29,8 +29,8 @@ export default class AgendaCtrl {
     this.products = [];
     this.reservations = [];
     this.open_hours = {};
-    this.data = {};
-    this.data.null = [];
+    this.data = [];
+    this.data_without_tables = [];
 
     this.draggableClass = '';
     this.channel = '';
@@ -234,7 +234,7 @@ export default class AgendaCtrl {
   }
 
   filterDataForGraph(zoneId, tableId) {
-    return this.filterFilter(this.data[zoneId], { source_table_ids: tableId });
+    return this.filterFilter(this.data, { source_table_ids: tableId });
   }
 
   openReservation() {
@@ -369,9 +369,6 @@ export default class AgendaCtrl {
       .then(
         (result) => {
           this.zones = result;
-          this.zones.forEach((zone) => {
-            this.data[zone.id] = [];
-          });
           this.loadTables();
         },
         () => {},
@@ -409,7 +406,7 @@ export default class AgendaCtrl {
   }
 
   getEmptyTableReservations() {
-    return Object.keys(this.data.null).length;
+    return this.data_without_tables.length;
   }
 
   setGraphData() {
@@ -435,10 +432,7 @@ export default class AgendaCtrl {
   }
 
   setData() {
-    this.data = {};
-    this.zones.forEach((zone) => {
-      this.data[zone.id] = this.getDataByZone(zone);
-    });
+    this.data = this.getData();
   }
 
   setWidgetData() {
@@ -455,24 +449,19 @@ export default class AgendaCtrl {
       }
     });
 
-    this.data.null = result;
+    this.data_without_tables = result;
   }
 
-  getDataByZone(zone) {
+  getData() {
     const result = [];
     const reservations = this.applyFilterToReservations();
 
     reservations.forEach((reservation) => {
       reservation.reservation_parts.forEach((part) => {
-        const row = this.rowPart(part, reservation);
-        part.table_ids.forEach((tableId) => {
-          if (zone.table_ids.includes(tableId) &&
-             !result.includes(row) &&
-             (this.moment(part.date_time).format('YYYY-MM-DD') ===
-              this.moment(this.date_filter).format('YYYY-MM-DD'))) {
-            result.push(row);
-          }
-        });
+        if ((this.moment(part.date_time).format('YYYY-MM-DD') ===
+            this.moment(this.date_filter).format('YYYY-MM-DD'))) {
+          result.push(this.rowPart(part, reservation));
+        }
       });
     });
 

@@ -19,7 +19,7 @@
   {{ item.number_of_persons }}x
 </td>
 <td ng-class='{"b-t-none p-t-none": hideIcon}'>
-  <span ng-show='item.table_ids'>
+  <span ng-show='item.table_ids.length'>
     <img class='table_icon' src='public/images/table.svg' />
     {{ item.table_ids }}
   </span>
