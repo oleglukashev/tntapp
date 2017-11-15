@@ -3,7 +3,7 @@ export default class NewReservation {
     'ngInject';
   }
 
-  validForm(reservation, phoneNumberIsRequired, walkIn) {
+  validForm(reservation, phoneNumberIsRequired, EmailIsRequired, walkIn) {
     const errors = [];
     let prefix = '';
     const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -25,12 +25,12 @@ export default class NewReservation {
     if (!walkIn) {
       if (!reservation.last_name) errors.push('achternaam is verplicht');
       if (!reservation.first_name) errors.push('voornaam is verplicht');
-    }
 
-    if (!reservation.mail && !walkIn) {
-      errors.push('email adres is verplicht');
-    } else if (reservation.mail && !emailRe.test(reservation.mail)) {
-      errors.push('email adres niet vol');
+      if (!reservation.mail && EmailIsRequired) {
+        errors.push('email adres is verplicht');
+      } else if (reservation.mail && !emailRe.test(reservation.mail)) {
+        errors.push('email adres niet vol');
+      }
     }
 
     if (phoneNumberIsRequired && !reservation.primary_phone_number) errors.push('telefoonnummer is verplciht');

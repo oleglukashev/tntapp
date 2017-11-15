@@ -589,12 +589,12 @@ export default class NewReservationCtrl {
 
   validForm() {
     this.errors = this.NewReservation
-      .validForm(this.reservation, this.settings.phone_number_is_required);
+      .validForm(this.reservation, this.settings.phone_number_is_required, this.is_customer_reservation, false);
   }
 
   validWalkInForm() {
     this.errors = this.NewReservation
-      .validForm(this.walk_in, this.settings.phone_number_is_required, true);
+      .validForm(this.walk_in, this.settings.phone_number_is_required, this.is_customer_reservation, true);
   }
 
   numberOfPersonsMoreThanTableSeats() {
