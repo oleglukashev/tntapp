@@ -187,6 +187,7 @@ export default class AgendaCtrl {
             this.dragEnd();
             this.setData();
             this.setGraphData();
+            this.setWidgetData();
           });
       }
     } else if (this.channel === 'move') {
@@ -225,6 +226,7 @@ export default class AgendaCtrl {
           changedPart.table_ids = Object.values(loadedPart.table_ids);
           this.setData();
           this.setGraphData();
+          this.setWidgetData();
         });
     }
 
@@ -331,6 +333,7 @@ export default class AgendaCtrl {
         if (this.tables) {
           this.setData();
           this.setGraphData();
+          this.setWidgetData();
         }
         this.is_loaded = true;
       });
@@ -410,7 +413,6 @@ export default class AgendaCtrl {
   }
 
   setGraphData() {
-    this.data.null = [];
     const reservations = this.applyFilterToReservations();
     reservations.forEach((reservation) => {
       if (reservation.status !== 'cancelled') {
@@ -426,36 +428,34 @@ export default class AgendaCtrl {
             procPart.width = this.durationToWidth(part.duration_minutes);
           } else {
             procPart.fromWidget = true;
-            this.data.null.push(procPart);
           }
         });
       }
-      this.data.null = this.getDataForWidget();
     });
   }
 
   setData() {
     this.data = {};
-    const nullZone = Object.assign({}, this.data.null);
     this.zones.forEach((zone) => {
       this.data[zone.id] = this.getDataByZone(zone);
     });
-    this.data.null = nullZone;
   }
 
-  getDataForWidget() {
+  setWidgetData() {
     const result = [];
-    const reservations = this.data.null;
+    const reservations = this.applyFilterToReservations();
 
-    Object.keys(reservations).forEach((key) => {
-      const part = reservations[key];
-      const reservation = reservations[key].reservation;
-      if (!part.table_ids.length) {
-        result.push(this.rowPart(part, reservation));
+    reservations.forEach((reservation) => {
+      if (reservation.status !== 'cancelled') {
+        reservation.reservation_parts.forEach((part) => {
+          if (!part.table_ids.length) {
+            result.push(this.rowPart(part, reservation));
+          }
+        });
       }
     });
 
-    return result;
+    this.data.null = result;
   }
 
   getDataByZone(zone) {
