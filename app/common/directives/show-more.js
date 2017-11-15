@@ -19,19 +19,17 @@ export default function showMore() {
           return;
         }
 
-        let timerCounter = 0;
-        let timer = $interval(() => {
+        let ticks = 0;
+        const timer = $interval(() => {
           const container = $element.children()[0].firstElementChild;
           const height = container.firstElementChild.clientHeight;
 
           // FIXME: wait until element become visible
-          timerCounter += 1;
-          if (height > 0 || timerCounter > 10) {
-            if (timer) {
-              $interval.cancel(timer);
-              timer = undefined;
-            }
+          ticks += 1;
+          if (height === 0 && ticks < 10) {
+            return;
           }
+          $interval.cancel(timer);
 
           const style = window.getComputedStyle(container);
           const fontSize = parseFloat(style.fontSize);
