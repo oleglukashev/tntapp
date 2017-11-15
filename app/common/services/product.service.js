@@ -51,6 +51,7 @@ export default class Product {
     return this.$http({
       url: `${API_URL}/company/${companyId}/product${(hidden ? '?hidden=true' : '')}`,
       skipAuthorization: skipJwtAuth,
+      ignoreLoadingBar: true,
       method: 'GET',
     }).then(result => result.data);
   }

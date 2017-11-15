@@ -76,8 +76,7 @@ export default class AgendaCtrl {
     this.loadGeneralSettings();
     this.loadZonesAndTables();
     this.loadProducts();
-
-    this.changeDateFilterPostProcess();
+    this.loadTimeRanges();
   }
 
   dontHideWidget($event) {
@@ -304,7 +303,7 @@ export default class AgendaCtrl {
                 };
               });
           });
-          this.loadTimeRanges();
+          this.loadReservations();
         });
   }
 
@@ -321,7 +320,6 @@ export default class AgendaCtrl {
             };
           }
         });
-        this.loadReservations();
       });
   }
 

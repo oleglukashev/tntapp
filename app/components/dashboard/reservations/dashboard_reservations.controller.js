@@ -32,6 +32,7 @@ export default class DashboardReservationsCtrl {
     });
 
     this.loadReservations();
+    this.loadTables();
     ReservationStatusMenu(this);
     DashboardReservationsItemFactory(this);
   }
@@ -42,7 +43,6 @@ export default class DashboardReservationsCtrl {
         (reservations) => {
           this.all_reservations = reservations;
           this.setData();
-          this.loadTables();
           this.reservationsLoaded = true;
           this.Loaded.reservations.count_per_year = reservations.count_per_year;
           this.Loaded.reservations.count_per_month = reservations.count_per_month;

@@ -204,6 +204,7 @@ export default class User {
     return this.$http({
       url: `${API_URL}/company/${this.current_company.id}/user/${userId}/photo?${new Date().getTime()}`,
       method: 'GET',
+      ignoreLoadingBar: true,
       headers: {
         Authorization: `Bearer ${this.JWT.get()}`,
       },

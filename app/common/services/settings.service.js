@@ -76,6 +76,7 @@ export default class Settings {
     return this.$http({
       url: `${API_URL}/company/${companyId}/settings/theme`,
       skipAuthorization: skipJwtAuth,
+      ignoreLoadingBar: true,
       method: 'GET',
     }).then(result => result.data);
   }

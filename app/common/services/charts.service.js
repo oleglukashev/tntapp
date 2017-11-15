@@ -1,11 +1,11 @@
 export default class Charts {
-  constructor(User, Reservation, AppConstants) {
+  constructor(User, Product, AppConstants) {
     'ngInject';
 
     this.current_company = User.current_company;
 
     this.letterOfWeek = AppConstants.letterOfWeek;
-    this.Reservation = Reservation;
+    this.Product = Product;
   }
 
   get(reservations) {
@@ -77,8 +77,8 @@ export default class Charts {
   }
 
   getProducts() {
-    this.Reservation
-      .getProducts(this.current_company.id)
+    this.Product
+      .getAll(this.current_company.id)
       .then((products) => {
         products.forEach((product) => {
           if (product.id) {
