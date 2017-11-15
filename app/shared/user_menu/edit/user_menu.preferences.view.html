@@ -37,7 +37,7 @@
       </div>
       <button type='submit'
             ng-class="{ 'disabled': !user_preferences_form.$valid || controller.preferences_is_submitting }"
-            ng-click='controller.submitPreferenceForm(user_preferences_form.$valid)'
+            ng-click='controller.submitPreferenceForm(user_preferences_form)'
             class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
         OPSLAAN
       </button>

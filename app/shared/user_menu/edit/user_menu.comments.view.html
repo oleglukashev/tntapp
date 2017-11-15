@@ -32,7 +32,7 @@
 
       <button type='submit'
               ng-class="{ 'disabled': !user_notes_form.$valid || controller.notes_is_submitting }"
-              ng-click="controller.submitNoteForm(user_notes_form.$valid)"
+              ng-click="controller.submitNoteForm(user_notes_form)"
               class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
         <span>OPSLAAN</span>
       </button>
