@@ -2,6 +2,11 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
   CustomerAllergies, moment) {
   'ngInject';
 
+  const resetForm = (form) => {
+    form.$setPristine();
+    form.$setUntouched();
+  }
+
   return (that) => {
     const instance = that;
 
@@ -12,7 +17,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
         instance.customerNotes[index].id,
       ).then(
         () => {
-          instance.customer_notes.splice(index, 1);
+          instance.customerNotes.splice(index, 1);
           instance.note = null;
         }, () => {},
       );
@@ -25,7 +30,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
         instance.customerPreferences[index].id,
       ).then(
         () => {
-          instance.preferences.splice(index, 1);
+          instance.customerPreferences.splice(index, 1);
           instance.preference = null;
         }, () => {},
       );
@@ -38,13 +43,13 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
         instance.customerAllergies[index].id,
       ).then(
         () => {
-          instance.allergies.splice(index, 1);
+          instance.customerAllergies.splice(index, 1);
           instance.allergy = null;
         }, () => {},
       );
     };
 
-    instance.submitForm = (isValid) => {
+    instance.submitForm = (isValid, form) => {
       if (!isValid) {
         return false;
       }
@@ -83,8 +88,8 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
       );
     };
 
-    instance.submitNoteForm = (isValid) => {
-      if (!isValid) {
+    instance.submitNoteForm = (form) => {
+      if (!form.$valid) {
         return false;
       }
 
@@ -114,13 +119,15 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
               instance.$rootScope.customer_notes.push(result);
               instance.note = {};
               instance.notes_is_submitting = false;
+
+              resetForm(form);
             }, () => {},
           );
       }
     };
 
-    instance.submitPreferenceForm = (isValid) => {
-      if (!isValid) {
+    instance.submitPreferenceForm = (form) => {
+      if (!form.$valid) {
         return false;
       }
 
@@ -151,13 +158,15 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
               instance.$rootScope.customer_preferences.push(result);
               instance.preference = {};
               instance.preferences_is_submitting = false;
+
+              resetForm(form);
             }, () => {},
           );
       }
     };
 
-    instance.submitAllergiesForm = (isValid) => {
-      if (!isValid) {
+    instance.submitAllergiesForm = (form) => {
+      if (!form.$valid) {
         return false;
       }
 
@@ -187,6 +196,8 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
               instance.$rootScope.customer_allergies.push(result);
               instance.allergy = {};
               instance.allergies_is_submitting = false;
+
+              resetForm(form);
             }, () => {},
           );
       }
