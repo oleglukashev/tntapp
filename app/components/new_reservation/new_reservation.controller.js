@@ -619,7 +619,7 @@ export default class NewReservationCtrl {
       const min = openedTimes[0].time;
       const max = openedTimes[openedTimes.length - 1].time;
       const now = this.moment();
-      const formatedDate = this.moment().format('YYYY-MM-DD');
+      const formatedDate = this.moment(date).format('YYYY-MM-DD');
 
       return this.filterFilter(availableTime, item => item.time >= min &&
         item.time <= max &&
