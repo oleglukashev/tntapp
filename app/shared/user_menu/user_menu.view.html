@@ -141,7 +141,7 @@
       <li ng-if='customer.accountURI'>
         <ul class="nav nav-sub">
           <li ui-sref-active="active">
-            <a ng-href='customer.accountURI' md-ink-ripple class='text-success fb-button'>
+            <a href='{{ customer.accountURI }}' target='_blank' md-ink-ripple class='text-success fb-button'>
               <span>Profiel bekijken</span>
             </a>
           </li>
