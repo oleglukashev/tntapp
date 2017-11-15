@@ -48,7 +48,7 @@ export default class ReservationPart {
 
   partsByDate(parts, date) {
     return parts.filter((part) => {
-      return this.moment(part.time).format('YYYY-MM-DD') ===
+      return this.moment(part.date_time, 'DD.MM.YYYY HH:mm').format('YYYY-MM-DD') ===
              this.moment(date).format('YYYY-MM-DD');
     });
   }

@@ -23,7 +23,10 @@
       <i class='mdi mdi-account-multiple'></i>
       <span class='font-thin m-r-xs'>{{ item.number_of_persons }}x</span>
       <i class='mdi mdi-clock'></i>
-      <span class='font-thin m-r-xs'>{{ item.date_time }}</span>
+      <span class='font-thin m-r-xs'>
+        <span ng-if='showDate'>{{ item.date }}</span>
+        {{ item.time }}
+      </span>
       <span class='m-r-xs' ng-show='item.table_ids'>
         <img class='table_icon' src='public/images/table.svg' />
         {{ item.table_ids }}

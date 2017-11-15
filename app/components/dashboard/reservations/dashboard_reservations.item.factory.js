@@ -22,6 +22,8 @@ export default function DashboardReservationsItemFactory(AppConstants, Reservati
         icon: ReservationStatus.getIcon(part, reservation),
         product_name: part.product ? part.product.name : undefined,
         date_time: instance.moment(part.date_time).format('DD.MM.YYYY HH:mm'),
+        date: instance.moment(part.date_time).format('DD.MM.YYYY'),
+        time: instance.moment(part.date_time).format('HH:mm'),
         number_of_persons: part.number_of_persons,
         table_ids: instance.Table.getTableNumbersByTableIds(instance.tables, part.table_ids).join(', '),
         notes: `${reservation.notes || ''}`,
