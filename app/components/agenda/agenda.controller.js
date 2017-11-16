@@ -186,8 +186,6 @@ export default class AgendaCtrl {
             part.width = (difference * this.hour_width) / 4;
             this.dragEnd();
             this.setData();
-            this.setGraphData();
-            this.setWidgetData();
           });
       }
     } else if (this.channel === 'move') {
@@ -225,8 +223,6 @@ export default class AgendaCtrl {
           const changedPart = this.filterFilter(changedReservation.reservation_parts, { id: partId })[0];
           changedPart.table_ids = Object.values(loadedPart.table_ids);
           this.setData();
-          this.setGraphData();
-          this.setWidgetData();
         });
     }
 
@@ -332,8 +328,6 @@ export default class AgendaCtrl {
 
         if (this.tables) {
           this.setData();
-          this.setGraphData();
-          this.setWidgetData();
         }
         this.is_loaded = true;
       });
@@ -433,6 +427,9 @@ export default class AgendaCtrl {
 
   setData() {
     this.data = this.getData();
+
+    this.setGraphData();
+    this.setWidgetData();
   }
 
   setWidgetData() {
@@ -457,12 +454,14 @@ export default class AgendaCtrl {
     const reservations = this.applyFilterToReservations();
 
     reservations.forEach((reservation) => {
-      reservation.reservation_parts.forEach((part) => {
-        if ((this.moment(part.date_time).format('YYYY-MM-DD') ===
-            this.moment(this.date_filter).format('YYYY-MM-DD'))) {
-          result.push(this.rowPart(part, reservation));
-        }
-      });
+      if (reservation.status !== 'cancelled') {
+        reservation.reservation_parts.forEach((part) => {
+          if ((this.moment(part.date_time).format('YYYY-MM-DD') ===
+              this.moment(this.date_filter).format('YYYY-MM-DD'))) {
+            result.push(this.rowPart(part, reservation));
+          }
+        });
+      }
     });
 
     return this.applySort(result);
