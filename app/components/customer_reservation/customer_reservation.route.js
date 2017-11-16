@@ -6,7 +6,7 @@ export default function routes($stateProvider) {
       template: '<div ui-view></div>',
     })
     .state('customer_reservation.new', {
-      url: '/customer/company/:id/reservation',
+      url: '/reservation/:id',
       template: require('./customer_reservation.view.html'),
       controller: 'CustomerReservationCtrl',
       controllerAs: 'customer_reserv'

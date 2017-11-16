@@ -1,4 +1,4 @@
-export default function routes($stateProvider, $urlRouterProvider) {
+export default function routes($stateProvider, $urlRouterProvider, $locationProvider) {
   'ngInject';
 
   $stateProvider
@@ -11,4 +11,8 @@ export default function routes($stateProvider, $urlRouterProvider) {
     });
 
   $urlRouterProvider.otherwise('/');
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false,
+  });
 }
