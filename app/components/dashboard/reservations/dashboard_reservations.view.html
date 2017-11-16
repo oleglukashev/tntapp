@@ -11,7 +11,7 @@
                         "b-b-none": item.reservation.id === data[$index + 1].reservation.id}'
              data-ng-include=" 'dashboard_reservations.item.view.html' "
              ng-repeat='item in data = reservations.Loaded.reservations.action_required'
-             ng-init='hideIcon = item.reservation.id === data[$index - 1].reservation.id'
+             ng-init='hideIcon = item.reservation.id === data[$index - 1].reservation.id; showDate = true'
              ng-mouseup='reservations.active_part = item.id'
              md-ink-ripple></md-list-item>
       </md-list>
@@ -29,7 +29,7 @@
                         "b-b-none": item.reservation.id === data[$index + 1].reservation.id}'
              data-ng-include=" 'dashboard_reservations.item.view.html' "
              ng-repeat='item in data = reservations.Loaded.reservations.group_this_week'
-             ng-init='hideIcon = item.reservation.id === data[$index - 1].reservation.id'
+             ng-init='hideIcon = item.reservation.id === data[$index - 1].reservation.id; showDate = true'
              ng-mouseup='reservations.active_part = item.id'
              md-ink-ripple></md-list-item>
       </md-list>
