@@ -1,13 +1,14 @@
 export default class AppCtrl {
-  constructor(User, $cookieStore, $scope) {
+  constructor($cookieStore, $scope, AppConstants) {
     'ngInject';
 
     this.$scope = $scope;
     this.$cookieStore = $cookieStore;
-    this.theme_class = this.$cookieStore.get('theme') || 'default-theme';
+    this.default_class = AppConstants.defaultThemeClass;
+    this.theme_class = this.$cookieStore.get('theme') || this.default_class;
 
-    $scope.$on('AppCtrl.change_plugin_theme_name', (event, theme) => {
-      this.theme_class = theme;
+    $scope.$on('AppCtrl.change_plugin_theme_name', (event, themeClass) => {
+      this.theme_class = themeClass || this.default_class;
     });
   }
 }
