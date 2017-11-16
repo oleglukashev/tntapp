@@ -1,5 +1,5 @@
 export default class User {
-  constructor(JWT, Upload, Settings, $http, $state, $q, $location, $window, $rootScope) {
+  constructor(JWT, Upload, Settings, $http, $state, $q, $location, $window, $rootScope, $cookieStore) {
     'ngInject';
 
     this.JWT = JWT;
@@ -11,6 +11,7 @@ export default class User {
     this.$q = $q;
     this.$window = $window;
     this.$rootScope = $rootScope;
+    this.$cookieStore = $cookieStore;
     this.current = null;
     this.current_company = null;
   }
@@ -215,8 +216,14 @@ export default class User {
     this.Settings
       .getThemeSettings(this.current_company.id).then(
         (result) => {
+          const currentTheme = this.$cookieStore.get('theme');
+          let themeClass = null;
+
           if (result.plugin_theme_name) {
-            const themeClass = `${result.plugin_theme_name.toLowerCase()}-theme`;
+            themeClass = `${result.plugin_theme_name.toLowerCase()}-theme`;
+          }
+
+          if (currentTheme != themeClass) {
             this.Settings.saveThemeToCookie(themeClass);
             this.$rootScope.$broadcast('AppCtrl.change_plugin_theme_name', themeClass);
           }
