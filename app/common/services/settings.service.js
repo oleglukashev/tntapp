@@ -62,7 +62,7 @@ export default class Settings {
     }
 
     return this.$http({
-      url: `${API_URL}/company/#{companyId}/settings/plugins`,
+      url: `${API_URL}/company/${companyId}/settings/plugins`,
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
