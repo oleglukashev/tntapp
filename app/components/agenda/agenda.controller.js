@@ -189,7 +189,10 @@ export default class AgendaCtrl {
           });
       }
     } else if (this.channel === 'move') {
-      const fullDateTime = `${dateFilter.format('YYYY-MM-DD')} ${hour}:${(quarter * 15)}:00`;
+      let minutes = quarter * 15;
+      minutes = minutes ? String(minutes) : '00';
+
+      const fullDateTime = `${dateFilter.format('YYYY-MM-DD')} ${hour}:${minutes}:00`;
       let newDateTime = this.moment(fullDateTime).subtract({
         hours: this.offsetHours,
         minutes: this.offsetQuarters * 15,
@@ -353,9 +356,9 @@ export default class AgendaCtrl {
   }
 
   timeToCoords(datetime) {
-    const time = new Date(datetime);
-    return this.left_margin + (time.getHours() * this.hour_width) +
-      ((time.getMinutes() / 60) * this.hour_width);
+    const time = this.moment(datetime);
+    return this.left_margin + (time.hours() * this.hour_width) +
+      ((time.minutes() / 60) * this.hour_width);
   }
 
   loadZonesAndTables() {
