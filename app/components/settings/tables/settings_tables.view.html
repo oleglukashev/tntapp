@@ -52,15 +52,12 @@
               ng-class="{'selected': tables_settings.selected === table}">
             <div class='table_item_number pull-left m-t-sm'>
               <md-input-container class='no-margin'>
-                <input type='number'
+                <input type='text'
                        class='text-center w-40'
                        name='table_number_{{$index}}'
                        ng-model='tables_settings.tables_by_zone[zone.id][$index].table_number'
                        ng-blur='tables_settings.submitForm();'
-                       required
-                       ng-maxlength='3'
-                       minlength='1'
-                       min='0' />
+                       required />
 
                 <div ng-messages='tables_form[tables_settings.getTableNumberNameByZoneAndIndex(zone.id, $index)].$error'>
                   <div ng-message='required'>This is required!</div>
