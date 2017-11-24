@@ -2,6 +2,7 @@ import angular from 'angular';
 
 export default angular.module('app.constants', [])
   .constant('AppConstants', {
+    twitterUrl: 'https://twitter.com',
     jwtKey: 'jwtToken',
     jwtRefresh: 'jwtRefresh',
     appName: 'TNT',

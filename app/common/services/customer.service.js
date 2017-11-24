@@ -88,4 +88,33 @@ export default class Customer {
       data,
     }).then(result => result.data);
   }
+
+  socialImageUrl(customer) {
+    if (!customer) return null;
+    if (customer.social_accounts.length) {
+      const socialAccount = customer.social_accounts[0];
+
+      if (socialAccount.type === 'facebook') {
+        return this.facebookImageUrl(socialAccount.account_id);
+      } else if (socialAccount.type === 'twitter') {
+        return socialAccount.twitter_profile_image;
+      }
+    }
+
+    return null;
+  }
+
+  facebookImageUrl(id) {
+    return `https://graph.facebook.com/${id}/picture?type=small`;
+  }
+
+  socialUrl(customer) {
+    if (!customer) return null;
+    if (customer.social_accounts.length) {
+      const socialAccount = customer.social_accounts[0];
+      return socialAccount.url;
+    }
+
+    return null;
+  }
 }
