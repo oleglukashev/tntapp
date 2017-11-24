@@ -21,8 +21,10 @@
         </button>
       </div>
       <h1 class='i-30'>
-        <img ng-src='{{ customer.photoURI }}' ng-if='customer.photoURI' class='customer_avatar m-r-md' />
-        <i ng-hide='customer.photoURI'
+        <img ng-src='{{ user.Customer.socialImageUrl(customer) }}'
+             ng-if='user.Customer.socialImageUrl(customer)'
+             class='customer_avatar m-r-md' />
+        <i ng-if='!user.Customer.socialImageUrl(customer)'
            class='customer_avatar customer_empty_avatar m-r-xs mdi mdi-account i-24'></i>
         <span class='user_name'>
           {{ customer.last_name }}
@@ -138,10 +140,13 @@
 
       <!-- list -->
 
-      <li ng-if='customer.accountURI'>
+      <li ng-if='user.Customer.socialUrl(customer)'>
         <ul class="nav nav-sub">
           <li ui-sref-active="active">
-            <a href='{{ customer.accountURI }}' target='_blank' md-ink-ripple class='text-success fb-button'>
+            <a href='{{ user.Customer.socialUrl(customer) }}'
+               target='_blank'
+               md-ink-ripple
+               class='text-success fb-button'>
               <span>Profiel bekijken</span>
             </a>
           </li>

@@ -3,8 +3,8 @@ import angular from 'angular';
 export default class NewReservationCtrl {
   constructor(
     Customer, User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone, NewReservation,
-    Table, moment, filterFilter, $state, $stateParams, $rootScope, $scope, $window, $auth, $timeout,
-    $q, $mdDialog,
+    Table, AppConstants, moment, filterFilter, $state, $stateParams, $rootScope, $scope, $window, $auth,
+    $timeout, $q, $mdDialog,
   ) {
     'ngInject';
 
@@ -21,6 +21,7 @@ export default class NewReservationCtrl {
     this.Table = Table;
     this.Settings = Settings;
     this.TimeRange = TimeRange;
+    this.AppConstants = AppConstants;
 
     if (this.is_customer_reservation) {
       this.current_company_id = $stateParams.id;
@@ -240,8 +241,18 @@ export default class NewReservationCtrl {
 
     const socialAccount = JSON.parse(this.$window.localStorage.getItem('social_account'));
     if (this.reservation.social && socialAccount) {
-      data.social_account = socialAccount;
-      data.social_account.type = this.reservation.social;
+      data.social_account = {
+        type: this.reservation.social,
+        id: socialAccount.id,
+        name: socialAccount.name,
+      }
+
+      if (data.social_account.type === 'facebook') {
+        data.social_account.url = socialAccount.link;
+      } else if (data.social_account.type === 'twitter') {
+        data.social_account.url = `${this.AppConstants.twitterUrl}/${socialAccount.screen_name}`;
+        data.social_account.profile_image_url = socialAccount.profile_image_url;
+      }
     }
 
     this.$window.localStorage.removeItem('social_account');
@@ -507,7 +518,7 @@ export default class NewReservationCtrl {
         this.reservation.date_of_birth = response.data.date_of_birth;
         this.reservation.primary_phone_number = response.data.primary_phone_number;
         if (response.data.gender) {
-          this.reservation.gender = response.data.gender;
+          this.reservation.gender = this.parseGenderFromSocialResponse(response.data.gender);
         }
 
         this.selectTab(this.pagination.type);
@@ -643,6 +654,18 @@ export default class NewReservationCtrl {
     }
 
     return result;
+  }
+
+  parseGenderFromSocialResponse(gender_str) {
+    if (gender_str === 'Man' || gender_str === 'male') {
+      return 'Man';
+    }
+
+    if (gender_str === 'Vrouw' || gender_str === 'female') {
+      return 'Vrouw';
+    }
+
+    return null;
   }
 }
 
