@@ -29,6 +29,7 @@ export default class NewReservationCtrl {
     } else {
       this.current_company_id = User.getCompanyId();
       this.pagination = this.Reservation.pagination.backend;
+      Reservation.max_date = undefined;
     }
 
     this.$auth = $auth;
