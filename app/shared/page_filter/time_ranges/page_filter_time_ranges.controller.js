@@ -18,7 +18,7 @@ export default class PageFiltertime_rangesCtrl {
     this.$modalInstance = $modalInstance;
     this.slider = this.Slider.getOptions();
     this.type = type;
-    this.value_label = type === 'product' ? 'Geopend' : 'Overboeken';
+    this.value_label = type === 'product' || type === 'zone' ? 'Geopend' : 'Overboeken';
     this.title = title;
     this.products = [];
 
