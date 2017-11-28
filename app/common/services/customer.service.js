@@ -1,4 +1,5 @@
 import angular from 'angular';
+import { buildURL } from '../../common/utils';
 
 export default class Customer {
   constructor($http, $q) {
@@ -8,13 +9,25 @@ export default class Customer {
     this.$q = $q;
   }
 
-  getAll(companyId, skipJwtAuth, page = 1) {
+  getAll(companyId, skipJwtAuth, options = {}) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/customer?page=${page}`,
+      url: buildURL(`${API_URL}/company/${companyId}/customer`, options),
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
+    }).then(result => result.data);
+  }
+
+  firstLetters(companyId, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/customer/first_letters`,
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
