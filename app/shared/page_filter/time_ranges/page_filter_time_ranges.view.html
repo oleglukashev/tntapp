@@ -19,12 +19,14 @@
         worden tot je zaak dan er aan tafels beschikbaar is. Kies hieronder<br />
         je tijdsperiodes waarin je dit wil doen.</p>
         <p ng-if='page_filter_time_ranges.type == "product"'>Stel hier je openingstijden in voor de zones en producten per dag. Wil je de openingstijden veranderen voor altijd doe dat dan via je instellingen.</p>
+        <p ng-if='page_filter_time_ranges.type == "zone"'>Stel hier je openingstijden in voor de zones en zone per dag.</p>
       </div>
       <table class='table no-margin' ng-show='page_filter_time_ranges.is_loaded'>
         <thead>
           <th>Type</th>
           <th>Waarde</th>
           <th ng-if='page_filter_time_ranges.type == "product"'>Product</th>
+          <th ng-if='page_filter_time_ranges.type == "zone"'>Zone</th>
           <th>Starttijd</th>
           <th>Eindttijd</th>
           <th>Hele dag?</th>
@@ -34,10 +36,14 @@
           <tr ng-repeat='time_range in page_filter_time_ranges.time_ranges'>
             <td class='v-middle'>{{ time_range.type }}</td>
             <td ng-if='page_filter_time_ranges.type == "product"' class='v-middle'>{{ time_range.value ? 'Geopend' : 'Gesloten' }}</td>
+            <td ng-if='page_filter_time_ranges.type == "zone"' class='v-middle'>{{ time_range.value ? 'Geopend' : 'Gesloten' }}</td>
             <td ng-if='page_filter_time_ranges.type == "overbooking"' class='v-middle'>{{ time_range.value ? 'Overboeken' : 'Niet overboeken' }}</td>
-            <td class='v-middle' ng-if='page_filter_time_ranges.type == "product"'>
-              {{ page_filter_time_ranges.getProductName(time_range.product.id); }}
-            </td>
+            <td class='v-middle'
+                ng-if='page_filter_time_ranges.type == "product"'
+                ng-bind='page_filter_time_ranges.getProductName(time_range.product.id)'></td>
+            <td class='v-middle'
+                ng-if='page_filter_time_ranges.type == "zone"'
+                ng-bind='page_filter_time_ranges.getZoneName(time_range.zone.id)'></td>
             <td class='v-middle'>{{ time_range.start_time }}</td>
             <td class='v-middle'>{{ time_range.end_time }}</td>
             <td class='v-middle'>{{ time_range.whole_day ? 'Hele dag' : '-' }}</td>
@@ -78,11 +84,28 @@
                     rz-slider-high="page_filter_time_ranges.slider.maxValue"
                     rz-slider-options="page_filter_time_ranges.slider.options"></rzslider>
           <div class='w-xl'>
-            <div class='md-form-group no-padder m-b-sm' ng-if='page_filter_time_ranges.type == "product"'>
+            <div class='md-form-group no-padder m-b-sm'
+                 ng-if='page_filter_time_ranges.type == "product"'>
               <md-input-container>
-                <md-select required ng-model='page_filter_time_ranges.form_data.product.id' placeholder='Product'>
-                  <md-option ng-value='product.id' ng-repeat='product in page_filter_time_ranges.products'>
+                <md-select required
+                           ng-model='page_filter_time_ranges.form_data.product.id'
+                           placeholder='Product'>
+                  <md-option ng-value='product.id'
+                             ng-repeat='product in page_filter_time_ranges.products'>
                     {{ product.name }}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <div class='md-form-group no-padder m-b-sm'
+                 ng-if='page_filter_time_ranges.type == "zone"'>
+              <md-input-container>
+                <md-select required
+                           ng-model='page_filter_time_ranges.form_data.zone.id'
+                           placeholder='Zone'>
+                  <md-option ng-value='zone.id'
+                             ng-repeat='zone in page_filter_time_ranges.zones'>
+                    {{ zone.name }}
                   </md-option>
                 </md-select>
               </md-input-container>

@@ -1,6 +1,6 @@
 export default class PageFiltertime_rangesCtrl {
   constructor(
-    date, type, title, User, Product, Slider, PageFilterTimeRange,
+    date, type, title, User, Product, Zone, Slider, PageFilterTimeRange,
     filterFilter, moment, $modalInstance, $window,
   ) {
     'ngInject';
@@ -9,6 +9,7 @@ export default class PageFiltertime_rangesCtrl {
     this.PageFilterTimeRange = PageFilterTimeRange;
     this.Slider = Slider;
     this.Product = Product;
+    this.Zone = Zone;
     this.state = 'list';
     this.date = date;
     this.moment = moment;
@@ -89,6 +90,10 @@ export default class PageFiltertime_rangesCtrl {
       data.product = this.form_data.product.id;
     }
 
+    if (this.type === 'zone' && this.form_data.zone) {
+      data.zone = this.form_data.zone.id;
+    }
+
     if (this.form_data.id) {
       delete data.id;
 
@@ -136,9 +141,15 @@ export default class PageFiltertime_rangesCtrl {
   }
 
   getProductName(id) {
-    const product = this.filterFilter(this.products, { id })[0];
+    if (!id) return null;
+    const products = this.filterFilter(this.products, { id });
+    return products && products.length ? products[0].name : null;
+  }
 
-    return product ? product.name : null;
+  getZoneName(id) {
+    if (!id) return null;
+    const zones = this.filterFilter(this.zones, { id });
+    return zones && zones.length ? zones[0].name : null;
   }
 
   loadTimeRange() {
@@ -154,8 +165,11 @@ export default class PageFiltertime_rangesCtrl {
           if (this.type === 'product') {
             this.loadProducts();
           }
-        },
-        () => {},
+
+          if (this.type === 'zone') {
+            this.loadZones();
+          }
+        }, () => {},
       );
   }
 
@@ -164,6 +178,14 @@ export default class PageFiltertime_rangesCtrl {
       .getAll(this.current_company_id)
       .then((products) => {
         this.products = products;
+      });
+  }
+
+  loadZones() {
+    this.Zone
+      .getAll(this.current_company_id)
+      .then((zones) => {
+        this.zones = zones;
       });
   }
 }
