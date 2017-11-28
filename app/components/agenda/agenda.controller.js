@@ -297,7 +297,7 @@ export default class AgendaCtrl {
               .map((item) => {
                 return {
                   id: item.id,
-                  table_number: parseInt(item.table_number, 10),
+                  table_number: item.table_number,
                   number_of_persons: parseInt(item.number_of_persons, 10),
                   position: parseInt(item.position, 10),
                   zones: item.zones,
