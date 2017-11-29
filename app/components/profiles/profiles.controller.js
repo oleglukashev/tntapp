@@ -51,7 +51,7 @@ export default class ProfilesCtrl {
 
     this.customersLoading = true;
 
-    this.Customer.getAll(this.current_company_id, undefined, {
+    this.Customer.getAll(this.current_company_id, false, {
       page: this.pagination.page,
       letter: this.pagination.letters.join(','),
     }).then((result) => {
