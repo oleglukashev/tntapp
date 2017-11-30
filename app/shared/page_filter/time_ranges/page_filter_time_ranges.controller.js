@@ -18,7 +18,7 @@ export default class PageFiltertime_rangesCtrl {
     this.$modalInstance = $modalInstance;
     this.slider = this.Slider.getOptions();
     this.type = type;
-    this.value_label = type === 'product' || type === 'zone' ? 'Geopend' : 'Overboeken';
+    this.value_label = type === 'overbooking' ? 'Overboeken' : 'Geopend';
     this.title = title;
     this.products = [];
 
@@ -33,7 +33,14 @@ export default class PageFiltertime_rangesCtrl {
 
   edit(timeRange) {
     this.state = 'form';
-    this.form_data = timeRange;
+    this.form_data = {
+      id: timeRange.id,
+      whole_day: timeRange.whole_day,
+      fixed_date: timeRange.fixed_date,
+      value: timeRange.value,
+      multiple: !!timeRange.products,
+      product: timeRange.products || (timeRange.product ? timeRange.product.id : null),
+    };
 
     if (timeRange.whole_day) {
       this.slider.options.disabled = true;
@@ -86,8 +93,14 @@ export default class PageFiltertime_rangesCtrl {
       whole_day: this.form_data.whole_day,
     };
 
-    if (this.type === 'product' && this.form_data.product) {
-      data.product = this.form_data.product.id;
+    if (this.form_data.product) {
+      if (this.form_data.multiple) {
+        data.products = this.form_data.product;
+        data.type = 'multiproduct';
+      } else {
+        data.product = this.form_data.product;
+        data.type = 'product';
+      }
     }
 
     if (this.type === 'zone' && this.form_data.zone) {
@@ -99,20 +112,21 @@ export default class PageFiltertime_rangesCtrl {
 
       this.PageFilterTimeRange
         .update(this.current_company_id, this.form_data.id, data)
-        .then(() => {
+        .then((timeRange) => {
           this.is_submitting = false;
-          const timeRange = this.filterFilter(this.time_ranges, { id: this.form_data.id })[0];
+          const oldTimeRange = this.filterFilter(this.time_ranges, { id: this.form_data.id })[0];
+          const index = this.time_ranges.indexOf(oldTimeRange);
+          this.time_ranges.splice(index, 1);
 
-          if (timeRange) {
-            timeRange.start_time = this.Slider.from15Min(this.slider.minValue);
-            timeRange.end_time = this.Slider.from15Min(this.slider.maxValue);
+          timeRange.start_time = this.Slider.from15Min(this.slider.minValue);
+          timeRange.end_time = this.Slider.from15Min(this.slider.maxValue);
 
-            if (this.form_data.fixed_date !== this.moment(this.date).format('YYYY-MM-DD')) {
-              const index = this.time_ranges.indexOf(timeRange);
-              this.time_ranges.splice(index, 1);
-            }
+          if (this.form_data.fixed_date !== this.moment(this.date).format('YYYY-MM-DD')) {
+            const index = this.time_ranges.indexOf(timeRange);
+            this.time_ranges.splice(index, 1);
           }
 
+          this.time_ranges.push(timeRange);
           this.setStateToList();
         });
     } else {
@@ -140,10 +154,16 @@ export default class PageFiltertime_rangesCtrl {
     }
   }
 
-  getProductName(id) {
-    if (!id) return null;
-    const products = this.filterFilter(this.products, { id });
-    return products && products.length ? products[0].name : null;
+  getProductsName(timeRange) {
+    if (timeRange.products) {
+      const products = this.products.filter(item => timeRange.products.includes(item.id));
+      return products && products.length ? products.map(item => item.name).join(', ') : null;
+    } else if (timeRange.product) {
+      const products = this.filterFilter(this.products, { id: timeRange.product.id });
+      return products && products.length ? products[0].name : null;
+    }
+
+    return null;
   }
 
   getZoneName(id) {

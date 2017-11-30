@@ -40,7 +40,7 @@
             <td ng-if='page_filter_time_ranges.type == "overbooking"' class='v-middle'>{{ time_range.value ? 'Overboeken' : 'Niet overboeken' }}</td>
             <td class='v-middle'
                 ng-if='page_filter_time_ranges.type == "product"'
-                ng-bind='page_filter_time_ranges.getProductName(time_range.product.id)'></td>
+                ng-bind='page_filter_time_ranges.getProductsName(time_range)'></td>
             <td class='v-middle'
                 ng-if='page_filter_time_ranges.type == "zone"'
                 ng-bind='page_filter_time_ranges.getZoneName(time_range.zone.id)'></td>
@@ -67,7 +67,7 @@
                 class='md-btn md-flat btn-fw text-success'
                 ng-click='page_filter_time_ranges.add();'>
           <i class='mdi mdi-plus-circle-outline'></i>
-          NIEUWE TIJDSZONE
+          NIEUWE REGEL
         </button>
       </div>
     </div>
@@ -86,9 +86,28 @@
           <div class='w-xl'>
             <div class='md-form-group no-padder m-b-sm'
                  ng-if='page_filter_time_ranges.type == "product"'>
-              <md-input-container>
+
+              <div class='md-form-group no-padder'>
+                <md-checkbox ng-model='page_filter_time_ranges.form_data.multiple'
+                             aria-label='Meerdere producten selecteren?'
+                             ng-disabled='page_filter_time_ranges.form_data.id'>
+                  Meerdere producten selecteren?
+                </md-checkbox>
+              </div>
+              <md-input-container ng-if='!page_filter_time_ranges.form_data.multiple'>
                 <md-select required
-                           ng-model='page_filter_time_ranges.form_data.product.id'
+                           ng-model='page_filter_time_ranges.form_data.product'
+                           placeholder='Product'>
+                  <md-option ng-value='product.id'
+                             ng-repeat='product in page_filter_time_ranges.products'>
+                    {{ product.name }}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+              <md-input-container ng-if='page_filter_time_ranges.form_data.multiple'>
+                <md-select required
+                           multiple
+                           ng-model='page_filter_time_ranges.form_data.product'
                            placeholder='Product'>
                   <md-option ng-value='product.id'
                              ng-repeat='product in page_filter_time_ranges.products'>
