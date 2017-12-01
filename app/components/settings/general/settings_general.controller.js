@@ -17,20 +17,21 @@ export default class SettingsGeneralCtrl {
       request_type_end_hours: 0,
       request_type_end_minutes: 0,
       enable_deadline: false,
+      enable_request_type: false,
     };
 
     $scope.$watch('general_settings.form_data.reservation_deadline', () => {
       const reservationDeadLine = this.form_data.reservation_deadline;
       if (reservationDeadLine) {
+        this.form_data.reservation_deadline_hours = 0;
+        this.form_data.reservation_deadline_minutes = 0;
+        this.form_data.enable_deadline = false;
+
         if (this.moment(reservationDeadLine, 'HH:mm').isValid()) {
           const time = reservationDeadLine.split(':');
           this.form_data.reservation_deadline_hours = parseInt(time[0], 10);
           this.form_data.reservation_deadline_minutes = parseInt(time[1], 10);
           this.form_data.enable_deadline = true;
-        } else {
-          this.form_data.reservation_deadline_hours = 0;
-          this.form_data.reservation_deadline_minutes = 0;
-          this.form_data.enable_deadline = false;
         }
       }
     });
@@ -38,15 +39,15 @@ export default class SettingsGeneralCtrl {
     $scope.$watch('general_settings.form_data.request_type_start', () => {
       const requestTypeStart = this.form_data.request_type_start;
       if (requestTypeStart) {
+        this.form_data.request_type_start_hours = 0;
+        this.form_data.request_type_start_minutes = 0;
+        this.form_data.enable_request_type = false;
+
         if (this.moment(requestTypeStart, 'HH:mm').isValid()) {
           const time = requestTypeStart.split(':');
           this.form_data.request_type_start_hours = parseInt(time[0], 10);
           this.form_data.request_type_start_minutes = parseInt(time[1], 10);
           this.form_data.enable_request_type = true;
-        } else {
-          this.form_data.request_type_start_hours = 0;
-          this.form_data.request_type_start_minutes = 0;
-          this.form_data.enable_request_type = false;
         }
       }
     });
@@ -54,15 +55,15 @@ export default class SettingsGeneralCtrl {
     $scope.$watch('general_settings.form_data.request_type_end', () => {
       const requestTypeEnd = this.form_data.request_type_end;
       if (requestTypeEnd) {
+        this.form_data.request_type_end_hours = 0;
+        this.form_data.request_type_end_minutes = 0;
+        this.form_data.enable_request_type = false;
+
         if (this.moment(requestTypeEnd, 'HH:mm').isValid()) {
           const time = requestTypeEnd.split(':');
           this.form_data.request_type_end_hours = parseInt(time[0], 10);
           this.form_data.request_type_end_minutes = parseInt(time[1], 10);
           this.form_data.enable_request_type = true;
-        } else {
-          this.form_data.request_type_end_hours = 0;
-          this.form_data.request_type_end_minutes = 0;
-          this.form_data.enable_request_type = false;
         }
       }
     });
