@@ -35,8 +35,7 @@
         <tbody>
           <tr ng-repeat='time_range in page_filter_time_ranges.time_ranges'>
             <td class='v-middle'>{{ time_range.type }}</td>
-            <td ng-if='page_filter_time_ranges.type == "product"' class='v-middle'>{{ time_range.value ? 'Geopend' : 'Gesloten' }}</td>
-            <td ng-if='page_filter_time_ranges.type == "zone"' class='v-middle'>{{ time_range.value ? 'Geopend' : 'Gesloten' }}</td>
+            <td ng-if='["open", "product", "zone"].includes(page_filter_time_ranges.type)' class='v-middle'>{{ time_range.value ? 'Geopend' : 'Gesloten' }}</td>
             <td ng-if='page_filter_time_ranges.type == "overbooking"' class='v-middle'>{{ time_range.value ? 'Overboeken' : 'Niet overboeken' }}</td>
             <td class='v-middle'
                 ng-if='page_filter_time_ranges.type == "product"'
