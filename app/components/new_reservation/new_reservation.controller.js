@@ -324,17 +324,30 @@ export default class NewReservationCtrl {
       const selectedDate = this.moment(this.current_part.date).format('YYYY-MM-DD');
       const selectedDateTime = this.moment(now.format('HH:mm'), 'HH:mm');
       const deadline = this.moment(this.socials.settings.reservation_deadline, 'HH:mm');
-      if (this.is_customer_reservation &&
-        (selectedDate === now.format('YYYY-MM-DD') &&
-        selectedDateTime > deadline) ||
-        this.dates_of_closed_time_ranges.includes(selectedDate)) {
-        this.selected_index = 1;
-        this.current_part.date = null;
-        this.$mdDialog.show(this.$mdDialog.alert()
-          .parent(angular.element(document.querySelector('.modal-dialog')))
-          .clickOutsideToClose(true)
-          .textContent('Vandaag nemen wij online geen reserveringen meer aan. Neem telefonisch contact met ons op')
-          .ok('Terug'));
+
+      if (this.is_customer_reservation) {
+        const moreThanDeadline = selectedDate === now.format('YYYY-MM-DD') && selectedDateTime > deadline;
+        const selectedDateIsClosed = this.dates_of_closed_time_ranges.includes(selectedDate);
+
+        if (moreThanDeadline || selectedDateIsClosed) {
+          let message = null;
+
+          if (moreThanDeadline) {
+            message = 'Vandaag nemen wij online geen reserveringen meer aan. Neem telefonisch contact met ons op';
+          }
+
+          if (selectedDateIsClosed) {
+            message = 'Vandaag zijn wij gesloten. Het is niet mogelijk om voor vandaag online te reserveren';
+          }
+
+          this.selected_index = 1;
+          this.current_part.date = null;
+          this.$mdDialog.show(this.$mdDialog.alert()
+            .parent(angular.element(document.querySelector('.modal-dialog')))
+            .clickOutsideToClose(true)
+            .textContent(message)
+            .ok('Terug'));
+        }
       }
     }
   }
