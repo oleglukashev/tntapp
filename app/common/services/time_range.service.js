@@ -18,6 +18,18 @@ export default class TimeRange {
     }).then(result => result.data);
   }
 
+  getDatesClosedOpeningHoursTimeRanges(companyId, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/time_ranges/dates_of_closed`,
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
+    }).then(result => result.data);
+  }
+
   edit(companyId, rangeId, data, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;

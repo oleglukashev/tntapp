@@ -318,21 +318,36 @@ export default class NewReservationCtrl {
     return result;
   }
 
-  checkDeadline() {
+  checkDeadlineAndClosedDate() {
     if (this.socials && this.socials.settings.reservation_deadline) {
       const now = this.moment();
       const selectedDate = this.moment(this.current_part.date).format('YYYY-MM-DD');
       const selectedDateTime = this.moment(now.format('HH:mm'), 'HH:mm');
       const deadline = this.moment(this.socials.settings.reservation_deadline, 'HH:mm');
-      if (this.is_customer_reservation && selectedDate === now.format('YYYY-MM-DD')
-        && selectedDateTime > deadline) {
-        this.selected_index = 1;
-        this.current_part.date = null;
-        this.$mdDialog.show(this.$mdDialog.alert()
-          .parent(angular.element(document.querySelector('.modal-dialog')))
-          .clickOutsideToClose(true)
-          .textContent('Vandaag nemen wij online geen reserveringen meer aan. Neem telefonisch contact met ons op')
-          .ok('Terug'));
+
+      if (this.is_customer_reservation) {
+        const moreThanDeadline = selectedDate === now.format('YYYY-MM-DD') && selectedDateTime > deadline;
+        const selectedDateIsClosed = this.dates_of_closed_time_ranges.includes(selectedDate);
+
+        if (moreThanDeadline || selectedDateIsClosed) {
+          let message = null;
+
+          if (moreThanDeadline) {
+            message = 'Vandaag nemen wij online geen reserveringen meer aan. Neem telefonisch contact met ons op';
+          }
+
+          if (selectedDateIsClosed) {
+            message = 'Vandaag zijn wij gesloten. Het is niet mogelijk om voor vandaag online te reserveren';
+          }
+
+          this.selected_index = 1;
+          this.current_part.date = null;
+          this.$mdDialog.show(this.$mdDialog.alert()
+            .parent(angular.element(document.querySelector('.modal-dialog')))
+            .clickOutsideToClose(true)
+            .textContent(message)
+            .ok('Terug'));
+        }
       }
     }
   }
@@ -374,6 +389,8 @@ export default class NewReservationCtrl {
       (result) => {
         this.products = result;
         this.products_is_loaded = true;
+
+        this.loadDatesOfClosedTimeRanges();
 
         if (this.products.length > 0) {
           this.loadTimeRanges();
@@ -432,6 +449,15 @@ export default class NewReservationCtrl {
       });
   }
 
+  loadDatesOfClosedTimeRanges() {
+    this
+      .TimeRange
+      .getDatesClosedOpeningHoursTimeRanges(this.current_company_id, this.is_customer_reservation)
+      .then((ranges) => {
+        this.dates_of_closed_time_ranges = ranges;
+      });
+  }
+
   checkProductForTimeRange(productId) {
     const selectedDayOfWeek = this.moment(this.current_part.date).isoWeekday();
     if (selectedDayOfWeek) {
@@ -476,7 +502,7 @@ export default class NewReservationCtrl {
   selectTab(index) {
     this.selected_index = index;
     if (index === 2) {
-      this.checkDeadline();
+      this.checkDeadlineAndClosedDate();
     }
   }
 
@@ -633,7 +659,7 @@ export default class NewReservationCtrl {
       const now = this.moment();
       const formatedDate = this.moment(date).format('YYYY-MM-DD');
 
-      return this.filterFilter(availableTime, item => item.time >= min &&
+      return this.filterFilter(openedTimes, item => item.time >= min &&
         item.time <= max &&
         this.moment(`${formatedDate} ${item.time}`) >= now &&
         (this.is_customer_reservation ? !item.more_than_deadline : true));

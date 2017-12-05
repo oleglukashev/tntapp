@@ -128,6 +128,8 @@ export default class PageFiltertime_rangesCtrl {
 
           this.time_ranges.push(timeRange);
           this.setStateToList();
+        }, () => {
+          this.is_submitting = false;
         });
     } else {
       this.PageFilterTimeRange
@@ -140,6 +142,8 @@ export default class PageFiltertime_rangesCtrl {
           }
 
           this.setStateToList();
+        }, () => {
+          this.is_submitting = false;
         });
     }
   }
