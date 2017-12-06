@@ -28,11 +28,11 @@
             uncheckable
             btn-radio='number'>{{ number }}</label>
 
-          <label ng-click='reserv.Reservation.triggerChooseNumberOfPersons()'
-                 ng-hide='reserv.Reservation.choose_number_of_persons_is_opened'
+          <label ng-click='reserv.triggerChooseNumberOfPersons()'
+                 ng-hide='reserv.choose_number_of_persons_is_opened'
                  class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>More...</label>
 
-          <div class='m-t-md' ng-show='reserv.Reservation.choose_number_of_persons_is_opened'>
+          <div class='m-t-md' ng-show='reserv.choose_number_of_persons_is_opened'>
             <md-input-container class='md-block'>
               <label>Aantal personen</label>
               <input type='number'
@@ -43,7 +43,7 @@
             </md-input-container>
             <button type='button'
                     class='btn btn-md btn-success text-success'
-                    ng-click='reserv.Reservation.triggerChooseNumberOfPersons();reserv.selectTab(reserv.pagination.number_of_persons);'>Ok</button>
+                    ng-click='reserv.triggerChooseNumberOfPersons();reserv.selectTab(reserv.pagination.number_of_persons);'>Ok</button>
           </div>
           <div class='md-form-group no-padder' ng-if='!reserv.is_customer_reservation'>
             <md-checkbox ng-model="reserv.reservation.is_group"
