@@ -1,8 +1,6 @@
 export default class AgendaQuickReservationCtrl {
-  constructor(
-    User, Product, Reservation, tableId, tableNumber, datetime, filterFilter,
-    moment, $window, $modalInstance, Confirm,
-  ) {
+  constructor(User, Product, Reservation, tableId, tableNumber, datetime, filterFilter,
+    moment, $window, $modalInstance, Confirm) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -92,8 +90,7 @@ export default class AgendaQuickReservationCtrl {
         (error) => {
           this.is_submitting = false;
           this.errors = error;
-        },
-      );
+        });
   }
 
   loadProducts() {
@@ -104,10 +101,7 @@ export default class AgendaQuickReservationCtrl {
         (result) => {
           this.products = result;
           this.loadAvailableTablesOfProducts();
-        },
-        () => {
-        },
-      );
+        }, () => {});
   }
 
   loadAvailableTablesOfProducts() {
@@ -115,9 +109,6 @@ export default class AgendaQuickReservationCtrl {
       .getAvailableTablesOfProducts(this.current_company_id, this.datetime.format('YYYY-MM-DD')).then(
         (result) => {
           this.available_time = result;
-        },
-        () => {
-        },
-      );
+        }, () => {});
   }
 }

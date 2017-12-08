@@ -27,6 +27,7 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
     instance.openedTimeRangePeriod = () => {
       const availableTime = instance.current_part.available_time;
       if (!availableTime.length) return [];
+      if (!this.is_customer_reservation) return availableTime;
 
       const date = instance.current_part.date;
       const openedTimes = filterFilter(availableTime, { is_open: true });

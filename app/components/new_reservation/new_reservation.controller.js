@@ -280,7 +280,7 @@ export default class NewReservationCtrl {
 
   loadTimeRanges() {
     // TODO REFACTOR AFTER NEW RESERVATION REFACTORING
-    this.TimeRange.getAll(this.current_company_id, this.is_customer_reservation).then(
+    this.TimeRange.getAll(this.current_company_id, null, this.is_customer_reservation).then(
       (ranges) => {  
         const productWeekTimeRanges = ranges
           .filter(item => item.type === 'product' && item.days_of_week.length);

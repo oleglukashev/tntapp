@@ -1,8 +1,6 @@
 export default class PageFiltertime_rangesCtrl {
-  constructor(
-    date, type, title, User, Product, Zone, Slider, PageFilterTimeRange,
-    filterFilter, moment, $modalInstance, $window,
-  ) {
+  constructor(date, type, title, User, Product, Zone, Slider, PageFilterTimeRange,
+    filterFilter, moment, $modalInstance, $window, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -14,6 +12,7 @@ export default class PageFiltertime_rangesCtrl {
     this.date = date;
     this.moment = moment;
     this.$window = $window;
+    this.$rootScope = $rootScope;
     this.filterFilter = filterFilter;
     this.$modalInstance = $modalInstance;
     this.slider = this.Slider.getOptions();
@@ -74,6 +73,7 @@ export default class PageFiltertime_rangesCtrl {
         .then(() => {
           this.time_ranges.splice(index, 1);
           this.setStateToList();
+          this.$rootScope.$broadcast('AgendaCtrl.reload_time_ranges');
         });
     }
   }
@@ -129,6 +129,7 @@ export default class PageFiltertime_rangesCtrl {
 
           this.time_ranges.push(timeRange);
           this.setStateToList();
+          this.$rootScope.$broadcast('AgendaCtrl.reload_time_ranges');
         }, () => {
           this.is_submitting = false;
         });
@@ -143,6 +144,7 @@ export default class PageFiltertime_rangesCtrl {
           }
 
           this.setStateToList();
+          this.$rootScope.$broadcast('AgendaCtrl.reload_time_ranges');
         }, () => {
           this.is_submitting = false;
         });

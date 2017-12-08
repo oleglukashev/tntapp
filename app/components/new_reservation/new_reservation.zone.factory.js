@@ -1,4 +1,4 @@
-export default function NewReservationZoneFactory($auth, filterFilter) {
+export default function NewReservationZoneFactory($auth, filterFilter, moment) {
   'ngInject';
 
   return (that) => {
@@ -71,6 +71,19 @@ export default function NewReservationZoneFactory($auth, filterFilter) {
       }
 
       return result;
+    };
+
+    instance.zoneIsClosed = (zoneId) => {
+      const currentDate = instance.current_part.date;
+
+      if (currentDate && zoneId) {
+        const date = moment(currentDate).format('YYYY-MM-DD');
+        if (instance.zone_time_ranges[date] && instance.zone_time_ranges[date][zoneId]) {
+          return !instance.zone_time_ranges[date][zoneId].value;
+        }
+      }
+
+      return false;
     };
   };
 }

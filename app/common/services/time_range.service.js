@@ -6,13 +6,14 @@ export default class TimeRange {
     this.$q = $q;
   }
 
-  getAll(companyId, skipJwtAuth) {
+  getAll(companyId, date, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
+    const dateParam = date ? `?date=${date}` : '';
     return this.$http({
-      url: `${API_URL}/company/${companyId}/time_range`,
+      url: `${API_URL}/company/${companyId}/time_range${dateParam}`,
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);

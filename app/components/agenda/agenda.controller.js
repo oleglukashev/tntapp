@@ -1,6 +1,6 @@
 export default class AgendaCtrl {
   constructor(
-    User, Settings, Zone, Table, TimeRange, Product, AgendaItemFactory, PageFilterFactory,
+    User, Settings, Zone, Table, TimeRange, Product, AgendaItemFactory, PageFilterFactory, PageFilterTimeRange,
     ReservationStatusMenu, Reservation, ReservationStatus, ReservationPart, filterFilter, AppConstants, $scope,
     $rootScope, $modal, moment, $timeout) {
     'ngInject';
@@ -15,6 +15,7 @@ export default class AgendaCtrl {
     this.Reservation = Reservation;
     this.ReservationPart = ReservationPart;
     this.ReservationStatus = ReservationStatus;
+    this.PageFilterTimeRange = PageFilterTimeRange;
     this.filterFilter = filterFilter;
     this.moment = moment;
     this.$modal = $modal;
@@ -28,7 +29,9 @@ export default class AgendaCtrl {
     this.zones = [];
     this.products = [];
     this.reservations = [];
-    this.open_hours = {};
+    this.time_ranges = [];
+    this.open_time_ranges = [];
+    this.zone_time_ranges = [];
     this.data = [];
     this.data_without_tables = [];
 
@@ -63,6 +66,10 @@ export default class AgendaCtrl {
 
     $scope.$on('NewReservationCtrl.reload_reservations', () => {
       this.loadReservations();
+    });
+
+    $scope.$on('AgendaCtrl.reload_time_ranges', () => {
+      this.loadTimeRanges();
     });
 
     $scope.$on('$viewContentLoaded', () => {
@@ -273,16 +280,45 @@ export default class AgendaCtrl {
     });
   }
 
-  getQuarterClass(hover, hour, quarter) {
-    const timePart = (hour * 4) + quarter;
-    if (hover ||
-      (this.open_hours[this.draggedProduct] &&
-      (timePart < this.open_hours[this.draggedProduct].start ||
-      timePart > this.open_hours[this.draggedProduct].end))
-    ) {
-      return 'hover';
+  // isHover(hover, hour, quarter) {
+  //   const timePart = (hour * 4) + quarter;
+
+  //   return (hover || (this.open_hours[this.draggedProduct] &&
+  //     (timePart < this.open_hours[this.draggedProduct].start ||
+  //     timePart > this.open_hours[this.draggedProduct].end)));
+  // }
+
+  isClosedTime(hour, quarter, zoneId) {
+    let result = false;
+    const minutes = quarter * 15;
+    const time = `${hour}:${minutes}`;
+
+    const lastOpenTimeRange = this.open_time_ranges[this.open_time_ranges.length - 1];
+    if (lastOpenTimeRange && !lastOpenTimeRange.value) {
+      if (lastOpenTimeRange.whole_day) {
+        result = true;
+      } else {
+        if (time >= lastOpenTimeRange.start_time && time <= lastOpenTimeRange.end_time) {
+          result = true;
+        }
+      }
     }
-    return '';
+
+    const zonesTimeRangesByZone = this.zone_time_ranges[zoneId];
+    if (zonesTimeRangesByZone) {
+      const lastZoneTimeRange = zonesTimeRangesByZone[zonesTimeRangesByZone.length - 1];
+      if (lastZoneTimeRange && !lastZoneTimeRange.value) {
+        if (lastZoneTimeRange.whole_day) {
+          result = true;
+        } else {
+          if (time >= lastZoneTimeRange.start_time && time <= lastZoneTimeRange.end_time) {
+            result = true;
+          }
+        }
+      }
+    }
+
+    return result;
   }
 
   loadTables() {
@@ -309,23 +345,39 @@ export default class AgendaCtrl {
   }
 
   loadTimeRanges() {
-    this.TimeRange.getAllProductTimeRanges(this.current_company_id)
-      .then((ranges) => {
-        ranges.forEach((range) => {
-          if (range.daysOfWeek[0] === this.current_day) {
-            const startTime = range.startTime.split(':');
-            const endTime = range.endTime.split(':');
-            this.open_hours[range.productId] = {
-              start: (startTime[0] * 4) + (startTime[1] / 15),
-              end: (endTime[0] * 4) + (endTime[1] / 15),
-            };
+    const date = this.moment(this.date_filter).format('YYYY-MM-DD');
+    this.TimeRange.getAll(this.current_company_id, date)
+      .then((timeRanges) => {
+        this.time_ranges = timeRanges;
+        this.open_time_ranges = timeRanges.filter(item => item.type === 'open' && item.fixed_date);
+
+        const zoneTimeRanges = timeRanges
+          .filter(item => item.type === 'zone' && item.fixed_date && item.zone);
+        zoneTimeRanges.forEach((item) => {
+          if (!this.zone_time_ranges[item.zone.id]) {
+            this.zone_time_ranges[item.zone.id] = [];
           }
+
+          this.zone_time_ranges[item.zone.id].push(item);
         });
+
+        this.time_ranges_is_loaded = true;
       });
   }
 
+  // loadOpenHoursTimeRanges() {
+  //   const date = this.moment(this.date_filter).format('YYYY-MM-DD');
+  //   this.PageFilterTimeRange
+  //     .getAll(this.current_company_id, date, 'open')
+  //     .then(
+  //       (openTimeRanges) => {
+  //         this.today_open_time_ranges = openTimeRanges;
+  //       }, () => {});
+  // }
+
   loadReservations() {
-    this.Reservation.getAll(this.current_company_id, this.moment(this.date_filter).format('YYYY-MM-DD'))
+    const date = this.moment(this.date_filter).format('YYYY-MM-DD');
+    this.Reservation.getAll(this.current_company_id, date)
       .then((result) => {
         this.reservations = result;
 
@@ -367,9 +419,7 @@ export default class AgendaCtrl {
         (result) => {
           this.zones = result;
           this.loadTables();
-        },
-        () => {},
-      );
+        }, () => {});
   }
 
   loadGeneralSettings() {
@@ -468,5 +518,11 @@ export default class AgendaCtrl {
     });
 
     return this.applySort(result);
+  }
+
+  getZoneNameByRange(timeRange) {
+    if (!timeRange.zone) return null;
+    const zones = this.filterFilter(this.zones, { id: timeRange.zone.id });
+    return zones && zones.length ? zones[0].name : null;
   }
 }
