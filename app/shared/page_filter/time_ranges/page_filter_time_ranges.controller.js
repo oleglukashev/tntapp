@@ -40,6 +40,7 @@ export default class PageFiltertime_rangesCtrl {
       value: timeRange.value,
       multiple: !!timeRange.products,
       product: timeRange.products || (timeRange.product ? timeRange.product.id : null),
+      zone: timeRange.zone ? timeRange.zone.id : null,
     };
 
     if (timeRange.whole_day) {
@@ -104,7 +105,7 @@ export default class PageFiltertime_rangesCtrl {
     }
 
     if (this.type === 'zone' && this.form_data.zone) {
-      data.zone = this.form_data.zone.id;
+      data.zone = this.form_data.zone;
     }
 
     if (this.form_data.id) {

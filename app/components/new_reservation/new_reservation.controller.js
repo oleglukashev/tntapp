@@ -44,6 +44,11 @@ export default class NewReservationCtrl {
     this.selected_index = 0;
     this.errors = [];
 
+    this.product_week_time_ranges = {};
+    this.product_time_ranges = {};
+    this.zone_time_ranges = {};
+    this.open_time_ranges = {};
+
     this.reservation = {
       language: 'NL',
       gender: 'Man',
@@ -52,8 +57,6 @@ export default class NewReservationCtrl {
       send_confirmation: true,
       reservation_parts: [],
     };
-
-    this.time_ranges = [];
 
     this.reservation.reservation_parts.push(this.getNewReservationPart());
     this.current_part = this.reservation.reservation_parts[0];
@@ -119,12 +122,87 @@ export default class NewReservationCtrl {
     this.dateDisableDeferred.notify(new Date().getTime());
   }
 
-  disableDatesWithoutProducts(date, filterDatePicker) {
-    if (filterDatePicker) {
-      if (this.time_ranges[this.moment(date).isoWeekday()]) {
-        return (Object.keys(this.time_ranges[this.moment(date).isoWeekday()]).length === 0);
+  disableDates(date) {
+    // TODO REFACTOR AFTER NEW RESERVATION REFACTORING
+    let result = false;
+    const dateFormat = this.moment(date).format('YYYY-MM-DD');
+    const dateWeekDay = this.moment(date).isoWeekday();
+    const showedProducts = this.filterFilter(this.products, { shaded: false });
+    let closedProductTimeRangesIds = [];
+
+    if (!this.is_customer_reservation) {
+      return result;
+    }
+
+    if (!showedProducts.length) {
+      return true
+    }
+
+    if (this.product_week_time_ranges[dateWeekDay]) {
+      const productIds = Object.keys(this.product_week_time_ranges[dateWeekDay]);
+      productIds.forEach((productId) => {
+        const timeRange = this.product_week_time_ranges[dateWeekDay][productId];
+        if (timeRange.value) {
+          result = false;
+        } else {
+          if (!closedProductTimeRangesIds.includes(parseInt(productId))) {
+            closedProductTimeRangesIds.push(parseInt(productId));
+          }
+        }
+      });
+    }
+
+    if (this.open_time_ranges[dateFormat]) {
+      result = true;
+      const timeRange = this.open_time_ranges[dateFormat];
+      if (timeRange.value || (!timeRange.value && !timeRange.whole_day)) {
+        result = false;
       }
     }
+
+    if (this.product_time_ranges[dateFormat]) {
+      const productIds = Object.keys(this.product_time_ranges[dateFormat]);
+      productIds.forEach((productId) => {
+        const product = this.filterFilter(this.products, { id: productId })[0];
+        const timeRange = this.product_time_ranges[dateFormat][productId];
+        if (timeRange.value ||
+          (!timeRange.value && !timeRange.whole_day) &&
+          product &&
+          !product.shaded) {
+          result = false;
+        } else {
+          if (!closedProductTimeRangesIds.includes(parseInt(productId))) {
+            closedProductTimeRangesIds.push(parseInt(productId));
+          }
+        }
+      });
+    }
+
+    const productIds = this.products.map(product => product.id).sort();
+    closedProductTimeRangesIds = closedProductTimeRangesIds.sort();
+
+    if (angular.equals(productIds, closedProductTimeRangesIds)) {
+      result = true;
+    }
+
+    if (this.zone_time_ranges[dateFormat]) {
+      const zonesIds = this.zones.map(zone => zone.id);
+      const closedZoneTimeRangesIds = [];
+      const zoneTimeRanges = this.zone_time_ranges[dateFormat];
+
+      Object.keys(zoneTimeRanges).forEach((key) => {
+        const timeRange = zoneTimeRanges[key];
+        if (!timeRange.value && timeRange.whole_day) {
+          closedZoneTimeRangesIds.push(parseInt(key));
+        }
+      });
+
+      if (angular.equals(zonesIds, closedZoneTimeRangesIds)) {
+        result = true;
+      }
+    }
+
+    return result;
   }
 
   walkInOrReservationPart() {
@@ -319,36 +397,23 @@ export default class NewReservationCtrl {
   }
 
   checkDeadlineAndClosedDate() {
-    if (this.is_customer_reservation) {
+    if (this.is_customer_reservation &&
+      this.settings &&
+      this.settings.reservation_deadline) {
       const now = this.moment();
       const selectedDate = this.moment(this.current_part.date).format('YYYY-MM-DD');
       const selectedDateTime = this.moment(now.format('HH:mm'), 'HH:mm');
-      let moreThanDeadline = false;
 
-      if (this.settings.reservation_deadline) {
-        const deadline = this.moment(this.settings.reservation_deadline, 'HH:mm');
-        moreThanDeadline = selectedDate === now.format('YYYY-MM-DD') && selectedDateTime > deadline;
-      }
+      const deadline = this.moment(this.settings.reservation_deadline, 'HH:mm');
+      const moreThanDeadline = selectedDate === now.format('YYYY-MM-DD') && selectedDateTime > deadline;
 
-      const selectedDateIsClosed = this.dates_of_closed_time_ranges.includes(selectedDate);
-
-      if (moreThanDeadline || selectedDateIsClosed) {
-        let message = null;
-
-        if (moreThanDeadline) {
-          message = 'Vandaag nemen wij online geen reserveringen meer aan. Neem telefonisch contact met ons op';
-        }
-
-        if (selectedDateIsClosed) {
-          message = 'Vandaag zijn wij gesloten. Het is niet mogelijk om voor vandaag online te reserveren';
-        }
-
+      if (moreThanDeadline) {
         this.selected_index = 1;
         this.current_part.date = null;
         this.$mdDialog.show(this.$mdDialog.alert()
           .parent(angular.element(document.querySelector('.modal-dialog')))
           .clickOutsideToClose(true)
-          .textContent(message)
+          .textContent('Vandaag nemen wij online geen reserveringen meer aan. Neem telefonisch contact met ons op')
           .ok('Terug'));
       }
     }
@@ -387,18 +452,17 @@ export default class NewReservationCtrl {
     this.products_is_loaded = false;
     this.products = [];
 
-    this.Product.getAll(this.current_company_id, false, this.is_customer_reservation).then(
-      (result) => {
-        this.products = result;
-        this.products_is_loaded = true;
+    this.Product.getAll(this.current_company_id, !this.is_customer_reservation, this.is_customer_reservation)
+      .then(
+        (result) => {
+          this.products = result;
+          this.products_is_loaded = true;
 
-        this.loadDatesOfClosedTimeRanges();
-
-        if (this.products.length > 0) {
-          this.loadTimeRanges();
-        }
-      },
-      () => {});
+          if (this.products.length > 0) {
+            this.loadTimeRanges();
+          }
+        },
+        () => {});
   }
 
   loadZones() {
@@ -428,47 +492,103 @@ export default class NewReservationCtrl {
   }
 
   loadTimeRanges() {
+    // TODO REFACTOR AFTER NEW RESERVATION REFACTORING
     this.TimeRange.getAll(this.current_company_id, this.is_customer_reservation).then(
-      (ranges) => {
-        this.time_ranges = [];
-        ranges.forEach((range) => {
-          const rangeDayOfWeek = range.daysOfWeek[0];
-          const rangeProduct = this.filterFilter(this.products, { id: range.productId })[0];
+      (ranges) => {  
+        const productWeekTimeRanges = ranges
+          .filter(item => item.type === 'product' && item.days_of_week.length);
 
-          if (!this.time_ranges[rangeDayOfWeek]) {
-            this.time_ranges[rangeDayOfWeek] = {};
-          }
-
-          if (range.value && rangeProduct && !rangeProduct.hidden) {
-            this.time_ranges[rangeDayOfWeek][range.productId] = {
-              startTime: this.moment(range.startTime, 'HH:mm'),
-              endTime: this.moment(range.endTime, 'HH:mm'),
-              value: range.value,
-            };
-          }
+        productWeekTimeRanges.forEach((timeRange) => {
+          timeRange.days_of_week.forEach((day) => {
+            if (!this.product_week_time_ranges[day]) {
+              this.product_week_time_ranges[day] = {};
+            }
+            this.product_week_time_ranges[day][timeRange.product.id] = timeRange;
+          });
         });
+
+        const zoneTimeRanges = ranges.filter(item => item.type === 'zone');
+        if (zoneTimeRanges) {
+          zoneTimeRanges.forEach((timeRange) => {
+            if (!this.zone_time_ranges[timeRange.fixed_date]) {
+              this.zone_time_ranges[timeRange.fixed_date] = {};
+            }
+            this.zone_time_ranges[timeRange.fixed_date][timeRange.zone.id] = timeRange;
+          });
+        }
+
+        const productTimeRanges = ranges.filter(item => item.type === 'product' && !item.days_of_week.length);
+        if (productTimeRanges.length) {
+          productTimeRanges.forEach((timeRange) => {
+            if (!this.product_time_ranges[timeRange.fixed_date]) {
+              this.product_time_ranges[timeRange.fixed_date] = {};
+            }
+            this.product_time_ranges[timeRange.fixed_date][timeRange.product.id] = timeRange;
+          });
+        }
+
+        const openTimeRanges = ranges.filter(item => item.type === 'open' && !item.days_of_week.length);
+        if (openTimeRanges.length) {
+          openTimeRanges.forEach((timeRange) => {
+            if (!this.open_time_ranges[timeRange.fixed_date]) {
+              this.open_time_ranges[timeRange.fixed_date] = {}
+            }
+            this.open_time_ranges[timeRange.fixed_date] = timeRange;
+          });
+        }
+
         this.refreshDatepicker();
       });
   }
 
-  loadDatesOfClosedTimeRanges() {
-    this
-      .TimeRange
-      .getDatesClosedOpeningHoursTimeRanges(this.current_company_id, this.is_customer_reservation)
-      .then((ranges) => {
-        this.dates_of_closed_time_ranges = ranges;
-      });
-  }
+  canShowProduct(product) {
+    // TODO REFACTOR AFTER NEW RESERVATION REFACTORING
+    let result = false;
 
-  checkProductForTimeRange(productId) {
-    const selectedDayOfWeek = this.moment(this.current_part.date).isoWeekday();
-    if (selectedDayOfWeek) {
-      const isProductEnabledForSelectedDay = this.time_ranges[selectedDayOfWeek][productId];
-      return selectedDayOfWeek &&
-        isProductEnabledForSelectedDay &&
-        isProductEnabledForSelectedDay.value;
+    if (!this.is_customer_reservation) {
+      return true;
     }
-    return false;
+
+    if (product.shaded) {
+      return false;
+    }
+
+    const selectedDayOfWeek = this.moment(this.current_part.date).isoWeekday();
+    const selectedDate = this.moment(this.current_part.date).format('YYYY-MM-DD');
+
+    if (selectedDayOfWeek) {
+      let productWeekTimeRange = null;
+      if (this.product_week_time_ranges[selectedDayOfWeek] &&
+        this.product_week_time_ranges[selectedDayOfWeek][product.id]) {
+        productWeekTimeRange = this.product_week_time_ranges[selectedDayOfWeek][product.id];
+      }
+
+      let openedTimeRange = null;
+      if (this.open_time_ranges[selectedDate]) {
+        openedTimeRange = this.open_time_ranges[selectedDate];
+      }
+
+      let openedProductTimeRange = null;
+      if (this.product_time_ranges[selectedDate] &&
+        this.product_time_ranges[selectedDate][product.id]) {
+        openedProductTimeRange = this.product_time_ranges[selectedDate][product.id];
+      }
+
+      if (product && productWeekTimeRange) {
+        result = productWeekTimeRange.value;
+
+        if (openedTimeRange) {
+          result = openedTimeRange.value || (!openedTimeRange.value && !openedTimeRange.whole_day);
+        }
+
+        if (openedProductTimeRange) {
+          result = openedProductTimeRange.value || 
+            (!openedProductTimeRange.value && !openedProductTimeRange.whole_day);
+        }
+      }
+    }
+
+    return result;
   }
 
   loadOccupiedTables() {
@@ -517,9 +637,9 @@ export default class NewReservationCtrl {
   preloadData() {
     this.loadProducts();
     this.loadGeneralSettings();
+    this.loadZones();
 
     if (this.is_dashboard_page || this.is_reservations || this.is_agenda) {
-      this.loadZones();
       this.loadTables();
     } else {
       this.loadSocialUrls();

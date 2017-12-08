@@ -17,7 +17,7 @@
         <div class='text-center' ng-show='reserv.products_is_loaded'>
           <label ng-repeat='product in reserv.products'
                  ng-change='reserv.changeProductPostProcess()'
-                 ng-if='reserv.checkProductForTimeRange(product.id)'
+                 ng-if='reserv.canShowProduct(product)'
                  class='box'
                  ng-model='reserv.current_part.product'
                  uncheckable

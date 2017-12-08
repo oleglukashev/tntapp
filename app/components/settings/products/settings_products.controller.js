@@ -89,7 +89,7 @@ export default class SettingsProductsCtrl {
   }
 
   loadTimeRanges() {
-    this.TimeRange.getAll(this.current_company_id)
+    this.TimeRange.getAllProductTimeRanges(this.current_company_id)
       .then(
         (ranges) => {
           this.data = {};
