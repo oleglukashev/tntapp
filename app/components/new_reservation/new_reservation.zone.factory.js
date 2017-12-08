@@ -78,8 +78,16 @@ export default function NewReservationZoneFactory($auth, filterFilter, moment) {
 
       if (currentDate && zoneId) {
         const date = moment(currentDate).format('YYYY-MM-DD');
+
         if (instance.zone_time_ranges[date] && instance.zone_time_ranges[date][zoneId]) {
-          return !instance.zone_time_ranges[date][zoneId].value;
+          const timeRange = instance.zone_time_ranges[date][zoneId];
+
+          if (timeRange.whole_day) {
+            return !timeRange.value;
+          } else if (instance.current_part.time && !timeRange.value) {
+            return instance.current_part.time >= timeRange.start_time &&
+              instance.current_part.time <= timeRange.end_time;
+          }
         }
       }
 
