@@ -1,7 +1,6 @@
 <ng-include src="'agenda.widget.html'"></ng-include>
 
-<div ng-show='agenda.is_loaded' class='col-lg-8 col-md-8 col-sm-8'>
-
+<div class='col-lg-8 col-md-8'>
   <div class='page_filter m-b-md clearfix'>
     <div class='pull-left m-r-xs'
          ng-init='controller = agenda'
@@ -90,20 +89,17 @@
                   ng-repeat='(tableIndex, table) in agenda.tables_by_zone[zone.id] | orderBy:"position"'>
 
                 <div class='hours-wrapper'>
-                  <div class='hour' ng-repeat='hour in agenda.hours'>
-                    <div class='quarter'
+                  <div class='hour' ng-repeat='hour in agenda.hours'><div class='quarter'
                          data-hour='{{ hour }}'
                          data-quarter='{{ quarter }}'
                          data-zone-id='{{ zone.id }}'
                          ng-repeat='quarter in [0,1,2,3]'
                          ui-on-drop='agenda.onDrop(table.id, tableIndex, hour, quarter, $data)'
                          ng-click='agenda.openQuickReservation(table.id, table.table_number, hour, quarter)'
-                         ng-class='agenda.getQuarterClass(hover, hour, quarter)'
+                         ng-class='{ closed: agenda.isClosedTime(hour, quarter, zone.id) }'
                          ng-mouseenter="hover=true"
                          ng-mouseleave="hover=false"
-                         drop-channel='move,resize'></div>
-                  </div>
-
+                         drop-channel='move,resize'><div></div></div></div>
                   <div class='reservation'
                        ng-repeat='item in agenda.filterDataForGraph(zone.id, table.id)'
                        ui-on-drop=''
@@ -141,4 +137,36 @@
 
     </accordion-group>
   </accordion>
+</div>
+
+<div class='col-lg-3 col-md-3'>
+  <div class='panel' ng-show='agenda.view_type == "calendar"'>
+    <div class='panel-heading'>Time ranges</div>
+    <div class='panel-body no-padder'>
+      <table class='table no-margin' ng-show='agenda.time_ranges_is_loaded'>
+        <thead>
+          <th>Type</th>
+          <th>Waarde</th>
+          <th>Tijd</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat='time_range in agenda.time_ranges'>
+            <td class='v-middle'>
+            {{ time_range.type }}
+            <span ng-if='time_range.type == "zone"'>({{ agenda.getZoneNameByRange(time_range) }})</span>
+            </td>
+            <td ng-if='["open", "zone"].includes(time_range.type)' class='v-middle'>{{ time_range.value ? 'Geopend' : 'Gesloten' }}</td>
+            <td ng-if='time_range.type == "overbooking"' class='v-middle'>{{ time_range.value ? 'Overboeken' : 'Niet overboeken' }}</td>
+            <td class='v-middle'>
+              <span ng-if='!time_range.whole_day'>
+                {{ time_range.start_time }} - {{ time_range.end_time }}
+              </span>
+              <span ng-if='time_range.whole_day'>
+                Hele dag
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 </div>

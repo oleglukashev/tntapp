@@ -23,13 +23,14 @@
             <p class='no-margin'>{{ zone.name }}</p>
           </div>
         </div>
-
         <div class='tables_boxes' ng-hide='reserv.current_part.zones_is_showed'>
           <p><small class='text-muted'>{{ reserv.current_part.zone.name }}:</small></p>
           <label ng-repeat='table_id in reserv.current_part.zone.table_ids'
                  ng-change='reserv.changeTableValuesPostProcess()'
-                 ng-class="{ 'disabled': reserv.Reservation.isDisabledTableByTableId(reserv.tables, reserv.current_part.occupied_tables, table_id) }"
-                 class='btn btn-default block m-b-xs no-shadow text-success text-left'
+                 ng-class="{ 'disabled': reserv.Reservation.isDisabledTableByTableId(reserv.tables, reserv.current_part.occupied_tables, table_id),
+                             'red-300': reserv.zoneIsClosed(reserv.current_part.zone.id),
+                             'btn-default text-success': !reserv.zoneIsClosed(reserv.current_part.zone.id) }"
+                 class='btn block m-b-xs no-shadow text-left'
                  ng-model='reserv.current_part.tables_values[table_id]'
                  uncheckable
                  btn-checkbox>

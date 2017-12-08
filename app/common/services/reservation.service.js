@@ -11,7 +11,6 @@ export default class Reservation {
     this.Upload = Upload;
 
     this.filterFilter = filterFilter;
-    this.choose_number_of_persons_is_opened = false;
     this.moment = moment;
 
     this.pagination = {
@@ -203,10 +202,6 @@ export default class Reservation {
     }
 
     return result;
-  }
-
-  triggerChooseNumberOfPersons() {
-    this.choose_number_of_persons_is_opened = !this.choose_number_of_persons_is_opened;
   }
 
   generalNumberOfPersons(tables, tableIds) {
