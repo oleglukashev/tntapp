@@ -309,7 +309,7 @@ export default class AgendaCtrl {
   }
 
   loadTimeRanges() {
-    this.TimeRange.getAll(this.current_company_id)
+    this.TimeRange.getAllProductTimeRanges(this.current_company_id)
       .then((ranges) => {
         ranges.forEach((range) => {
           if (range.daysOfWeek[0] === this.current_day) {

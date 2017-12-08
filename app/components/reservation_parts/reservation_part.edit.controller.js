@@ -177,7 +177,7 @@ export default class ReservationPartEditCtrl {
   }
 
   loadTimeRanges() {
-    this.TimeRange.getAll(this.current_company_id).then(
+    this.TimeRange.getAllProductTimeRanges(this.current_company_id).then(
       (ranges) => {
         ranges.forEach((range) => {
           if (range.daysOfWeek[0] === this.moment().isoWeekday()) {
