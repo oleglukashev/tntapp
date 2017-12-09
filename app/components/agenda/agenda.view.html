@@ -1,6 +1,6 @@
 <ng-include src="'agenda.widget.html'"></ng-include>
 
-<div class='col-lg-8 col-md-8'>
+<div class='col-lg-8 col-md-8' ng-show='agenda.is_loaded'>
   <div class='page_filter m-b-md clearfix'>
     <div class='pull-left m-r-xs'
          ng-init='controller = agenda'
