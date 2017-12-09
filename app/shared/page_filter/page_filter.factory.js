@@ -78,17 +78,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     };
 
     instance.changeDateFilterPostProcess = () => {
-      instance.current_day = (new Date(instance.date_filter)).getDay();
-      instance.is_loaded = false;
-      instance.is_today = false;
-      instance.reservations = [];
       instance.loadReservations();
-
-      if (moment().format('YYYY-MM-DD') ===
-          moment(instance.date_filter).format('YYYY-MM-DD')) {
-        instance.is_today = true;
-        instance.scrollToNow();
-      }
     };
 
     instance.openTimeRangeSettings = (type, title) => {

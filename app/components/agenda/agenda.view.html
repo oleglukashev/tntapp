@@ -139,11 +139,11 @@
   </accordion>
 </div>
 
-<div class='col-lg-3 col-md-3'>
+<div class='col-lg-3 col-md-3' ng-show='agenda.time_ranges_is_loaded'>
   <div class='panel' ng-show='agenda.view_type == "calendar"'>
     <div class='panel-heading'>Time ranges</div>
     <div class='panel-body no-padder'>
-      <table class='table no-margin' ng-show='agenda.time_ranges_is_loaded'>
+      <table class='table no-margin'>
         <thead>
           <th>Type</th>
           <th>Waarde</th>
