@@ -22,7 +22,6 @@ export default class AgendaCtrl {
     this.$timeout = $timeout;
     this.$scope = $scope;
     this.$rootScope = $rootScope;
-    this.is_loaded = false;
     this.tables_by_zone = {};
     this.errors = [];
     this.opened = [true];
@@ -326,7 +325,6 @@ export default class AgendaCtrl {
       .then(
         (tables) => {
           this.tables = tables;
-          this.is_loaded = true;
 
           this.zones.forEach((zone) => {
             this.tables_by_zone[zone.id] = this.filterFilter(tables, { zones: zone.id })
@@ -341,6 +339,7 @@ export default class AgendaCtrl {
               });
           });
           this.loadReservations();
+          this.iniAndScrolltToNowLine();
         });
   }
 
@@ -376,6 +375,7 @@ export default class AgendaCtrl {
   // }
 
   loadReservations() {
+    this.reservations = [];
     const date = this.moment(this.date_filter).format('YYYY-MM-DD');
     this.Reservation.getAll(this.current_company_id, date)
       .then((result) => {
@@ -384,7 +384,6 @@ export default class AgendaCtrl {
         if (this.tables) {
           this.setData();
         }
-        this.is_loaded = true;
       });
   }
 
@@ -524,5 +523,14 @@ export default class AgendaCtrl {
     if (!timeRange.zone) return null;
     const zones = this.filterFilter(this.zones, { id: timeRange.zone.id });
     return zones && zones.length ? zones[0].name : null;
+  }
+
+  iniAndScrolltToNowLine() {
+    this.is_today = false;
+    if (this.moment().format('YYYY-MM-DD') ===
+        this.moment(this.date_filter).format('YYYY-MM-DD')) {
+      this.is_today = true;
+      this.scrollToNow();
+    }
   }
 }
