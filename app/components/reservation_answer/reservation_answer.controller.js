@@ -18,7 +18,7 @@ export default class ReservationsAnswerCtrl {
     this.form_data = {};
 
     if (this.isCancellingReservation) {
-      this.loadMailsTextsSettings();
+      this.loadMailsTextsSettings('reservering_niet_mogelijk');
     }
 
     ReservationStatusMenu(this);
@@ -51,12 +51,12 @@ export default class ReservationsAnswerCtrl {
       }, () => {});
   }
 
-  loadMailsTextsSettings() {
+  loadMailsTextsSettings(type) {
     this.Settings.getMailsTextsSettings(this.current_company_id)
       .then(
         (mailsSettings) => {
           this.mails_texts_settings = mailsSettings;
-          const currentMail = this.filterFilter(mailsSettings, { type: 'reservering_ontvangen', language: 'NL' })[0];
+          const currentMail = this.filterFilter(mailsSettings, { type: type, language: 'NL' })[0];
 
           if (currentMail) {
             const fullName = `${this.reservation.customer.first_name} ${this.reservation.customer.last_name}`;

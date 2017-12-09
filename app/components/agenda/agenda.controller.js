@@ -25,6 +25,7 @@ export default class AgendaCtrl {
     this.tables_by_zone = {};
     this.errors = [];
     this.opened = [true];
+    this.is_loaded = false;
     this.zones = [];
     this.products = [];
     this.reservations = [];
@@ -340,6 +341,7 @@ export default class AgendaCtrl {
           });
           this.loadReservations();
           this.iniAndScrolltToNowLine();
+          this.is_loaded = true;
         });
   }
 
@@ -384,6 +386,8 @@ export default class AgendaCtrl {
         if (this.tables) {
           this.setData();
         }
+
+        this.is_loaded = true;
       });
   }
 
