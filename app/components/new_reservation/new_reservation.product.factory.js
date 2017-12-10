@@ -63,16 +63,17 @@ export default function NewReservationProductFactory(moment, filterFilter) {
           openedProductTimeRange = instance.product_time_ranges[selectedDate][product.id];
         }
 
-        if (product && productWeekTimeRange) {
-          result = productWeekTimeRange.value;
+        if (product) {
+          if (productWeekTimeRange) {
+            result = productWeekTimeRange.value;
+          }
 
           if (openedTimeRange) {
-            result = openedTimeRange.value || (!openedTimeRange.value && !openedTimeRange.whole_day);
+            result = openedTimeRange.value || !openedTimeRange.whole_day;
           }
 
           if (openedProductTimeRange) {
-            result = openedProductTimeRange.value || 
-              (!openedProductTimeRange.value && !openedProductTimeRange.whole_day);
+            result = openedProductTimeRange.value || !openedProductTimeRange.whole_day;
           }
         }
       }
