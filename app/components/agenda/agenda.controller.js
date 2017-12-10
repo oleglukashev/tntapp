@@ -529,6 +529,18 @@ export default class AgendaCtrl {
     return zones && zones.length ? zones[0].name : null;
   }
 
+  getProductsName(timeRange) {
+    if (timeRange.products) {
+      const products = this.products.filter(item => timeRange.products.includes(item.id));
+      return products && products.length ? products.map(item => item.name).join(', ') : null;
+    } else if (timeRange.product) {
+      const products = this.filterFilter(this.products, { id: timeRange.product.id });
+      return products && products.length ? products[0].name : null;
+    }
+
+    return null;
+  }
+
   iniAndScrolltToNowLine() {
     this.is_today = false;
     if (this.moment().format('YYYY-MM-DD') ===
