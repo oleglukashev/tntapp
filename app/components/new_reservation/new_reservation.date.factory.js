@@ -32,6 +32,7 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
         return true
       }
 
+
       if (instance.product_week_time_ranges[dateWeekDay]) {
         const productIds = Object.keys(instance.product_week_time_ranges[dateWeekDay]);
         productIds.forEach((productId) => {
@@ -44,6 +45,8 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
             }
           }
         });
+      } else {
+        result = true;
       }
 
       if (instance.open_time_ranges[dateFormat]) {

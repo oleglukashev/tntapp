@@ -37,7 +37,7 @@
                  ng-class="{ 'btn-success': reserv.current_part.time == time_obj.time,
                              'red-300': reserv.timeIsDisabled(time_obj),
                              'btn-default text-success': !reserv.timeIsDisabled(time_obj),
-                             'disabled': reser.is_customer_reservation }"
+                             'disabled': reserv.is_customer_reservation && reserv.timeIsDisabled(time_obj) }"
                  class='time_item btn btn-lg no-shadow'
                  ng-model='reserv.current_part.time'
                  uncheckable
