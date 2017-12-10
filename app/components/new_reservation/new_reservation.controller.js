@@ -150,7 +150,7 @@ export default class NewReservationCtrl {
         },
         (error) => {
           this.is_submitting = false;
-          this.errors = error;
+          this.errors = error.data.errors.errors;
         });
 
     return true;
