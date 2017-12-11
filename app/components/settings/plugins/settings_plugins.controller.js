@@ -5,7 +5,7 @@ export default class SettingsPluginsCtrl {
     this.current_company_id = User.getCompanyId();
     this.Settings        = Settings;
     this.is_loaded       = false;
-    this.iframe_widget   = '<iframe src="http://dashboard.thenexttable.com/thenexttable-embed/iframe.php?rid=' + this.current_company_id + '" style="display: block; margin: 0 auto;" frameborder="0" seamless="seamless" height="440px;" width="300px;"></iframe>'
+    this.iframe_widget   = '<iframe src="https://dashboard.thenexttable.com/thenexttable-embed/iframe.php?rid=' + this.current_company_id + '" style="display: block; margin: 0 auto;" frameborder="0" seamless="seamless" height="440px;" width="300px;"></iframe>'
 
     this.loadPluginsSettings();
   }
