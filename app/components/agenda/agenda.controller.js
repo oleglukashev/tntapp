@@ -347,6 +347,9 @@ export default class AgendaCtrl {
 
   loadTimeRanges() {
     const date = this.moment(this.date_filter).format('YYYY-MM-DD');
+    this.time_ranges = [];
+    this.open_time_ranges = [];
+    this.zone_time_ranges = [];
     this.TimeRange.getAll(this.current_company_id, date)
       .then((timeRanges) => {
         this.time_ranges = timeRanges;
