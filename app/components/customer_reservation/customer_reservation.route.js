@@ -11,8 +11,12 @@ export default function routes($stateProvider) {
       controller: 'CustomerReservationCtrl',
       controllerAs: 'customer_reserv'
     })
-    .state('customer_reservation.new_alternative', {
+    .state('customer_reservation.alternative', {
       url: '/thenexttable-embed/iframe.php',
+      controller: 'CustomerReservationCtrl'
+    })
+    .state('customer_reservation.alternative_start', {
+      url: '/index.php/reservering/:id/start',
       controller: 'CustomerReservationCtrl'
     })
 }
