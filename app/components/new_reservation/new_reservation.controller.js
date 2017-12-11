@@ -55,6 +55,18 @@ export default class NewReservationCtrl {
     this.reservation.reservation_parts.push(this.getNewReservationPart());
     this.current_part = this.reservation.reservation_parts[0];
 
+    if ($stateParams.date) {
+      const date = new Date($stateParams.date);
+
+      if (date != 'Invalid Date') {
+        this.current_part.date = new Date($stateParams.date);
+      }
+    }
+
+    if ($stateParams.aantal_personen) {
+      this.current_part.number_of_persons = parseInt($stateParams.aantal_personen);
+    }
+
     this.walk_in = Object.assign({}, this.reservation);
     this.walk_in_part = this.walk_in.reservation_parts[0];
 
