@@ -2,6 +2,7 @@ image: node
 
 stages:
   - beta
+  - production
   - staging2
 
 beta:staging:
