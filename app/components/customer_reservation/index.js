@@ -1,4 +1,5 @@
 import angular from 'angular';
+import uirouter from 'angular-ui-router';
 import routing from './customer_reservation.route';
 import controller from './customer_reservation.controller';
 import newReservationDateFactory from '../new_reservation/new_reservation.date.factory';
@@ -13,7 +14,7 @@ import newReservationTimeFactory from '../new_reservation/new_reservation.time.f
 import newReservationTypeFactory from '../new_reservation/new_reservation.type.factory';
 import newReservationZoneFactory from '../new_reservation/new_reservation.zone.factory';
 
-export default angular.module('app.customer_reservation', [])
+export default angular.module('app.customer_reservation', [uirouter])
   .config(routing)
   .controller('CustomerReservationCtrl', controller)
   .factory('NewReservationDateFactory', newReservationDateFactory, ['moment', '$mdDialog', '$q'])

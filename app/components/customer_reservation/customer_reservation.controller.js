@@ -1,6 +1,4 @@
-import angular from 'angular';
-
-export default class CustomerReservationCtrl {
+class CustomerReservationCtrl {
   constructor($stateParams, $state) {
     'ngInject';
 
@@ -23,3 +21,5 @@ export default class CustomerReservationCtrl {
     }
   }
 }
+
+export default CustomerReservationCtrl;
