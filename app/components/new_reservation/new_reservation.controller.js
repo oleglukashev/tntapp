@@ -56,7 +56,7 @@ export default class NewReservationCtrl {
     this.current_part = this.reservation.reservation_parts[0];
 
     if ($stateParams.date) {
-      const date = new Date($stateParams.date);
+      const date = this.moment($stateParams.date, 'DD-MM-YYYY').toDate();
 
       if (date != 'Invalid Date') {
         this.current_part.date = new Date($stateParams.date);
