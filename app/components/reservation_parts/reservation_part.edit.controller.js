@@ -272,18 +272,8 @@ export default class ReservationPartEditCtrl {
   }
 
   openedTimeRangePeriod() {
-    const availableTime = this.available_time;
-    if (!availableTime.length) return [];
-    const openedTimes = this.filterFilter(availableTime, { is_open: true });
-
-    if (openedTimes.length > 0) {
-      const min = openedTimes[0].time;
-      const max = openedTimes[openedTimes.length - 1].time;
-
-      return this.filterFilter(availableTime, item => item.time >= min && item.time <= max);
-    }
-
-    return [];
+    if (!this.available_time.length) return [];
+    return this.available_time;
   }
 
   timeIsPast(timeObj) {
