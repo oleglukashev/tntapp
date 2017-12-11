@@ -10,95 +10,15 @@ export default class SettingsGeneralCtrl {
     this.is_loaded = false;
 
     this.form_data = {
-      reservation_deadline_hours: 0,
-      reservation_deadline_minutes: 0,
-      request_type_start_hours: 0,
-      request_type_start_minutes: 0,
-      request_type_end_hours: 0,
-      request_type_end_minutes: 0,
+      reservation_deadline_hours: null,
+      reservation_deadline_minutes: null,
+      request_type_start_hours: null,
+      request_type_start_minutes: null,
+      request_type_end_hours: null,
+      request_type_end_minutes: null,
       enable_deadline: false,
       enable_request_type: false,
     };
-
-    $scope.$watch('general_settings.form_data.reservation_deadline', () => {
-      const reservationDeadLine = this.form_data.reservation_deadline;
-      if (reservationDeadLine) {
-        this.form_data.reservation_deadline_hours = 0;
-        this.form_data.reservation_deadline_minutes = 0;
-        this.form_data.enable_deadline = false;
-
-        if (this.moment(reservationDeadLine, 'HH:mm').isValid()) {
-          const time = reservationDeadLine.split(':');
-          this.form_data.reservation_deadline_hours = parseInt(time[0], 10);
-          this.form_data.reservation_deadline_minutes = parseInt(time[1], 10);
-          this.form_data.enable_deadline = true;
-        }
-      }
-    });
-
-    $scope.$watch('general_settings.form_data.request_type_start', () => {
-      const requestTypeStart = this.form_data.request_type_start;
-      if (requestTypeStart) {
-        this.form_data.request_type_start_hours = 0;
-        this.form_data.request_type_start_minutes = 0;
-        this.form_data.enable_request_type = false;
-
-        if (this.moment(requestTypeStart, 'HH:mm').isValid()) {
-          const time = requestTypeStart.split(':');
-          this.form_data.request_type_start_hours = parseInt(time[0], 10);
-          this.form_data.request_type_start_minutes = parseInt(time[1], 10);
-          this.form_data.enable_request_type = true;
-        }
-      }
-    });
-
-    $scope.$watch('general_settings.form_data.request_type_end', () => {
-      const requestTypeEnd = this.form_data.request_type_end;
-      if (requestTypeEnd) {
-        this.form_data.request_type_end_hours = 0;
-        this.form_data.request_type_end_minutes = 0;
-        this.form_data.enable_request_type = false;
-
-        if (this.moment(requestTypeEnd, 'HH:mm').isValid()) {
-          const time = requestTypeEnd.split(':');
-          this.form_data.request_type_end_hours = parseInt(time[0], 10);
-          this.form_data.request_type_end_minutes = parseInt(time[1], 10);
-          this.form_data.enable_request_type = true;
-        }
-      }
-    });
-
-    $scope.$watch('general_settings.form_data.enable_deadline', (newValue, oldValue) => {
-      if (newValue && !oldValue) {
-        this.form_data.reservation_deadline_hours = 0;
-        this.form_data.reservation_deadline_minutes = 0;
-      }
-    });
-
-    $scope.$watch('general_settings.form_data.enable_request_type', (newValue, oldValue) => {
-      if (newValue && !oldValue) {
-        this.form_data.request_type_end_hours = 0;
-        this.form_data.request_type_end_minutes = 0;
-        this.form_data.request_type_start_hours = 0;
-        this.form_data.request_type_start_minutes = 0;
-      }
-    });
-
-    $scope.$watch('general_settings.form_data.request_type_end_minutes', () => {
-      this.optimizeRequestTypeStartTimes();
-    });
-
-    $scope.$watch('general_settings.form_data.request_type_end_hours', () => {
-      this.optimizeRequestTypeStartTimes();
-    });
-
-    $scope.$watch('general_settings.form_data.request_type_start_minutes', () => {
-      this.optimizeRequestTypeEndTimes();
-    });
-
-    $scope.$watch('general_settings.form_data.request_type_start_hours', () => {
-      this.optimizeRequestTypeEndTimes();
-    });
 
     this.loadGeneralSettings();
   }
@@ -109,6 +29,32 @@ export default class SettingsGeneralCtrl {
         (generalSettings) => {
           this.is_loaded = true;
           this.form_data = generalSettings;
+
+          const reservationDeadLine = this.form_data.reservation_deadline;
+          if (reservationDeadLine && this.moment(reservationDeadLine, 'HH:mm').isValid()) {
+            const time = reservationDeadLine.split(':');
+            this.form_data.reservation_deadline_hours = parseInt(time[0], 10);
+            this.form_data.reservation_deadline_minutes = parseInt(time[1], 10);
+            this.form_data.enable_deadline = true;
+          }
+
+          const requestTypeStart = this.form_data.request_type_start;
+          const requestTypeEnd = this.form_data.request_type_end;
+          if (requestTypeStart && requestTypeEnd) {
+            if (this.moment(requestTypeStart, 'HH:mm').isValid()) {
+              const timeStart = requestTypeStart.split(':');
+              this.form_data.request_type_start_hours = parseInt(timeStart[0], 10);
+              this.form_data.request_type_start_minutes = parseInt(timeStart[1], 10);
+              this.form_data.enable_request_type = true;
+            }
+
+            if (this.moment(requestTypeEnd, 'HH:mm').isValid()) {
+              const timeEnd = requestTypeEnd.split(':');
+              this.form_data.request_type_end_hours = parseInt(timeEnd[0], 10);
+              this.form_data.request_type_end_minutes = parseInt(timeEnd[1], 10);
+              this.form_data.enable_request_type = true;
+            }
+          }
         });
   }
 
@@ -137,7 +83,7 @@ export default class SettingsGeneralCtrl {
 
     if (this.form_data.enable_request_type) {
       data.request_type_start = this.convertedRequestTypeStartToString();
-      data.request_type_end = this.convertedRequestTypeEndToString()
+      data.request_type_end = this.convertedRequestTypeEndToString();
     } else {
       data.request_type_start = null;
       data.request_type_end = null;
@@ -213,5 +159,33 @@ export default class SettingsGeneralCtrl {
       this.form_data.request_type_end_hours = this.form_data.request_type_start_hours;
       this.form_data.request_type_end_minutes = this.form_data.request_type_start_minutes;
     }
+  }
+
+  updateDeadlineAndSubmitForm() {
+    this.form_data.reservation_deadline_hours = null;
+    this.form_data.reservation_deadline_minutes = null;
+
+    if (this.form_data.enable_deadline) {
+      this.form_data.reservation_deadline_hours = 0;
+      this.form_data.reservation_deadline_minutes = 0;
+    }
+
+    this.submitForm();
+  }
+
+  updateRequestTypePeriod() {
+    this.form_data.request_type_start_hours = null;
+    this.form_data.request_type_start_minutes = null;
+    this.form_data.request_type_end_hours = null;
+    this.form_data.request_type_end_minutes = null;
+
+    if (this.form_data.enable_request_type) {
+      this.form_data.request_type_start_hours = 0;
+      this.form_data.request_type_start_minutes = 0;
+      this.form_data.request_type_end_hours = 0;
+      this.form_data.request_type_end_minutes = 0;
+    }
+
+    this.submitForm();
   }
 }

@@ -121,7 +121,7 @@
         <div class='pull-right m-r-sm'>
           <div class='md-form-group no-padder'>
             <md-switch ng-model='general_settings.form_data.enable_deadline'
-                       ng-change='general_settings.submitForm()'></md-switch>
+                       ng-change='general_settings.updateDeadlineAndSubmitForm()'></md-switch>
           </div>
         </div>
 	  	</div>
@@ -182,7 +182,7 @@
         <div class='pull-right m-r-sm'>
           <div class='md-form-group no-padder'>
             <md-switch ng-model='general_settings.form_data.enable_request_type'
-                       ng-change='general_settings.submitForm()'></md-switch>
+                       ng-change='general_settings.updateRequestTypePeriod()'></md-switch>
           </div>
         </div>
       </div>
