@@ -6,9 +6,9 @@ export default function routes($stateProvider) {
       template: '<div ui-view></div>',
     })
     .state('customer_reservation.new', {
-      url: '/reservation/:id',
+      url: '/thenexttable-embed/iframe.php?',
       template: require('./customer_reservation.view.html'),
       controller: 'CustomerReservationCtrl',
       controllerAs: 'customer_reserv'
-    })
+    });
 }

@@ -79,6 +79,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
 
     instance.changeDateFilterPostProcess = () => {
       instance.loadReservations();
+      instance.loadTimeRanges();
     };
 
     instance.openTimeRangeSettings = (type, title) => {
