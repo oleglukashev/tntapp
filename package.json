@@ -4,6 +4,7 @@
   "description": "TheNextTableApp",
   "scripts": {
     "build_beta": "webpack --config webpack.config.beta.js",
+    "build_production": "webpack --config webpack.config.production.js",
     "build_staging2": "webpack --config webpack.config.staging2.js",
     "dev": "webpack-dev-server --host tnt.me --port 8082"
   },
