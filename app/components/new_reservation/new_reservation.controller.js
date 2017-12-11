@@ -1,11 +1,9 @@
-import { getParameterByName } from '../../common/utils';
-
 export default class NewReservationCtrl {
   constructor(Customer, User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone,
     NewReservation, Table, AppConstants, NewReservationDateFactory, NewReservationGroupFactory,
     NewReservationNumberOfPersonsFactory, NewReservationPersonFactory, NewReservationTimeFactory,
     NewReservationProductFactory, NewReservationTypeFactory, NewReservationZoneFactory,
-    NewReservationPersonAutocompleteFactory, moment, filterFilter, $state, $scope,
+    NewReservationPersonAutocompleteFactory, moment, filterFilter, $state, $stateParams, $scope,
     $rootScope, $window) {
     'ngInject';
 
@@ -29,8 +27,7 @@ export default class NewReservationCtrl {
     this.$window = $window;
 
     if (this.is_customer_reservation) {
-      const companyIdFromUrl = getParameterByName('rid');
-      this.current_company_id = companyIdFromUrl;
+      this.current_company_id = $stateParams.id;
       this.pagination = this.Reservation.pagination.customer;
     } else {
       this.current_company_id = User.getCompanyId();
