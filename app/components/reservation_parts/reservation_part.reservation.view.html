@@ -38,8 +38,7 @@
                          ng-model='reserv.current_part.time'>
                 <md-option ng-value='item.time'
                            ng-class="{ 'red-300': reserv.timeIsDisabled(item) }"
-                           ng-repeat='item in reserv.openedTimeRangePeriod()'
-                           ng-disabled='reserv.timeIsDisabled(item) || reserv.timeIsPast(item)'>{{ item.time }}</md-option>
+                           ng-repeat='item in reserv.openedTimeRangePeriod()'>{{ item.time }}</md-option>
               </md-select>
               <div ng-show='reserv.disabledTimes().length'>
                 <i class="mdi mdi-checkbox-blank-circle i-16 red-color-200"></i>
