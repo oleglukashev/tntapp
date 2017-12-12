@@ -92,35 +92,45 @@ export default class ReservationPartEditCtrl {
       );
   }
 
+  // UNITE WITH NEW RESERVATION FUNCTION
   timeIsDisabled(timeObj) {
-    if (!timeObj.is_open || !this.isEnoughSeats(timeObj)) {
+    const now = this.moment();
+    const date = this.current_part.date;
+    const formatedDate = this.moment(date).format('YYYY-MM-DD');
+
+    if (!timeObj.is_open ||
+      timeObj.more_than_deadline ||
+      this.moment(`${formatedDate} ${timeObj.time}`) >= now &&
+      !this.isEnoughSeats(timeObj)) {
       return true;
     }
 
-    if (this.current_product) {
-      const reservationDateStr = this.moment(this.reservation.date).format('YYYY-MM-DD');
-      const objTime = this.moment(`${reservationDateStr} ${timeObj.time}`);
-      const startProductTime = this.moment(`${reservationDateStr} ${this.current_product.start_time}`);
-      const endProductTime = this.moment(`${reservationDateStr} ${this.current_product.end_time}`);
-
-      if (objTime <= endProductTime &&
-          objTime >= startProductTime &&
-          this.current_product.max_person_count &&
-          ((this.current_product.max_person_count < this.current_part.number_of_persons) ||
-          this.current_product.min_person_count > this.current_part.number_of_persons)) {
+    const product = this.current_part.current_product;
+    if (product && this.current_part.number_of_persons) {
+      if (product.max_person_count &&
+          product.max_person_count < this.current_part.number_of_persons) {
         return true;
       }
+
+      if (product.min_person_count &&
+          product.min_person_count < this.current_part.number_of_persons) {
+        return true;
+      }        
+    } else {
+      return true;
     }
 
     return false;
-  }
+  };
 
+  // UNITE WITH NEW RESERVATION FUNCTION
   isEnoughSeats(timeObj) {
     return (this.current_part.number_of_persons <= timeObj.max_personen_voor_tafels &&
            this.current_part.number_of_persons <= timeObj.available_seat_count) ||
            timeObj.can_overbook;
   }
 
+  // UNITE WITH NEW RESERVATION FUNCTION
   disabledTimes() {
     const result = [];
 
@@ -150,6 +160,7 @@ export default class ReservationPartEditCtrl {
     this.Product.getAll(this.current_company_id, false).then(
       (result) => {
         this.products = result;
+        this.current_part.current_product = this.filterFilter(this.products, { id: this.current_part.product})[0];
 
         if (this.products.length > 0) {
           this.loadTimeRanges();
@@ -301,6 +312,13 @@ export default class ReservationPartEditCtrl {
 
   changeProductPostProcess() {
     this.current_part.table_ids = [];
+    this.current_part.current_product = null;
+
+    if (this.current_part.product) {
+      const product = this.current_part.product;
+      this.current_part.current_product = filterFilter(this.products, { id: product })[0];
+    }
+
     this.clearAndLoadTime();
   }
 

@@ -416,4 +416,14 @@ export default class NewReservationCtrl {
       zone: [],
     };
   }
+
+  getProductWeekTimeRange(weekday, productId) {
+    if (this.product_week_time_ranges &&
+      this.product_week_time_ranges[weekday] &&
+      this.product_week_time_ranges[weekday][productId]) {
+      return this.product_week_time_ranges[weekday][productId]
+    }
+
+    return null;
+  }
 }
