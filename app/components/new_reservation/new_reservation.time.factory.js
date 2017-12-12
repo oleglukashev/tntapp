@@ -26,45 +26,72 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
 
     instance.openedTimeRangePeriod = () => {
       const availableTime = instance.current_part.available_time;
-      if (!availableTime.length) return [];
-      if (!this.is_customer_reservation) return availableTime;
-
       const date = instance.current_part.date;
-      const openedTimes = filterFilter(availableTime, { is_open: true });
+      const formatedDate = moment(date).format('YYYY-MM-DD');
+      const now = moment();
 
-      if (openedTimes.length > 0) {
-        const min = openedTimes[0].time;
-        const max = openedTimes[openedTimes.length - 1].time;
-        const now = moment();
-        const formatedDate = moment(date).format('YYYY-MM-DD');
+      if (!availableTime.length) return [];
 
-        return filterFilter(openedTimes, item => item.time >= min &&
-          item.time <= max &&
-          moment(`${formatedDate} ${item.time}`) >= now &&
-          (instance.is_customer_reservation ? !item.more_than_deadline : true));
+      let currentTimeRange = null;
+      if (date && instance.current_part.product) {
+        const weekday = instance.moment(date).isoWeekday();
+        const timeRange = instance.getProductWeekTimeRange(weekday, instance.current_part.product);
+        if (timeRange.value || !timeRange.whole_day) {
+          currentTimeRange = timeRange;
+        }
       }
 
-      return [];
+      let minProductWeekTime = null;
+      let maxProductWeekTime = null;
+      if (currentTimeRange) {
+        minProductWeekTime = currentTimeRange.start_time;
+        maxProductWeekTime = currentTimeRange.end_time;
+      }
+
+      const openedTimes = filterFilter(availableTime, { is_open: true });
+      const minOpenedTime = openedTimes[0].time;
+      const maxOpenedTime = openedTimes[openedTimes.length - 1].time;
+
+      return filterFilter(availableTime, (item) => {
+        const defaultCondition = item.time >= minOpenedTime &&
+          item.time <= maxOpenedTime &&
+          (!item.is_open ? item.time >= minProductWeekTime && item.time <= maxProductWeekTime : true);
+
+        if (!instance.is_customer_reservation) {
+          return defaultCondition &&
+            moment(`${formatedDate} ${item.time}`) >= now &&
+            !item.more_than_deadline
+        }
+
+        return defaultCondition;
+      });
     };
 
     instance.timeIsDisabled = (timeObj) => {
-      if (!timeObj.is_open || !instance.isEnoughSeats(timeObj)) {
+      const now = moment();
+      const date = instance.current_part.date;
+      const formatedDate = moment(date).format('YYYY-MM-DD');
+
+      if (!timeObj.is_open ||
+        timeObj.more_than_deadline ||
+        moment(`${formatedDate} ${timeObj.time}`) >= now &&
+        !instance.isEnoughSeats(timeObj)) {
         return true;
       }
 
-      if (instance.current_product) {
-        const reservationDateStr = moment(instance.reservation.date).format('YYYY-MM-DD');
-        const objTime = moment(`${reservationDateStr} ${timeObj.time}`);
-        const startProductTime = moment(`${reservationDateStr} ${instance.current_product.start_time}`);
-        const endProductTime = moment(`${reservationDateStr} ${instance.current_product.end_time}`);
-
-        if (objTime <= endProductTime &&
-            objTime >= startProductTime &&
-            instance.current_product.max_person_count &&
-            ((instance.current_product.max_person_count < instance.current_part.number_of_persons) ||
-            instance.current_product.min_person_count > instance.current_part.number_of_persons)) {
+      const product = instance.current_part.current_product;
+      if (product && instance.current_part.number_of_persons) {
+        if (product.max_person_count &&
+            product.max_person_count < instance.current_part.number_of_persons) {
           return true;
         }
+
+        if (product.min_person_count &&
+            product.min_person_count < instance.current_part.number_of_persons) {
+          return true;
+        }        
+      } else {
+        return true;
       }
 
       return false;
