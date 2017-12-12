@@ -30,7 +30,8 @@
         </md-input-container>
         <div class='pull-right m-t-lg'
              ng-if='antwoord.isCancellingReservation'>
-          <button class=' text-danger md-btn md-flat btn-fw '
+          <button type='button'
+                  class='text-danger md-btn md-flat btn-fw'
                   ng-click='antwoord.cancelReservation();'>ANNULEREN ZONDER MAIL</button>
         </div>
       </div>
