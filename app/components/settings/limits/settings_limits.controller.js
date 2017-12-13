@@ -13,8 +13,10 @@ export default class SettingsLimitsCtrl {
 
     this.days = AppConstants.dayOfWeek;
     this.limit = 1;
+    this.type = null;
 
     this.loadLimits();
+    this.loadGeneralSettings();
     this.limits = {};
   }
 
@@ -29,7 +31,16 @@ export default class SettingsLimitsCtrl {
           });
   }
 
+  loadGeneralSettings() {
+    this.Settings
+      .getGeneralSettings(this.current_company_id).then(
+        (generalSettings) => {
+          this.type = generalSettings.limit_type;
+        });
+  }
+
   saveLimitByTimeAndDay(time, dayOfWeek) {
+    if (!this.type) return false;
     const newValue = this.getChangedValue(time, dayOfWeek);
     const data = [this.buildLimit(time, dayOfWeek, newValue)];
 
