@@ -57,7 +57,7 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
           item.time <= maxOpenedTime &&
           (!item.is_open ? item.time >= minProductWeekTime && item.time <= maxProductWeekTime : true);
 
-        if (!instance.is_customer_reservation) {
+        if (instance.is_customer_reservation) {
           return defaultCondition &&
             moment(`${formatedDate} ${item.time}`) >= now &&
             !item.more_than_deadline
