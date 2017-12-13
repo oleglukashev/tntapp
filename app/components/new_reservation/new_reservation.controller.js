@@ -255,7 +255,7 @@ export default class NewReservationCtrl {
     this.products_is_loaded = false;
     this.products = [];
 
-    this.Product.getAll(this.current_company_id, !this.is_customer_reservation, this.is_customer_reservation)
+    this.Product.getAll(this.current_company_id, false, this.is_customer_reservation)
       .then(
         (result) => {
           this.products = result;
@@ -316,13 +316,21 @@ export default class NewReservationCtrl {
           });
         }
 
-        const productTimeRanges = ranges.filter(item => item.type === 'product' && !item.days_of_week.length);
+        const productTimeRanges = ranges.filter(item => 
+          (item.type === 'product' || item.type === 'multiproduct') && !item.days_of_week.length);
         if (productTimeRanges.length) {
           productTimeRanges.forEach((timeRange) => {
             if (!this.product_time_ranges[timeRange.fixed_date]) {
               this.product_time_ranges[timeRange.fixed_date] = {};
             }
-            this.product_time_ranges[timeRange.fixed_date][timeRange.product.id] = timeRange;
+
+            if (timeRange.type === 'product') {
+              this.product_time_ranges[timeRange.fixed_date][timeRange.product.id] = timeRange;
+            } else if (timeRange.type === 'multiproduct') {
+              timeRange.products.forEach((productId) => {
+                this.product_time_ranges[timeRange.fixed_date][productId] = timeRange;
+              });
+            }
           });
         }
 

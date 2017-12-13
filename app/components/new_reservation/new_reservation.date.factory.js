@@ -18,14 +18,14 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
 
     instance.disableDates = (date) => {
       // TODO REFACTOR AFTER NEW RESERVATION REFACTORING
-      let result = false;
+      let result = true;
       const dateFormat = moment(date).format('YYYY-MM-DD');
       const dateWeekDay = moment(date).isoWeekday();
       const showedProducts = filterFilter(instance.products, { shaded: false });
       let closedProductTimeRangesIds = [];
 
       if (!instance.is_customer_reservation) {
-        return result;
+        return false;
       }
 
       if (!showedProducts.length) {
@@ -37,23 +37,21 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
         const productIds = Object.keys(instance.product_week_time_ranges[dateWeekDay]);
         productIds.forEach((productId) => {
           const timeRange = instance.product_week_time_ranges[dateWeekDay][productId];
-          if (timeRange.value) {
-            result = false;
-          } else {
-            if (!closedProductTimeRangesIds.includes(parseInt(productId))) {
-              closedProductTimeRangesIds.push(parseInt(productId));
-            }
+          result = !timeRange.value;
+
+          if (!timeRange.value && !closedProductTimeRangesIds.includes(parseInt(productId))) {
+            closedProductTimeRangesIds.push(parseInt(productId));
           }
         });
-      } else {
-        result = true;
       }
 
       if (instance.open_time_ranges[dateFormat]) {
-        result = true;
         const timeRange = instance.open_time_ranges[dateFormat];
-        if (timeRange.value || (!timeRange.value && !timeRange.whole_day)) {
+
+        if (timeRange.value) {
           result = false;
+        } else if (!timeRange.value && timeRange.whole_day) {
+          result = true;
         }
       }
 
@@ -62,14 +60,20 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
         productIds.forEach((productId) => {
           const product = filterFilter(instance.products, { id: productId })[0];
           const timeRange = instance.product_time_ranges[dateFormat][productId];
-          if (timeRange.value ||
-            (!timeRange.value && !timeRange.whole_day) &&
-            product &&
-            !product.shaded) {
-            result = false;
-          } else {
+
+          if (!product || product.shaded) {
+            result = true;
             if (!closedProductTimeRangesIds.includes(parseInt(productId))) {
               closedProductTimeRangesIds.push(parseInt(productId));
+            }
+          } else {
+            if (timeRange.value) {
+              result = false;
+            } else if (!timeRange.value && timeRange.whole_day) {
+              result = true;
+              if (!closedProductTimeRangesIds.includes(parseInt(productId))) {
+                closedProductTimeRangesIds.push(parseInt(productId));
+              }
             }
           }
         });
@@ -79,7 +83,7 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
       closedProductTimeRangesIds = closedProductTimeRangesIds.sort();
 
       if (angular.equals(productIds, closedProductTimeRangesIds)) {
-        result = true;
+        return true;
       }
 
       if (instance.zone_time_ranges[dateFormat]) {
@@ -95,7 +99,7 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
         });
 
         if (angular.equals(zonesIds, closedZoneTimeRangesIds)) {
-          result = true;
+          return true;
         }
       }
 
