@@ -158,7 +158,7 @@
               <span ng-if='time_range.type == "zone"'>{{ agenda.getZoneNameByRange(time_range) }}</span>
               <span ng-if='time_range.type == "product"'>{{ agenda.getProductsName(time_range) }}</span>
             </td>
-            <td ng-if='["open", "zone", "product"].includes(time_range.type)'
+            <td ng-if='["open", "zone", "product", "multiproduct"].includes(time_range.type)'
                 class='v-middle'>{{ time_range.value ? 'Geopend' : 'Gesloten' }}</td>
             <td ng-if='time_range.type == "overbooking"'
                 class='v-middle'>{{ time_range.value ? 'Overboeken' : 'Niet overboeken' }}</td>
