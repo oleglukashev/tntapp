@@ -36,7 +36,7 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
       if (date && instance.current_part.product) {
         const weekday = instance.moment(date).isoWeekday();
         const timeRange = instance.getProductWeekTimeRange(weekday, instance.current_part.product);
-        if (timeRange.value || !timeRange.whole_day) {
+        if (timeRange && (timeRange.value || !timeRange.whole_day)) {
           currentTimeRange = timeRange;
         }
       }
