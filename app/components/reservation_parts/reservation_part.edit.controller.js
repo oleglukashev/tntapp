@@ -207,6 +207,13 @@ export default class ReservationPartEditCtrl {
       });
   }
 
+  formIsValid() {
+    return this.current_part.product &&
+           this.current_part.number_of_persons &&
+           this.current_part.date &&
+           this.current_part.time;
+  }
+
   canLoadTime() {
     return this.current_part.product &&
            this.current_part.number_of_persons &&
@@ -316,7 +323,7 @@ export default class ReservationPartEditCtrl {
 
     if (this.current_part.product) {
       const product = this.current_part.product;
-      this.current_part.current_product = filterFilter(this.products, { id: product })[0];
+      this.current_part.current_product = this.filterFilter(this.products, { id: product })[0];
     }
 
     this.clearAndLoadTime();
