@@ -22,6 +22,7 @@ export default function templates($templateCache) {
   $templateCache.put('reservation_answer.view.html', require('./components/reservation_answer/reservation_answer.view.html'));
   $templateCache.put('reservations.print.view.html', require('./components/reservations/reservations.print.view.html'));
   $templateCache.put('agenda.view.html', require('./components/agenda/agenda.view.html'));
+  $templateCache.put('agenda_charts.view.html', require('./components/agenda/charts/agenda_charts.view.html'));
   $templateCache.put('user_menu.edit.view.html', require('./shared/user_menu/edit/user_menu.edit.view.html'));
   $templateCache.put('settings_employees.item.view.html', require('./components/settings/employees/settings_employees.item.view.html'));
   $templateCache.put('agenda_quick_reservation.view.html', require('./components/agenda/quick_reservation/agenda_quick_reservation.view.html'));
