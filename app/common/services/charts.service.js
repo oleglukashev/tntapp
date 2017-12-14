@@ -78,7 +78,7 @@ export default class Charts {
 
   getProducts() {
     this.Product
-      .getAll(this.current_company.id)
+      .getAll(this.current_company.id, true)
       .then((products) => {
         products.forEach((product) => {
           if (product.id) {
