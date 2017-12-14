@@ -94,13 +94,8 @@ export default class ReservationPartEditCtrl {
 
   // UNITE WITH NEW RESERVATION FUNCTION
   timeIsDisabled(timeObj) {
-    const now = this.moment();
-    const date = this.current_part.date;
-    const formatedDate = this.moment(date).format('YYYY-MM-DD');
-
     if (!timeObj.is_open ||
       timeObj.more_than_deadline ||
-      this.moment(`${formatedDate} ${timeObj.time}`) >= now &&
       !this.isEnoughSeats(timeObj)) {
       return true;
     }
@@ -115,13 +110,13 @@ export default class ReservationPartEditCtrl {
       if (product.min_person_count &&
           product.min_person_count < this.current_part.number_of_persons) {
         return true;
-      }        
+      }
     } else {
       return true;
     }
 
     return false;
-  };
+  }
 
   // UNITE WITH NEW RESERVATION FUNCTION
   isEnoughSeats(timeObj) {

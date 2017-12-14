@@ -27,40 +27,40 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
     instance.openedTimeRangePeriod = () => {
       const availableTime = instance.current_part.available_time;
       const date = instance.current_part.date;
-      const formatedDate = moment(date).format('YYYY-MM-DD');
-      const now = moment();
+      const product = instance.current_part.product;
 
-      if (!availableTime.length) return [];
-
-      let currentTimeRange = null;
-      if (date && instance.current_part.product) {
-        const weekday = instance.moment(date).isoWeekday();
-        const timeRange = instance.getProductWeekTimeRange(weekday, instance.current_part.product);
-        if (timeRange && (timeRange.value || !timeRange.whole_day)) {
-          currentTimeRange = timeRange;
-        }
-      }
+      if (!date || !product || !availableTime.length) return [];
 
       let minProductWeekTime = null;
       let maxProductWeekTime = null;
-      if (currentTimeRange) {
-        minProductWeekTime = currentTimeRange.start_time;
-        maxProductWeekTime = currentTimeRange.end_time;
+      let minOpenedTime = null;
+      let maxOpenedTime = null;
+
+      const weekday = instance.moment(date).isoWeekday();
+      const timeRange = instance.getProductWeekTimeRange(weekday, instance.current_part.product);
+      if (timeRange && (timeRange.value || !timeRange.whole_day)) {
+        minProductWeekTime = timeRange.start_time;
+        maxProductWeekTime = timeRange.end_time;
       }
 
       const openedTimes = filterFilter(availableTime, { is_open: true });
-      const minOpenedTime = openedTimes[0].time;
-      const maxOpenedTime = openedTimes[openedTimes.length - 1].time;
+      if (openedTimes.length) {
+        minOpenedTime = openedTimes[0].time;
+        maxOpenedTime = openedTimes[openedTimes.length - 1].time;
+      } else if (!instance.is_customer_reservation) {
+        minOpenedTime = minProductWeekTime;
+        maxOpenedTime = maxProductWeekTime;
+      }
 
       return filterFilter(availableTime, (item) => {
-        const defaultCondition = item.time >= minOpenedTime &&
-          item.time <= maxOpenedTime &&
-          (!item.is_open ? item.time >= minProductWeekTime && item.time <= maxProductWeekTime : true);
+        const defaultCondition = (item.value ||
+                                  (item.time >= minProductWeekTime &&
+                                  item.time <= maxProductWeekTime)) ||
+                                  (item.time >= minOpenedTime &&
+                                  item.time <= maxOpenedTime);
 
         if (instance.is_customer_reservation) {
-          return defaultCondition &&
-            moment(`${formatedDate} ${item.time}`) >= now &&
-            !item.more_than_deadline
+          return defaultCondition && !item.time_is_past && !item.more_than_deadline;
         }
 
         return defaultCondition;
@@ -68,13 +68,8 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
     };
 
     instance.timeIsDisabled = (timeObj) => {
-      const now = moment();
-      const date = instance.current_part.date;
-      const formatedDate = moment(date).format('YYYY-MM-DD');
-
       if (!timeObj.is_open ||
         timeObj.more_than_deadline ||
-        moment(`${formatedDate} ${timeObj.time}`) >= now &&
         !instance.isEnoughSeats(timeObj)) {
         return true;
       }
@@ -89,7 +84,7 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
         if (product.min_person_count &&
             product.min_person_count < instance.current_part.number_of_persons) {
           return true;
-        }        
+        }
       } else {
         return true;
       }
