@@ -35,6 +35,7 @@
               <label>Tijdstip</label>
               <md-icon><i class='mdi mdi-clock i-20' /></md-icon>
               <md-select ng-change='reserv.changeTimePostProcess()'
+                         ng-disabled='!reserv.canLoadTime()'
                          ng-model='reserv.current_part.time'>
                 <md-option ng-value='item.time'
                            ng-class="{ 'red-300': reserv.timeIsDisabled(item) }"
@@ -52,6 +53,7 @@
               <md-icon><i class='mdi mdi-border-horizontal i-20' /></md-icon>
               <md-select multiple
                          ng-change='reserv.changeFilterPostProcess()'
+                         ng-disabled='!reserv.current_part.time'
                          ng-model='reserv.current_part.table_ids'>
                 <md-optgroup ng-repeat='zone in reserv.zones' label='{{ zone.name }}'>
                   <md-option ng-value='table_id' ng-repeat='table_id in zone.table_ids'
@@ -76,7 +78,7 @@
             </div>
             <button type='submit'
                       class='btn btn-lg btn-success w-full no-top-radius md-content-button'
-                      ng-class="{ 'disabled': reserv.errors.length || reserv.is_submitting }">
+                      ng-class="{ 'disabled': !reserv.formIsValid() || reserv.is_submitting }">
               <span>OPSLAAN</span>
             </button>
           </form>
