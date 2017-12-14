@@ -18,127 +18,110 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
 
     instance.disableDates = (date) => {
       // TODO REFACTOR AFTER NEW RESERVATION REFACTORING
-      let result = true;
-      const dateFormat = moment(date).format('YYYY-MM-DD');
-      const dateWeekDay = moment(date).isoWeekday();
-      const showedProducts = filterFilter(instance.products, { shaded: false });
-      let closedProductTimeRangesIds = [];
-
       if (!instance.is_customer_reservation) {
         return false;
       }
 
-      if (!showedProducts.length) {
-        return true
-      }
+      let result = true;
 
       console.log(date);
 
-      if (instance.product_week_time_ranges[dateWeekDay]) {
-        const productIds = Object.keys(instance.product_week_time_ranges[dateWeekDay]);
-        let productsOpened = false;
-        productIds.forEach((productId) => {
-          const timeRange = instance.product_week_time_ranges[dateWeekDay][productId];
-          result = !timeRange.value;
+      const disabledProductsData = instance.disabledProductsData(date);
+      const disabledZonesData = instance.disabledZonesData(date);
 
-          if (timeRange.value) {
-            productsOpened = true;
-          }
-
-          if (!timeRange.value && !closedProductTimeRangesIds.includes(parseInt(productId))) {
-            closedProductTimeRangesIds.push(parseInt(productId));
-          }
-
-          console.log('-- product week time range --');
-          console.log(timeRange)
-        });
-
-        console.log(`opened: ${productsOpened}`);
-        result = !productsOpened;
-      }
-
-      if (instance.open_time_ranges[dateFormat]) {
-        const timeRange = instance.open_time_ranges[dateFormat];
-
-        if (timeRange.value) {
+      Object.keys(disabledProductsData).forEach((productId) => {
+        if (!disabledProductsData[productId]) {
           result = false;
-        } else if (!timeRange.value && timeRange.whole_day) {
-          result = true;
         }
+      });
 
-        console.log('-- open time range --');
-        console.log(`opened: ${!result}`);
-        console.log(timeRange);
-      }
-
-      if (instance.product_time_ranges[dateFormat]) {
-        const productIds = Object.keys(instance.product_time_ranges[dateFormat]);
-        let productsOpened = false;
-        productIds.forEach((productId) => {
-          const product = filterFilter(instance.products, { id: productId })[0];
-          const timeRange = instance.product_time_ranges[dateFormat][productId];
-
-          if (!product || product.shaded) {
-            console.log('-- product --');
-            console.log(`hidden: ${product.id}`);
-            if (!closedProductTimeRangesIds.includes(parseInt(productId))) {
-              closedProductTimeRangesIds.push(parseInt(productId));
-            }
-          } else {
-            if (!timeRange.value && timeRange.whole_day) {
-              if (!closedProductTimeRangesIds.includes(parseInt(productId))) {
-                closedProductTimeRangesIds.push(parseInt(productId));
-              }
-            } else {
-              productsOpened = true;
-            }
-          }
-
-          console.log('-- product --');
-          console.log(timeRange);
-        });
-
-        console.log(`opened: ${productsOpened}`);
-        result = !productsOpened;
-      }
-
-      const productIds = instance.products.map(product => product.id).sort();
-      closedProductTimeRangesIds = closedProductTimeRangesIds.sort();
-
-      if (angular.equals(productIds, closedProductTimeRangesIds)) {
-        console.log('-- products closed --');
-        console.log('list of products are uniq with list of closed products');
-        console.log('-- TOTAL --');
-        console.log(false);
-        return true;
-      }
-
-      if (instance.zone_time_ranges[dateFormat]) {
-        const zonesIds = instance.zones.map(zone => zone.id);
-        const closedZoneTimeRangesIds = [];
-        const zoneTimeRanges = instance.zone_time_ranges[dateFormat];
-
-        Object.keys(zoneTimeRanges).forEach((key) => {
-          const timeRange = zoneTimeRanges[key];
-          if (!timeRange.value && timeRange.whole_day) {
-            closedZoneTimeRangesIds.push(parseInt(key));
-          }
-        });
-
-        if (angular.equals(zonesIds, closedZoneTimeRangesIds)) {
-          console.log('-- zones closed --');
-          console.log('list of zones are uniq with list of closed zones');
-          console.log('-- TOTAL --');
-          console.log(false);
-          return true;
-        }
+      if (!Object.values(disabledZonesData).includes(false)) {
+        result = true;
       }
 
       console.log('-- TOTAL --');
-      console.log(!result);
+      console.log(`disabled: ${result}`);
 
       return result;
-    }
+    };
+
+    instance.disabledProductsData = (date) => {
+      const dateFormat = moment(date).format('YYYY-MM-DD');
+      const dateWeekDay = moment(date).isoWeekday();
+      const data = {};
+
+      instance.products.forEach((product) => {
+        data[product.id] = true;
+
+        if (instance.product_week_time_ranges[dateWeekDay] &&
+          instance.product_week_time_ranges[dateWeekDay][product.id]) {
+          const timeRange = instance.product_week_time_ranges[dateWeekDay][product.id];
+          data[product.id] = !timeRange.value;
+
+          console.log('-- product week time range --');
+          console.log(`disabled: ${data[product.id]}`);
+          console.log(timeRange);
+        }
+
+        if (instance.open_time_ranges[dateFormat]) {
+          const timeRange = instance.open_time_ranges[dateFormat];
+
+          if (timeRange.value) {
+            data[product.id] = false;
+          } else if (!timeRange.value && timeRange.whole_day) {
+            data[product.id] = true;
+          }
+
+          console.log('-- open time range --');
+          console.log(`disabled: ${data[product.id]}`);
+          console.log(timeRange);
+        }
+
+        if (instance.product_time_ranges[dateFormat] &&
+          instance.product_time_ranges[dateFormat][product.id]) {
+          const timeRange = instance.product_time_ranges[dateFormat][product.id];
+
+          if (timeRange.value) {
+            data[product.id] = false;
+          } else if (!timeRange.value && timeRange.whole_day) {
+            data[product.id] = true;
+          }
+
+          console.log('-- product --');
+          console.log(`disabled: ${data[product.id]}`);
+          console.log(timeRange);
+        }
+
+        if (product.shaded) {
+          data[product.id] = true;
+        }
+      });
+
+      return data;
+    };
+
+    instance.disabledZonesData = (date) => {
+      const dateFormat = moment(date).format('YYYY-MM-DD');
+      const data = {};
+
+      instance.zones.forEach((zone) => {
+        data[zone.id] = false;
+
+        if (instance.zone_time_ranges[dateFormat] &&
+          instance.zone_time_ranges[dateFormat][zone.id]) {
+          const timeRange = instance.zone_time_ranges[dateFormat][zone.id];
+
+          if (!timeRange.value && timeRange.whole_day) {
+            data[zone.id] = true;
+            console.log('-- zone time range --');
+            console.log(`disabled: ${data[zone.id]}`);
+            console.log(timeRange);
+          }
+        }
+      });
+
+      return data;
+    };
 
     instance.checkDeadlineAndClosedDate = () => {
       if (instance.is_customer_reservation &&
@@ -161,7 +144,7 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
             .ok('Terug'));
         }
       }
-    }
+    };
 
     instance.refreshDatepicker = () => {
       instance.dateDisableDeferred.notify(new Date().getTime());
