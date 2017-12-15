@@ -5,13 +5,12 @@
         Reserveringen
       </div>
       <div class='panel-body relative'>
-
           <div class='col-xs-6 text-center m-t-sm' ng-repeat='(productId, guests) in charts.charts.graphs.guests_by_product'>
             <div class='dashboard-reservation__chart'>
               <div ng-click='charts.showReservations(productId)'
                    ui-jq='easyPieChart'
                    ui-options='{
-                        percent: charts.charts.getPercent(charts.charts.graphs.total_guests_d.guests_by_product[0],
+                        percent: charts.charts.getPercent(charts.charts.graphs.guests_by_product[0],
                         charts.charts.graphs.guests_by_product[productId]),
                         lineWidth: 2,
                         trackColor: "#787878",
