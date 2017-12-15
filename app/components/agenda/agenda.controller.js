@@ -385,7 +385,6 @@ export default class AgendaCtrl {
     this.Reservation.getAll(this.current_company_id, date)
       .then((result) => {
         this.reservations = result;
-        this.$rootScope.$broadcast('agenda.load_reservations', result);
 
         if (this.tables) {
           this.setData();
@@ -487,6 +486,9 @@ export default class AgendaCtrl {
 
   setData() {
     this.data = this.getData();
+
+    this.$rootScope.$broadcast('agenda.load_reservations_data_and_date_filter',
+      { reservations_data: this.data, date: this.date_filter });
 
     this.setGraphData();
     this.setWidgetData();
