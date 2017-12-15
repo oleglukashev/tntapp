@@ -140,6 +140,8 @@
 </div>
 
 <div class='agenda-timeranges col-lg-3 col-md-3' ng-show='agenda.time_ranges_is_loaded'>
+  <div data-ng-include=" 'agenda_charts.view.html' " ng-controller='AgendaChartsCtrl as agenda_charts'></div>
+
   <div class='panel'>
     <div class='panel-heading'>Time ranges</div>
     <div class='panel-body no-padder'>

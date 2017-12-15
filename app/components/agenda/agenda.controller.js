@@ -385,6 +385,7 @@ export default class AgendaCtrl {
     this.Reservation.getAll(this.current_company_id, date)
       .then((result) => {
         this.reservations = result;
+        this.$rootScope.$broadcast('agenda.load_reservations', result);
 
         if (this.tables) {
           this.setData();

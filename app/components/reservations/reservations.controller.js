@@ -114,6 +114,7 @@ export default class ReservationsCtrl {
       });
   }
 
+  // remove this functional and use filters
   filterURIParams() {
     if (this.paramProduct) {
       const product = this.filterFilter(this.products, { id: this.paramProduct })[0];

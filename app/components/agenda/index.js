@@ -5,12 +5,13 @@ import quickReservationController from './quick_reservation/agenda_quick_reserva
 import itemFactory from './agenda.item.factory';
 import pageFilterFactory from '../../shared/page_filter/page_filter.factory';
 import reservationStatusMenuFactory from '../../shared/reservation_status_menu/reservation_status_menu.factory';
-
+import agendaChartsController from './charts/agenda_charts.controller';
 
 export default angular.module('app.agenda', [])
   .config(routing)
   .controller('AgendaCtrl', controller, ['Agenda'])
   .controller('AgendaQuickReservationCtrl', quickReservationController)
+  .controller('AgendaChartsCtrl', agendaChartsController)
   .factory('AgendaItemFactory', itemFactory,
     ['AppConstants', 'ReservationStatus', '$mdSidenav', '$rootScope'])
   .factory('ReservationStatusMenu', reservationStatusMenuFactory,
