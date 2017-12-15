@@ -94,9 +94,7 @@ export default class ReservationPartEditCtrl {
 
   // UNITE WITH NEW RESERVATION FUNCTION
   timeIsDisabled(timeObj) {
-    if (!timeObj.is_open ||
-      timeObj.more_than_deadline ||
-      !this.isEnoughSeats(timeObj)) {
+    if (!timeObj.is_open || !this.isEnoughSeats(timeObj)) {
       return true;
     }
 

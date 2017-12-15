@@ -128,11 +128,10 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
         instance.settings &&
         instance.settings.reservation_deadline) {
         const now = moment();
-        const selectedDate = moment(instance.current_part.date).format('YYYY-MM-DD');
-        const selectedDateTime = moment(now.format('HH:mm'), 'HH:mm');
-
-        const deadline = moment(instance.settings.reservation_deadline, 'HH:mm');
-        const moreThanDeadline = selectedDate === now.format('YYYY-MM-DD') && selectedDateTime > deadline;
+        const formattedSelectedDate = moment(instance.current_part.date).format('YYYY-MM-DD');
+        const todayDeadline = moment(`${formattedSelectedDate} ${instance.settings.reservation_deadline}`);
+        const todayEnd = moment(`${formattedSelectedDate} 23:59:59`);
+        const moreThanDeadline = now >= todayDeadline && now <= todayEnd;
 
         if (moreThanDeadline) {
           instance.selected_index = 1;

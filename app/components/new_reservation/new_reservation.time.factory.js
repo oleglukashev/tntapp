@@ -60,7 +60,7 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
                                   item.time <= maxOpenedTime);
 
         if (instance.is_customer_reservation) {
-          return defaultCondition && !item.time_is_past && !item.more_than_deadline;
+          return defaultCondition && !item.time_is_past;
         }
 
         return defaultCondition;
@@ -68,9 +68,7 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
     };
 
     instance.timeIsDisabled = (timeObj) => {
-      if (!timeObj.is_open ||
-        timeObj.more_than_deadline ||
-        !instance.isEnoughSeats(timeObj)) {
+      if (!timeObj.is_open || !instance.isEnoughSeats(timeObj)) {
         return true;
       }
 
