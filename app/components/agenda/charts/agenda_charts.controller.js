@@ -1,34 +1,31 @@
 export default class AgendaChartsCtrl {
-  constructor(Charts, $scope, $state, ReservationPart) {
+  constructor(Charts, moment, $scope, $state, ReservationPart) {
     'ngInject';
 
     this.$scope = $scope;
     this.$state = $state;
+    this.moment = moment;
     this.Charts = Charts;
     this.ReservationPart = ReservationPart;
 
-    this.data = {
-      product: {},
-      totalNumberOfPersons: 0,
-    };
+    this.$scope.$on('agenda.load_reservations_data_and_date_filter', (e, data) => {
+      this.data = {
+        product: {},
+        totalNumberOfPersons: 0,
+      };
 
-    this.$scope.$on('agenda.load_reservations', (e, reservations) => {
-      reservations.forEach((reservation) => {
-        if (reservation.status !== 'cancelled') {
-          reservation.reservation_parts.forEach((part) => {
-            const numberOfPersons = parseInt(part.number_of_persons, 10);
+      data.reservations_data.forEach((item) => {
+        const numberOfPersons = parseInt(item.number_of_persons, 10);
 
-            if (!this.data.product[part.product.id]) {
-              this.data.product[part.product.id] = {
-                numberOfPersons: 0,
-                name: part.product.name,
-              };
-            }
-
-            this.data.product[part.product.id].numberOfPersons += numberOfPersons;
-            this.data.totalNumberOfPersons += numberOfPersons;
-          });
+        if (!this.data.product[item.product_id]) {
+          this.data.product[item.product_id] = {
+            numberOfPersons: 0,
+            name: item.product_name,
+          };
         }
+
+        this.data.product[item.product_id].numberOfPersons += numberOfPersons;
+        this.data.totalNumberOfPersons += numberOfPersons;
       });
 
       this.data.product[0] = {
