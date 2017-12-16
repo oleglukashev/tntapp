@@ -22,6 +22,7 @@ export default class DashboardReservationsCtrl {
     this.action_required = Loaded.reservations.action_required;
     this.group_this_week = Loaded.reservations.group_this_week;
     this.today = Loaded.reservations.today;
+    this.latest = Loaded.reservations.latest;
 
     $scope.$on('NewReservationCtrl.reload_reservations', () => {
       this.loadReservations();
@@ -53,7 +54,7 @@ export default class DashboardReservationsCtrl {
   }
 
   setData() {
-    ['action_required', 'group_this_week', 'today'].forEach((item) => {
+    ['action_required', 'group_this_week', 'today', 'latest'].forEach((item) => {
       const result = [];
       const tempData = this.all_reservations[item];
       tempData.forEach((reservation) => {
@@ -77,6 +78,7 @@ export default class DashboardReservationsCtrl {
   hasReservations() {
     return this.Loaded.reservations.action_required.length
       || this.Loaded.reservations.group_this_week.length
-      || this.Loaded.reservations.today.length;
+      || this.Loaded.reservations.today.length
+      || this.Loaded.reservations.latest.length;
   }
 }
