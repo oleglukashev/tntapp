@@ -16,7 +16,7 @@
   <md-menu-content width='4' class='reservation_menu'>
     <md-menu-item>
       <md-button ng-click='controller.openEditReservationModal(item.reservation, item.part)'>
-        <md-icon>
+        <md-icon aria-label>
           <i class='mdi mdi-pencil' />
         </md-icon>
         <span>Aanpassen</span>
@@ -24,9 +24,9 @@
     </md-menu-item>
     <md-menu-divider role='separator'></md-menu-divider>
     <md-menu-item ng-repeat='status in controller.statuses'>
-      <md-button ng-click='controller.changeStatus(item.reservation, status, callback)'
+      <md-button ng-click='controller.chooseChangeStatusMethod(item.reservation, status)'
                  ng-disabled='item.reservation.status == status'>
-        <md-icon>
+        <md-icon aria-label>
           <i class='mdi mdi-with-button-padding'
              ng-class='controller.status_icon[status]'></i>
         </md-icon>
@@ -36,7 +36,7 @@
     <md-menu-divider role='separator'></md-menu-divider>
     <md-menu-item>
       <md-button ng-click='controller.answer(item.reservation);'>
-        <md-icon>
+        <md-icon aria-label>
           <i class='mdi mdi-reply' />
         </md-icon>
         <span>Antwoord</span>

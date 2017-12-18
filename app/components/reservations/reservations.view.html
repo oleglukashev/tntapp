@@ -1,4 +1,4 @@
-<div class='clearfix'>
+<div class='reservations-content clearfix'>
   <div class='col-lg-8 col-md-8 col-sm-8'>
     <div class='page_filter m-b-md clearfix'>
       <div class='pull-left'
@@ -34,6 +34,7 @@
                data-ng-include=" 'dashboard_reservations.item.view.html' "
                ng-repeat='item in data = reservations.data'
                ng-init='hideIcon = item.reservation.id === data[$index - 1].reservation.id'
+
                ng-mouseup='reservations.active_part = item.id'
                md-ink-ripple></md-list-item>
         </md-list>
@@ -61,4 +62,4 @@
   </div>
 </div>
 
-<div data-ng-include=" 'reservations.print.view.html' "></div>
+<div data-ng-include=" 'reservation_print.view.html' " ng-init='controller = reservations'></div>

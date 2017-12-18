@@ -73,7 +73,10 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     instance.changeView = (view) => {
       if (instance.view_type !== view) {
         instance.view_type = view;
-        instance.scrollToNow();
+
+        if (view === 'calendar') {
+          instance.scrollToNow();
+        }
       }
     };
 
@@ -99,8 +102,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
 
     instance.changeFilterPostProcess = () => {
       if (instance.reservations.length) {
-        if (instance.setData) instance.setData();
-        if (instance.setGraphData) instance.setGraphData();
+        instance.setData();
       }
     };
 

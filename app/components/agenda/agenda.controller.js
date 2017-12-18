@@ -1,8 +1,8 @@
 export default class AgendaCtrl {
-  constructor(
-    User, Settings, Zone, Table, TimeRange, Product, AgendaItemFactory, PageFilterFactory, PageFilterTimeRange,
-    ReservationStatusMenu, Reservation, ReservationStatus, ReservationPart, filterFilter, AppConstants, $scope,
-    $rootScope, $modal, moment, $timeout) {
+  constructor(User, Settings, Zone, Table, TimeRange, Product, ReservationItemFactory,
+    PageFilterFactory, PageFilterTimeRange, ReservationStatusMenu, Reservation,
+    ReservationStatus, ReservationPart, filterFilter, AppConstants, $scope, $rootScope,
+    $modal, moment, $timeout) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -76,14 +76,37 @@ export default class AgendaCtrl {
       this.scrollToNow();
     });
 
-    AgendaItemFactory(this);
+    $scope.$on('reservationStatusChanged', (e, data) => {
+      this.changeReservatinItemStatus(data.reservation.id, data.status);
+    });
+
+    ReservationItemFactory(this);
     PageFilterFactory(this);
     ReservationStatusMenu(this);
 
     this.loadGeneralSettings();
     this.loadZonesAndTables();
-    this.loadProducts();
-    this.loadTimeRanges();
+  }
+
+  changeStatus(reservation, status) {
+    this.ReservationStatus
+      .changeStatus(this.current_company_id, reservation, status).then(() => {
+        this.changeReservatinItemStatus(reservation.id, status);
+      });
+  }
+
+  changeReservatinItemStatus(reservationId, status) {
+    const reservation = this.filterFilter(this.reservations, { id: reservationId })[0];
+
+    if (reservation) {
+      reservation.status = status;
+
+      this.data.forEach((dataItem, index) => {
+        if (dataItem.reservation.id === reservationId) {
+          this.data[index] = this.rowPart(dataItem.part, reservation);
+        }
+      });
+    }
   }
 
   dontHideWidget($event) {
@@ -321,26 +344,211 @@ export default class AgendaCtrl {
     return result;
   }
 
+  durationToWidth(durationMinutes) {
+    const hours = Math.floor(durationMinutes / 60);
+    const quarters = (durationMinutes % 60) / 15;
+    return (hours + (quarters / 4)) * this.hour_width;
+  }
+
+  timeToCoords(datetime) {
+    const time = this.moment(datetime);
+    return this.left_margin + (time.hours() * this.hour_width) +
+      ((time.minutes() / 60) * this.hour_width);
+  }
+
+  getTableIdsByTablesList(list) {
+    return list.map(item => item.id);
+  }
+
+  reservationBlockStyle(tableIndex, item) {
+    return {
+      left: item.left,
+      top: item.top || ((tableIndex * this.top_margin) + this.reservation_height),
+      width: item.width || this.reservation_block_width,
+    };
+  }
+
+  nowLineStyle(zoneId) {
+    if (!this.zones[zoneId]) return null;
+
+    return {
+      height: (this.zones[zoneId].table_ids.length * this.top_margin) + this.reservation_height,
+      left: this.now_left_px + this.hour_width,
+    };
+  }
+
+  getEmptyTableReservations() {
+    return this.data_without_tables.length;
+  }
+
+  setData() {
+    this.data = this.getData();
+    this.calculateTotalsForPrint();
+
+    this.$rootScope.$broadcast('agenda.load_reservations_data_and_date_filter',
+      { reservations_data: this.data, date: this.date_filter });
+  }
+
+  calculateTotalsForPrint() {
+    this.totalNumberOfReservations = this.reservations
+      .filter(item => item.staus !== 'cancelled').length;
+
+    this.totalNumberOfPersons = 0;
+    this.data.forEach((item) => {
+      this.totalNumberOfPersons += parseInt(item.number_of_persons, 10);
+    });
+  }
+
+  changeSortPostProcess() {
+    this.data = this.applySort(this.data);
+  }
+
+  // setWidgetData() {
+  //   const result = [];
+  //   const reservations = this.applyFilterToReservations();
+
+  //   reservations.forEach((reservation) => {
+  //     if (reservation.status !== 'cancelled') {
+  //       reservation.reservation_parts.forEach((part) => {
+  //         if (!part.table_ids.length) {
+  //           result.push(this.rowPart(part, reservation));
+  //         }
+  //       });
+  //     }
+  //   });
+
+  //   this.data_without_tables = result;
+  // }
+
+  // setGraphData() {
+  //   const widgetResult = [];
+  //   const reservations = this.applyFilterToReservations();
+  //   reservations.forEach((reservation) => {
+  //     if (reservation.status !== 'cancelled') {
+  //       reservation.reservation_parts.forEach((part) => {
+  //         // const tmpReserv = this.filterFilter(this.reservations, { id: reservation.id })[0];
+  //         // const procPart = this.filterFilter(tmpReserv.reservation_parts, { id: part.id })[0];
+
+  //         part.customer = reservation.customer;
+  //         part.status = reservation.status;
+  //         part.reservation = reservation;
+  //         if (part.table_ids.length) {
+  //           part.left = this.timeToCoords(part.date_time);
+  //           part.width = this.durationToWidth(part.duration_minutes);
+  //         } else {
+  //           part.fromWidget = true;
+  //         }
+
+  //         if (!part.table_ids.length) {
+  //           widgetResult.push(this.rowPart(part, reservation));
+  //         }
+  //       });
+  //     }
+  //   });
+
+  //   this.data_without_tables = widgetResult;
+  // }
+
+  getData() {
+    const result = [];
+    const widgetResult = [];
+    const reservations = this.applyFilterToReservations();
+
+    reservations.forEach((reservation) => {
+      if (reservation.status !== 'cancelled') {
+        reservation.reservation_parts.forEach((part) => {
+          if ((this.moment(part.date_time).format('YYYY-MM-DD') ===
+              this.moment(this.date_filter).format('YYYY-MM-DD'))) {
+            // list
+            result.push(this.rowPart(part, reservation));
+
+            // calendar
+            part.customer = reservation.customer;
+            part.status = reservation.status;
+            part.reservation = reservation;
+            if (part.table_ids.length) {
+              part.left = this.timeToCoords(part.date_time);
+              part.width = this.durationToWidth(part.duration_minutes);
+            } else {
+              part.fromWidget = true;
+            }
+
+            // widget
+            if (!part.table_ids.length) {
+              widgetResult.push(this.rowPart(part, reservation));
+            }
+          }
+        });
+      }
+    });
+
+    this.data_without_tables = widgetResult;
+    return this.applySort(result);
+  }
+
+  getZoneNameByRange(timeRange) {
+    if (!timeRange.zone) return null;
+    return this.zones[timeRange.zone.id].name;
+  }
+
+  getProductsName(timeRange) {
+    if (timeRange.products) {
+      const products = this.products.filter(item => timeRange.products.includes(item.id));
+      return products && products.length ? products.map(item => item.name).join(', ') : null;
+    } else if (timeRange.product) {
+      const products = this.filterFilter(this.products, { id: timeRange.product.id });
+      return products && products.length ? products[0].name : null;
+    }
+
+    return null;
+  }
+
+  iniAndScrolltToNowLine() {
+    this.is_today = false;
+    if (this.moment().format('YYYY-MM-DD') ===
+        this.moment(this.date_filter).format('YYYY-MM-DD')) {
+      this.is_today = true;
+      this.scrollToNow();
+    }
+  }
+
   loadTables() {
     this.Table.getAll(this.current_company_id)
       .then(
         (tables) => {
-          this.tables = tables;
-
-          this.zones.forEach((zone) => {
-            this.tables_by_zone[zone.id] = this.filterFilter(tables, { zones: zone.id })
-              .map((item) => {
-                return {
-                  id: item.id,
-                  table_number: item.table_number,
-                  number_of_persons: parseInt(item.number_of_persons, 10),
-                  position: parseInt(item.position, 10),
-                  zones: item.zones,
-                };
-              });
+          this.tables = {};
+          tables.forEach((table) => {
+            this.tables[table.id] = table;
           });
+          // this.tables.forEach((table) => {
+          //   table.zones.forEach((zoneId) => {
+          //     if (this.tables_by_zone[zoneId]) {
+          //       this.tables_by_zone[zoneId].push({
+          //         id: table.id,
+          //         table_number: table.table_number,
+          //         number_of_persons: parseInt(table.number_of_persons, 10),
+          //         position: parseInt(table.position, 10),
+          //         zones: table.zones,
+          //       });
+          //     }
+          //   });
+          // });
+          // this.zones.forEach((zone) => {
+          //   this.tables_by_zone[zone.id] = this.filterFilter(tables, { zones: zone.id })
+          //     .map((item) => {
+          //       return {
+          //         id: item.id,
+          //         table_number: item.table_number,
+          //         number_of_persons: parseInt(item.number_of_persons, 10),
+          //         position: parseInt(item.position, 10),
+          //         zones: item.zones,
+          //       };
+          //     });
+          // });
           this.loadReservations();
           this.iniAndScrolltToNowLine();
+          this.loadProducts();
+          this.loadTimeRanges();
           this.is_loaded = true;
         });
   }
@@ -368,16 +576,6 @@ export default class AgendaCtrl {
         this.time_ranges_is_loaded = true;
       });
   }
-
-  // loadOpenHoursTimeRanges() {
-  //   const date = this.moment(this.date_filter).format('YYYY-MM-DD');
-  //   this.PageFilterTimeRange
-  //     .getAll(this.current_company_id, date, 'open')
-  //     .then(
-  //       (openTimeRanges) => {
-  //         this.today_open_time_ranges = openTimeRanges;
-  //       }, () => {});
-  // }
 
   loadReservations() {
     this.reservations = [];
@@ -407,23 +605,14 @@ export default class AgendaCtrl {
       });
   }
 
-  durationToWidth(durationMinutes) {
-    const hours = Math.floor(durationMinutes / 60);
-    const quarters = (durationMinutes % 60) / 15;
-    return (hours + (quarters / 4)) * this.hour_width;
-  }
-
-  timeToCoords(datetime) {
-    const time = this.moment(datetime);
-    return this.left_margin + (time.hours() * this.hour_width) +
-      ((time.minutes() / 60) * this.hour_width);
-  }
-
   loadZonesAndTables() {
     this.Zone.getAll(this.current_company_id)
       .then(
-        (result) => {
-          this.zones = result;
+        (zones) => {
+          this.zones = {};
+          zones.forEach((zone) => {
+            this.zones[zone.id] = zone;
+          });
           this.loadTables();
         }, () => {});
   }
@@ -433,126 +622,8 @@ export default class AgendaCtrl {
       .then((generalSettings) => {
         this.general_settings = generalSettings;
         this.reservation_block_width = (this.hour_width / 60) * generalSettings.bezettings_minuten;
-
         const view = (generalSettings.show_timetable_first ? 'list' : 'calendar');
         this.changeView(view);
       });
-  }
-
-  getTableIdsByTablesList(list) {
-    return list.map(item => item.id);
-  }
-
-  reservationBlockStyle(tableIndex, item) {
-    return {
-      left: item.left,
-      top: item.top || ((tableIndex * this.top_margin) + this.reservation_height),
-      width: item.width || this.reservation_block_width,
-    };
-  }
-
-  nowLineStyle(zoneId) {
-    return {
-      height: (this.tables_by_zone[zoneId].length * this.top_margin) + this.reservation_height,
-      left: this.now_left_px + this.hour_width,
-    };
-  }
-
-  getEmptyTableReservations() {
-    return this.data_without_tables.length;
-  }
-
-  setGraphData() {
-    const reservations = this.applyFilterToReservations();
-    reservations.forEach((reservation) => {
-      if (reservation.status !== 'cancelled') {
-        reservation.reservation_parts.forEach((part) => {
-          const tmpReserv = this.filterFilter(this.reservations, { id: reservation.id })[0];
-          const procPart = this.filterFilter(tmpReserv.reservation_parts, { id: part.id })[0];
-
-          procPart.customer = reservation.customer;
-          procPart.status = reservation.status;
-          procPart.reservation = reservation;
-          if (procPart.table_ids.length) {
-            procPart.left = this.timeToCoords(part.date_time);
-            procPart.width = this.durationToWidth(part.duration_minutes);
-          } else {
-            procPart.fromWidget = true;
-          }
-        });
-      }
-    });
-  }
-
-  setData() {
-    this.data = this.getData();
-
-    this.$rootScope.$broadcast('agenda.load_reservations_data_and_date_filter',
-      { reservations_data: this.data, date: this.date_filter });
-
-    this.setGraphData();
-    this.setWidgetData();
-  }
-
-  setWidgetData() {
-    const result = [];
-    const reservations = this.applyFilterToReservations();
-
-    reservations.forEach((reservation) => {
-      if (reservation.status !== 'cancelled') {
-        reservation.reservation_parts.forEach((part) => {
-          if (!part.table_ids.length) {
-            result.push(this.rowPart(part, reservation));
-          }
-        });
-      }
-    });
-
-    this.data_without_tables = result;
-  }
-
-  getData() {
-    const result = [];
-    const reservations = this.applyFilterToReservations();
-
-    reservations.forEach((reservation) => {
-      if (reservation.status !== 'cancelled') {
-        reservation.reservation_parts.forEach((part) => {
-          if ((this.moment(part.date_time).format('YYYY-MM-DD') ===
-              this.moment(this.date_filter).format('YYYY-MM-DD'))) {
-            result.push(this.rowPart(part, reservation));
-          }
-        });
-      }
-    });
-
-    return this.applySort(result);
-  }
-
-  getZoneNameByRange(timeRange) {
-    if (!timeRange.zone) return null;
-    const zones = this.filterFilter(this.zones, { id: timeRange.zone.id });
-    return zones && zones.length ? zones[0].name : null;
-  }
-
-  getProductsName(timeRange) {
-    if (timeRange.products) {
-      const products = this.products.filter(item => timeRange.products.includes(item.id));
-      return products && products.length ? products.map(item => item.name).join(', ') : null;
-    } else if (timeRange.product) {
-      const products = this.filterFilter(this.products, { id: timeRange.product.id });
-      return products && products.length ? products[0].name : null;
-    }
-
-    return null;
-  }
-
-  iniAndScrolltToNowLine() {
-    this.is_today = false;
-    if (this.moment().format('YYYY-MM-DD') ===
-        this.moment(this.date_filter).format('YYYY-MM-DD')) {
-      this.is_today = true;
-      this.scrollToNow();
-    }
   }
 }

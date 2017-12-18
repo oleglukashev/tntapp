@@ -47,6 +47,7 @@ export default class Table {
   }
 
   getTableNumbersByTableIds(tables, tableIds) {
+    if (!tables) return [];
     const result = [];
 
     angular.forEach(tableIds, (value) => {

@@ -20,7 +20,8 @@ export default function templates($templateCache) {
   $templateCache.put('reservation_part.edit.view.html', require('./components/reservation_parts/reservation_part.edit.view.html'));
   $templateCache.put('rzSliderTpl.html', require('./shared/rz-slider/rz-slider.view.html'));
   $templateCache.put('reservation_answer.view.html', require('./components/reservation_answer/reservation_answer.view.html'));
-  $templateCache.put('reservations.print.view.html', require('./components/reservations/reservations.print.view.html'));
+  $templateCache.put('reservation_print.view.html', require('./shared/reservation_print/reservation_print.view.html'));
+  $templateCache.put('search.print.view.html', require('./components/search/search.print.view.html'));
   $templateCache.put('agenda.view.html', require('./components/agenda/agenda.view.html'));
   $templateCache.put('agenda_charts.view.html', require('./components/agenda/charts/agenda_charts.view.html'));
   $templateCache.put('user_menu.edit.view.html', require('./shared/user_menu/edit/user_menu.edit.view.html'));

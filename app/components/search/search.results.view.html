@@ -1,5 +1,4 @@
-<div class='col-lg-8 col-md-8 col-sm-8 col-md-offset-1'>
-  
+<div class='search-result-content col-lg-8 col-md-8 col-sm-8 col-md-offset-1'>
   <div class='clearfix m-b-md'>
     <div class='pull-left m-t-sm m-r-sm'>
       <p>{{ search.reservations.length }} resultaten <b>{{ search.reservations[0].customer.first_name }} {{ search.reservations[0].customer.last_name }}</b></p>
@@ -19,7 +18,7 @@
   </div>
 
   <div class='dashboard-ad panel'
-       ng-repeat='dateTime in search.dateTimes'
+       ng-repeat='(date, dataItems) in search.data'
        ng-if='search.reservations.length'>
     <div class='panel-heading'>{{ search.moment(dateTime).lang('nl').format('DD MMM') }}</div>
     <table class='table m-b-none'>
@@ -40,10 +39,12 @@
             ng-click='search.openCustomerMenu(item.customer_id, item.id)'
             ng-class='{"active": agenda.active_part == item.id,
                        "cancelled": item.reservation.status == "cancelled"}'
-            ng-repeat='item in data = search.data[dateTime]'
+            ng-repeat='item in search_data = dataItems'
             ng-mouseup='search.active_part = item.id'
-            ng-init='controller = search;hideIcon = item.reservation.id === data[$index - 1].reservation.id;'></tr>
+            ng-init='controller = search;hideIcon = item.reservation.id === search_data[$index - 1].reservation.id;'></tr>
       </tbody>
     </table>
   </div>
 </div>
+
+<div data-ng-include=" 'search.print.view.html' "></div>
