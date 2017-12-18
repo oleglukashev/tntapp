@@ -23,17 +23,14 @@ export default class ReservationStatus {
     ).then(result => result.data);
   }
 
-  changeStatus(companyId, reservation, status, mail) {
+  changeStatus(companyId, reservation, status) {
     const deferred = this.$q.defer();
 
     if (!companyId) {
       return deferred.promise;
     }
 
-    let data = { status };
-    if (mail) data = Object.assign(data, mail);
-
-    return this.edit(companyId, reservation.id, data)
+    return this.edit(companyId, reservation.id, { status })
       .then(
         (result) => {
           const currentReservation = reservation;
@@ -42,8 +39,7 @@ export default class ReservationStatus {
         },
         (error) => {
           this.errors = error.data.errors;
-        },
-      );
+        });
   }
 
   sendMail(companyId, reservation, data, skipJwtAuth) {
@@ -62,8 +58,7 @@ export default class ReservationStatus {
       result => result.data,
       (error) => {
         this.errors = error.data.errors;
-      },
-    );
+      });
   }
 
   getIcon(part, reservation) {

@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 export default function AgendaItemFactory(AppConstants, ReservationStatus, $mdSidenav, $rootScope) {
   'ngInject';
 
@@ -24,19 +26,53 @@ export default function AgendaItemFactory(AppConstants, ReservationStatus, $mdSi
         time: instance.moment(part.date_time).format('HH:mm'),
         number_of_persons: part.number_of_persons,
         table_ids: part.table_ids.length ?
-          instance.Table.getTableNumbersByTableIds(instance.tables, part.table_ids).join(', ') :
+          instance.Table.getTableNumbersByTableIds(Object.values(instance.tables), part.table_ids).join(', ') :
           [],
         notes: `${reservation.notes || ''}`,
         customer_id: reservation.customer.id,
         name,
         reservation,
         part,
+        tables: instance.convertedTables(part.table_ids),
 
         // graph calendar data:
         source_table_ids: part.table_ids,
         product_id: part.product ? part.product.id : undefined,
         reservation_id: reservation.id,
       };
+    };
+
+    instance.convertedTables = (tableIds) => {
+      let result = [];
+      const tablesByZone = {};
+
+      tableIds.forEach((tableId) => {
+        const table = instance.tables[tableId];
+        if (table) {
+          table.zones.forEach((zoneId) => {
+            if (!tablesByZone[zoneId]) {
+              tablesByZone[zoneId] = [];
+            }
+
+            tablesByZone[zoneId].push(tableId);
+          });
+        }
+      });
+
+      Object.keys(tablesByZone).forEach((zoneId) => {
+        const sortedTablesByZone = tablesByZone[zoneId].sort();
+        const sortedZonesTableIds = instance.zones[zoneId].table_ids.sort();
+
+        if (angular.equals(sortedTablesByZone, sortedZonesTableIds)) {
+          result.push(instance.zones[zoneId].name);
+        } else {
+          tablesByZone[zoneId].forEach((tableId) => {
+            result = result.concat(instance.tables[tableId].table_number);
+          });
+        }
+      });
+
+      return result.join(', ');
     };
 
     instance.openCustomerMenu = (customerId, reservationPartId) => {

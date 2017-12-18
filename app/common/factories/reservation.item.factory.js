@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-export default function DashboardReservationsItemFactory(AppConstants, ReservationStatus, $mdSidenav, $rootScope) {
+export default function ReservationItemFactory(AppConstants, ReservationStatus, $mdSidenav, $rootScope) {
   'ngInject';
 
   return (that) => {
@@ -9,7 +9,7 @@ export default function DashboardReservationsItemFactory(AppConstants, Reservati
     instance.rowPart = (part, reservation) => {
       if (!reservation.customer) {
         reservation.customer = {
-          last_name: undefined,
+          last_name: 'undefined',
         };
       }
 
@@ -32,10 +32,16 @@ export default function DashboardReservationsItemFactory(AppConstants, Reservati
           [],
         tables: instance.convertedTables(part.table_ids),
         notes: `${reservation.notes || ''}`,
+        customer: reservation.customer,
         customer_id: reservation.customer.id,
         name,
         reservation,
         part,
+
+        // graph calendar data:
+        source_table_ids: part.table_ids,
+        product_id: part.product ? part.product.id : undefined,
+        reservation_id: reservation.id,
       };
     };
 

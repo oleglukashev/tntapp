@@ -19,9 +19,9 @@
   {{ item.number_of_persons }}x
 </td>
 <td ng-class='{"b-t-none p-t-none": hideIcon}'>
-  <span ng-show='item.table_ids.length'>
+  <span ng-show='item.tables'>
     <img class='table_icon' src='public/images/table.svg' />
-    {{ item.table_ids }}
+    {{ item.tables }}
   </span>
 </td>
 <td ng-class='{"b-t-none p-t-none": hideIcon}' show-more show-more-trigger={{agenda.view_type}}>
