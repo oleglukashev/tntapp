@@ -13,9 +13,9 @@ export default function ReservationItemFactory(AppConstants, ReservationStatus, 
         };
       }
 
-      const name = reservation.customer.last_name ?
-        `${reservation.customer.first_name} ${reservation.customer.last_name}` :
-        reservation.customer.first_name;
+      const lastName = reservation.customer.last_name;
+      const firstName = reservation.customer.first_name;
+      const name = instance.getName(lastName, firstName);
 
       return {
         id: part.id,
@@ -83,6 +83,16 @@ export default function ReservationItemFactory(AppConstants, ReservationStatus, 
         $rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId, reservationPartId });
         $mdSidenav('right').open();
       }
+    };
+
+    instance.getName = (lastName, firstName) => {
+      if (lastName && firstName) {
+        return `${lastName} ${firstName}`;
+      } else if (lastName) {
+        return lastName;
+      }
+
+      return firstName;
     };
   };
 }
