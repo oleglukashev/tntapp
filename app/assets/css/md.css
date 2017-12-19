@@ -1,30 +1,26 @@
-/*
-
-*/
-
 [md-ink-ripple] {
     position: relative;
 }
 
-.i-16 {
-    font-size: 16px
-}
+.i-16 { font-size: 16px; }
+.md-mini.i-16.mdi,
+.md-mini .i-16.mdi { display: block; line-height: 16px; height: 16px; }
 
-.i-20 {
-    font-size: 20px;
-}
+.i-20 { font-size: 20px; }
+.md-mini.i-20.mdi,
+.md-mini .i-16.mdi { display: block; line-height: 20px; height: 20px; }
 
-.i-24 {
-    font-size: 24px;
-}
+.i-24 { font-size: 24px; }
+.md-mini.i-24.mdi,
+.md-mini .i-24.mdi { display: block; line-height: 24px; height: 24px; }
 
-.i-30 {
-    font-size: 30px;
-}
+.i-30 { font-size: 30px; }
+.md-mini.i-30.mdi,
+.md-mini .i-30.mdi { display: block; line-height: 30px; height: 30px; }
 
-.i-40 {
-    font-size: 40px !important;
-}
+.i-40 { font-size: 40px !important; }
+.md-mini.i-40.mdi,
+.md-mini .i-40.mdi { display: block; line-height: 40px; height: 40px; }
 
 .md-btn {
     position: relative;

@@ -1,0 +1,14 @@
+<div class='select-wrapper'>
+  <button class='mdi md-icon-button md-button mdi-filter-variant no-margin i-24 pull-left'
+          md-ink-ripple></button>
+  <md-select multiple
+             class='pull-left'
+             ng-change='controller.changeFilterPostProcess()'
+             ng-model='controller.status_filter'
+             ng-model-options="{ trackBy: '$value.value' }">
+    <md-option ng-value='item'
+               ng-repeat='item in controller.status_filter_params'>
+      {{ item.value }}
+    </md-option>
+  </md-select>
+</div>

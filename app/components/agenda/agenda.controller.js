@@ -390,8 +390,9 @@ export default class AgendaCtrl {
   }
 
   calculateTotalsForPrint() {
-    this.totalNumberOfReservations = this.reservations
-      .filter(item => item.staus !== 'cancelled').length;
+    const dataReservationIds = this.data.map(dataItem => dataItem.reservation_id);
+    this.totalNumberOfReservations = dataReservationIds
+      .filter((value, index) => dataReservationIds.indexOf(value) === index).length;
 
     this.totalNumberOfPersons = 0;
     this.data.forEach((item) => {
@@ -403,83 +404,35 @@ export default class AgendaCtrl {
     this.data = this.applySort(this.data);
   }
 
-  // setWidgetData() {
-  //   const result = [];
-  //   const reservations = this.applyFilterToReservations();
-
-  //   reservations.forEach((reservation) => {
-  //     if (reservation.status !== 'cancelled') {
-  //       reservation.reservation_parts.forEach((part) => {
-  //         if (!part.table_ids.length) {
-  //           result.push(this.rowPart(part, reservation));
-  //         }
-  //       });
-  //     }
-  //   });
-
-  //   this.data_without_tables = result;
-  // }
-
-  // setGraphData() {
-  //   const widgetResult = [];
-  //   const reservations = this.applyFilterToReservations();
-  //   reservations.forEach((reservation) => {
-  //     if (reservation.status !== 'cancelled') {
-  //       reservation.reservation_parts.forEach((part) => {
-  //         // const tmpReserv = this.filterFilter(this.reservations, { id: reservation.id })[0];
-  //         // const procPart = this.filterFilter(tmpReserv.reservation_parts, { id: part.id })[0];
-
-  //         part.customer = reservation.customer;
-  //         part.status = reservation.status;
-  //         part.reservation = reservation;
-  //         if (part.table_ids.length) {
-  //           part.left = this.timeToCoords(part.date_time);
-  //           part.width = this.durationToWidth(part.duration_minutes);
-  //         } else {
-  //           part.fromWidget = true;
-  //         }
-
-  //         if (!part.table_ids.length) {
-  //           widgetResult.push(this.rowPart(part, reservation));
-  //         }
-  //       });
-  //     }
-  //   });
-
-  //   this.data_without_tables = widgetResult;
-  // }
-
   getData() {
     const result = [];
     const widgetResult = [];
     const reservations = this.applyFilterToReservations();
 
     reservations.forEach((reservation) => {
-      if (reservation.status !== 'cancelled') {
-        reservation.reservation_parts.forEach((part) => {
-          if ((this.moment(part.date_time).format('YYYY-MM-DD') ===
-              this.moment(this.date_filter).format('YYYY-MM-DD'))) {
-            // list
-            result.push(this.rowPart(part, reservation));
+      reservation.reservation_parts.forEach((part) => {
+        if ((this.moment(part.date_time).format('YYYY-MM-DD') ===
+            this.moment(this.date_filter).format('YYYY-MM-DD'))) {
+          // list
+          result.push(this.rowPart(part, reservation));
 
-            // calendar
-            part.customer = reservation.customer;
-            part.status = reservation.status;
-            part.reservation = reservation;
-            if (part.table_ids.length) {
-              part.left = this.timeToCoords(part.date_time);
-              part.width = this.durationToWidth(part.duration_minutes);
-            } else {
-              part.fromWidget = true;
-            }
-
-            // widget
-            if (!part.table_ids.length) {
-              widgetResult.push(this.rowPart(part, reservation));
-            }
+          // calendar
+          part.customer = reservation.customer;
+          part.status = reservation.status;
+          part.reservation = reservation;
+          if (part.table_ids.length) {
+            part.left = this.timeToCoords(part.date_time);
+            part.width = this.durationToWidth(part.duration_minutes);
+          } else {
+            part.fromWidget = true;
           }
-        });
-      }
+
+          // widget
+          if (!part.table_ids.length) {
+            widgetResult.push(this.rowPart(part, reservation));
+          }
+        }
+      });
     });
 
     this.data_without_tables = widgetResult;
@@ -520,31 +473,6 @@ export default class AgendaCtrl {
           tables.forEach((table) => {
             this.tables[table.id] = table;
           });
-          // this.tables.forEach((table) => {
-          //   table.zones.forEach((zoneId) => {
-          //     if (this.tables_by_zone[zoneId]) {
-          //       this.tables_by_zone[zoneId].push({
-          //         id: table.id,
-          //         table_number: table.table_number,
-          //         number_of_persons: parseInt(table.number_of_persons, 10),
-          //         position: parseInt(table.position, 10),
-          //         zones: table.zones,
-          //       });
-          //     }
-          //   });
-          // });
-          // this.zones.forEach((zone) => {
-          //   this.tables_by_zone[zone.id] = this.filterFilter(tables, { zones: zone.id })
-          //     .map((item) => {
-          //       return {
-          //         id: item.id,
-          //         table_number: item.table_number,
-          //         number_of_persons: parseInt(item.number_of_persons, 10),
-          //         position: parseInt(item.position, 10),
-          //         zones: item.zones,
-          //       };
-          //     });
-          // });
           this.loadReservations();
           this.iniAndScrolltToNowLine();
           this.loadProducts();
@@ -597,10 +525,13 @@ export default class AgendaCtrl {
       (products) => {
         this.products = products;
         this.products.forEach((product) => {
-          this.filter_params.push({
+          const productFilterParams = {
             name: 'product',
             value: product.name,
-          });
+          };
+
+          this.product_filter_params.push(productFilterParams);
+          this.product_filter.push(productFilterParams);
         });
       });
   }

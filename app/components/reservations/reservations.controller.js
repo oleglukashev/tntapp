@@ -99,12 +99,12 @@ export default class ReservationsCtrl {
     });
   }
 
-  // remove this functional and use filters
   filterURIParams() {
     if (this.paramProduct) {
       const product = this.filterFilter(this.products, { id: this.paramProduct })[0];
       if (product) {
-        this.filters = [{
+        this.filter_type = 'product';
+        this.product_filter = [{
           name: 'product',
           value: product.name,
         }];
@@ -156,10 +156,13 @@ export default class ReservationsCtrl {
     this.Product.getAll(this.current_company_id).then((products) => {
       this.products = products;
       this.products.forEach((product) => {
-        this.filter_params.push({
+        const productFilterParams = {
           name: 'product',
           value: product.name,
-        });
+        };
+
+        this.product_filter_params.push(productFilterParams);
+        this.product_filter.push(productFilterParams);
       });
 
       this.filterURIParams();
