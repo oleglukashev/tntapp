@@ -36,6 +36,11 @@ export default class ReservationPartEditCtrl {
     this.reservation = reservation;
     this.available_time = [];
 
+    this.products = [];
+    if (reservationPart.product) {
+      this.products = [reservationPart.product];
+    }
+
     this.current_part = {
       id: reservationPart.id,
       table_ids: reservationPart.table_ids,
@@ -148,8 +153,6 @@ export default class ReservationPartEditCtrl {
   }
 
   loadProducts() {
-    this.products = [];
-
     this.Product.getAll(this.current_company_id, false).then(
       (result) => {
         this.products = result;
@@ -293,37 +296,23 @@ export default class ReservationPartEditCtrl {
   }
 
   changeDatePostProcess() {
-    this.current_part.number_of_persons = null;
-    this.current_part.product = null;
-    this.current_part.time = null;
-    this.current_part.table_ids = [];
+    this.loadTime();
+    this.loadOccupiedTables();
   }
 
   changeTimePostProcess() {
-    this.current_part.table_ids = [];
     this.loadOccupiedTables();
   }
 
   changeNumberOfPersonsPostProcess() {
-    this.current_part.product = null;
-    this.current_part.table_ids = [];
-    this.clearAndLoadTime();
+    this.loadTime();
   }
 
   changeProductPostProcess() {
-    this.current_part.table_ids = [];
-    this.current_part.current_product = null;
-
     if (this.current_part.product) {
       const product = this.current_part.product;
       this.current_part.current_product = this.filterFilter(this.products, { id: product })[0];
     }
-
-    this.clearAndLoadTime();
-  }
-
-  clearAndLoadTime() {
-    this.current_part.time = null;
     this.loadTime();
   }
 
