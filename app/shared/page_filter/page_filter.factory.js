@@ -1,21 +1,26 @@
 export default function PageFilterFactory(AppConstants, Reservation, Customer,
-  $modal, $filter, moment, filterFilter) {
+  $modal, $filter, moment) {
   'ngInject';
 
   return (that) => {
     const instance = that;
 
     instance.view_type = 'calendar';
+    instance.filter_type = 'status';
     instance.date_filter = new Date();
-    instance.filter_params = [];
+    instance.product_filter_params = [];
+    instance.status_filter_params = [];
+    instance.product_filter = [];
+    instance.status_filter = [];
+
     instance.sort_params = [{
       name: 'Naam A-Z',
-      value: 'last_name',
+      value: 'name',
       reverse: false,
     },
     {
       name: 'Naam Z-A',
-      value: 'last_name',
+      value: 'name',
       reverse: true,
     },
     {
@@ -49,7 +54,6 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
       reverse: false,
     }];
 
-    instance.filters = [];
     instance.sort = instance.sort_params[0];
 
     AppConstants.reservationStatuses.forEach((item) => {
@@ -58,7 +62,11 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
         value: AppConstants.reservationDutchStatuses[item],
       };
 
-      instance.filter_params.push(filterItem);
+      instance.status_filter_params.push(filterItem);
+
+      if (item !== 'cancelled') {
+        instance.status_filter.push(filterItem);
+      }
     });
 
     instance.exportReservationsCSV = () => {
@@ -106,31 +114,35 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
       }
     };
 
-    instance.applyFilterToReservations = () => {
-      let result = [];
-      if (!instance.reservations.length) return result;
+    instance.applyFilterToReservations = () =>
+      instance.reservations.filter((reservation) => {
+        let reservationResult = false;
 
-      instance.filters.forEach((filter) => {
-        if (filter.name === 'status') {
-          result = result.concat(filterFilter(instance.reservations, {
-            status: AppConstants.reservationEnglishStatuses[filter.value],
-          }));
-        } else if (filter.name === 'product') {
-          result = result.concat(instance.reservations.filter((reservation) => {
-            return reservation.reservation_parts.map(part => part.product.name).includes(filter.value);
-          }));
+        if (instance.filter_type === 'product') {
+          instance.product_filter.forEach((filter) => {
+            if (reservation
+              .reservation_parts
+              .map(part => part.product.name)
+              .includes(filter.value)) {
+              reservationResult = true;
+            }
+          });
+        } else if (instance.filter_type === 'status') {
+          instance.status_filter.forEach((filter) => {
+            if (reservation.status === AppConstants.reservationEnglishStatuses[filter.value]) {
+              reservationResult = true;
+            }
+          });
         }
+
+        return reservationResult;
       });
 
-      if (!instance.filters.length) {
-        return instance.reservations;
-      }
-
-      return result.filter((value, index) => result.indexOf(value) === index);
+    instance.changeFilterType = (type) => {
+      instance.filter_type = type;
     };
 
-    instance.applySort = (parts) => {
-      return $filter('orderBy')(parts, instance.sort.value, instance.sort.reverse);
-    };
+    instance.applySort = parts =>
+      $filter('orderBy')(parts, instance.sort.value, instance.sort.reverse);
   };
 }

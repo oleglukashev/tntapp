@@ -4,8 +4,8 @@
   <div class='col-lg-8 col-md-8' ng-show='agenda.is_loaded'>
     <div class='page_filter m-b-md clearfix'>
       <div class='pull-left m-r-xs'
-             ng-init='controller = agenda'
-             data-ng-include=" 'page_filter.print.view.html' "></div>
+           ng-init='controller = agenda'
+           data-ng-include=" 'page_filter.print.view.html' "></div>
       <div class='pull-left m-r-xs'
            ng-init='controller = agenda'
            data-ng-include=" 'page_filter.date.view.html' "></div>
@@ -48,10 +48,11 @@
             <tr data-ng-include=" 'agenda.item.view.html' "
                 ng-click='agenda.openCustomerMenu(item.customer_id, item.id)'
                 ng-class='{"active": agenda.active_part == item.id,
-                           "cancelled": item.reservation.status == "cancelled"}'
-                ng-repeat='item in data = agenda.data'
+                           "cancelled": item.reservation.status == "cancelled",
+                           "hide-icon": item.reservation.id === agenda_data[$index - 1].reservation.id}'
+                ng-repeat='item in agenda_data = agenda.data'
                 ng-mouseup='agenda.active_part = item.id'
-                ng-init='controller = agenda;hideIcon = item.reservation.id === data[$index - 1].reservation.id;'>
+                ng-init='controller = agenda;'>
                 </tr>
           </tbody>
         </table>
@@ -143,7 +144,6 @@
             </div>
           </div>
         </div>
-
       </accordion-group>
     </accordion>
   </div>

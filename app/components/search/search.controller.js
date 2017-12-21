@@ -138,10 +138,13 @@ class SearchCtrl {
       (products) => {
         this.products = products;
         this.products.forEach((product) => {
-          this.filter_params.push({
+          const productFilterParams = {
             name: 'product',
             value: product.name,
-          });
+          };
+
+          this.product_filter_params.push(productFilterParams);
+          this.product_filter.push(productFilterParams);
         });
       });
   }

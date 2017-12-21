@@ -1,4 +1,4 @@
-<td ng-class='{"b-t-none p-t-none": hideIcon}'>
+<td>
   <div ng-class='item.icon_color'
        ng-hide='hideIcon'
        class='md-list-item-left img-circle'>
@@ -8,26 +8,26 @@
     </div>
   </div>
 </td>
-<td ng-class='{"b-t-none p-t-none": hideIcon}'>
+<td>
   <i class='mdi mdi-clock'></i>
   {{ item.time }}
 </td>
-<td ng-class='{"b-t-none p-t-none": hideIcon}'>{{ item.product_name }}</td>
-<td ng-class='{"b-t-none p-t-none": hideIcon}'>{{ item.name }}</td>
-<td ng-class='{"b-t-none p-t-none": hideIcon}'>
+<td>{{ item.product_name }}</td>
+<td>{{ item.name }}</td>
+<td>
   <i class='mdi mdi-account-multiple'></i>
   {{ item.number_of_persons }}x
 </td>
-<td ng-class='{"b-t-none p-t-none": hideIcon}'>
+<td>
   <span ng-show='item.tables'>
     <img class='table_icon' src='public/images/table.svg' />
     {{ item.tables }}
   </span>
 </td>
-<td ng-class='{"b-t-none p-t-none": hideIcon}' show-more show-more-trigger={{agenda.view_type}}>
+<td show-more show-more-trigger={{agenda.view_type}}>
   {{ item.notes }}
 </td>
-<td ng-class='{"b-t-none p-t-none": hideIcon}'>
+<td>
   <div class='pull-right'
        data-ng-include=" 'reservation_status_menu.view.html' "
        ng-init='controller = controller;'></div>
