@@ -16,8 +16,8 @@
         </div>
       </div>
       <div class='wrapper orange-500 layout-align-space-around-center layout-column'
-           ng-show='reserv.numberOfPersonsMoreThanTableSeats() && reserv.current_part.tables.length'>Aantal personen is meer dan waar de tafel(s) geschikt voor is
-      </div>
+           ng-show='reserv.numberOfPersonsMoreThanTableSeats() && reserv.current_part.tables.length'
+           ng-bind='reserv.warnings.max_number_of_persons'></div>
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <div class='w-lg'>
           <label ng-repeat='number in [1,2,3,4,5,6,7,8,9,10]'

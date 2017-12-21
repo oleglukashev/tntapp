@@ -13,6 +13,7 @@ export default function templates($templateCache) {
   $templateCache.put('charts.view.html', require('./components/dashboard/charts/charts.view.html'));
   $templateCache.put('settings_products.new_product.view.html', require('./components/settings/products/settings_products.new_product.view.html'));
   $templateCache.put('settings_mails.edit_mail.view.html', require('./components/settings/mails/settings_mails.edit_mail.view.html'));
+  $templateCache.put('settings_warnings.edit.view.html', require('./components/settings/warnings/edit/settings_warnings.edit.view.html'));
   $templateCache.put('settings_tables.new_zone.view.html', require('./components/settings/tables/settings_tables.new_zone.view.html'));
   $templateCache.put('dashboard_reservations.view.html', require('./components/dashboard/reservations/dashboard_reservations.view.html'));
   $templateCache.put('dashboard_reservations.item.view.html', require('./components/dashboard/reservations/dashboard_reservations.item.view.html'));

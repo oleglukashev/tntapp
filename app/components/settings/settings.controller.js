@@ -14,6 +14,7 @@ export default class SettingsCtrl {
       'MEDEWERKERS': 'app.settings.employees',
       'TAFELS/ZONES': 'app.settings.tables',
       'PLUGINS': 'app.settings.plugins',
+      'WARNINGS': 'app.settings.warnings',
       "KLEUREN THEMA'S": 'app.settings.themes',
     };
   }
