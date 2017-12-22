@@ -35,9 +35,10 @@ export default class NewReservation {
       } else if (reservation.mail && !emailRe.test(reservation.mail)) {
         errors.push('email adres niet vol');
       }
+
+      if (phoneNumberIsRequired && !reservation.primary_phone_number) errors.push('telefoonnummer is verplciht');
     }
 
-    if (phoneNumberIsRequired && !reservation.primary_phone_number) errors.push('telefoonnummer is verplciht');
 
     return errors;
   }
