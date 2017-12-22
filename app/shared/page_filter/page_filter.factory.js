@@ -54,7 +54,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
       reverse: false,
     }];
 
-    instance.sort = instance.sort_params[3];
+    instance.sort = instance.sort_params[2];
 
     AppConstants.reservationStatuses.forEach((item) => {
       const filterItem = {
