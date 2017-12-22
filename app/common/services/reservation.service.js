@@ -124,28 +124,11 @@ export default class Reservation {
     }).then(result => result.data);
   }
 
-  getCreateURI(companyId, params) {
-    if (!companyId) {
-      return this.$q.defer().promise;
-    }
-
-    const uri = `${API_URL}/company/${companyId}/reservation`;
-    const additional = [];
-    params.forEach((param) => {
-      if (Object.values(param)[0]) {
-        const encodedParam = encodeURIComponent(Object.keys(param));
-        additional.push(`${encodedParam}=true`); // adding parameters to query string like 'confirm_mail=true' only if Object.values(param)[0] contains true
-      }
-    });
-
-    return [uri, additional.join('&')].join('?');
-  }
-
-  create(companyId, data, params, skipJwtAuth) {
+  create(companyId, data, skipJwtAuth) {
     const header = skipJwtAuth ? null : { Authorization: `Bearer ${this.JWT.get()}` };
 
     return this.Upload.upload({
-      url: this.getCreateURI(companyId, params),
+      url: `${API_URL}/company/${companyId}/reservation`,
       skipAuthorization: skipJwtAuth,
       headers: header,
       data,
