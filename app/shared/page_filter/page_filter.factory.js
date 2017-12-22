@@ -25,12 +25,12 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     },
     {
       name: 'Tijd oplopend',
-      value: 'date',
+      value: 'time',
       reverse: false,
     },
     {
       name: 'Tijd aflopend',
-      value: 'date',
+      value: 'time',
       reverse: true,
     },
     {
