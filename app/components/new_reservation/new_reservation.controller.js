@@ -119,6 +119,7 @@ export default class NewReservationCtrl {
     this.walk_in_part.time = this.moment().format('HH:mm');
 
     const data = {
+      is_customer: this.is_customer_reservation,
       language: this.walk_in.language,
       send_confirmation: this.walk_in.send_confirmation,
       notes: this.walk_in.notes,
@@ -148,12 +149,8 @@ export default class NewReservationCtrl {
 
     this.is_submitting = true;
     const data = this.prepareFormData();
-    const params = [];
-    params.push(this.is_customer_reservation ?
-      { is_customer: true } :
-      { confirm_mail: this.confirm_mail });
 
-    this.Reservation.create(this.current_company_id, data, params, this.is_customer_reservation)
+    this.Reservation.create(this.current_company_id, data, this.is_customer_reservation)
       .then(
         () => {
           this.is_submitting = false;
@@ -174,6 +171,7 @@ export default class NewReservationCtrl {
       undefined;
 
     const data = {
+      is_customer: this.is_customer_reservation,
       language: this.reservation.language,
       send_confirmation: this.reservation.send_confirmation,
       notes: this.reservation.notes,

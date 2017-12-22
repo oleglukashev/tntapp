@@ -39,13 +39,10 @@
               <md-radio-button value='EN' class='inline md-success'>Engels</md-radio-button>
             </md-radio-group>
           </div>
-          <div class='md-form-group no-padder'>
-            <md-checkbox ng-model="reserv.reservation.send_confirmation" aria-label="Inschrijven nieuwsbrief">
-              Inschrijven nieuwsbrief
-            </md-checkbox>
-          </div>
-          <div class='md-form-group no-padder' ng-if='showConfirmEmailCheckbox'>
-            <md-checkbox ng-model="reserv.confirm_mail" ng-checked="true" aria-label="Bevestiging mailen">
+          <div class='md-form-group no-padder' ng-if='!reserv.is_customer_reservation'>
+            <md-checkbox ng-model='reserv.reservation.send_confirmation'
+                         ng-checked='true'
+                         aria-label='Bevestiging mailen'>
               Bevestiging mailen
             </md-checkbox>
           </div>
