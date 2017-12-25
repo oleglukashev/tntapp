@@ -185,7 +185,7 @@ export default class User {
     }).then(result => result.data);
   }
 
-  uploadPhoto(userId, file) {
+  uploadPhoto(userId, file, skipJwtAuth) {
     const header = skipJwtAuth ? null : { Authorization: `Bearer ${this.JWT.get()}` };
 
     return this.Upload.upload({
@@ -195,20 +195,28 @@ export default class User {
     });
   }
 
-  getPhoto(userId) {
-    const deferred = this.$q.defer();
-
-    if (!this.current_company) {
-      return deferred.promise;
-    }
-
+  // move subscription methods to separate service
+  startSubscription(companyId) {
     return this.$http({
-      url: `${API_URL}/company/${this.current_company.id}/user/${userId}/photo?${new Date().getTime()}`,
-      method: 'GET',
-      ignoreLoadingBar: true,
-      headers: {
-        Authorization: `Bearer ${this.JWT.get()}`,
-      },
+      url: `${API_URL}/company/${companyId}/subscription/start`,
+      method: 'POST',
+    }).then(result => result.data);
+  }
+
+  finishSubscription(companyId, transactionId) {
+    return this.$http({
+      url: buildURL(`${API_URL}/company/${companyId}/subscription/finish`, {
+        transaction_id: transactionId,
+      }),
+      method: 'POST',
+    }).then(result => result.data);
+  }
+
+  inviteFriend(companyId, email) {
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/subscription/invite`,
+      method: 'POST',
+      data: { email },
     }).then(result => result.data);
   }
 
