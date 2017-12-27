@@ -121,6 +121,11 @@ export default class DashboardReservationsCtrl {
           this.Loaded.reservations.count_per_month = reservations.count_per_month;
           this.Loaded.reservations.count_per_week = reservations.count_per_week;
           this.Loaded.reservations.count_by_week = reservations.count_by_week;
+          this.Loaded.reservations.guests_with_repeats =
+            reservations.guests_with_repeats;
+          reservations.guests_ids_with_allergies.forEach((item) => {
+            this.Loaded.reservations.guests_ids_with_allergies[item.id] = true;
+          });
           this.$rootScope.$broadcast('reservationsLoaded', reservations);
         }, () => {
           this.$rootScope.show_spinner = false;

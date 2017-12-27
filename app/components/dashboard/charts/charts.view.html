@@ -80,5 +80,28 @@
 
     </div>
 
+    <div class='panel'>
+      <div class='panel-heading'>Repeat guests</div>
+      <div class='panel-body no-padder'>
+        <table class='table m-b-none'>
+          <thead>
+            <tr>
+                <th width='80%'>Naam</th>
+                <th>Repeats</th>
+                <th class='text-right'>Allergy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat='item in charts.guests_with_repeats'>
+              <td>{{ item.customer.last_name }}  {{ item.customer.first_name }}</td>
+              <td class='text-center'>{{ item.repeat_count }}</td>
+              <td class='text-center'><span class='mdi mdi-exclamation i-20'
+                           ng-if='charts.guests_ids_with_allergies[item.customer.id]'></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 
