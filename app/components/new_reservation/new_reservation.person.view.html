@@ -8,9 +8,11 @@
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <div class='w-xl'>
 
-          <div data-ng-include=" 'new_reservation.person.autocomplete.view.html' " ng-if='autocomplete' class='no-margin'></div>
+          <div data-ng-include=" 'new_reservation.person.autocomplete.view.html' "
+               ng-if='!reserv.is_customer_reservation'
+               class='no-margin'></div>
 
-          <div ng-if='!autocomplete'>
+          <div ng-if='reserv.is_customer_reservation'>
             <md-input-container class='md-block'>
               <label>Achternaam</label>
               <input ng-model='reserv.reservation.last_name' />
