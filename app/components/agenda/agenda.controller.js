@@ -60,7 +60,7 @@ export default class AgendaCtrl {
       this.dragEnd();
     });
 
-    $rootScope.$on('ANGULAR_HOVER', (obj, event) => {
+    $rootScope.$on('ANGULAR_HOVER', (obj, event, channel) => {
       this.dragHover(obj, event);
     });
 
@@ -124,8 +124,11 @@ export default class AgendaCtrl {
   }
 
   dragHover(obj, event) {
-    const quarter = $(event.target);
     const part = $(this.itemMoveEvent.target);
+    part.addClass('z-index-1');
+
+    if (this.channel === 'resize') return;
+    const quarter = $(event.target);
 
     // when moving item on other zone
     if (quarter.data('zoneId') && this.itemShadowZone !== quarter.data('zoneId')) {
@@ -138,8 +141,6 @@ export default class AgendaCtrl {
       ((this.offsetHours * this.hour_width) + ((this.offsetQuarters * this.hour_width) / 4));
     const top = quarter.offset().top - this.calendarWrapper.offset().top;
 
-    part.addClass('z-index-1');
-
     this.itemShadow.css({ left, top });
   }
 
@@ -151,28 +152,29 @@ export default class AgendaCtrl {
     if (channel === 'move') {
       const part = $(event.target);
 
-      this.calendarWrapper = calendarWrapper || part.closest('.calendar_wrapper');
+      if (this.channel === 'move') {
+        this.calendarWrapper = calendarWrapper || part.closest('.calendar_wrapper');
+        const wrapperScrollX = this.calendarWrapper.scrollLeft() - this.calendarWrapper.offset().left;
+        const mouseX = event.originalEvent.pageX;
+        const clickedX = wrapperScrollX + mouseX;
+        const clickedXPartOffset = Math.floor((
+          clickedX - part.position().left) / (this.hour_width / 4));
 
-      const wrapperScrollX = this.calendarWrapper.scrollLeft() - this.calendarWrapper.offset().left;
-      const mouseX = event.originalEvent.pageX;
-      const clickedX = wrapperScrollX + mouseX;
-      const clickedXPartOffset = Math.floor((
-        clickedX - part.position().left) / (this.hour_width / 4));
+        if (!calendarWrapper) {
+          this.offsetHours = Math.floor(clickedXPartOffset / 4);
+          this.offsetQuarters = clickedXPartOffset % 4;
+        }
 
-      if (!calendarWrapper) {
-        this.offsetHours = Math.floor(clickedXPartOffset / 4);
-        this.offsetQuarters = clickedXPartOffset % 4;
+        // creating shadow
+        if (this.itemShadow) {
+          this.itemShadow.remove();
+        }
+        this.itemShadow = part.clone().appendTo(this.calendarWrapper);
+        this.itemShadow.removeClass('reservation').addClass('reservationShadow');
+        this.itemShadowZone = this.calendarWrapper.data('zoneId');
       }
 
       part.removeClass('z-index-1');
-
-      // creating shadow
-      if (this.itemShadow) {
-        this.itemShadow.remove();
-      }
-      this.itemShadow = part.clone().appendTo(this.calendarWrapper);
-      this.itemShadow.removeClass('reservation').addClass('reservationShadow');
-      this.itemShadowZone = this.calendarWrapper.data('zoneId');
       this.itemMoveEvent = event;
 
       if (event.target.attributes['data-product-id']) {
@@ -186,7 +188,11 @@ export default class AgendaCtrl {
   dragEnd() {
     const part = $(this.itemMoveEvent.target);
     part.removeClass('z-index-1');
-    this.itemShadow.remove();
+
+    if (this.itemShadow) {
+      this.itemShadow.remove();
+    }
+
     this.draggedProduct = 0;
     this.draggable_class = '';
   }
