@@ -265,7 +265,7 @@ export default class AgendaCtrl {
   }
 
   filterDataForGraph(zoneId, tableId) {
-    return this.filterFilter(this.data, { source_table_ids: tableId });
+    return this.data.filter(item => item.source_table_ids.includes(tableId));
   }
 
   openReservation() {
