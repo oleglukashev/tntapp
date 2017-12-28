@@ -35,7 +35,7 @@ export default class AgendaCtrl {
     this.data = [];
     this.data_without_tables = [];
 
-    this.draggableClass = '';
+    this.draggable_class = '';
     this.channel = '';
 
     this.hours = Array.from(Array(24).keys()).map((h) => {
@@ -128,10 +128,11 @@ export default class AgendaCtrl {
     const part = $(this.itemMoveEvent.target);
 
     // when moving item on other zone
-    if (this.itemShadowZone !== quarter.data('zoneId')) {
+    if (quarter.data('zoneId') && this.itemShadowZone !== quarter.data('zoneId')) {
       this.calendarWrapper = quarter.closest('.calendar_wrapper');
       this.dragStart(this.itemMoveEvent, 'move', this.calendarWrapper);
     }
+
     const left = ((quarter.data('hour') * this.hour_width) +
       ((quarter.data('quarter') * this.hour_width) / 4)) -
       ((this.offsetHours * this.hour_width) + ((this.offsetQuarters * this.hour_width) / 4));
@@ -179,7 +180,7 @@ export default class AgendaCtrl {
       }
     }
 
-    this.draggableClass = 'dragged';
+    this.draggable_class = 'dragged';
   }
 
   dragEnd() {
@@ -187,7 +188,7 @@ export default class AgendaCtrl {
     part.removeClass('z-index-1');
     this.itemShadow.remove();
     this.draggedProduct = 0;
-    this.draggableClass = '';
+    this.draggable_class = '';
   }
 
   onDrop(targetTableId, tablePosition, hour, quarter, dragData) {
@@ -212,8 +213,9 @@ export default class AgendaCtrl {
         };
 
         this.ReservationPart.update(this.current_company_id, partId, data)
-          .then(() => {
-            part.width = (difference * this.hour_width) / 4;
+          .then((reservationPart) => {
+            part.duration_minutes = reservationPart.duration_minutes;
+            part.width = this.durationToWidth(part.duration_minutes);
             this.dragEnd();
             this.setData();
           });
