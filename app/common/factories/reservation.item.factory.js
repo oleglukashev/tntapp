@@ -9,7 +9,7 @@ export default function ReservationItemFactory(AppConstants, ReservationStatus, 
     instance.rowPart = (part, reservation) => {
       if (!reservation.customer) {
         reservation.customer = {
-          last_name: 'undefined',
+          last_name: 'Walk in',
         };
       }
 
