@@ -17,8 +17,7 @@
 
   <div class='md-list-item-content'
        ng-click='reservations.openCustomerMenu(item.reservation.customer.id, item.id)'>
-    <h3 class='text-md' ng-show='item.name'>{{ item.name }}</h3>
-    <h3 class='text-md' ng-hide='item.name'>Walk in</h3>
+    <h3 class='text-md'>{{ item.name }}</h3>
     <div>
       <i class='mdi mdi-account-multiple'></i>
       <span class='font-thin m-r-xs'>{{ item.number_of_persons }}x</span>
