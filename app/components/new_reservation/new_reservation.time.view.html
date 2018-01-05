@@ -13,7 +13,8 @@
           <h4>Beschikbare tijden</h4>
           <div ng-show='reserv.disabledTimes().length'>
             <i class="mdi mdi-checkbox-blank-circle i-16 red-color-200"></i>
-            – Niet genoeg plaatsen beschikbaar
+            –
+            <span ng-bind='reserv.warnings.no_seats_available'></span>
           </div>
         </div>
       </div>
@@ -28,7 +29,7 @@
       </div>
       <div class='wrapper red-300 layout-align-space-around-center layout-column'
            ng-show='!reserv.openedTimeRangePeriod().length && reserv.current_part.time_is_loaded'>
-        <div class='w-xl'>Dit product is niet beschikbaar op dit tijdstip</div>
+        <div class='w-xl' ng-bind='reserv.warnings.product_not_available'></div>
       </div>
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <div class='w-xl'>

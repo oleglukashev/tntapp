@@ -6,6 +6,6 @@ export default function routes($stateProvider) {
       url: '/settings',
       controller: 'SettingsCtrl',
       controllerAs: 'settings',
-      template: require('./settings.view.html')
-    })
+      template: require('./settings.view.html'),
+    });
 }

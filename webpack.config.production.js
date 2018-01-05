@@ -52,7 +52,8 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       API_URL: JSON.stringify('https://api.dashboard.thenexttable.com/api/v2'),
-      FACEBOOK_ID: '698477453590264'
+      FACEBOOK_ID: '698477453590264',
+      ENV: JSON.stringify('production'),
     }),
     new ngAnnotatePlugin({
       add: true

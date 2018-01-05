@@ -42,6 +42,7 @@ export default class NewReservationCtrl {
     this.product_time_ranges = {};
     this.zone_time_ranges = {};
     this.open_time_ranges = {};
+    this.warnings = {};
 
     this.reservation = {
       language: 'NL',
@@ -361,9 +362,20 @@ export default class NewReservationCtrl {
       });
   }
 
+  loadWarningsSettings() {
+    this.Settings
+      .getWarningsSettings(this.current_company_id).then(
+        (warnings) => {
+          warnings.forEach((warning) => {
+            this.warnings[warning.title] = warning.text;
+          });
+        });
+  }
+
   preloadData() {
     this.loadProducts();
     this.loadGeneralSettings();
+    this.loadWarningsSettings();
     this.loadZones();
 
     if (this.is_dashboard_page || this.is_reservations || this.is_agenda) {

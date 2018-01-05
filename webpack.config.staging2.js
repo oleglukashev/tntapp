@@ -52,7 +52,8 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       API_URL: JSON.stringify('https://staging2.thenexttable.com/api/v2'),
-      FACEBOOK_ID: '722157017888974'
+      FACEBOOK_ID: '722157017888974',
+      ENV: JSON.stringify('staging2'),
     }),
     new ngAnnotatePlugin({
       add: true

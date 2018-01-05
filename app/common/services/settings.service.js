@@ -44,6 +44,18 @@ export default class Settings {
     }).then(result => result.data);
   }
 
+  getWarningsSettings(companyId, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/settings/warnings`,
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
+    }).then(result => result.data);
+  }
+
   getLimitsSettings(companyId, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
@@ -114,6 +126,19 @@ export default class Settings {
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/settings/mails_texts/${id}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'PATCH',
+      data,
+    }).then(result => result.data);
+  }
+
+  updateWarning(companyId, id, data, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/settings/warnings/${id}`,
       skipAuthorization: skipJwtAuth,
       method: 'PATCH',
       data,

@@ -1,13 +1,18 @@
-export default class SettingsMailsEditMailCtrl {
-  constructor(User, AppConstants, item, Settings, $modalInstance) {
+export default class SettingsWarningsEditCtrl {
+  constructor(User, Settings, item, $modal, $modalInstance, filterFilter) {
     'ngInject';
 
-    this.current_company_id = User.getCompanyId();
     this.Settings = Settings;
+    this.current_company_id = User.getCompanyId();
+    this.filterFilter = filterFilter;
+
+    this.$modal = $modal;
     this.$modalInstance = $modalInstance;
 
+    this.item = item;
     this.form_data = item;
-    this.statuses = AppConstants.mailStatuses;
+    this.warnings = [];
+    this.is_loaded = false;
   }
 
   submitForm(isValid) {
@@ -18,18 +23,15 @@ export default class SettingsMailsEditMailCtrl {
     this.is_submitting = true;
 
     const data = {
-      title: this.form_data.title,
-      content: this.form_data.content,
+      text: this.form_data.text,
     };
 
     this.Settings
-      .updateMailtext(this.current_company_id, this.form_data.id, data)
+      .updateWarning(this.current_company_id, this.form_data.id, data)
       .then(() => {
         this.is_submitting = false;
         this.closeModal();
-      }, () => {
-        this.is_submitting = false;
-      });
+      }, () => {});
 
     return true;
   }

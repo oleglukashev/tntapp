@@ -49,7 +49,8 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       API_URL: JSON.stringify('http://api.tnt.me/api/v2'),
-      FACEBOOK_ID: '722157017888974'
+      FACEBOOK_ID: '722157017888974',
+      ENV: JSON.stringify('dev'),
     }),
     new ngAnnotatePlugin({
       add: true

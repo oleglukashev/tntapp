@@ -12,6 +12,7 @@
     "jquery": true
   },
   "globals": {
-    "API_URL": true
+    "API_URL": true,
+    "require": true
   }
 }
