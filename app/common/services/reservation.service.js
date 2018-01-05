@@ -189,17 +189,6 @@ export default class Reservation {
     return table ? parseInt(table.number_of_persons) : null;
   }
 
-  isDisabledTableByTableId(tables, occupiedTables, tableId) {
-    const table = this.filterFilter(tables, { id: tableId })[0];
-    let result = table ? table.hidden === true : false;
-
-    if (!result && occupiedTables) {
-      result = typeof occupiedTables[tableId] !== 'undefined';
-    }
-
-    return result;
-  }
-
   generalNumberOfPersons(tables, tableIds) {
     let result = 0;
 

@@ -58,23 +58,12 @@ export default function NewReservationZoneFactory($auth, filterFilter, moment) {
       });
     };
 
-    instance.isDisabledTableByTableId = (tableId) => {
-      const table = filterFilter(instance.tables, { id: tableId })[0];
-      let result = table ? table.hidden === true : false;
-
-      if (!result && instance.occupied_tables) {
-        result = typeof instance.occupied_tables[tableId] !== 'undefined';
-      }
-
-      if (!result) {
-        result = false;
-      }
-
-      return result;
-    };
-
-    instance.zoneIsClosed = (zoneId) => {
+    instance.isDisabledTable = (tableId, zoneId) => {
       const currentDate = instance.current_part.date;
+      const currentOccupiedTables = instance.current_part.occupied_tables;
+      if (currentOccupiedTables && typeof currentOccupiedTables[parseInt(tableId)] !== 'undefined') {
+        return true;
+      }
 
       if (currentDate && zoneId) {
         const date = moment(currentDate).format('YYYY-MM-DD');
@@ -93,5 +82,8 @@ export default function NewReservationZoneFactory($auth, filterFilter, moment) {
 
       return false;
     };
+
+    instance.classOfTable = (tableId, zoneId) =>
+      instance.isDisabledTable(tableId, zoneId) ? 'red-300' : 'btn-default text-success';
   };
 }
