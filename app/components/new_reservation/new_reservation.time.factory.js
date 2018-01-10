@@ -98,6 +98,7 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
     instance.loadOccupiedTables = () => {
       instance.current_part.occupied_tables = [];
       instance.current_part.occupied_tables_is_loaded = false;
+      instance.$rootScope.show_spinner = true;
       const time = instance.current_part.time;
       const dateTime = `${moment(instance.current_part.date).format('DD-MM-YYYY')} ${time}`;
 
@@ -108,7 +109,10 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
           (result) => {
             instance.current_part.occupied_tables = result;
             instance.current_part.occupied_tables_is_loaded = true;
-          }, () => {});
+            instance.$rootScope.show_spinner = false;
+          }, () => {
+            instance.$rootScope.show_spinner = false;
+          });
     };
   };
 }
