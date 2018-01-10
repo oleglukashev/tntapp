@@ -1,10 +1,11 @@
 export default class SettingsMailsEditMailCtrl {
-  constructor(User, AppConstants, item, Settings, $modalInstance) {
+  constructor(User, AppConstants, item, Settings, $modalInstance, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.Settings = Settings;
     this.$modalInstance = $modalInstance;
+    this.$rootScope = $rootScope;
 
     this.form_data = item;
     this.statuses = AppConstants.mailStatuses;
@@ -16,6 +17,7 @@ export default class SettingsMailsEditMailCtrl {
     }
 
     this.is_submitting = true;
+    this.$rootScope.is_loaded = false;
 
     const data = {
       title: this.form_data.title,
@@ -26,9 +28,11 @@ export default class SettingsMailsEditMailCtrl {
       .updateMailtext(this.current_company_id, this.form_data.id, data)
       .then(() => {
         this.is_submitting = false;
+        this.$rootScope.is_loaded = true;
         this.closeModal();
       }, () => {
         this.is_submitting = false;
+        this.$rootScope.is_loaded = true;
       });
 
     return true;

@@ -1,15 +1,15 @@
 import angular from 'angular';
 
 export default class SettingsLimitsCtrl {
-  constructor(User, Settings, AppConstants, moment, $window) {
+  constructor(User, Settings, AppConstants, moment, $window, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
     this.Settings = Settings;
     this.moment = moment;
-    this.is_loaded = false;
     this.$window = $window;
+    this.$rootScope = $rootScope;
 
     this.days = AppConstants.dayOfWeek;
     this.limit = 1;
@@ -18,17 +18,22 @@ export default class SettingsLimitsCtrl {
     this.loadLimits();
     this.loadGeneralSettings();
     this.limits = {};
+
+    this.is_loaded = false;
+    this.$rootScope.show_spinner = true;
   }
 
   loadLimits() {
     this.Settings
-      .getLimitsSettings(this.current_company_id)
-        .then(
-          (limits) => {
-            this.is_loaded = true;
-            this.times = limits.times;
-            this.setLimits(limits.limits);
-          });
+      .getLimitsSettings(this.current_company_id).then(
+        (limits) => {
+          this.is_loaded = true;
+          this.$rootScope.show_spinner = false;
+          this.times = limits.times;
+          this.setLimits(limits.limits);
+        }, () => {
+          this.$rootScope.show_spinner = false;
+        });
   }
 
   loadGeneralSettings() {

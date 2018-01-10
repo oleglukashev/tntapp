@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 export default class ProfilesCtrl {
   constructor(User, Customer, moment, AppConstants, JWT, $mdSidenav, $rootScope, $scope, $modal,
     PageFilterFactory) {
@@ -42,6 +40,7 @@ export default class ProfilesCtrl {
 
     this.loadCustomers();
     PageFilterFactory(this);
+    this.$rootScope.show_spinner = true;
   }
 
   loadCustomers(nextPage = false) {
@@ -50,6 +49,7 @@ export default class ProfilesCtrl {
     }
 
     this.customersLoading = true;
+    this.$rootScope.show_spinner = true;
 
     this.Customer.getAll(this.current_company_id, false, {
       page: this.pagination.page,
@@ -63,8 +63,10 @@ export default class ProfilesCtrl {
 
       this.pagination.hasMore = !!result.length;
       this.customersLoading = false;
+      this.$rootScope.show_spinner = false;
     }, () => {
-      this.customersLoading = false;
+      this.customersLoading = true;
+      this.$rootScope.show_spinner = false;
     });
   }
 

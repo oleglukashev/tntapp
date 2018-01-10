@@ -6,6 +6,18 @@ export default class Product {
     this.$q = $q;
   }
 
+  getAll(companyId, hidden, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/product${(hidden ? '?hidden=true' : '')}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
+    }).then(result => result.data);
+  }
+
   create(companyId, data, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
@@ -40,19 +52,6 @@ export default class Product {
       url: `${API_URL}/company/${companyId}/products/hidden/${productId}`,
       skipAuthorization: skipJwtAuth,
       method: 'POST',
-    }).then(result => result.data);
-  }
-
-  getAll(companyId, hidden, skipJwtAuth) {
-    if (!companyId) {
-      return this.$q.defer().promise;
-    }
-
-    return this.$http({
-      url: `${API_URL}/company/${companyId}/product${(hidden ? '?hidden=true' : '')}`,
-      skipAuthorization: skipJwtAuth,
-      ignoreLoadingBar: true,
-      method: 'GET',
     }).then(result => result.data);
   }
 

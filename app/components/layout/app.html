@@ -2,3 +2,6 @@
 <div class='content clearfix' ui-view></div>
 <div data-ng-include=" 'user_menu.view.html' " ng-controller='UserMenuCtrl as user'></div>
 <div data-ng-include=" 'mobile_menu.view.html' " ng-controller='MobileMenuCtrl as mobile_menu'></div>
+<div ng-show='app.$rootScope.show_spinner' id='loading-bar-spinner'>
+  <div class='spinner-icon'></div>
+</div>

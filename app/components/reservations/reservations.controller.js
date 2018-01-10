@@ -45,6 +45,7 @@ export default class ReservationsCtrl {
 
     this.loadZonesAndTables();
     this.loadProducts();
+    this.$rootScope.show_spinner = true;
   }
 
   changeStatus(reservation, status) {
@@ -147,8 +148,11 @@ export default class ReservationsCtrl {
     this.Reservation
       .getAll(this.current_company_id, date).then((reservations) => {
         this.is_loaded = true;
+        this.$rootScope.show_spinner = false;
         this.reservations = reservations;
         this.setData();
+      }, () => {
+        this.$rootScope.show_spinner = false;
       });
   }
 

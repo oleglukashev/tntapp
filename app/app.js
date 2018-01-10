@@ -1,7 +1,6 @@
 import angular from 'angular';
 import angularJwt from 'angular-jwt';
 import angularAnimate from 'angular-animate';
-import angularLoadingBar from 'angular-loading-bar';
 import angularNgUploader from 'ng-file-upload';
 import angularMaterial from 'angular-material';
 import angularAria from 'angular-aria';
@@ -62,7 +61,7 @@ angular
     angularTranslateStorageCookie, angularMoment, angularMaterial, uiLoad, anguarOclazyLoad, uiJq,
     dndLists, satellizer, search, dashboard, customerReservation,
     reservations, dnd, agenda, auth, settings, rzModule, chartjs, profiles, constants, editUser,
-    angularLoadingBar, 'app.services', 'app.directives', 'app.filters', 'growlNotifications',
+    'app.services', 'app.directives', 'app.filters', 'growlNotifications',
   ])
   .config(jwtConfig)
   .controller('AppCtrl', appController)

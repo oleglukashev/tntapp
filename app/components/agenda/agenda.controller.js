@@ -25,7 +25,6 @@ export default class AgendaCtrl {
     this.tables_by_zone = {};
     this.errors = [];
     this.opened = [true];
-    this.is_loaded = false;
     this.zones = [];
     this.products = [];
     this.reservations = [];
@@ -86,6 +85,9 @@ export default class AgendaCtrl {
 
     this.loadGeneralSettings();
     this.loadZonesAndTables();
+
+    this.is_loaded = false;
+    this.$rootScope.show_spinner = true;
   }
 
   changeStatus(reservation, status) {
@@ -486,6 +488,7 @@ export default class AgendaCtrl {
           this.loadProducts();
           this.loadTimeRanges();
           this.is_loaded = true;
+          this.$rootScope.show_spinner = false;
         });
   }
 
@@ -524,7 +527,7 @@ export default class AgendaCtrl {
           this.setData();
         }
 
-        this.is_loaded = true;
+        this.$rootScope.show_spinner = false;
       });
   }
 

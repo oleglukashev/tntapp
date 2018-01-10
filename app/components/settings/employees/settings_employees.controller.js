@@ -1,15 +1,18 @@
 export default class SettingsEmployeesCtrl {
-  constructor(User, Employee, filterFilter, $modal) {
+  constructor(User, Employee, filterFilter, $modal, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
     this.filterFilter = filterFilter;
     this.Employee = Employee;
-    this.is_loaded = false;
     this.$modal = $modal;
+    this.$rootScope = $rootScope;
 
     this.loadEmployees();
+
+    this.is_loaded = false;
+    this.$rootScope.show_spinner = true;
   }
 
   addEmployee() {
@@ -44,8 +47,9 @@ export default class SettingsEmployeesCtrl {
     this.Employee
       .getAll(this.current_company_id)
       .then((employees) => {
-        this.is_loaded = true;
         this.employees = employees;
+        this.is_loaded = true;
+        this.$rootScope.show_spinner = false;
       });
   }
 }

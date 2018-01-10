@@ -1,5 +1,5 @@
 export default class SettingsWarningsEditCtrl {
-  constructor(User, Settings, item, $modal, $modalInstance, filterFilter) {
+  constructor(User, Settings, item, $modal, $rootScope, $modalInstance, filterFilter) {
     'ngInject';
 
     this.Settings = Settings;
@@ -7,6 +7,7 @@ export default class SettingsWarningsEditCtrl {
     this.filterFilter = filterFilter;
 
     this.$modal = $modal;
+    this.$rootScope = $rootScope;
     this.$modalInstance = $modalInstance;
 
     this.item = item;
@@ -21,6 +22,7 @@ export default class SettingsWarningsEditCtrl {
     }
 
     this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
 
     const data = {
       text: this.form_data.text,
@@ -30,8 +32,11 @@ export default class SettingsWarningsEditCtrl {
       .updateWarning(this.current_company_id, this.form_data.id, data)
       .then(() => {
         this.is_submitting = false;
+        this.$rootScope.show_spinner = true;
         this.closeModal();
-      }, () => {});
+      }, () => {
+        this.$rootScope.show_spinner = true;
+      });
 
     return true;
   }

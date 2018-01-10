@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export default class SettingsTablesCtrl {
-  constructor(User, Zone, Table, filterFilter, $scope, $window, $modal) {
+  constructor(User, Zone, Table, filterFilter, $scope, $rootScope, $window, $modal) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -10,6 +10,7 @@ export default class SettingsTablesCtrl {
     this.Zone = Zone;
     this.filterFilter = filterFilter;
     this.$modal = $modal;
+    this.$rootScope = $rootScope;
     this.$window = $window;
     this.is_loaded = false;
     this.tables_by_zone = {};
@@ -17,10 +18,12 @@ export default class SettingsTablesCtrl {
     this.opened = [true];
 
     this.loadZonesAndTables();
+    this.$rootScope.show_spinner = true;
   }
 
   submitForm() {
     this.errors = [];
+    this.$rootScope.show_spinner = true;
     const data = this.getScopeTables().map((item, index) => {
       return {
         table_number: item.table_number,
@@ -32,8 +35,11 @@ export default class SettingsTablesCtrl {
 
     this.Table.save(this.current_company_id, { tables: data })
       .then(
-        () => {},
+        () => {
+          this.$rootScope.show_spinner = false;
+        },
         (error) => {
+          this.$rootScope.show_spinner = false;
           this.errors = error.data.errors;
         });
   }
@@ -43,6 +49,7 @@ export default class SettingsTablesCtrl {
       .then(
         (tables) => {
           this.is_loaded = true;
+          this.$rootScope.show_spinner = false;
 
           angular.forEach(this.zones, (zone) => {
             this.tables_by_zone[zone.id] = this.filterFilter(tables, { zones: zone.id }).map((item) => {
@@ -95,6 +102,7 @@ export default class SettingsTablesCtrl {
 
   removeZone(index) {
     const zone = this.zones[index];
+    this.$rootScope.show_spinner = true;
 
     if (zone) {
       this.Zone.delete(this.current_company_id, zone.id)
@@ -102,8 +110,11 @@ export default class SettingsTablesCtrl {
           () => {
             delete this.tables_by_zone[zone.id];
             this.zones.splice(index, 1);
+            this.$rootScope.show_spinner = false;
           },
-          () => {});
+          () => {
+            this.$rootScope.show_spinner = false;
+          });
     }
   }
 
