@@ -9,10 +9,10 @@
         <div class='w-xl'>
 
           <div data-ng-include=" 'new_reservation.person.autocomplete.view.html' "
-               ng-if='!reserv.is_customer_reservation'
+               ng-if='reserv.showAutocompleteCustomerName()'
                class='no-margin'></div>
 
-          <div ng-if='reserv.is_customer_reservation'>
+          <div ng-if='!reserv.showAutocompleteCustomerName()'>
             <md-input-container class='md-block'>
               <label>Achternaam</label>
               <input ng-model='reserv.reservation.last_name' />

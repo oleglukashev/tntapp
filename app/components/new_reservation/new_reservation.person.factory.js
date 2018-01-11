@@ -13,5 +13,10 @@ export default function NewReservationPersonFactory() {
     instance.triggerAdditionalInfo = () => {
       instance.additional_is_opened = !instance.additional_is_opened;
     };
+
+    instance.showAutocompleteCustomerName = () =>
+      !instance.is_customer_reservation &&
+      instance.settings &&
+      instance.settings.suggest_customer_name;
   };
 }
