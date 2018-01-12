@@ -1,107 +1,129 @@
-
-  <div class='col-lg-4 col-md-4 col-sm-6'>
-    <div class='dashboard-reservation panel'>
-      <div class='panel-heading'>
-        Reserveringen
-      </div>
-      <div class='panel-body relative'>
-          <div class='col-xs-6 text-center m-t-sm' ng-repeat='(productId, guests) in charts.charts.graphs.guests_by_product'>
-            <div class='dashboard-reservation__chart'>
-              <div ng-click='charts.showReservations(productId)'
-                   ui-jq='easyPieChart'
-                   ui-options='{
-                        percent: charts.charts.getPercent(charts.charts.graphs.guests_by_product[0],
-                        charts.charts.graphs.guests_by_product[productId]),
-                        lineWidth: 2,
-                        trackColor: "#787878",
-                        barColor: "#f6f6f6",
-                        scaleColor: false,
-                        size: 84,
-                        rotate: 90,
-                        lineCap: "butt"
-                      }'>
-                <div>
-                  <span>{{ guests }}</span>
-                </div>
+<div class='col-lg-4 col-md-4 col-sm-6'>
+  <div class='dashboard-reservation panel'>
+    <div class='panel-heading'>
+      Reserveringen
+    </div>
+    <div class='panel-body relative'>
+        <div class='col-xs-6 text-center m-t-sm' ng-repeat='(productId, guests) in charts.charts.graphs.guests_by_product'>
+          <div class='dashboard-reservation__chart'>
+            <div ng-click='charts.showReservations(productId)'
+                 ui-jq='easyPieChart'
+                 ui-options='{
+                      percent: charts.charts.getPercent(charts.charts.graphs.guests_by_product[0],
+                      charts.charts.graphs.guests_by_product[productId]),
+                      lineWidth: 2,
+                      trackColor: "#787878",
+                      barColor: "#f6f6f6",
+                      scaleColor: false,
+                      size: 84,
+                      rotate: 90,
+                      lineCap: "butt"
+                    }'>
+              <div>
+                <span>{{ guests }}</span>
               </div>
             </div>
-            <div class='dashboard-reservation__title m-t-sm m-b-sm'>
-              {{ charts.charts.graphs.products[productId] }}
-            </div>
           </div>
-
-      </div>
-    </div>
-
-    <div class='dashboard-reservation panel deze-week' resize>
-      <div class='panel-heading'>
-        Deze week
-      </div>
-      <div class='panel-body'>
-        <div ng-if="charts.charts.graphs.day_guests_arr" ui-jq="plot" ui-options="
-          [
-            {
-              data: {{ charts.charts.graphs.day_guests_arr}},
-              label: '',
-              points: { show: true, radius: 2 },
-              lines: {
-                show: true,
-                fill: false,
-                lineWidth: 1,
-              }
-            },
-          ],
-          {
-            colors: [ '#bababa' ],
-            series: { shadowSize: 2 },
-            xaxis:{ ticks: {{ charts.charts.graphs.week_axis }}, tickColor: '#fff', font: { color: '#999' } },
-            yaxis:{ ticks: 10, tickDecimals:0, tickColor: '#f4f4f4', font: { color: '#999' } },
-            grid: { labelMargin: 20, margin: 0, minBorderMargin: 10,  hoverable: true, clickable: true, borderWidth: 0, color: '#f4f4f4' },
-            tooltip: false,
-            resetAxes: true
-          }
-        " style="width:100%;height:240px"></div>
-      </div>
-
-      <div class='panel-footer table-wrapper'>
-        <div class='year-panel'>
-          <div class="bottom_total_title">Totaal</div>
-          <div class="bottom_total_count">{{ charts.charts.graphs.total_guests_y }}</div>
+          <div class='dashboard-reservation__title m-t-sm m-b-sm'>
+            {{ charts.charts.graphs.products[productId] }}
+          </div>
         </div>
-        <div class='month-panel'>
-          <div class="bottom_total_title">Maand</div>
-          <div class="bottom_total_count">{{ charts.charts.graphs.total_guests_m }}</div>
-        </div>
-        <div class='week-panel'>
-          <div class="bottom_total_title">Week</div>
-          <div class="bottom_total_count">{{ charts.charts.graphs.total_guests_w }}</div>
-        </div>
-      </div>
 
     </div>
-
-    <div class='panel'>
-      <div class='panel-heading'>Repeat guests</div>
-      <div class='panel-body no-padder'>
-        <table class='table m-b-none'>
-          <thead>
-            <tr>
-                <th width='80%'>Naam</th>
-                <th>Repeats</th>
-                <th class='text-right'>Allergy</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat='item in charts.guests_with_repeats'>
-              <td>{{ item.customer.last_name }}  {{ item.customer.first_name }}</td>
-              <td class='text-center'>{{ item.repeat_count }}</td>
-              <td class='text-center'><span class='mdi mdi-exclamation i-20'
-                           ng-if='charts.guests_ids_with_allergies[item.customer.id]'></span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
   </div>
 
+  <div class='panel'>
+    <div class='panel-heading'>Vaste gast</div>
+    <div class='panel-body no-padder'>
+      <table class='table m-b-none'>
+        <thead>
+          <tr>
+              <th width='40%'>Naam</th>
+              <th>TheNextReview</th>
+              <th>Aantal bezoeken</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat='item in charts.guests_with_repeats'>
+            <td>{{ item.customer.last_name }}  {{ item.customer.first_name }}</td>
+            <td><chart-rating tnrrating='item.customer.average_rating'></chart-rating></td>
+            <td>{{ item.repeat_count }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class='panel'>
+    <div class='panel-heading'>Speciale voorkeuren gasten vandaag</div>
+    <div class='panel-body no-padder'>
+      <table class='table m-b-none'>
+        <thead>
+          <tr>
+              <th width='60%'>Naam</th>
+              <th>Bijzonderheden</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat='item in charts.guests_with_allergies'>
+            <td>{{ item.last_name }}  {{ item.first_name }}</td>
+            <td>
+              <p ng-if='item.allergies.length'><small class='font-thin'>Allergiën</small></p>
+              <p ng-repeat='allergy in item.allergies' ng-bind='allergy.allergy'></p>
+              <p ng-if='item.notes.length'><small class='font-thin'>Opmerkingen</small></p>
+              <p ng-repeat='note in item.notes' ng-bind='note.note'></p>
+              <p ng-if='item.preferences.length'><small class='font-thin'>Voorkeuren</small></p>
+              <p ng-repeat='preference in item.preferences'>{{ preference.name }}: {{ preference.value }}</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class='dashboard-reservation panel deze-week' resize>
+    <div class='panel-heading'>
+      Deze week
+    </div>
+    <div class='panel-body'>
+      <div ng-if="charts.charts.graphs.day_guests_arr" ui-jq="plot" ui-options="
+        [
+          {
+            data: {{ charts.charts.graphs.day_guests_arr}},
+            label: '',
+            points: { show: true, radius: 2 },
+            lines: {
+              show: true,
+              fill: false,
+              lineWidth: 1,
+            }
+          },
+        ],
+        {
+          colors: [ '#bababa' ],
+          series: { shadowSize: 2 },
+          xaxis:{ ticks: {{ charts.charts.graphs.week_axis }}, tickColor: '#fff', font: { color: '#999' } },
+          yaxis:{ ticks: 10, tickDecimals:0, tickColor: '#f4f4f4', font: { color: '#999' } },
+          grid: { labelMargin: 20, margin: 0, minBorderMargin: 10,  hoverable: true, clickable: true, borderWidth: 0, color: '#f4f4f4' },
+          tooltip: false,
+          resetAxes: true
+        }
+      " style="width:100%;height:240px"></div>
+    </div>
+
+    <div class='panel-footer table-wrapper'>
+      <div class='year-panel'>
+        <div class="bottom_total_title">Totaal</div>
+        <div class="bottom_total_count">{{ charts.charts.graphs.total_guests_y }}</div>
+      </div>
+      <div class='month-panel'>
+        <div class="bottom_total_title">Maand</div>
+        <div class="bottom_total_count">{{ charts.charts.graphs.total_guests_m }}</div>
+      </div>
+      <div class='week-panel'>
+        <div class="bottom_total_title">Week</div>
+        <div class="bottom_total_count">{{ charts.charts.graphs.total_guests_w }}</div>
+      </div>
+    </div>
+  </div>
+</div>
