@@ -195,31 +195,6 @@ export default class User {
     });
   }
 
-  // move subscription methods to separate service
-  startSubscription(companyId) {
-    return this.$http({
-      url: `${API_URL}/company/${companyId}/subscription/start`,
-      method: 'POST',
-    }).then(result => result.data);
-  }
-
-  finishSubscription(companyId, transactionId) {
-    return this.$http({
-      url: buildURL(`${API_URL}/company/${companyId}/subscription/finish`, {
-        transaction_id: transactionId,
-      }),
-      method: 'POST',
-    }).then(result => result.data);
-  }
-
-  inviteFriend(companyId, email) {
-    return this.$http({
-      url: `${API_URL}/company/${companyId}/subscription/invite`,
-      method: 'POST',
-      data: { email },
-    }).then(result => result.data);
-  }
-
   loadTheme() {
     this.Settings
       .getThemeSettings(this.current_company.id).then(
