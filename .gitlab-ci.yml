@@ -1,23 +1,13 @@
 image: node
 
 stages:
-  #- beta
   - production
   - staging2
-
-# beta:staging:
-#   stage: beta
-#   only:
-#     - release
-#   environment: staging
-#   script:
-#     - npm run build_beta
-#     - rsync --rsync-path="doas rsync" -ave ssh --delete * oleglukashev@icarus.thenextsoftware.io:/www/beta.thenexttable/
 
 production:staging:
   stage: production
   only:
-    - release
+    - master
   environment: staging
   script:
     - npm run build_production
