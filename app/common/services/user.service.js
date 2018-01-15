@@ -185,7 +185,7 @@ export default class User {
     }).then(result => result.data);
   }
 
-  uploadPhoto(userId, file) {
+  uploadPhoto(userId, file, skipJwtAuth) {
     const header = skipJwtAuth ? null : { Authorization: `Bearer ${this.JWT.get()}` };
 
     return this.Upload.upload({
@@ -193,23 +193,6 @@ export default class User {
       data: { photo: file },
       headers: header,
     });
-  }
-
-  getPhoto(userId) {
-    const deferred = this.$q.defer();
-
-    if (!this.current_company) {
-      return deferred.promise;
-    }
-
-    return this.$http({
-      url: `${API_URL}/company/${this.current_company.id}/user/${userId}/photo?${new Date().getTime()}`,
-      method: 'GET',
-      ignoreLoadingBar: true,
-      headers: {
-        Authorization: `Bearer ${this.JWT.get()}`,
-      },
-    }).then(result => result.data);
   }
 
   loadTheme() {
