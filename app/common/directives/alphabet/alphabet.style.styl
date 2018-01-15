@@ -1,0 +1,35 @@
+alphabet
+  position: fixed
+  top: 50%
+  margin-top: -336px
+  right: 8px
+  width: 36px
+
+  .panel
+    margin: 0
+
+  ul
+    list-style-type: none
+    padding: 0
+    margin: 0
+
+    li
+      padding: 2px 0
+      text-align: center
+
+      :hover
+        font-weight: bold
+
+alphabet[group-by="1"]
+  display: none
+
+alphabet[group-by="2"]
+  width: 50px
+  margin-top: -180px
+
+@media (min-height: 820px)
+  alphabet[group-by="1"]
+    display: block
+
+  alphabet[group-by="2"]
+    display: none

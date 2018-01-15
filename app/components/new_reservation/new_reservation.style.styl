@@ -1,0 +1,85 @@
+.reservation_modal
+  md-content
+    padding-bottom 0
+    min-height modal-height
+
+    md-tabs.reservation_tabs
+      md-tabs-wrapper
+        md-tabs-canvas
+          height new-reserv-tab-height
+
+          md-pagination-wrapper
+            height new-reserv-tab-height
+
+            md-tab-item.md-tab
+              width 16.66%
+              height new-reserv-tab-height
+
+      md-tabs-content-wrapper
+        md-tab-content
+          min-height 464px
+          .walk-in-wrapper
+            min-height 520px !important
+          .reservation_person,
+          .reservation_zone,
+          .reservation_group
+            padding-bottom 78px
+
+            & > button[type='submit']
+              position absolute
+              bottom 0
+            & > button[type='button']
+              position absolute
+              bottom 46px
+
+          .reservation_person_count
+            .wrapper
+              .w-lg
+                & > label
+                  padding 12px 0
+                  width 44px
+                  border-radius 50%
+                  border none
+                  box-shadow none
+
+          .reservation_zone
+            .wrapper
+              .zones_boxes
+                label.active
+                  background-color #fff
+                  border-color #dee5e7
+                  color font-color
+              .tables_boxes
+                label.active
+                  color #fff !important
+
+          .reservation_group
+            .wrapper
+              label.btn.active
+                color #fff !important
+
+    @media (max-width 600px)
+      md-tabs.reservation_tabs
+        md-tabs-wrapper
+          md-tabs-canvas
+            md-pagination-wrapper
+              md-tab-item
+                .text-center
+                  display none
+
+                  &:first-child
+                    display block
+                    heght 46px
+
+                    i
+                      font-size 22px
+                      line-height 46px
+
+.time_item
+  display inline-block
+  margin 5px 5px 5px 0
+
+for theme in 'default' 'aqua' 'lego' 'chocolate'
+  .{theme}-theme
+    .walk-in-wrapper
+      border-top 56px lookup(theme + '-theme-color') solid

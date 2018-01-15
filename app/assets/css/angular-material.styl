@@ -1,0 +1,276 @@
+.md-open-menu-container
+  position: absolute
+
+md-input-container
+  padding-bottom 0
+  margin-bottom 0
+
+  input
+    font-size 16px
+
+  label,
+  .md-placeholder
+    color #929292
+
+  [ng-messages]
+    div
+      color rgb(244,67,54)
+      font-size 12px
+      line-height 14px
+
+  &>md-icon.i-20
+    line-height 20px
+
+  &.md-input-invalid
+    &.md-input-focused
+      label
+        color rgb(244,67,54)
+
+    .md-input
+      border-color rgb(244,67,54)
+
+
+.md-backdrop.md-opaque
+  background none
+
+.md-sidenav-right
+  top 72px
+
+.md-sidenav-right,
+.md-sidenav-left
+  md-content
+    .wrapper
+      color #fff
+
+md-toolbar
+  color #fff
+  border-radius 6px 6px 0 0
+
+md-content
+  min-height modal-height
+  position relative
+  border-radius 0 0 6px 6px
+  background-color #fff
+
+  .md-content-view
+    overflow-y auto
+    height 100%
+    height modal-height
+
+  .md-content-submit
+    min-height modal-height - 46px
+    padding-bottom 46px
+
+  .md-content-button
+    position absolute
+    width 100%
+    left 0
+    bottom 0
+
+@media (max-width 768px)
+  md-toolbar
+    border-radius 0
+
+  md-content
+    border-radius 0
+
+md-select
+  padding 0
+
+  md-select-value
+    display -webkit-box
+    display -webkit-flex
+    display flex
+    -webkit-box-align center
+    -webkit-align-items center
+    align-items center
+    padding 2px 2px 1px
+    border-bottom-width 1px
+    border-bottom-style solid
+    background-color transparent
+    position relative
+    box-sizing content-box
+    min-width 54px
+    min-height 26px
+    -webkit-box-flex 1
+    -webkit-flex-grow 1
+    flex-grow 1
+    border-bottom-color border-color
+
+    .md-text
+      font-size 16px
+
+    .md-select-icon
+      display block
+      -webkit-box-align end
+      -webkit-align-items flex-end
+      align-items flex-end
+      text-align end
+      width 24px
+      margin 0 4px
+      -webkit-transform translate3d(0,-2px,0)
+      transform translate3d(0,-2px,0)
+      font-size 1.2rem
+
+      &:after
+        display block
+        content '\25BC'
+        position relative
+        top 2px
+        speak none
+        font-size 13px
+        -webkit-transform scaleY(.5) scaleX(1)
+        transform scaleY(.5) scaleX(1)
+
+.md-select-menu-container,
+md-menu-content
+  background-color #fff
+
+  md-menu-item
+    & > .md-button md-icon i.mdi
+      display block
+      line-height 24px
+      font-size 24px
+
+  md-menu-divider
+    background-color rgba(0, 0, 0, 0.12)
+
+md-switch
+  .md-bar
+    background-color font-color
+  .md-thumb
+    background-color #fff
+  &.md-checked
+    .md-bar
+      opacity 0.7
+
+md-radio-button
+  margin 8px 8px 8px 0
+
+md-checkbox
+  margin 8px 8px 8px 0
+
+  &.md-checked
+    .md-icon
+      border-color transparent
+
+      &:after
+        border-color #fff
+
+  &[disabled]
+    opacity 0.5
+
+.md-form-group
+  padding 10px 0
+
+md-datepicker
+  &>.md-button.md-datepicker-button
+    padding 0
+    margin 3px 0 0 0
+    width 24px
+    height 24px
+    top 0
+    min-height 0
+
+  &>.md-datepicker-input-container
+    .md-datepicker-input
+      font-size 16px
+      padding 3px 0 4px
+      border-color input-border-color
+
+.md-datepicker-calendar-pane
+  border-color #fff
+  z-index 1050
+
+  .md-datepicker-input-mask
+    display none
+  .md-datepicker-calendar
+    background-color #fff
+
+    .md-calendar-day-header
+      background #fff
+      color font-color
+
+    .md-calendar
+      tr:last-child
+        td
+          border-bottom-color: rgb(238,238,238);
+
+      .md-calendar-date
+        &:hover,
+        &.md-calendar-date-today
+          .md-calendar-date-selection-indicator
+            background-color #edf1f2
+            color font-color
+
+        &.md-calendar-selected-date
+          .md-calendar-date-selection-indicator
+            color #fff
+
+md-tabs.hidden_tab > md-tabs-wrapper
+  display none
+md-tabs
+  border-radius 0
+
+  md-tabs-wrapper
+    md-tabs-canvas
+      height tab-height
+
+      md-pagination-wrapper
+        width 100%
+        height tab-height
+
+        md-tab-item.md-tab
+          padding 5px 0
+          font-size 16px
+          line-height 30px
+          color muted-color
+          height tab-height
+
+          &.md-active
+            color #fff
+
+        md-ink-bar
+          height 4px
+
+md-list-item
+  font-size 16px
+  border-bottom 1px solid border-color
+
+  &:last-of-type
+    border-width 0
+
+  &.active
+    background-color list-item-active-color
+
+md-icon
+  line-height 24px
+  text-align center
+
+._md-datepicker-floating-label._md-datepicker-has-calendar-icon
+  & >label:not(.md-no-float):not(.md-container-ignore)
+    right 48px
+
+.md-dialog-container
+  z-index 1066
+  md-dialog
+    background-color: #fff
+
+md-select-menu
+  md-content
+    md-optgroup
+      color #929292
+
+      md-option
+        color font-color
+
+    md-option[disabled]
+      color #929292
+
+  &[multiple]
+    md-option.md-checkbox-enabled[selected]
+      .md-icon:after
+        border-color #fff
+
+.md-panel.md-tooltip
+  color: #fff

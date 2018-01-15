@@ -1,0 +1,44 @@
+<div class='panel'>
+  <div class='panel-heading'>Medewerkers</div>
+  <div class='panel-body no-padder'>
+    <table class='table no-margin' ng-show='employees_settings.is_loaded'>
+      <thead>
+        <th>Naam</th>
+        <th>Email</th>
+        <th>Beheersrechten</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr ng-repeat='employee in employees_settings.employees'>
+          <td class='v-middle'>{{ employee.user.first_name }} {{ employee.user.last_name }}</td>
+          <td class='v-middle'>{{ employee.user.email }}</td>
+          <td class='v-middle'>{{ employee.manage_access ? 'Ja' : 'Nee' }}</td>
+          <td class='v-middle text-right'>
+            <md-menu>
+                <button md-ink-ripple
+                      class='md-btn md-fab no-shadow'
+                      ng-disabled='disabled'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                      aria-disabled='false'
+                      ng-click='$mdMenu.open($event)'>
+                  <i class='mdi mdi-dots-vertical i-24'></i>
+                </button>
+                <md-menu-content>
+                  <md-menu-item>
+                    <md-button ng-click='employees_settings.editEmployee(employee.id)'>Medewerker bewerken</md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class='panel-footer'>
+    <button md-ink-ripple class='md-btn md-flat btn-fw text-success' ng-click='employees_settings.addEmployee();'>
+      <i class='mdi mdi-plus-circle'></i>
+      MEDEWERKER TOEVOEGEN
+    </button>
+  </div>
+</div>

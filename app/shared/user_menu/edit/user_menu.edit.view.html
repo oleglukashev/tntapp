@@ -1,0 +1,27 @@
+<section class='no-margin user_edit'>
+  <md-toolbar>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex>Algemene informatie</h2>
+      <md-button class="md-icon-button" ng-click='edit_user.closeModal();' md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <md-tabs class='user_menu_tabs'
+             flex
+             md-selected='edit_user.tab_index'
+             md-no-pagination
+             md-stretch-tabs
+             md-dynamic-height>
+      
+      <div ng-init='controller = edit_user' data-ng-include=" 'user_menu.main_info.view.html' "></div>
+
+      <div ng-init='controller = edit_user' data-ng-include=" 'user_menu.comments.view.html' "></div>
+
+      <div ng-init='controller = edit_user' data-ng-include=" 'user_menu.preferences.view.html' "></div>
+
+      <div ng-init='controller = edit_user' data-ng-include=" 'user_menu.allergies.view.html' "></div>
+    </md-tabs>
+  </md-content>
+</section>

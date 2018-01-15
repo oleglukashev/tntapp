@@ -1,0 +1,34 @@
+<td>
+  <div ng-class='item.icon_color'
+       ng-hide='hideIcon'
+       class='md-list-item-left img-circle'>
+    <md-tooltip>{{ item.dutch_status }}</md-tooltip>
+    <div class='pull-left m-l-sm'>
+      <i ng-class='item.icon' class='mdi i-20'></i>
+    </div>
+  </div>
+</td>
+<td>
+  <i class='mdi mdi-clock'></i>
+  {{ item.time }}
+</td>
+<td>{{ item.product_name }}</td>
+<td>{{ item.name }}</td>
+<td>
+  <i class='mdi mdi-account-multiple'></i>
+  {{ item.number_of_persons }}x
+</td>
+<td>
+  <span ng-show='item.tables'>
+    <img class='table_icon' src='public/images/table.svg' />
+    {{ item.tables }}
+  </span>
+</td>
+<td show-more show-more-trigger={{agenda.view_type}}>
+  {{ item.notes }}
+</td>
+<td>
+  <div class='pull-right'
+       data-ng-include=" 'reservation_status_menu.view.html' "
+       ng-init='controller = controller;'></div>
+</td>

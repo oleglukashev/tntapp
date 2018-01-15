@@ -1,0 +1,46 @@
+<md-menu>
+  <button md-ink-ripple
+        class='md-icon-button md-button'
+        ng-disabled='disabled'
+        aria-haspopup='true'
+        aria-expanded='false'
+        aria-disabled='false'
+        ng-click='$mdMenu.open($event);'>
+    <i ng-if='agendaIcon'
+       class='mdi i-20'
+       ng-class='controller.ReservationStatus.getIcon(item, item.reservation)'
+       title='{{ agenda.AppConstants.reservationDutchStatuses[part.reservation.status] }}'></i>
+    <i ng-if='!agendaIcon'
+       class='mdi mdi-dots-vertical i-24'></i>
+  </button>
+  <md-menu-content width='4' class='reservation_menu'>
+    <md-menu-item>
+      <md-button ng-click='controller.openEditReservationModal(item.reservation, item.part)'>
+        <md-icon aria-label>
+          <i class='mdi mdi-pencil' />
+        </md-icon>
+        <span>Aanpassen</span>
+      </md-button>
+    </md-menu-item>
+    <md-menu-divider role='separator'></md-menu-divider>
+    <md-menu-item ng-repeat='status in controller.statuses'>
+      <md-button ng-click='controller.chooseChangeStatusMethod(item.reservation, status)'
+                 ng-disabled='item.reservation.status == status'>
+        <md-icon aria-label>
+          <i class='mdi mdi-with-button-padding'
+             ng-class='controller.status_icon[status]'></i>
+        </md-icon>
+        <span>{{ controller.dutch_statuses[status] }}</span>
+      </md-button>
+    </md-menu-item>
+    <md-menu-divider role='separator'></md-menu-divider>
+    <md-menu-item>
+      <md-button ng-click='controller.answer(item.reservation);'>
+        <md-icon aria-label>
+          <i class='mdi mdi-reply' />
+        </md-icon>
+        <span>Antwoord</span>
+      </md-button>
+    </md-menu-item>
+  </md-menu-content>
+</md-menu>

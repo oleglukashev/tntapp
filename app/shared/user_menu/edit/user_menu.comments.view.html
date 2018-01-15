@@ -1,0 +1,41 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'>Opmerkingen</div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='md-content-submit'>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-xl'>
+          <label ng-repeat='note in controller.customerNotes'
+                 class='btn btn-default block m-b-xs no-shadow text-success text-left'
+                 ng-model='controller.note'
+                 uncheckable
+                 btn-radio='note'>
+            <span>{{ note.note }}</span>
+            <span class='pull-right' ng-click='controller.deleteNote($index)'>
+              <i class='mdi mdi-close i-21'></i>
+            </span>
+          </label>
+
+          <form name='user_notes_form'>
+            <div class='wrapper'>
+              <md-input-container class='md-block'>
+                <label>Opmerking</label>
+                <textarea required ng-model='controller.note.note'></textarea>
+              </md-input-container>
+
+              <input type="hidden" ng-model='controller.note.id' />
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <button type='submit'
+              ng-class="{ 'disabled': !user_notes_form.$valid || controller.notes_is_submitting }"
+              ng-click="controller.submitNoteForm(user_notes_form)"
+              class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
+        <span>OPSLAAN</span>
+      </button>
+    </div>
+  </md-tab-body>
+</md-tab>

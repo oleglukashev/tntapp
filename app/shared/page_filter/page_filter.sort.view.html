@@ -1,0 +1,13 @@
+<md-input-container class='no-margin p-t-none'>
+  <md-icon class='mdi mdi-sort i-24'></md-icon>
+  <md-select class='pull-left'
+             ng-change='controller.changeSortPostProcess()'
+             ng-model='controller.sort'>
+    <md-optgroup label='Filter de reservering'>
+      <md-option ng-value='item'
+                 ng-repeat='item in controller.sort_params'>
+        {{ item.name }}
+      </md-option>
+    </md-optgroup>
+  </md-select>
+</md-input-container>

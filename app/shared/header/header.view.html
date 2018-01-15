@@ -1,0 +1,79 @@
+<!-- navbar header -->
+<div class='header-mobile navbar-header visible-xs'>
+  <button class='header-mobile__menu pull-left visible-xs'
+          ng-controller='MobileMenuCtrl as mobile_menu'
+          ng-click='mobile_menu.openMenu()'>
+    <i class='mdi mdi-format-align-justify'></i>
+  </button>
+  <!-- brand -->
+
+</div>
+<!-- / navbar header -->
+
+<!-- navbar collapse -->
+<div class="collapse navbar-collapse">
+  <div class='header-logo pull-left'>
+    <a href='#'></a>
+  </div>
+  <div class='header-menu'>
+    <md-tabs md-no-ink='true' class='header-menu-wrapper' ng-click='header.hideRightSidebar()'>
+      <md-tab md-active='header.isDiactiveState()'></md-tab>
+      <md-tab md-active='header.isActiveState("app.dashboard")' ui-sref='app.dashboard'>Dashboard</md-tab>
+      <md-tab md-active='header.isActiveState("app.reservations")' ui-sref='app.reservations'>Vandaag</md-tab>
+      <md-tab md-active='header.isActiveState("app.agenda")' ui-sref='app.agenda'>Agenda</md-tab>
+      <md-tab md-active='header.isActiveState("app.profiles")' ui-sref='app.profiles'>Profielen</md-tab>
+    </md-tabs>
+  </div>
+  <ul class='nav navbar-nav hidden-xs navbar-right'>
+    <li class='dropdown' dropdown ng-click='header.hideRightSidebar()'>
+      <div class='header-account-menu pull-right m-l-sm'>
+        <div class='dropdown-toggle clearfix' dropdown-toggle>
+          <div class='header-account-menu__info pull-left hidden-sm hidden-md m-l-sm'>
+            <p class='header-account-menu__name'>{{ header.current_user.first_name }}</p>
+            <div class='header-account-menu__info'>
+              <p>{{ header.current_company.name }}</p>
+            </div>
+          </div>
+          <b class='pull-right caret m-l-sm m-t'></b>
+        </div>
+
+        <!-- dropdown -->
+        <ul class="header-account-menu-box dropdown-menu animated">
+          <li ng-repeat='company in header.User.getCompanies()'>
+            <a href='javascript://' ng-click='header.setDefaultCompany(company.id)'>
+              <span>{{ company.name }}</span>
+              <i ng-show='company.id === header.current_company_id' class='mdi mdi-check pull-right'></i>
+            </a>
+          </li>
+          <li class='m-t-sm'>
+            <a href='#' ui-sref='app.settings.general'>
+              <span>Instellingen</span>
+            </a>
+          </li>
+          <li>
+            <a href='#' ui-sref='app.upgrade'>
+              <span>Upgrade</span>
+            </a>
+          </li>
+          <li>
+            <a href='#' ng-click='header.logout()'>
+              <span>Uitloggen</span>
+            </a>
+          </li>
+        </ul>
+        <!-- / dropdown -->
+      </div>
+    </li>
+  </ul>
+  <growl-notifications ng-if="header.upload_photo_error"></growl-notifications>
+
+  <growl-notification ng-if="header.upload_photo_error" on-close="header.upload_photo_error = ''">
+    Error: {{ header.upload_photo_error }}
+  </growl-notification>
+
+  <button type='button' md-ink-ripple class='header-account-menu__avatar bg-light pull-right' ngf-select="header.uploadPhoto($file, $invalidFiles)" accept="image/*" ngf-pattern="'.png,.jpg'" ngf-max-height="2000" ngf-max-size="1MB" ng-model="picFile" ng-click="upload_photo.upload_photo_error=''" ng-style="{'background-image': header.User.current.photo ? 'url('+header.user_avatar+')' : ''}" ng-class="picFile.progress < 100 ? photo_loading : ''"></button>
+
+  <div data-ng-include=" 'search.view.html' " ng-controller='SearchHeaderCtrl as search'></div>
+
+</div>
+<!-- / navbar collapse -->

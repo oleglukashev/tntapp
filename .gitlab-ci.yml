@@ -1,0 +1,43 @@
+image: node
+
+stages:
+  #- beta
+  - production
+  - staging2
+
+# beta:staging:
+#   stage: beta
+#   only:
+#     - release
+#   environment: staging
+#   script:
+#     - npm run build_beta
+#     - rsync --rsync-path="doas rsync" -ave ssh --delete * oleglukashev@icarus.thenextsoftware.io:/www/beta.thenexttable/
+
+production:staging:
+  stage: production
+  only:
+    - release
+  environment: staging
+  script:
+    - npm run build_production
+    - rsync --rsync-path="doas rsync" -ave ssh --delete * oleglukashev@icarus.thenextsoftware.io:/www/dashboard1.thenexttable/
+
+staging2:staging:
+  stage: staging2
+  only:
+    - develop
+  environment: staging
+  script:
+    - npm run build_staging2
+    - rsync --rsync-path="doas rsync" -ave ssh --delete * oleglukashev@icarus.thenextsoftware.io:/www/staging2.thenexttable/
+
+before_script:
+  - apt-get update -y && apt-get install openssh-client rsync -y
+  #- 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client rsync -y )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$DEPLOY_KEY")
+  - mkdir -p ~/.ssh
+  - 'echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - npm install
+  - npm install babel-loader babel-core webpack

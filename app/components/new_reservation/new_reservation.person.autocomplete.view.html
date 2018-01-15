@@ -1,0 +1,30 @@
+<md-input-container class='md-block no-margin no-padder'>
+  <md-autocomplete
+      md-selected-item='reserv.selectedItem'
+      md-search-text='reserv.reservation.last_name'
+      md-selected-item-change='reserv.selectedItemChange(item)'
+      md-items='item in reserv.search(reserv.reservation.last_name)'
+      md-item-text='item.last_name'
+      md-min-length='3'
+      md-delay='500'
+      md-floating-label="Achternaam">
+    <md-item-template>
+      <span md-highlight-text='reserv.reservation.last_name' md-highlight-flags='^i'>{{item.display}}</span>
+    </md-item-template>
+  </md-autocomplete>
+</md-input-container>
+<md-input-container class='md-block no-margin no-padder'>
+  <md-autocomplete
+      md-selected-item='reserv.selectedItem'
+      md-search-text='reserv.reservation.first_name'
+      md-selected-item-change='reserv.selectedItemChange(item)'
+      md-items='item in reserv.search(reserv.reservation.first_name)'
+      md-item-text='item.first_name'
+      md-min-length='3'
+      md-delay='500'
+      md-floating-label="Voornaam">
+    <md-item-template>
+      <span md-highlight-text='reserv.reservation.first_name' md-highlight-flags='^i'>{{item.display}}</span>
+    </md-item-template>
+  </md-autocomplete>
+</md-input-container>

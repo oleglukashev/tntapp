@@ -1,0 +1,38 @@
+<section class='reservation_part_edit no-margin'>
+  <md-toolbar class='blue-grey-900'>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex>Aanpassen</h2>
+      <md-button class="md-icon-button" ng-click='reserv.Confirm.onCloseModal(reserv.$modalInstance);' md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <div ng-hide='reserv.success'>
+      <md-tabs class='reservation_edit_tabs'
+               flex
+               md-selected='reserv.selected_index'
+               md-no-pagination
+               md-stretch-tabs
+               md-dynamic-height>
+
+        <div data-ng-include=" 'reservation_part.reservation.view.html' "></div>
+
+        <div ng-init='controller = reserv' data-ng-include=" 'user_menu.main_info.view.html' "></div>
+
+        <div ng-init='controller = reserv' data-ng-include=" 'user_menu.comments.view.html' "></div>
+
+        <div ng-init='controller = reserv' data-ng-include=" 'user_menu.preferences.view.html' "></div>
+
+        <div ng-init='controller = reserv' data-ng-include=" 'user_menu.allergies.view.html' "></div>
+      </md-tabs>
+      <div class='wrapper red-300 layout-align-space-around-center layout-column' ng-show='reserv.errors.length'>
+        <div class='w-xl'>
+          <div ng-repeat='error in reserv.errors'>
+            {{ error }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </md-content>
+</section>

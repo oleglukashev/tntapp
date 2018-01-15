@@ -1,0 +1,32 @@
+<div class='dashboard'>
+  <div data-ng-include=" 'dashboard_reservations.view.html' "
+       ng-controller='DashboardReservationsCtrl as reservations'></div>
+  <div data-ng-include=" 'charts.view.html' "
+       ng-controller='ChartsCtrl as charts'></div>
+
+  <div class='col-lg-2 col-md-2 hidden-xs hidden-sm'>
+    <div class='dashboard-ad panel'>
+      <div class='panel-body'>
+        <div>
+          <img class='w-full' src='public/images/receipts.png' srcset='public/images/receipts@2x.png 2x' title='receipts' />
+        </div>
+        <p>Ook je reviews bijhouden?<p/>
+      </div>
+      <div class='panel-footer text-center'>
+        <a href='https://dashboard.thenextreview.nl/register' target="_blank" md-ink-ripple class='md-btn md-flat btn-fw text-success'>Probeer gratis</a>
+      </div>
+    </div>
+
+    <div class='dashboard-ad panel'>
+      <div class='panel-body'>
+        <div>
+          <img class='w-full' src='public/images/reviews.png' srcset='public/images/reviews@2x.png 2x' title='reviews' />
+        </div>
+        <p>Wil je kasboek bij houden<p/>
+      </div>
+      <div class='panel-footer text-center'>
+        <a href='https://dashboard.kassatellen.nl' target="_blank" md-ink-ripple class='md-btn md-flat btn-fw text-success'>Probeer gratis</a>
+      </div>
+    </div>
+  </div>
+</div>

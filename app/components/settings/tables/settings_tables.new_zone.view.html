@@ -1,0 +1,71 @@
+<section class='no-margin'>
+  <md-toolbar>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex>Zone toevoegen</h2>
+      <md-button class="md-icon-button" ng-click='new_zone.closeModal();' md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <div class='md-content-submit'>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4>Wat voor soort zone wil je toevoegen?</h4>
+        </div>
+      </div>
+      <div class='clearfix'>
+        <label ng-repeat="(zone, className) in new_zone.iconsClasses"
+               ng-class="{ 'disabled': new_zone.zonesNames().includes(zone) }"
+               ng-click='new_zone.changeClass(className)'
+               class='box'
+               ng-model='new_zone.item.name'
+               uncheckable
+               btn-radio='zone'>
+          <i class='box_active_icon mdi mdi-check'></i>
+          <i class='box_icon mdi {{ new_zone.iconsClasses[zone] }}'></i>
+          <p class='no-margin'>{{ zone }}</p>
+        </label>
+      </div>
+
+      <div class='m-l-sm'>
+        <form name="new_zone_form">
+        <div class='md-form-group m-l-sm no-padder'>
+          <md-checkbox ng-model="new_zone.item.use_in_frontoffice_availability"
+                       aria-label='Gebruiken voor reserveringen via frontoffice'>
+            Gebruiken voor reserveringen via frontoffice
+          </md-checkbox>
+        </div>
+
+        <button
+              ng-hide='new_zone.add_name_is_opened'
+              class='md-btn md-flat btn-fw m-t-md m-l-xs text-success'
+              ng-click='new_zone.add_name_is_opened = true;'>
+          <i class='mdi mdi-plus-circle-outline'></i>
+          ZELF NAAM TOEVOEGEN
+        </button>
+
+        <md-input-container class='m-l-sm' ng-show='new_zone.add_name_is_opened'>
+          <label>ZELF NAAM TOEVOEGEN</label>
+          <input ng-model='new_zone.item.name' required />
+        </md-input-container>
+
+        <md-input-container ng-show="new_zone.add_name_is_opened" class="m-t-n-s">
+          <label>ICON</label>
+          <md-select ng-model="new_zone.item.icon_class" required>
+            <md-option ng-repeat="icon_class in new_zone.uniq_icons" ng-value="icon_class">
+              <i class="mdi {{ icon_class }} i-24"></i>
+            </md-option>
+          </md-select>
+        </md-input-container>
+        </form>
+      </div>
+
+      <button class='btn btn-lg btn-success text-success no-top-radius md-content-button'
+              ng-class="{ 'disabled': !new_zone_form.$valid || new_zone.is_submitting }"
+              ng-click='new_zone.submitForm();'>
+        <span>OPSLAAN</span>
+      </button>
+    </div>
+  </md-content>
+</section>

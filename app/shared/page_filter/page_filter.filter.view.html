@@ -1,0 +1,39 @@
+<button class='md-button md-mini md-icon-button no-margin pull-left'
+        ng-class='{ "md-fab md-primary": controller.filter_type == "status" }'
+        ng-click='controller.changeFilterType("status")'
+        md-ink-ripple>
+  <i class='mdi mdi-checkbox-blank-circle-outline i-24'></i>
+</button>
+<button class='md-button md-mini md-icon-button no-margin pull-left'
+        ng-class='{ "md-fab md-primary": controller.filter_type == "product" }'
+        ng-click='controller.changeFilterType("product")'
+        md-ink-ripple>
+  <i class='mdi mdi-silverware-variant i-24'></i>
+</button>
+
+<div class='select-wrapper'>
+  <button class='mdi md-icon-button md-button mdi-filter-variant no-margin i-24 pull-left'
+          md-ink-ripple></button>
+  <md-select multiple
+             class='pull-left'
+             ng-change='controller.changeFilterPostProcess()'
+             ng-model='controller.product_filter'
+             ng-show='controller.filter_type == "product"'
+             ng-model-options="{ trackBy: '$value.value' }">
+    <md-option ng-value='item'
+               ng-repeat='item in controller.product_filter_params'>
+      {{ item.value }}
+    </md-option>
+  </md-select>
+  <md-select multiple
+             class='pull-left'
+             ng-change='controller.changeFilterPostProcess()'
+             ng-model='controller.status_filter'
+             ng-show='controller.filter_type == "status"'
+             ng-model-options="{ trackBy: '$value.value' }">
+    <md-option ng-value='item'
+               ng-repeat='item in controller.status_filter_params'>
+      {{ item.value }}
+    </md-option>
+  </md-select>
+</div>

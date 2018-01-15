@@ -1,0 +1,40 @@
+<div class='md-avatar'>
+  <div ng-if='!hideIcon'
+       ng-class='item.icon_color'
+       class='md-list-item-left img-circle'>
+    <md-tooltip>{{ item.dutch_status }}</md-tooltip>
+    <div class='pull-left m-l-sm'>
+      <i ng-class='item.icon' class='mdi i-20'></i>
+    </div>
+  </div>
+  <div ng-if='hideIcon' class='md-list-item-left'>
+  </div>
+</div>
+<div class='md-list-item-text'>
+  <div class='pull-right'
+       data-ng-include=" 'reservation_status_menu.view.html' "
+       ng-init='controller = reservations;'></div>
+
+  <div class='md-list-item-content'
+       ng-click='reservations.openCustomerMenu(item.reservation.customer.id, item.id)'>
+    <h3 class='text-md'>{{ item.name }}</h3>
+    <div>
+      <i class='mdi mdi-account-multiple'></i>
+      <span class='font-thin m-r-xs'>{{ item.number_of_persons }}x</span>
+      <i class='mdi mdi-clock'></i>
+      <span class='font-thin m-r-xs'>
+        <span ng-if='showDate'>{{ item.date }}</span>
+        {{ item.time }}
+      </span>
+      <span class='m-r-xs' ng-show='item.tables'>
+        <img class='table_icon' src='public/images/table.svg' />
+        {{ item.tables }}
+      </span>
+      <i class='mdi mdi-silverware-variant' ng-if='item.product_name'></i>
+      <span class='font-thin m-r-xs'>{{ item.product_name }}</span>
+    </div>
+    <div class='font-thin' ng-if='item.notes' show-more>
+      {{ item.notes }}
+    </div>
+  </div>
+</div>

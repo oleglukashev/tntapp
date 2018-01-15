@@ -1,0 +1,44 @@
+<section class='no-margin'>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 md-truncate flex>Antwoord</h2>
+      <md-button class="md-icon-button" ng-click='antwoord.closeModal();' md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <form class='md-content-submit' name='mail_form' ng-submit='antwoord.submitForm(mail_form.$valid, "confirm");'>
+      <div class='wrapper'>
+        <div class='clearfix m-b-lg m-t-sm'>
+          <span class='md-list-item-left img-circle m-r-sm grey-100'></span>
+          <span>
+            <span class='clear'>{{ antwoord.reservation.customer.last_name }} {{ antwoord.reservation.customer.first_name }}</span>
+            <small class='text-muted'>{{ antwoord.reservation.customer.mail }}</small>
+          </span>
+        </div>
+        <md-input-container class='md-block'>
+          <label>Onderwerp</label>
+          <input ng-model='antwoord.form_data.title' required />
+        </md-input-container>
+        <md-input-container class='md-block'>
+          <label>Bericht</label>
+          <textarea rows='7'
+                    ng-model='antwoord.form_data.content'
+                    md-maxlength='1500'
+                    required></textarea>
+        </md-input-container>
+        <div class='text-right m-t-md' ng-if='antwoord.status'>
+          <button type='button'
+                  class='text-danger md-btn md-flat btn-fw'
+                  ng-click='antwoord.changeStatusWithoutSendEmail();'>AKKOORD ZONDER MAIL</button>
+        </div>
+      </div>
+      <button type='submit'
+              ng-class="{ 'disabled': !mail_form.$valid || antwoord.is_submitting }"
+              class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
+        <span>VERSTUUR</span>
+      </button>
+    </form>
+  </md-content>
+</section>

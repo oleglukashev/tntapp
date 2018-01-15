@@ -1,0 +1,33 @@
+<div class='print-block'>
+    <div class='totals'>
+        <div>Total number of guest: {{controller.totalNumberOfPersons}},</div>
+        <div>total number of resevations: {{controller.totalNumberOfReservations}}</div>
+    </div>
+    <table border='1' cellpadding='0' cellspacing='0' width='100%' class='print-reservation'>
+        <thead>
+            <th width='15%'>Aanwezig</th>
+            <th>Tafels</th>
+            <th>Tijd</th>
+            <th>Pers.</th>
+            <th>Naam</th>
+            <th>Product</th>
+            <th width='15%'>Opmerkingen</th>
+            <th width='10%''>Phone</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat='item in controller.data'
+                ng-if='reservation.status !== "cancelled"'>
+                <td align="center">
+                    <input type='checkbox' />
+                </td>
+                <td><small class='font-thin' ng-bind='item.tables'></small></td>
+                <td ng-bind='item.time'></td>
+                <td ng-bind='item.number_of_persons'></td>
+                <td ng-bind='item.name'></td>
+                <td ng-bind='item.product_name'></td>
+                <td ng-bind='item.notes'></td>
+                <td ng-bind='item.customer.primary_phone_number'></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

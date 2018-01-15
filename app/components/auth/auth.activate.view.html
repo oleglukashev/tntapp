@@ -1,0 +1,52 @@
+<div class='fade-in-right-big smooth ng-scope'>
+  <div class='container w-xxl w-auto-xs ng-scope'>
+    <div class='auth popup panel no-border m-t text-muted'>
+      <div class='panel-heading blue-grey-900'>
+        <img src='/public/images/logo@2x.png' />
+      </div>
+      <div>
+        <div class='text-muted wrapper text-center'>U moet een nieuw wachtwoord instellen. Samen met uw e-mail adres zijn dit uw logingegevens. Bewaar deze dus goed.</div>
+        <form ng-submit='auth.submitForm()'>
+          <div class='text-default wrapper text-center bg-danger' ng-show='auth.errors'>
+            <div ng-repeat='error in auth.errors'>
+              {{ error.message }}
+            </div>
+          </div>
+
+          <div class='list-group-item'>
+            <input type='password'
+                   class='form-control no-border'
+                   ng-model='auth.formData.plainPassword.first'
+                   ng-required='auth.authType == "reset_password_finish"'
+                   placeholder='Wachtwoord'
+                   autocomplete='new-password' />
+          </div>
+
+          <div class='list-group-item'>
+            <input type='password'
+                   class='form-control no-border'
+                   ng-model='auth.formData.plainPassword.second'
+                   ng-required='auth.authType == "reset_password_finish"'
+                   placeholder='Wachtwoord herhalen'
+                   autocomplete='new-password' />
+          </div>
+
+          <div class='wrapper'>
+            <button type='submit'
+                    style='height: 42px;'
+                    class='md-btn md-flat btn-fw btn-block m-t-md'
+                    ng-class="{ 'disabled': auth.isSubmitting }">
+              <span>Doorgaan</span>
+            </button>
+
+            <div class='text-center bold'>
+              <div class='m-t-lg'>
+                <a class='text-success' ui-sref='auth.register'>CREATE AN ACCOUNT</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

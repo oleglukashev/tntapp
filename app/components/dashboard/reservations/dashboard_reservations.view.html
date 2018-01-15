@@ -1,0 +1,97 @@
+<div class='col-lg-6 col-md-6 col-sm-6'>
+
+  <div ng-show='reservations.reservationsLoaded && reservations.hasReservations();'>
+    <div class='panel'>
+      <div class='panel-heading'>Actie vereist</div>
+      <md-list class='no-padder'
+               ng-show='reservations.Loaded.reservations.action_required.length'>
+        <md-list-item class='reservation_today md-2-line md-no-proxy'
+             ng-class='{"active": reservations.active_part == item.id,
+                        "cancelled": item.reservation.status == "cancelled",
+                        "b-b-none": item.reservation.id === required_data[$index + 1].reservation.id}'
+             data-ng-include=" 'dashboard_reservations.item.view.html' "
+             ng-repeat='item in required_data = reservations.Loaded.reservations.action_required'
+             ng-init='hideIcon = item.reservation.id === required_data[$index - 1].reservation.id; showDate = true'
+             ng-mouseup='reservations.active_part = item.id'
+             md-ink-ripple></md-list-item>
+      </md-list>
+      <div class='md-padding'
+           ng-hide='reservations.Loaded.reservations.action_required.length'>Geen</div>
+    </div>
+
+    <div class='panel'>
+      <div class='panel-heading'>Groepen deze week</div>
+      <md-list class='no-padder'
+               ng-show='reservations.Loaded.reservations.group_this_week.length'>
+        <md-list-item class='reservation_today md-2-line md-no-proxy'
+             ng-class='{"active": reservations.active_part == item.id,
+                        "cancelled": item.reservation.status == "cancelled",
+                        "b-b-none": item.reservation.id === group_data[$index + 1].reservation.id}'
+             data-ng-include=" 'dashboard_reservations.item.view.html' "
+             ng-repeat='item in group_data = reservations.Loaded.reservations.group_this_week'
+             ng-init='hideIcon = item.reservation.id === group_data[$index - 1].reservation.id; showDate = true'
+             ng-mouseup='reservations.active_part = item.id'
+             md-ink-ripple></md-list-item>
+      </md-list>
+      <div class='md-padding'
+           ng-hide='reservations.Loaded.reservations.group_this_week.length'>Geen</div>
+    </div>
+
+    <button ng-click='dash.openReservation()'
+            class='panel-add-button md-btn md-fab m-b'
+            md-ink-ripple>
+      <md-tooltip>Nieuwe reservering?</md-tooltip>
+      <i class='mdi mdi-plus i-24'></i>
+    </button>
+
+    <div class='panel'>
+      <div class='panel-heading'>Vandaag</div>
+      <md-list class='no-padder'
+               ng-show='reservations.ReservationPart.partsByDate(reservations.Loaded.reservations.today, reservations.moment()).length'>
+        <md-list-item class='reservation_today md-2-line md-no-proxy'
+             ng-class='{"active": reservations.active_part == item.id,
+                        "cancelled": item.reservation.status == "cancelled",
+                        "b-b-none": item.reservation.id === today_data[$index + 1].reservation.id}'
+             data-ng-include=" 'dashboard_reservations.item.view.html' "
+             ng-repeat='item in today_data = reservations.ReservationPart.partsByDate(reservations.Loaded.reservations.today, reservations.moment())'
+             ng-init='hideIcon = item.reservation.id === today_data[$index - 1].reservation.id'
+             ng-mouseup='reservations.active_part = item.id'
+             md-ink-ripple></md-list-item>
+      </md-list>
+      <div class='md-padding'
+           ng-hide='reservations.ReservationPart.partsByDate(reservations.Loaded.reservations.today, reservations.moment()).length'>Geen</div>
+    </div>
+
+    <div class='panel'>
+      <div class='panel-heading'>Laatste reserveringen</div>
+      <md-list class='no-padder'
+               ng-show='reservations.Loaded.reservations.latest.length'>
+        <md-list-item class='reservation_today md-2-line md-no-proxy'
+             ng-class='{"active": reservations.active_part == item.id,
+                        "cancelled": item.reservation.status == "cancelled",
+                        "b-b-none": item.reservation.id === latest_data[$index + 1].reservation.id}'
+             data-ng-include=" 'dashboard_reservations.item.view.html' "
+             ng-repeat='item in latest_data = reservations.Loaded.reservations.latest'
+             ng-init='hideIcon = item.reservation.id === latest_data[$index - 1].reservation.id; showDate = true'
+             ng-mouseup='reservations.active_part = item.id'
+             md-ink-ripple></md-list-item>
+      </md-list>
+      <div class='md-padding'
+           ng-hide='reservations.Loaded.reservations.latest.length'>Geen</div>
+    </div>
+  </div>
+
+  <div ng-show='reservations.reservationsLoaded && !reservations.hasReservations();'>
+    <button ng-click='dash.openReservation();' md-ink-ripple class='panel-add-button md-btn md-fab m-b'>
+      <md-tooltip>Nieuwe reservering?</md-tooltip>
+      <i class='mdi mdi-plus i-24'></i>
+    </button>
+    <div class='panel'>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-xl m-t-xxl m-b-xxl text-center'>
+          Je hebt nog geen reserveringen klik op de "+" om je eerste reservering aan te maken
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

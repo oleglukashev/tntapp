@@ -1,0 +1,105 @@
+<div class='fade-in-right-big smooth ng-scope'>
+  <div class='container w-xxl w-auto-xs ng-scope'>
+    <div class='auth popup panel no-border m-t text-muted'>
+      <div class='panel-heading blue-grey-900'>
+        <img src='/public/images/logo@2x.png' />
+      </div>
+      <div class='text-muted m-b m-t text-center'>Welkom bij TheNextTable</div>
+      <form ng-submit='auth.submitForm()'>
+        <div ng-show='auth.authType == "login"'>
+          <div class='text-default wrapper text-center bg-danger' ng-show='auth.errors'>
+            {{ auth.errors.message }}
+          </div>
+
+          <div class='list-group-item'>
+            <input type='email'
+                   class='form-control no-border'
+                   ng-model='auth.formData._username'
+                   ng-required='auth.authType == "login"'
+                   placeholder='E-mail'
+                   autocomplete='new-password' />
+          </div>
+
+          <div class='list-group-item'>
+            <input type='password'
+                   class='form-control no-border'
+                   ng-model='auth.formData._password'
+                   placeholder='Wachtwoord'
+                   autocomplete='new-password' />
+          </div>
+        </div>
+
+        <div ng-show='auth.authType == "register"'>
+          <div class='text-default wrapper text-center bg-danger' ng-show='auth.errors'>
+            <div ng-repeat='error in auth.errors'>
+              {{ error.origin }}: {{ error.message }}
+            </div>
+          </div>
+
+          <div class='list-group-item'>
+            <input type='email'
+                   class='form-control no-border'
+                   ng-model='auth.formData.email'
+                   ng-required='auth.authType == "register"'
+                   placeholder='E-mail'
+                   autocomplete='new-password' />
+          </div>
+
+          <div class='list-group-item'>
+            <input type='text'
+                   class='form-control no-border'
+                   ng-model='auth.formData.first_name'
+                   ng-required='auth.authType == "register"'
+                   placeholder='Voornaam' />
+          </div>
+
+          <div class='list-group-item'>
+            <input type='text'
+                   class='form-control no-border'
+                   ng-model='auth.formData.last_name'
+                   ng-required='auth.authType == "register"'
+                   placeholder='Achternaam' />
+          </div>
+
+          <div class='list-group-item'>
+            <input type='password'
+                   class='form-control no-border'
+                   ng-model='auth.formData.plainPassword.first'
+                   ng-required='auth.authType == "register"'
+                   placeholder='Wachtwoord'
+                   autocomplete='new-password' />
+          </div>
+
+          <div class='list-group-item no-border'>
+            <input type='password'
+                   class='form-control no-border'
+                   ng-model='auth.formData.plainPassword.second'
+                   placeholder='Wachtwoord herhalen'
+                   autocomplete='new-password' />
+          </div>
+        </div>
+
+        <div class='wrapper'>
+          <button type='submit'
+                  class='md-btn md-flat btn-fw btn-block m-t-md'
+                  ng-class="{ 'disabled': auth.isSubmitting }">
+            <span>
+              <span ng-show='auth.authType == "login"'>Login</span>
+              <span ng-show='auth.authType == "register"'>Account aanmaken</span>
+            </span>
+          </button>
+
+          <div class='text-center bold'>
+            <div class='m-t-lg'>
+              <a ng-show='auth.authType == "login"' class='text-success' ui-sref='auth.register'>CREATE AN ACCOUNT</a>
+              <a ng-show='auth.authType == "register"' class='text-success' ui-sref='auth.login'>SIGN IN</a>
+            </div>
+            <div class='m-t-sm'>
+              <a ui-sref='auth.reset_password'>WACHTWOORD VERGETEN?</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

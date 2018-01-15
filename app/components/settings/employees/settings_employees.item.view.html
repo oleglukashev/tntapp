@@ -1,0 +1,67 @@
+<section class='no-margin'>
+  <md-toolbar>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex>Mederwerker toevoegen</h2>
+      <md-button class="md-icon-button" ng-click='employee.closeModal();' md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <div class='wrapper md-content-submit' layout='column' layout-align='space-around center'>
+      <div class='w-xl'>
+        <form name='employee_form' ng-submit='employee.submitForm();'>
+          <div class='wrapper'>
+            <div ng-if='!employee.item.id'>
+              <md-input-container class='md-block' ng-class="{ 'md-input-invalid': employee.errors.children.first_name.errors }">
+                <label>Voornaam</label>
+                <input name='first_name' ng-model='employee.item.first_name' required />
+                <div ng-messages='employee_form.first_name.$error'>
+                  <div ng-message='required'>This is required!</div>
+                </div>
+                <div ng-messages='employee_form.first_name.$error'
+                     ng-show='employee.errors.children.first_name.errors'>
+                  <div ng-repeat='error in employee.errors.children.first_name.errors'>{{ error }}</div>
+                </div>
+              </md-input-container>
+              <md-input-container class='md-block' ng-class="{ 'md-input-invalid': employee.errors.children.last_name.errors }">
+                <label>Achternaam</label>
+                <input name='last_name' ng-model='employee.item.last_name' required />
+                <div ng-messages='employee_form.last_name.$error'>
+                  <div ng-message='required'>This is required!</div>
+                </div>
+                <div ng-messages='employee_form.last_name.$error'
+                     ng-show='employee.errors.children.last_name.errors'>
+                  <div ng-repeat='error in employee.errors.children.last_name.errors'>{{ error }}</div>
+                </div>
+              </md-input-container>
+              <md-input-container class='md-block' ng-class="{ 'md-input-invalid': employee.errors.children.email.errors }">
+                <label>Email</label>
+                <input type='email' name='email' ng-model='employee.item.email' required />
+                <div ng-messages='employee_form.email.$error'>
+                  <div ng-message='required'>This is required!</div>
+                </div>
+                <div ng-messages='employee_form.email.$error'
+                     ng-show='employee.errors.children.email.errors'>
+                  <div ng-repeat='error in employee.errors.children.email.errors'>{{ error }}</div>
+                </div>
+              </md-input-container>
+            </div>
+            <div class='md-form-group'>
+              <md-checkbox ng-model="employee.item.manage_access" aria-label='Beheers rechten'>
+                Beheers rechten
+              </md-checkbox>
+            </div>
+            <p ng-if='employee.item.id'><span class='text-danger' ng-click='employee.showConfirm();'>PROFIEL VERWIJDEREN</span></p>
+          </div>
+        </form>
+      </div>
+      <button type='button'
+            ng-class="{ 'disabled': !employee_form.$valid || employee.is_submitting }"
+            ng-click='employee.submitForm();'
+            class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
+        <span>OPSLAAN</span>
+      </button>
+    </div>
+  </md-content>
+</section>

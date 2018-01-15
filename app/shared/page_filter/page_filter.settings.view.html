@@ -1,0 +1,29 @@
+<md-menu>
+  <button class='mdi md-icon-button md-button mdi-settings i-24 no-margin'
+          ng-click='$mdMenu.open($event);'></button>
+  <md-menu-content>
+    <md-menu-item>
+      <md-button ng-click='controller.exportReservationsCSV();'>CSV export</md-button>
+    </md-menu-item>
+    <md-menu-item>
+      <md-button ng-click='controller.openTimeRangeSettings("product", "Producten openen/blokkeren");'>
+        Producten openen/blokkeren
+      </md-button>
+    </md-menu-item>
+    <md-menu-item>
+      <md-button ng-click='controller.openTimeRangeSettings("open", "Tijden openen / blokkeren");'>
+        Tijden openen / blokkeren
+      </md-button>
+    </md-menu-item>
+    <md-menu-item>
+      <md-button ng-click='controller.openTimeRangeSettings("overbooking", "Overboeken aan/uit zetten");'>
+        Overboeken aan/uit zetten
+      </md-button>
+    </md-menu-item>
+    <md-menu-item>
+      <md-button ng-click='controller.openTimeRangeSettings("zone", "Zone openen / blokkeren");'>
+        Zone openen / blokkeren
+      </md-button>
+    </md-menu-item>
+  </md-menu-content>
+</md-menu>
