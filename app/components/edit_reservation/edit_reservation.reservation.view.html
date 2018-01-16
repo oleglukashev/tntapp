@@ -6,7 +6,7 @@
     <div class='md-content-submit b-t' flex>
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <div class='w-xl'>
-          <form ng-submit='reserv.submitPartForm()'>
+          <form ng-submit='reserv.submitReservationForm()'>
             <md-input-container class='md-block'>
               <label>Datum</label>
               <md-datepicker ng-model='reserv.current_part.date'
@@ -69,6 +69,44 @@
               <md-icon><i class='mdi mdi-message-text i-20' /></md-icon>
               <textarea ng-model='reserv.current_part.notes' ng-required='false'></textarea>
             </md-input-container>
+            <div class='md-form-group no-padder m-b-sm'>
+              <md-checkbox ng-model='reserv.reservation.is_group'
+                           ng-change='reserv.changeIsGroupPostProcess()'
+                           aria-label='Group?'>
+                Group?
+              </md-checkbox>
+            </div>
+            <div ng-show='reserv.reservation.is_group'>
+              <label ng-repeat='part in reserv.reservation.reservation_parts'
+                     class='btn btn-default block m-b-xs no-shadow text-success text-left'
+                     ng-click='reserv.setCurrentPart(part);'
+                     ng-model='reserv.current_part'
+                     btn-radio='part'>
+                <span class='m-r-sm'>
+                  <i class='mdi mdi-clock'></i>
+                  {{ reserv.moment(part.date).format('DD.MM.YY') }} {{ part.time }}
+                </span>
+                <span class='m-r-sm' ng-show='part.number_of_persons'>
+                  <i class='mdi mdi-account-multiple'></i>
+                  <small class='font-thin m-r-xs'>{{ part.number_of_persons }}x</small>
+                </span>
+                <span class='m-r-sm' ng-show='part.product'>
+                  <i class='mdi mdi-silverware-variant'></i>
+                  <small class='font-thin'>{{ reserv.Reservation.getProductNameByProductId(reserv.products, part.product) }}</small>
+                </span>
+                <span class='m-r-sm' ng-show='part.tables.length'>
+                  <img class='table_icon' src='public/images/table.svg' />
+                  <small class='font-thin' ng-bind='reserv.Table.getTableNumbersByTableIds(reserv.tables, part.tables).join(", ")'></small>
+                </span>
+                <div class='pull-right'
+                     ng-show='reserv.reservation.reservation_parts.length > 1'>
+                  <i class='mdi mdi-delete' ng-click='reserv.removePart($event, $index);'></i>
+                </div>
+              </label>
+
+              <label ng-click='reserv.addPart()'
+                     class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>Add activiteit</label>
+            </div>
             <div class='wrapper red-300 layout-align-space-around-center layout-column' ng-show='reserv.errors.length'>
               <div class='w-xl'>
                 <div ng-repeat='error in reserv.errors'>
@@ -77,8 +115,8 @@
               </div>
             </div>
             <button type='submit'
-                      class='btn btn-lg btn-success w-full no-top-radius md-content-button'
-                      ng-class="{ 'disabled': !reserv.formIsValid() || reserv.is_submitting }">
+                    class='btn btn-lg btn-success w-full no-top-radius md-content-button'
+                    ng-class="{ 'disabled': reserv.is_submitting }">
               <span>OPSLAAN</span>
             </button>
           </form>

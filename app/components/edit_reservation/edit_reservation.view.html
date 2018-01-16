@@ -1,4 +1,4 @@
-<section class='reservation_part_edit no-margin'>
+<section class='edit_reservation no-margin'>
   <md-toolbar class='blue-grey-900'>
     <div class='md-toolbar-tools'>
       <h2 md-truncate flex>Aanpassen</h2>
@@ -9,14 +9,14 @@
   </md-toolbar>
   <md-content>
     <div ng-hide='reserv.success'>
-      <md-tabs class='reservation_edit_tabs'
+      <md-tabs class='edit_reservation_tabs'
                flex
                md-selected='reserv.selected_index'
                md-no-pagination
                md-stretch-tabs
                md-dynamic-height>
 
-        <div data-ng-include=" 'reservation_part.reservation.view.html' "></div>
+        <div data-ng-include=" 'edit_reservation.reservation.view.html' "></div>
 
         <div ng-init='controller = reserv' data-ng-include=" 'user_menu.main_info.view.html' "></div>
 

@@ -18,7 +18,7 @@ export default function templates($templateCache) {
   $templateCache.put('dashboard_reservations.view.html', require('./components/dashboard/reservations/dashboard_reservations.view.html'));
   $templateCache.put('dashboard_reservations.item.view.html', require('./components/dashboard/reservations/dashboard_reservations.item.view.html'));
   $templateCache.put('dashboard_reservations.new.view.html', require('./components/dashboard/reservations/dashboard_reservations.new.view.html'));
-  $templateCache.put('reservation_part.edit.view.html', require('./components/reservation_parts/reservation_part.edit.view.html'));
+  $templateCache.put('edit_reservation.view.html', require('./components/edit_reservation/edit_reservation.view.html'));
   $templateCache.put('rzSliderTpl.html', require('./shared/rz-slider/rz-slider.view.html'));
   $templateCache.put('reservation_answer.view.html', require('./components/reservation_answer/reservation_answer.view.html'));
   $templateCache.put('reservation_print.view.html', require('./shared/reservation_print/reservation_print.view.html'));
@@ -51,7 +51,7 @@ export default function templates($templateCache) {
   $templateCache.put('page_filter.filter.view.html', require('./shared/page_filter/page_filter.filter.view.html'));
   $templateCache.put('page_filter.sort.view.html', require('./shared/page_filter/page_filter.sort.view.html'));
 
-  $templateCache.put('reservation_part.reservation.view.html', require('./components/reservation_parts/reservation_part.reservation.view.html'));
+  $templateCache.put('edit_reservation.reservation.view.html', require('./components/edit_reservation/edit_reservation.reservation.view.html'));
   $templateCache.put('user_menu.main_info.view.html', require('./shared/user_menu/edit/user_menu.main_info.view.html'));
   $templateCache.put('user_menu.comments.view.html', require('./shared/user_menu/edit/user_menu.comments.view.html'));
   $templateCache.put('user_menu.preferences.view.html', require('./shared/user_menu/edit/user_menu.preferences.view.html'));

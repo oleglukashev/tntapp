@@ -7,19 +7,6 @@ export default class ReservationPart {
     this.moment = moment;
   }
 
-  update(companyId, reservationPartId, data, skipJwtAuth) {
-    if (!companyId) {
-      return this.$q.defer().promise;
-    }
-
-    return this.$http({
-      url: `${API_URL}/company/${companyId}/reservation_part/${reservationPartId}`,
-      skipAuthorization: skipJwtAuth,
-      method: 'PATCH',
-      data,
-    }).then(result => result.data);
-  }
-
   partsByReservations(reservations) {
     const result = [];
 
@@ -51,5 +38,20 @@ export default class ReservationPart {
       return this.moment(part.date_time, 'DD.MM.YYYY HH:mm').format('YYYY-MM-DD') ===
              this.moment(date).format('YYYY-MM-DD');
     });
+  }
+
+  getNewReservationPart() {
+    return {
+      date: null,
+      time: null,
+      number_of_persons: null,
+      product: null,
+      tables: [],
+      available_time: [],
+      occupied_tables: [],
+      zones_is_showed: true,
+      zone: [],
+      table_ids: [],
+    };
   }
 }
