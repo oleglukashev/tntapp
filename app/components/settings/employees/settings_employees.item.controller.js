@@ -1,5 +1,5 @@
 export default class SettingsEmployeesItemCtrl {
-  constructor(User, Employee, item, items, $modalInstance) {
+  constructor(User, Employee, item, items, $modalInstance, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -7,6 +7,7 @@ export default class SettingsEmployeesItemCtrl {
     this.items = items;
     this.Employee = Employee;
     this.$modalInstance = $modalInstance;
+    this.$rootScope = $rootScope;
   }
 
   submitForm() {
@@ -22,8 +23,6 @@ export default class SettingsEmployeesItemCtrl {
   }
 
   createEmployee() {
-    this.is_submitting = true;
-
     const data = {
       manage_access: this.item.manage_access,
       email: this.item.email,
@@ -31,15 +30,19 @@ export default class SettingsEmployeesItemCtrl {
       first_name: this.item.first_name,
     };
 
+    this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
     this.Employee
       .create(this.current_company_id, data).then(
         (employee) => {
           this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
           this.items.push(employee);
           this.$modalInstance.dismiss('cancel');
         },
         (error) => {
           this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
           this.errors = error.data.errors;
         },
       );

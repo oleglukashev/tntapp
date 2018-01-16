@@ -1,6 +1,6 @@
 export default class SettingsProductsCtrl {
   constructor(
-    User, Product, AppConstants, TimeRange, Slider, $scope, $timeout, $window,
+    User, Product, AppConstants, TimeRange, Slider, $scope, $rootScope, $timeout, $window,
     $modal, filterFilter,
   ) {
     'ngInject';
@@ -14,8 +14,8 @@ export default class SettingsProductsCtrl {
     this.$modal = $modal;
     this.$window = $window;
     this.$scope = $scope;
+    this.$rootScope = $rootScope;
     this.$timeout = $timeout;
-    this.is_loaded = false;
     this.errors = [];
     this.days = AppConstants.dayOfWeek;
     this.opened = {};
@@ -27,6 +27,7 @@ export default class SettingsProductsCtrl {
     this.slider = this.Slider.getOptions();
 
     this.loadProducts();
+    this.$rootScope.show_spinner = true;
   }
 
   sliderChanged(id, timeRange) {
@@ -63,11 +64,16 @@ export default class SettingsProductsCtrl {
       },
     };
 
+    this.$rootScope.show_spinner = true;
     this.TimeRange
       .edit(this.current_company_id, id, data)
       .then(
-        () => {},
-        () => {},
+        () => {
+          this.$rootScope.show_spinner = false;
+        },
+        () => {
+          this.$rootScope.show_spinner = false;
+        },
       );
 
     timeRange.options.disabled = !timeRange.options.disabled;
@@ -92,6 +98,7 @@ export default class SettingsProductsCtrl {
     this.TimeRange.getAllProductTimeRanges(this.current_company_id)
       .then(
         (ranges) => {
+          this.$rootScope.show_spinner = false;
           this.data = {};
           this.days.map((day) => {
             if (typeof this.data[day] === 'undefined') {
@@ -134,13 +141,14 @@ export default class SettingsProductsCtrl {
           });
 
           this.redrawSliders();
-          this.is_loaded = true;
+        }, () => {
+          this.$rootScope.show_spinner = false;
         },
-        () => {},
       );
   }
 
   addProduct() {
+
     const modalInstance = this.$modal.open({
       templateUrl: 'settings_products.new_product.view.html',
       controller: 'SettingsProductsNewProductCtrl as new_product',
@@ -150,9 +158,9 @@ export default class SettingsProductsCtrl {
       },
     });
 
-
     modalInstance.result.then((newProduct) => {
       let productId = 0;
+      this.$rootScope.show_spinner = true;
 
       Object.keys(this.products).forEach((key) => {
         const product = this.products[key];
@@ -234,10 +242,12 @@ export default class SettingsProductsCtrl {
   }
 
   removeProduct(id) {
+    this.$rootScope.show_spinner = true;
     this.Product
       .delete(this.current_company_id, id)
       .then(
         () => {
+          this.$rootScope.show_spinner = false;
           this.loadProducts();
           this.days.map((day) => {
             const timeRangesByDay = this.data[day].time_ranges;
@@ -248,20 +258,26 @@ export default class SettingsProductsCtrl {
             }
           });
         },
-        () => {},
+        () => {
+          this.$rootScope.show_spinner = false;
+        },
       );
 
     this.calculateMinMax();
   }
 
   hidden(productId) {
+    this.$rootScope.show_spinner = true;
     this.Product
       .hidden(this.current_company_id, productId)
       .then(
         (res) => {
+          this.$rootScope.show_spinner = false;
           this.products[productId].shaded = res.hidden;
         },
-        () => {},
+        () => {
+          this.$rootScope.show_spinner = false;
+        },
       );
 
     this.calculateMinMax();

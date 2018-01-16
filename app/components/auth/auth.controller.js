@@ -1,23 +1,27 @@
 class AuthCtrl {
-  constructor(User, $state, $stateParams, $window) {
+  constructor(User, $state, $stateParams, $window, $rootScope) {
     'ngInject';
 
     this.User = User;
     this.$state = $state;
     this.$stateParams = $stateParams;
     this.$window = $window;
+    this.$rootScope = $rootScope;
     this.authType = $state.current.name.replace('auth.', '');
   }
 
   sendAuthForm(path) {
     this.isSubmitting = true;
+    this.$rootScope.show_spinner = true;
 
     this.User.auth(path, this.formData).then(
       () => {
+        this.$rootScope.show_spinner = false;
         this.$state.go('app.dashboard');
       },
       (error) => {
         this.isSubmitting = false;
+        this.$rootScope.show_spinner = false;
 
         if (this.authType === 'login') {
           this.errors = error.data;
@@ -33,13 +37,16 @@ class AuthCtrl {
 
   sendResetPasswordForm() {
     this.isSubmitting = true;
+    this.$rootScope.show_spinner = true;
 
     this.User.resetPassword(this.formData).then(
       () => {
         this.isSubmitting = false;
+        this.$rootScope.show_spinner = false;
         this.success = true;
       },
       () => {
+        this.$rootScope.show_spinner = false;
         this.isSubmitting = false;
       });
   }

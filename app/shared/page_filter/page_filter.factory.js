@@ -89,6 +89,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     };
 
     instance.changeDateFilterPostProcess = () => {
+      instance.$rootScope.show_spinner = true;
       instance.loadReservations();
       instance.loadTimeRanges();
     };

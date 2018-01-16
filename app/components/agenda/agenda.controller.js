@@ -25,7 +25,6 @@ export default class AgendaCtrl {
     this.tables_by_zone = {};
     this.errors = [];
     this.opened = [true];
-    this.is_loaded = false;
     this.zones = [];
     this.products = [];
     this.reservations = [];
@@ -86,6 +85,9 @@ export default class AgendaCtrl {
 
     this.loadGeneralSettings();
     this.loadZonesAndTables();
+
+    this.is_loaded = false;
+    this.$rootScope.show_spinner = true;
   }
 
   changeStatus(reservation, status) {
@@ -477,6 +479,9 @@ export default class AgendaCtrl {
     this.Table.getAll(this.current_company_id)
       .then(
         (tables) => {
+          this.is_loaded = true;
+          this.$rootScope.show_spinner = false;
+
           this.tables = {};
           tables.forEach((table) => {
             this.tables[table.id] = table;
@@ -485,7 +490,6 @@ export default class AgendaCtrl {
           this.iniAndScrolltToNowLine();
           this.loadProducts();
           this.loadTimeRanges();
-          this.is_loaded = true;
         });
   }
 
@@ -518,13 +522,12 @@ export default class AgendaCtrl {
     const date = this.moment(this.date_filter).format('YYYY-MM-DD');
     this.Reservation.getAll(this.current_company_id, date)
       .then((result) => {
+        this.$rootScope.show_spinner = false;
         this.reservations = result;
 
         if (this.tables) {
           this.setData();
         }
-
-        this.is_loaded = true;
       });
   }
 

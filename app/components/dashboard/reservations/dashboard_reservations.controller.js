@@ -39,6 +39,7 @@ export default class DashboardReservationsCtrl {
     this.loadZonesAndTables();
     ReservationStatusMenu(this);
     ReservationItemFactory(this);
+    this.$rootScope.show_spinner = true;
   }
 
   changeStatus(currentReservation, status) {
@@ -112,6 +113,7 @@ export default class DashboardReservationsCtrl {
     this.Reservation
       .getAllGrouped(this.current_company_id).then(
         (reservations) => {
+          this.$rootScope.show_spinner = false;
           this.all_reservations = reservations;
           this.setData();
           this.reservationsLoaded = true;
@@ -120,6 +122,8 @@ export default class DashboardReservationsCtrl {
           this.Loaded.reservations.count_per_week = reservations.count_per_week;
           this.Loaded.reservations.count_by_week = reservations.count_by_week;
           this.$rootScope.$broadcast('reservationsLoaded', reservations);
+        }, () => {
+          this.$rootScope.show_spinner = false;
         });
   }
 

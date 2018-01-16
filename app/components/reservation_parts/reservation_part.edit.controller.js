@@ -60,11 +60,11 @@ export default class ReservationPartEditCtrl {
 
     this.loadGeneralSettings();
     UserMenuEditFactroy(this);
+
+    this.$rootScope.show_spinner = true;
   }
 
   submitPartForm() {
-    this.is_submitting = true;
-
     const data = {
       number_of_persons: this.current_part.number_of_persons,
       product_id: this.current_part.product,
@@ -74,10 +74,13 @@ export default class ReservationPartEditCtrl {
       notes: this.current_part.notes,
     };
 
+    this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
     this.ReservationPart.update(this.current_company_id, this.current_part.id, data)
       .then(
         (reservationPart) => {
           this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
           this.$rootScope.current_part = reservationPart;
           this.$rootScope.reservations.forEach((reservation, reservIndex) => {
             reservation.reservation_parts.forEach((part, partIndex) => {
@@ -92,6 +95,7 @@ export default class ReservationPartEditCtrl {
         },
         (error) => {
           this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
           this.errors = error;
         },
       );
@@ -170,7 +174,10 @@ export default class ReservationPartEditCtrl {
     this.Zone.getAll(this.current_company_id).then(
       (result) => {
         this.zones = result;
-      }, () => {});
+        this.$rootScope.show_spinner = false;
+      }, () => {
+        this.$rootScope.show_spinner = false;
+      });
   }
 
   loadTables() {

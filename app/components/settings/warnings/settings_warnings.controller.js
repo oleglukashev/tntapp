@@ -1,5 +1,5 @@
 export default class SettingsWarningsCtrl {
-  constructor(User, Settings, $modal, filterFilter) {
+  constructor(User, Settings, $modal, $rootScope, filterFilter) {
     'ngInject';
 
     this.Settings = Settings;
@@ -7,19 +7,23 @@ export default class SettingsWarningsCtrl {
     this.filterFilter = filterFilter;
 
     this.$modal = $modal;
+    this.$rootScope = $rootScope;
 
     this.warnings = [];
-    this.is_loaded = false;
 
     this.loadWarningsSettings();
+
+    this.is_loaded = false;
+    this.$rootScope.show_spinner = true;
   }
 
   loadWarningsSettings() {
     this.Settings
       .getWarningsSettings(this.current_company_id).then(
         (warnings) => {
-          this.warnings = warnings;
           this.is_loaded = true;
+          this.$rootScope.show_spinner = false;
+          this.warnings = warnings;
         });
   }
 

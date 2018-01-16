@@ -95,17 +95,20 @@ export default class NewReservationCtrl {
   submitWalkInForm() {
     this.validWalkInForm();
     if (this.errors.length) return false;
-    this.is_submitting = true;
     const data = this.prepareWalkInFormData();
 
+    this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
     this.Reservation.createWalkIn(this.current_company_id, data, this.is_customer_reservation)
       .then(
         () => {
+          this.$rootScope.show_spinner = false;
           this.is_submitting = false;
           this.success = true;
           this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
         },
         (error) => {
+          this.$rootScope.show_spinner = false;
           this.is_submitting = false;
           this.errors = error;
         });
@@ -147,18 +150,20 @@ export default class NewReservationCtrl {
   submitForm() {
     this.validForm();
     if (this.errors.length) return false;
-
-    this.is_submitting = true;
     const data = this.prepareFormData();
 
+    this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
     this.Reservation.create(this.current_company_id, data, this.is_customer_reservation)
       .then(
         () => {
+          this.$rootScope.show_spinner = false;
           this.is_submitting = false;
           this.success = true;
           this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
         },
         (error) => {
+          this.$rootScope.show_spinner = false;
           this.is_submitting = false;
           this.errors = error.data.errors.errors;
         });
@@ -234,14 +239,18 @@ export default class NewReservationCtrl {
       const companyId = this.current_company_id;
       const product = this.current_part.product;
       const reservationDate = this.moment(this.current_part.date).format('YYYY-MM-DD HH:mm:ss');
+      this.$rootScope.show_spinner = true;
 
       this
         .Product
         .getAvailableTables(companyId, product, reservationDate, this.is_customer_reservation)
         .then((result) => {
+          this.$rootScope.show_spinner = false;
           this.current_part.available_time = result;
           this.current_part.time_is_loaded = true;
-        }, () => {});
+        }, () => {
+          this.$rootScope.show_spinner = false;
+        });
     }
   }
 

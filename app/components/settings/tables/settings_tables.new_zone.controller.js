@@ -1,5 +1,5 @@
 export default class SettingsTablesNewZoneCtrl {
-  constructor(User, Zone, AppConstants, zones, $scope, $modalInstance) {
+  constructor(User, Zone, AppConstants, zones, $scope, $rootScope, $modalInstance) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -7,6 +7,7 @@ export default class SettingsTablesNewZoneCtrl {
     this.Zone = Zone;
     this.zones = zones;
     this.$scope = $scope;
+    this.$rootScope = $rootScope;
     this.$modalInstance = $modalInstance;
     this.iconsClasses = AppConstants.zonesClasses;
     this.emptyMdiClass = AppConstants.emptyClass;
@@ -27,6 +28,7 @@ export default class SettingsTablesNewZoneCtrl {
 
   submitForm() {
     this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
     this.errors = [];
 
     this.Zone
@@ -34,13 +36,14 @@ export default class SettingsTablesNewZoneCtrl {
       .then(
         (zone) => {
           this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
           this.zones.push(zone);
           this.$modalInstance.dismiss('cancel');
         },
         (error) => {
+          this.$rootScope.show_spinner = false;
           this.errors = error.data.errors;
-        },
-      );
+        });
   }
 
   zonesNames() {

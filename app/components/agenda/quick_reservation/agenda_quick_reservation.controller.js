@@ -1,6 +1,6 @@
 export default class AgendaQuickReservationCtrl {
   constructor(User, Product, Reservation, tableId, tableNumber, datetime, filterFilter,
-    moment, $window, $modalInstance, Confirm) {
+    moment, $window, $modalInstance, $rootScope, Confirm) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -10,6 +10,7 @@ export default class AgendaQuickReservationCtrl {
     this.Reservation = Reservation;
     this.filterFilter = filterFilter;
     this.$window = $window;
+    this.$rootScope = $rootScope;
     this.$modalInstance = $modalInstance;
     this.moment = moment;
     this.available_time = {};
@@ -69,7 +70,6 @@ export default class AgendaQuickReservationCtrl {
   }
 
   submitForm() {
-    this.is_submitting = true;
     const name = this.reservation.name || '';
     const data = {
       last_name: name.split(' ').splice(1).join(' '),
@@ -80,15 +80,19 @@ export default class AgendaQuickReservationCtrl {
       number_of_persons: this.reservation.number_of_persons,
     };
 
+    this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
     this.Reservation.createQuick(this.current_company_id, data)
       .then(
         () => {
           this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
           this.success = true;
           this.closeModal();
         },
         (error) => {
           this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
           this.errors = error;
         });
   }
