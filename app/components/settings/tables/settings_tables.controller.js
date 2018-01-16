@@ -22,8 +22,6 @@ export default class SettingsTablesCtrl {
   }
 
   submitForm() {
-    this.errors = [];
-    this.$rootScope.show_spinner = true;
     const data = this.getScopeTables().map((item, index) => {
       return {
         table_number: item.table_number,
@@ -33,6 +31,8 @@ export default class SettingsTablesCtrl {
       };
     });
 
+    this.errors = [];
+    this.$rootScope.show_spinner = true;
     this.Table.save(this.current_company_id, { tables: data })
       .then(
         () => {
@@ -72,6 +72,8 @@ export default class SettingsTablesCtrl {
               return comparison;
             });
           });
+        }, () => {
+          this.$rootScope.show_spinner = false;
         });
   }
 
@@ -108,9 +110,9 @@ export default class SettingsTablesCtrl {
       this.Zone.delete(this.current_company_id, zone.id)
         .then(
           () => {
+            this.$rootScope.show_spinner = false;
             delete this.tables_by_zone[zone.id];
             this.zones.splice(index, 1);
-            this.$rootScope.show_spinner = false;
           },
           () => {
             this.$rootScope.show_spinner = false;

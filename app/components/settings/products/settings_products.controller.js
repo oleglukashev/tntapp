@@ -54,7 +54,6 @@ export default class SettingsProductsCtrl {
   }
 
   closeToday(id, timeRange) {
-    this.$rootScope.show_spinner = true;
     const data = {
       product_time_range: {
         startTime: this.Slider.from15Min(timeRange.minValue),
@@ -65,6 +64,7 @@ export default class SettingsProductsCtrl {
       },
     };
 
+    this.$rootScope.show_spinner = true;
     this.TimeRange
       .edit(this.current_company_id, id, data)
       .then(
@@ -98,6 +98,7 @@ export default class SettingsProductsCtrl {
     this.TimeRange.getAllProductTimeRanges(this.current_company_id)
       .then(
         (ranges) => {
+          this.$rootScope.show_spinner = false;
           this.data = {};
           this.days.map((day) => {
             if (typeof this.data[day] === 'undefined') {
@@ -140,9 +141,9 @@ export default class SettingsProductsCtrl {
           });
 
           this.redrawSliders();
+        }, () => {
           this.$rootScope.show_spinner = false;
         },
-        () => {},
       );
   }
 
@@ -246,6 +247,7 @@ export default class SettingsProductsCtrl {
       .delete(this.current_company_id, id)
       .then(
         () => {
+          this.$rootScope.show_spinner = false;
           this.loadProducts();
           this.days.map((day) => {
             const timeRangesByDay = this.data[day].time_ranges;
@@ -255,7 +257,6 @@ export default class SettingsProductsCtrl {
               }
             }
           });
-          this.$rootScope.show_spinner = false;
         },
         () => {
           this.$rootScope.show_spinner = false;
@@ -271,8 +272,8 @@ export default class SettingsProductsCtrl {
       .hidden(this.current_company_id, productId)
       .then(
         (res) => {
-          this.products[productId].shaded = res.hidden;
           this.$rootScope.show_spinner = false;
+          this.products[productId].shaded = res.hidden;
         },
         () => {
           this.$rootScope.show_spinner = false;

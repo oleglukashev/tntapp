@@ -47,9 +47,9 @@ export default class SettingsEmployeesCtrl {
     this.Employee
       .getAll(this.current_company_id)
       .then((employees) => {
-        this.employees = employees;
-        this.is_loaded = true;
         this.$rootScope.show_spinner = false;
+        this.is_loaded = true;
+        this.employees = employees;
       });
   }
 }

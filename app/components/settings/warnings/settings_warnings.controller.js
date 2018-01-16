@@ -21,9 +21,9 @@ export default class SettingsWarningsCtrl {
     this.Settings
       .getWarningsSettings(this.current_company_id).then(
         (warnings) => {
-          this.warnings = warnings;
           this.is_loaded = true;
           this.$rootScope.show_spinner = false;
+          this.warnings = warnings;
         });
   }
 

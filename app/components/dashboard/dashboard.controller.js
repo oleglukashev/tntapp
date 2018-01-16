@@ -12,8 +12,6 @@ export default class DashboardCtrl {
       size: 'md',
     });
 
-    modalInstance.result.then(() => {
-    }, () => {
-    });
+    modalInstance.result.then(() => {}, () => {});
   }
 }

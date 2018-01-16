@@ -23,9 +23,6 @@ export default class SettingsEmployeesItemCtrl {
   }
 
   createEmployee() {
-    this.is_submitting = true;
-    this.$rootScope.show_spinner = true;
-
     const data = {
       manage_access: this.item.manage_access,
       email: this.item.email,
@@ -33,6 +30,8 @@ export default class SettingsEmployeesItemCtrl {
       first_name: this.item.first_name,
     };
 
+    this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
     this.Employee
       .create(this.current_company_id, data).then(
         (employee) => {

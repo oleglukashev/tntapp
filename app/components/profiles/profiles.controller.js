@@ -55,6 +55,8 @@ export default class ProfilesCtrl {
       page: this.pagination.page,
       letter: this.pagination.letters.join(','),
     }).then((result) => {
+      this.$rootScope.show_spinner = false;
+
       result.forEach((customer) => {
         const firstChar = customer.first_name ? customer.first_name[0].toUpperCase() : '#';
         if (!this.customers[firstChar]) this.customers[firstChar] = [];
@@ -63,10 +65,9 @@ export default class ProfilesCtrl {
 
       this.pagination.hasMore = !!result.length;
       this.customersLoading = false;
-      this.$rootScope.show_spinner = false;
     }, () => {
-      this.customersLoading = true;
       this.$rootScope.show_spinner = false;
+      this.customersLoading = true;
     });
   }
 

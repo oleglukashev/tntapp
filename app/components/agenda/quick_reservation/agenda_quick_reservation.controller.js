@@ -70,8 +70,6 @@ export default class AgendaQuickReservationCtrl {
   }
 
   submitForm() {
-    this.is_submitting = true;
-    this.$rootScope.show_spinner = true;
     const name = this.reservation.name || '';
     const data = {
       last_name: name.split(' ').splice(1).join(' '),
@@ -82,6 +80,8 @@ export default class AgendaQuickReservationCtrl {
       number_of_persons: this.reservation.number_of_persons,
     };
 
+    this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
     this.Reservation.createQuick(this.current_company_id, data)
       .then(
         () => {

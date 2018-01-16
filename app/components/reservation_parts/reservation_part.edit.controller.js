@@ -65,9 +65,6 @@ export default class ReservationPartEditCtrl {
   }
 
   submitPartForm() {
-    this.is_submitting = true;
-    this.$rootScope.show_spinner = true;
-
     const data = {
       number_of_persons: this.current_part.number_of_persons,
       product_id: this.current_part.product,
@@ -77,6 +74,8 @@ export default class ReservationPartEditCtrl {
       notes: this.current_part.notes,
     };
 
+    this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
     this.ReservationPart.update(this.current_company_id, this.current_part.id, data)
       .then(
         (reservationPart) => {
@@ -176,7 +175,9 @@ export default class ReservationPartEditCtrl {
       (result) => {
         this.zones = result;
         this.$rootScope.show_spinner = false;
-      }, () => {});
+      }, () => {
+        this.$rootScope.show_spinner = false;
+      });
   }
 
   loadTables() {

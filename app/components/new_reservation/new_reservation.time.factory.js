@@ -98,18 +98,18 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
     instance.loadOccupiedTables = () => {
       instance.current_part.occupied_tables = [];
       instance.current_part.occupied_tables_is_loaded = false;
-      instance.$rootScope.show_spinner = true;
       const time = instance.current_part.time;
       const dateTime = `${moment(instance.current_part.date).format('DD-MM-YYYY')} ${time}`;
+      instance.$rootScope.show_spinner = true;
 
       instance.Table
         .getOccupiedTables(instance.current_company_id,
           { date_time: dateTime, part_id: null },
           instance.is_customer_reservation).then(
           (result) => {
+            instance.$rootScope.show_spinner = false;
             instance.current_part.occupied_tables = result;
             instance.current_part.occupied_tables_is_loaded = true;
-            instance.$rootScope.show_spinner = false;
           }, () => {
             instance.$rootScope.show_spinner = false;
           });

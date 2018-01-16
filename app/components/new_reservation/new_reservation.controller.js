@@ -95,21 +95,21 @@ export default class NewReservationCtrl {
   submitWalkInForm() {
     this.validWalkInForm();
     if (this.errors.length) return false;
-    this.is_submitting = true;
-    this.$rootScope.show_spinner = true;
     const data = this.prepareWalkInFormData();
 
+    this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
     this.Reservation.createWalkIn(this.current_company_id, data, this.is_customer_reservation)
       .then(
         () => {
-          this.is_submitting = false;
           this.$rootScope.show_spinner = false;
+          this.is_submitting = false;
           this.success = true;
           this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
         },
         (error) => {
-          this.is_submitting = false;
           this.$rootScope.show_spinner = false;
+          this.is_submitting = false;
           this.errors = error;
         });
 
@@ -150,22 +150,21 @@ export default class NewReservationCtrl {
   submitForm() {
     this.validForm();
     if (this.errors.length) return false;
+    const data = this.prepareFormData();
 
     this.is_submitting = true;
     this.$rootScope.show_spinner = true;
-    const data = this.prepareFormData();
-
     this.Reservation.create(this.current_company_id, data, this.is_customer_reservation)
       .then(
         () => {
-          this.is_submitting = false;
           this.$rootScope.show_spinner = false;
+          this.is_submitting = false;
           this.success = true;
           this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
         },
         (error) => {
-          this.is_submitting = false;
           this.$rootScope.show_spinner = false;
+          this.is_submitting = false;
           this.errors = error.data.errors.errors;
         });
 
@@ -246,9 +245,9 @@ export default class NewReservationCtrl {
         .Product
         .getAvailableTables(companyId, product, reservationDate, this.is_customer_reservation)
         .then((result) => {
+          this.$rootScope.show_spinner = false;
           this.current_part.available_time = result;
           this.current_part.time_is_loaded = true;
-          this.$rootScope.show_spinner = false;
         }, () => {
           this.$rootScope.show_spinner = false;
         });

@@ -16,10 +16,10 @@ export default class SettingsThemesCtrl {
   }
 
   submitForm() {
-    this.$rootScope.show_spinner = true;
     const themeClass = `${this.plugin_theme_name.toLowerCase()}-theme`;
     this.Settings.saveThemeToCookie(themeClass);
     this.$rootScope.$broadcast('AppCtrl.change_plugin_theme_name', themeClass);
+    this.$rootScope.show_spinner = true;
     this.Settings
       .updateThemeSettings(this.current_company_id, { plugin_theme_name: this.plugin_theme_name })
         .then(() => {

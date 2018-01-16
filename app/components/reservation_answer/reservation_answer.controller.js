@@ -43,28 +43,28 @@ export default class ReservationsAnswerCtrl {
     this.is_submitting = true;
     this.$rootScope.show_spinner = true;
     return this.changeStatus().then(() => {
+      this.$rootScope.show_spinner = false;
       this.closeModal();
       this.is_submitting = false;
-      this.$rootScope.show_spinner = false;
     });
   }
 
   submitForm(isValid) {
-    this.is_submitting = true;
-    this.$rootScope.show_spinner = true;
-
     if (!isValid) {
       return false;
     }
 
+    this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
     return this.changeStatus(this.reservation, this.status).then(() => {
       this.ReservationStatus
         .sendMail(this.current_company_id, this.reservation, this.form_data).then(() => {
+          this.$rootScope.show_spinner = false;
           this.closeModal();
           this.is_submitting = false;
-          this.$rootScope.show_spinner = false;
         }, () => {
           this.$rootScope.show_spinner = false;
+          this.is_submitting = false;
         });
     });
   }
