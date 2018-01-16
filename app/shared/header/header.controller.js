@@ -10,18 +10,36 @@ export default class HeaderCtrl {
     this.current_company = User.current_company;
     this.current_company_id = User.getCompanyId();
     this.logout = User.logout.bind(User);
+    this.photoPath = `${API_URL}../../../upload/user-photos/`;
+    this.userPhotoURI = `${this.photoPath}${this.User.current.photo}?`;
+    this.loadPhoto();
   }
 
   hideRightSidebar() {
     this.$mdSidenav('right').close();
   }
 
+  loadPhoto() {
+    this.User.getPhoto(this.User.current.id).then((response) => {
+      this.user_avatar = response;
+    });
+  }
+
   uploadPhoto(file, errFiles) {
     if (file) {
       this.User.uploadPhoto(this.User.current.id, file).then((response) => {
-        this.User.current.photo = response.data.photo;
+        this.$timeout(() => {
+          file.result = response.data;
+          this.User.update().then(() => {
+            this.loadPhoto();
+          });
+        });
       }, (response) => {
-        if (response.status > 0) this.upload_photo_error = response.status;
+        if (response.status > 0)
+          this.upload_photo_error = response.status;
+      }, (evt) => {
+        // Math.min is to fix IE which reports 200% sometimes
+        file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
       });
     }
 

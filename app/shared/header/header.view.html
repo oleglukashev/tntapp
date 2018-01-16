@@ -71,18 +71,9 @@
     Error: {{ header.upload_photo_error }}
   </growl-notification>
 
-  <button type='button'
-          class='header-account-menu__avatar bg-light pull-right'
-          ngf-select="header.uploadPhoto($file, $invalidFiles)"
-          accept="image/*"
-          ngf-pattern="'.png,.jpg'"
-          ngf-max-height="2000"
-          ngf-max-size="1MB"
-          ng-model="picFile"
-          ng-click="upload_photo.upload_photo_error=''"
-          ng-style="{'background-image': header.User.current.photo ? 'url(' + header.User.current.photo + ')' : 'none'}"
-          md-ink-ripple></button>
+  <button type='button' md-ink-ripple class='header-account-menu__avatar bg-light pull-right' ngf-select="header.uploadPhoto($file, $invalidFiles)" accept="image/*" ngf-pattern="'.png,.jpg'" ngf-max-height="2000" ngf-max-size="1MB" ng-model="picFile" ng-click="upload_photo.upload_photo_error=''" ng-style="{'background-image': header.User.current.photo ? 'url('+header.user_avatar+')' : ''}" ng-class="picFile.progress < 100 ? photo_loading : ''"></button>
 
   <div data-ng-include=" 'search.view.html' " ng-controller='SearchHeaderCtrl as search'></div>
+
 </div>
 <!-- / navbar collapse -->
