@@ -70,15 +70,14 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
       }
 
       const customerClone = instance.customer;
-      instance.is_submitting = true;
-      instance.$rootScope.show_spinner = true;
-
       if (customerClone.date_of_birth) {
         customerClone.date_of_birth = moment(customerClone.date_of_birth).format('DD-MM-YYYY');
       } else {
         customerClone.date_of_birth = null;
       }
 
+      instance.is_submitting = true;
+      instance.$rootScope.show_spinner = true;
       const data = {
         first_name: customerClone.first_name,
         last_name: customerClone.last_name,
@@ -96,12 +95,13 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
 
       Customer.edit(instance.current_company_id, customerClone.id, data).then(
         () => {
+          instance.is_submitting = false;
+          instance.$rootScope.show_spinner = false;
           instance.$rootScope.customer = Object.assign(data, customerClone);
           instance.$rootScope.$broadcast('ProfilesCtrl.reload_customers');
           instance.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
-          instance.is_submitting = false;
-          instance.$rootScope.show_spinner = false;
         }, () => {
+          instance.is_submitting = false;
           instance.$rootScope.show_spinner = false;
         },
       );
@@ -112,13 +112,12 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
         return false;
       }
 
-      instance.notes_is_submitting = true;
-      instance.$rootScope.show_spinner = true;
-
       const data = {
         note: instance.note.note,
       };
 
+      instance.notes_is_submitting = true;
+      instance.$rootScope.show_spinner = true;
       if (instance.note.id) {
         CustomerNote.update(
           instance.current_company_id,
@@ -127,11 +126,12 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
           data,
         ).then(
           () => {
-            instance.$rootScope.customer_notes = instance.notes;
-            instance.note = {};
             instance.notes_is_submitting = false;
             instance.$rootScope.show_spinner = false;
+            instance.$rootScope.customer_notes = instance.notes;
+            instance.note = {};
           }, () => {
+            instance.notes_is_submitting = false;
             instance.$rootScope.show_spinner = false;
           },
         );
@@ -139,13 +139,13 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
         CustomerNote.create(instance.current_company_id, instance.customer.id, data)
           .then(
             (result) => {
-              instance.$rootScope.customer_notes.push(result);
-              instance.note = {};
               instance.notes_is_submitting = false;
               instance.$rootScope.show_spinner = false;
-
+              instance.$rootScope.customer_notes.push(result);
+              instance.note = {};
               resetForm(form);
             }, () => {
+              instance.notes_is_submitting = false;
               instance.$rootScope.show_spinner = false;
             },
           );
@@ -157,14 +157,13 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
         return false;
       }
 
-      instance.preferences_is_submitting = true;
-      instance.$rootScope.show_spinner = true;
-
       const data = {
         name: instance.preference.name,
         value: instance.preference.value,
       };
 
+      instance.preferences_is_submitting = true;
+      instance.$rootScope.show_spinner = true;
       if (instance.preference.id) {
         CustomerPreference.update(
           instance.current_company_id,
@@ -173,23 +172,29 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
           data,
         ).then(
           () => {
-            instance.$rootScope.customer_preferences = instance.preferences;
-            instance.preference = {};
             instance.preferences_is_submitting = false;
             instance.$rootScope.show_spinner = false;
-          }, () => {},
+            instance.$rootScope.customer_preferences = instance.preferences;
+            instance.preference = {};
+          }, () => {
+            instance.preferences_is_submitting = false;
+            instance.$rootScope.show_spinner = false;
+          },
         );
       } else {
         CustomerPreference.create(instance.current_company_id, instance.customer.id, data)
           .then(
             (result) => {
-              instance.$rootScope.customer_preferences.push(result);
-              instance.preference = {};
               instance.preferences_is_submitting = false;
               instance.$rootScope.show_spinner = false;
+              instance.$rootScope.customer_preferences.push(result);
+              instance.preference = {};
 
               resetForm(form);
-            }, () => {},
+            }, () => {
+              instance.preferences_is_submitting = false;
+              instance.$rootScope.show_spinner = false;
+            },
           );
       }
     };
@@ -199,13 +204,12 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
         return false;
       }
 
-      instance.allergies_is_submitting = true;
-      instance.$rootScope.show_spinner = true;
-
       const data = {
         allergy: instance.allergy.allergy,
       };
 
+      instance.allergies_is_submitting = true;
+      instance.$rootScope.show_spinner = true;
       if (instance.allergy.id) {
         CustomerAllergies.update(
           instance.current_company_id,
@@ -219,6 +223,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
             instance.allergies_is_submitting = false;
             instance.$rootScope.show_spinner = false;
           }, () => {
+            instance.allergies_is_submitting = false;
             instance.$rootScope.show_spinner = false;
           },
         );
@@ -226,6 +231,8 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
         CustomerAllergies.create(instance.current_company_id, instance.customer.id, data)
           .then(
             (result) => {
+              instance.allergies_is_submitting = false;
+              instance.$rootScope.show_spinner = false;
               instance.$rootScope.customer_allergies.push(result);
               instance.allergy = {};
 
@@ -234,11 +241,9 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
                 currentNumber: instance.customerAllergies.length
               });
 
-              instance.allergies_is_submitting = false;
-              instance.$rootScope.show_spinner = false;
-
               resetForm(form);
             }, () => {
+              instance.allergies_is_submitting = false;
               instance.$rootScope.show_spinner = false;
             },
           );
