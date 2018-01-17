@@ -45,8 +45,8 @@
         </thead>
         <tbody>
           <tr ng-repeat='item in charts.guests_with_repeats'>
-            <td>{{ item.customer.last_name }}  {{ item.customer.first_name }}</td>
-            <td><chart-rating tnrrating='item.customer.average_rating'></chart-rating></td>
+            <td>{{ item.last_name }}  {{ item.first_name }}</td>
+            <td><chart-rating tnrrating='item.average_rating'></chart-rating></td>
             <td>{{ item.repeat_count }}</td>
           </tr>
         </tbody>
@@ -69,11 +69,11 @@
             <td>{{ item.last_name }}  {{ item.first_name }}</td>
             <td>
               <p ng-if='item.allergies.length'><small class='font-thin'>Allergiën</small></p>
-              <p ng-repeat='allergy in item.allergies' ng-bind='allergy.allergy'></p>
+              <p ng-repeat='allergy in item.allergies' ng-bind='allergy'></p>
               <p ng-if='item.notes.length'><small class='font-thin'>Opmerkingen</small></p>
-              <p ng-repeat='note in item.notes' ng-bind='note.note'></p>
+              <p ng-repeat='note in item.notes' ng-bind='note'></p>
               <p ng-if='item.preferences.length'><small class='font-thin'>Voorkeuren</small></p>
-              <p ng-repeat='preference in item.preferences'>{{ preference.name }}: {{ preference.value }}</p>
+              <p ng-repeat='preference in item.preferences'>{{ preference[0] }}: {{ preference[1] }}</p>
             </td>
           </tr>
         </tbody>
