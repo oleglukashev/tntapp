@@ -252,6 +252,17 @@
 	  	</div>
       <div class='md-list-item clear'>
         <div class='pull-left'>
+          <h3 class='no-margin text-md'>Wilt u gastprofielen automatisch aanvullen?</h3>
+        </div>
+        <div class='pull-right m-r-n-xs'>
+          <div class='md-form-group no-padder'>
+            <md-switch ng-model='general_settings.form_data.suggest_customer_name'
+                       ng-change='general_settings.submitForm()'></md-switch>
+          </div>
+        </div>
+      </div>
+      <div class='md-list-item clear'>
+        <div class='pull-left'>
           <h3 class='no-margin text-md'>Booking Api</h3>
           <small class='text-muted'>Wil je een koppeling maken met een booking systeem? Gebruik de onderstaande UUID om dit te koppelen</small>
         </div>
