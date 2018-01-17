@@ -17,6 +17,7 @@ export default class SettingsProductsCtrl {
     this.$rootScope = $rootScope;
     this.$timeout = $timeout;
     this.errors = [];
+    this.is_loaded = false;
     this.days = AppConstants.dayOfWeek;
     this.opened = {};
     this.opened[this.days[0]] = true;
@@ -141,6 +142,7 @@ export default class SettingsProductsCtrl {
           });
 
           this.redrawSliders();
+          this.is_loaded = true;
         }, () => {
           this.$rootScope.show_spinner = false;
         },
