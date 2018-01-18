@@ -20,6 +20,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
       ).then(
         () => {
           instance.$rootScope.show_spinner = false;
+          instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
           instance.customerNotes.splice(index, 1);
           instance.note = null;
         }, () => {
@@ -38,6 +39,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
       ).then(
         () => {
           instance.$rootScope.show_spinner = false;
+          instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
           instance.customerPreferences.splice(index, 1);
           instance.preference = null;
         }, () => {
@@ -56,6 +58,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
       ).then(
         () => {
           instance.$rootScope.show_spinner = false;
+          instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
           instance.customerAllergies.splice(index, 1);
           instance.allergy = null;
         }, () => {
@@ -97,9 +100,8 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
         () => {
           instance.is_submitting = false;
           instance.$rootScope.show_spinner = false;
-          instance.$rootScope.customer = Object.assign(data, customerClone);
+          instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
           instance.$rootScope.$broadcast('ProfilesCtrl.reload_customers');
-          instance.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
         }, () => {
           instance.is_submitting = false;
           instance.$rootScope.show_spinner = false;
@@ -128,8 +130,9 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
           () => {
             instance.notes_is_submitting = false;
             instance.$rootScope.show_spinner = false;
-            instance.$rootScope.customer_notes = instance.notes;
-            instance.note = {};
+            instance.note = null;
+            instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
+            resetForm(form);
           }, () => {
             instance.notes_is_submitting = false;
             instance.$rootScope.show_spinner = false;
@@ -141,8 +144,9 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
             (result) => {
               instance.notes_is_submitting = false;
               instance.$rootScope.show_spinner = false;
-              instance.$rootScope.customer_notes.push(result);
-              instance.note = {};
+              instance.note = null;
+              instance.customerNotes.push(result);
+              instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
               resetForm(form);
             }, () => {
               instance.notes_is_submitting = false;
@@ -174,8 +178,9 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
           () => {
             instance.preferences_is_submitting = false;
             instance.$rootScope.show_spinner = false;
-            instance.$rootScope.customer_preferences = instance.preferences;
-            instance.preference = {};
+            instance.preference = null;
+            instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
+            resetForm(form);
           }, () => {
             instance.preferences_is_submitting = false;
             instance.$rootScope.show_spinner = false;
@@ -187,9 +192,9 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
             (result) => {
               instance.preferences_is_submitting = false;
               instance.$rootScope.show_spinner = false;
-              instance.$rootScope.customer_preferences.push(result);
-              instance.preference = {};
-
+              instance.preference = null;
+              instance.customerPreferences.push(result);
+              instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
               resetForm(form);
             }, () => {
               instance.preferences_is_submitting = false;
@@ -218,10 +223,11 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
           data,
         ).then(
           () => {
-            instance.$rootScope.customer_allergies = instance.allergies;
-            instance.allergy = {};
             instance.allergies_is_submitting = false;
             instance.$rootScope.show_spinner = false;
+            instance.allergy = null;
+            instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
+            resetForm(form);
           }, () => {
             instance.allergies_is_submitting = false;
             instance.$rootScope.show_spinner = false;
@@ -233,14 +239,9 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
             (result) => {
               instance.allergies_is_submitting = false;
               instance.$rootScope.show_spinner = false;
-              instance.$rootScope.customer_allergies.push(result);
-              instance.allergy = {};
-
-              instance.$rootScope.$broadcast('edit_customer.allergy_is_added', {
-                customerId: instance.customer.id,
-                currentNumber: instance.customerAllergies.length
-              });
-
+              instance.allergy = null;
+              instance.customerAllergies.push(result);
+              instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
               resetForm(form);
             }, () => {
               instance.allergies_is_submitting = false;

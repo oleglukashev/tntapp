@@ -66,6 +66,7 @@ export default class EditReservationCtrl {
           this.$rootScope.show_spinner = false;
           this.$modalInstance.dismiss('cancel');
           this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
+          this.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: this.reservation.customer.id });
         },
         (error) => {
           this.is_submitting = false;
