@@ -37,9 +37,14 @@ export default class EditReservationCtrl {
     this.available_time = [];
 
     this.products = [];
-    this.reservation.reservation_parts.forEach((part, index) => {
-      this.reservation.reservation_parts[index] = this.getModifiedPart(part);
-    });
+
+    // $modal cache input variables
+    if (!this.reservation.is_cached) {
+      this.reservation.is_cached = true;
+      this.reservation.reservation_parts.forEach((part, index) => {
+        this.reservation.reservation_parts[index] = this.getModifiedPart(part);
+      });
+    }
 
     this.current_part = this.reservation.reservation_parts[0];
 
