@@ -7,9 +7,9 @@ export default angular.module('app.filters', [])
       const result = [];
 
       items.sort((a, b) => {
-        if (a.reservation_id > b.reservation_id) {
+        if (a.time > b.time) {
           return 1;
-        } else if (a.reservation_id < b.reservation_id) {
+        } else if (a.time < b.time) {
           return -1;
         }
 
@@ -22,16 +22,6 @@ export default angular.module('app.filters', [])
         }
 
         partsByReservation[item.reservation_id].push(item);
-      });
-
-      items.sort((a, b) => {
-        if (a.time > b.time) {
-          return 1;
-        } else if (a.time < b.time) {
-          return -1;
-        }
-
-        return 0;
       });
 
       const existReservations = [];
