@@ -5,7 +5,7 @@
         aria-haspopup='true'
         aria-expanded='false'
         aria-disabled='false'
-        ng-click='$mdMenu.open($event);'>
+        ng-click='$mdMenu.open($event);controller.openCustomerMenu(item.customer_id, item.id)'>
     <i ng-if='agendaIcon'
        class='mdi i-20'
        ng-class='controller.ReservationStatus.getIcon(item, item.reservation)'
@@ -15,7 +15,7 @@
   </button>
   <md-menu-content width='4' class='reservation_menu'>
     <md-menu-item>
-      <md-button ng-click='controller.openEditReservationModal(item.reservation, item.part)'>
+      <md-button ng-click='controller.openEditReservationModal(item.reservation)'>
         <md-icon aria-label>
           <i class='mdi mdi-pencil' />
         </md-icon>

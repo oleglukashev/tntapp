@@ -1,7 +1,9 @@
+import angular from 'angular';
+
 export default class UserMenuCtrl {
   constructor(
     User, Reservation, ReservationPart, CustomerNote, CustomerPreference,
-    CustomerAllergies, Customer, moment, $scope, $rootScope, $mdSidenav, $modal) {
+    CustomerAllergies, Customer, moment, $scope, $mdSidenav, $modal) {
     'ngInject';
 
     this.currentCompanyId = User.getCompanyId();
@@ -14,7 +16,6 @@ export default class UserMenuCtrl {
 
     this.moment = moment;
     this.Customer = Customer;
-    this.$rootScope = $rootScope;
     this.$mdSidenav = $mdSidenav;
     this.$modal = $modal;
 
@@ -33,16 +34,16 @@ export default class UserMenuCtrl {
 
   openEditReservationModal(reservation, reservationPart) {
     const modalInstance = this.$modal.open({
-      templateUrl: 'reservation_part.edit.view.html',
-      controller: 'ReservationPartEditCtrl as reserv',
+      templateUrl: 'edit_reservation.view.html',
+      controller: 'EditReservationCtrl as reserv',
       size: 'md',
       resolve: {
-        reservation: () => reservation,
-        reservationPart: () => reservationPart,
-        customer: () => this.$rootScope.customer,
-        customerNotes: () => this.$rootScope.customer_notes,
-        customerAllergies: () => this.$rootScope.customer_allergies,
-        customerPreferences: () => this.$rootScope.customer_preferences,
+        reservation: () => angular.copy(reservation),
+        reservationPart: () => angular.copy(reservationPart),
+        customer: () => angular.copy(this.customer),
+        customerNotes: () => angular.copy(this.customer_notes),
+        customerAllergies: () => angular.copy(this.customer_allergies),
+        customerPreferences: () => angular.copy(this.customer_preferences),
       },
     });
 
@@ -54,6 +55,12 @@ export default class UserMenuCtrl {
       templateUrl: 'user_menu.edit.view.html',
       controller: 'UserMenuEditCtrl as edit_user',
       size: 'md',
+      resolve: {
+        customer: () => angular.copy(this.customer),
+        customerNotes: () => angular.copy(this.customer_notes),
+        customerAllergies: () => angular.copy(this.customer_allergies),
+        customerPreferences: () => angular.copy(this.customer_preferences),
+      },
     });
 
     modalInstance.result.then(() => {}, () => {});
@@ -77,7 +84,7 @@ export default class UserMenuCtrl {
     };
 
     this.Customer.edit(this.currentCompanyId, customer.id, data).then((customer) => {
-      this.$rootScope.customer = customer;
+      this.customer = customer;
     });
   }
 
@@ -86,17 +93,17 @@ export default class UserMenuCtrl {
 
     this.Customer.searchReservationsByCustomerId(this.currentCompanyId, customerId)
       .then((response) => {
-        this.$rootScope.reservations = response.reservations;
-        this.$rootScope.customer_notes = response.notes;
-        this.$rootScope.customer_allergies = response.allergies;
-        this.$rootScope.customer_preferences = response.preferences;
-        this.$rootScope.customer = response.customer;
+        this.reservations = response.reservations;
+        this.customer_notes = response.notes;
+        this.customer_allergies = response.allergies;
+        this.customer_preferences = response.preferences;
+        this.customer = response.customer;
 
         response.reservations.forEach((reservation) => {
           reservation.reservation_parts.forEach((part) => {
             if (part.id === reservationPartId) {
-              this.$rootScope.current_part = part;
-              this.$rootScope.current_reservation = reservation;
+              this.current_part = part;
+              this.current_reservation = reservation;
             }
           });
         });
@@ -112,16 +119,16 @@ export default class UserMenuCtrl {
   }
 
   getPartByReservations() {
-    return this.ReservationPart.partsByReservations(this.$rootScope.reservations);
+    return this.ReservationPart.partsByReservations(this.reservations);
   }
 
   clearUserMenuData() {
-    this.$rootScope.current_part = null;
-    this.$rootScope.current_reservation = null;
-    this.$rootScope.customer = null;
-    this.$rootScope.reservations = [];
-    this.$rootScope.customer_notes = [];
-    this.$rootScope.customer_allergies = [];
-    this.$rootScope.customer_preferences = [];
+    this.current_part = null;
+    this.current_reservation = null;
+    this.customer = null;
+    this.reservations = [];
+    this.customer_notes = [];
+    this.customer_allergies = [];
+    this.customer_preferences = [];
   }
 }

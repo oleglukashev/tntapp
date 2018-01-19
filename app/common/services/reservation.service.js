@@ -135,6 +135,19 @@ export default class Reservation {
     }).then(result => result.data);
   }
 
+  update(companyId, reservationId, data, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/reservation/${reservationId}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'PATCH',
+      data,
+    }).then(result => result.data);
+  }
+
   createQuick(companyId, data, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;

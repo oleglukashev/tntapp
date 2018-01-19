@@ -32,16 +32,15 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
       }, () => {});
     };
 
-    instance.openEditReservationModal = (reservation, reservationPart) => {
+    instance.openEditReservationModal = (reservation) => {
       Customer.searchReservationsByCustomerId(instance.current_company_id, reservation.customer.id)
         .then((response) => {
           const modalInstance = $modal.open({
-            templateUrl: 'reservation_part.edit.view.html',
-            controller: 'ReservationPartEditCtrl as reserv',
+            templateUrl: 'edit_reservation.view.html',
+            controller: 'EditReservationCtrl as reserv',
             size: 'md',
             resolve: {
               reservation: () => reservation,
-              reservationPart: () => reservationPart,
               customer: () => response.customer,
               customerNotes: () => response.notes,
               customerAllergies: () => response.allergies,

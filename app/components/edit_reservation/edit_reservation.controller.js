@@ -1,10 +1,10 @@
 import angular from 'angular';
 
-export default class ReservationPartEditCtrl {
+export default class EditReservationCtrl {
   constructor(User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone,
     Table, moment, filterFilter, $rootScope, $window, $scope, $modalInstance, UserMenuEditFactroy,
-    reservation, customer, customerNotes, customerPreferences, customerAllergies, reservationPart,
-    Confirm) {
+    reservation, customer, customerNotes, customerPreferences, customerAllergies, Confirm,
+    NewReservationGroupFactory) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -37,11 +37,67 @@ export default class ReservationPartEditCtrl {
     this.available_time = [];
 
     this.products = [];
-    if (reservationPart.product) {
-      this.products = [reservationPart.product];
+
+    // $modal cache input variables
+    if (!this.reservation.is_cached) {
+      this.reservation.is_cached = true;
+      this.reservation.reservation_parts.forEach((part, index) => {
+        this.reservation.reservation_parts[index] = this.getModifiedPart(part);
+      });
     }
 
-    this.current_part = {
+    this.current_part = this.reservation.reservation_parts[0];
+
+    this.loadGeneralSettings();
+    UserMenuEditFactroy(this);
+    NewReservationGroupFactory(this);
+
+    this.$rootScope.show_spinner = true;
+  }
+
+  submitReservationForm() {
+    const data = this.prepareFormData();
+    this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
+    this.Reservation.update(this.current_company_id, this.reservation.id, data)
+      .then(
+        () => {
+          this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
+          this.$modalInstance.dismiss('cancel');
+          this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
+          this.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: this.reservation.customer.id });
+        },
+        (error) => {
+          this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
+          this.errors = error.data.errors.errors;
+        });
+
+    return true;
+  }
+
+  prepareFormData() {
+    const data = {
+      notes: this.current_part.notes,
+      is_group: this.reservation.is_group,
+      reservation_parts: [],
+    };
+
+    this.reservation.reservation_parts.forEach((part) => {
+      data.reservation_parts.push({
+        number_of_persons: part.number_of_persons,
+        product: part.product,
+        tables: part.table_ids,
+        date_time: `${this.moment(part.date).format('DD-MM-YYYY')} ${part.time}`,
+      });
+    });
+
+    return data;
+  }
+
+  getModifiedPart(reservationPart) {
+    return {
       id: reservationPart.id,
       table_ids: reservationPart.table_ids,
       old_table_ids: reservationPart.table_ids,
@@ -55,50 +111,8 @@ export default class ReservationPartEditCtrl {
       old_product: reservationPart.product ? reservationPart.product.id : null,
       time: this.moment(reservationPart.date_time).format('HH:mm'),
       old_time: this.moment(reservationPart.date_time).format('HH:mm'),
-      notes: reservation.notes,
+      notes: this.reservation.notes,
     };
-
-    this.loadGeneralSettings();
-    UserMenuEditFactroy(this);
-
-    this.$rootScope.show_spinner = true;
-  }
-
-  submitPartForm() {
-    const data = {
-      number_of_persons: this.current_part.number_of_persons,
-      product_id: this.current_part.product,
-      tables: this.current_part.table_ids,
-      part_id: this.current_part.id,
-      date_time: `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${this.current_part.time}`,
-      notes: this.current_part.notes,
-    };
-
-    this.is_submitting = true;
-    this.$rootScope.show_spinner = true;
-    this.ReservationPart.update(this.current_company_id, this.current_part.id, data)
-      .then(
-        (reservationPart) => {
-          this.is_submitting = false;
-          this.$rootScope.show_spinner = false;
-          this.$rootScope.current_part = reservationPart;
-          this.$rootScope.reservations.forEach((reservation, reservIndex) => {
-            reservation.reservation_parts.forEach((part, partIndex) => {
-              if (part.id === this.$rootScope.current_part.id) {
-                this.$rootScope.reservations[reservIndex].reservation_parts[partIndex] =
-                  this.$rootScope.current_part;
-              }
-            });
-          });
-          this.$modalInstance.close();
-          this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
-        },
-        (error) => {
-          this.is_submitting = false;
-          this.$rootScope.show_spinner = false;
-          this.errors = error;
-        },
-      );
   }
 
   // UNITE WITH NEW RESERVATION FUNCTION
@@ -315,6 +329,10 @@ export default class ReservationPartEditCtrl {
     this.loadTime();
   }
 
+  changeIsGroupPostProcess() {
+    this.reservation.reservation_parts = [this.current_part];
+  }
+
   changeProductPostProcess() {
     if (this.current_part.product) {
       const product = this.current_part.product;
@@ -331,7 +349,9 @@ export default class ReservationPartEditCtrl {
       result = typeof this.occupied_tables[tableId] !== 'undefined';
     }
 
-    if (!result && this.current_part.table_ids.includes(tableId)) {
+    if (!result &&
+      this.current_part.table_ids &&
+      this.current_part.table_ids.includes(tableId)) {
       result = false;
     }
 

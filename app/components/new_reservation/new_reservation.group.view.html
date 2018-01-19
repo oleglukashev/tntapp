@@ -32,7 +32,8 @@
             <img class='table_icon' src='public/images/table.svg' />
             <small class='font-thin' ng-bind='reserv.Table.getTableNumbersByTableIds(reserv.tables, part.tables).join(", ")'></small>
           </span>
-          <div class='pull-right'>
+          <div class='pull-right'
+               ng-show='reserv.reservation.reservation_parts.length > 1'>
             <i class='mdi mdi-delete' ng-click='reserv.removePart($event, $index);'></i>
           </div>
         </label>

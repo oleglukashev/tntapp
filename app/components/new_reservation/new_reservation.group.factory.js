@@ -5,7 +5,7 @@ export default function NewReservationGroupFactory() {
     const instance = that;
 
     instance.addPart = () => {
-      const newPart = instance.getNewReservationPart();
+      const newPart = instance.ReservationPart.getNewReservationPart();
       newPart.date = new Date();
       instance.reservation.reservation_parts.push(newPart);
     };

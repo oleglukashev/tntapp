@@ -3,8 +3,8 @@ export default class NewReservationCtrl {
     NewReservation, Table, AppConstants, NewReservationDateFactory, NewReservationGroupFactory,
     NewReservationNumberOfPersonsFactory, NewReservationPersonFactory, NewReservationTimeFactory,
     NewReservationProductFactory, NewReservationTypeFactory, NewReservationZoneFactory,
-    NewReservationPersonAutocompleteFactory, moment, filterFilter, $state, $stateParams, $scope,
-    $rootScope, $window) {
+    NewReservationPersonAutocompleteFactory, ReservationPart, moment, filterFilter, $state,
+    $stateParams, $scope, $rootScope, $window) {
     'ngInject';
 
     this.is_dashboard_page = $state.current.name === 'app.dashboard';
@@ -12,6 +12,7 @@ export default class NewReservationCtrl {
     this.is_agenda = $state.current.name === 'app.agenda';
     this.is_customer_reservation = $state.current.name === 'customer_reservation.new';
     this.Reservation = Reservation;
+    this.ReservationPart = ReservationPart;
     this.NewReservation = NewReservation;
     this.CustomerCompany = CustomerCompany;
     this.Customer = Customer;
@@ -53,7 +54,7 @@ export default class NewReservationCtrl {
       reservation_parts: [],
     };
 
-    this.reservation.reservation_parts.push(this.getNewReservationPart());
+    this.reservation.reservation_parts.push(this.ReservationPart.getNewReservationPart());
     this.current_part = this.reservation.reservation_parts[0];
 
     if ($stateParams.date) {
@@ -425,23 +426,6 @@ export default class NewReservationCtrl {
     if (index === 2) {
       this.checkDeadlineAndClosedDate();
     }
-  }
-
-  getNewReservationPart() {
-    const innerId = this.reservation.reservation_parts.length + 1;
-
-    return {
-      inner_id: innerId,
-      date: null,
-      time: null,
-      number_of_persons: null,
-      product: null,
-      tables: [],
-      available_time: [],
-      occupied_tables: [],
-      zones_is_showed: true,
-      zone: [],
-    };
   }
 
   getProductWeekTimeRange(weekday, productId) {

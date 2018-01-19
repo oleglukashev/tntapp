@@ -28,7 +28,7 @@ import dndLists from './common/directives/angular-drag-and-drop-lists.directive'
 import mainRoute from './config.router';
 import jwtConfig from './config.jwt';
 import initTemplates from './config.templates';
-import editReservationParts from './components/reservation_parts/reservation_part.edit.controller';
+import editReservationController from './components/edit_reservation/edit_reservation.controller';
 import search from './components/search';
 import dashboard from './components/dashboard';
 import dashboardReservations from './components/dashboard/reservations/dashboard_reservations.controller';
@@ -70,7 +70,7 @@ angular
   .controller('MobileMenuCtrl', mobileMenuController)
   .controller('ChartsCtrl', chartsController)
   .controller('NewReservationCtrl', newReservationController)
-  .controller('ReservationPartEditCtrl', editReservationParts)
+  .controller('EditReservationCtrl', editReservationController)
   .controller('DashboardReservationsCtrl', dashboardReservations)
   .controller('PageFilterTimeRangesCtrl', pageFilterTimeRangesController)
   .controller('ReservationAnswerCtrl', reservationAnswerController)
