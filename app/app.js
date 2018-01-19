@@ -52,7 +52,7 @@ import editUser from './shared/user_menu/edit';
 import './assets/css/app.styl';
 import './common/services';
 import './common/directives';
-import './common/filters/object_to_array_and_sort_by';
+import './common/filters/time_reservation_id_sort.filter';
 
 angular
   .module('app', [angularJwt, angularAnimate, angularNgUploader, angularAria, angularCookies,

@@ -32,7 +32,7 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
       }, () => {});
     };
 
-    instance.openEditReservationModal = (reservation) => {
+    instance.openEditReservationModal = (reservation, reservationPart) => {
       Customer.searchReservationsByCustomerId(instance.current_company_id, reservation.customer.id)
         .then((response) => {
           const modalInstance = $modal.open({
@@ -40,6 +40,7 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
             controller: 'EditReservationCtrl as reserv',
             size: 'md',
             resolve: {
+              reservationPart: () => reservationPart,
               reservation: () => reservation,
               customer: () => response.customer,
               customerNotes: () => response.notes,

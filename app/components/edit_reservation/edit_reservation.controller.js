@@ -3,7 +3,7 @@ import angular from 'angular';
 export default class EditReservationCtrl {
   constructor(User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone,
     Table, moment, filterFilter, $rootScope, $window, $scope, $modalInstance, UserMenuEditFactroy,
-    reservation, customer, customerNotes, customerPreferences, customerAllergies, Confirm,
+    reservation, reservationPart, customer, customerNotes, customerPreferences, customerAllergies, Confirm,
     NewReservationGroupFactory) {
     'ngInject';
 
@@ -46,7 +46,12 @@ export default class EditReservationCtrl {
       });
     }
 
-    this.current_part = this.reservation.reservation_parts[0];
+    // setup current part. we can't insert it to block above
+    this.reservation.reservation_parts.forEach((part, index) => {
+      if (reservationPart.id === part.id) {
+        this.current_part = this.reservation.reservation_parts[index];
+      }
+    });
 
     this.loadGeneralSettings();
     UserMenuEditFactroy(this);
