@@ -24,6 +24,11 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
       reverse: true,
     },
     {
+      name: 'Reserveringen',
+      value: null,
+      reverse: false,
+    },
+    {
       name: 'Tijd oplopend',
       value: 'time',
       reverse: false,
@@ -143,7 +148,12 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
       instance.filter_type = type;
     };
 
-    instance.applySort = parts =>
-      $filter('orderBy')(parts, instance.sort.value, instance.sort.reverse);
+    instance.applySort = (parts) => {
+      if (instance.sort.name === 'Reserveringen') {
+        return $filter('orderByTimeAndRestaurantId')(parts);
+      }
+
+      return $filter('orderBy')(parts, instance.sort.value, instance.sort.reverse);
+    };
   };
 }
