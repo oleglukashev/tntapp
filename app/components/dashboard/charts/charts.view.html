@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <div class='panel'>
+  <div class='panel' ng-if='charts.guests_with_repeats.length'>
     <div class='panel-heading'>Vaste gast</div>
     <div class='panel-body no-padder'>
       <table class='table m-b-none'>
@@ -54,7 +54,7 @@
     </div>
   </div>
 
-  <div class='panel'>
+  <div class='panel' ng-if='charts.guests_with_allergies.length'>
     <div class='panel-heading'>Speciale voorkeuren gasten vandaag</div>
     <div class='panel-body no-padder'>
       <table class='table m-b-none'>
