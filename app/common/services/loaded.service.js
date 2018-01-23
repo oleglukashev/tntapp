@@ -9,6 +9,8 @@ export default class Loaded {
       group_this_week: [],
       today: [],
       latest: [],
+      guests_with_repeats: [],
+      guests_with_allergies: [],
       count_per_year: 0,
       count_per_month: 0,
       count_per_week: 0,

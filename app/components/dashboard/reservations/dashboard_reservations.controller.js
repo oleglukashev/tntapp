@@ -113,14 +113,18 @@ export default class DashboardReservationsCtrl {
     this.Reservation
       .getAllGrouped(this.current_company_id).then(
         (reservations) => {
+          this.reservationsLoaded = true;
           this.$rootScope.show_spinner = false;
           this.all_reservations = reservations;
           this.setData();
-          this.reservationsLoaded = true;
           this.Loaded.reservations.count_per_year = reservations.count_per_year;
           this.Loaded.reservations.count_per_month = reservations.count_per_month;
           this.Loaded.reservations.count_per_week = reservations.count_per_week;
           this.Loaded.reservations.count_by_week = reservations.count_by_week;
+          this.Loaded.reservations.guests_with_repeats =
+            reservations.guests_with_repeats;
+          this.Loaded.reservations.guests_with_allergies =
+            reservations.guests_with_allergies;
           this.$rootScope.$broadcast('reservationsLoaded', reservations);
         }, () => {
           this.$rootScope.show_spinner = false;
