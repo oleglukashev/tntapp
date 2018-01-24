@@ -172,9 +172,9 @@
               <span ng-if='part.product.name'>{{ part.product.name }},</span>
               {{ part.number_of_persons }} <translate class='lowercase' translate='persons'></translate>
             </small>
-            <div class='pull-right review_score' ng-if='reservation.reviewScore != null'>
+            <div class='pull-right review_score' ng-if='reservation.review'>
               <i class='mdi mdi-star-outline icon-muted i-20'></i>
-              <small class='font-thin'>{{ reservation.reviewScore }}</small>
+              <small class='font-thin'>{{ reservation.review.score }}</small>
             </div>
           </div>
         </a>
@@ -191,6 +191,23 @@
                 translate-values='{ text: user.parsedDate(reservation.reservation_parts[0].date_time) }'>
             </h3>
             <small class='font-thin' translate='reservation.load_pdf'></small>
+          </div>
+        </a>
+
+        <a md-ink-ripple
+           ng-if='reservation.review'
+           href='{{ reservation.review.url }}'
+           target='_blank'>
+          <div class="md-list-item-left">
+            <i class="mdi mdi-star-outline icon-muted i-24"></i>
+          </div>
+          <div class="md-list-item-content">
+            <h3 class="text-md">
+              TheNextReview Score: {{ user.formatScore(reservation.review.score) }}
+            </h3>
+            <small class="font-thin">
+              {{ reservation.review.notes }}
+            </small>
           </div>
         </a>
       </li>

@@ -118,6 +118,10 @@ export default class UserMenuCtrl {
     return this.moment(date).locale('nl').format('D MMMM YYYY HH:mm');
   }
 
+  formatScore(score) {
+    return score.toFixed(2);
+  }
+
   getPartByReservations() {
     return this.ReservationPart.partsByReservations(this.reservations);
   }
