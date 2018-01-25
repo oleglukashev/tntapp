@@ -112,15 +112,16 @@
                              drop-channel='move,resize'><div></div></div>
                       </div>
                       <div class='reservation'
-                           ng-repeat='item in agenda.filterDataForGraph(zone.id, tableId)'
+                           ng-repeat='item in agenda.graph_data[tableId]'
+                           ng-if='agenda.graph_data[tableId]'
                            ui-on-drop=''
                            drop-channel='resize'
                            ui-draggable='true'
-                           drag='[item.id, item.reservation_id]'
-                           ng-style='agenda.reservationBlockStyle(tableIndex, item.part)'
+                           drag='[item.id, tableId]'
+                           ng-style='agenda.reservationBlockStyle(tableIndex, tableId, item)'
                            on-drop-failure='agenda.dragEnd()'
                            ng-class='agenda.draggable_class'
-                           data-product-id='{{ item.product_id }}'
+                           data-product-id='{{ item.product.id }}'
                            data-id='{{ item.id }}'
                            drag-channel='move'>
                         <div class='reservation_wrapper'>
@@ -128,7 +129,7 @@
                              data-ng-include=" 'reservation_status_menu.view.html' "
                              ng-init='controller = agenda; agendaIcon = true'
                           ></span>
-                          <a ng-click='agenda.openCustomerMenu(item.customer_id, item.id)'>
+                          <a ng-click='agenda.openCustomerMenu(item.customer.id, item.id)'>
                             {{ item.number_of_persons }}
                             {{ item.product_name }}
                             <strong ng-bind='item.name'></strong>

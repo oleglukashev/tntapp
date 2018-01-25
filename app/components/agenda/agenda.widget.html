@@ -16,7 +16,7 @@
         <div class="pull-left widget-time">{{ item.time }}</div>
         <div class='reservation'
              ui-draggable='true'
-             drag='[item.id, item.reservation.id]'
+             drag='[item.id, null]'
              on-drop-failure='agenda.dragEnd()'
              ng-class='agenda.draggable_class'
              data-product-id='{{ item.product_id }}'
