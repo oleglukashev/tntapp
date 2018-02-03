@@ -179,7 +179,8 @@ export default class EditReservationCtrl {
     this.Product.getAll(this.current_company_id, false).then(
       (result) => {
         this.products = result;
-        this.current_part.current_product = this.filterFilter(this.products, { id: this.current_part.product})[0];
+        this.current_part.current_product =
+          this.filterFilter(this.products, { id: this.current_part.product })[0];
 
         if (this.products.length > 0) {
           this.loadTimeRanges();

@@ -105,6 +105,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
           instance.$rootScope.show_spinner = false;
           instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
           instance.$rootScope.$broadcast('ProfilesCtrl.reload_customers');
+          instance.$modalInstance.close();
         }, () => {
           instance.is_submitting = false;
           instance.$rootScope.show_spinner = false;
@@ -137,6 +138,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
             instance.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
             instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
             resetForm(form);
+            instance.$modalInstance.close();
           }, () => {
             instance.notes_is_submitting = false;
             instance.$rootScope.show_spinner = false;
@@ -153,6 +155,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
               instance.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
               instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
               resetForm(form);
+              instance.$modalInstance.close();
             }, () => {
               instance.notes_is_submitting = false;
               instance.$rootScope.show_spinner = false;
@@ -187,6 +190,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
             instance.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
             instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
             resetForm(form);
+            instance.$modalInstance.close();
           }, () => {
             instance.preferences_is_submitting = false;
             instance.$rootScope.show_spinner = false;
@@ -203,6 +207,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
               instance.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
               instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
               resetForm(form);
+              instance.$modalInstance.close();
             }, () => {
               instance.preferences_is_submitting = false;
               instance.$rootScope.show_spinner = false;
@@ -236,6 +241,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
             instance.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
             instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
             resetForm(form);
+            instance.$modalInstance.close();
           }, () => {
             instance.allergies_is_submitting = false;
             instance.$rootScope.show_spinner = false;
@@ -252,6 +258,7 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
               instance.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
               instance.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: instance.customer.id });
               resetForm(form);
+              instance.$modalInstance.close();
             }, () => {
               instance.allergies_is_submitting = false;
               instance.$rootScope.show_spinner = false;
