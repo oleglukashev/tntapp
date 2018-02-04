@@ -20,14 +20,12 @@
           </a>
         </li>
         <li class='m-t-sm'>
-          <a href='#' ui-sref='app.settings.general'>
-            <span>Instellingen</span>
-          </a>
+          <a href='#' ui-sref='app.settings.general' ng-show='header.userIsOwner()'><span>Instellingen</span></a>
+          <span ng-hide='header.userIsOwner()' title='Alleen toegankelijk met een beheerdersaccount'>Instellingen</span>
         </li>
         <li>
-          <a href='#' ui-sref='app.upgrade'>
-            <span>Upgrade</span>
-          </a>
+          <a href='#' ui-sref='app.upgrade' ng-show='header.userIsOwner()'><span>Upgrade</span></a>
+          <span ng-hide='header.userIsOwner()' title='Alleen toegankelijk met een beheerdersaccount'>Upgrade</span>
         </li>
         <li>
           <a href='#' ng-click='header.logout()'>

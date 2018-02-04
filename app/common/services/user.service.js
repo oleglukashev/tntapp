@@ -212,4 +212,18 @@ export default class User {
           }
         });
   }
+
+  isOwner() {
+    let result = false;
+
+    if (this.current.owned_companies.length && this.getCompanyId()) {
+      this.current.owned_companies.forEach((company) => {
+        if (company.id === this.getCompanyId()) {
+          result = true;
+        }
+      });
+    }
+
+    return result;
+  }
 }

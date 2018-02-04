@@ -1,5 +1,5 @@
-import angular                    from 'angular';
-import UserService                from './user.service'
+import angular from 'angular';
+import UserService from './user.service';
 import ProductService from './product.service';
 import SettingsService from './settings.service';
 import ZoneService from './zone.service';

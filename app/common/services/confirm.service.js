@@ -14,7 +14,6 @@ export default class Confirm {
 
     this.$mdDialog.show(confirm).then(() => {
       $modalInstance.close();
-    }, () => {
-    });
+    }, () => {});
   }
 }
