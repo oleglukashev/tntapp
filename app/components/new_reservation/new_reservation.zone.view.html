@@ -27,9 +27,7 @@
           <p><small class='text-muted'>{{ reserv.current_part.zone.name }}:</small></p>
           <label ng-repeat='table_id in reserv.current_part.zone.table_ids'
                  ng-change='reserv.changeTableValuesPostProcess()'
-                 ng-class="{ 'disabled': reserv.Reservation.isDisabledTableByTableId(reserv.tables, reserv.current_part.occupied_tables, table_id),
-                             'red-300': reserv.zoneIsClosed(reserv.current_part.zone.id),
-                             'btn-default text-success': !reserv.zoneIsClosed(reserv.current_part.zone.id) }"
+                 ng-class='reserv.classOfTable(table_id, reserv.current_part.zone.id)'
                  class='btn block m-b-xs no-shadow text-left'
                  ng-model='reserv.current_part.tables_values[table_id]'
                  uncheckable
