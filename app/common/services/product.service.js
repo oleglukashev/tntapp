@@ -77,7 +77,7 @@ export default class Product {
       url: `${API_URL}/company/${companyId}/product/available_tables`,
       skipAuthorization: skipJwtAuth,
       method: 'POST',
-      data: { product_id: productId, date },
+      data: { product_id: productId, date, is_front: skipJwtAuth },
     }).then(result => result.data);
   }
 
