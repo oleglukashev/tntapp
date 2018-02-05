@@ -5,12 +5,13 @@ export default function ResponseFactory($q, $injector) {
     responseError: (rejection) => {
       if (rejection.status === 403 && rejection.statusText === 'Forbidden') {
         // hack to arround circle dependences
+
         const mdDialog = $injector.get('$mdDialog');
         const alert = mdDialog
           .alert()
-          .title('Verwijderen')
-          .textContent('Het huidige werk is niet afgerond en wordt daarom niet opgeslagen')
-          .ok('Verwijderen');
+          .title('Geen toegang')
+          .textContent('U heeft geen toegang tot deze pagina omdat u hiervoor geen rechten heeft.')
+          .ok('Sluiten');
 
         mdDialog.show(alert).then(() => {}, () => {});
       }
