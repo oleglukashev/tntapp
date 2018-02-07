@@ -93,14 +93,15 @@
           </div>
 
           <div ng-if='!reserv.is_customer_reservation'
-               ng-show="reserv.reservation.pdfFile"
+               ng-show='reserv.reservation.reservation_pdf'
                class="file_wrapper">
-            <button ng-click="reserv.reservation.pdfFile = null"
+            <button ng-click="reserv.removePdf()"
                     md-ink-ripple
+                    type='button'
                     class='md-btn md-flat btn-fw text-success m-r-6 m-l-6'
-                    ng-show="reserv.reservation.pdfFile">
+                    ng-show="reserv.reservation.reservation_pdf">
               <i class="mdi mdi-close i-24"></i></button>
-            <span>{{ reserv.reservation.pdfFile.name }}</span>
+            <span>{{ reserv.reservation.reservation_pdf.name }}</span>
           </div>
 
           <button type='button'
@@ -111,7 +112,7 @@
                   ngf-drop=''
                   ngf-pattern="'.pdf'"
                   accept='application/pdf'
-                  ng-model='reserv.reservation.pdfFile'>PDF UPLOADEN...</button>
+                  ng-model='reserv.reservation.reservation_pdf'>PDF UPLOADEN...</button>
         </div>
       </div>
       <button type='button'

@@ -10,6 +10,10 @@ export default function NewReservationPersonFactory() {
       instance.opened = true;
     };
 
+    instance.removePdf = () => {
+      instance.reservation.reservation_pdf = null;
+    };
+
     instance.triggerAdditionalInfo = () => {
       instance.additional_is_opened = !instance.additional_is_opened;
     };

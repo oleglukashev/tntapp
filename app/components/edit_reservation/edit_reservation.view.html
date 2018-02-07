@@ -26,13 +26,6 @@
 
         <div ng-init='controller = reserv' data-ng-include=" 'user_menu.allergies.view.html' "></div>
       </md-tabs>
-      <div class='wrapper red-300 layout-align-space-around-center layout-column' ng-show='reserv.errors.length'>
-        <div class='w-xl'>
-          <div ng-repeat='error in reserv.errors'>
-            {{ error }}
-          </div>
-        </div>
-      </div>
     </div>
   </md-content>
 </section>

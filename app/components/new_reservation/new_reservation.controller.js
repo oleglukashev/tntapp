@@ -157,11 +157,16 @@ export default class NewReservationCtrl {
     this.$rootScope.show_spinner = true;
     this.Reservation.create(this.current_company_id, data, this.is_customer_reservation)
       .then(
-        () => {
-          this.$rootScope.show_spinner = false;
+        (result) => {
+          if (result.status === 200) {
+            this.success = true;
+            this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
+          } else if (result.status === -1 && result.statusText === '') {
+            this.errors = ['Een bestand mag niet groter zijn dan 2MB'];
+          }
+
           this.is_submitting = false;
-          this.success = true;
-          this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
+          this.$rootScope.show_spinner = false;
         },
         (error) => {
           this.$rootScope.show_spinner = false;
@@ -184,7 +189,6 @@ export default class NewReservationCtrl {
       notes: this.reservation.notes,
       is_group: this.reservation.is_group,
       company_name: this.reservation.company_name,
-      reservation_pdf: this.reservation.pdfFile,
       customer: {
         last_name: this.reservation.last_name,
         first_name: this.reservation.first_name,
@@ -201,6 +205,10 @@ export default class NewReservationCtrl {
       },
       reservation_parts: [],
     };
+
+    if (this.reservation.reservation_pdf) {
+      data.reservation_pdf = this.reservation.reservation_pdf;
+    }
 
     this.reservation.reservation_parts.forEach((part) => {
       data.reservation_parts.push({

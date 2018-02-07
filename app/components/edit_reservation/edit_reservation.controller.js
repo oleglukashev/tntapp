@@ -44,6 +44,12 @@ export default class EditReservationCtrl {
       this.reservation.reservation_parts.forEach((part, index) => {
         this.reservation.reservation_parts[index] = this.getModifiedPart(part);
       });
+
+      if (this.reservation.reservation_pdf) {
+        this.reservation.reservation_pdf = {
+          name: this.reservation.reservation_pdf,
+        };
+      }
     }
 
     // setup current part. we can't insert it to block above
@@ -52,6 +58,8 @@ export default class EditReservationCtrl {
         this.current_part = this.reservation.reservation_parts[index];
       }
     });
+
+    Reservation.removePdf.bind(Reservation);
 
     this.loadGeneralSettings();
     UserMenuEditFactroy(this);
@@ -66,14 +74,18 @@ export default class EditReservationCtrl {
     this.$rootScope.show_spinner = true;
     this.Reservation.update(this.current_company_id, this.reservation.id, data)
       .then(
-        () => {
+        (result) => {
+          if (result.status === 200) {
+            this.$modalInstance.dismiss('cancel');
+            this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
+            this.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: this.reservation.customer.id });
+          } else if (result.status === -1 && result.statusText === '') {
+            this.errors = ['Een bestand mag niet groter zijn dan 2MB'];
+          }
+
           this.is_submitting = false;
           this.$rootScope.show_spinner = false;
-          this.$modalInstance.dismiss('cancel');
-          this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
-          this.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: this.reservation.customer.id });
-        },
-        (error) => {
+        }, (error) => {
           this.is_submitting = false;
           this.$rootScope.show_spinner = false;
           this.errors = error.data.errors.errors;
@@ -88,6 +100,10 @@ export default class EditReservationCtrl {
       is_group: this.reservation.is_group,
       reservation_parts: [],
     };
+
+    if (this.pdfIsFile()) {
+      data.reservation_pdf = this.reservation.reservation_pdf;
+    }
 
     this.reservation.reservation_parts.forEach((part) => {
       data.reservation_parts.push({
@@ -151,6 +167,11 @@ export default class EditReservationCtrl {
            timeObj.can_overbook;
   }
 
+  pdfIsFile() {
+    return this.reservation.reservation_pdf &&
+           this.reservation.reservation_pdf.constructor.name === 'File';
+  }
+
   // UNITE WITH NEW RESERVATION FUNCTION
   disabledTimes() {
     const result = [];
@@ -162,6 +183,16 @@ export default class EditReservationCtrl {
     });
 
     return result;
+  }
+
+  removePdf() {
+    if (this.pdfIsFile()) {
+      this.reservation.reservation_pdf = null;
+    } else {
+      this.Reservation.removePdf(this.current_company_id, this.reservation.id).then(() => {
+        this.reservation.reservation_pdf = null;
+      });
+    }
   }
 
   loadGeneralSettings() {
