@@ -13,6 +13,12 @@
   },
   "globals": {
     "API_URL": true,
-    "require": true
+    "require": true,
+    "describe": true,
+    "it": true,
+    "browser": true,
+    "by": true,
+    "element": true,
+    "expect": true,
   }
 }
