@@ -74,6 +74,18 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
       }
     });
 
+    instance.cancelFilterIsOn = () => {
+      let result = false;
+
+      instance.status_filter.forEach((item) => {
+        if (item.value === AppConstants.reservationDutchStatuses.cancelled) {
+          result = true;
+        }
+      });
+
+      return result;
+    };
+
     instance.exportReservationsCSV = () => {
       const date = moment(instance.date_filter).format('YYYY-MM-DD');
       Reservation.exportCSV(instance.current_company_id, date).then(() => {});
