@@ -76,15 +76,16 @@
                 Group?
               </md-checkbox>
             </div>
-            <div ng-show='reserv.reservation.reservation_pdf'
-                 class='file_wrapper'>
-              <button ng-click='reserv.removePdf()'
-                      md-ink-ripple
-                      type='button'
-                      class='md-btn md-flat btn-fw text-success m-r-6 m-l-6'
-                      ng-show='reserv.reservation.reservation_pdf'>
-                <i class="mdi mdi-close i-24"></i></button>
-              <span>{{ reserv.reservation.reservation_pdf.name }}</span>
+            <div ng-show='reserv.reservation.reservation_pdf'>
+              <label class='btn btn-default block m-b-xs no-shadow text-success text-left'>
+                <span class='m-r-sm'>
+                  <i class='mdi mdi-pdf'></i>
+                  PDF for reservation
+                </span>
+                <div class='pull-right'>
+                  <i class='mdi mdi-delete' ng-click='reserv.removePdf();'></i>
+                </div>
+              </label>
             </div>
             <button type='button'
                     md-ink-ripple

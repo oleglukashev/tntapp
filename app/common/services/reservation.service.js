@@ -71,7 +71,7 @@ export default class Reservation {
       anchor.attr({
         href: encodeURI(result.data),
         target: '_blank',
-        download: 'export.pdf',
+        download: `reservation(#${reservationId}).pdf`,
       })[0].click();
     });
   }
