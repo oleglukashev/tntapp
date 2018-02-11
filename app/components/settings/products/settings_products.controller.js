@@ -81,6 +81,19 @@ export default class SettingsProductsCtrl {
     this.calculateMinMax();
   }
 
+  showLimits(productId) {
+    const modalInstance = this.$modal.open({
+      templateUrl: 'settings_products.limits.view.html',
+      controller: 'SettingsProductsLimitsCtrl as product_limits',
+      size: 'md',
+      resolve: {
+        productId: () => productId,
+      },
+    });
+
+    modalInstance.result.then(() => {}, () => {});
+  }
+
   loadProducts() {
     this.Product.getAll(this.current_company_id, true)
       .then(
