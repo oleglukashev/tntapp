@@ -46,8 +46,6 @@ export default class SettingsProductsLimitsCtrl {
 
     this.setLimit(time, dayOfWeek, newValue);
     this.saveLimit(data);
-
-    return false;
   }
 
   saveLimitByTime(time) {
