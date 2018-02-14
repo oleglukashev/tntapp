@@ -185,7 +185,15 @@ export default class EditReservationCtrl {
     return result;
   }
 
-  removePdf() {
+  loadPDF() {
+    this.Reservation
+      .getPDF(this.current_company_id, this.reservation.id)
+      .then();
+  }
+
+  removePdf($event) {
+    $event.stopPropagation();
+
     if (this.pdfIsFile()) {
       this.reservation.reservation_pdf = null;
     } else {

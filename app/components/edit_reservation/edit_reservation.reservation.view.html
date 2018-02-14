@@ -77,13 +77,14 @@
               </md-checkbox>
             </div>
             <div ng-show='reserv.reservation.reservation_pdf'>
-              <label class='btn btn-default block m-b-xs no-shadow text-success text-left'>
+              <label class='btn btn-default block m-b-xs no-shadow text-success text-left'
+                     ng-click='reserv.loadPDF();'>
                 <span class='m-r-sm'>
                   <i class='mdi mdi-pdf'></i>
                   PDF for reservation
                 </span>
                 <div class='pull-right'>
-                  <i class='mdi mdi-delete' ng-click='reserv.removePdf();'></i>
+                  <i class='mdi mdi-delete' ng-click='reserv.removePdf($event);'></i>
                 </div>
               </label>
             </div>
