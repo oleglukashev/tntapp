@@ -3,6 +3,7 @@ export default function templates($templateCache) {
 
   $templateCache.removeAll();
   $templateCache.put('header.view.html', require('./shared/header/header.view.html'));
+  $templateCache.put('header.right_menu.view.html', require('./shared/header/header.right_menu.view.html'));
   $templateCache.put('footer.view.html', require('./shared/footer/footer.view.html'));
   $templateCache.put('app.html', require('./components/layout/app.html'));
   $templateCache.put('login.html', require('./components/layout/login.html'));
