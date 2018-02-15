@@ -27,12 +27,10 @@ export default function NewReservationPersonFactory() {
       if (typeof file !== 'object') return false;
 
       const url = (window.URL || window.webkitURL).createObjectURL(file);
-      const anchor = angular.element('<a/>');
-      anchor.attr({
-        href: url,
-        target: '_blank',
-        download: `${file.name}`,
-      })[0].click();
+      const link = window.document.createElement('a');
+      link.setAttribute('href', encodeURI(url));
+      link.setAttribute('download', `${file.name}`);
+      link.click();
     };
 
     instance.showAutocompleteCustomerName = () =>

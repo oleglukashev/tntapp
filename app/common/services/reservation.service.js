@@ -67,12 +67,10 @@ export default class Reservation {
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then((result) => {
-      const anchor = angular.element('<a/>');
-      anchor.attr({
-        href: encodeURI(result.data),
-        target: '_blank',
-        download: `reservation(#${reservationId}).pdf`,
-      })[0].click();
+      const link = window.document.createElement('a');
+      link.setAttribute('href', encodeURI(result.data));
+      link.setAttribute('download', `reservation(#${reservationId}).pdf`);
+      link.click();
     });
   }
 
