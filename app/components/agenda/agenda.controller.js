@@ -105,6 +105,7 @@ export default class AgendaCtrl {
     reservation.status = status;
     let rowItem = null;
 
+    // replace dataItem in this.data by index 
     this.data.forEach((dataItem, index) => {
       if (dataItem.reservation.id === reservationId) {
         this.data.splice(index, 1);
@@ -116,11 +117,13 @@ export default class AgendaCtrl {
       }
     });
 
+    // list of table ids all parts of reservation
     let tableIds = [];
     reservation.reservation_parts.forEach((part) => {
       tableIds = [...new Set(tableIds.concat(part.table_ids))];
     });
 
+    // replace dataItem in this.graph_data by index 
     tableIds.forEach((tableId) => {
       this.graph_data[tableId].forEach((graphItem, index) => {
         if (graphItem.reservation.id === reservationId) {
