@@ -1,6 +1,38 @@
 export default class NewReservation {
-  constructor() {
+  constructor($translate) {
     'ngInject';
+
+    this.$translate = $translate;
+
+    // run translates
+    const translatesArray = [
+      'date', 'product', 'number_of_guests', 'first_name', 'notifications.not_full',
+      'last_name', 'phone', 'notifications.is_required', 'time', 'notifications.full_name',
+    ];
+
+    $translate(translatesArray).then((translates) => {
+      this.date_text = translates.date;
+      this.product_text = translates.product;
+      this.number_of_guests_text = translates.number_of_guests;
+      this.first_name_text = translates.first_name;
+      this.last_name_text = translates.last_name;
+      this.phone_text = translates.phone;
+      this.is_required_text = translates['notifications.is_required'];
+      this.time_text = translates.time;
+      this.full_name_text = translates['notifications.full_name'];
+      this.not_full_text = translates['notifications.not_full'];
+    }, (translationIds) => {
+      this.date_text = translationIds.date;
+      this.product_text = translationIds.product;
+      this.number_of_guests_text = translationIds.number_of_guests;
+      this.first_name_text = translationIds.first_name;
+      this.last_name_text = translationIds.last_name;
+      this.phone_text = translationIds.phone;
+      this.is_required_text = translationIds['notifications.is_required'];
+      this.time_text = translationIds.time;
+      this.full_name_text = translationIds['notifications.full_name'];
+      this.not_full_text = translationIds['notifications.not_full'];
+    });
   }
 
   validForm(reservation, phoneNumberIsRequired, isCustomerReservation, walkIn) {
@@ -13,30 +45,30 @@ export default class NewReservation {
         prefix = `part ${index + 1}: `;
       }
 
-      if (!part.number_of_persons) errors.push(`${prefix}number of persons is verplicht`);
+      if (!part.number_of_persons) errors.push(`${prefix}${this.number_of_guests_text} ${this.is_required_text}`);
 
       if (!walkIn) {
-        if (!part.date) errors.push(`${prefix}date is verplicht`);
-        if (!part.time) errors.push(`${prefix}tijdstip is verplicht`);
-        if (!part.product) errors.push(`${prefix}product is verplicht`);
+        if (!part.date) errors.push(`${prefix}${this.date_text} ${this.is_required_text}`);
+        if (!part.time) errors.push(`${prefix}${this.time_text} ${this.is_required_text}`);
+        if (!part.product) errors.push(`${prefix}${this.product_text} ${this.is_required_text}`);
       }
     });
 
     if (!walkIn) {
       if (isCustomerReservation) {
-        if (!reservation.last_name) errors.push('achternaam is verplicht');
-        if (!reservation.first_name) errors.push('voornaam is verplicht');
+        if (!reservation.last_name) errors.push(`${this.last_name_text} ${this.is_required_text}`);
+        if (!reservation.first_name) errors.push(`${this.first_name_text} ${this.is_required_text}`);
       } else if (!reservation.last_name && !reservation.first_name) {
-        errors.push('vul a.u.b. ten minste een voor- of achternaam in.');
+        errors.push(this.full_name_text);
       }
 
       if (!reservation.mail && isCustomerReservation) {
-        errors.push('email adres is verplicht');
+        errors.push(`${this.email} ${this.is_required_text}`);
       } else if (reservation.mail && !emailRe.test(reservation.mail)) {
-        errors.push('email adres niet vol');
+        errors.push(`${this.email} ${this.not_full_text}`);
       }
 
-      if (phoneNumberIsRequired && !reservation.primary_phone_number) errors.push('telefoonnummer is verplciht');
+      if (phoneNumberIsRequired && !reservation.primary_phone_number) errors.push(`${this.phone_text} ${this.is_required_text}`);
     }
 
 

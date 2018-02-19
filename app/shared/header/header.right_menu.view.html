@@ -19,20 +19,47 @@
             <i ng-show='company.id === header.current_company_id' class='mdi mdi-check pull-right'></i>
           </a>
         </li>
+
+        <li>
+          <a href='#'
+             ng-click='header.changeLang("en")'
+             ng-if='header.$translate.proposedLanguage() === "nl"'>
+            <span class='lang en'></span>
+          </a>
+          <a href='#'
+             ng-click='header.changeLang("nl")'
+             ng-if='header.$translate.proposedLanguage() === "en"'>
+            <span class='lang nl'></span>
+          </a>
+        </li>
+
         <li class='m-t-sm'>
-          <a href='#' ui-sref='app.settings.general' ng-show='header.userIsOwner()'><span>Instellingen</span></a>
-          <span ng-hide='header.userIsOwner()' title='Alleen toegankelijk met een beheerdersaccount'>Instellingen</span>
+          <a href='#'
+             ui-sref='app.settings.general'
+             ng-show='header.userIsOwner()'>
+            <span translate='right_menu.settings'></span>
+          </a>
+          <span ng-hide='header.userIsOwner()'
+                title='{{ "notifications.access_only" | translate }}'
+                translate='right_menu.settings'></span>
         </li>
         <li>
-          <a href='#' ui-sref='app.upgrade' ng-show='header.userIsOwner()'><span>Upgrade</span></a>
-          <span ng-hide='header.userIsOwner()' title='Alleen toegankelijk met een beheerdersaccount'>Upgrade</span>
+          <a href='#'
+             ui-sref='app.upgrade'
+             ng-show='header.userIsOwner()'>
+            <span translate='right_menu.upgrade'></span>
+          </a>
+          <span ng-hide='header.userIsOwner()'
+                title='{{ "notifications.access_only" | translate }}'
+                translate='right_menu.upgrade'></span>
         </li>
         <li>
-          <a href='https://thenextsoftware.slaask.help' target='_blank'><span>Help</span></a>
+          <a href='https://thenextsoftware.slaask.help'
+             target='_blank'><span translate='help'></span></a>
         </li>
         <li>
           <a href='#' ng-click='header.logout()'>
-            <span>Uitloggen</span>
+            <span translate='right_menu.logout'></span>
           </a>
         </li>
       </ul>

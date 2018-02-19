@@ -6,10 +6,10 @@
 		<div ng-repeat='(page, state) in settings.pages'
 				 ng-class="{ 'b-l-success' : $state.current.name == state }"
 				 class='list-group-item no-border b-l-3x'>
-			<a class='text-md font-bold'
+			<a class='text-md font-bold uppercase'
 				 ng-class="{ 'text-muted' : $state.current.name != state }"
 				 href='#'
-				 ui-sref='{{ state }}'>{{ page }}</a>
+				 ui-sref='{{ state }}'>{{ page | translate }}</a>
 		</div>
 	</div>
 </div>

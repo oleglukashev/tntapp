@@ -3,27 +3,23 @@
           ng-click='$mdMenu.open($event);'></button>
   <md-menu-content>
     <md-menu-item>
-      <md-button ng-click='controller.exportReservationsCSV();'>CSV export</md-button>
+      <md-button ng-click='controller.exportReservationsCSV();' translate='filter_settings.csv'></md-button>
     </md-menu-item>
     <md-menu-item>
-      <md-button ng-click='controller.openTimeRangeSettings("product", "Producten openen/blokkeren");'>
-        Producten openen/blokkeren
-      </md-button>
+      <md-button ng-click='controller.openTimeRangeSettings("product");'
+                 translate='filter_settings.product'></md-button>
     </md-menu-item>
     <md-menu-item>
-      <md-button ng-click='controller.openTimeRangeSettings("open", "Tijden openen / blokkeren");'>
-        Tijden openen / blokkeren
-      </md-button>
+      <md-button ng-click='controller.openTimeRangeSettings("open");'
+                 translate='filter_settings.open'></md-button>
     </md-menu-item>
     <md-menu-item>
-      <md-button ng-click='controller.openTimeRangeSettings("overbooking", "Overboeken aan/uit zetten");'>
-        Overboeken aan/uit zetten
-      </md-button>
+      <md-button ng-click='controller.openTimeRangeSettings("overbooking");'
+                 translate='filter_settings.overbooking'></md-button>
     </md-menu-item>
     <md-menu-item>
-      <md-button ng-click='controller.openTimeRangeSettings("zone", "Zone openen / blokkeren");'>
-        Zone openen / blokkeren
-      </md-button>
+      <md-button ng-click='controller.openTimeRangeSettings("zone");'
+                 translate='filter_settings.zone'></md-button>
     </md-menu-item>
   </md-menu-content>
 </md-menu>

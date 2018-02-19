@@ -1,6 +1,6 @@
 <md-tab>
   <md-tab-label>
-    <div class='text-center l-h'>Allergiën</div>
+    <div class='text-center l-h' translate='allergies'></div>
   </md-tab-label>
   <md-tab-body>
     <div class='md-content-submit'>
@@ -21,7 +21,7 @@
           <form name='user_allergies_form'>
             <div class='wrapper'>
               <md-input-container class='md-block'>
-                <label>Allergiën</label>
+                <label translate='allergy'></label>
                 <textarea required ng-model='controller.allergy.allergy'></textarea>
               </md-input-container>
 
@@ -32,10 +32,10 @@
       </div>
 
       <button type='submit'
-            ng-class="{ 'disabled': !user_allergies_form.$valid || controller.allergies_is_submitting }"
-            ng-click="controller.submitAllergiesForm(user_allergies_form)"
-            class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
-        OPSLAAN
+              ng-class="{ 'disabled': !user_allergies_form.$valid || controller.allergies_is_submitting }"
+              ng-click="controller.submitAllergiesForm(user_allergies_form)"
+              class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
+        <translate>save</translate>
       </button>
     </div>
   </md-tab-body>

@@ -1,10 +1,12 @@
 export default class HeaderCtrl {
-  constructor(User, $state, $timeout, $mdSidenav) {
+  constructor(User, $state, $timeout, $window, $mdSidenav, $translate) {
     'ngInject';
 
     this.$state = $state;
     this.$timeout = $timeout;
+    this.$window = $window;
     this.$mdSidenav = $mdSidenav;
+    this.$translate = $translate;
     this.User = User;
     this.current_user = User.current;
     this.current_company = User.current_company;
@@ -31,6 +33,11 @@ export default class HeaderCtrl {
       this.upload_photo_error = '';
       this.upload_photo_error = `${errFiles[0].$error} ${errFiles[0].$errorParam}`;
     }
+  }
+
+  changeLang(lang) {
+    this.$translate.use(lang);
+    this.$window.location.reload();
   }
 
   setDefaultCompany(id) {

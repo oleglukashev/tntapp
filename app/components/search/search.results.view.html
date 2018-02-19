@@ -1,7 +1,7 @@
 <div class='search-result-content col-lg-8 col-md-8 col-sm-8 col-md-offset-1'>
   <div class='clearfix m-b-md'>
     <div class='pull-left m-t-sm m-r-sm'>
-      <p>{{ search.getDataLength() }} resultaten <b>{{ search.reservations[0].customer.first_name }} {{ search.reservations[0].customer.last_name }}</b></p>
+      <p translate='search.results' translate-values='{ count: search.getDataLength(), first_name: search.reservations[0].customer.first_name, last_name: search.reservations[0].customer.last_name }'></p>
     </div>
 
     <div class='page_filter pull-left'>
@@ -24,13 +24,13 @@
     <table class='table m-b-none'>
       <thead>
         <tr>
-            <th width='8%'>Aanwezig</th>
-            <th width='10%'>Tijd</th>
-            <th width='12%'>Product</th>
-            <th width='12%'>Naam</th>
-            <th width='10%'>Personen</th>
-            <th width='10%'>Tafel</th>
-            <th>Opmerking</th>
+            <th width='8%' translate='present'></th>
+            <th width='10%' translate='time'></th>
+            <th width='12%' translate='product'></th>
+            <th width='12%' translate='name'></th>
+            <th width='10%' translate='persons'></th>
+            <th width='10%' translate='table'></th>
+            <th translate='comment'></th>
             <th width='8%'></th>
         </tr>
       </thead>

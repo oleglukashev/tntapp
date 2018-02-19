@@ -1,11 +1,11 @@
 <div class='panel'>
-  <div class='panel-heading'>Algemeen</div>
+  <div class='panel-heading' translate='general'></div>
   <form ng-show='general_settings.is_loaded'>
 	  <div class='md-list'>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Gemiddelde bezettingstijd (minuten)</h3>
-		  		<small class='text-muted'>De gemiddelde tijd aan dat een gast zich in jouw restaurant bevind</small>
+		  		<h3 class='no-margin text-md' translate='settings.general.average_ocup_time'></h3>
+		  		<small class='text-muted' translate='settings.general.average_ocup_time_description'></small>
 	  		</div>
 	  		<div class='pull-right'>
 	  			<md-input-container class='w-4x no-margin'>
@@ -22,23 +22,27 @@
 	  	</div>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Lemiettype</h3>
-		  		<small class='text-muted'>Welk type limiet wil je gebruiken voor je reserveringen</small>
+		  		<h3 class='no-margin text-md' translate='settings.general.limit_type'></h3>
+		  		<small class='text-muted' translate='settings.general.limit_type_description'></small>
 	  		</div>
 	  		<div class='pull-right'>
 	  			<div class='md-form-group no-padder'>
             <md-radio-group ng-model='general_settings.form_data.limit_type'
             								ng-change='general_settings.submitForm()'>
-              <md-radio-button value='Tafels' class='inline md-success'>Tafels</md-radio-button>
-              <md-radio-button value='Personen' class='inline md-success m-r-none'>Personen</md-radio-button>
+              <md-radio-button value='Tafels' class='inline md-success'>
+                {{ 'tables' | translate }}
+              </md-radio-button>
+              <md-radio-button value='Personen' class='inline md-success m-r-none'>
+                {{ 'persons' | translate }}
+              </md-radio-button>
             </md-radio-group>
           </div>
 	  		</div>
 	  	</div>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Aantal personen voor aanvraag</h3>
-		  		<small class='text-muted'>Het maximaal aantal personen op waarmee je een reservering kan plaatsen</small>
+		  		<h3 class='no-margin text-md' translate='settings.general.number_of_persons'></h3>
+		  		<small class='text-muted' translate='settings.general.number_of_persons_description'></small>
 	  		</div>
 	  		<div class='pull-right'>
 	  			<md-input-container class='w-3x no-margin'>
@@ -55,8 +59,8 @@
 	  	</div>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Telefoonnummer verplicht</h3>
-		  		<small class='text-muted'>Is bij een reservering een telefoonnummer verplicht of optioneel</small>
+		  		<h3 class='no-margin text-md' translate='settings.general.phone_required'></h3>
+		  		<small class='text-muted' translate='settings.general.phone_required_description'></small>
 	  		</div>
 	  		<div class='pull-right m-r-n-xs'>
 	  			<div class='md-form-group no-padder'>
@@ -68,8 +72,8 @@
 	  	</div>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Snel reserveren</h3>
-		  		<small class='text-muted'>Maakt snel reserveren in de agenda mogelijk</small>
+		  		<h3 class='no-margin text-md' translate='settings.general.quick_reservation'></h3>
+		  		<small class='text-muted' translate='settings.general.quick_reservation_description'></small>
 	  		</div>
 	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
@@ -80,8 +84,8 @@
 	  	</div>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Tafels automatisch toekennen aan reserveringen</h3>
-		  		<small class='text-muted'>Zorgt dat er automatisch een beschikbare tafel word gekozen</small>
+		  		<h3 class='no-margin text-md' translate='settings.general.autoassign'></h3>
+		  		<small class='text-muted' translate='settings.general.autoassign_description'></small>
 	  		</div>
 	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
@@ -92,8 +96,8 @@
 	  	</div>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Reserveringsdeadline</h3>
-		  		<small class='text-muted'>(HH:MM; laat leeg voor geen deadline)</small>
+		  		<h3 class='no-margin text-md' translate='settings.general.deadline'></h3>
+		  		<small class='text-muted' translate='settings.general.deadline_description'></small>
 	  		</div>
 	  		<div class='pull-right' ng-show='general_settings.form_data.enable_deadline'>
           <div class='md-form-group no-padder'>
@@ -127,13 +131,9 @@
 	  	</div>
 
       <div class='md-list-item clear'>
-        <div class='pull-left'>
-          <h3 class='no-margin text-md'>
-            Tussen de aangegeven tijd krijgen de reserveringen
-            <br />
-            de status aanvraag en worden deze dus niet
-            <br />automatisch bevestigd</h3>
-          <small class='text-muted'>(HH:MM; de default waarde zijn de openingstijden die het product of zone nu heeft)</small>
+        <div class='pull-left not-confirm-period'>
+          <h3 class='no-margin text-md' translate='settings.general.not_confirm_period'></h3>
+          <small class='text-muted' translate='settings.general.not_confirm_period_description'></small>
         </div>
         <div class='pull-right' ng-show='general_settings.form_data.enable_request_type'>
           <div class='md-form-group no-padder'>
@@ -189,23 +189,27 @@
 
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Starten met</h3>
-		  		<small class='text-muted'>Wil je de agenda direct openen op de lijst weergave of de kalender weergave</small>
+		  		<h3 class='no-margin text-md' translate='settings.general.start_with'></h3>
+		  		<small class='text-muted' translate='settings.general.start_with_description'></small>
 	  		</div>
 	  		<div class='pull-right'>
 	  			<div class='md-form-group no-padder'>
             <md-radio-group ng-model='general_settings.form_data.show_timetable_first'
             								ng-change='general_settings.submitForm()'>
-              <md-radio-button value='0' class='inline md-success'>Agenda</md-radio-button>
-              <md-radio-button value='1' class='inline md-success m-r-none'>Tijdschema</md-radio-button>
+              <md-radio-button value='0' class='inline md-success'>
+                {{ 'calend' | translate }}
+              </md-radio-button>
+              <md-radio-button value='1' class='inline md-success m-r-none'>
+                {{ 'timeschedule' | translate }}
+              </md-radio-button>
             </md-radio-group>
           </div>
 	  		</div>
 	  	</div>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Extra gastinformatie in agenda</h3>
-		  		<small class='text-muted'>Laat extra informatie zien in de agenda</small>
+		  		<h3 class='no-margin text-md' translate='settings.general.add_guest_info'></h3>
+		  		<small class='text-muted' translate='settings.general.add_guest_info_description'></small>
 	  		</div>
 	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
@@ -216,8 +220,8 @@
 	  	</div>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Reserveren via twitter</h3>
-		  		<small class='text-muted'>Gasten mogen reserveren via Twitter</small>
+		  		<h3 class='no-margin text-md' translate='settings.general.reserv_via_twitter'></h3>
+		  		<small class='text-muted' translate='settings.general.reserv_via_twitter_description'></small>
 	  		</div>
 	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
@@ -228,8 +232,8 @@
 	  	</div>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Reserveren via facebook</h3>
-		  		<small class='text-muted'>Gasten mogen reserveren via Facebook</small>
+		  		<h3 class='no-margin text-md' translate='settings.general.reserv_via_fb'></h3>
+		  		<small class='text-muted' translate='settings.general.reserv_via_fb_description'></small>
 	  		</div>
 	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
@@ -240,8 +244,8 @@
 	  	</div>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Productlimieten gebruiken</h3>
-		  		<small class='text-muted'>Wil je een limiet instellen voor het aantal reserveringen dat geplaatst mag worden</small>
+		  		<h3 class='no-margin text-md' translate='settings.general.product_limits'></h3>
+		  		<small class='text-muted' translate='settings.general.product_limits_description'></small>
 	  		</div>
 	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
@@ -252,7 +256,7 @@
 	  	</div>
       <div class='md-list-item clear'>
         <div class='pull-left'>
-          <h3 class='no-margin text-md'>Wilt u gastprofielen automatisch aanvullen?</h3>
+          <h3 class='no-margin text-md' translate='settings.general.autocomplete_guests'></h3>
         </div>
         <div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
@@ -263,8 +267,8 @@
       </div>
       <div class='md-list-item clear'>
         <div class='pull-left'>
-          <h3 class='no-margin text-md'>Booking Api</h3>
-          <small class='text-muted'>Wil je een koppeling maken met een booking systeem? Gebruik de onderstaande UUID om dit te koppelen</small>
+          <h3 class='no-margin text-md' translate='settings.general.booking_api'></h3>
+          <small class='text-muted' translate='settings.general.booking_api_description'></small>
         </div>
         <div class='pull-right'>
           <div class='md-form-group no-padder'>
@@ -275,7 +279,7 @@
       </div>
       <div class='md-list-item clear'>
         <div class='pull-left'>
-          <h3 class='no-margin text-md'>UUID</h3>
+          <h3 class='no-margin text-md' translate='settings.general.uuid'></h3>
         </div>
         <div class='pull-right col-sm-6'>
           <div class='form-group no-margin'>

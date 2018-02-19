@@ -1,7 +1,7 @@
 <section class='no-margin'>
   <md-toolbar>
     <div class='md-toolbar-tools'>
-      <h2 md-truncate flex>Snel reserveren</h2>
+      <h2 md-truncate flex translate='quick_reservation'></h2>
       <md-button class="md-icon-button" ng-click='quick_reserv.Confirm.onCloseModal(quick_reserv.$modalInstance);' md-no-ink>
         <i class='mdi mdi-close m-r-sm i-24'></i>
       </md-button>
@@ -12,23 +12,23 @@
       <div class='wrapper md-content-submit' layout='column' layout-align='space-around center'>
         <div class='w-xl'>
           <md-input-container class='md-block'>
-            <label>Tijd</label>
+            <label translate='time'></label>
             <input ng-value='quick_reserv.moment(quick_reserv.reservation.datetime).format("DD MMM YYYY HH:mm")'
                    disabled
                    required />
           </md-input-container>
           <md-input-container class='md-block'>
-            <label>Tafelnummer</label>
+            <label translate='phone'></label>
             <input ng-value='quick_reserv.reservation.table_number'
                    disabled
                    required />
           </md-input-container>
           <md-input-container class='md-block'>
-            <label>Voor- en achternaam</label>
+            <label translate='full_name'></label>
             <input ng-model='quick_reserv.reservation.name' />
           </md-input-container>
           <md-input-container class='md-block'>
-            <label>Aantal personen</label>
+            <label translate='number_of_persons'></label>
             <input ng-model='quick_reserv.reservation.number_of_persons' required />
           </md-input-container>
           <div class='md-form-group'>
@@ -49,7 +49,7 @@
         <button type='submit'
                 ng-class="{ 'disabled': !quick_reservation_form.$valid }"
                 class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
-          <span ng-hide='quick_reserv.is_submitting'>OPSLAAN</span>
+          <translate ng-hide='quick_reserv.is_submitting'>save</translate>
           <div layout='row' layout-align='space-around' ng-show='quick_reserv.is_submitting'>
             <md-progress-circular md-mode="indeterminate" md-diameter='24' class='white'></md-progress-circular>
           </div>

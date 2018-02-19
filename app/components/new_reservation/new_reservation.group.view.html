@@ -1,13 +1,13 @@
 <md-tab ng-disabled="!reserv.reservation.is_group">
   <md-tab-label>
     <div class='text-center l-h'><i class='mdi mdi-account-multiple'></i></div>
-    <div class='text-center l-h'>GROUP</div>
+    <div class='text-center l-h' class='uppercase' translate='reservation.group'></div>
   </md-tab-label>
   <md-tab-body>
     <div class='md-content-submit reservation_group b-t' flex>
       <div class='md-list-item'>
         <div class='md-list-item-content text-center'>
-          <h4>Groups</h4>
+          <h4 translate='reservation.group'></h4>
         </div>
       </div>
       <div class='wrapper'>
@@ -39,11 +39,14 @@
         </label>
 
         <label ng-click='reserv.addPart()'
-               class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>Add activiteit</label>
+               class='btn btn-sm font-bold m-xs text-success no-shadow no-border'
+               translate='reservation.add_activity'></label>
 
         <button type='button'
                 class='btn btn-lg btn-success w-full no-top-radius md-content-button'
-                ng-click='reserv.selectTab(reserv.pagination.person);'>VOLGENDE</button>
+                ng-click='reserv.selectTab(reserv.pagination.person);'>
+          <translate>next</translate>        
+        </button>
       </div>
     </div>
   </md-tab-body>

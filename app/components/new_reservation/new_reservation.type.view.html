@@ -3,14 +3,15 @@
     <div class='text-center l-h'><i class='mdi mdi-format-list-bulleted-type'></i></div>
     <div class='text-center l-h'>
       <span ng-show='reserv.reservation.social'>{{ reserv.reservation.social }}</span>
-      <span ng-hide='reserv.reservation.social'>TYPE</span>
+      <span ng-hide='reserv.reservation.social' class='uppercase' translate='type'></span>
     </div>
   </md-tab-label>
   <md-tab-body>
     <div class='b-t' flex ng-show='reserv.socials_is_loaded'>
       <div class='md-list-item'>
         <div class='md-list-item-content text-center'>
-          <h4>Reserveer nu direct bij {{ reserv.socials.restaurant_name }} met onderstaande reserveringsknop</h4>
+          <h4 translate='reservation.reserve_title'
+              translate-values='{ name: reserv.socials.restaurant_name }'></h4>
         </div>
       </div>
       <div class='md-list text-center'>
@@ -18,18 +19,18 @@
            class='md-list-item text-success text-md'
            ng-click='reserv.authenticate("facebook");'>
           <i class='mdi mdi-facebook m-r-lg' />
-          RESERVEER MET FACEBOOK
+          <translate class='uppercase'>reserv</translate>  <translate class='uppercase'>via</translate> FACEBOOK
         </a>
         <a ng-if='reserv.socials.allow_twitter_login'
            class='md-list-item text-success text-md'
            ng-click='reserv.authenticate("twitter");'>
           <i class='mdi mdi-twitter m-r-lg' />
-          RESERVEER MET TWITTER
+          <translate class='uppercase'>reserv</translate>  <translate class='uppercase'>via</translate> TWITTER
         </a>
         <a class='md-list-item text-success text-md'
            ng-click='reserv.authenticate("email");'>
           <i class='mdi mdi-email m-r-lg' />
-          RESERVEER MET E-MAIL
+          <translate class='uppercase'>reserv</translate>  <translate class='uppercase'>via</translate> E-MAIL
         </a>
       </div>
     </div>

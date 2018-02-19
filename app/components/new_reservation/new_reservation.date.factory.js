@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-export default function NewReservationDateFactory(moment, filterFilter, $mdDialog, $q) {
+export default function NewReservationDateFactory(moment, filterFilter, $mdDialog, $q, $translate) {
   'ngInject';
 
   return (that, $scope) => {
@@ -139,8 +139,8 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
           $mdDialog.show($mdDialog.alert()
             .parent(angular.element(document.querySelector('.modal-dialog')))
             .clickOutsideToClose(true)
-            .textContent('Vandaag nemen wij online geen reserveringen meer aan. Neem telefonisch contact met ons op')
-            .ok('Terug'));
+            .textContent(this.no_reservations_today_more_text)
+            .ok(this.back_text));
         }
       }
     };
@@ -148,5 +148,16 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
     instance.refreshDatepicker = () => {
       instance.dateDisableDeferred.notify(new Date().getTime());
     };
+
+    // run translates
+    instance.no_reservations_today_more_text = '';
+    instance.back_text = '';
+    $translate(['notification.no_reservations_today_more', 'back']).then((translates) => {
+      instance.no_reservations_today_more_text = translates.no_reservations_today_more;
+      instance.back_text = translates.back;
+    }, (translationIds) => {
+      instance.no_reservations_today_more_text = translationIds.no_reservations_today_more;
+      instance.back_text = translationIds.back;
+    });
   };
 }

@@ -1,0 +1,29 @@
+<div class='wrapper' layout='column' layout-align='space-around center'>
+  <div class='text-center m-t-xxl'>
+    <img src='public/images/payment.png'
+         srcset='public/images/payment.png'
+         title='payment' />
+  </div>
+
+  <h2 class='text-center'
+      translate='trial.expired_time'
+      translate-values='{ days: days }'></h2>
+
+  <div class='w-xl'>
+    <form name='passthrough'
+          method='POST'
+          action='{{ payment.getUrl() }}'>
+
+      <input ng-repeat='field in payment.fields'
+             type='hidden'
+             name='{{ field.name }}'
+             value='{{ field.value }}' />
+
+      <button class='btn btn-lg btn-success btn-block rounded-md m-t-md m-b-md'
+              ng-click='payment.submitForm(passthrough)'
+              type='submit'
+              translate='trial.verify_bank_account'
+              md-no-ink></button>
+    </form>
+  </div>
+</div>

@@ -1,18 +1,22 @@
-<section ng-controller='NewReservationCtrl as reserv' class='reservation_modal no-margin'>
+<section ng-controller='NewReservationCtrl as reserv'
+         class='reservation_modal no-margin'>
   <md-toolbar>
-    <div class="md-toolbar-tools">
+    <div class='md-toolbar-tools'>
       <h2 md-truncate flex>
-        <i class='mdi mdi-arrow-left m-r-sm' ng-click='reserv.selected_type_index=0' ng-if="reserv.selected_type_index > 0"></i>
-        Nieuwe reservering
+        <i class='mdi mdi-arrow-left m-r-sm'
+           ng-click='reserv.selected_type_index=0'
+           ng-if='reserv.selected_type_index > 0'></i>
+        {{ 'new_reservation' | translate }}
       </h2>
-      <md-button class="md-icon-button" ng-click='dash_reserv.closeModalOrConfirm(reserv.success);' md-no-ink>
+      <md-button class='md-icon-button'
+                 ng-click='dash_reserv.closeModalOrConfirm(reserv.success);'
+                 md-no-ink>
         <i class='mdi mdi-close m-r-sm i-24'></i>
       </md-button>
     </div>
   </md-toolbar>
   <md-content>
     <div ng-hide='reserv.success'>
-
       <md-tabs class='reservation_tabs hidden_tab'
                flex
                md-selected='reserv.selected_type_index'
@@ -20,50 +24,42 @@
                md-stretch-tabs
                md-dynamic-height>
         <md-tab>
-
           <md-tab-body>
             <div class='md-content-submit select-product-wrapper b-t walk-in-wrapper' flex>
               <div class='md-list-item'>
                 <div class='md-list-item-content text-center'>
-                  <h4>Wat voor soort reservering wil je aanmaken?</h4>
+                  <h4 translate='reservation.reservation_kind_title'></h4>
                 </div>
               </div>
               <div class='settings_add_items m-t-md text-center'>
                 <div class='clearfix'>
-
                   <label ng-click='reserv.selected_type_index=1'
                          class='box'
                          uncheckable>
                     <i class='box_icon mdi mdi-clipboard-outline i-40'></i>
-                    <div class='m-t-sm'>Normale reservering</div>
+                    <div class='m-t-sm' translate='reservation.regular'></div>
                   </label>
-
                   <label ng-click='reserv.selected_type_index=2'
                          class='box'
                          uncheckable>
                     <i class='box_icon mdi mdi-walk i-40'></i>
-                    <div class='m-t-sm'>Walk-in</div>
+                    <div class='m-t-sm' translate='reservation.walkin'></div>
                   </label>
-
                 </div>
               </div>
             </div>
           </md-tab-body>
-
         </md-tab>
+
         <md-tab>
-
           <md-tab-body>
-
             <form ng-submit='reserv.submitForm()'>
-
               <md-tabs class='reservation_tabs'
                      flex
                      md-selected='reserv.selected_index'
                      md-no-pagination
                      md-stretch-tabs
                      md-dynamic-height>
-
 
                 <div data-ng-include=" 'new_reservation.date.view.html' "></div>
 
@@ -78,71 +74,66 @@
                 <div data-ng-include=" 'new_reservation.group.view.html' "></div>
 
                 <div data-ng-include=" 'new_reservation.person.view.html' "></div>
-
-
               </md-tabs>
-
             </form>
-
           </md-tab-body>
-
         </md-tab>
-
         <div data-ng-include=" 'new_reservation.walk_in.view.html' "></div>
-
       </md-tabs>
     </div>
 
     <div class='md-content-submit b-t' flex ng-show='reserv.success'>
       <div class='md-list-item'>
         <div class='md-list-item-content'>
-          <h4>Reservering geplaatst</h4>
+          <h4 translate='reservation.success'></h4>
         </div>
       </div>
       <div class='wrapper'>
-        <div class="md-list-item inset" ng-repeat='part in reserv.walkInOrReservationPart()'>
-            <div class="md-list-item-left">
-              <i class="mdi mdi-calendar icon-muted i-24"></i>
+        <div class='md-list-item inset' ng-repeat='part in reserv.walkInOrReservationPart()'>
+            <div class='md-list-item-left'>
+              <i class='mdi mdi-calendar icon-muted i-24'></i>
             </div>
-            <div class="md-list-item-content">
-              <h3 class="text-md">{{ reserv.moment(part.date).format('DD MMMM YYYY') }} {{ part.time }}</h3>
-              <small class="font-thin"><span ng-if='part.product'>{{ reserv.Reservation.getProductNameByProductId(reserv.products, part.product) }},  </span>{{ part.number_of_persons }} personen</small>
+            <div class='md-list-item-content'>
+              <h3 class='text-md'>{{ reserv.moment(part.date).format('DD MMMM YYYY') }} {{ part.time }}</h3>
+              <small class='font-thin'>
+                <span ng-if='part.product'>{{ reserv.Reservation.getProductNameByProductId(reserv.products, part.product) }},</span> {{ part.number_of_persons }} <translate class='lowercase'>persons</translate>
+              </small>
             </div>
           </div>
-        <div class="md-list-item inset" ng-if='reserv.reservation.primary_phone_number'>
-          <div class="md-list-item-left">
-            <i class="mdi mdi-phone icon-muted i-24"></i>
+        <div class='md-list-item inset' ng-if='reserv.reservation.primary_phone_number'>
+          <div class='md-list-item-left'>
+            <i class='mdi mdi-phone icon-muted i-24'></i>
           </div>
-          <div class="md-list-item-content">
-            <h3 class="text-md">{{ reserv.reservation.primary_phone_number || reserv.walk_in.primary_phone_number }}</h3>
-            <small class="font-thin">Telefoon</small>
-          </div>
-        </div>
-        <div class="md-list-item inset">
-          <div class="md-list-item-left ">
-            <i class="mdi mdi-email icon-muted i-24"></i>
-          </div>
-          <div class="md-list-item-content">
-            <h3 class="text-md">{{ reserv.reservation.mail || reserv.walk_in.mail }}</h3>
-            <small class="font-thin">E-mail</small>
+          <div class='md-list-item-content'>
+            <h3 class='text-md'>{{ reserv.reservation.primary_phone_number || reserv.walk_in.primary_phone_number }}</h3>
+            <small class='font-thin' translate='phone'></small>
           </div>
         </div>
-        <div class="md-list-item inset">
-          <div class="md-list-item-left">
-            <i class="mdi mdi-comment-text icon-muted i-24"></i>
+        <div class='md-list-item inset'>
+          <div class='md-list-item-left'>
+            <i class='mdi mdi-email icon-muted i-24'></i>
           </div>
-          <div class="md-list-item-content">
-            <h3 class="text-md">{{ reserv.reservation.notes || reserv.walk_in.notes }}</h3>
-            <small class="font-thin">Opmerkingen</small>
+          <div class='md-list-item-content'>
+            <h3 class='text-md'>{{ reserv.reservation.mail || reserv.walk_in.mail }}</h3>
+            <small class='font-thin' translate='email'></small>
           </div>
         </div>
-        <div class="md-list-item" ng-if='reserv.reservation.reservation_pdf'>
-          <div class="md-list-item-left">
-            <i class="mdi mdi-attachment icon-muted i-24"></i>
+        <div class='md-list-item inset'>
+          <div class='md-list-item-left'>
+            <i class='mdi mdi-comment-text icon-muted i-24'></i>
           </div>
-          <div class="md-list-item-content">
-            <h3 class="text-md">Reservering PDF</h3>
-            <small class="font-thin">Bijlage</small>
+          <div class='md-list-item-content'>
+            <h3 class='text-md'>{{ reserv.reservation.notes || reserv.walk_in.notes }}</h3>
+            <small class='font-thin' translate='comment'></small>
+          </div>
+        </div>
+        <div class='md-list-item' ng-if='reserv.reservation.reservation_pdf'>
+          <div class='md-list-item-left'>
+            <i class='mdi mdi-attachment icon-muted i-24'></i>
+          </div>
+          <div class='md-list-item-content'>
+            <h3 class='text-md' translate='reservation.pdf'></h3>
+            <small class='font-thin' translate='reservation.attachment'></small>
           </div>
         </div>
       </div>

@@ -3,16 +3,16 @@
     <div class='text-center l-h'><i class='mdi mdi-account-multiple'></i></div>
     <div class='text-center l-h'>
       <span ng-show='reserv.current_part.number_of_persons'>
-        {{ reserv.current_part.number_of_persons }} PERSONEN
+        {{ reserv.current_part.number_of_persons }} <translate class='uppercase'>persons</translate>
       </span>
-      <span ng-hide='reserv.current_part.number_of_persons'>AANTAL</span>
+      <span ng-hide='reserv.current_part.number_of_persons' translate='number'></span>
     </div>
   </md-tab-label>
   <md-tab-body>
     <div class='reservation_person_count b-t' flex>
       <div class='md-list-item'>
         <div class='md-list-item-content text-center'>
-          <h4>Aantal personen</h4>
+          <h4 translate='number_of_guests'></h4>
         </div>
       </div>
       <div class='wrapper orange-500 layout-align-space-around-center layout-column'
@@ -30,11 +30,13 @@
 
           <label ng-click='reserv.triggerChooseNumberOfPersons()'
                  ng-hide='reserv.choose_number_of_persons_is_opened'
-                 class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>More...</label>
+                 class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>
+            {{ 'more' | translate }}...
+          </label>
 
           <div class='m-t-md' ng-show='reserv.choose_number_of_persons_is_opened'>
             <md-input-container class='md-block'>
-              <label>Aantal personen</label>
+              <label translate='number_of_guests'></label>
               <input type='number'
                      class='md-input'
                      ng-required='false'
@@ -42,14 +44,14 @@
                      ng-model='reserv.current_part.number_of_persons' required />
             </md-input-container>
             <button type='button'
-                    class='btn btn-md btn-success text-success'
+                    class='btn m-b-sm btn-md btn-success text-success'
                     ng-click='reserv.triggerChooseNumberOfPersons();reserv.selectTab(reserv.pagination.number_of_persons);'>Ok</button>
           </div>
           <div class='md-form-group no-padder' ng-if='!reserv.is_customer_reservation'>
             <md-checkbox ng-model="reserv.reservation.is_group"
                          ng-change='reserv.changeIsGroupPostProcess()'
                          aria-label="Group?">
-              Group?
+              {{ 'reservation.group' | translate }}?
             </md-checkbox>
           </div>
         </div>

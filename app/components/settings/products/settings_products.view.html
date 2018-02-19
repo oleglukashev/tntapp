@@ -1,5 +1,7 @@
 <div ng-show='products_settings.is_loaded'>
-  <button ng-click='products_settings.addProduct()' md-ink-ripple class='panel-add-button md-btn md-fab m-b'>
+  <button ng-click='products_settings.addProduct()'
+          md-ink-ripple
+          class='panel-add-button md-btn md-fab m-b'>
     <i class='mdi mdi-plus i-24'></i>
   </button>
 
@@ -9,19 +11,16 @@
                      ng-click="products_settings.redrawSliders()">
       <accordion-heading>
         <div class='clearfix'>
-
             <table class='table no-margin head-table'>
               <col width='33%'>
               <col width='33%'>
               <col width='34%'>
               <thead>
-                <th class="day-of-week">{{ day }}</th>
+                <th class="day-of-week">{{ 'weekdays.' + day | translate }}</th>
                 <th class="nine-o-clock">{{ products_settings.Slider.from15Min(day_data.min_time) }}</th>
                 <th class="twenty-four-o-clock">{{ products_settings.Slider.from15Min(day_data.max_time) }}</th>
               </thead>
             </table>
-
-
         </div>
       </accordion-heading>
 
@@ -58,16 +57,24 @@
 
                   <md-menu-item>
                     <md-button ng-click='products_settings.closeToday(id, time_range)'
-                               ng-if='!time_range.options.disabled'>Vandaag sluiten</md-button>
+                               ng-if='!time_range.options.disabled'>
+                      {{ 'settings.products.close_today' | translate }}
+                    </md-button>
                     <md-button ng-click='products_settings.closeToday(id, time_range)'
-                               ng-if='time_range.options.disabled'>Vandaag openen</md-button>
+                               ng-if='time_range.options.disabled'>
+                      {{ 'settings.products.open_today' | translate }}
+                    </md-button>
                   </md-menu-item>
 
                   <md-menu-item>
                     <md-button ng-click='products_settings.hidden(time_range.product_id)'
-                               ng-if='!products_settings.products[time_range.product_id].shaded'>Verberg</md-button>
+                               ng-if='!products_settings.products[time_range.product_id].shaded'>
+                      {{ 'settings.products.hide' | translate }}
+                    </md-button>
                     <md-button ng-click='products_settings.hidden(time_range.product_id)'
-                               ng-if='products_settings.products[time_range.product_id].shaded'>Tonen</md-button>
+                               ng-if='products_settings.products[time_range.product_id].shaded'>
+                      {{ 'settings.products.show' | translate }}
+                    </md-button>
                   </md-menu-item>
 
                   <md-menu-item>
@@ -82,7 +89,9 @@
 
                   <md-menu-item>
                     <md-button ng-click='products_settings.removeProduct(time_range.product_id)'
-                               class='remove-button'>Product verwijderen</md-button>
+                               class='remove-button'>
+                      {{ 'settings.products.remove' | translate }}
+                    </md-button>
                   </md-menu-item>
                 </md-menu-content>
               </md-menu>

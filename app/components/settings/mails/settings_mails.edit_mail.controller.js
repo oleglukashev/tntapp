@@ -1,5 +1,5 @@
 export default class SettingsMailsEditMailCtrl {
-  constructor(User, AppConstants, item, Settings, $modalInstance, $rootScope) {
+  constructor(User, item, Settings, $modalInstance, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -8,7 +8,6 @@ export default class SettingsMailsEditMailCtrl {
     this.$rootScope = $rootScope;
 
     this.form_data = item;
-    this.statuses = AppConstants.mailStatuses;
   }
 
   submitForm(isValid) {

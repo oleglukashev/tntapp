@@ -1,11 +1,19 @@
 export default class Charts {
-  constructor(User, Product, AppConstants) {
+  constructor(User, Product, AppConstants, $translate) {
     'ngInject';
 
     this.current_company = User.current_company;
 
     this.letterOfWeek = AppConstants.letterOfWeek;
     this.Product = Product;
+    this.total_text = '';
+
+    // run translates
+    $translate('total').then((total) => {
+      this.total_text = total;
+    }, (translationIds) => {
+      this.total_text = translationIds;
+    });
   }
 
   get(reservations) {
@@ -82,7 +90,7 @@ export default class Charts {
             this.charts.products[product.id] = product.name;
           }
         });
-        this.charts.products[0] = 'Totaal';
+        this.charts.products[0] = this.total_text;
       });
 
     return this.charts;

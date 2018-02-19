@@ -1,20 +1,20 @@
 <div class='settings-warnings-content'>
   <div class='panel'>
-    <div class='panel-heading'>Frond end meldingen</div>
+    <div class='panel-heading' translate='settings.warnings.title'></div>
     <div class='md-list' ng-show='warnings_settings.is_loaded'>
       <div class='md-list-item no-padder'>
         <table class='table'>
           <thead>
-            <th>Titel</th>
-            <th>Text</th>
-            <th>Language</th>
+            <th translate='title'></th>
+            <th translate='text'></th>
+            <th translate='language'></th>
             <th></th>
           </thead>
           <tbody>
             <tr ng-repeat='warning in warnings_settings.warnings'>
               <td class='v-middle' ng-bind='warning.title'></td>
               <td class='v-middle' ng-bind='warning.text'></td>
-              <td class='v-middle' ng-bind='warning.language'></td>
+              <td class='v-middle' ng-bind='warning.lang'></td>
               <td class='v-middle text-right'>
                 <md-menu>
                   <button md-ink-ripple
@@ -28,7 +28,9 @@
                   </button>
                   <md-menu-content>
                     <md-menu-item>
-                      <md-button ng-click='warnings_settings.editWarning(warning.id)'>Warning bewerken</md-button>
+                      <md-button ng-click='warnings_settings.editWarning(warning.id)'>
+                        {{ 'settings.warnings.edit' | translate }}
+                      </md-button>
                     </md-menu-item>
                   </md-menu-content>
                 </md-menu>

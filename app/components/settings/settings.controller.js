@@ -11,15 +11,15 @@ export default class SettingsCtrl {
     }
 
     this.pages = {
-      'ALGEMEEN': 'app.settings.general',
-      'MAILS': 'app.settings.mails',
-      'OPENINGSTIJDEN/PRODUCTEN': 'app.settings.products',
-      'PLEKKEN VRIJHOUDEN': 'app.settings.limits',
-      'MEDEWERKERS': 'app.settings.employees',
-      'TAFELS/ZONES': 'app.settings.tables',
-      'PLUGINS': 'app.settings.plugins',
-      'WARNINGS': 'app.settings.warnings',
-      "KLEUREN THEMA'S": 'app.settings.themes',
+      'settings.general.title': 'app.settings.general',
+      'settings.mails.title': 'app.settings.mails',
+      'settings.products.title': 'app.settings.products',
+      'settings.limits.title': 'app.settings.limits',
+      'settings.employees.title': 'app.settings.employees',
+      'settings.tables.title': 'app.settings.tables',
+      'settings.plugins.title': 'app.settings.plugins',
+      'settings.warnings.title': 'app.settings.warnings',
+      'settings.themes.title': 'app.settings.themes',
     };
   }
 }

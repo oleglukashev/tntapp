@@ -19,12 +19,12 @@
       <button ng-click='reservations.openReservation();'
               md-ink-ripple
               class='panel-add-button md-btn md-fab m-b m-t-n-md'>
-        <md-tooltip>Nieuwe reservering?</md-tooltip>
+        <md-tooltip>{{ 'new_reservation' | translate }}?</md-tooltip>
         <i class='mdi mdi-plus i-24'></i>
       </button>
 
       <div class='panel'>
-        <div class='panel-heading'>Vandaag</div>
+        <div class='panel-heading' translate='today'></div>
         <md-list class='no-padder'
                  ng-show='reservations.data.length'>
           <md-list-item class='md-2-line md-no-proxy'
@@ -39,7 +39,7 @@
                md-ink-ripple></md-list-item>
         </md-list>
         <div class='md-padding'
-             ng-hide='reservations.data.length'>Geen</div>
+             ng-hide='reservations.data.length' translate='none'></div>
       </div>
     </div>
 
@@ -47,15 +47,13 @@
       <button ng-click='reservations.openReservation();'
               md-ink-ripple
               class='panel-add-button md-btn md-fab m-b m-t-n-md'>
-        <md-tooltip>Nieuwe reservering?</md-tooltip>
+        <md-tooltip>{{ 'new_reservation' | translate }}?</md-tooltip>
         <i class='mdi mdi-plus i-24'></i>
       </button>
 
       <div class='panel'>
         <div class='wrapper' layout='column' layout-align='space-around center'>
-          <div class='w-xl m-t-xxl m-b-xxl text-center'>
-            Je hebt nog geen reserveringen klik op de "+" om je eerste reservering aan te maken
-          </div>
+          <div class='w-xl m-t-xxl m-b-xxl text-center' translate='reservation.no_reservations_yet'></div>
         </div>
       </div>
     </div>

@@ -1,21 +1,23 @@
 <div class='print-block'>
     <div class='totals'>
         <div ng-if='controller.date_filter'>
-            Datum: {{ controller.moment(controller.date_filter).format('DD-MM-YYYY') }},
+            {{ "date" | translate }}: {{ controller.moment(controller.date_filter).format('DD-MM-YYYY') }},
         </div>
-        <div>Total number of guest: {{controller.totalNumberOfPersons}},</div>
-        <div>total number of resevations: {{controller.totalNumberOfReservations}}</div>
+        <div translate='search.print.total_of_guests'
+             translate-values='{ total: controller.totalNumberOfPersons }'></div>
+        <div translate='search.print.total_of_reservations'
+             translate-values='{ total: controller.totalNumberOfReservations }'></div>
     </div>
     <table border='1' cellpadding='0' cellspacing='0' width='100%' class='print-reservation'>
         <thead>
-            <th width='15%'>Aanwezig</th>
-            <th>Tafels</th>
-            <th>Tijd</th>
-            <th>Pers.</th>
-            <th>Naam</th>
-            <th>Product</th>
-            <th width='15%'>Opmerkingen</th>
-            <th width='10%''>Phone</th>
+            <th width='15%' translate='present'></th>
+            <th translate='table'></th>
+            <th translate='time'></th>
+            <th translate='persons'></th>
+            <th translate='name'></th>
+            <th translate='product'></th>
+            <th width='15%' translate='comment'></th>
+            <th width='10%' translate='phone'></th>
         </thead>
         <tbody>
             <tr ng-repeat='item in controller.data'

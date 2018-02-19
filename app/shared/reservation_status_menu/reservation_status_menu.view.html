@@ -19,7 +19,7 @@
         <md-icon aria-label>
           <i class='mdi mdi-pencil' />
         </md-icon>
-        <span>Aanpassen</span>
+        <translate>edit</translate>
       </md-button>
     </md-menu-item>
     <md-menu-divider role='separator'></md-menu-divider>
@@ -30,7 +30,7 @@
           <i class='mdi mdi-with-button-padding'
              ng-class='controller.status_icon[status]'></i>
         </md-icon>
-        <span>{{ controller.dutch_statuses[status] }}</span>
+        <translate translate='status.{{ status }}'></translate>
       </md-button>
     </md-menu-item>
     <md-menu-divider role='separator'></md-menu-divider>
@@ -39,7 +39,7 @@
         <md-icon aria-label>
           <i class='mdi mdi-reply' />
         </md-icon>
-        <span>Antwoord</span>
+        <translate>answer</translate>
       </md-button>
     </md-menu-item>
   </md-menu-content>

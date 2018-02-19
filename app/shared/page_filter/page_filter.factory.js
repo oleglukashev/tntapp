@@ -1,5 +1,5 @@
 export default function PageFilterFactory(AppConstants, Reservation, Customer,
-  $modal, $filter, moment) {
+  $modal, $filter, $translate, moment) {
   'ngInject';
 
   return (that) => {
@@ -14,63 +14,78 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     instance.status_filter = [];
 
     instance.sort_params = [{
-      name: 'Naam A-Z',
+      name: 'name_a_z',
       value: 'name',
       reverse: false,
     },
     {
-      name: 'Naam Z-A',
+      name: 'name_z_a',
       value: 'name',
       reverse: true,
     },
     {
-      name: 'Reserveringen',
+      name: 'reservation',
       value: null,
       reverse: false,
     },
     {
-      name: 'Tijd oplopend',
+      name: 'time_asc',
       value: 'time',
       reverse: false,
     },
     {
-      name: 'Tijd aflopend',
+      name: 'time_desc',
       value: 'time',
       reverse: true,
     },
     {
-      name: 'Aantal personen oplopend',
+      name: 'guests_asc',
       value: 'number_of_persons',
       reverse: false,
     },
     {
-      name: 'Aantal personen aflopend',
+      name: 'guests_desc',
       value: 'number_of_persons',
       reverse: true,
     },
     {
-      name: 'Status',
+      name: 'status',
       value: 'reservation.status',
       reverse: false,
     },
     {
-      name: 'Tafel',
+      name: 'table',
       value: 'table_ids',
       reverse: false,
     }];
 
+    instance.status_filter_params = [{
+      name: 'status',
+      value: 'confirmed',
+      translate: 'confirmed', // don't mix with value
+    }, {
+      name: 'status',
+      value: 'request',
+      translate: 'request',
+    }, {
+      name: 'status',
+      value: 'present',
+      translate: 'present',
+    }, {
+      name: 'status',
+      value: 'delayed',
+      translate: 'delayed',
+    }, {
+      name: 'status',
+      value: 'cancelled',
+      translate: 'cancelled',
+    }];
+
     instance.sort = instance.sort_params[2];
 
-    AppConstants.reservationStatuses.forEach((item) => {
-      const filterItem = {
-        name: 'status',
-        value: AppConstants.reservationDutchStatuses[item],
-      };
-
-      instance.status_filter_params.push(filterItem);
-
-      if (item !== 'cancelled') {
-        instance.status_filter.push(filterItem);
+    instance.status_filter_params.forEach((item) => {
+      if (item.value !== 'cancelled') {
+        instance.status_filter.push(item);
       }
     });
 
@@ -111,7 +126,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
       instance.loadTimeRanges();
     };
 
-    instance.openTimeRangeSettings = (type, title) => {
+    instance.openTimeRangeSettings = (type) => {
       const modalInstance = $modal.open({
         templateUrl: 'page_filter_time_ranges.view.html',
         controller: 'PageFilterTimeRangesCtrl as page_filter_time_ranges',
@@ -119,7 +134,6 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
         resolve: {
           date: () => that.date_filter,
           type: () => type,
-          title: () => title,
         },
       });
 
@@ -141,13 +155,13 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
             if (reservation
               .reservation_parts
               .map(part => part.product.name)
-              .includes(filter.value)) {
+              .includes(filter.translate)) {
               reservationResult = true;
             }
           });
         } else if (instance.filter_type === 'status') {
           instance.status_filter.forEach((filter) => {
-            if (reservation.status === AppConstants.reservationEnglishStatuses[filter.value]) {
+            if (reservation.status === filter.value) {
               reservationResult = true;
             }
           });
@@ -167,5 +181,28 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
 
       return $filter('orderBy')(parts, instance.sort.value, instance.sort.reverse);
     };
+
+
+    // run sort translates
+    $translate(instance.sort_params.map(item => `sort.${item.name}`)).then((translations) => {
+      instance.sort_params.forEach((item, index) => {
+        instance.sort_params[index].name = translations[`sort.${item.name}`];
+      });
+    }, (translationIds) => {
+      instance.sort_params.forEach((item, index) => {
+        instance.sort_params[index].name = translationIds[`sort.${item.name}`];
+      });
+    });
+
+    // run status translates
+    $translate(instance.status_filter_params.map(item => `status.${item.value}`)).then((translations) => {
+      instance.status_filter_params.forEach((item, index) => {
+        instance.status_filter_params[index].translate = translations[`status.${item.value}`];
+      });
+    }, (translationIds) => {
+      instance.status_filter_params.forEach((item, index) => {
+        instance.status_filter_params[index].translate = translationIds[`status.${item.value}`];
+      });
+    });
   };
 }

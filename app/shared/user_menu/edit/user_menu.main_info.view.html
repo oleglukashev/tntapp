@@ -1,6 +1,6 @@
 <md-tab>
   <md-tab-label>
-    <div class='text-center l-h'>Algemene</div>
+    <div class='text-center l-h' translate='general'></div>
   </md-tab-label>
   <md-tab-body>
     <div class='md-content-submit'>
@@ -9,27 +9,27 @@
           <form name='edit_user_form' ng-submit='controller.submitForm(edit_user_form.$valid)'>
             <div class='wrapper'>
               <md-input-container class='md-block'>
-                <label>E-mail</label>
+                <label translate='email'></label>
                 <input required ng-model="controller.customer.mail" />
               </md-input-container>
               <md-input-container class='md-block'>
-                <label>Voornaam</label>
+                <label translate='first_name'></label>
                 <input required ng-model="controller.customer.first_name" />
               </md-input-container>
               <md-input-container class='md-block'>
-                <label>Achternaam</label>
+                <label translate='last_name'></label>
                 <input ng-model="controller.customer.last_name" />
               </md-input-container>
               <md-input-container class='md-block'>
-                <label>Telefoon</label>
+                <label translate='phone'></label>
                 <input required ng-model="controller.customer.primary_phone_number" />
               </md-input-container>
               <md-input-container class='md-block'>
-                <label>Secundair nummer</label>
+                <label translate='second_phone'></label>
                 <input ng-model="controller.customer.secondary_phone_number" />
               </md-input-container>
             <md-input-container class='md-block'>
-                <label>Geboortedatum</label>
+                <label translate='birthdate'></label>
                 <input
                    type="text"
                    class="form-control date-picker"
@@ -44,29 +44,36 @@
                    close-text='Close' />
               </md-input-container>
               <md-input-container class='md-block'>
-                <label>Straat</label>
+                <label translate='address'></label>
                 <input ng-model="controller.customer.street" />
               </md-input-container>
               <md-input-container class='md-block'>
-                <label>Huisnummer</label>
+                <label translate='housenumber'></label>
                 <input ng-model="controller.customer.house_number" />
               </md-input-container>
               <md-input-container class='md-block'>
-                <label>Postcode</label>
+                <label translate='postcode'></label>
                 <input ng-model="controller.customer.zipcode" />
               </md-input-container>
               <md-input-container class='md-block'>
-                <label>Stad</label>
+                <label translate='city'></label>
                 <input ng-model="controller.customer.city" />
               </md-input-container>
               <md-input-container class='md-block'>
-                <label>Gemiddelde score</label>
-                <input type="number" ng-model="controller.customer.average_rating" ng-pattern="/^[0-9]+(\.[0-9])?$/" step="0.1" />
+                <label translate='av_rating'></label>
+                <input type='number'
+                       ng-model='controller.customer.average_rating'
+                       ng-pattern="/^[0-9]+(\.[0-9])?$/"
+                       step='0.1' />
               </md-input-container>
               <div class='md-form-group no-padder'>
                 <md-radio-group ng-model="controller.customer.gender">
-                  <md-radio-button value='Man' class='inline md-success'>Man</md-radio-button>
-                  <md-radio-button value='Vrouw' class='inline md-success'>Vrouw</md-radio-button>
+                  <md-radio-button value='Man' class='inline md-success'>
+                    {{ 'male' | translate }}
+                  </md-radio-button>
+                  <md-radio-button value='Vrouw' class='inline md-success'>
+                    {{ 'female' | translate }}
+                  </md-radio-button>
                 </md-radio-group>
               </div>
             </div>
@@ -74,7 +81,7 @@
             <button type='submit'
                     ng-class="{ 'disabled': !edit_user_form.$valid || controller.is_submitting }"
                     class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
-              <span>OPSLAAN</span>
+              <translate>save</translate>
             </button>
           </form>
         </div>

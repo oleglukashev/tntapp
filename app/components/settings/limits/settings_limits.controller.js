@@ -40,7 +40,13 @@ export default class SettingsLimitsCtrl {
     this.Settings
       .getGeneralSettings(this.current_company_id).then(
         (generalSettings) => {
-          this.type = generalSettings.limit_type;
+          const result = generalSettings;
+
+          if (result.limit_type === 'Tafels') {
+            this.type = 'tables';
+          } else if (result.limit_type === 'Personen') {
+            this.type = 'persons';
+          }
         });
   }
 

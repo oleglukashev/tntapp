@@ -30,10 +30,10 @@
              ng-change='controller.changeFilterPostProcess()'
              ng-model='controller.status_filter'
              ng-show='controller.filter_type == "status"'
-             ng-model-options="{ trackBy: '$value.value' }">
+             ng-model-options="{ trackBy: '$value.translate' }">
     <md-option ng-value='item'
                ng-repeat='item in controller.status_filter_params'>
-      {{ item.value }}
+      {{ item.translate }}
     </md-option>
   </md-select>
 </div>

@@ -1,32 +1,27 @@
 <div class='agenda-charts panel'>
-  <div class='panel-heading'>
-    Reserveringen
-  </div>
+  <div class='panel-heading' translate='reservations'></div>
   <div class='panel-body relative'>
-
-      <div class='col-xs-6 text-center m-t-sm' ng-repeat='(productId, productData) in agenda_charts.data.product'>
+      <div class='col-xs-6 text-center m-t-sm'
+           ng-repeat='(productId, productData) in agenda_charts.data.product'>
         <div class='agenda-charts-graph'>
           <div ng-click='agenda_charts.showReservations(productId)'
                ui-jq='easyPieChart'
                ui-options='{
-                    percent: agenda_charts.Charts.getPercent(agenda_charts.data.totalNumberOfPersons, productData.numberOfPersons),
-                    lineWidth: 2,
-                    trackColor: "#787878",
-                    barColor: "#f6f6f6",
-                    scaleColor: false,
-                    size: 84,
-                    rotate: 90,
-                    lineCap: "butt"
-                  }'>
+                percent: agenda_charts.Charts.getPercent(agenda_charts.data.totalNumberOfPersons, productData.numberOfPersons),
+                lineWidth: 2,
+                trackColor: "#787878",
+                barColor: "#f6f6f6",
+                scaleColor: false,
+                size: 84,
+                rotate: 90,
+                lineCap: "butt"
+               }'>
             <div>
               <span>{{ productData.numberOfPersons }}</span>
             </div>
           </div>
         </div>
-        <div class='agenda-charts-title m-t-sm m-b-sm'>
-          {{ productData.name }}
-        </div>
+        <div class='agenda-charts-title m-t-sm m-b-sm'>{{ productData.name }}</div>
       </div>
-
   </div>
 </div>
