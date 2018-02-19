@@ -3,7 +3,7 @@ export default function ResponseFactory($q, $injector) {
 
   const responseInjector = {
     responseError: (rejection) => {
-      if (rejection.status === 403 && rejection.statusText === 'Forbidden') {
+      if (rejection.status === 403) {
         // hack to arround circle dependences
 
         const mdDialog = $injector.get('$mdDialog');
