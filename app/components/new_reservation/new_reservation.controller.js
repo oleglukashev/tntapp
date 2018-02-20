@@ -46,7 +46,7 @@ export default class NewReservationCtrl {
     this.warnings = {};
 
     this.reservation = {
-      language: 'NL',
+      language: $translate.proposedLanguage().toUpperCase() || 'NL',
       gender: 'Man',
       social: null,
       is_group: false,
