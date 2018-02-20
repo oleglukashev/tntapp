@@ -8,7 +8,9 @@ import mailsController from './mails/settings_mails.controller';
 import tablesRouting from './tables/settings_tables.route';
 import tablesController from './tables/settings_tables.controller';
 import editMailController from './mails/settings_mails.edit_mail.controller';
-import newZoneController from './tables/settings_tables.new_zone.controller';
+import newZoneController from './tables/new_zone/settings_tables.new_zone.controller';
+import editZoneController from './tables/edit_zone/settings_tables.edit_zone.controller';
+import settingsTablesZoneFactory from './tables/settings_tables.zone.factory';
 import limitsRouting from './limits/settings_limits.route';
 import limitsController from './limits/settings_limits.controller';
 import productsRouting from './products/settings_products.route';
@@ -28,6 +30,7 @@ import editWarningsController from './warnings/edit/settings_warnings.edit.contr
 export default angular.module('app.settings', [])
   .controller('SettingsMailsEditMailCtrl', editMailController)
   .controller('SettingsTablesNewZoneCtrl', newZoneController)
+  .controller('SettingsTablesEditZoneCtrl', editZoneController)
   .controller('SettingsProductsNewProductCtrl', newProductController)
   .controller('SettingsEmployeesItemCtrl', employeesItemController)
   .config(routing)
@@ -51,4 +54,5 @@ export default angular.module('app.settings', [])
   .config(warningsRouting)
   .controller('SettingsWarningsCtrl', warningsController)
   .controller('SettingsWarningsEditCtrl', editWarningsController)
+  .factory('SettingsTablesZoneFactory', settingsTablesZoneFactory, ['AppConstants'])
   .name;

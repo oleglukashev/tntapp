@@ -31,6 +31,19 @@ export default class Zone {
     }).then(result => result.data);
   }
 
+  update(companyId, data, zoneId, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/zone/${zoneId}`,
+      method: 'PATCH',
+      skipAuthorization: skipJwtAuth,
+      data,
+    }).then(result => result.data);
+  }
+
   delete(companyId, id, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
