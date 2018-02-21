@@ -2,6 +2,7 @@ import angular from 'angular';
 import routing from './dashboard.route';
 import controller from './dashboard.controller';
 import dashboardReservationsController from './reservations/dashboard_reservations.controller';
+import dashboardInviteController from './invite/dashboard_invite.controller';
 import dashboardReservationsReservationController from './reservations/dashboard_reservations.reservation.controller';
 import reservationItemFactory from '../../common/factories/reservation.item.factory';
 import reservationStatusMenuFactory from '../../shared/reservation_status_menu/reservation_status_menu.factory';
@@ -12,6 +13,7 @@ export default angular.module('app.dashboard', [])
   .config(routing)
   .controller('DashboardCtrl', controller)
   .controller('DashboardReservationsCtrl', dashboardReservationsController)
+  .controller('DashboardInviteCtrl', dashboardInviteController)
   .controller('DashboardReservationsReservationCtrl', dashboardReservationsReservationController)
   .factory('ReservationItemFactory', reservationItemFactory,
     ['AppConstants', 'ReservationStatus', '$mdSidenav', '$rootScope'])

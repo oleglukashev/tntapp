@@ -14,4 +14,14 @@ export default class DashboardCtrl {
 
     modalInstance.result.then(() => {}, () => {});
   }
+
+  openInvitePopup() {
+    const modalInstance = this.$modal.open({
+      templateUrl: 'dashboard_invite.view.html',
+      controller: 'DashboardInviteCtrl as dash_invite',
+      size: 'md',
+    });
+
+    modalInstance.result.then(() => {}, () => {});
+  }
 }
