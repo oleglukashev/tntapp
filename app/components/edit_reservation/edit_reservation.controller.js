@@ -140,7 +140,7 @@ export default class EditReservationCtrl {
 
   // UNITE WITH NEW RESERVATION FUNCTION
   timeIsDisabled(timeObj) {
-    if (!timeObj.is_open || !this.isEnoughSeats(timeObj)) {
+    if (!timeObj.is_open || !this.isEnoughSeats(timeObj) || timeObj.available_table_count <= 0) {
       return true;
     }
 
