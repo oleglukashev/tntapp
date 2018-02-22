@@ -6,15 +6,15 @@ export default class SettingsTablesEditZoneCtrl {
 
     this.current_company_id = User.getCompanyId();
 
-    this.Zone = Zone;
-    this.zones = zones;
-    this.zone = zone;
+    this.ZoneService = Zone;
+    this.zonesList = zones;
+    this.zoneItem = zone;
     this.$rootScope = $rootScope;
     this.$modalInstance = $modalInstance;
     this.item = {
-      name: zone.name,
-      icon_class: zone.icon_class,
-      use_in_frontoffice_availability: zone.use_in_frontoffice_availability,
+      name: this.zoneItem.name,
+      icon_class: this.zoneItem.icon_class,
+      use_in_frontoffice_availability: this.zoneItem.use_in_frontoffice_availability === '1',
     };
 
     this.defaultItem = angular.copy(this.item);
@@ -28,15 +28,15 @@ export default class SettingsTablesEditZoneCtrl {
     this.$rootScope.show_spinner = true;
     this.errors = [];
 
-    this.Zone
-      .update(this.current_company_id, this.item, this.zone.id)
+    this.ZoneService
+      .update(this.current_company_id, this.item, this.zoneItem.id)
       .then(
         (zone) => {
           const index = this.getIndex(zone.id);
 
           this.is_submitting = false;
           this.$rootScope.show_spinner = false;
-          this.zones.splice(index, 1, zone);
+          this.zonesList.splice(index, 1, zone);
           this.$modalInstance.dismiss('cancel');
         }, (error) => {
           this.is_submitting = false;
@@ -52,7 +52,7 @@ export default class SettingsTablesEditZoneCtrl {
   getIndex(zoneId) {
     let result = -1;
 
-    this.zones.forEach((zone, index) => {
+    this.zonesList.forEach((zone, index) => {
       if (zoneId === zone.id) {
         result = index;
       }

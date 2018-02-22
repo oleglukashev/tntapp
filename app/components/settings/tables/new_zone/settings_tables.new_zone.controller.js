@@ -4,8 +4,8 @@ export default class SettingsTablesNewZoneCtrl {
 
     this.current_company_id = User.getCompanyId();
 
-    this.Zone = Zone;
-    this.zones = zones;
+    this.ZoneService = Zone;
+    this.zonesList = zones;
     this.$rootScope = $rootScope;
     this.$modalInstance = $modalInstance;
     this.item = {};
@@ -18,13 +18,13 @@ export default class SettingsTablesNewZoneCtrl {
     this.$rootScope.show_spinner = true;
     this.errors = [];
 
-    this.Zone
+    this.ZoneService
       .create(this.current_company_id, this.item)
       .then(
         (zone) => {
           this.is_submitting = false;
           this.$rootScope.show_spinner = false;
-          this.zones.push(zone);
+          this.zonesList.push(zone);
           this.$modalInstance.dismiss('cancel');
         },
         (error) => {

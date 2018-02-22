@@ -15,11 +15,11 @@ export default function SettingsTablesZoneFactory(AppConstants) {
       instance.item.icon_class = className;
     };
 
-    instance.zonesNames = () => instance.zones.map(item => item.name);
+    instance.zonesNames = () => instance.zonesList.map(item => item.name);
 
     instance.zonesHash = () => {
       const zones = {};
-      instance.zones.forEach((item) => {
+      instance.zonesList.forEach((item) => {
         zones[item.name] = (item.icon_class ? item.icon_class :
           instance.iconsClasses[item.name]) || instance.emptyMdiClass;
       });
