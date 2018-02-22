@@ -106,10 +106,12 @@ export default class EditReservationCtrl {
     }
 
     this.reservation.reservation_parts.forEach((part) => {
+      const tableIds = angular.copy(part.table_ids);
+
       data.reservation_parts.push({
         number_of_persons: part.number_of_persons,
         product: part.product,
-        tables: part.table_ids,
+        tables: tableIds,
         date_time: `${this.moment(part.date).format('DD-MM-YYYY')} ${part.time}`,
       });
     });
