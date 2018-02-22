@@ -100,15 +100,44 @@ export default class AgendaCtrl {
   changeReservatinItemStatus(reservationId, status) {
     const reservation = this.filterFilter(this.reservations, { id: reservationId })[0];
 
-    if (reservation) {
-      reservation.status = status;
+    if (!reservation) return false;
 
-      this.data.forEach((dataItem, index) => {
-        if (dataItem.reservation.id === reservationId) {
-          this.data[index] = this.rowPart(dataItem.part, reservation);
+    reservation.status = status;
+    let rowItem = null;
+
+    // replace dataItem in this.data by index 
+    this.data.forEach((dataItem, index) => {
+      if (dataItem.reservation.id === reservationId) {
+        this.data.splice(index, 1);
+
+        if (this.cancelFilterIsOn()) {
+          rowItem = this.rowPart(dataItem.part, reservation);
+          this.data.splice(index, 0, rowItem);
+        }
+      }
+    });
+
+    // list of table ids all parts of reservation
+    let tableIds = [];
+    reservation.reservation_parts.forEach((part) => {
+      tableIds = [...new Set(tableIds.concat(part.table_ids))];
+    });
+
+    // replace dataItem in this.graph_data by index 
+    tableIds.forEach((tableId) => {
+      this.graph_data[tableId].forEach((graphItem, index) => {
+        if (graphItem.reservation.id === reservationId) {
+          this.graph_data[tableId].splice(index, 1);
+
+          if (this.cancelFilterIsOn() && rowItem) {
+            const rowGraphItem = this.rowGraphPart(rowItem, tableId);
+            this.graph_data[tableId].splice(index, 0, rowGraphItem);
+          }
         }
       });
-    }
+    });
+
+    return false;
   }
 
   dontHideWidget($event) {
@@ -404,7 +433,7 @@ export default class AgendaCtrl {
   setData() {
     this.data = [];
     this.graph_data = {};
-    const widgetResult = [];
+    this.data_without_tables = [];
     const reservations = this.applyFilterToReservations();
 
     reservations.forEach((reservation) => {
@@ -418,50 +447,52 @@ export default class AgendaCtrl {
           // calendar
           if (part.table_ids.length) {
             part.table_ids.forEach((tableId) => {
-              let tableIndex = -1;
-              if (!this.graph_data[tableId]) {
-                this.graph_data[tableId] = [];
-              }
-
-              Object.keys(this.zones).forEach((zoneId) => {
-                const indexOf = this.zones[zoneId].table_ids.indexOf(tableId);
-                if (indexOf >= 0) {
-                  tableIndex = indexOf;
-                }
-              });
-
-              const rowGraphItem = {
-                id: part.id,
-                name: rowItem.name,
-                customer: reservation.customer,
-                status: reservation.status,
-                reservation,
-                part,
-                number_of_persons: part.number_of_persons,
-                product_name: rowItem.product_name,
-                left: this.timeToCoords(part.date_time),
-                top: this.top_margin + (tableIndex * this.reservation_height),
-                width: this.durationToWidth(part.duration_minutes) || this.reservation_block_width,
-              };
-
+              const rowGraphItem = this.rowGraphPart(rowItem, tableId);
               this.graph_data[tableId].push(rowGraphItem);
             });
           } else {
             part.fromWidget = true;
 
             // widget
-            widgetResult.push(this.rowPart(part, reservation));
+            this.data_without_tables.push(rowItem);
           }
         }
       });
     });
 
     this.data = this.applySort(this.data);
-    this.data_without_tables = widgetResult;
     this.calculateTotalsForPrint();
 
     this.$rootScope.$broadcast('agenda.load_reservations_data_and_date_filter',
       { reservations_data: this.data, date: this.date_filter });
+  }
+
+  rowGraphPart(rowItem, tableId) {
+    let tableIndex = -1;
+    if (!this.graph_data[tableId]) {
+      this.graph_data[tableId] = [];
+    }
+
+    Object.keys(this.zones).forEach((zoneId) => {
+      const indexOf = this.zones[zoneId].table_ids.indexOf(tableId);
+      if (indexOf >= 0) {
+        tableIndex = indexOf;
+      }
+    });
+
+    return {
+      id: rowItem.part.id,
+      name: rowItem.name,
+      customer: rowItem.reservation.customer,
+      status: rowItem.reservation.status,
+      reservation: rowItem.reservation,
+      part: rowItem.part,
+      number_of_persons: rowItem.part.number_of_persons,
+      product_name: rowItem.product_name,
+      left: this.timeToCoords(rowItem.part.date_time),
+      top: this.top_margin + (tableIndex * this.reservation_height),
+      width: this.durationToWidth(rowItem.part.duration_minutes) || this.reservation_block_width,
+    };
   }
 
   calculateTotalsForPrint() {
