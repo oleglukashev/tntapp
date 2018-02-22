@@ -51,6 +51,7 @@ import constants from './config.constants';
 import editUser from './shared/user_menu/edit';
 import './assets/css/app.styl';
 import './common/services';
+import './common/factories';
 import './common/directives';
 import './common/filters/time_reservation_id_sort.filter';
 
@@ -61,7 +62,7 @@ angular
     angularTranslateStorageCookie, angularMoment, angularMaterial, uiLoad, anguarOclazyLoad, uiJq,
     dndLists, satellizer, search, dashboard, customerReservation,
     reservations, dnd, agenda, auth, settings, rzModule, chartjs, profiles, constants, editUser,
-    'app.services', 'app.directives', 'app.filters', 'growlNotifications',
+    'app.services', 'app.factories', 'app.directives', 'app.filters', 'growlNotifications',
   ])
   .controller('AppCtrl', appController)
   .controller('HeaderCtrl', headerController)
