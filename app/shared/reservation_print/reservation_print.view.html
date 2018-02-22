@@ -1,5 +1,8 @@
 <div class='print-block'>
     <div class='totals'>
+        <div ng-if='controller.date_filter'>
+            Datum: {{ controller.moment(controller.date_filter).format('DD-MM-YYYY') }},
+        </div>
         <div>Total number of guest: {{controller.totalNumberOfPersons}},</div>
         <div>total number of resevations: {{controller.totalNumberOfReservations}}</div>
     </div>
