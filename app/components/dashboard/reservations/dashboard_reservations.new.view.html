@@ -102,7 +102,7 @@
       <div class='wrapper'>
         <div class="md-list-item inset" ng-repeat='part in reserv.walkInOrReservationPart()'>
             <div class="md-list-item-left">
-              <i class="mdi mdi-attachment icon-muted i-24"></i>
+              <i class="mdi mdi-calendar icon-muted i-24"></i>
             </div>
             <div class="md-list-item-content">
               <h3 class="text-md">{{ reserv.moment(part.date).format('DD MMMM YYYY') }} {{ part.time }}</h3>
@@ -127,14 +127,22 @@
             <small class="font-thin">E-mail</small>
           </div>
         </div>
-
-        <div class="md-list-item ">
-          <div class="md-list-item-left ">
+        <div class="md-list-item inset">
+          <div class="md-list-item-left">
             <i class="mdi mdi-comment-text icon-muted i-24"></i>
           </div>
           <div class="md-list-item-content">
             <h3 class="text-md">{{ reserv.reservation.notes || reserv.walk_in.notes }}</h3>
             <small class="font-thin">Opmerkingen</small>
+          </div>
+        </div>
+        <div class="md-list-item" ng-if='reserv.reservation.reservation_pdf'>
+          <div class="md-list-item-left">
+            <i class="mdi mdi-attachment icon-muted i-24"></i>
+          </div>
+          <div class="md-list-item-content">
+            <h3 class="text-md">Reservering PDF</h3>
+            <small class="font-thin">Bijlage</small>
           </div>
         </div>
       </div>

@@ -1,12 +1,13 @@
 import angular from 'angular';
 
 export default class Reservation {
-  constructor(JWT, Upload, moment, $http, $q, filterFilter) {
+  constructor(JWT, Upload, moment, $http, $q, filterFilter, $mdDialog) {
     'ngInject';
 
     this.moment = moment;
     this.$http = $http;
     this.$q = $q;
+    this.$mdDialog = $mdDialog;
     this.JWT = JWT;
     this.Upload = Upload;
 
@@ -66,12 +67,10 @@ export default class Reservation {
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then((result) => {
-      const anchor = angular.element('<a/>');
-      anchor.attr({
-        href: encodeURI(result.data),
-        target: '_blank',
-        download: 'export.pdf',
-      })[0].click();
+      const link = window.document.createElement('a');
+      link.setAttribute('href', encodeURI(result.data));
+      link.setAttribute('download', `reservation(#${reservationId}).pdf`);
+      link.click();
     });
   }
 
@@ -127,24 +126,43 @@ export default class Reservation {
   create(companyId, data, skipJwtAuth) {
     const header = skipJwtAuth ? null : { Authorization: `Bearer ${this.JWT.get()}` };
 
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
     return this.Upload.upload({
       url: `${API_URL}/company/${companyId}/reservation`,
       skipAuthorization: skipJwtAuth,
       headers: header,
       data,
-    }).then(result => result.data);
+    }).then(result => result, error => error);
   }
 
   update(companyId, reservationId, data, skipJwtAuth) {
+    const header = skipJwtAuth ? null : { Authorization: `Bearer ${this.JWT.get()}` };
+
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.Upload.upload({
+      url: `${API_URL}/company/${companyId}/reservation/${reservationId}`,
+      skipAuthorization: skipJwtAuth,
+      headers: header,
+      method: 'POST',
+      data,
+    }).then(result => result, error => error);
+  }
+
+  removePdf(companyId, reservationId, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/reservation/${reservationId}`,
+      url: `${API_URL}/company/${companyId}/reservation/${reservationId}/remove_pdf`,
       skipAuthorization: skipJwtAuth,
-      method: 'PATCH',
-      data,
+      method: 'POST',
     }).then(result => result.data);
   }
 

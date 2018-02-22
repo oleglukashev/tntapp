@@ -3,10 +3,10 @@
     <div class='text-center l-h'>RESERVERING</div>
   </md-tab-label>
   <md-tab-body>
-    <div class='md-content-submit b-t' flex>
-      <div class='wrapper' layout='column' layout-align='space-around center'>
-        <div class='w-xl'>
-          <form ng-submit='reserv.submitReservationForm()'>
+    <form ng-submit='reserv.submitReservationForm()'>
+      <div class='md-content-submit b-t' flex>
+        <div class='wrapper' layout='column' layout-align='space-around center'>
+          <div class='w-xl'>
             <md-input-container class='md-block'>
               <label>Datum</label>
               <md-datepicker ng-model='reserv.current_part.date'
@@ -76,6 +76,26 @@
                 Group?
               </md-checkbox>
             </div>
+            <div ng-show='reserv.reservation.reservation_pdf'>
+              <label class='btn btn-default block m-b-xs no-shadow text-success text-left'
+                     ng-click='reserv.loadPDF();'>
+                <span class='m-r-sm'>
+                  <i class='mdi mdi-pdf'></i>
+                  PDF for reservation
+                </span>
+                <div class='pull-right'>
+                  <i class='mdi mdi-delete' ng-click='reserv.removePdf($event);'></i>
+                </div>
+              </label>
+            </div>
+            <button type='button'
+                    md-ink-ripple
+                    class='md-btn md-flat m-b m-t btn-fw text-success m-l-6'
+                    ngf-select=''
+                    ngf-drop=''
+                    ngf-pattern="'.pdf'"
+                    accept='application/pdf'
+                    ng-model='reserv.reservation.reservation_pdf'>PDF UPLOADEN...</button>
             <div ng-show='reserv.reservation.is_group'>
               <label ng-repeat='part in reserv.reservation.reservation_parts'
                      class='btn btn-default block m-b-xs no-shadow text-success text-left'
@@ -107,21 +127,22 @@
               <label ng-click='reserv.addPart()'
                      class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>Add activiteit</label>
             </div>
-            <div class='wrapper red-300 layout-align-space-around-center layout-column' ng-show='reserv.errors.length'>
-              <div class='w-xl'>
-                <div ng-repeat='error in reserv.errors'>
-                  {{ error }}
-                </div>
-              </div>
-            </div>
-            <button type='submit'
-                    class='btn btn-lg btn-success w-full no-top-radius md-content-button'
-                    ng-class="{ 'disabled': reserv.is_submitting }">
-              <span>OPSLAAN</span>
-            </button>
-          </form>
+          </div>
         </div>
+        <div class='wrapper red-300 layout-align-space-around-center layout-column'
+             ng-show='reserv.errors.length'>
+          <div class='w-xl'>
+            <div ng-repeat='error in reserv.errors'>
+              {{ error }}
+            </div>
+          </div>
+        </div>
+        <button type='submit'
+                class='btn btn-lg btn-success w-full no-top-radius md-content-button'
+                ng-class="{ 'disabled': reserv.is_submitting }">
+          <span>OPSLAAN</span>
+        </button>
       </div>
-    </div>
+    </form>
   </md-tab-body>
 </md-tab>
