@@ -38,6 +38,7 @@
           height header-menu-tab-height
 
           md-tab-item
+            transition all .3s ease-in-out
             height header-menu-tab-height
             margin-left 26px
             line-height 52px
@@ -52,14 +53,27 @@
             &:nth-child(2)
               margin-left 0
 
-  @media (max-width 962px)
+  @media (min-width 768px)
     .header-menu
-      width 400px
+      width 480px
+
+  @media (max-width 962px)
+    .navbar-right
+      margin-right -20px !important
+      .dropdown
+        .header-account-menu
+          .dropdown-toggle
+            width 165px
+            min-width 165px
+
+    .header-menu
+      width 340px
 
       md-tabs.header-menu-wrapper
         md-tabs-canvas
           md-pagination-wrapper
             md-tab-item
+              padding 10px
               margin-left 0
 
   .header-search
@@ -105,6 +119,7 @@
       min-width 200px
       padding 18px 15px
       cursor pointer
+      transition all .3s ease-in-out
 
     .header-account-menu__info
       text-transform uppercase
