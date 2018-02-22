@@ -9,7 +9,9 @@ export default class HeaderCtrl {
     this.current_user = User.current;
     this.current_company = User.current_company;
     this.current_company_id = User.getCompanyId();
+
     this.logout = User.logout.bind(User);
+    this.userIsOwner = User.isOwner.bind(User);
   }
 
   hideRightSidebar() {

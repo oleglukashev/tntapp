@@ -63,7 +63,6 @@ angular
     reservations, dnd, agenda, auth, settings, rzModule, chartjs, profiles, constants, editUser,
     'app.services', 'app.directives', 'app.filters', 'growlNotifications',
   ])
-  .config(jwtConfig)
   .controller('AppCtrl', appController)
   .controller('HeaderCtrl', headerController)
   .controller('UserMenuCtrl', userMenuController)
@@ -75,6 +74,10 @@ angular
   .controller('PageFilterTimeRangesCtrl', pageFilterTimeRangesController)
   .controller('ReservationAnswerCtrl', reservationAnswerController)
   .controller('SearchHeaderCtrl', searchHeaderController)
+  .config(jwtConfig)
+  .config(['$httpProvider', ($httpProvider) => {
+    $httpProvider.interceptors.push('responseFactory');
+  }])
   .config(['$ocLazyLoadProvider', 'MODULE_CONFIG', ($ocLazyLoadProvider, MODULE_CONFIG) => {
     // We configure ocLazyLoad to use the lib script.js as the async loader
     $ocLazyLoadProvider.config({

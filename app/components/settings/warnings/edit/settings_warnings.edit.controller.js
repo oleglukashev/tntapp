@@ -31,10 +31,10 @@ export default class SettingsWarningsEditCtrl {
       .updateWarning(this.current_company_id, this.form_data.id, data)
       .then(() => {
         this.is_submitting = false;
-        this.$rootScope.show_spinner = true;
+        this.$rootScope.show_spinner = false;
         this.closeModal();
       }, () => {
-        this.$rootScope.show_spinner = true;
+        this.$rootScope.show_spinner = false;
       });
 
     return true;
