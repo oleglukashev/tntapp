@@ -161,6 +161,8 @@ export default class NewReservationCtrl {
           if (result.status === 200) {
             this.success = true;
             this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
+          } else if (result.status === 400) {
+            this.errors = result.data.errors.errors;
           } else if (result.status === -1 && result.statusText === '') {
             this.errors = ['Een bestand mag niet groter zijn dan 2MB'];
           }
