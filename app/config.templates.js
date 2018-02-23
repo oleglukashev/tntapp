@@ -16,6 +16,7 @@ export default function templates($templateCache) {
   $templateCache.put('settings_mails.edit_mail.view.html', require('./components/settings/mails/settings_mails.edit_mail.view.html'));
   $templateCache.put('settings_warnings.edit.view.html', require('./components/settings/warnings/edit/settings_warnings.edit.view.html'));
   $templateCache.put('settings_tables.new_zone.view.html', require('./components/settings/tables/settings_tables.new_zone.view.html'));
+  $templateCache.put('dashboard_invite.view.html', require('./components/dashboard/invite/dashboard_invite.view.html'));
   $templateCache.put('dashboard_reservations.view.html', require('./components/dashboard/reservations/dashboard_reservations.view.html'));
   $templateCache.put('dashboard_reservations.item.view.html', require('./components/dashboard/reservations/dashboard_reservations.item.view.html'));
   $templateCache.put('dashboard_reservations.new.view.html', require('./components/dashboard/reservations/dashboard_reservations.new.view.html'));

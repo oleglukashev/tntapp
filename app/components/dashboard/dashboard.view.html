@@ -8,24 +8,54 @@
     <div class='dashboard-ad panel'>
       <div class='panel-body'>
         <div>
-          <img class='w-full' src='public/images/receipts.png' srcset='public/images/receipts@2x.png 2x' title='receipts' />
+          <img class='w-full'
+               src='public/images/receipts.png'
+               srcset='public/images/receipts@2x.png 2x'
+               title='receipts' />
         </div>
-        <p>Ook je reviews bijhouden?<p/>
+        <p class='m-t-sm text-center'>Ook je reviews bijhouden?</p>
       </div>
       <div class='panel-footer text-center'>
-        <a href='https://dashboard.thenextreview.nl/register' target="_blank" md-ink-ripple class='md-btn md-flat btn-fw text-success'>Probeer gratis</a>
+        <a href='https://dashboard.thenextreview.nl/register'
+           target='_blank'
+           md-ink-ripple
+           class='md-btn md-flat btn-fw text-success'>Probeer gratis</a>
+      </div>
+    </div>
+
+    <div class='dashboard-invite panel'>
+      <div class='panel-body'>
+        <div>
+          <img class='w-full'
+               src='public/images/addfriend.png'
+               srcset='public/images/addfriend@2x.png 2x'
+               title='add_friend' />
+        </div>
+        <p class='m-t-sm text-center'>Gratis een maand TheNextTable?</p>
+      </div>
+      <div class='panel-footer text-center'>
+        <a href='#'
+           ng-click='dash.openInvitePopup()'
+           class='md-btn md-flat btn-fw text-success'
+           md-ink-ripple>Vriend uitnodigen</a>
       </div>
     </div>
 
     <div class='dashboard-ad panel'>
       <div class='panel-body'>
         <div>
-          <img class='w-full' src='public/images/reviews.png' srcset='public/images/reviews@2x.png 2x' title='reviews' />
+          <img class='w-full'
+               src='public/images/reviews.png'
+               srcset='public/images/reviews@2x.png 2x'
+               title='reviews' />
         </div>
-        <p>Wil je kasboek bij houden<p/>
+        <p class='m-t-sm text-center'>Wil je kasboek bij houden</p>
       </div>
       <div class='panel-footer text-center'>
-        <a href='https://dashboard.kassatellen.nl' target="_blank" md-ink-ripple class='md-btn md-flat btn-fw text-success'>Probeer gratis</a>
+        <a href='https://dashboard.kassatellen.nl'
+           target='_blank'
+           md-ink-ripple
+           class='md-btn md-flat btn-fw text-success'>Probeer gratis</a>
       </div>
     </div>
   </div>
