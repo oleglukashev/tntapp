@@ -75,6 +75,16 @@ class SearchCtrl {
     this.calculateTotalsForPrint();
   }
 
+  getDataLength() {
+    let result = 0;
+
+    Object.keys(this.data).forEach((date) => {
+      result += this.data[date].length;
+    });
+
+    return result;
+  }
+
   calculateTotalsForPrint() {
     this.totalNumberOfReservations = this.reservations
       .filter(item => item.staus !== 'cancelled').length;

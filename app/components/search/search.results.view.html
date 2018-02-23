@@ -1,7 +1,7 @@
 <div class='search-result-content col-lg-8 col-md-8 col-sm-8 col-md-offset-1'>
   <div class='clearfix m-b-md'>
     <div class='pull-left m-t-sm m-r-sm'>
-      <p>{{ search.reservations.length }} resultaten <b>{{ search.reservations[0].customer.first_name }} {{ search.reservations[0].customer.last_name }}</b></p>
+      <p>{{ search.getDataLength() }} resultaten <b>{{ search.reservations[0].customer.first_name }} {{ search.reservations[0].customer.last_name }}</b></p>
     </div>
 
     <div class='page_filter pull-left'>
@@ -19,8 +19,8 @@
 
   <div class='dashboard-ad panel'
        ng-repeat='(date, dataItems) in search.data'
-       ng-if='search.reservations.length'>
-    <div class='panel-heading'>{{ search.moment(dateTime).lang('nl').format('DD MMM') }}</div>
+       ng-if='dataItems.length'>
+    <div class='panel-heading'>{{ search.moment(date).lang('nl').format('DD MMM') }}</div>
     <table class='table m-b-none'>
       <thead>
         <tr>

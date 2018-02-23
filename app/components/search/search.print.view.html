@@ -15,6 +15,9 @@
             <th width='10%''>Phone</th>
         </thead>
         <tbody ng-repeat='(date, items) in search.data'>
+            <tr ng-if='items.length'>
+                <td colspan='8'>Datum {{ date }}</td>
+            </tr>
             <tr ng-repeat='item in items'>
                 <td align="center">
                     <input type='checkbox' />
