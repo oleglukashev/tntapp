@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 class SearchCtrl {
   constructor(Table, User, Zone, ReservationItemFactory, Customer, Product, ReservationPart,
     ReservationStatus, PageFilterFactory, ReservationStatusMenu, filterFilter, moment,
@@ -53,17 +55,24 @@ class SearchCtrl {
   changeReservatinItemStatus(reservationId, status) {
     const reservation = this.filterFilter(this.reservations, { id: reservationId })[0];
 
-    if (reservation) {
-      reservation.status = status;
+    if (!reservation) return false;
+    reservation.status = status;
 
-      Object.keys(this.data).forEach((date) => {
-        this.data[date].forEach((dataItem, index) => {
-          if (dataItem.reservation.id === reservationId) {
-            this.data[date][index] = this.rowPart(dataItem.part, reservation);
+    // replace dataItem in this.data by index
+    Object.keys(this.data).forEach((date) => {
+      // use reverse loop for correct removing items in circle
+      for (let i = this.data[date].length - 1; i >= 0; i -= 1) {
+        const dataItem = this.data[date][i];
+
+        if (dataItem.reservation.id === reservationId) {
+          this.data[date].splice(i, 1);
+
+          if (dataItem.reservation.status !== 'cancelled' || this.cancelFilterIsOn()) {
+            this.data[date].splice(i, 0, this.rowPart(dataItem.part, reservation));
           }
-        });
-      });
-    }
+        }
+      }
+    });
   }
 
   setData() {

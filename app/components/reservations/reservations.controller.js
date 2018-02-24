@@ -58,14 +58,21 @@ export default class ReservationsCtrl {
   changeReservatinItemStatus(reservationId, status) {
     const reservation = this.filterFilter(this.reservations, { id: reservationId })[0];
 
-    if (reservation) {
-      reservation.status = status;
+    if (!reservation) return false;
+    reservation.status = status;
 
-      this.data.forEach((dataItem, index) => {
-        if (dataItem.reservation.id === reservationId) {
-          this.data[index] = this.rowPart(dataItem.part, reservation);
+    // replace dataItem in this.data by index
+    // use reverse loop for correct removing items in circle
+    for (let i = this.data.length - 1; i >= 0; i -= 1) {
+      const dataItem = this.data[i];
+
+      if (dataItem.reservation.id === reservationId) {
+        this.data.splice(i, 1);
+
+        if (dataItem.reservation.status !== 'cancelled' || this.cancelFilterIsOn()) {
+          this.data.splice(i, 0, this.rowPart(dataItem.part, reservation));
         }
-      });
+      }
     }
   }
 
