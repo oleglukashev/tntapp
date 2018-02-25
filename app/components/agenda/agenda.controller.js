@@ -103,41 +103,39 @@ export default class AgendaCtrl {
     if (!reservation) return false;
 
     reservation.status = status;
-    let rowItem = null;
 
-    // replace dataItem in this.data by index 
-    this.data.forEach((dataItem, index) => {
+    // replace dataItem in this.data by index
+    // use reverse loop for correct removing items in circle
+    for (let i = this.data.length - 1; i >= 0; i -= 1) {
+      const dataItem = this.data[i];
       if (dataItem.reservation.id === reservationId) {
-        this.data.splice(index, 1);
+        this.changeGraphsItemStatus(dataItem, reservationId);
+        this.data.splice(i, 1);
 
-        if (this.cancelFilterIsOn()) {
-          rowItem = this.rowPart(dataItem.part, reservation);
-          this.data.splice(index, 0, rowItem);
+        if (dataItem.reservation.status !== 'cancelled' || this.cancelFilterIsOn()) {
+          this.data.splice(i, 0, this.rowPart(dataItem.part, reservation));
+        }
+      }
+    }
+
+    return false;
+  }
+
+  changeGraphsItemStatus(dataItem, reservationId) {
+    if (!dataItem.source_table_ids) return false;
+
+    dataItem.source_table_ids.forEach((tableId) => {
+      for (let i = this.graph_data[tableId].length - 1; i >= 0; i -= 1) {
+        const graphItem = this.graph_data[tableId][i];
+        if (graphItem.reservation.id === reservationId) {
+          this.graph_data[tableId].splice(i, 1);
+
+          if (graphItem.reservation.status !== 'cancelled' || this.cancelFilterIsOn()) {
+            this.graph_data[tableId].splice(i, 0, this.rowGraphPart(dataItem, tableId));
+          }
         }
       }
     });
-
-    // list of table ids all parts of reservation
-    let tableIds = [];
-    reservation.reservation_parts.forEach((part) => {
-      tableIds = [...new Set(tableIds.concat(part.table_ids))];
-    });
-
-    // replace dataItem in this.graph_data by index 
-    tableIds.forEach((tableId) => {
-      this.graph_data[tableId].forEach((graphItem, index) => {
-        if (graphItem.reservation.id === reservationId) {
-          this.graph_data[tableId].splice(index, 1);
-
-          if (this.cancelFilterIsOn() && rowItem) {
-            const rowGraphItem = this.rowGraphPart(rowItem, tableId);
-            this.graph_data[tableId].splice(index, 0, rowGraphItem);
-          }
-        }
-      });
-    });
-
-    return false;
   }
 
   dontHideWidget($event) {
