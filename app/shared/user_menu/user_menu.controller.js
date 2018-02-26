@@ -79,7 +79,6 @@ export default class UserMenuCtrl {
       mail: customer.mail,
       date_of_birth: customer.date_of_birth,
       gender: customer.gender,
-      averageRating: customer.average_rating,
       regular: !customer.regular,
     };
 
@@ -116,10 +115,6 @@ export default class UserMenuCtrl {
 
   parsedDate(date) {
     return this.moment(date).locale('nl').format('D MMMM YYYY HH:mm');
-  }
-
-  formatScore(score) {
-    return score.toFixed(2);
   }
 
   getPartByReservations() {

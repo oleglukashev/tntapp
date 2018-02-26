@@ -203,7 +203,8 @@
           </div>
           <div class="md-list-item-content">
             <h3 class="text-md">
-              TheNextReview Score: {{ user.formatScore(reservation.review.score) }}
+              Score TheNextReview:
+              <chart-rating tnrrating='reservation.review.score'></chart-rating>
             </h3>
             <small class="font-thin">
               {{ reservation.review.notes }}

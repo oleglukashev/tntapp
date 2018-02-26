@@ -96,7 +96,6 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
         mail: customerClone.mail,
         date_of_birth: customerClone.date_of_birth,
         gender: customerClone.gender,
-        averageRating: customerClone.average_rating,
       };
 
       Customer.edit(instance.current_company_id, customerClone.id, data).then(
