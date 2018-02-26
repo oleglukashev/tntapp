@@ -83,19 +83,32 @@ export default class SettingsTablesCtrl {
         (result) => {
           this.zones = result;
           this.loadTables();
-        },
-        () => {
-        });
+        }, () => {});
   }
 
   addZone() {
     const that = this;
     const modalInstance = this.$modal.open({
-      templateUrl: 'settings_tables.new_zone.view.html',
-      controller: 'SettingsTablesNewZoneCtrl as new_zone',
+      templateUrl: 'settings_tables.zone.view.html',
+      controller: 'SettingsTablesNewZoneCtrl as controller',
       size: 'md',
       resolve: {
         zones: () => that.zones,
+      },
+    });
+
+    modalInstance.result.then(() => {}, () => {});
+  }
+
+  editZone(zone) {
+    const that = this;
+    const modalInstance = this.$modal.open({
+      templateUrl: 'settings_tables.zone.view.html',
+      controller: 'SettingsTablesEditZoneCtrl as controller',
+      size: 'md',
+      resolve: {
+        zones: () => that.zones,
+        zone: () => zone,
       },
     });
 
@@ -113,8 +126,7 @@ export default class SettingsTablesCtrl {
             this.$rootScope.show_spinner = false;
             delete this.tables_by_zone[zone.id];
             this.zones.splice(index, 1);
-          },
-          () => {
+          }, () => {
             this.$rootScope.show_spinner = false;
           });
     }

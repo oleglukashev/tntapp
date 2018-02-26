@@ -23,6 +23,9 @@
             <i class='mdi mdi-dots-vertical i-20' ng-click='$mdMenu.open($event);'></i>
             <md-menu-content>
               <md-menu-item>
+                <md-button ng-click='tables_settings.editZone(zone)'>Zone bewerken</md-button>
+              </md-menu-item>
+              <md-menu-item>
                 <md-button ng-click='tables_settings.removeZone($index)'>Zone verwijderen</md-button>
               </md-menu-item>
             </md-menu-content>
