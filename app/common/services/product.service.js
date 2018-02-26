@@ -31,6 +31,19 @@ export default class Product {
     }).then(result => result.data);
   }
 
+  update(companyId, data, productId, skipJwtAuth) {
+    if (!companyId || !productId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/products/${productId}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'PATCH',
+      data,
+    }).then(result => result.data);
+  }
+
   delete(companyId, productId, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;

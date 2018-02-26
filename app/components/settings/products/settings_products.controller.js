@@ -94,6 +94,19 @@ export default class SettingsProductsCtrl {
     modalInstance.result.then(() => {}, () => {});
   }
 
+  editMinMax(product) {
+    const modalInstance = this.$modal.open({
+      templateUrl: 'settings_products.edit_minmax.view.html',
+      controller: 'SettingsProductsEditMinMaxCtrl as product_minmax',
+      size: 'md',
+      resolve: {
+        product: () => product,
+      },
+    });
+
+    modalInstance.result.then(() => {}, () => {});
+  }
+
   loadProducts() {
     this.Product.getAll(this.current_company_id, true)
       .then(
@@ -184,13 +197,11 @@ export default class SettingsProductsCtrl {
 
       if (productId === 0) {
         const data = {
-          product: {
-            startTime: '00:00',
-            endTime: '23:45',
-            name: newProduct.name,
-            icon_class: newProduct.icon,
-            minPersons: 1,
-          },
+          start_time: '00:00',
+          end_time: '23:45',
+          name: newProduct.name,
+          icon_class: newProduct.icon,
+          min_persons: 1,
         };
 
         this.Product

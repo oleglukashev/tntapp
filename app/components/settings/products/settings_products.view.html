@@ -74,6 +74,12 @@
                     <md-button ng-click='products_settings.showLimits(time_range.product_id)'>Productlimieten</md-button>
                   </md-menu-item>
 
+                  <md-menu-item ng-if='products_settings.products[time_range.product_id]'>
+                    <md-button ng-click='products_settings.editMinMax(products_settings.products[time_range.product_id])'>
+                      Min/max personen ({{ products_settings.products[time_range.product_id].min_persons || '-' }}/{{ products_settings.products[time_range.product_id].max_persons || '-' }})
+                    </md-button>
+                  </md-menu-item>
+
                   <md-menu-item>
                     <md-button ng-click='products_settings.removeProduct(time_range.product_id)'
                                class='remove-button'>Product verwijderen</md-button>

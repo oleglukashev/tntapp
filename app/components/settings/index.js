@@ -16,6 +16,7 @@ import limitsController from './limits/settings_limits.controller';
 import productsRouting from './products/settings_products.route';
 import productsController from './products/settings_products.controller';
 import productLimitsController from './products/settings_products.limits.controller';
+import productEditMinMaxController from './products/settings_products.edit_minmax.controller';
 import newProductController from './products/settings_products.new_product.controller';
 import pluginsRouting from './plugins/settings_plugins.route';
 import pluginsController from './plugins/settings_plugins.controller';
@@ -34,6 +35,7 @@ export default angular.module('app.settings', [])
   .controller('SettingsTablesEditZoneCtrl', editZoneController)
   .controller('SettingsProductsNewProductCtrl', newProductController)
   .controller('SettingsProductsLimitsCtrl', productLimitsController)
+  .controller('SettingsProductsEditMinMaxCtrl', productEditMinMaxController)
   .controller('SettingsEmployeesItemCtrl', employeesItemController)
   .config(routing)
   .controller('SettingsCtrl', controller)
