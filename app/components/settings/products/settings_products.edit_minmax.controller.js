@@ -1,14 +1,13 @@
-export default class SettingsMailsEditMailCtrl {
-  constructor(User, AppConstants, item, Settings, $modalInstance, $rootScope) {
+export default class SettingsProductsEditMinMaxCtrl {
+  constructor(User, Product, product, $modalInstance, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
-    this.Settings = Settings;
+    this.User = User;
+    this.ProductService = Product;
+    this.product = product;
     this.$modalInstance = $modalInstance;
     this.$rootScope = $rootScope;
-
-    this.form_data = item;
-    this.statuses = AppConstants.mailStatuses;
   }
 
   submitForm(isValid) {
@@ -20,25 +19,23 @@ export default class SettingsMailsEditMailCtrl {
     this.$rootScope.show_spinner = true;
 
     const data = {
-      title: this.form_data.title,
-      content: this.form_data.content,
+      min_persons: this.product.min_persons,
+      max_persons: this.product.max_persons,
     };
 
-    this.Settings
-      .updateMailtext(this.current_company_id, this.form_data.id, data)
+    this.ProductService.update(this.current_company_id, data, this.product.id)
       .then(() => {
+        this.errors = [];
         this.is_submitting = false;
         this.$rootScope.show_spinner = false;
-        this.closeModal();
-      }, () => {
+      }, (error) => {
+        this.errors = error.data.errors.errors;
         this.is_submitting = false;
         this.$rootScope.show_spinner = false;
       });
-
-    return true;
   }
 
   closeModal() {
-    this.$modalInstance.dismiss('cancel');
+    this.$modalInstance.close();
   }
 }

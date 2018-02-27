@@ -68,6 +68,18 @@ export default class Settings {
     }).then(result => result.data);
   }
 
+  getProductsLimitsSettings(companyId, productId, skipJwtAuth) {
+    if (!companyId || !productId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/settings/products/${productId}/limits`,
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
+    }).then(result => result.data);
+  }
+
   getPluginsSettings(companyId, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
@@ -151,6 +163,19 @@ export default class Settings {
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/settings/minimum_seats_free/save`,
+      skipAuthorization: skipJwtAuth,
+      method: 'POST',
+      data,
+    }).then(result => result.data);
+  }
+
+  saveProductsLimitsSettings(companyId, productId, data, skipJwtAuth) {
+    if (!companyId || !productId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/settings/products/${productId}/limits/save`,
       skipAuthorization: skipJwtAuth,
       method: 'POST',
       data,
