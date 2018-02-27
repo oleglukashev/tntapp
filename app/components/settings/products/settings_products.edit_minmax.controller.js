@@ -1,5 +1,5 @@
 export default class SettingsProductsEditMinMaxCtrl {
-  constructor(User, Product, product, $modalInstance) {
+  constructor(User, Product, product, $modalInstance, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -7,9 +7,17 @@ export default class SettingsProductsEditMinMaxCtrl {
     this.ProductService = Product;
     this.product = product;
     this.$modalInstance = $modalInstance;
+    this.$rootScope = $rootScope;
   }
 
-  submitForm() {
+  submitForm(isValid) {
+    if (!isValid) {
+      return false;
+    }
+
+    this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
+
     const data = {
       min_persons: this.product.min_persons,
       max_persons: this.product.max_persons,
@@ -18,8 +26,12 @@ export default class SettingsProductsEditMinMaxCtrl {
     this.ProductService.update(this.current_company_id, data, this.product.id)
       .then(() => {
         this.errors = [];
+        this.is_submitting = false;
+        this.$rootScope.show_spinner = false;
       }, (error) => {
         this.errors = error.data.errors.errors;
+        this.is_submitting = false;
+        this.$rootScope.show_spinner = false;
       });
   }
 

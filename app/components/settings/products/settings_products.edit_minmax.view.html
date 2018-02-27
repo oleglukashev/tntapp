@@ -10,7 +10,7 @@
     </div>
   </md-toolbar>
   <md-content>
-    <form ng-submit='product_minmax.submitForm()'>
+    <form name='edit_min_max_form' ng-submit='product_minmax.submitForm(edit_min_max_form.$valid)'>
       <div class='md-content-submit' flex>
         <div class='wrapper md-content-submit'
              layout='column'
@@ -21,7 +21,6 @@
               <input type='number'
                      min='0'
                      ng-model='product_minmax.product.min_persons'
-                     ng-change='product_minmax.submitForm()'
                      ng-required='true' />
             </md-input-container>
             <md-input-container class='md-block'>
@@ -29,19 +28,23 @@
               <input type='number'
                      min='0'
                      ng-model='product_minmax.product.max_persons'
-                     ng-change='product_minmax.submitForm()'
                      ng-required='false' />
             </md-input-container>
           </div>
         </div>
         <div class='wrapper red-300 layout-align-space-around-center layout-column'
              ng-show='product_minmax.errors.length'>
-            <div class='w-xl'>
-              <div ng-repeat='error in product_minmax.errors'>
-                {{ error }}
-              </div>
+          <div class='w-xl'>
+            <div ng-repeat='error in product_minmax.errors'>
+              {{ error }}
             </div>
           </div>
+        </div>
+        <button type='submit'
+                ng-class="{ 'disabled': !edit_min_max_form.$valid || product_minmax.is_submitting }"
+                class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
+        <span>OPSLAAN</span>
+      </button>
       </div>
     </form>
   </md-content>

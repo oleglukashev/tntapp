@@ -17,7 +17,7 @@ export default class SettingsMailsEditMailCtrl {
     }
 
     this.is_submitting = true;
-    this.$rootScope.is_loaded = false;
+    this.$rootScope.show_spinner = true;
 
     const data = {
       title: this.form_data.title,
@@ -28,11 +28,11 @@ export default class SettingsMailsEditMailCtrl {
       .updateMailtext(this.current_company_id, this.form_data.id, data)
       .then(() => {
         this.is_submitting = false;
-        this.$rootScope.is_loaded = true;
+        this.$rootScope.show_spinner = false;
         this.closeModal();
       }, () => {
         this.is_submitting = false;
-        this.$rootScope.is_loaded = true;
+        this.$rootScope.show_spinner = false;
       });
 
     return true;
