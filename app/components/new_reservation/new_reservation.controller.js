@@ -72,6 +72,10 @@ export default class NewReservationCtrl {
     this.walk_in = Object.assign({}, this.reservation);
     this.walk_in_part = this.walk_in.reservation_parts[0];
 
+    // default walk in reservation value
+    if (!this.walk_in_part.number_of_persons)
+      this.walk_in_part.number_of_persons = 2;
+
     this.is_success = false;
     this.is_submitting = false;
 
