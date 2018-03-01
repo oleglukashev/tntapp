@@ -1,11 +1,11 @@
 <div class='panel'>
-  <div class='panel-heading'>Mails</div>
+  <div class='panel-heading' translate='mails'></div>
   <form ng-show='mails_settings.is_loaded'>
 	  <div class='md-list'>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Aanvraagbevestiging</h3>
-		  		<small class='text-muted'>Aanvraagbevestiging aan de restauranteigenaar sturen</small>
+		  		<h3 class='no-margin text-md' translate='settings.mails.request_confirm'></h3>
+		  		<small class='text-muted' translate='settings.mails.request_confirm_description'></small>
 	  		</div>
 	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
@@ -16,8 +16,8 @@
 	  	</div>
 	  	<div class='md-list-item clear'>
 	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md'>Reserveringsbevestiging</h3>
-		  		<small class='text-muted'>Reserveringsbevestiging aan de restauranteigenaar sturen</small>
+		  		<h3 class='no-margin text-md' translate='settings.mails.reserv_confirm'></h3>
+		  		<small class='text-muted' translate='settings.mails.reserv_confirm_description'></small>
 	  		</div>
 	  		<div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
@@ -28,8 +28,8 @@
 	  	</div>
       <div class='md-list-item clear'>
         <div class='pull-left'>
-          <h3 class='no-margin text-md'>Mail na bezoek</h3>
-          <small class='text-muted'>Geef aan hoeveel uur na het bezoek je een mail wil versturen</small>
+          <h3 class='no-margin text-md' translate='settings.mails.reserv_confirm'></h3>
+          <small class='text-muted' translate='settings.mails.reserv_confirm_description'></small>
         </div>
         <div class='pull-right m-r-n-xs'>
           <div class='md-form-group no-padder'>
@@ -40,7 +40,7 @@
       </div>
       <div class='md-list-item clear'>
         <div class='pull-left m-t-sm'>
-          <h3 class='no-margin text-md'>Mail X uren na bezoek versturen</h3>
+          <h3 class='no-margin text-md' translate='settings.mails.send_mail_after_visit_in'></h3>
         </div>
         <div class='pull-right'>
           <md-input-container class='w-3x no-margin'>
@@ -61,49 +61,49 @@
 
 <div class='panel blue-50' ng-show='mails_settings.is_loaded'>
   <div class='panel-body'>
-    <p>De volgende placeholders kunnen worden gebruikt:</p>
+    <p translate='settings.mails.following_placeholders'></p>
     <ul>
-      <li>%OPMERKINGEN%</li>
-      <li>%STATUS%</li>
-      <li>%BEDRIJFSNAAM%</li>
-      <li>%AANTAL_PERSONEN%</li>
-      <li>%TIJDSTIP%</li>
-      <li>%VOORNAAM%</li>
-      <li>%ACHTERNAAM%</li>
-      <li>%PRIMAIR_NUMMER%</li>
-      <li>%SECUNDAIR_NUMMER%</li>
-      <li>%STRAAT%</li>
-      <li>%HUISNUMMER%</li>
-      <li>%POSTCODE%</li>
-      <li>%PLAATS%</li>
-      <li>%MAIL%</li>
-      <li>%GEBOORTEDATUM%</li>
-      <li>%GESLACHT%</li>
-      <li>%RESTAURANTNAAM%</li>
-      <li>%PRODUCT%</li>
-      <li>%EINDTIJD%</li>
-      <li>%STARTTIJD%</li>
-      <li>%DATUM%</li>
-      <li>%ICAL_LINK%</li>
-      <li>%GOOGLE_CAL_LINK%</li>
-      <li>%TNRLINK%</li>
+      <li translate='settings.mails.placeholders.notes'></li>
+      <li translate='settings.mails.placeholders.status'></li>
+      <li translate='settings.mails.placeholders.company_name'></li>
+      <li translate='settings.mails.placeholders.number_of_guests'></li>
+      <li translate='settings.mails.placeholders.time'></li>
+      <li translate='settings.mails.placeholders.first_name'></li>
+      <li translate='settings.mails.placeholders.last_name'></li>
+      <li translate='settings.mails.placeholders.primary_phone'></li>
+      <li translate='settings.mails.placeholders.second_phone'></li>
+      <li translate='settings.mails.placeholders.street'></li>
+      <li translate='settings.mails.placeholders.house_number'></li>
+      <li translate='settings.mails.placeholders.zipcode'></li>
+      <li translate='settings.mails.placeholders.city'></li>
+      <li translate='settings.mails.placeholders.mail'></li>
+      <li translate='settings.mails.placeholders.date_of_birth'></li>
+      <li translate='settings.mails.placeholders.gender'></li>
+      <li translate='settings.mails.placeholders.restaurant_name'></li>
+      <li translate='settings.mails.placeholders.product'></li>
+      <li translate='settings.mails.placeholders.end_time'></li>
+      <li translate='settings.mails.placeholders.start_time'></li>
+      <li translate='settings.mails.placeholders.date'></li>
+      <li translate='settings.mails.placeholders.ical_link'></li>
+      <li translate='settings.mails.placeholders.google_cal_link'></li>
+      <li translate='settings.mails.placeholders.tnr_link'></li>
     </ul>
   </div>
 </div>
 
 <div class='panel'>
-  <div class='panel-heading'>Nederlandse mails</div>
+  <div class='panel-heading' translate='settings.mails.netherlands'></div>
   <div class='md-list' ng-show='mails_settings.is_loaded'>
     <div class='md-list-item no-padder'>
       <table class='table'>
         <thead>
-          <th>Type</th>
-          <th>Titel</th>
+          <th translate='type'></th>
+          <th translate='title'></th>
           <th></th>
         </thead>
         <tbody>
           <tr ng-repeat="mail in mails_settings.mails_texts_settings | filter:{ language: 'NL' }">
-            <td class='v-middle'>{{ mails_settings.statuses[mail.type] }}</td>
+            <td class='v-middle'>{{ 'settings.mails.statuses.' + mail.type | translate }}</td>
             <td class='v-middle'>{{ mail.title }}</td>
             <td class='v-middle text-right'>
               <md-menu>
@@ -118,7 +118,9 @@
                 </button>
                 <md-menu-content>
                   <md-menu-item>
-                    <md-button ng-click='mails_settings.editMail(mail.id)'>Mail bewerken</md-button>
+                    <md-button ng-click='mails_settings.editMail(mail.id)'>
+                      {{ 'settings.mails.edit' | translate }}
+                    </md-button>
                   </md-menu-item>
                 </md-menu-content>
               </md-menu>
@@ -131,18 +133,18 @@
 </div>
 
 <div class='panel'>
-  <div class='panel-heading'>Engelse mails</div>
+  <div class='panel-heading' translate='settings.mails.english'></div>
   <div class='md-list' ng-show='mails_settings.is_loaded'>
     <div class='md-list-item no-padder'>
       <table class='table'>
         <thead>
-          <th>Type</th>
-          <th>Titel</th>
+          <th translate='type'></th>
+          <th translate='title'></th>
           <th></th>
         </thead>
         <tbody>
           <tr ng-repeat="mail in mails_settings.mails_texts_settings | filter:{ language: 'EN' }">
-            <td class='v-middle'>{{ mails_settings.statuses[mail.type] }}</td>
+            <td class='v-middle'>{{ 'settings.mails.statuses.' + mail.type | translate }}</td>
             <td class='v-middle'>{{ mail.title }}</td>
             <td class='v-middle text-right'>
               <md-menu>
@@ -157,7 +159,9 @@
                 </button>
                 <md-menu-content>
                   <md-menu-item>
-                    <md-button ng-click='mails_settings.editMail(mail.id)'>Mail bewerken</md-button>
+                    <md-button ng-click='mails_settings.editMail(mail.id)'>
+                      {{ 'settings.mails.edit' | translate }}
+                    </md-button>
                   </md-menu-item>
                 </md-menu-content>
               </md-menu>

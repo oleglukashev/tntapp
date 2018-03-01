@@ -1,6 +1,6 @@
 <md-tab>
   <md-tab-label>
-    <div class='text-center l-h'>Voorkeuren</div>
+    <div class='text-center l-h' translate='preferences'></div>
   </md-tab-label>
   <md-tab-body>
     <div class='md-content-submit'>
@@ -21,12 +21,12 @@
           <form name='user_preferences_form'>
             <div class='wrapper'>
               <md-input-container class='md-block'>
-                <label>Voorkeur</label>
+                <label translate='preference'></label>
                 <input required ng-model='controller.preference.name' />
               </md-input-container>
 
               <md-input-container class='md-block'>
-                <label>Omschrijving</label>
+                <label translate='description'></label>
                 <input required ng-model='controller.preference.value' />
               </md-input-container>
 
@@ -36,10 +36,10 @@
         </div>
       </div>
       <button type='submit'
-            ng-class="{ 'disabled': !user_preferences_form.$valid || controller.preferences_is_submitting }"
-            ng-click='controller.submitPreferenceForm(user_preferences_form)'
-            class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
-        OPSLAAN
+              ng-class="{ 'disabled': !user_preferences_form.$valid || controller.preferences_is_submitting }"
+              ng-click='controller.submitPreferenceForm(user_preferences_form)'
+              class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
+        <translate>save</translate>
       </button>
     </div>
   </md-tab-body>

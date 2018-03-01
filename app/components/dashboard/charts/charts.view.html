@@ -1,24 +1,23 @@
 <div class='col-lg-4 col-md-4 col-sm-6'>
   <div class='dashboard-reservation panel'>
-    <div class='panel-heading'>
-      Reserveringen
-    </div>
+    <div class='panel-heading' translate='reservations'></div>
     <div class='panel-body relative'>
-        <div class='col-xs-6 text-center m-t-sm' ng-repeat='(productId, guests) in charts.charts.graphs.guests_by_product'>
+        <div class='col-xs-6 text-center m-t-sm'
+             ng-repeat='(productId, guests) in charts.charts.graphs.guests_by_product'>
           <div class='dashboard-reservation__chart'>
             <div ng-click='charts.showReservations(productId)'
                  ui-jq='easyPieChart'
                  ui-options='{
-                      percent: charts.charts.getPercent(charts.charts.graphs.guests_by_product[0],
-                      charts.charts.graphs.guests_by_product[productId]),
-                      lineWidth: 2,
-                      trackColor: "#787878",
-                      barColor: "#f6f6f6",
-                      scaleColor: false,
-                      size: 84,
-                      rotate: 90,
-                      lineCap: "butt"
-                    }'>
+                    percent: charts.charts.getPercent(charts.charts.graphs.guests_by_product[0],
+                    charts.charts.graphs.guests_by_product[productId]),
+                    lineWidth: 2,
+                    trackColor: "#787878",
+                    barColor: "#f6f6f6",
+                    scaleColor: false,
+                    size: 84,
+                    rotate: 90,
+                    lineCap: "butt"
+                 }'>
               <div>
                 <span>{{ guests }}</span>
               </div>
@@ -33,14 +32,14 @@
   </div>
 
   <div class='panel'>
-    <div class='panel-heading'>Vaste gast</div>
+    <div class='panel-heading' translate='dashboard.regular_guests'></div>
     <div class='panel-body no-padder'>
       <table class='table m-b-none'>
         <thead>
           <tr>
-              <th width='40%'>Naam</th>
+              <th width='40%' translate='name'></th>
               <th>TheNextReview</th>
-              <th>Aantal bezoeken</th>
+              <th translate='number_of_visits'></th>
           </tr>
         </thead>
         <tbody>
@@ -55,24 +54,24 @@
   </div>
 
   <div class='panel'>
-    <div class='panel-heading'>Speciale voorkeuren gasten vandaag</div>
+    <div class='panel-heading' translate='dashboard.special_requests'></div>
     <div class='panel-body no-padder'>
       <table class='table m-b-none'>
         <thead>
           <tr>
-              <th width='60%'>Naam</th>
-              <th>Bijzonderheden</th>
+              <th width='60%' translate='name'></th>
+              <th translate='dashboard.particularities'></th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat='item in charts.guests_with_allergies'>
             <td>{{ item.last_name }}  {{ item.first_name }}</td>
             <td>
-              <p ng-if='item.allergies.length'><small class='font-thin'>Allergiën</small></p>
+              <p ng-if='item.allergies.length'><small class='font-thin' translate='allergies'></small></p>
               <p ng-repeat='allergy in item.allergies' ng-bind='allergy'></p>
-              <p ng-if='item.notes.length'><small class='font-thin'>Opmerkingen</small></p>
+              <p ng-if='item.notes.length'><small class='font-thin' translate='notes'></small></p>
               <p ng-repeat='note in item.notes' ng-bind='note'></p>
-              <p ng-if='item.preferences.length'><small class='font-thin'>Voorkeuren</small></p>
+              <p ng-if='item.preferences.length'><small class='font-thin' translate='preferences'></small></p>
               <p ng-repeat='preference in item.preferences'>{{ preference[0] }}: {{ preference[1] }}</p>
             </td>
           </tr>
@@ -82,11 +81,9 @@
   </div>
 
   <div class='dashboard-reservation panel deze-week' resize>
-    <div class='panel-heading'>
-      Deze week
-    </div>
+    <div class='panel-heading' translate='this_week'></div>
     <div class='panel-body'>
-      <div ng-if="charts.charts.graphs.day_guests_arr" ui-jq="plot" ui-options="
+      <div ng-if='charts.charts.graphs.day_guests_arr' ui-jq='plot' ui-options="
         [
           {
             data: {{ charts.charts.graphs.day_guests_arr}},
@@ -113,16 +110,16 @@
 
     <div class='panel-footer table-wrapper'>
       <div class='year-panel'>
-        <div class="bottom_total_title">Totaal</div>
-        <div class="bottom_total_count">{{ charts.charts.graphs.total_guests_y }}</div>
+        <div class='bottom_total_title' translate='total'></div>
+        <div class='bottom_total_count'>{{ charts.charts.graphs.total_guests_y }}</div>
       </div>
       <div class='month-panel'>
-        <div class="bottom_total_title">Maand</div>
-        <div class="bottom_total_count">{{ charts.charts.graphs.total_guests_m }}</div>
+        <div class='bottom_total_title' translate='month'></div>
+        <div class='bottom_total_count'>{{ charts.charts.graphs.total_guests_m }}</div>
       </div>
       <div class='week-panel'>
-        <div class="bottom_total_title">Week</div>
-        <div class="bottom_total_count">{{ charts.charts.graphs.total_guests_w }}</div>
+        <div class='bottom_total_title' translate='week'></div>
+        <div class='bottom_total_count'>{{ charts.charts.graphs.total_guests_w }}</div>
       </div>
     </div>
   </div>

@@ -5,7 +5,7 @@
         <i class='mdi mdi-arrow-left m-r-sm'
            ng-click='page_filter_time_ranges.setStateToList();'
            ng-show='page_filter_time_ranges.state === "form"'></i>
-        {{ page_filter_time_ranges.title }}
+        <translate translate='filter_settings.{{ page_filter_time_ranges.type }}'></translate>
       </h2>
       <md-button md-no-ink class="md-icon-button" ng-click='page_filter_time_ranges.closeModal();'>
         <i class='mdi mdi-close m-r-sm i-24'></i>
@@ -15,28 +15,29 @@
   <md-content>
     <div class='md-content-view' ng-class='page_filter_time_ranges.state === "list" ? "show" : "transparent"'>
       <div class='wrapper'>
-        <p ng-if='page_filter_time_ranges.type == "overbooking"'>Met overboeken kun je zorgen dat er meer personen toegelaten<br />
-        worden tot je zaak dan er aan tafels beschikbaar is. Kies hieronder<br />
-        je tijdsperiodes waarin je dit wil doen.</p>
-        <p ng-if='page_filter_time_ranges.type == "product"'>Stel hier je openingstijden in voor de zones en producten per dag. Wil je de openingstijden veranderen voor altijd doe dat dan via je instellingen.</p>
-        <p ng-if='page_filter_time_ranges.type == "zone"'>Stel hier je openingstijden in voor de zones en zone per dag.</p>
+        <p ng-if='page_filter_time_ranges.type == "overbooking"'
+           translate='filter_time_ranges.overbooking_title'></p>
+        <p ng-if='page_filter_time_ranges.type == "product"'
+           translate='filter_time_ranges.product_title'></p>
+        <p ng-if='page_filter_time_ranges.type == "zone"'
+           translate='filter_time_ranges.zone_title'></p>
       </div>
       <table class='table no-margin' ng-show='page_filter_time_ranges.is_loaded'>
         <thead>
-          <th>Type</th>
-          <th>Waarde</th>
-          <th ng-if='page_filter_time_ranges.type == "product"'>Product</th>
-          <th ng-if='page_filter_time_ranges.type == "zone"'>Zone</th>
-          <th>Starttijd</th>
-          <th>Eindttijd</th>
-          <th>Hele dag?</th>
+          <th translate='type'></th>
+          <th translate='value'></th>
+          <th ng-if='page_filter_time_ranges.type == "product"' translate='product'></th>
+          <th ng-if='page_filter_time_ranges.type == "zone"' translate='zone'></th>
+          <th translate='start_time'></th>
+          <th translate='end_time'></th>
+          <th>{{ "whole_day" | translate }}?</th>
           <th></th>
         </thead>
         <tbody>
           <tr ng-repeat='time_range in page_filter_time_ranges.time_ranges'>
             <td class='v-middle'>{{ time_range.type }}</td>
-            <td ng-if='["open", "product", "zone"].includes(page_filter_time_ranges.type)' class='v-middle'>{{ time_range.value ? 'Geopend' : 'Gesloten' }}</td>
-            <td ng-if='page_filter_time_ranges.type == "overbooking"' class='v-middle'>{{ time_range.value ? 'Overboeken' : 'Niet overboeken' }}</td>
+            <td ng-if='["open", "product", "zone"].includes(page_filter_time_ranges.type)' class='v-middle'>{{ time_range.value ? 'opened' : 'closed' | translate }}</td>
+            <td ng-if='page_filter_time_ranges.type == "overbooking"' class='v-middle'>{{ time_range.value ? 'overbooking' : 'not_overbooking' | translate }}</td>
             <td class='v-middle'
                 ng-if='page_filter_time_ranges.type == "product"'
                 ng-bind='page_filter_time_ranges.getProductsName(time_range)'></td>
@@ -45,7 +46,7 @@
                 ng-bind='page_filter_time_ranges.getZoneName(time_range.zone.id)'></td>
             <td class='v-middle'>{{ time_range.start_time }}</td>
             <td class='v-middle'>{{ time_range.end_time }}</td>
-            <td class='v-middle'>{{ time_range.whole_day ? 'Hele dag' : '-' }}</td>
+            <td class='v-middle'>{{ time_range.whole_day ? 'yes' : 'no' | translate }}</td>
             <td class='v-middle text-right'>
               <button md-ink-ripple
                       class='md-btn md-fab no-shadow'
@@ -66,7 +67,7 @@
                 class='md-btn md-flat btn-fw text-success'
                 ng-click='page_filter_time_ranges.add();'>
           <i class='mdi mdi-plus-circle-outline'></i>
-          NIEUWE REGEL
+          <translate>filter_time_ranges.new_rule</translate>
         </button>
       </div>
     </div>
@@ -77,7 +78,7 @@
         <div class='wrapper' layout='column' layout-align='space-around center'>
           <div class='w-xl m-b-sm'>
             <md-datepicker ng-model='page_filter_time_ranges.form_data.fixed_date'></md-datepicker>
-            <p class='no-margin'>Stel hier tijden in om de openingtijden te veranderen (de default vaarde zijn de openingstijden die het product of zone nu neeft.)</p>
+            <p class='m-b-none m-t-sm' translate='filter_time_ranges.change'></p>
           </div>
           <rzslider rz-slider-model="page_filter_time_ranges.slider.minValue"
                     rz-slider-high="page_filter_time_ranges.slider.maxValue"
@@ -88,9 +89,9 @@
 
               <div class='md-form-group no-padder'>
                 <md-checkbox ng-model='page_filter_time_ranges.form_data.multiple'
-                             aria-label='Meerdere producten selecteren?'
+                             aria-label='{{ "filter_time_ranges.multiproduct" | translate }}'
                              ng-disabled='page_filter_time_ranges.form_data.id'>
-                  Meerdere producten selecteren?
+                  {{ "filter_time_ranges.multiproduct" | translate }}
                 </md-checkbox>
               </div>
               <md-input-container ng-if='!page_filter_time_ranges.form_data.multiple'>
@@ -129,22 +130,24 @@
               </md-input-container>
             </div>
             <div class='md-form-group no-padder'>
-              <md-checkbox ng-model='page_filter_time_ranges.form_data.value' aria-label='{{ page_filter_time_ranges.value_label }}'>
-                {{ page_filter_time_ranges.value_label }}
+              <md-checkbox ng-model='page_filter_time_ranges.form_data.value'
+                           aria-label='{{ page_filter_time_ranges.value_label | translate }}'>
+                {{ page_filter_time_ranges.value_label | translate }}
               </md-checkbox>
             </div>
             <div class='md-form-group no-padder'>
               <md-checkbox ng-model='page_filter_time_ranges.form_data.whole_day'
                            ng-change='page_filter_time_ranges.slider.options.disabled = page_filter_time_ranges.form_data.whole_day'
-                           aria-label='Hele dag?'>
-                Hele dag?
+                           aria-label='{{ "whole_day" | translate }}?'>
+                {{ "whole_day" | translate }}?
               </md-checkbox>
             </div>
 
-            <div class='b-a wrapper-sm rounded-sm m-t-sm'>Door deze verandering kunnen eerder geplaatste reserveringen buiten de openingtijden terecht komen</div>
-            <p ng-if='page_filter_time_ranges.form_data.id'
-               class='m-t-md'>
-              <span class='text-danger' ng-click='page_filter_time_ranges.destoyWithConfirm();'>TIJDSZONE VERWIJDEREN</span>
+            <div class='m-t-sm' translate='filter_time_ranges.time_notify'></div>
+            <p ng-if='page_filter_time_ranges.form_data.id' class='m-t-md'>
+              <span class='text-danger uppercase'
+                    ng-click='page_filter_time_ranges.destoyWithConfirm();'
+                    translate='filter_time_ranges.remove_time_zone'></span>
             </p>
           </div>
         </div>
@@ -152,7 +155,7 @@
         <button type='submit'
                 class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
                 ng-class="{ 'disabled': !page_filter_time_ranges_form.$valid || page_filter_time_ranges.is_submitting }">
-          <span>OPSLAAN</span>
+          <translate>save</translate>
         </button>
       </form>
     </div>

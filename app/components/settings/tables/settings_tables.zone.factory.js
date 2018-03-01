@@ -1,4 +1,4 @@
-export default function SettingsTablesZoneFactory(AppConstants) {
+export default function SettingsTablesZoneFactory(AppConstants, $translate) {
   'ngInject';
 
   return (that) => {
@@ -27,8 +27,20 @@ export default function SettingsTablesZoneFactory(AppConstants) {
       return zones;
     };
 
-    const loadedZones = instance.zonesHash();
-    if (loadedZones) instance.iconsClasses = $.extend(loadedZones, instance.iconsClasses);
-    instance.uniq_icons = [...new Set(Object.values(instance.iconsClasses))];
+    // run translates
+    $translate(Object.keys(instance.iconsClasses).map(item => `zones_examples.${item}`))
+      .then((translates) => {
+        const classes = {};
+        classes[translates['zones_examples.bar']] = instance.iconsClasses.bar;
+        classes[translates['zones_examples.lounge']] = instance.iconsClasses.lounge;
+        classes[translates['zones_examples.meeting_room']] = instance.iconsClasses.meeting_room;
+        classes[translates['zones_examples.restaurant']] = instance.iconsClasses.restaurant;
+        classes[translates['zones_examples.terrace']] = instance.iconsClasses.terrace;
+        classes[translates['zones_examples.hall']] = instance.iconsClasses.hall;
+        instance.iconsClasses = classes;
+        const loadedZones = instance.zonesHash();
+        if (loadedZones) instance.iconsClasses = $.extend(loadedZones, instance.iconsClasses);
+        instance.uniq_icons = [...new Set(Object.values(instance.iconsClasses))];
+      });
   };
 }

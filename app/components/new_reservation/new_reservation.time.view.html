@@ -3,14 +3,14 @@
     <div class='text-center l-h'><i class='mdi mdi-clock'></i></div>
     <div class='text-center l-h'>
       <span ng-show='reserv.current_part.time'>{{ reserv.current_part.time }}</span>
-      <span ng-hide='reserv.current_part.time'>TIJDSTIP</span>
+      <span ng-hide='reserv.current_part.time' class='uppercase' translate='time'></span>
     </div>
   </md-tab-label>
   <md-tab-body>
     <div class='b-t' flex>
       <div class='md-list-item'>
         <div class='md-list-item-content text-center'>
-          <h4>Beschikbare tijden</h4>
+          <h4 translate='reservation.time_title'></h4>
           <div ng-show='reserv.disabledTimes().length'>
             <i class="mdi mdi-checkbox-blank-circle i-16 red-color-200"></i>
             –
@@ -23,7 +23,7 @@
         <div class='w-xl'>
           <div ng-repeat='item in ["date", "number_of_persons", "product"]'
                ng-show='!reserv.current_part[item]'>
-            {{ item.split('_').join(' ') }} is verplicht
+            {{ item.split('_').join(' ') }} {{ 'notifications.is_required' | translate }}
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 export default class AgendaChartsCtrl {
-  constructor(Charts, moment, $scope, $state, ReservationPart) {
+  constructor(Charts, moment, $scope, $state, ReservationPart, $translate) {
     'ngInject';
 
     this.$scope = $scope;
@@ -7,6 +7,7 @@ export default class AgendaChartsCtrl {
     this.moment = moment;
     this.Charts = Charts;
     this.ReservationPart = ReservationPart;
+    this.total_label = 'Total';
 
     this.$scope.$on('agenda.load_reservations_data_and_date_filter', (e, data) => {
       this.data = {
@@ -30,8 +31,15 @@ export default class AgendaChartsCtrl {
 
       this.data.product[0] = {
         numberOfPersons: this.data.totalNumberOfPersons,
-        name: 'Totaal',
+        name: this.total_label,
       };
+    });
+
+    // run translates
+    $translate('total').then((total) => {
+      this.total_label = total;
+    }, (translationIds) => {
+      this.total_label = translationIds;
     });
   }
 

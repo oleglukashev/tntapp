@@ -3,7 +3,7 @@
   <md-select class='pull-left'
              ng-change='controller.changeSortPostProcess()'
              ng-model='controller.sort'>
-    <md-optgroup label='Filter de reservering'>
+    <md-optgroup label='{{ "sort.title" | translate }}'>
       <md-option ng-value='item'
                  ng-repeat='item in controller.sort_params'>
         {{ item.name }}

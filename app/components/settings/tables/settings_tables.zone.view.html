@@ -1,7 +1,7 @@
 <section class='no-margin'>
   <md-toolbar>
     <div class='md-toolbar-tools'>
-      <h2 md-truncate flex>Zone</h2>
+      <h2 md-truncate flex translate='settings.zones.add'></h2>
       <md-button class="md-icon-button" ng-click='controller.closeModal();' md-no-ink>
         <i class='mdi mdi-close m-r-sm i-24'></i>
       </md-button>
@@ -11,7 +11,7 @@
     <div class='md-content-submit'>
       <div class='md-list-item'>
         <div class='md-list-item-content text-center'>
-          <h4>Wat voor soort zone wil je toevoegen?</h4>
+          <h4 translate='settings.zones.what_kind'></h4>
         </div>
       </div>
       <div class='clearfix'>
@@ -33,7 +33,7 @@
         <div class='md-form-group m-l-sm no-padder'>
           <md-checkbox ng-model="controller.item.use_in_frontoffice_availability"
                        aria-label='Gebruiken voor reserveringen via frontoffice'>
-            Gebruiken voor reserveringen via frontoffice
+            {{ 'settings.zones.use_for_reserv' | translate }}
           </md-checkbox>
         </div>
 
@@ -42,16 +42,16 @@
               class='md-btn md-flat btn-fw m-t-md m-l-xs text-success'
               ng-click='controller.add_name_is_opened = true;'>
           <i class='mdi mdi-plus-circle-outline'></i>
-          ZELF NAAM TOEVOEGEN
+          <translate class='uppercase'>{{ 'add_name' | translate }}</translate>
         </button>
 
         <md-input-container class='m-l-sm' ng-show='controller.add_name_is_opened'>
-          <label>ZELF NAAM TOEVOEGEN</label>
+          <label translate='add_name'></label>
           <input ng-model='controller.item.name' required />
         </md-input-container>
 
         <md-input-container ng-show="controller.add_name_is_opened" class="m-t-n-s">
-          <label>ICON</label>
+          <label translate='icon'></label>
           <md-select ng-model="controller.item.icon_class" required>
             <md-option ng-repeat="icon_class in controller.uniq_icons" ng-value="icon_class">
               <i class="mdi {{ icon_class }} i-24"></i>
@@ -63,8 +63,8 @@
 
       <button class='btn btn-lg btn-success text-success no-top-radius md-content-button'
               ng-class="{ 'disabled': !new_zone_form.$valid || controller.is_submitting }"
-              ng-click='controller.submitForm();'>
-        <span>OPSLAAN</span>
+              ng-click='controller.submitForm();'
+              translate='save'>
       </button>
     </div>
   </md-content>

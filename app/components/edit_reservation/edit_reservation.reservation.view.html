@@ -1,6 +1,6 @@
 <md-tab>
   <md-tab-label>
-    <div class='text-center l-h'>RESERVERING</div>
+    <div class='text-center l-h uppercase' translate='reserv'></div>
   </md-tab-label>
   <md-tab-body>
     <form ng-submit='reserv.submitReservationForm()'>
@@ -8,12 +8,12 @@
         <div class='wrapper' layout='column' layout-align='space-around center'>
           <div class='w-xl'>
             <md-input-container class='md-block'>
-              <label>Datum</label>
+              <label translate='date'></label>
               <md-datepicker ng-model='reserv.current_part.date'
                              ng-change='reserv.changeDatePostProcess()'></md-datepicker>
             </md-input-container>
             <md-input-container class='md-block'>
-              <label>Aantal personen</label>
+              <label translate='number_of_guests'></label>
               <md-icon><i class='mdi mdi-account-multiple i-20' /></md-icon>
               <input type='number'
                      ng-model='reserv.current_part.number_of_persons'
@@ -21,7 +21,7 @@
                      ng-required='false' />
             </md-input-container>
             <md-input-container class='md-block'>
-              <label>Product</label>
+              <label translate='product'></label>
               <md-icon><i class='mdi mdi-silverware-variant i-20' /></md-icon>
               <md-select ng-change='reserv.changeProductPostProcess()'
                          ng-model='reserv.current_part.product'>
@@ -32,7 +32,7 @@
               <div class='md-errors-spacer'></div>
             </md-input-container>
             <md-input-container class='md-block'>
-              <label>Tijdstip</label>
+              <label translate='time'></label>
               <md-icon><i class='mdi mdi-clock i-20' /></md-icon>
               <md-select ng-change='reserv.changeTimePostProcess()'
                          ng-disabled='!reserv.canLoadTime()'
@@ -43,13 +43,13 @@
               </md-select>
               <div ng-show='reserv.disabledTimes().length'>
                 <i class="mdi mdi-checkbox-blank-circle i-16 red-color-200"></i>
-                – Niet genoeg plaatsen beschikbaar
+                – <translate>reservation.not_enough_seats</translate>
               </div>
               <div class='md-errors-spacer'>
               </div>
             </md-input-container>
             <md-input-container class='md-block'>
-              <label>Tafel</label>
+              <label translate='table'></label>
               <md-icon><i class='mdi mdi-border-horizontal i-20' /></md-icon>
               <md-select multiple
                          ng-change='reserv.changeFilterPostProcess()'
@@ -58,30 +58,23 @@
                 <md-optgroup ng-repeat='zone in reserv.zones' label='{{ zone.name }}'>
                   <md-option ng-value='table_id' ng-repeat='table_id in zone.table_ids'
                              ng-disabled='reserv.isDisabledTableByTableId(table_id)'>
-                    Tafel {{ reserv.Reservation.getTableNumberByTableId(reserv.tables, table_id) }} - {{ reserv.Reservation.getPersonCountByTableId(reserv.tables, table_id) }} personen
+                    {{ 'table' | translate }} {{ reserv.Reservation.getTableNumberByTableId(reserv.tables, table_id) }} - {{ reserv.Reservation.getPersonCountByTableId(reserv.tables, table_id) }} <trasnalte class='lowercase'>persons</trasnalte>
                   </md-option>
                 </md-optgroup>
               </md-select>
               <div class='md-errors-spacer'></div>
             </md-input-container>
             <md-input-container class='md-block'>
-              <label>Opmerking</label>
+              <label translate='note'></label>
               <md-icon><i class='mdi mdi-message-text i-20' /></md-icon>
               <textarea ng-model='reserv.current_part.notes' ng-required='false'></textarea>
             </md-input-container>
-            <div class='md-form-group no-padder m-b-sm'>
-              <md-checkbox ng-model='reserv.reservation.is_group'
-                           ng-change='reserv.changeIsGroupPostProcess()'
-                           aria-label='Group?'>
-                Group?
-              </md-checkbox>
-            </div>
             <div ng-show='reserv.reservation.reservation_pdf'>
               <label class='btn btn-default block m-b-xs no-shadow text-success text-left'
                      ng-click='reserv.loadPDF();'>
                 <span class='m-r-sm'>
                   <i class='mdi mdi-pdf'></i>
-                  PDF for reservation
+                  <translate>reservation.pdf</translate>
                 </span>
                 <div class='pull-right'>
                   <i class='mdi mdi-delete' ng-click='reserv.removePdf($event);'></i>
@@ -95,7 +88,15 @@
                     ngf-drop=''
                     ngf-pattern="'.pdf'"
                     accept='application/pdf'
-                    ng-model='reserv.reservation.reservation_pdf'>PDF UPLOADEN...</button>
+                    ng-model='reserv.reservation.reservation_pdf'
+                    translate='reservation.pdf_upload'></button>
+            <div class='md-form-group no-padder m-b-sm'>
+              <md-checkbox ng-model='reserv.reservation.is_group'
+                           ng-change='reserv.changeIsGroupPostProcess()'
+                           aria-label='{{ "reservation.group" | translate }}?'>
+                {{ 'reservation.group' | translate }}?
+              </md-checkbox>
+            </div>
             <div ng-show='reserv.reservation.is_group'>
               <label ng-repeat='part in reserv.reservation.reservation_parts'
                      class='btn btn-default block m-b-xs no-shadow text-success text-left'
@@ -125,7 +126,8 @@
               </label>
 
               <label ng-click='reserv.addPart()'
-                     class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>Add activiteit</label>
+                     class='btn btn-sm font-bold m-xs text-success no-shadow no-border'
+                     translate='reservation.add_activity'></label>
             </div>
           </div>
         </div>
@@ -140,7 +142,7 @@
         <button type='submit'
                 class='btn btn-lg btn-success w-full no-top-radius md-content-button'
                 ng-class="{ 'disabled': reserv.is_submitting }">
-          <span>OPSLAAN</span>
+          <translate>save</translate>
         </button>
       </div>
     </form>

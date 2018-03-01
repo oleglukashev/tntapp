@@ -5,7 +5,7 @@
         <img src='/public/images/logo@2x.png' />
       </div>
       <div>
-        <div class='text-muted wrapper text-center'>U moet een nieuw wachtwoord instellen. Samen met uw e-mail adres zijn dit uw logingegevens. Bewaar deze dus goed.</div>
+        <div class='text-muted wrapper text-center' translate='auth.activate_description'></div>
         <form ng-submit='auth.submitForm()'>
           <div class='text-default wrapper text-center bg-danger' ng-show='auth.errors'>
             <div ng-repeat='error in auth.errors'>
@@ -36,7 +36,7 @@
                     style='height: 42px;'
                     class='md-btn md-flat btn-fw btn-block m-t-md'
                     ng-class="{ 'disabled': auth.isSubmitting }">
-              <span>Doorgaan</span>
+              <span translate='next'></span>
             </button>
 
             <div class='text-center bold'>

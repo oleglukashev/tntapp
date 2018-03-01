@@ -1,7 +1,7 @@
 <md-tab>
   <md-tab-label>
     <div class='text-center l-h'><i class='mdi mdi-account'></i></div>
-    <div class='text-center l-h'>PERSOON</div>
+    <div class='text-center l-h' translate='persons'></div>
   </md-tab-label>
   <md-tab-body>
     <div class='md-content-submit reservation_person' flex>
@@ -14,48 +14,52 @@
 
           <div ng-if='!reserv.showAutocompleteCustomerName()'>
             <md-input-container class='md-block'>
-              <label>Achternaam</label>
+              <label translate='last_name'></label>
               <input ng-model='reserv.reservation.last_name' />
             </md-input-container>
             <md-input-container class='md-block'>
-              <label>Voornaam</label>
+              <label translate='first_name'></label>
               <input ng-model='reserv.reservation.first_name' />
             </md-input-container>
           </div>
 
           <md-input-container class='md-block'>
-            <label>E-mail</label>
+            <label translate='email'></label>
             <input type='string' ng-model='reserv.reservation.mail' />
           </md-input-container>
           <md-input-container class='md-block'>
-            <label>Telefoonnummer</label>
+            <label translate='phone'></label>
             <input ng-model='reserv.reservation.primary_phone_number' />
           </md-input-container>
           <md-input-container class='md-block'>
-            <label>Opmerking</label>
+            <label translate='note'></label>
             <input ng-model='reserv.reservation.notes' />
           </md-input-container>
           <div class='md-form-group no-padder'>
             <md-radio-group ng-model="reserv.reservation.language">
-              <md-radio-button value='NL' class='inline md-success'>Nederlands</md-radio-button>
-              <md-radio-button value='EN' class='inline md-success'>Engels</md-radio-button>
+              <md-radio-button value='NL' class='inline md-success'>
+                {{ 'language.netherlands' | translate }}
+              </md-radio-button>
+              <md-radio-button value='EN' class='inline md-success'>
+                {{ 'language.english' | translate }}
+              </md-radio-button>
             </md-radio-group>
           </div>
           <div class='md-form-group no-padder' ng-if='!reserv.is_customer_reservation'>
             <md-checkbox ng-model='reserv.reservation.send_confirmation'
                          ng-checked='true'
-                         aria-label='Bevestiging mailen'>
-              Bevestiging mailen
+                         aria-label='{{ "mail_confirmation" | translate }}'>
+              {{ 'mail_confirmation' | translate }}
             </md-checkbox>
           </div>
         </div>
         <div class='w-xl' ng-show='reserv.additional_is_opened'>
           <md-input-container class='md-block'>
-            <label>Secundair nummer</label>
+            <label translate='second_phone'></label>
             <input ng-model='reserv.reservation.secondary_phone_number' />
           </md-input-container>
           <md-input-container class='md-block'>
-            <label>Geboortedatum</label>
+            <label translate='birthdate'></label>
             <input class='md-input'
                    ng-focus='reserv.openDatepicker($event)'
                    ng-model='reserv.reservation.date_of_birth'
@@ -66,29 +70,33 @@
                    close-text='Close' />
           </md-input-container>
           <md-input-container class='md-block'>
-            <label>Straat</label>
+            <label translate='address'></label>
             <input ng-model='reserv.reservation.street' />
           </md-input-container>
           <md-input-container class='md-block'>
-            <label>Huisnummer</label>
+            <label translate='housenumber'></label>
             <input ng-model='reserv.reservation.house_number' />
           </md-input-container>
           <md-input-container class='md-block'>
-            <label>Postcode</label>
+            <label translate='postcode'></label>
             <input ng-model='reserv.reservation.zipcode' />
           </md-input-container>
           <md-input-container class='md-block'>
-            <label>Stad</label>
+            <label translate='city'></label>
             <input ng-model='reserv.reservation.city' />
           </md-input-container>
           <md-input-container class='md-block'>
-            <label>Bedrijfsnaam</label>
+            <label translate='company_name'></label>
             <input ng-model='reserv.reservation.company_name' />
           </md-input-container>
           <div class='md-form-group no-padder'>
             <md-radio-group ng-model="reserv.reservation.gender">
-              <md-radio-button value='Man' class="inline md-success">Man</md-radio-button>
-              <md-radio-button value='Vrouw' class="inline md-success">Vrouw</md-radio-button>
+              <md-radio-button value='Man' class="inline md-success">
+                {{ 'male' | translate }}
+              </md-radio-button>
+              <md-radio-button value='Vrouw' class="inline md-success">
+                {{ 'female' | translate }}
+              </md-radio-button>
             </md-radio-group>
           </div>
 
@@ -98,7 +106,7 @@
                    ng-click='reserv.loadPDF();'>
               <span class='m-r-sm'>
                 <i class='mdi mdi-pdf'></i>
-                PDF for reservation
+                <translate>reservation.pdf</translate>
               </span>
               <div class='pull-right'>
                 <i class='mdi mdi-delete' ng-click='reserv.removePdf($event);'></i>
@@ -114,7 +122,9 @@
                   ngf-drop=''
                   ngf-pattern="'.pdf'"
                   accept='application/pdf'
-                  ng-model='reserv.reservation.reservation_pdf'>PDF UPLOADEN...</button>
+                  ng-model='reserv.reservation.reservation_pdf'>
+            {{ 'reservation.pdf_upload' | translate }}...
+          </button>
         </div>
       </div>
       <button type='button'
@@ -123,14 +133,15 @@
               class='md-btn w-full md-flat btn-fw no-radius text-success'>
           <span ng-hide='reserv.additional_is_opened'>
             <i class='mdi mdi-plus-circle-outline'></i>
-            MEER VELDEN
+            <translate class='uppercase'>reservation.more_fields</translate>
           </span>
           <span ng-show='reserv.additional_is_opened'>
             <i class='mdi mdi-minus-circle-outline'></i>
-            MINDER VELDEN
+            <translate class='uppercase'>reservation.less_fields</translate>
           </span>
       </button>
-      <div class='wrapper red-300 layout-align-space-around-center layout-column' ng-show='reserv.errors.length'>
+      <div class='wrapper red-300 layout-align-space-around-center layout-column'
+           ng-show='reserv.errors.length'>
         <div class='w-xl'>
           <div ng-repeat='error in reserv.errors'>
             {{ error }}
@@ -141,7 +152,7 @@
               class='btn btn-lg btn-success w-full no-top-radius md-content-button'
               ng-class="{ 'disabled': reserv.is_submitting }"
               ng-show='reserv.isPersonTab() && !reserv.success'>
-        <span>RESERVEER</span>
+        <translate>reservation.reserve</translate>
       </button>
     </div>
   </md-tab-body>

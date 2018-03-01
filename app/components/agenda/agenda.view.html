@@ -24,23 +24,23 @@
     </div>
 
     <button ng-click='agenda.openReservation()' md-ink-ripple class='panel-add-button md-btn md-fab m-b'>
-      <md-tooltip>Nieuwe reservering?</md-tooltip>
+      <md-tooltip>{{ 'new_reservation' | translate }}?</md-tooltip>
       <i class='mdi mdi-plus i-24'></i>
     </button>
 
     <div class='panel' ng-show='agenda.view_type == "list"'>
-      <div class='panel-heading'>Reserveringen</div>
+      <div class='panel-heading' translate='reservations'></div>
       <div class='panel-body no-padder'>
         <table class='table m-b-none'>
           <thead>
             <tr>
-                <th width='8%'>Aanwezig</th>
-                <th width='10%'>Tijd</th>
-                <th width='12%'>Product</th>
-                <th width='12%'>Naam</th>
-                <th width='10%'>Personen</th>
-                <th width='10%'>Tafel</th>
-                <th>Opmerking</th>
+                <th width='8%' translate='present'></th>
+                <th width='10%' translate='time'></th>
+                <th width='12%' translate='product'></th>
+                <th width='12%' translate='name'></th>
+                <th width='10%' translate='persons'></th>
+                <th width='10%' translate='table'></th>
+                <th translate='note'></th>
                 <th width='8%'></th>
             </tr>
           </thead>
@@ -153,13 +153,13 @@
     <div data-ng-include=" 'agenda_charts.view.html' " ng-controller='AgendaChartsCtrl as agenda_charts'></div>
 
     <div class='panel'>
-      <div class='panel-heading'>Time ranges</div>
+      <div class='panel-heading' translate='time_ranges'></div>
       <div class='panel-body no-padder'>
         <table class='table no-margin'>
           <thead>
-            <th>Type</th>
-            <th>Waarde</th>
-            <th>Tijd</th>
+            <th translate='type'></th>
+            <th translate='value'></th>
+            <th translate='time'></th>
           </thead>
           <tbody>
             <tr ng-repeat='time_range in agenda.time_ranges'>
@@ -171,16 +171,14 @@
                 <span ng-if='time_range.type == "product"'>{{ agenda.getProductsName(time_range) }}</span>
               </td>
               <td ng-if='["open", "zone", "product", "multiproduct"].includes(time_range.type)'
-                  class='v-middle'>{{ time_range.value ? 'Geopend' : 'Gesloten' }}</td>
-              <td ng-if='time_range.type == "overbooking"'
-                  class='v-middle'>{{ time_range.value ? 'Overboeken' : 'Niet overboeken' }}</td>
+                  class='v-middle'>{{ time_range.value ? 'opened' : 'closed' | translate }}</td>
+              <td ng-if='time_range.type == "overboeken"'
+                  class='v-middle'>{{ time_range.value ? 'overbooking' : 'not_overbooking' | translate }}</td>
               <td class='v-middle'>
                 <span ng-if='!time_range.whole_day'>
                   {{ time_range.start_time }} - {{ time_range.end_time }}
                 </span>
-                <span ng-if='time_range.whole_day'>
-                  Hele dag
-                </span>
+                <span ng-if='time_range.whole_day' translate='whole_day'></span>
               </td>
             </tr>
           </tbody>

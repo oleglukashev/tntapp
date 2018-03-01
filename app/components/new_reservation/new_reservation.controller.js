@@ -4,7 +4,7 @@ export default class NewReservationCtrl {
     NewReservationNumberOfPersonsFactory, NewReservationPersonFactory, NewReservationTimeFactory,
     NewReservationProductFactory, NewReservationTypeFactory, NewReservationZoneFactory,
     NewReservationPersonAutocompleteFactory, ReservationPart, moment, filterFilter, $state,
-    $stateParams, $scope, $rootScope, $window) {
+    $stateParams, $scope, $rootScope, $window, $translate) {
     'ngInject';
 
     this.is_dashboard_page = $state.current.name === 'app.dashboard';
@@ -46,7 +46,7 @@ export default class NewReservationCtrl {
     this.warnings = {};
 
     this.reservation = {
-      language: 'NL',
+      language: $translate.proposedLanguage().toUpperCase() || 'NL',
       gender: 'Man',
       social: null,
       is_group: false,
@@ -60,7 +60,7 @@ export default class NewReservationCtrl {
     if ($stateParams.date) {
       const date = this.moment($stateParams.date, 'DD-MM-YYYY').toDate();
 
-      if (date != 'Invalid Date') {
+      if (date !== 'Invalid Date') {
         this.current_part.date = date;
       }
     }
@@ -78,6 +78,14 @@ export default class NewReservationCtrl {
 
     this.is_success = false;
     this.is_submitting = false;
+
+    // run translates
+    this.more_than_2mb_error_text = '';
+    $translate('notifications.more_than_2mb').then((total) => {
+      this.more_than_2mb_error_text = total;
+    }, (translationIds) => {
+      this.more_than_2mb_error_text = translationIds;
+    });
 
     NewReservationDateFactory(this, $scope);
     NewReservationGroupFactory(this);
@@ -168,7 +176,7 @@ export default class NewReservationCtrl {
           } else if (result.status === 400) {
             this.errors = result.data.errors.errors;
           } else if (result.status === -1 && result.statusText === '') {
-            this.errors = ['Een bestand mag niet groter zijn dan 2MB'];
+            this.errors = [this.more_than_2mb_error_text];
           }
 
           this.is_submitting = false;
@@ -316,7 +324,7 @@ export default class NewReservationCtrl {
   loadTimeRanges() {
     // TODO REFACTOR AFTER NEW RESERVATION REFACTORING
     this.TimeRange.getAll(this.current_company_id, null, this.is_customer_reservation).then(
-      (ranges) => {  
+      (ranges) => {
         const productWeekTimeRanges = ranges
           .filter(item => item.type === 'product' && item.days_of_week.length);
 
@@ -339,7 +347,7 @@ export default class NewReservationCtrl {
           });
         }
 
-        const productTimeRanges = ranges.filter(item => 
+        const productTimeRanges = ranges.filter(item =>
           (item.type === 'product' || item.type === 'multiproduct') && !item.days_of_week.length);
         if (productTimeRanges.length) {
           productTimeRanges.forEach((timeRange) => {
@@ -361,7 +369,7 @@ export default class NewReservationCtrl {
         if (openTimeRanges.length) {
           openTimeRanges.forEach((timeRange) => {
             if (!this.open_time_ranges[timeRange.fixed_date]) {
-              this.open_time_ranges[timeRange.fixed_date] = {}
+              this.open_time_ranges[timeRange.fixed_date] = {};
             }
             this.open_time_ranges[timeRange.fixed_date] = timeRange;
           });
@@ -446,7 +454,7 @@ export default class NewReservationCtrl {
     if (this.product_week_time_ranges &&
       this.product_week_time_ranges[weekday] &&
       this.product_week_time_ranges[weekday][productId]) {
-      return this.product_week_time_ranges[weekday][productId]
+      return this.product_week_time_ranges[weekday][productId];
     }
 
     return null;

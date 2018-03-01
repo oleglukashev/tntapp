@@ -1,20 +1,19 @@
 <div ng-show='plugins_settings.is_loaded'>
   <div class='panel'>
-    <div class='panel-heading'>
-      Wordpress plugin
-    </div>
+    <div class='panel-heading' translate='settings.plugins.wordpress_title'></div>
     <div class='panel-body'>
-      <p class='m-b-md'>U kunt een reserveer-widget en een reserveer-tag op uw WordPress website plaatsen. Hiervoor moet eerst de TheNextTable plugin geïnstalleerd worden.</p>
+      <p class='m-b-md' translate='settings.plugins.wordpress_description'></p>
       <ul class='list_number_point'>
-        <li><span class='number_point'>1</span>Download de plugin van de WordPress plugin website of hier</li>
-        <li><span class='number_point'>2</span>Activeer de plugin als deze nog niet geactiveerd is</li>
-        <li><span class='number_point'>3</span>Ga naar de instellingen van TheNextTable in het Admin-paneel</li>
-        <li><span class='number_point'>4</span>Voer de onderstaande koppel-code in om het restaurant met de widget te koppelen:</li>
+        <li><span class='number_point'>1</span>{{ 'settings.plugins.wordpress_point1' | translate }}</li>
+        <li><span class='number_point'>2</span>{{ 'settings.plugins.wordpress_point2' | translate }}</li>
+        <li><span class='number_point'>3</span>{{ 'settings.plugins.wordpress_point3' | translate }}</li>
+        <li><span class='number_point'>4</span>{{ 'settings.plugins.wordpress_point4' | translate }}</li>
       </ul>
     </div>
     <div class='panel-footer clearfix form-horizontal'>
       <div class='form-group no-margin'>
-        <label class='col-sm-2 text-left p-l-none control-label'>Koppel-code</label>
+        <label class='col-sm-2 text-left p-l-none control-label'
+               translate='settings.plugins.link_code_title'></label>
 
         <div class='col-sm-10 no-padder'>
           <input type='text' class='form-control' ng-model='plugins_settings.wordpress_token' readonly />
@@ -26,16 +25,15 @@
 
 <div ng-show='plugins_settings.is_loaded'>
   <div class='panel'>
-    <div class='panel-heading'>
-      iFrame widget
-    </div>
+    <div class='panel-heading' translate='settings.plugins.iframe_title'></div>
     <div class='panel-body'>
-      <p class='m-b-md'>Als u geen WordPress heeft, kunt u alsnog gebruik maken van de reserveer-widget.</p>
-      <p class='no-margin'>Plaats de volgende HTML-code op uw website voor de widget:</p>
+      <p class='m-b-md' translate='settings.plugins.iframe_description'></p>
+      <p class='no-margin' translate='settings.plugins.iframe_text'></p>
     </div>
     <div class='panel-footer clearfix form-horizontal'>
       <div class='form-group no-margin'>
-        <label class='col-sm-2 text-left p-l-none control-label'>Koppel-code</label>
+        <label class='col-sm-2 text-left p-l-none control-label'
+               translate='settings.plugins.link_code_title'></label>
 
         <div class='col-sm-10 no-padder'>
           <textarea class='form-control' readonly>{{ plugins_settings.iframe_widget }}</textarea>
@@ -64,20 +62,21 @@
 
 <div ng-show='plugins_settings.is_loaded'>
   <div class='panel'>
-    <div class='panel-heading'>
-      TheNextReview Link-code
-    </div>
+    <div class='panel-heading' translate='settings.plugins.tnr_link_title'></div>
     <div class='panel-body'>
-      <p class='m-b-md'>Link TheNextReview en TheNextTable, en zie de beoordelingen van je gasten direct vanuit TheNextTable. Vul hier de code die bij TheNextReview onder de algemene instellingen staat. Pas daarna in de mails de link naar TheNextReview aan. De nieuwe link kan je op TheNextReview, onder Bedrijf Beheren > Vragenlijst-instellingen vinden.</p>
+      <p class='m-b-md' translate='settings.plugins.tnr_link_description'></p>
     </div>
     <div class='panel-footer clearfix form-horizontal'>
       <form ng-submit='plugins_settings.submitForm();'>
-        <label class='col-sm-2 col-xs-12 text-left p-l-none control-label'>Link-code</label>
+        <label class='col-sm-2 col-xs-12 text-left p-l-none control-label'
+               translate='settings.plugins.link_code_title'></label>
         <div class='col-sm-8 col-xs-8 no-padder'>
           <input type='text' class='form-control' ng-model='plugins_settings.tnr_sync_token' />
         </div>
         <div class='col-sm-2 col-xs-4 no-padder text-right'>
-          <button type='submit' class='md-button btn-success no-margin'>Opslaan</button>
+          <button type='submit'
+                  class='md-button btn-success no-margin'
+                  translate='save'></button>
         </div>
       </form>
     </div>
@@ -86,14 +85,13 @@
 
 <div ng-show='plugins_settings.is_loaded'>
   <div class='panel'>
-    <div class='panel-heading'>
-      API Token
-    </div>
+    <div class='panel-heading' translate='settings.plugins.api_title'></div>
     <div class='panel-body'>
-      <p class='m-b-md'>Hieronder staat het API-token dat gebruikt kan worden voor communicatie met de TheNextTable API.</p>
+      <p class='m-b-md' translate='settings.plugins.api_description'></p>
     </div>
     <div class='panel-footer clearfix form-horizontal'>
-      <label class='col-sm-2 text-left p-l-none control-label'>API token</label>
+      <label class='col-sm-2 text-left p-l-none control-label'
+             translate='settings.plugins.api_title'></label>
 
       <div class='col-sm-10 no-padder'>
         <input type='text' class='form-control' ng-model='plugins_settings.api_token' readonly />

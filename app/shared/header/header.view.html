@@ -13,17 +13,27 @@
 <!-- / navbar header -->
 
 <!-- navbar collapse -->
-<div class="collapse navbar-collapse">
+<div class='collapse navbar-collapse'>
   <div class='header-logo pull-left'>
     <a href='#'></a>
   </div>
   <div class='header-menu'>
-    <md-tabs md-no-ink='true' class='header-menu-wrapper' ng-click='header.hideRightSidebar()'>
+    <md-tabs md-no-ink='true'
+             class='header-menu-wrapper'
+             ng-click='header.hideRightSidebar()'>
       <md-tab md-active='header.isDiactiveState()'></md-tab>
-      <md-tab md-active='header.isActiveState("app.dashboard")' ui-sref='app.dashboard'>Dashboard</md-tab>
-      <md-tab md-active='header.isActiveState("app.reservations")' ui-sref='app.reservations'>Vandaag</md-tab>
-      <md-tab md-active='header.isActiveState("app.agenda")' ui-sref='app.agenda'>Agenda</md-tab>
-      <md-tab md-active='header.isActiveState("app.profiles")' ui-sref='app.profiles'>Profielen</md-tab>
+      <md-tab md-active='header.isActiveState("app.dashboard")' ui-sref='app.dashboard'>
+        <translate>top_menu.dashboard</translate>
+      </md-tab>
+      <md-tab md-active='header.isActiveState("app.reservations")' ui-sref='app.reservations'>
+        <translate>top_menu.today</translate>
+      </md-tab>
+      <md-tab md-active='header.isActiveState("app.agenda")' ui-sref='app.agenda'>
+        <translate>top_menu.calendar</translate>
+      </md-tab>
+      <md-tab md-active='header.isActiveState("app.profiles")' ui-sref='app.profiles'>
+        <translate>top_menu.profiles</translate>
+      </md-tab>
     </md-tabs>
   </div>
 

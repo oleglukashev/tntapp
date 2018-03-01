@@ -12,10 +12,7 @@ import angularTouch from 'angular-touch';
 import angularUiRouter from 'angular-ui-router';
 import angularUiBootstrap from 'angular-bootstrap-npm';
 import angularTranslate from 'angular-translate';
-import angularTranslateStorageLocale from 'angular-translate-storage-local';
-import angularTranslateStorageCookie from 'angular-translate-storage-cookie';
 import angularMoment from 'angular-moment';
-import anguarOclazyLoad from 'oclazyload';
 import rzModule from 'angularjs-slider';
 import satellizer from 'satellizer';
 import chartjs from 'angular-chart.js';
@@ -27,6 +24,7 @@ import uiJq from './common/directives/ui-jq';
 import dndLists from './common/directives/angular-drag-and-drop-lists.directive';
 import mainRoute from './config.router';
 import jwtConfig from './config.jwt';
+import translatesConfig from './config.translates';
 import initTemplates from './config.templates';
 import editReservationController from './components/edit_reservation/edit_reservation.controller';
 import search from './components/search';
@@ -58,11 +56,10 @@ import './common/filters/time_reservation_id_sort.filter';
 angular
   .module('app', [angularJwt, angularAnimate, angularNgUploader, angularAria, angularCookies,
     angularMessages, angularResource, angularSanitize, angularTouch, angularUiRouter,
-    angularUiBootstrap, angularTranslate, angularTranslateStorageLocale,
-    angularTranslateStorageCookie, angularMoment, angularMaterial, uiLoad, anguarOclazyLoad, uiJq,
-    dndLists, satellizer, search, dashboard, customerReservation,
-    reservations, dnd, agenda, auth, settings, rzModule, chartjs, profiles, constants, editUser,
-    'app.services', 'app.factories', 'app.directives', 'app.filters', 'growlNotifications',
+    angularUiBootstrap, angularTranslate, angularMoment, angularMaterial, uiLoad,
+    uiJq, dndLists, satellizer, search, dashboard, customerReservation,
+    reservations, dnd, agenda, auth, settings, rzModule, chartjs, profiles, constants,
+    editUser, 'app.services', 'app.factories', 'app.directives', 'app.filters', 'growlNotifications',
   ])
   .controller('AppCtrl', appController)
   .controller('HeaderCtrl', headerController)
@@ -75,18 +72,14 @@ angular
   .controller('PageFilterTimeRangesCtrl', pageFilterTimeRangesController)
   .controller('ReservationAnswerCtrl', reservationAnswerController)
   .controller('SearchHeaderCtrl', searchHeaderController)
-  .config(jwtConfig)
-  .config(['$httpProvider', ($httpProvider) => {
-    $httpProvider.interceptors.push('responseFactory');
-  }])
-  .config(['$ocLazyLoadProvider', 'MODULE_CONFIG', ($ocLazyLoadProvider, MODULE_CONFIG) => {
-    // We configure ocLazyLoad to use the lib script.js as the async loader
-    $ocLazyLoadProvider.config({
-      debug: false,
-      events: true,
-      modules: MODULE_CONFIG,
-    });
-  }])
+  // .config(['$ocLazyLoadProvider', 'MODULE_CONFIG', ($ocLazyLoadProvider, MODULE_CONFIG) => {
+  //   // We configure ocLazyLoad to use the lib script.js as the async loader
+  //   $ocLazyLoadProvider.config({
+  //     debug: false,
+  //     events: true,
+  //     modules: MODULE_CONFIG,
+  //   });
+  // }])
   .config(['$mdThemingProvider', ($mdThemingProvider) => {
     $mdThemingProvider.disableTheming();
   }])
@@ -109,19 +102,11 @@ angular
   .config(['$mdDateLocaleProvider', ($mdDateLocaleProvider) => {
     $mdDateLocaleProvider.firstDayOfWeek = 1;
   }])
-  .config(['$translateProvider', ($translateProvider) => {
-    // Register a loader for the static files
-    // So, the module will search missing translation tables under the specified urls.
-    // Those urls are [prefix][langKey][suffix].
-    // $translateProvider.useStaticFilesLoader({
-    //   prefix: 'l10n/',
-    //   suffix: '.js'
-    // });
-    // Tell the module what language to use by default
-    $translateProvider.preferredLanguage('en');
-    // Tell the module to store the language in the local storage
-    $translateProvider.useLocalStorage();
+  .config(jwtConfig)
+  .config(['$httpProvider', ($httpProvider) => {
+    $httpProvider.interceptors.push('responseFactory');
   }])
+  .config(translatesConfig)
   .run(initTemplates)
   .run(['$rootScope', '$state', '$stateParams',
     ($rootScope, $state, $stateParams) => {

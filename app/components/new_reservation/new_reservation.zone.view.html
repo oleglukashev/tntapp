@@ -2,18 +2,19 @@
   <md-tab-label>
     <div class='text-center l-h'><i class='mdi mdi-border-horizontal'></i></div>
     <div class='text-center l-h'>
-      <span>ZONE</span>
+      <span translate='zone'></span>
     </div>
   </md-tab-label>
   <md-tab-body>
     <div class='md-content-submit reservation_zone b-t' flex>
       <div class='md-list-item'>
         <div class='md-list-item-content text-center'>
-          <h4>Welk tafel komt de klant te zitten?</h4>
+          <h4 translate='reservation.zone_title'></h4>
         </div>
       </div>
       <div class='wrapper orange-500 layout-align-space-around-center layout-column'
-           ng-show='reserv.numberOfPersonsMoreThanTableSeats() && reserv.current_part.tables.length'>Aantal personen is meer dan waar de tafel(s) geschikt voor is</div>
+           ng-show='reserv.numberOfPersonsMoreThanTableSeats() && reserv.current_part.tables.length'
+           translate='notifications.guests_more_than_suitable'></div>
       <div class='wrapper' ng-show='reserv.zones_is_loaded && reserv.tablesDataIsLoaded()'>
         <div class='zones_boxes clearfix text-center m-b-sm' ng-show='reserv.current_part.zones_is_showed'>
           <div ng-repeat="zone in reserv.zones"
@@ -32,20 +33,23 @@
                  ng-model='reserv.current_part.tables_values[table_id]'
                  uncheckable
                  btn-checkbox>
-            <span class='m-r-lg'>Tafel {{ reserv.Reservation.getTableNumberByTableId(reserv.tables, table_id) }}</span><span>{{ reserv.Reservation.getPersonCountByTableId(reserv.tables, table_id) }} personen</span>
+            <span class='m-r-lg'><translate>table</translate> {{ reserv.Reservation.getTableNumberByTableId(reserv.tables, table_id) }}</span><span>{{ reserv.Reservation.getPersonCountByTableId(reserv.tables, table_id) }} <translate class='lowercase'>persons</translate></span>
           </label>
 
           <label ng-click='reserv.current_part.zones_is_showed = true'
-                 class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>Show zones</label>
+                 class='btn btn-sm font-bold m-xs text-success no-shadow no-border'
+                 translate='reservation.show_zones'></label>
         </div>
         <button type='button'
                 class='btn btn-lg btn-success w-full no-top-radius md-content-button'
                 ng-show='reserv.current_part.tables.length'
-                ng-click='reserv.selectTab(reserv.pagination.zone);'>VOLGENDE</button>
+                ng-click='reserv.selectTab(reserv.pagination.zone);'
+                translate='next'></button>
         <button type='button'
                 class='btn btn-lg bg-white text-success w-full no-top-radius md-content-button'
                 ng-hide='reserv.current_part.tables.length'
-                ng-click='reserv.selectTab(reserv.pagination.zone);'>STAP OVERSLAAN</button>
+                ng-click='reserv.selectTab(reserv.pagination.zone);'
+                translate='skip_step'></button>
 
       </div>
     </div>

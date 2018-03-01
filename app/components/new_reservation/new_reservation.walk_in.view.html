@@ -4,25 +4,25 @@
       <div class='md-content-submit reservation_person b-t walk-in-wrapper' flex>
         <div class='md-list-item'>
           <div class='md-list-item-content text-center'>
-            <h4>Walk-in reservering plaatsen</h4>
+            <h4 translate='reservation.walkin_title'></h4>
           </div>
         </div>
         <div class='wrapper' layout='column' layout-align='space-around center'>
           <div class='w-xl'>
             <md-input-container class='md-block'>
-              <label>Aantal personen</label>
+              <label translate='number_of_guests'></label>
               <md-icon class="mdi mdi-account-multiple i-24 m-t-n-xs"></md-icon>
               <input type="number" ng-model='reserv.walk_in_part.number_of_persons' required />
             </md-input-container>
             <md-input-container class='md-block'>
-              <label>Tafel</label>
+              <label translate='table'></label>
               <md-icon class="mdi mdi-border-horizontal i-24 m-t-n-xs"></md-icon>
               <md-select multiple
                          ng-model='reserv.walk_in_part.tables'>
                 <md-optgroup ng-repeat='zone in reserv.zones' label='{{ zone.name }}'>
                   <md-option ng-value='table_id' ng-repeat='table_id in zone.table_ids'
                              ng-disabled='reserv.isDisabledTableByTableId(table_id)'>
-                    Tafel {{ reserv.Reservation.getTableNumberByTableId(reserv.tables, table_id) }} - {{ reserv.Reservation.getPersonCountByTableId(reserv.tables, table_id) }} personen
+                    <translate>table</translate> {{ reserv.Reservation.getTableNumberByTableId(reserv.tables, table_id) }} - {{ reserv.Reservation.getPersonCountByTableId(reserv.tables, table_id) }} <translate>persons</translate>
                   </md-option>
                 </md-optgroup>
               </md-select>
@@ -33,28 +33,32 @@
             <div data-ng-include=" 'new_reservation.person.autocomplete.view.html' " ng-init='reserv.reservation = reserv.walk_in' class='no-margin'></div>
 
             <md-input-container class='md-block'>
-              <label>E-mail</label>
+              <label translate='email'></label>
               <input type='email' ng-model='reserv.walk_in.mail' ng-required='false' />
             </md-input-container>
             <md-input-container class='md-block'>
-              <label>Telefoonnummer</label>
+              <label translate='phone'></label>
               <input ng-model='reserv.walk_in.primary_phone_number' ng-required='false' />
             </md-input-container>
             <md-input-container class='md-block'>
-              <label>Opmerking</label>
+              <label translate='note'></label>
               <input ng-model='reserv.walk_in.notes' />
             </md-input-container>
             <div class='md-form-group no-padder'>
               <md-radio-group ng-model="reserv.walk_in.language">
-                <md-radio-button value='NL' class='inline md-success'>Nederlands</md-radio-button>
-                <md-radio-button value='EN' class='inline md-success'>Engels</md-radio-button>
+                <md-radio-button value='NL' class='inline md-success'>
+                  {{ 'language.netherlands' | translate }}
+                </md-radio-button>
+                <md-radio-button value='EN' class='inline md-success'>
+                  {{ 'language.english' | translate }}
+                </md-radio-button>
               </md-radio-group>
             </div>
             <div class='md-form-group no-padder' ng-if='!reserv.is_customer_reservation'>
             <md-checkbox ng-model='reserv.reservation.send_confirmation'
                          ng-checked='true'
                          aria-label='Bevestiging mailen'>
-              Bevestiging mailen
+              {{ 'mail_confirmation' | translate }}
             </md-checkbox>
           </div>
           </div>
@@ -65,11 +69,11 @@
                 class='md-btn w-full md-flat btn-fw no-radius text-success'>
             <span ng-hide='reserv.additional_is_opened'>
               <i class='mdi mdi-plus-circle-outline'></i>
-              MEER VELDEN
+              <translate class='uppercase'>reservation.more_fields</translate>
             </span>
             <span ng-show='reserv.additional_is_opened'>
               <i class='mdi mdi-minus-circle-outline'></i>
-              MINDER VELDEN
+              <translate class='uppercase'>reservation.less_fields</translate>
             </span>
         </button>
         <div class='wrapper red-300 layout-align-space-around-center layout-column' ng-show='reserv.errors.length'>
@@ -83,7 +87,7 @@
                 class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
                 ng-class="{ 'disabled': reserv.is_submitting }"
                 ng-show='!reserv.success'>
-          <span>RESERVEER</span>
+          <translate>reservation.reserve</translate>
         </button>
       </div>
     </form>

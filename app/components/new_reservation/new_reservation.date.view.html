@@ -3,14 +3,14 @@
     <div class='text-center l-h'><i class='mdi mdi-calendar'></i></div>
     <div class='text-center l-h'>
       <span ng-show='reserv.current_part.date'>{{ reserv.current_part.date | date:'d MMMM' }}</span>
-      <span ng-hide='reserv.current_part.date'>DATUM</span>
+      <span class='uppercase' ng-hide='reserv.current_part.date' translate='date'></span>
     </div>
   </md-tab-label>
   <md-tab-body>
     <div class='b-t' flex>
       <div class='md-list-item'>
         <div class='md-list-item-content text-center'>
-          <h4>Kies een datum</h4>
+          <h4 translate='dashboard.pick_date'></h4>
         </div>
       </div>
       <div class='wrapper' layout='column' layout-align='space-around center'>

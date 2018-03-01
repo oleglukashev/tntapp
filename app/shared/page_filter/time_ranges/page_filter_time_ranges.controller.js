@@ -1,6 +1,6 @@
 export default class PageFiltertime_rangesCtrl {
-  constructor(date, type, title, User, Product, Zone, Slider, PageFilterTimeRange,
-    filterFilter, moment, $modalInstance, $window, $rootScope) {
+  constructor(date, type, User, Product, Zone, Slider, PageFilterTimeRange,
+    filterFilter, moment, $modalInstance, $window, $rootScope, $translate) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -17,11 +17,19 @@ export default class PageFiltertime_rangesCtrl {
     this.$modalInstance = $modalInstance;
     this.slider = this.Slider.getOptions();
     this.type = type;
-    this.value_label = type === 'overbooking' ? 'Overboeken' : 'Geopend';
-    this.title = title;
+    this.value_label = type === 'overbooking' ? 'overbooking' : 'opened';
+    this.confirm_text = 'Are you sure?'
+    this.title = '';
     this.products = [];
 
     this.loadTimeRange();
+
+    // run translates
+    $translate('are_you_sure').then((are_you_sure) => {
+      this.confirm_text = are_you_sure;
+    }, (translationIds) => {
+      this.confirm_text = translationIds;
+    });
   }
 
   setStateToList() {
@@ -156,7 +164,7 @@ export default class PageFiltertime_rangesCtrl {
   }
 
   destoyWithConfirm() {
-    if (confirm('Weet je het zeker?')) {
+    if (confirm(this.confirm_text)) {
       this.destroy();
     }
   }

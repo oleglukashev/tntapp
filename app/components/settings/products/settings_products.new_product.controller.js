@@ -1,8 +1,6 @@
 export default class SettingsProductsNewProductCtrl {
-  constructor(
-    User, TimeRange, AppConstants, products, Slider, $timeout, $rootScope,
-    $scope, $modalInstance,
-  ) {
+  constructor(User, TimeRange, AppConstants, products, Slider, $timeout, $rootScope,
+    $scope, $modalInstance, $translate) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -26,30 +24,40 @@ export default class SettingsProductsNewProductCtrl {
 
     this.sliders = [
       {
-        name: 'Maandag t/m vrijdag',
+        name: 'settings.products.mon_to_fri',
         slider: this.sliderMonFri,
       },
       {
-        name: 'Zaterdag',
+        name: 'weekdays.sat',
         slider: this.sliderSat,
       },
       {
-        name: 'Zondag',
+        name: 'weekdays.sun',
         slider: this.sliderSun,
       },
     ];
-    this.iconsClasses = AppConstants.productsClasses;
-
-    const loadedProducts = this.productsHash();
-    if (loadedProducts) this.iconsClasses = $.extend(loadedProducts, this.iconsClasses);
-
-    this.uniqIcons = [...new Set(Object.values(this.iconsClasses))];
 
     this.$modalInstance = $modalInstance;
 
     this.sliderOptions = this.Slider.getOptions().options;
 
     this.redrawSliders();
+
+    this.iconsClasses = AppConstants.productsClasses;
+
+    // run translates
+    $translate(Object.keys(this.iconsClasses).map(item => `product_examples.${item}`)).then((translates) => {
+      const classes = {};
+      classes[translates['product_examples.lunch']] = this.iconsClasses.lunch;
+      classes[translates['product_examples.brunch']] = this.iconsClasses.brunch;
+      classes[translates['product_examples.diner']] = this.iconsClasses.diner;
+      classes[translates['product_examples.drink']] = this.iconsClasses.drink;
+      classes[translates['product_examples.breakfast']] = this.iconsClasses.breakfast;
+      this.iconsClasses = classes;
+      const loadedProducts = this.productsHash();
+      if (loadedProducts) this.iconsClasses = $.extend(loadedProducts, this.iconsClasses);
+      this.uniqIcons = [...new Set(Object.values(this.iconsClasses))];
+    });
   }
 
   changeClass(className) {

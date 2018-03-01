@@ -1,28 +1,32 @@
 <div class='panel seats-free'>
-  <div class='panel-heading'>Plekken vrijhouden</div>
+  <div class='panel-heading' translate='settings.limits.title'></div>
 
 	<div class='wrapper' ng-show='limits_settings.is_loaded'>
-		<p class='text-muted'>Hier kunt u het aantal personen / tafels dat per tijdslot gereserveerd kan worden aanpassen. Selecteer een waarde en klik op een tijdslot om de limieten in te stellen. Klik nogmaals om een limiet te verwijderen.</p>
+		<p class='text-muted' translate='settings.limits.description'></p>
 
 		<md-input-container ng-show='limits_settings.type'>
-      <label>{{ limits_settings.type }}</label>
+      <label>{{ limits_settings.type | translate }}</label>
       <input type='number' min='1' ng-model='limits_settings.limit' />
     </md-input-container>
 
 		<div class='scroll-x'>
 			<table class='table'>
 				<thead>
-					<th>Dag</th>
+					<th></th>
 					<th class='clickable'
 							ng-repeat='time in limits_settings.times'
 							ng-click='limits_settings.saveLimitByTime(time)'>{{ time }}</th>
 				</thead>
 				<tbody>
 					<tr ng-repeat='(number_of_day, day) in limits_settings.days'>
-						<td class='clickable' ng-click='limits_settings.saveLimitByDay(number_of_day)'>{{ day }}</td>
+						<td class='clickable' ng-click='limits_settings.saveLimitByDay(number_of_day)'>
+							{{ 'weekdays.' + day | translate }}
+						</td>
 						<td class='clickable time'
 								ng-repeat='time in limits_settings.times'
-								ng-click='limits_settings.saveLimitByTimeAndDay(time, number_of_day)'>{{ limits_settings.limits[number_of_day][time] || '-' }}</td>
+								ng-click='limits_settings.saveLimitByTimeAndDay(time, number_of_day)'>
+							{{ limits_settings.limits[number_of_day][time] || '-' }}
+						</td>
 					</tr>
 				</tbody>
 			</table>

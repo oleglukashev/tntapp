@@ -1,5 +1,5 @@
 export default class SettingsMailsCtrl {
-  constructor(User, AppConstants, Settings, filterFilter, $scope, $modal, $rootScope) {
+  constructor(User, Settings, filterFilter, $scope, $modal, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -9,8 +9,6 @@ export default class SettingsMailsCtrl {
     this.$modal = $modal;
     this.filterFilter = filterFilter;
     this.Settings = Settings;
-    this.statuses = AppConstants.mailStatuses;
-
     this.loadMailsSettings();
     this.loadMailsTextsSettings();
 

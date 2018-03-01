@@ -1,28 +1,35 @@
 <section class='no-margin'>
   <md-toolbar>
     <div class='md-toolbar-tools'>
-      <h2 md-truncate flex>{{ edit_mail.statuses[edit_mail.form_data.type] }}</h2>
-      <md-button class="md-icon-button" ng-click='edit_mail.closeModal();' md-no-ink>
+      <h2 md-truncate flex>{{ 'settings.mails.statuses.' + edit_mail.form_data.type | translate }}</h2>
+      <md-button class='md-icon-button'
+                 ng-click='edit_mail.closeModal();'
+                 md-no-ink>
         <i class='mdi mdi-close m-r-sm i-24'></i>
       </md-button>
     </div>
   </md-toolbar>
   <md-content>
-    <form class='md-content-submit' name='edit_mail_form' ng-submit='edit_mail.submitForm(edit_mail_form.$valid)'>
+    <form class='md-content-submit'
+          name='edit_mail_form'
+          ng-submit='edit_mail.submitForm(edit_mail_form.$valid)'>
       <div class='wrapper'>
         <md-input-container class='md-block'>
-          <label>Titel</label>
+          <label translate='title'></label>
           <input ng-model='edit_mail.form_data.title' required />
         </md-input-container>
         <md-input-container class='md-block'>
-          <label>Inhoud</label>
-          <textarea rows='10' max-rows='12' ng-model='edit_mail.form_data.content' md-maxlength='1500'></textarea>
+          <label translate='content'></label>
+          <textarea rows='10'
+                    max-rows='12'
+                    ng-model='edit_mail.form_data.content'
+                    md-maxlength='1500'></textarea>
         </md-input-container>
       </div>
       <button type='submit'
               ng-class="{ 'disabled': !edit_mail_form.$valid || edit_mail.is_submitting }"
-              class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
-        <span>OPSLAAN</span>
+              class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
+              translate='save'>
       </button>
     </form>
   </md-content>

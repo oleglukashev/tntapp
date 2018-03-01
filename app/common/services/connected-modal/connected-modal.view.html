@@ -1,0 +1,21 @@
+<img src="public/images/connected.png">
+<h2 translate='trial.iban_connected' translate-values='{ iban: iban }'></h2>
+<br>
+
+<form name="connected">
+  <md-input-container class="md-block">
+    <label translate='email'></label>
+    <input type="email"
+           name="email"
+           autocomplete="off"
+           ng-model="friendEmail"
+           autofocus
+           required>
+  </md-input-container>
+  <div class="text-center">
+    <button type="submit"
+            ng-disabled="loading"
+            ng-click="inviteFriend(connected)"
+            class="btn btn-lg btn-success" translate='trial.notify_restaurant'></a>
+  </div>
+</form>

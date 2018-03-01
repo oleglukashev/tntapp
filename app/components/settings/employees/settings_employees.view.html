@@ -1,18 +1,18 @@
 <div class='panel'>
-  <div class='panel-heading'>Medewerkers</div>
+  <div class='panel-heading' translate='settings.employees.title'></div>
   <div class='panel-body no-padder'>
     <table class='table no-margin' ng-show='employees_settings.is_loaded'>
       <thead>
-        <th>Naam</th>
-        <th>Email</th>
-        <th>Beheersrechten</th>
+        <th translate='name'></th>
+        <th translate='email'></th>
+        <th translate='settings.employees.rights'></th>
         <th></th>
       </thead>
       <tbody>
         <tr ng-repeat='employee in employees_settings.employees'>
           <td class='v-middle'>{{ employee.user.first_name }} {{ employee.user.last_name }}</td>
           <td class='v-middle'>{{ employee.user.email }}</td>
-          <td class='v-middle'>{{ employee.manage_access ? 'Ja' : 'Nee' }}</td>
+          <td class='v-middle'>{{ employee.manage_access ? 'yes' : 'no' | translate }}</td>
           <td class='v-middle text-right'>
             <md-menu>
                 <button md-ink-ripple
@@ -26,7 +26,8 @@
                 </button>
                 <md-menu-content>
                   <md-menu-item>
-                    <md-button ng-click='employees_settings.editEmployee(employee.id)'>Medewerker bewerken</md-button>
+                    <md-button ng-click='employees_settings.editEmployee(employee.id)'
+                               translate='settings.employees.edit'></md-button>
                   </md-menu-item>
                 </md-menu-content>
               </md-menu>
@@ -36,9 +37,11 @@
     </table>
   </div>
   <div class='panel-footer'>
-    <button md-ink-ripple class='md-btn md-flat btn-fw text-success' ng-click='employees_settings.addEmployee();'>
+    <button md-ink-ripple
+            class='md-btn md-flat btn-fw text-success'
+            ng-click='employees_settings.addEmployee();'>
       <i class='mdi mdi-plus-circle'></i>
-      MEDEWERKER TOEVOEGEN
+      <translate class='uppercase'>settings.employees.add</translate>
     </button>
   </div>
 </div>

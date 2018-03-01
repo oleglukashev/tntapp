@@ -3,14 +3,14 @@
     <div class='text-center l-h'><i class='mdi mdi-silverware-variant'></i></div>
     <div class='text-center l-h'>
       <span ng-show='reserv.current_part.product'>{{ reserv.Reservation.getProductNameByProductId(reserv.products, reserv.current_part.product) }}</span>
-      <span ng-hide='reserv.current_part.product'>PRODUCT</span>
+      <span ng-hide='reserv.current_part.product' class='uppercase' translate='product'></span>
     </div>
   </md-tab-label>
   <md-tab-body>
     <div class='reservation_product b-t' flex>
       <div class='md-list-item' ng-if='!reserv.is_customer_reservation'>
         <div class='md-list-item-content text-center'>
-          <h4>Welk product komt de klant voor?</h4>
+          <h4 translate='reservation.product_title'></h4>
         </div>
       </div>
       <div class='wrapper'>

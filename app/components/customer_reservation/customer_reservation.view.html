@@ -3,8 +3,8 @@
     <form ng-submit='reserv.submitForm()'>
       <md-toolbar>
         <div class='md-toolbar-tools'>
-          <h2 md-truncate flex ng-hide='reserv.success'>Reserveren</h2>
-          <h2 md-truncate flex ng-show='reserv.success'>Nieuwe reservering</h2>
+          <h2 md-truncate flex ng-hide='reserv.success' translate='reserv'></h2>
+          <h2 md-truncate flex ng-show='reserv.success' translate='new_reservation'></h2>
           <md-button class='md-icon-button'
                      ng-click='reserv.$window.location.reload()'
                      md-no-ink>
@@ -37,7 +37,7 @@
         <div class='md-content-submit b-t' flex ng-show='reserv.success'>
           <div class='md-list-item'>
             <div class='md-list-item-content'>
-              <h4>Reservering geplaatst</h4>
+              <h4 translate='reservation.success'></h4>
             </div>
           </div>
           <div class='wrapper'>
@@ -47,7 +47,7 @@
               </div>
               <div class="md-list-item-content">
                 <h3 class="text-md">{{ reserv.moment(reserv.current_part.date).format('DD MMMM YYYY') }} {{ reserv.current_part.time }}</h3>
-                <small class="font-thin">{{ reserv.Reservation.getProductNameByProductId(reserv.products, reserv.current_part.product) }},  {{ reserv.current_part.number_of_persons }} personen</small>
+                <small class="font-thin">{{ reserv.Reservation.getProductNameByProductId(reserv.products, reserv.current_part.product) }},  {{ reserv.current_part.number_of_persons }} <translate class='lowercase' translate='persons'></translate></small>
               </div>
             </div>
             <div class="md-list-item inset" ng-if='reserv.reservation.primary_phone_number'>
@@ -56,7 +56,7 @@
               </div>
               <div class="md-list-item-content">
                 <h3 class="text-md">{{ reserv.reservation.primary_phone_number }}</h3>
-                <small class="font-thin">Telefoon</small>
+                <small class="font-thin" translate='phone'></small>
               </div>
             </div>
             <div class="md-list-item inset">
@@ -65,7 +65,7 @@
               </div>
               <div class="md-list-item-content">
                 <h3 class="text-md">{{ reserv.reservation.mail }}</h3>
-                <small class="font-thin">E-mail</small>
+                <small class="font-thin" translate='email'></small>
               </div>
             </div>
 
@@ -75,7 +75,7 @@
               </div>
               <div class="md-list-item-content">
                 <h3 class="text-md">{{ reserv.reservation.notes }}</h3>
-                <small class="font-thin">Opmerkingen</small>
+                <small class="font-thin" translate='note'></small>
               </div>
             </div>
           </div>
