@@ -309,7 +309,7 @@ export default {
   time: 'Time',
   product: 'Product',
   name: 'Name',
-  fill_name: 'Full name',
+  full_name: 'Full name',
   persons: 'Persons',
   table: 'Table',
   tables: 'Tables',
@@ -382,4 +382,5 @@ export default {
   lang: 'Language',
   help: 'Help',
   choose_file: 'Choose file',
+  unknown: 'Unknown',
 };

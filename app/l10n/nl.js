@@ -308,7 +308,7 @@ export default {
   time: 'Tijd',
   product: 'Producten',
   name: 'Naam',
-  fill_name: 'Voor- en achternaam',
+  full_name: 'Voor- en achternaam',
   persons: 'Personen',
   table: 'Tafel',
   tables: 'Tafels',
@@ -381,4 +381,5 @@ export default {
   lang: 'Taal',
   help: 'Helpen',
   choose_file: 'Choose file',
+  unknown: 'Onbekend',
 };
