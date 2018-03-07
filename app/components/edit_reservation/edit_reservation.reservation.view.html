@@ -84,8 +84,9 @@
             <button type='button'
                     md-ink-ripple
                     class='md-btn md-flat m-b m-t btn-fw text-success m-l-6'
-                    ngf-select=''
+                    ngf-select='reserv.uploadImage($file, $invalidFiles)'
                     ngf-drop=''
+                    ngf-max-size="1MB"
                     ngf-pattern="'.pdf'"
                     accept='application/pdf'
                     ng-model='reserv.reservation.reservation_pdf'

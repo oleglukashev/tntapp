@@ -4,7 +4,7 @@ export default class EditReservationCtrl {
   constructor(User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone,
     Table, moment, filterFilter, $rootScope, $window, $scope, $modalInstance, UserMenuEditFactroy,
     reservation, reservationPart, customer, customerNotes, customerPreferences, customerAllergies, Confirm,
-    NewReservationGroupFactory) {
+    NewReservationGroupFactory, Notification) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -17,6 +17,7 @@ export default class EditReservationCtrl {
     this.Settings = Settings;
     this.TimeRange = TimeRange;
     this.Confirm = Confirm;
+    this.Notification = Notification;
 
     this.customer = customer;
     this.customerNotes = customerNotes;
@@ -34,6 +35,8 @@ export default class EditReservationCtrl {
     this.errors = [];
 
     this.reservation = reservation;
+    this.old_reservation_pdf = this.reservation.reservation_pdf;
+    this.original_reservation_pdf_file = null;
     this.available_time = [];
 
     this.products = [];
@@ -44,12 +47,6 @@ export default class EditReservationCtrl {
       this.reservation.reservation_parts.forEach((part, index) => {
         this.reservation.reservation_parts[index] = this.getModifiedPart(part);
       });
-
-      if (this.reservation.reservation_pdf) {
-        this.reservation.reservation_pdf = {
-          name: this.reservation.reservation_pdf,
-        };
-      }
     }
 
     // setup current part. we can't insert it to block above
@@ -101,8 +98,11 @@ export default class EditReservationCtrl {
       reservation_parts: [],
     };
 
-    if (this.pdfIsFile()) {
-      data.reservation_pdf = this.reservation.reservation_pdf;
+    if (this.reservation.reservation_pdf) {
+      if (this.original_reservation_pdf_file)
+        data.reservation_pdf = this.reservation.reservation_pdf;
+    } else if (this.old_reservation_pdf) {
+      data.reservation_pdf = null;
     }
 
     this.reservation.reservation_parts.forEach((part) => {
@@ -169,11 +169,6 @@ export default class EditReservationCtrl {
            timeObj.can_overbook;
   }
 
-  pdfIsFile() {
-    return this.reservation.reservation_pdf &&
-           this.reservation.reservation_pdf.constructor.name === 'File';
-  }
-
   // UNITE WITH NEW RESERVATION FUNCTION
   disabledTimes() {
     const result = [];
@@ -187,22 +182,40 @@ export default class EditReservationCtrl {
     return result;
   }
 
+  uploadImage(file, errFiles) {
+    if (file) {
+      this.original_reservation_pdf_file = file;
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = (fileLoadedEvent) => {
+        let srcData = fileLoadedEvent.target.result;
+        srcData = srcData.replace(/data:application\/pdf;base64,/g, '');
+        this.reservation.reservation_pdf = srcData;
+      };
+    }
+
+    if (errFiles && errFiles[0]) {
+      this.Notification.setText(`${errFiles[0].$error} ${errFiles[0].$errorParam}`);
+    }
+  };
+
   loadPDF() {
-    this.Reservation
-      .getPDF(this.current_company_id, this.reservation.id)
-      .then();
+    if (this.original_reservation_pdf_file) {
+      const link = window.document.createElement('a');
+      link.setAttribute('href', encodeURI('data:application/pdf;base64,' + this.reservation.reservation_pdf));
+      link.setAttribute('download', `reservation(#${this.reservation.id}).pdf`);
+      link.click();
+    } else {
+      this.Reservation
+        .getPDF(this.current_company_id, this.reservation.id)
+        .then();
+    }
   }
 
   removePdf($event) {
     $event.stopPropagation();
-
-    if (this.pdfIsFile()) {
-      this.reservation.reservation_pdf = null;
-    } else {
-      this.Reservation.removePdf(this.current_company_id, this.reservation.id).then(() => {
-        this.reservation.reservation_pdf = null;
-      });
-    }
+    this.reservation.reservation_pdf = null;
+    this.original_reservation_pdf_file = null;
   }
 
   loadGeneralSettings() {

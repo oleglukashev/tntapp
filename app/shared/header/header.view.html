@@ -39,12 +39,6 @@
 
   <div data-ng-include=" 'header.right_menu.view.html' "></div>
 
-  <growl-notifications ng-if="header.upload_photo_error"></growl-notifications>
-
-  <growl-notification ng-if="header.upload_photo_error" on-close="header.upload_photo_error = ''">
-    Error: {{ header.upload_photo_error }}
-  </growl-notification>
-
   <button type='button'
           class='header-account-menu__avatar bg-light pull-right'
           ngf-select="header.uploadPhoto($file, $invalidFiles)"

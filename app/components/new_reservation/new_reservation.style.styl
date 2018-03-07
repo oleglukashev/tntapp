@@ -1,4 +1,11 @@
 .reservation_modal
+  md-toolbar
+    -webkit-transition-duration: none;
+    transition-duration: none;
+    -webkit-transition-timing-function: none;
+    transition-timing-function: none;
+    -webkit-transition-property: none;
+    transition-property: none;
   md-content
     padding-bottom 0
     min-height modal-height
@@ -81,5 +88,25 @@
 
 for theme in 'default' 'aqua' 'lego' 'chocolate'
   .{theme}-theme
+    .reservation_modal.custom-image
+      md-toolbar,
+      md-content,
+      md-tabs-wrapper
+        background-color transparent
+
+        h4,
+        .text-success,
+        .text-success:hover,
+        .md-list-item
+          color #fff
+
+        md-tabs-wrapper
+          visibility hidden
+
+        .b-t,
+        .md-list-item:after
+          border-width 0
+
+
     .walk-in-wrapper
       border-top 56px lookup(theme + '-theme-color') solid

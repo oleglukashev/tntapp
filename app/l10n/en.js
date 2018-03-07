@@ -290,6 +290,8 @@ export default {
       tnr_link_description: 'Connect TheNextReview and TheNextTable and keep track of guests reviews directly from within TheNextTable. Copy-paste the code from TheNextReview which you can find in general settings. Then edit the mail send after visits and insert the placeholder %THENEXTREVIEW%.',
       api_title: 'API Token',
       api_description: 'The following API-token can be used to communicate with TheNextTable API.',
+      file_title: 'Custom backgrounds',
+      file_description: 'Add your own background. The recommended size of the background is 1920x1080.',
     },
   },
   email: 'E-mail',
@@ -379,4 +381,5 @@ export default {
   text: 'Text',
   lang: 'Language',
   help: 'Help',
+  choose_file: 'Choose file',
 };

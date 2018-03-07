@@ -289,6 +289,8 @@ export default {
       tnr_link_description: 'Link TheNextReview en TheNextTable, en zie de beoordelingen van je gasten direct vanuit TheNextTable. Vul hier de code die bij TheNextReview onder de algemene instellingen staat. Pas daarna in de mails de link naar TheNextReview aan. De nieuwe link kan je op TheNextReview, onder Bedrijf Beheren > Vragenlijst-instellingen vinden.',
       api_title: 'API Token',
       api_description: 'Hieronder staat het API-token dat gebruikt kan worden voor communicatie met de TheNextTable API.',
+      file_title: 'Aangepaste achtergronden',
+      file_description: 'Hier kunt u uw eigen achtergrondafbeelding voor de plugins uploaden. De aanbevolen grootte van de afbeelding is 1920x1080, maar kleinere afbeeldingen worden ook geaccepteerd.',
     },
   },
   email: 'E-mail',
@@ -378,4 +380,5 @@ export default {
   text: 'Tekst',
   lang: 'Taal',
   help: 'Helpen',
+  choose_file: 'Choose file',
 };

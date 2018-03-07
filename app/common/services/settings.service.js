@@ -105,7 +105,7 @@ export default class Settings {
   }
 
   updateGeneralSettings(companyId, data, skipJwtAuth) {
-    if (!companyId) {
+    if (!companyId || !data) {
       return this.$q.defer().promise;
     }
 
@@ -114,7 +114,7 @@ export default class Settings {
       skipAuthorization: skipJwtAuth,
       method: 'PATCH',
       data,
-    }).then(result => result.data);
+    }).then(result => result, error => error);
   }
 
   updateMailsSettings(companyId, data, skipJwtAuth) {

@@ -1,4 +1,4 @@
-export default function NewReservationPersonFactory() {
+export default function NewReservationPersonFactory(Notification) {
   'ngInject';
 
   return (that) => {
@@ -8,6 +8,22 @@ export default function NewReservationPersonFactory() {
 
     instance.openDatepicker = () => {
       instance.opened = true;
+    };
+
+    instance.uploadImage = (file, errFiles) => {
+      if (file) {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = (fileLoadedEvent) => {
+          let srcData = fileLoadedEvent.target.result;
+          srcData = srcData.replace(/data:application\/pdf;base64,/g, '');
+          instance.reservation.reservation_pdf = srcData;
+        };
+      }
+
+      if (errFiles && errFiles[0]) {
+        Notification.setText(`${errFiles[0].$error} ${errFiles[0].$errorParam}`);
+      }
     };
 
     instance.removePdf = ($event) => {
@@ -20,14 +36,9 @@ export default function NewReservationPersonFactory() {
     };
 
     instance.loadPDF = () => {
-      const file = instance.reservation.reservation_pdf;
-
-      if (typeof file !== 'object') return false;
-
-      const url = (window.URL || window.webkitURL).createObjectURL(file);
       const link = window.document.createElement('a');
-      link.setAttribute('href', encodeURI(url));
-      link.setAttribute('download', `${file.name}`);
+      link.setAttribute('href', encodeURI('data:application/pdf;base64,' + instance.reservation.reservation_pdf));
+      link.setAttribute('download', `reservation.pdf`);
       link.click();
     };
 
