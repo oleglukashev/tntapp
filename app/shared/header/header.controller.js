@@ -13,7 +13,7 @@ export default class HeaderCtrl {
     this.current_company_id = User.getCompanyId();
 
     this.logout = User.logout.bind(User);
-    this.userIsOwner = User.isOwner.bind(User);
+    this.userIsOwnerOrManager = User.isOwnerOrManager.bind(User);
   }
 
   hideRightSidebar() {
