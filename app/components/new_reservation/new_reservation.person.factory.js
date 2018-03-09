@@ -1,4 +1,4 @@
-export default function NewReservationPersonFactory($translate) {
+export default function NewReservationPersonFactory() {
   'ngInject';
 
   return (that) => {
@@ -35,12 +35,5 @@ export default function NewReservationPersonFactory($translate) {
       !instance.is_customer_reservation &&
       instance.settings &&
       instance.settings.suggest_customer_name;
-
-    // run translates
-    $translate(['male']).then((translates) => {
-      instance.reservation.gender = translates.male;
-    }, (translationIds) => {
-      instance.reservation.gender = translationIds.male;
-    });
   };
 }
