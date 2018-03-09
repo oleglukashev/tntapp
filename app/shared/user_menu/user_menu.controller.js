@@ -79,7 +79,6 @@ export default class UserMenuCtrl {
       mail: customer.mail,
       date_of_birth: customer.date_of_birth,
       gender: customer.gender,
-      averageRating: customer.average_rating,
       regular: !customer.regular,
     };
 

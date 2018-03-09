@@ -11,12 +11,15 @@ class chartRating {
     this.link = (scope) => {
       scope.rating = scope.rating || 0;
       scope.result = '';
-      for (let i = 0; i < Math.floor(parseFloat(scope.rating)); i += 1) {
-        scope.result += '<i class="mdi mdi-star"></i>';
-      }
 
-      if (parseFloat(scope.rating) % 1 > 0) {
-        scope.result += '<i class="mdi mdi-star-half"></i>';
+      for (let i = 1; i <= 5; i += 1) {
+        if (i <= Math.floor(parseFloat(scope.rating)))
+          scope.result += '<i class="mdi mdi-star"></i>';
+        else if (parseFloat(scope.rating) % 1 > 0 &&
+          i === Math.floor(parseFloat(scope.rating)) + 1)
+          scope.result += '<i class="mdi mdi-star-half"></i>';
+        else
+          scope.result += '<i class="mdi mdi-star-outline"></i>';
       }
     };
   }
