@@ -83,6 +83,11 @@
     <div class='panel-heading' translate='settings.plugins.file_title'></div>
     <div class='panel-body clearfix'>
       <p class='m-b-md' translate='settings.plugins.file_description'></p>
+      <div ng-if='plugins_settings.percent_upload_file'
+           class='m-b-sm'>
+        <md-progress-linear md-mode='determinate'
+                            value='{{ plugins_settings.percent_upload_file }}'></md-progress-linear>
+      </div>
       <div class='plugin-image m-b-sm'
            ng-if='plugins_settings.plugin_image_file_name'>
         <img ng-src='{{ plugins_settings.plugin_image_file_name }}' />

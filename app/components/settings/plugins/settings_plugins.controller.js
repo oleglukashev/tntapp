@@ -1,11 +1,12 @@
 export default class SettingsPluginsCtrl {
-  constructor(User, Settings, Notification, $rootScope) {
+  constructor(User, Settings, Notification, $rootScope, $interval) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.Settings = Settings;
     this.Notification = Notification;
     this.$rootScope = $rootScope;
+    this.$interval = $interval;
     this.is_loaded = false;
     this.iframe_widget = '<iframe src="https://dashboard.thenexttable.com/thenexttable-embed/iframe.php?rid=' + this.current_company_id + '" style="display: block; margin: 0 auto;" frameborder="0" seamless="seamless" height="440px;" width="300px;"></iframe>'
 
@@ -57,6 +58,15 @@ export default class SettingsPluginsCtrl {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = (fileLoadedEvent) => {
+        // start number of fix progress bar
+        this.percent_upload_file = 0;
+        const progressInterval = this.$interval(() => {
+          this.percent_upload_file += 5;
+          if (this.percent_upload_file >= 90) {
+            this.$interval.cancel(progressInterval);
+          }
+        }, 50);
+
         let srcData = fileLoadedEvent.target.result;
         srcData = srcData.replace(/data:image\/(png|jpeg);base64,/g, '');
 
@@ -68,6 +78,8 @@ export default class SettingsPluginsCtrl {
           .updateGeneralSettings(this.current_company_id, data).then((result) => {
             this.plugin_image_file_name = result.data.plugin_image_file_name;
             this.$rootScope.show_spinner = false;
+            this.$interval.cancel(progressInterval);
+            this.percent_upload_file = null;
           }, (error) => {
             if (error.status > 0) this.upload_image_error = error.status;
           });
