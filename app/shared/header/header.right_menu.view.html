@@ -36,20 +36,20 @@
         <li class='m-t-sm'>
           <a href='#'
              ui-sref='app.settings.general'
-             ng-show='header.userIsOwner()'>
+             ng-show='header.userIsOwnerOrManager()'>
             <span translate='right_menu.settings'></span>
           </a>
-          <span ng-hide='header.userIsOwner()'
+          <span ng-hide='header.userIsOwnerOrManager()'
                 title='{{ "notifications.access_only" | translate }}'
                 translate='right_menu.settings'></span>
         </li>
         <li>
           <a href='#'
              ui-sref='app.upgrade'
-             ng-show='header.userIsOwner()'>
+             ng-show='header.userIsOwnerOrManager()'>
             <span translate='right_menu.upgrade'></span>
           </a>
-          <span ng-hide='header.userIsOwner()'
+          <span ng-hide='header.userIsOwnerOrManager()'
                 title='{{ "notifications.access_only" | translate }}'
                 translate='right_menu.upgrade'></span>
         </li>

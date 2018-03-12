@@ -6,7 +6,7 @@ export default class SettingsCtrl {
     this.$stateParams = $stateParams;
     this.$window = $window;
 
-    if (this.$state.current.name.indexOf('app.settings') >= 0 && !User.isOwner()) {
+    if (this.$state.current.name.indexOf('app.settings') >= 0 && !User.isOwnerOrManager()) {
       this.$state.go('app.dashboard');
     }
 

@@ -50,6 +50,7 @@ export default class SettingsEmployeesItemCtrl {
 
   updateEmployee() {
     this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
 
     const data = {
       manage_access: this.item.manage_access,
@@ -59,10 +60,12 @@ export default class SettingsEmployeesItemCtrl {
       .update(this.current_company_id, this.item.id, data).then(
         () => {
           this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
           this.$modalInstance.dismiss('cancel');
         },
         (error) => {
           this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
           this.errors = error.data.errors;
         },
       );
@@ -70,15 +73,19 @@ export default class SettingsEmployeesItemCtrl {
 
   destroy() {
     this.is_submitting = true;
+    this.$rootScope.show_spinner = true;
+
     this.Employee
       .destroy(this.current_company_id, this.item.id).then(
         () => {
           this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
           this.items.splice(this.items.indexOf(this.item), 1);
           this.$modalInstance.dismiss('cancel');
         },
         () => {
           this.is_submitting = false;
+          this.$rootScope.show_spinner = false;
         },
       );
   }
