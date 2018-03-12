@@ -109,10 +109,15 @@ export default class AgendaQuickReservationCtrl {
   }
 
   loadAvailableTablesOfProducts() {
+    this.$rootScope.show_spinner = true;
+
     this.Product
-      .getAvailableTablesOfProducts(this.current_company_id, this.datetime.format('YYYY-MM-DD')).then(
+      .getAvailableTablesOfProducts(this.current_company_id, this.datetime.format('YYYY-MM-DD HH:mm')).then(
         (result) => {
+          this.$rootScope.show_spinner = false;
           this.available_time = result;
-        }, () => {});
+        }, () => {
+          this.$rootScope.show_spinner = false;
+        });
   }
 }
