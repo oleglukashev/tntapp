@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 export default class SettingsProductsNewProductCtrl {
   constructor(User, TimeRange, AppConstants, products, Slider, $timeout, $rootScope,
     $scope, $modalInstance, $translate) {
@@ -19,8 +21,8 @@ export default class SettingsProductsNewProductCtrl {
       maxValue: 95,
     };
 
-    this.sliderSat = Object.assign({}, this.sliderMonFri);
-    this.sliderSun = Object.assign({}, this.sliderMonFri);
+    this.sliderSat = angular.copy(this.sliderMonFri);
+    this.sliderSun = angular.copy(this.sliderMonFri);
 
     this.sliders = [
       {
