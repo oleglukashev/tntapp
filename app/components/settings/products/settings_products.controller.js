@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 export default class SettingsProductsCtrl {
   constructor(
     User, Product, AppConstants, TimeRange, Slider, $scope, $rootScope, $timeout, $window,
@@ -148,7 +146,8 @@ export default class SettingsProductsCtrl {
 
               const startTime = Math.max(productStartTime, rangeStartTime);
               const endTime = Math.min(productEndTime, rangeEndTime);
-              const options = angular.copy(this.slider.options);
+
+              const options = Object.assign({}, this.slider.options);
 
               // options.minLimit = productStartTime;
               // options.maxLimit = productEndTime;
@@ -256,7 +255,7 @@ export default class SettingsProductsCtrl {
               name: timeRange.product.name,
               minValue: arr.minValue,
               maxValue: arr.maxValue,
-              options: angular.copy(this.slider.options),
+              options: Object.assign({}, this.slider.options),
             };
 
             this.data[day].time_ranges[timeRange.id] = newTimeRange;
