@@ -89,10 +89,10 @@
                             value='{{ plugins_settings.percent_upload_file }}'></md-progress-linear>
       </div>
       <div class='plugin-image m-b-sm'
-           ng-if='plugins_settings.plugin_image_file_name'>
+           ng-if='plugins_settings.canShowImage()'>
         <img ng-src='{{ plugins_settings.plugin_image_file_name }}' />
         <div>
-          <i class='mdi mdi-delete' ng-click='plugins_settings.removeImage();'></i>
+          <i class='mdi mdi-delete i-16' ng-click='plugins_settings.removeImage();'></i>
         </div>
       </div>
       <button type='button'

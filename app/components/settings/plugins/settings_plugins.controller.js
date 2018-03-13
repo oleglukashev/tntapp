@@ -54,7 +54,7 @@ export default class SettingsPluginsCtrl {
 
   uploadImage(file, errFiles) {
     if (file) {
-      this.$rootScope.show_spinner = true;
+      this.image_is_submiting = true;
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onload = (fileLoadedEvent) => {
@@ -77,11 +77,12 @@ export default class SettingsPluginsCtrl {
         this.Settings
           .updateGeneralSettings(this.current_company_id, data).then((result) => {
             this.plugin_image_file_name = result.data.plugin_image_file_name;
-            this.$rootScope.show_spinner = false;
             this.$interval.cancel(progressInterval);
             this.percent_upload_file = null;
+            this.image_is_submiting = false;
           }, (error) => {
             if (error.status > 0) this.upload_image_error = error.status;
+            this.image_is_submiting = false;
           });
       };
     }
@@ -92,6 +93,8 @@ export default class SettingsPluginsCtrl {
   }
 
   removeImage() {
+    this.$rootScope.show_spinner = true;
+
     const data = {
       plugin_image_file_name: null,
     };
@@ -101,5 +104,9 @@ export default class SettingsPluginsCtrl {
         this.plugin_image_file_name = result.data.plugin_image_file_name;
         this.$rootScope.show_spinner = false;
       });
+  }
+
+  canShowImage() {
+    return this.plugin_image_file_name && !this.image_is_submiting;
   }
 }
