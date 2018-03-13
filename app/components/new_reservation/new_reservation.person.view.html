@@ -118,8 +118,9 @@
                   ng-if='!reserv.is_customer_reservation'
                   md-ink-ripple
                   class='md-btn md-flat m-b m-t btn-fw text-success m-l-6'
-                  ngf-select=''
+                  ngf-select='reserv.uploadImage($file, $invalidFiles)'
                   ngf-drop=''
+                  ngf-max-size="1MB"
                   ngf-pattern="'.pdf'"
                   accept='application/pdf'
                   ng-model='reserv.reservation.reservation_pdf'>
@@ -140,6 +141,7 @@
             <translate class='uppercase'>reservation.less_fields</translate>
           </span>
       </button>
+
       <div class='wrapper red-300 layout-align-space-around-center layout-column'
            ng-show='reserv.errors.length'>
         <div class='w-xl'>

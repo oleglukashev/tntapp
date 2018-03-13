@@ -23,6 +23,7 @@ import newReservationService from '../../components/new_reservation/new_reservat
 import inviteService from './invite.service';
 import ConfirmService from './confirm.service';
 import LoadedService from './loaded.service';
+import NotificationService from './notification.service';
 
 export default angular.module('app.services', [])
   .service('User', UserService)
@@ -49,4 +50,5 @@ export default angular.module('app.services', [])
   .service('Invite', inviteService)
   .service('Confirm', ConfirmService)
   .service('Loaded', LoadedService)
+  .service('Notification', NotificationService)
   .name;

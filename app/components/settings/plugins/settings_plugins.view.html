@@ -21,9 +21,7 @@
       </div>
     </div>
   </div>
-</div>
 
-<div ng-show='plugins_settings.is_loaded'>
   <div class='panel'>
     <div class='panel-heading' translate='settings.plugins.iframe_title'></div>
     <div class='panel-body'>
@@ -38,9 +36,9 @@
         <div class='col-sm-10 no-padder'>
           <textarea class='form-control' readonly>{{ plugins_settings.iframe_widget }}</textarea>
         </div>
+      </div>
     </div>
   </div>
-</div>
 
 <!-- <div ng-show='plugins_settings.is_loaded'>
   <div class='panel'>
@@ -60,7 +58,6 @@
   </div>
 </div> -->
 
-<div ng-show='plugins_settings.is_loaded'>
   <div class='panel'>
     <div class='panel-heading' translate='settings.plugins.tnr_link_title'></div>
     <div class='panel-body'>
@@ -81,9 +78,36 @@
       </form>
     </div>
   </div>
-</div>
 
-<div ng-show='plugins_settings.is_loaded'>
+  <div class='panel'>
+    <div class='panel-heading' translate='settings.plugins.file_title'></div>
+    <div class='panel-body clearfix'>
+      <p class='m-b-md' translate='settings.plugins.file_description'></p>
+      <div ng-if='plugins_settings.percent_upload_file'
+           class='m-b-sm'>
+        <md-progress-linear md-mode='determinate'
+                            value='{{ plugins_settings.percent_upload_file }}'></md-progress-linear>
+      </div>
+      <div class='plugin-image m-b-sm'
+           ng-if='plugins_settings.canShowImage()'>
+        <img ng-src='{{ plugins_settings.plugin_image_file_name }}' />
+        <div>
+          <i class='mdi mdi-delete i-16' ng-click='plugins_settings.removeImage();'></i>
+        </div>
+      </div>
+      <button type='button'
+              class='md-button btn-success no-margin'
+              ngf-select='plugins_settings.uploadImage($file, $invalidFiles)'
+              accept="image/*"
+              ngf-pattern="'.png,.jpg'"
+              ngf-max-height="2000"
+              ngf-max-size="1MB"
+              ng-model='plugins_settings.plugin_image_file_name'>
+        {{ 'choose_file' | translate }}
+      </button>
+    </div>
+  </div>
+
   <div class='panel'>
     <div class='panel-heading' translate='settings.plugins.api_title'></div>
     <div class='panel-body'>

@@ -1,15 +1,13 @@
 import angular from 'angular';
 
 export default class Reservation {
-  constructor(JWT, Upload, moment, $http, $q, filterFilter, $mdDialog) {
+  constructor(moment, $http, $q, filterFilter, $mdDialog) {
     'ngInject';
 
     this.moment = moment;
     this.$http = $http;
     this.$q = $q;
     this.$mdDialog = $mdDialog;
-    this.JWT = JWT;
-    this.Upload = Upload;
 
     this.filterFilter = filterFilter;
     this.moment = moment;
@@ -124,32 +122,27 @@ export default class Reservation {
   }
 
   create(companyId, data, skipJwtAuth) {
-    const header = skipJwtAuth ? null : { Authorization: `Bearer ${this.JWT.get()}` };
-
-    if (!companyId) {
+    if (!companyId || !data) {
       return this.$q.defer().promise;
     }
 
-    return this.Upload.upload({
+    return this.$http({
       url: `${API_URL}/company/${companyId}/reservation`,
       skipAuthorization: skipJwtAuth,
-      headers: header,
+      method: 'POST',
       data,
     }).then(result => result, error => error);
   }
 
   update(companyId, reservationId, data, skipJwtAuth) {
-    const header = skipJwtAuth ? null : { Authorization: `Bearer ${this.JWT.get()}` };
-
-    if (!companyId) {
+    if (!companyId || !data) {
       return this.$q.defer().promise;
     }
 
-    return this.Upload.upload({
+    return this.$http({
       url: `${API_URL}/company/${companyId}/reservation/${reservationId}`,
       skipAuthorization: skipJwtAuth,
-      headers: header,
-      method: 'POST',
+      method: 'PATCH',
       data,
     }).then(result => result, error => error);
   }

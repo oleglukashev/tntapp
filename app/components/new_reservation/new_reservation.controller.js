@@ -459,4 +459,13 @@ export default class NewReservationCtrl {
 
     return null;
   }
+
+  getBackgroundStyles() {
+    if (!this.showCustomBackground()) return null;
+    return `background: url(${this.settings.plugin_image_file_name }) no-repeat 0 0;background-size: cover;`;
+  }
+
+  showCustomBackground() {
+    return this.settings && this.settings.plugin_image_file_name && this.selected_index === 0;
+  }
 }
