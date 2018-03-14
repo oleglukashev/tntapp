@@ -305,7 +305,7 @@ export default class EditReservationCtrl {
       const product = this.current_part.product;
       const reservationDate = this.moment(this.current_part.date).format('YYYY-MM-DD HH:mm:ss');
 
-      this.Product.getAvailableTables(companyId, product, reservationDate).then(
+      this.Product.getAvailableTables(companyId, product, reservationDate, true).then(
         (result) => {
           this.available_time = result;
           const date = this.moment(this.current_part.date).format('YYYY-MM-DD');
