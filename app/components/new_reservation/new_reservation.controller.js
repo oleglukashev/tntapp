@@ -266,7 +266,7 @@ export default class NewReservationCtrl {
 
       this
         .Product
-        .getAvailableTables(companyId, product, reservationDate, this.is_customer_reservation)
+        .getAvailableTables(companyId, product, reservationDate, true)
         .then((result) => {
           this.$rootScope.show_spinner = false;
           this.current_part.available_time = result;

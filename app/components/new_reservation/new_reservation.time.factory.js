@@ -68,7 +68,7 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
     };
 
     instance.timeIsDisabled = (timeObj) => {
-      if (!timeObj.is_open || !instance.isEnoughSeats(timeObj)) {
+      if (!timeObj.is_open || !instance.isEnoughSeats(timeObj) || timeObj.available_table_count <= 0) {
         return true;
       }
 
