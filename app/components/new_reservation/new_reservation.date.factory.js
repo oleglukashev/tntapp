@@ -24,8 +24,6 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
 
       let result = true;
 
-      console.log(date);
-
       const disabledProductsData = instance.disabledProductsData(date);
       const disabledZonesData = instance.disabledZonesData(date);
 
@@ -139,8 +137,8 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
           $mdDialog.show($mdDialog.alert()
             .parent(angular.element(document.querySelector('.modal-dialog')))
             .clickOutsideToClose(true)
-            .textContent(this.no_reservations_today_more_text)
-            .ok(this.back_text));
+            .textContent(instance.no_reservations_today_more_text)
+            .ok(instance.back_text));
         }
       }
     };
@@ -152,11 +150,11 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
     // run translates
     instance.no_reservations_today_more_text = '';
     instance.back_text = '';
-    $translate(['notification.no_reservations_today_more', 'back']).then((translates) => {
-      instance.no_reservations_today_more_text = translates.no_reservations_today_more;
+    $translate(['notifications.no_reservations_today_more', 'back']).then((translates) => {
+      instance.no_reservations_today_more_text = translates['notifications.no_reservations_today_more'];
       instance.back_text = translates.back;
     }, (translationIds) => {
-      instance.no_reservations_today_more_text = translationIds.no_reservations_today_more;
+      instance.no_reservations_today_more_text = translationIds['notifications.no_reservations_today_more'];
       instance.back_text = translationIds.back;
     });
   };
