@@ -69,7 +69,7 @@ export default class NewReservationCtrl {
       this.current_part.number_of_persons = parseInt($stateParams.aantal_personen);
     }
 
-    this.walk_in = Object.assign({}, this.reservation);
+    this.walk_in = this.reservation;
     this.walk_in_part = this.walk_in.reservation_parts[0];
 
     // default walk in reservation value
