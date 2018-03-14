@@ -303,7 +303,7 @@ export default class EditReservationCtrl {
     if (this.canLoadTime()) {
       const companyId = this.current_company_id;
       const product = this.current_part.product;
-      const reservationDate = this.moment(this.current_part.date).format('YYYY-MM-DD HH:mm:ss');
+      const reservationDate = this.moment(this.current_part.date).format('YYYY-MM-DD');
 
       this.Product.getAvailableTables(companyId, product, reservationDate, true).then(
         (result) => {

@@ -81,8 +81,8 @@ export default class Product {
     }).then(result => result.data);
   }
 
-  getAvailableTablesOfProducts(companyId, date, skipJwtAuth) {
-    if (!(companyId && date)) {
+  getAvailableTablesOfProducts(companyId, dateTime, skipJwtAuth) {
+    if (!(companyId && dateTime)) {
       return this.$q.defer().promise;
     }
 
@@ -90,7 +90,9 @@ export default class Product {
       url: `${API_URL}/company/${companyId}/product/available_tables_of_products`,
       skipAuthorization: skipJwtAuth,
       method: 'POST',
-      data: { date },
+      data: {
+        date_time: dateTime,
+      },
     }).then(result => result.data);
   }
 }
