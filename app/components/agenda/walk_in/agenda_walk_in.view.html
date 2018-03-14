@@ -1,0 +1,15 @@
+<section class='no-margin reservation_modal'>
+  <md-toolbar>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex translate='reservation.walkin'></h2>
+      <md-button class='md-icon-button'
+                 ng-click='reserv.Confirm.onCloseModal(reserv.$modalInstance)'
+                 md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <div data-ng-include=" 'new_reservation.walk_in.view.html' "></div>
+  </md-content>
+</section>

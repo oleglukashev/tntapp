@@ -6,7 +6,7 @@ export default class NewReservation {
 
     // run translates
     const translatesArray = [
-      'date', 'product', 'number_of_guests', 'first_name', 'notifications.not_full',
+      'date', 'product', 'number_of_guests', 'first_name', 'notifications.not_full', 'email',
       'last_name', 'phone', 'notifications.is_required', 'time', 'notifications.full_name',
     ];
 
@@ -17,6 +17,7 @@ export default class NewReservation {
       this.first_name_text = translates.first_name;
       this.last_name_text = translates.last_name;
       this.phone_text = translates.phone;
+      this.email_text = translates.email;
       this.is_required_text = translates['notifications.is_required'];
       this.time_text = translates.time;
       this.full_name_text = translates['notifications.full_name'];
@@ -28,6 +29,7 @@ export default class NewReservation {
       this.first_name_text = translationIds.first_name;
       this.last_name_text = translationIds.last_name;
       this.phone_text = translationIds.phone;
+      this.email_text = translationIds.email;
       this.is_required_text = translationIds['notifications.is_required'];
       this.time_text = translationIds.time;
       this.full_name_text = translationIds['notifications.full_name'];
@@ -63,9 +65,9 @@ export default class NewReservation {
       }
 
       if (!reservation.mail && isCustomerReservation) {
-        errors.push(`${this.email} ${this.is_required_text}`);
+        errors.push(`${this.email_text} ${this.is_required_text}`);
       } else if (reservation.mail && !emailRe.test(reservation.mail)) {
-        errors.push(`${this.email} ${this.not_full_text}`);
+        errors.push(`${this.email_text} ${this.not_full_text}`);
       }
 
       if (phoneNumberIsRequired && !reservation.primary_phone_number) errors.push(`${this.phone_text} ${this.is_required_text}`);

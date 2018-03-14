@@ -36,7 +36,7 @@ export default class NewReservationCtrl {
       Reservation.max_date = undefined;
     }
 
-    this.selected_index = 0;
+    this.tab_index = 0;
     this.errors = [];
 
     this.product_week_time_ranges = {};
@@ -69,23 +69,8 @@ export default class NewReservationCtrl {
       this.current_part.number_of_persons = parseInt($stateParams.aantal_personen);
     }
 
-    this.walk_in = this.reservation;
-    this.walk_in_part = this.walk_in.reservation_parts[0];
-
-    // default walk in reservation value
-    if (!this.walk_in_part.number_of_persons)
-      this.walk_in_part.number_of_persons = 2;
-
     this.is_success = false;
     this.is_submitting = false;
-
-    // run translates
-    this.more_than_2mb_error_text = '';
-    $translate('notifications.more_than_2mb').then((total) => {
-      this.more_than_2mb_error_text = total;
-    }, (translationIds) => {
-      this.more_than_2mb_error_text = translationIds;
-    });
 
     NewReservationDateFactory(this, $scope);
     NewReservationGroupFactory(this);
@@ -97,81 +82,37 @@ export default class NewReservationCtrl {
     NewReservationZoneFactory(this);
     NewReservationPersonAutocompleteFactory(this);
     this.preloadData();
-  }
 
-  walkInOrReservationPart() {
-    return this.walk_in.reservation_parts.length
-      ? this.walk_in.reservation_parts
-      : this.reservation.reservation_parts;
-  }
-
-  submitWalkInForm() {
-    this.validWalkInForm();
-    if (this.errors.length) return false;
-    const data = this.prepareWalkInFormData();
-
-    this.is_submitting = true;
-    this.$rootScope.show_spinner = true;
-    this.Reservation.createWalkIn(this.current_company_id, data, this.is_customer_reservation)
-      .then(
-        () => {
-          this.$rootScope.show_spinner = false;
-          this.is_submitting = false;
-          this.success = true;
-          this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
-        },
-        (error) => {
-          this.$rootScope.show_spinner = false;
-          this.is_submitting = false;
-          this.errors = error;
-        });
-
-    return true;
-  }
-
-  prepareWalkInFormData() {
-    const dateTime = `${this.moment().format('DD-MM-YYYY HH:mm')}`;
-
-    this.walk_in_part.date = this.moment().format('DD MMMM YYYY');
-    this.walk_in_part.time = this.moment().format('HH:mm');
-
-    const data = {
-      is_customer: this.is_customer_reservation,
-      language: this.walk_in.language,
-      send_confirmation: this.walk_in.send_confirmation,
-      notes: this.walk_in.notes,
-      customer: {
-        first_name: this.walk_in.first_name,
-        last_name: this.walk_in.last_name,
-        primary_phone_number: this.walk_in.primary_phone_number,
-        mail: this.walk_in.mail,
-      },
-      reservation_parts: [],
-    };
-
-    this.walk_in.reservation_parts.forEach((part) => {
-      data.reservation_parts.push({
-        number_of_persons: part.number_of_persons,
-        tables: part.tables,
-        date_time: dateTime,
-      });
+    // run translates
+    this.more_than_2mb_error_text = '';
+    $translate('notifications.more_than_2mb').then((total) => {
+      this.more_than_2mb_error_text = total;
+    }, (translationIds) => {
+      this.more_than_2mb_error_text = translationIds;
     });
-
-    return data;
   }
 
   submitForm() {
     this.validForm();
     if (this.errors.length) return false;
-    const data = this.prepareFormData();
+
+    let data;
+    let method;
+    if (this.reservation.walk_in) {
+      data = this.prepareWalkInFormData();
+      method = this.Reservation.createWalkIn.bind(this.Reservation);
+    } else {
+      data = this.prepareFormData();
+      method = this.Reservation.create.bind(this.Reservation);
+    }
 
     this.is_submitting = true;
     this.$rootScope.show_spinner = true;
-    this.Reservation.create(this.current_company_id, data, this.is_customer_reservation)
+    method(this.current_company_id, data, this.is_customer_reservation)
       .then(
         (result) => {
           if (result.status === 200) {
-            this.success = true;
+            this.is_success = true;
             this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
           } else if (result.status === 400) {
             this.errors = result.data.errors.errors;
@@ -189,6 +130,37 @@ export default class NewReservationCtrl {
         });
 
     return true;
+  }
+
+  prepareWalkInFormData() {
+    const dateTime = `${this.moment().format('DD-MM-YYYY HH:mm')}`;
+
+    this.current_part.date = this.moment().format('DD MMMM YYYY');
+    this.current_part.time = this.moment().format('HH:mm');
+
+    const data = {
+      is_customer: this.is_customer_reservation,
+      language: this.reservation.language,
+      send_confirmation: this.reservation.send_confirmation,
+      notes: this.reservation.notes,
+      customer: {
+        first_name: this.reservation.first_name,
+        last_name: this.reservation.last_name,
+        primary_phone_number: this.reservation.primary_phone_number,
+        mail: this.reservation.mail,
+      },
+      reservation_parts: [],
+    };
+
+    this.reservation.reservation_parts.forEach((part) => {
+      data.reservation_parts.push({
+        number_of_persons: part.number_of_persons,
+        tables: part.tables,
+        date_time: dateTime,
+      });
+    });
+
+    return data;
   }
 
   prepareFormData() {
@@ -428,25 +400,31 @@ export default class NewReservationCtrl {
       this.reservation,
       this.settings.phone_number_is_required,
       this.is_customer_reservation,
-      false);
-  }
-
-  validWalkInForm() {
-    this.errors = this.NewReservation.validForm(
-      this.walk_in,
-      this.settings.phone_number_is_required,
-      this.is_customer_reservation,
-      true);
+      this.reservation.walk_in);
   }
 
   isPersonTab() {
-    return this.selected_index === this.pagination.person - 1;
+    return this.tab_index === this.pagination.person - 1;
   }
 
   selectTab(index) {
-    this.selected_index = index;
+    this.tab_index = index;
     if (index === 2) {
       this.checkDeadlineAndClosedDate();
+    }
+  }
+
+  selectType(type) {
+    if (type === 'regular') {
+      this.selected_type_index = 1;
+      this.reservation.walk_in = false;
+    } else {
+      this.selected_type_index = 2;
+      this.reservation.walk_in = true;
+
+      if (!this.current_part.number_of_persons) {
+        this.current_part.number_of_persons = 2;
+      }
     }
   }
 
@@ -462,10 +440,10 @@ export default class NewReservationCtrl {
 
   getBackgroundStyles() {
     if (!this.showCustomBackground()) return null;
-    return `background: url(${this.settings.plugin_image_file_name }) no-repeat 0 0;background-size: cover;`;
+    return `background: url(${this.settings.plugin_image_file_name}) no-repeat 0 0;background-size: cover;`;
   }
 
   showCustomBackground() {
-    return this.settings && this.settings.plugin_image_file_name && this.selected_index === 0;
+    return this.settings && this.settings.plugin_image_file_name && this.tab_index === 0;
   }
 }

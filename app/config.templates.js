@@ -31,7 +31,6 @@ export default function templates($templateCache) {
   $templateCache.put('agenda_charts.view.html', require('./components/agenda/charts/agenda_charts.view.html'));
   $templateCache.put('user_menu.edit.view.html', require('./shared/user_menu/edit/user_menu.edit.view.html'));
   $templateCache.put('settings_employees.item.view.html', require('./components/settings/employees/settings_employees.item.view.html'));
-  $templateCache.put('agenda_quick_reservation.view.html', require('./components/agenda/quick_reservation/agenda_quick_reservation.view.html'));
   $templateCache.put('agenda.widget.html', require('./components/agenda/agenda.widget.html'));
   $templateCache.put('new_reservation.date.view.html', require('./components/new_reservation/new_reservation.date.view.html'));
   $templateCache.put('new_reservation.number_of_persons.view.html', require('./components/new_reservation/new_reservation.number_of_persons.view.html'));

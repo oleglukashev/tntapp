@@ -9,14 +9,14 @@
         {{ 'new_reservation' | translate }}
       </h2>
       <md-button class='md-icon-button'
-                 ng-click='dash_reserv.closeModalOrConfirm(reserv.success);'
+                 ng-click='dash_reserv.closeModalOrConfirm(reserv.is_success);'
                  md-no-ink>
         <i class='mdi mdi-close m-r-sm i-24'></i>
       </md-button>
     </div>
   </md-toolbar>
   <md-content>
-    <div ng-hide='reserv.success'>
+    <div ng-hide='reserv.is_success'>
       <md-tabs class='reservation_tabs hidden_tab'
                flex
                md-selected='reserv.selected_type_index'
@@ -33,13 +33,13 @@
               </div>
               <div class='settings_add_items m-t-md text-center'>
                 <div class='clearfix'>
-                  <label ng-click='reserv.selected_type_index=1'
+                  <label ng-click='reserv.selectType("regular")'
                          class='box'
                          uncheckable>
                     <i class='box_icon mdi mdi-clipboard-outline i-40'></i>
                     <div class='m-t-sm' translate='reservation.regular'></div>
                   </label>
-                  <label ng-click='reserv.selected_type_index=2'
+                  <label ng-click='reserv.selectType("walkin")'
                          class='box'
                          uncheckable>
                     <i class='box_icon mdi mdi-walk i-40'></i>
@@ -56,7 +56,7 @@
             <form ng-submit='reserv.submitForm()'>
               <md-tabs class='reservation_tabs'
                      flex
-                     md-selected='reserv.selected_index'
+                     md-selected='reserv.tab_index'
                      md-no-pagination
                      md-stretch-tabs
                      md-dynamic-height>
@@ -78,18 +78,23 @@
             </form>
           </md-tab-body>
         </md-tab>
-        <div data-ng-include=" 'new_reservation.walk_in.view.html' "></div>
+
+        <md-tab>
+          <md-tab-body>
+            <div data-ng-include=" 'new_reservation.walk_in.view.html' "></div>
+          </md-tab-body>
+        </md-tab>
       </md-tabs>
     </div>
 
-    <div class='md-content-submit b-t' flex ng-show='reserv.success'>
+    <div class='md-content-submit b-t' flex ng-show='reserv.is_success'>
       <div class='md-list-item'>
         <div class='md-list-item-content'>
           <h4 translate='reservation.success'></h4>
         </div>
       </div>
       <div class='wrapper'>
-        <div class='md-list-item inset' ng-repeat='part in reserv.walkInOrReservationPart()'>
+        <div class='md-list-item inset' ng-repeat='part in reserv.reservation_parts'>
             <div class='md-list-item-left'>
               <i class='mdi mdi-calendar icon-muted i-24'></i>
             </div>
