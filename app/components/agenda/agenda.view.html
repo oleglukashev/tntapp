@@ -105,7 +105,7 @@
                              data-zone-id='{{ zone.id }}'
                              ng-repeat='quarter in [0,1,2,3]'
                              ui-on-drop='agenda.onDrop(tableId, tableIndex, hour, quarter, $data)'
-                             ng-click='agenda.openQuickReservation(tableId, agenda.tables[tableId].table_number, hour, quarter)'
+                             ng-click='agenda.openWalkIn(tableId, agenda.tables[tableId].table_number, hour, quarter)'
                              ng-class='{ closed: agenda.isClosedTime(hour, quarter, zone.id) }'
                              ng-mouseenter="hover=true"
                              ng-mouseleave="hover=false"

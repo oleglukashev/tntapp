@@ -90,11 +90,11 @@
             <input ng-model='reserv.reservation.company_name' />
           </md-input-container>
           <div class='md-form-group no-padder'>
-            <md-radio-group ng-model="reserv.reservation.gender">
-              <md-radio-button value='Man' class="inline md-success">
+            <md-radio-group ng-model='reserv.reservation.gender'>
+              <md-radio-button value='Man' class='inline md-success'>
                 {{ 'male' | translate }}
               </md-radio-button>
-              <md-radio-button value='Vrouw' class="inline md-success">
+              <md-radio-button value='Vrouw' class='inline md-success'>
                 {{ 'female' | translate }}
               </md-radio-button>
             </md-radio-group>
@@ -153,7 +153,7 @@
       <button type='submit'
               class='btn btn-lg btn-success w-full no-top-radius md-content-button'
               ng-class="{ 'disabled': reserv.is_submitting }"
-              ng-show='reserv.isPersonTab() && !reserv.success'>
+              ng-show='reserv.isPersonTab() && !reserv.is_success'>
         <translate>reservation.reserve</translate>
       </button>
     </div>

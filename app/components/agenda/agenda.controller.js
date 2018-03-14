@@ -1,3 +1,6 @@
+import walkInTemplate from './walk_in/agenda_walk_in.view.html';
+
+
 export default class AgendaCtrl {
   constructor(User, Settings, Zone, Table, TimeRange, Product, ReservationItemFactory,
     PageFilterFactory, PageFilterTimeRange, ReservationStatusMenu, Reservation,
@@ -319,10 +322,10 @@ export default class AgendaCtrl {
     });
   }
 
-  openQuickReservation(tableId, tableNumber, hour, quarter) {
+  openWalkIn(tableId, tableNumber, hour, quarter) {
     const modalInstance = this.$modal.open({
-      templateUrl: 'agenda_quick_reservation.view.html',
-      controller: 'AgendaQuickReservationCtrl as quick_reserv',
+      template: walkInTemplate,
+      controller: 'AgendaWalkInCtrl as reserv',
       size: 'md',
       resolve: {
         datetime: () => {

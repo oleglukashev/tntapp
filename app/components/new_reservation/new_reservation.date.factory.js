@@ -132,7 +132,7 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
         const moreThanDeadline = now >= todayDeadline && now <= todayEnd;
 
         if (moreThanDeadline) {
-          instance.selected_index = 1;
+          instance.tab_index = 1;
           instance.current_part.date = null;
           $mdDialog.show($mdDialog.alert()
             .parent(angular.element(document.querySelector('.modal-dialog')))

@@ -159,19 +159,6 @@ export default class Reservation {
     }).then(result => result.data);
   }
 
-  createQuick(companyId, data, skipJwtAuth) {
-    if (!companyId) {
-      return this.$q.defer().promise;
-    }
-
-    return this.$http({
-      url: `${API_URL}/company/${companyId}/reservation/quick`,
-      skipAuthorization: skipJwtAuth,
-      data,
-      method: 'POST',
-    }).then(result => result.data);
-  }
-
   createWalkIn(companyId, data, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
@@ -182,7 +169,7 @@ export default class Reservation {
       skipAuthorization: skipJwtAuth,
       data,
       method: 'POST',
-    }).then(result => result.data);
+    }).then(result => result, error => error);
   }
 
   getProductNameByProductId(products, productId) {

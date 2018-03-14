@@ -31,7 +31,7 @@ export default class EditReservationCtrl {
     this.$modalInstance = $modalInstance;
 
     this.moment = moment;
-    this.selected_index = 0;
+    this.tab_index = 0;
     this.errors = [];
 
     this.reservation = reservation;

@@ -43,7 +43,7 @@ describe('TNT app', () => {
     const submitButton = element.all(by.css('[type=submit]'));
     submitButton.first().click();
 
-    const closeModalButton = element(by.css('[ng-click="dash_reserv.closeModalOrConfirm(reserv.success);"]'));
+    const closeModalButton = element(by.css('[ng-click="dash_reserv.closeModalOrConfirm(reserv.is_success);"]'));
     closeModalButton.click();
 
     const lastReservations = element.all(by.repeater('item in today_data')).last();

@@ -5,8 +5,8 @@
     <form ng-submit='reserv.submitForm()'>
       <md-toolbar>
         <div class='md-toolbar-tools'>
-          <h2 md-truncate flex ng-hide='reserv.success' translate='reserv'></h2>
-          <h2 md-truncate flex ng-show='reserv.success' translate='new_reservation'></h2>
+          <h2 md-truncate flex ng-hide='reserv.is_success' translate='reserv'></h2>
+          <h2 md-truncate flex ng-show='reserv.is_success' translate='new_reservation'></h2>
           <md-button class='md-icon-button'
                      ng-click='reserv.$window.location.reload()'
                      md-no-ink>
@@ -15,10 +15,10 @@
         </div>
       </md-toolbar>
       <md-content>
-        <div ng-hide='reserv.success'>
+        <div ng-hide='reserv.is_success'>
           <md-tabs class='reservation_tabs'
                    flex
-                   md-selected='reserv.selected_index'
+                   md-selected='reserv.tab_index'
                    md-no-pagination
                    md-stretch-tabs
                    md-dynamic-height>
@@ -36,7 +36,7 @@
           </md-tabs>
         </div>
 
-        <div class='md-content-submit b-t' flex ng-show='reserv.success'>
+        <div class='md-content-submit b-t' flex ng-show='reserv.is_success'>
           <div class='md-list-item'>
             <div class='md-list-item-content'>
               <h4 translate='reservation.success'></h4>
