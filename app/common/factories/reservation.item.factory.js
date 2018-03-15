@@ -1,21 +1,22 @@
 import angular from 'angular';
 
-export default function ReservationItemFactory(AppConstants, ReservationStatus, $mdSidenav, $rootScope) {
+export default function ReservationItemFactory(AppConstants, ReservationStatus, $mdSidenav,
+  $rootScope, $translate) {
   'ngInject';
 
   return (that) => {
     const instance = that;
 
     instance.rowPart = (part, reservation) => {
-      if (!reservation.customer) {
-        reservation.customer = {
-          last_name: 'Walk in',
-        };
-      }
-
       const lastName = reservation.customer.last_name;
       const firstName = reservation.customer.first_name;
-      const name = instance.getName(lastName, firstName);
+      let name = instance.getName(lastName, firstName);
+
+      if (reservation.walk_in) {
+        name = 'Walk in';
+      } else if (!name) {
+        name = instance.unknown_text;
+      }
 
       return {
         id: part.id,
@@ -94,5 +95,11 @@ export default function ReservationItemFactory(AppConstants, ReservationStatus, 
 
       return firstName;
     };
+
+    $translate('unknown').then((translate) => {
+      instance.unknown_text = translate;
+    }, (translationIds) => {
+      instance.unknown_text = translationIds;
+    });
   };
 }
