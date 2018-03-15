@@ -25,7 +25,7 @@
 						<td class='clickable time'
 								ng-repeat='time in limits_settings.times'
 								ng-click='limits_settings.saveLimitByTimeAndDay(time, number_of_day)'>
-							{{ limits_settings.limits[number_of_day][time] || '-' }}
+							{{ limits_settings.limits[number_of_day][time] >= 0 ? limits_settings.limits[number_of_day][time] : '-' }}
 						</td>
 					</tr>
 				</tbody>
