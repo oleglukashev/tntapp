@@ -18,6 +18,12 @@ import satellizer from 'satellizer';
 import chartjs from 'angular-chart.js';
 import 'angular-growl-notifications';
 
+// Internet Explorer compatibility
+import 'core-js/es6/symbol';
+import 'core-js/es6/array';
+import 'core-js/es7/array';
+import 'core-js/es7/object';
+
 import dnd from './shared/dnd';
 import uiLoad from './common/services/ui-load';
 import uiJq from './common/directives/ui-jq';
