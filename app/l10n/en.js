@@ -152,6 +152,9 @@ export default {
     expired_time: 'Your trial expires in {{ days }} days',
   },
   settings: {
+    lightspeed: {
+      title: 'Lightspeed'
+    },
     employees: {
       title: 'Employees',
       add: 'Add employee',
@@ -299,6 +302,9 @@ export default {
       file_description: 'Add your own background. The recommended size of the background is 1920x1080.',
     },
   },
+  receipts: {
+    status: 'Receipt status'
+  },
   email: 'E-mail',
   first_name: 'First name',
   last_name: 'Last name',
@@ -332,6 +338,7 @@ export default {
   overbooking: 'Overbooking',
   not_overbooking: 'Not overbooking',
   save: 'Save',
+  sync: 'Sync',
   reservations: 'Reservations',
   reserv: 'Reservation',
   quick_reservation: 'Quick reservation',

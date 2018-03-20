@@ -6,6 +6,6 @@ export default function routes($stateProvider) {
       url: '/limits',
       controller: 'SettingsLimitsCtrl',
       controllerAs: 'limits_settings',
-      template: require('./settings_limits.view.html')
-    })
+      template: require('./settings_limits.view.html'),
+    });
 }

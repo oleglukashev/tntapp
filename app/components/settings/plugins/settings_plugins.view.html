@@ -109,6 +109,43 @@
   </div>
 
   <div class='panel'>
+    <div class='panel-heading'>
+      Lightspeed Auth
+    </div>
+    <div class='panel-body'>
+      <p class='m-b-md'></p>
+    </div>
+    <div class='panel-footer clearfix form-horizontal'>
+      <form ng-submit='plugins_settings.submitLightspeedForm();'>
+        <div class='row'>
+          <label class='col-sm-2 col-xs-12 text-left control-label'>Auth</label>
+          <div class='col-sm-4 col-xs-5 p-r-none'>
+            <input type='text'
+                   placeholder='Username'
+                   class='form-control'
+                   ng-model='plugins_settings.lightspeed_username' />
+          </div>
+          <div class='col-sm-6 col-xs-7'>
+            <div class='input-group'>
+              <input type='password'
+                     placeholder='password'
+                     class='form-control'
+                     ng-model='plugins_settings.lightspeed_password' />
+              <span class='input-group-btn'>
+                <button type='submit'
+                        class='md-button btn-success no-margin'
+                        translate='save'></button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div ng-show='plugins_settings.is_loaded'>
+  <div class='panel'>
     <div class='panel-heading' translate='settings.plugins.api_title'></div>
     <div class='panel-body'>
       <p class='m-b-md' translate='settings.plugins.api_description'></p>

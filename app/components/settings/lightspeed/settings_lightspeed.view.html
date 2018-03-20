@@ -1,0 +1,38 @@
+<div class='panel'>
+  <div class='panel-heading clearfix'>
+    {{ 'settings.lightspeed.title' | translate }}
+    <button ng-click='lightspeed_settings.showAuthPopup()'
+            class='md-btn md-flat btn-fw text-success pull-right'
+            translate='authorization'></button>
+  </div>
+  <div class='md-list'>
+    <div class='md-list-item clear'
+         ng-repeat='table in lightspeed_settings.tables'>
+      <div class='pull-left'>
+        <h3 class='no-margin text-md'>
+          {{ 'table' | translate }}: {{ table.table_number }}
+        </h3>
+        <small class='text-muted'></small>
+      </div>
+      <div class='pull-right'>
+        <md-input-container class='no-margin p-t-none'>
+          <md-select ng-model='table.lightspeed_table_id'>
+            <md-option ></md-option>
+            <md-option ng-value='item.id'
+                       ng-repeat='(name, item) in lightspeed_settings.lightspeed_tables'>
+              {{ name }}
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+    </div>
+  </div>
+  <div class='panel-footer'>
+    <button ng-click='lightspeed_settings.saveTables()'
+            class='md-btn md-flat btn-fw text-success'
+            translate='save'></button>
+    <button ng-click='lightspeed_settings.sync()'
+            class='md-btn md-flat btn-fw text-success'
+            translate='sync'></button>
+  </div>
+</div>

@@ -213,6 +213,17 @@
         </a>
       </li>
 
+      <div class='inset'
+           ng-if='user.ls_reservations.length > 0'
+           ng-repeat='ls_reservation in user.ls_reservations'>
+        <div class='md-list-item-left'>
+          <i class='mdi mdi-cash icon-muted i-24'></i>
+        </div>
+        <div class='md-list-item-content'>
+          <h3 class='text-md'>{{ 'receipts.status' | translate }}: {{ ls_reservation.status }}</h3>
+          <small class='font-thin'>{{ 'date' | translate }}: {{ user.moment(ls_reservation.paid_on).format('DD.MM.YYYY HH:mm') }}, {{ 'total' | translate }}: {{ ls_reservation.total }}, Amount: {{ ls_reservation.amount || 0 }}</small>
+        </div>
+      </div>
     </ul>
   </md-content>
 </md-sidenav>

@@ -1,0 +1,37 @@
+<section>
+  <md-toolbar>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex translate='authorization'></h2>
+      <md-button class='md-icon-button'
+                 ng-click='lightspeed_auth.$modalInstance.close()'
+                 md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <div class='wrapper md-content-submit'
+         layout='column'
+         layout-align='space-around center'>
+      <div class='w-xl'>
+        <form name='lightspeed_auth_form'
+              novalidate
+              ng-submit='lightspeed_auth.submitForm(lightspeed_auth_form.$valid);'>
+          <md-input-container class='md-block'>
+            <label translate='username'></label>
+            <input ng-model='lightspeed_auth.form_data.username' />
+          </md-input-container>
+          <md-input-container class='md-block'>
+            <label translate='password'></label>
+            <input ng-model='lightspeed_auth.form_data.password' />
+          </md-input-container>
+          <button type='submit'
+                  ng-class="{ 'disabled': !lightspeed_auth_form.$valid || lightspeed_auth.is_submitting }"
+                  class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
+                  translate='save'>
+          </button>
+        </form>
+      </div>
+    </div>
+  </md-content>
+</section>
