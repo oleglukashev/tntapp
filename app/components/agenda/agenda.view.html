@@ -31,7 +31,12 @@
     <div class='panel' ng-show='agenda.view_type == "list"'>
       <div class='panel-heading' translate='reservations'></div>
       <div class='panel-body no-padder'>
-        <table class='table m-b-none'>
+        <div ng-hide='agenda.data.length'
+             class='empty_reservations'
+             translate='make_first_reservation'>
+        </div>
+
+        <table class='table m-b-none' ng-show='agenda.data.length'>
           <thead>
             <tr>
                 <th width='8%' translate='present'></th>

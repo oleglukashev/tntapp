@@ -362,6 +362,7 @@ export default {
   send: 'Send',
   view_profile: 'View profile',
   none: 'None',
+  make_first_reservation: 'You don\'t have any reservations, click on the "+" to make your first reservation',
   today: 'Today',
   this_week: 'This week',
   number: 'Number',
