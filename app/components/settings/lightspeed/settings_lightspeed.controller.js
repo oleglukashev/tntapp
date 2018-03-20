@@ -41,7 +41,7 @@ export default class SettingsLightspeedCtrl {
     this.lightspeed_tables = {};
 
     return this.Lightspeed.getAllTables(this.current_company_id).then((result) => {
-      result.results.forEach((table) => {
+      result.forEach((table) => {
         this.lightspeed_tables[table.name] = {
           id: parseInt(table.id),
           floorId: table.floorId,
