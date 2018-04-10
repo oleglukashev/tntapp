@@ -361,6 +361,7 @@ export default {
   send: 'Verstuur',
   view_profile: 'Profiel bekijken',
   none: 'Geen',
+  make_first_reservation: 'Je hebt nog geen reserveringen klik op de “+” om je eerste reservering aan te maken',
   today: 'Vandaag',
   this_week: 'Deze week',
   number: 'Aantal',

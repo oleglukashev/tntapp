@@ -60,9 +60,9 @@
                       ng-mouseup='reservations.active_part = item.id'
                       md-ink-ripple></md-list-item>
       </md-list>
-      <div class='md-padding'
+      <div class='md-padding empty_reservations'
            ng-hide='reservations.ReservationPart.partsByDate(reservations.Loaded.reservations.today, reservations.moment()).length'
-           translate='none'></div>
+           translate='make_first_reservation'></div>
     </div>
 
     <div class='panel'>
