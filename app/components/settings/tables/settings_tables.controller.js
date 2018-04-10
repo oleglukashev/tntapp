@@ -134,16 +134,29 @@ export default class SettingsTablesCtrl {
 
   addTableByZoneId(id) {
     const scopeTables = this.getScopeTables();
+    const zoneTables = this.tables_by_zone[id];
     const lastPosition = scopeTables.length ?
       Math.max.apply(Math, scopeTables.map(item => item.position)) :
       null;
 
-    const lastTableNumber = scopeTables.length ?
-      Math.max.apply(Math, scopeTables.map(item => item.table_number)) :
+    const lastTableNumber = zoneTables.length ?
+      Math.max.apply(Math, zoneTables
+        .filter((table) => parseInt(table.table_number) >= 0)
+        .map(item => parseInt(item.table_number))) :
       null;
 
     const position = lastPosition ? lastPosition + 1 : 0;
-    const tableNumber = lastTableNumber || String(1);
+
+    let tableNumber = String(1);
+    if (lastTableNumber) {
+      const lastNumericTableNumber = parseInt(lastTableNumber);
+
+      if (lastNumericTableNumber >= 0) {
+        tableNumber = lastNumericTableNumber + 1;
+      } else {
+        tableNumber = `${zoneTables[zoneTables.length - 1].table_number}2`;
+      }
+    }
 
     if (!this.tables_by_zone[id]) {
       this.tables_by_zone[id] = [];
