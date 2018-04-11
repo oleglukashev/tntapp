@@ -1,10 +1,11 @@
 export default class Settings {
-  constructor($http, $q, $cookieStore) {
+  constructor($http, $q, $cookieStore, $translate) {
     'ngInject';
 
     this.$http = $http;
     this.$q = $q;
     this.$cookieStore = $cookieStore;
+    this.$translate = $translate;
   }
 
   getGeneralSettings(companyId, skipJwtAuth) {
@@ -210,5 +211,30 @@ export default class Settings {
 
   saveThemeToCookie(value) {
     this.$cookieStore.put('theme', value);
+  }
+
+  sendConfirmSenderEmail(companyId, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/${this.$translate.proposedLanguage()}/company/${companyId}/settings/sender_email/send_confirm_letter`,
+      skipAuthorization: skipJwtAuth,
+      method: 'POST',
+    }).then(result => result.data);
+  }
+
+  confirmSenderEmail(companyId, token, skipJwtAuth) {
+    if (!companyId || !token) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/settings/sender_email/confirm`,
+      skipAuthorization: skipJwtAuth,
+      method: 'POST',
+      data: { sender_email_token: token },
+    }).then(result => result.data);
   }
 }

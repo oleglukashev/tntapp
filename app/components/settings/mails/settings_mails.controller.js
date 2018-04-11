@@ -24,6 +24,10 @@ export default class SettingsMailsCtrl {
           this.$rootScope.show_spinner = false;
           this.mails_settings_form_data = mailsSettings;
           this.setIsLoaded();
+
+          if (this.mails_settings_form_data.sender_email) {
+            this.sender_email_is_loaded = true;
+          }
         }, () => {
           this.$rootScope.show_spinner = false;
         });
@@ -40,8 +44,15 @@ export default class SettingsMailsCtrl {
   }
 
   submitMailsSettingsForm() {
+    delete this.mails_settings_form_data.sender_email_confirmed;
+
     this.Settings
-      .updateMailsSettings(this.current_company_id, this.mails_settings_form_data).then(() => {});
+      .updateMailsSettings(this.current_company_id, this.mails_settings_form_data)
+      .then((mailsSettings) => {
+        if (this.mails_settings_form_data.sender_email) {
+          this.sender_email_is_loaded = true;
+        }
+      });
   }
 
   editMail(id) {
@@ -59,5 +70,18 @@ export default class SettingsMailsCtrl {
 
   setIsLoaded() {
     this.is_loaded = this.mails_settings_is_loaded && this.mails_texts_settings_is_loaded;
+  }
+
+  sendConfirmSenderEmail() {
+    this.$rootScope.show_spinner = true;
+    this.email_has_sent = false;
+
+    this.Settings
+      .sendConfirmSenderEmail(this.current_company_id).then(() => {
+        this.email_has_sent = true;
+        this.$rootScope.show_spinner = false;
+      }, () => {
+        this.$rootScope.show_spinner = false;
+      });
   }
 }
