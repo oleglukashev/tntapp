@@ -440,7 +440,7 @@ export default class NewReservationCtrl {
 
   getBackgroundStyles() {
     if (!this.showCustomBackground()) return null;
-    return `background: url(${this.settings.plugin_image_file_name}) no-repeat 0 0;background-size: cover;`;
+    return this.settings.plugin_image_file_name;
   }
 
   showCustomBackground() {

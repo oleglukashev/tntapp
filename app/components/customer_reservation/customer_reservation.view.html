@@ -1,7 +1,6 @@
 <div class='modal-dialog' ng-controller='NewReservationCtrl as reserv'>
-  <section class='reservation_modal panel no-margin'
-           style='{{ reserv.getBackgroundStyles() }}'
-           ng-class='{ "custom-image": reserv.showCustomBackground() }'>
+  <section class='reservation_modal panel no-margin custom-image'
+           ng-style="{'background-image': 'url(' + reserv.getBackgroundStyles() + ')'}">
     <form ng-submit='reserv.submitForm()'>
       <md-toolbar>
         <div class='md-toolbar-tools'>
