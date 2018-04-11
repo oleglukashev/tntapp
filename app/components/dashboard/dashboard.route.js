@@ -3,7 +3,7 @@ export default function routes($stateProvider) {
 
   $stateProvider
     .state('app.dashboard', {
-      url: '/',
+      url: '/?sender_email_token',
       template: require('./dashboard.view.html'),
       controller: 'DashboardCtrl',
       controllerAs: 'dash'

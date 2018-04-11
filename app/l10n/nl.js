@@ -110,6 +110,7 @@ export default {
     not_full: 'niet vol',
     guests_more_than_suitable: 'Aantal personen is meer dan waar de tafel(s) geschikt voor is',
     more_than_2mb: 'Een bestand mag niet groter zijn dan 2MB',
+    access_only: 'Alleen toegankelijk met een beheerdersaccount',
   },
   auth: {
     activate_description: 'U moet een nieuw wachtwoord instellen. Samen met uw e-mail adres zijn dit uw logingegevens. Bewaar deze dus goed.',
@@ -132,6 +133,7 @@ export default {
     regular_guests: 'Vaste gast',
     particularities: 'Bijzonderheden',
     pick_date: 'Kies een datum',
+    sender_email_text: 'Email adres is bevestigd. We dit adres om mails te versturen',
   },
   language: {
     netherlands: 'Nederlands',
@@ -203,6 +205,10 @@ export default {
       netherlands: 'Nederlandse mails',
       english: 'Engelse mails',
       edit: 'Mail bewerken',
+      sender_email: 'Verifieer afzend adres',
+      sender_email_description: 'Verifieer hier het mail adres dat je wilt gebruiken voor de communicatie naar je gasten',
+      send_conf_email: 'Stuur bevestigingsmail',
+      email_has_sent: 'Email is verstuurd',
       statuses: {
         na_bezoek: 'Mail na bezoek',
         reservering_bevestigd: 'Bevestigingsmail',
@@ -383,4 +389,6 @@ export default {
   help: 'Helpen',
   choose_file: 'Choose file',
   unknown: 'Onbekend',
+  authorization: 'Authorization',
+  congratulations: 'Gefeliciteerd'
 };
