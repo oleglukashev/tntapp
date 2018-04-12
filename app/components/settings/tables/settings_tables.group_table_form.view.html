@@ -1,0 +1,48 @@
+<section class='no-margin'>
+  <md-toolbar>
+    <div class='md-toolbar-tools'>
+      <h2 translate='settings.group_tables.title'
+          md-truncate
+          flex></h2>
+      <md-button class='md-icon-button'
+                 ng-click='controller.$modalInstance.dismiss("cancel")'
+                 md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <div class='wrapper md-content-submit'
+         layout='column'
+         layout-align='space-around center'>
+      <div class='w-xl'>
+        <form name='group_table_form'
+              ng-submit='controller.submitForm()'>
+          <color-picker ng-model='controller.form_data.color'></color-picker>
+
+          <md-input-container class='md-block'>
+            <label translate='min'></label>
+            <input type='number'
+                   ng-model='controller.form_data.min'
+                   min='0'
+                   required />
+          </md-input-container>
+
+          <md-input-container class='md-block'>
+            <label translate='max'></label>
+            <input type='number'
+                   ng-model='controller.form_data.max'
+                   min='0'
+                   required />
+          </md-input-container>
+
+          <button type='submit'
+              ng-class="{ 'disabled': controller.is_submitting }"
+              class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
+              translate='save'>
+          </button>
+        </form>
+      </div>
+    </div>
+  </md-content>
+</section>

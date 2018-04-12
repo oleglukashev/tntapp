@@ -27,6 +27,7 @@ import NotificationService from './notification.service';
 import LightspeedService from './lightspeed.service';
 import AnalyticsService from './analytics.service';
 import UserMenuService from '../../shared/user_menu/user_menu.service';
+import GroupTableService from './group_table.service';
 
 export default angular.module('app.services', [])
   .service('User', UserService)
@@ -57,4 +58,5 @@ export default angular.module('app.services', [])
   .service('Lightspeed', LightspeedService)
   .service('Analytics', AnalyticsService)
   .service('UserMenu', UserMenuService)
+  .service('GroupTable', GroupTableService)
   .name;

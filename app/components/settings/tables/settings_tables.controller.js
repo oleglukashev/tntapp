@@ -1,11 +1,18 @@
+<<<<<<< HEAD
+=======
+import angular from 'angular';
+import groupTableFormTemplate from './settings_tables.group_table_form.view.html';
+
+>>>>>>> 8635b863... #364: add table groups
 export default class SettingsTablesCtrl {
-  constructor(User, Zone, Table, filterFilter, $scope, $rootScope, $window, $modal) {
+  constructor(User, Zone, Table, GroupTable, filterFilter, $scope, $rootScope, $window, $modal) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
     this.Table = Table;
     this.Zone = Zone;
+    this.GroupTable = GroupTable;
     this.filterFilter = filterFilter;
     this.$modal = $modal;
     this.$rootScope = $rootScope;
@@ -16,6 +23,7 @@ export default class SettingsTablesCtrl {
     this.opened = [true];
 
     this.loadZonesAndTables();
+    this.loadGroupTables();
     this.$rootScope.show_spinner = true;
   }
 
@@ -30,6 +38,7 @@ export default class SettingsTablesCtrl {
             table_number: table.table_number,
             number_of_persons: table.number_of_persons,
             position: index,
+            group_table: table.group_table_id,
             zones: [zone.id],
           });
 
@@ -53,27 +62,6 @@ export default class SettingsTablesCtrl {
         });
   }
 
-  loadTables() {
-    this.Table.getAll(this.current_company_id)
-      .then(
-        (tables) => {
-          this.is_loaded = true;
-          this.$rootScope.show_spinner = false;
-          this.initTablesByZone(tables);
-        }, () => {
-          this.$rootScope.show_spinner = false;
-        });
-  }
-
-  loadZonesAndTables() {
-    this.Zone.getAll(this.current_company_id)
-      .then(
-        (result) => {
-          this.zones = result;
-          this.loadTables();
-        }, () => {});
-  }
-
   addZone() {
     const that = this;
     const modalInstance = this.$modal.open({
@@ -82,6 +70,19 @@ export default class SettingsTablesCtrl {
       size: 'md',
       resolve: {
         zones: () => that.zones,
+      },
+    });
+
+    modalInstance.result.then(() => {}, () => {});
+  }
+
+  addGroupTable() {
+    const modalInstance = this.$modal.open({
+      template: groupTableFormTemplate,
+      controller: 'SettingsTablesNewGroupTableCtrl as controller',
+      size: 'md',
+      resolve: {
+        groupTables: () => this.groupTables,
       },
     });
 
@@ -103,7 +104,21 @@ export default class SettingsTablesCtrl {
     modalInstance.result.then(() => {}, () => {});
   }
 
-  removeZone(index) {
+  editGroupTable(index) {
+    const modalInstance = this.$modal.open({
+      template: groupTableFormTemplate,
+      controller: 'SettingsTablesEditGroupTableCtrl as controller',
+      size: 'md',
+      resolve: {
+        groupTables: () => this.groupTables,
+        groupTable: () => this.groupTables[index],
+      },
+    });
+
+    modalInstance.result.then(() => {}, () => {});
+  }
+
+  deleteZone(index) {
     const zone = this.zones[index];
     this.$rootScope.show_spinner = true;
 
@@ -117,6 +132,21 @@ export default class SettingsTablesCtrl {
           }, () => {
             this.$rootScope.show_spinner = false;
           });
+    }
+  }
+
+  deleteGroupTable(index) {
+    const groupTable = this.groupTables[index];
+    this.$rootScope.show_spinner = true;
+
+    if (groupTable) {
+      this.GroupTable.delete(this.current_company_id, groupTable.id)
+        .then(() => {
+          this.$rootScope.show_spinner = false;
+          this.groupTables.splice(index, 1);
+        }, () => {
+          this.$rootScope.show_spinner = false;
+        });
     }
   }
 
@@ -159,7 +189,7 @@ export default class SettingsTablesCtrl {
     this.submitForm();
   }
 
-  removeTable(zoneId, index) {
+  deleteTable(zoneId, index) {
     const table = this.tables_by_zone[zoneId][index];
 
     if (table) {
@@ -200,29 +230,52 @@ export default class SettingsTablesCtrl {
     return result;
   }
 
-  initTablesByZone(tables) {
-    this.tables_by_zone = {};
-    tables.forEach((table) => {
-      let zoneId = table.zones[0];
+  loadGroupTables() {
+    this.GroupTable.getAll(this.current_company_id).then((groupTables) => {
+      this.groupTables = groupTables;
+    })
+  }
 
-      if (!this.tables_by_zone[zoneId]) {
-        this.tables_by_zone[zoneId] = [];
-      }
+  loadTables() {
+    this.Table.getAll(this.current_company_id)
+      .then(
+        (tables) => {
+          this.is_loaded = true;
+          this.$rootScope.show_spinner = false;
 
-      let index = 0;
-      this.tables_by_zone[zoneId].forEach((sortTable, sortIndex) => {
-        if (parseInt(sortTable.position) < parseInt(table.position)) {
-          index = sortIndex + 1;
-        }
-      });
+          angular.forEach(this.zones, (zone) => {
+            this.tables_by_zone[zone.id] = this.filterFilter(tables, { zones: zone.id }).map((item) => {
+              return {
+                id: item.id,
+                table_number: item.table_number,
+                group_table_id: item.group_table_id,
+                number_of_persons: parseInt(item.number_of_persons),
+                position: parseInt(item.position),
+                zones: item.zones,
+              };
+            }).sort((a, b) => {
+              let comparison = 0;
 
-      this.tables_by_zone[zoneId].splice(index, 0, {
-        id: table.id,
-        table_number: table.table_number,
-        number_of_persons: parseInt(table.number_of_persons),
-        position: parseInt(table.position),
-        zones: [ zoneId ],
-      });
-    });
+              if (a.position > b.position) {
+                comparison = 1;
+              } else if (b.position > a.position) {
+                comparison = -1;
+              }
+
+              return comparison;
+            });
+          });
+        }, () => {
+          this.$rootScope.show_spinner = false;
+        });
+  }
+
+  loadZonesAndTables() {
+    this.Zone.getAll(this.current_company_id)
+      .then(
+        (result) => {
+          this.zones = result;
+          this.loadTables();
+        }, () => {});
   }
 }

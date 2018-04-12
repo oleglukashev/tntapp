@@ -8,8 +8,10 @@ import mailsController from './mails/settings_mails.controller';
 import tablesRouting from './tables/settings_tables.route';
 import tablesController from './tables/settings_tables.controller';
 import editMailController from './mails/settings_mails.edit_mail.controller';
-import newZoneController from './tables/new_zone/settings_tables.new_zone.controller';
-import editZoneController from './tables/edit_zone/settings_tables.edit_zone.controller';
+import newZoneController from './tables/settings_tables.new_zone.controller';
+import editZoneController from './tables/settings_tables.edit_zone.controller';
+import newGroupTableController from './tables/settings_tables.new_group_table.controller';
+import editGroupTableController from './tables/settings_tables.edit_group_table.controller';
 import settingsTablesZoneFactory from './tables/settings_tables.zone.factory';
 import limitsRouting from './limits/settings_limits.route';
 import limitsController from './limits/settings_limits.controller';
@@ -36,6 +38,8 @@ export default angular.module('app.settings', [])
   .controller('SettingsMailsEditMailCtrl', editMailController)
   .controller('SettingsTablesNewZoneCtrl', newZoneController)
   .controller('SettingsTablesEditZoneCtrl', editZoneController)
+  .controller('SettingsTablesNewGroupTableCtrl', newGroupTableController)
+  .controller('SettingsTablesEditGroupTableCtrl', editGroupTableController)
   .controller('SettingsProductsNewProductCtrl', newProductController)
   .controller('SettingsProductsLimitsCtrl', productLimitsController)
   .controller('SettingsProductsEditMinMaxCtrl', productEditMinMaxController)

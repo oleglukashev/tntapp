@@ -272,7 +272,7 @@ export default {
     zones: {
       add: 'Zone toevoegen',
       new: 'Nieuwe zone',
-      remove: 'Zone verwijderen',
+      delete: 'Zone verwijderen',
       edit: 'Zone bewerken',
       what_kind: 'Wat voor soort zone wil je toevoegen?',
       use_for_reserv: 'Gebruiken voor reserveringen via frontoffice',
@@ -280,7 +280,15 @@ export default {
     tables: {
       title: 'Tafels/zones',
       add: 'Tafel toevoegen',
-      remove: 'Tafel verwijderen',
+      delete: 'Tafel verwijderen',
+      group_table: 'Table group'
+    },
+    group_tables: {
+      title: 'Table groups',
+      edit: 'Edit table group',
+      delete: 'Delete table group',
+      new: 'New table group',
+      color: 'Color',
     },
     themes: {
       title: "Kleuren thema's",

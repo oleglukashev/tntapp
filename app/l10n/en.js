@@ -272,7 +272,7 @@ export default {
     zones: {
       add: 'Add zone',
       new: 'New zone',
-      remove: 'Delete zone',
+      delete: 'Delete zone',
       edit: 'Edit zone',
       what_kind: 'What kind of zone do you want to add?',
       use_for_reserv: 'Use for reservation through frontoffice',
@@ -280,7 +280,15 @@ export default {
     tables: {
       title: 'Tables/zones',
       add: 'Add table',
-      remove: 'Delete table',
+      delete: 'Delete table',
+      group_table: 'Table group'
+    },
+    group_tables: {
+      title: 'Table groups',
+      edit: 'Edit table group',
+      delete: 'Delete table group',
+      new: 'New table group',
+      color: 'Color',
     },
     themes: {
       title: 'Colored themes',
