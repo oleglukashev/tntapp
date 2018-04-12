@@ -109,7 +109,7 @@ export default {
     is_required: 'is required',
     not_full: 'not full',
     guests_more_than_suitable: 'Number of guests is more than of which de tabel is suitable',
-    more_than_2mb: 'The file can’t be larger than 2MB',
+    more_than_2mb: "The file can't be larger than 2MB",
     access_only: 'Only accessible with management account',
   },
   auth: {
