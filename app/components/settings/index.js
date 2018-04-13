@@ -28,6 +28,9 @@ import themesController from './themes/settings_themes.controller';
 import warningsRouting from './warnings/settings_warnings.route';
 import warningsController from './warnings/settings_warnings.controller';
 import editWarningsController from './warnings/edit/settings_warnings.edit.controller';
+import lightspeedController from './lightspeed/settings_lightspeed.controller';
+import lightspeedAuthController from './lightspeed/settings_lightspeed.auth.controller';
+import lightspeedRouting from './lightspeed/settings_lightspeed.route';
 
 export default angular.module('app.settings', [])
   .controller('SettingsMailsEditMailCtrl', editMailController)
@@ -58,5 +61,8 @@ export default angular.module('app.settings', [])
   .config(warningsRouting)
   .controller('SettingsWarningsCtrl', warningsController)
   .controller('SettingsWarningsEditCtrl', editWarningsController)
+  .controller('SettingsLightspeedCtrl', lightspeedController)
+  .controller('SettingsLightspeedAuthCtrl', lightspeedAuthController)
+  .config(lightspeedRouting)
   .factory('SettingsTablesZoneFactory', settingsTablesZoneFactory, ['AppConstants'])
   .name;

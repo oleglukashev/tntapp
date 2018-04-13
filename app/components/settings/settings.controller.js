@@ -20,6 +20,7 @@ export default class SettingsCtrl {
       'settings.plugins.title': 'app.settings.plugins',
       'settings.warnings.title': 'app.settings.warnings',
       'settings.themes.title': 'app.settings.themes',
+      'settings.lightspeed.title': 'app.settings.lightspeed',
     };
   }
 }

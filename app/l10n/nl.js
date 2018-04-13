@@ -152,6 +152,9 @@ export default {
     expired_time: 'Je trial verloopt over {{ days }} dag',
   },
   settings: {
+    lightspeed: {
+      title: 'Lightspeed'
+    },
     employees: {
       title: 'Medewerkers',
       add: 'Mederwerker toevoegen',
@@ -299,6 +302,9 @@ export default {
       file_description: 'Hier kunt u uw eigen achtergrondafbeelding voor de plugins uploaden. De aanbevolen grootte van de afbeelding is 1920x1080, maar kleinere afbeeldingen worden ook geaccepteerd.',
     },
   },
+  receipts: {
+    status: 'Receipt status'
+  },
   email: 'E-mail',
   first_name: 'Voornaam',
   last_name: 'Achternaam',
@@ -332,6 +338,7 @@ export default {
   overbooking: 'Overboeken',
   not_overbooking: 'Niet overboeken',
   save: 'Opslaan',
+  sync: 'Sync',
   reservations: 'Reserveringen',
   reserv: 'Reservering',
   quick_reservation: 'Snel reserveren',

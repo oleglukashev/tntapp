@@ -93,6 +93,7 @@ export default class UserMenuCtrl {
     this.Customer.searchReservationsByCustomerId(this.currentCompanyId, customerId)
       .then((response) => {
         this.reservations = response.reservations;
+        this.ls_reservations = response.ls_reservations;
         this.customer_notes = response.notes;
         this.customer_allergies = response.allergies;
         this.customer_preferences = response.preferences;
