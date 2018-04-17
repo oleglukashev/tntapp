@@ -1,0 +1,221 @@
+<div class='analytics-content clearfix'>
+  <div class='raw'>
+    <div class='col-xs-12 col-sm-6'>
+      <div class='panel'>
+        <div class='panel-heading' translate='analytics.average_guests_per_day'></div>
+        <div class='panel-body'>
+          <div class='clearfix m-b-sm'>
+            <div class='select-wrapper pull-left'>
+              <button class='mdi md-icon-button md-button mdi-filter-variant no-margin i-24 pull-left'
+                      md-ink-ripple></button>
+              <md-select class='pull-left'
+                         ng-change='analytics.updateAverageGuestsPerDayProduct()'
+                         ng-model='analytics.average_guests_per_day_product'>
+                <md-option ng-value='null' translate='none'></md-option>
+                <md-option ng-value='item'
+                           ng-repeat='item in analytics.products'>
+                  {{ item.name }}
+                </md-option>
+              </md-select>
+            </div>
+            <p class='pull-left m-b-none m-t-sm'
+               ng-if='analytics.average_guests_per_day_product'>
+              {{ analytics.average_guests_per_day_product.name }}
+            </p>
+            <button class='md-button md-mini md-icon-button no-margin pull-right'
+                    ng-class='{ "md-fab md-primary": analytics.average_guests_per_day_type == "year" }'
+                    ng-click='analytics.updateAverageGuestsPerDayType("year")'
+                    md-ink-ripple>
+              Y
+            </button>
+            <button class='md-button md-mini md-icon-button no-margin pull-right'
+                    ng-class='{ "md-fab md-primary": analytics.average_guests_per_day_type == "month" }'
+                    ng-click='analytics.updateAverageGuestsPerDayType("month")'
+                    md-ink-ripple>
+              M
+            </button>
+            <button class='md-button md-mini md-icon-button no-margin pull-right'
+                    ng-class='{ "md-fab md-primary": analytics.average_guests_per_day_type == "week" }'
+                    ng-click='analytics.updateAverageGuestsPerDayType("week")'
+                    md-ink-ripple>
+              W
+            </button>
+          </div>
+          <canvas id='average_guests_per_day'
+                  class='chart chart-line' 
+                  chart-data='analytics.analyticsData.getAverageGuestsPerDay.data'
+                  chart-labels='analytics.analyticsData.getAverageGuestsPerDay.labels'
+                  chart-series='analytics.analyticsData.getAverageGuestsPerDay.series'>
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <div class='col-xs-12 col-sm-6'>
+      <div class='panel'>
+        <div class='panel-heading' translate='analytics.total_amount_of_guests'></div>
+        <div class='panel-body'>
+          <div class='clearfix m-b-sm'>
+            <div class='select-wrapper pull-left'>
+              <button class='mdi md-icon-button md-button mdi-filter-variant no-margin i-24 pull-left'
+                      md-ink-ripple></button>
+              <md-select class='pull-left'
+                         ng-change='analytics.updateTotalAmountOfGuestsProduct()'
+                         ng-model='analytics.total_amount_of_guests_product'>
+                <md-option ng-value='null' translate='none'></md-option>
+                <md-option ng-value='item'
+                           ng-repeat='item in analytics.products'>
+                  {{ item.name }}
+                </md-option>
+              </md-select>
+            </div>
+            <p class='pull-left m-b-none m-t-sm'
+               ng-if='analytics.total_amount_of_guests_product'>
+              {{ analytics.total_amount_of_guests_product.name }}
+            </p>
+            <button class='md-button md-mini md-icon-button no-margin pull-right'
+                    ng-class='{ "md-fab md-primary": analytics.total_amount_of_guests_type == "month" }'
+                    ng-click='analytics.updateTotalAmountOfGuestsType("month")'
+                    md-ink-ripple>
+              M
+            </button>
+            <button class='md-button md-mini md-icon-button no-margin pull-right'
+                    ng-class='{ "md-fab md-primary": analytics.total_amount_of_guests_type == "day" }'
+                    ng-click='analytics.updateTotalAmountOfGuestsType("day")'
+                    md-ink-ripple>
+              D
+            </button>
+          </div>
+          <canvas id='total_guests_per_day'
+                  class='chart-bar'
+                  chart-data='analytics.analyticsData.getTotalAmountOfGuests.data'
+                  chart-labels='analytics.analyticsData.getTotalAmountOfGuests.labels'
+                  chart-series='analytics.analyticsData.getTotalAmountOfGuests.series'
+                  chart-dataset-override='analytics.totalAmountOfGuestsDatasetOverride'>
+          </canvas> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='raw'>
+    <div class='col-xs-12 col-sm-6'>
+      <div class='panel'>
+        <div class='panel-heading' translate='analytics.reservations_per_hour'></div>
+        <div class='panel-body'>
+          <canvas id='reservations_per_date_time'
+                  class='chart chart-bar'
+                  chart-data='analytics.analyticsData.getReservationsPerDateTime.data'
+                  chart-labels='analytics.analyticsData.getReservationsPerDateTime.labels'
+                  chart-series='analytics.analyticsData.getReservationsPerDateTime.series'
+                  chart-colors='analytics.barColors'>
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <div class='col-xs-12 col-sm-6'>
+      <div class='panel'>
+        <div class='panel-heading' translate='analytics.age_of_guests'></div>
+        <div class='panel-body'>
+          <canvas id='reservations_per_age'
+                  class='chart chart-bar'
+                  chart-data='analytics.analyticsData.getReservationsPerAge.data'
+                  chart-labels='analytics.analyticsData.getReservationsPerAge.labels'
+                  chart-series='analytics.analyticsData.getReservationsPerAge.series'
+                  chart-colors='analytics.barColors'>
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='raw'>
+    <div class='col-xs-12 col-sm-4'>
+      <div class='panel'>
+        <div class='panel-heading' translate='analytics.booking_channels'></div>
+        <div class='panel-body'>
+          <div class='pie-chart col-xs-6 m-t-sm'
+               ng-repeat='value in analytics.analyticsData.getBookingChannels.data'>
+            <div class='pie-chart-graph'>
+              <div ui-jq='easyPieChart'
+                   ui-options='{
+                    percent: analytics.Charts.getPercent(analytics.analyticsData.getBookingChannels.total, value),
+                    lineWidth: 2,
+                    trackColor: "#787878",
+                    barColor: "#f6f6f6",
+                    scaleColor: false,
+                    size: 84,
+                    rotate: 90,
+                    lineCap: "butt"
+                   }'>
+                <div>
+                  <span>{{ value }}</span>
+                </div>
+              </div>
+            </div>
+            <div class='pie-chart-title m-t-sm m-b-sm'>
+              {{ analytics.analyticsData.getBookingChannels.labels[$index] }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='col-xs-12 col-sm-4'>
+      <div class='panel'>
+        <div class='panel-heading' translate='analytics.product_distribution'></div>
+        <div class='panel-body'>
+          <div class='pie-chart col-xs-6 m-t-sm'
+               ng-repeat='value in analytics.analyticsData.getProductDistribution.data'>
+            <div class='pie-chart-graph'>
+              <div ui-jq='easyPieChart'
+                   ui-options='{
+                    percent: analytics.Charts.getPercent(analytics.analyticsData.getProductDistribution.total, value),
+                    lineWidth: 2,
+                    trackColor: "#787878",
+                    barColor: "#f6f6f6",
+                    scaleColor: false,
+                    size: 84,
+                    rotate: 90,
+                    lineCap: "butt"
+                   }'>
+                <div>
+                  <span>{{ value }}</span>
+                </div>
+              </div>
+            </div>
+            <div class='pie-chart-title m-t-sm m-b-sm'>
+              {{ analytics.analyticsData.getProductDistribution.labels[$index] }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='col-xs-12 col-sm-4'>
+      <div class='panel'>
+        <div class='panel-heading' translate='gender'></div>
+        <div class='panel-body'>
+          <div class='pie-chart col-xs-6 m-t-sm'
+               ng-repeat='value in analytics.analyticsData.getGender.data'>
+            <div class='pie-chart-graph'>
+              <div ui-jq='easyPieChart'
+                   ui-options='{
+                    percent: analytics.Charts.getPercent(analytics.analyticsData.getGender.total, value),
+                    lineWidth: 2,
+                    trackColor: "#787878",
+                    barColor: "#f6f6f6",
+                    scaleColor: false,
+                    size: 84,
+                    rotate: 90,
+                    lineCap: "butt"
+                   }'>
+                <div>
+                  <span>{{ value }}</span>
+                </div>
+              </div>
+            </div>
+            <div class='pie-chart-title m-t-sm m-b-sm'>
+              {{ analytics.analyticsData.getGender.labels[$index] }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -36,7 +36,7 @@ import editReservationController from './components/edit_reservation/edit_reserv
 import search from './components/search';
 import dashboard from './components/dashboard';
 import dashboardReservations from './components/dashboard/reservations/dashboard_reservations.controller';
-import reservations from './components/reservations';
+import analytics from './components/analytics';
 import customerReservation from './components/customer_reservation';
 import appController from './common/controllers/app.controller';
 import headerController from './shared/header/header.controller';
@@ -63,9 +63,9 @@ angular
   .module('app', [angularJwt, angularAnimate, angularNgUploader, angularAria, angularCookies,
     angularMessages, angularResource, angularSanitize, angularTouch, angularUiRouter,
     angularUiBootstrap, angularTranslate, angularMoment, angularMaterial, uiLoad,
-    uiJq, dndLists, satellizer, search, dashboard, customerReservation,
-    reservations, dnd, agenda, auth, settings, rzModule, chartjs, profiles, constants,
-    editUser, 'app.services', 'app.factories', 'app.directives', 'app.filters', 'growlNotifications',
+    uiJq, dndLists, satellizer, search, dashboard, customerReservation, analytics, dnd, agenda,
+    auth, settings, rzModule, chartjs, profiles, constants, editUser, 'app.services', 'app.factories',
+    'app.directives', 'app.filters', 'growlNotifications',
   ])
   .controller('AppCtrl', appController)
   .controller('HeaderCtrl', headerController)

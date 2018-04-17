@@ -1,7 +1,7 @@
 export default {
   top_menu: {
     dashboard: 'Dashboard',
-    today: 'Vandaag',
+    analytics: 'Analytics',
     calendar: 'Agenda',
     profiles: 'Profielen',
   },
@@ -101,6 +101,14 @@ export default {
   },
   calendar: {
     widget: 'Reserveringen zonder tafel',
+  },
+  analytics: {
+    average_guests_per_day: 'Gemiddeld aantal gasten per dag',
+    total_amount_of_guests: 'Totaal aantal gasten',
+    booking_channels: 'Reserveringskanalen',
+    product_distribution: 'Omzet productgroepen',
+    reservations_per_hour: 'Reserveringen per tijdstip',
+    age_of_guests: 'Leeftijd gasten'
   },
   notifications: {
     settings_escape: 'Het huidige werk is niet afgerond en wordt daarom niet opgeslagen',
@@ -398,5 +406,6 @@ export default {
   choose_file: 'Choose file',
   unknown: 'Onbekend',
   authorization: 'Authorization',
-  congratulations: 'Gefeliciteerd'
+  congratulations: 'Gefeliciteerd',
+  gender: 'Geslacht'
 };
