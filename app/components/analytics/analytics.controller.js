@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 export default class AnalyticsCtrl {
   constructor(User, Analytics, AppConstants, Charts, Product, $rootScope) {
     'ngInject';
@@ -23,11 +21,11 @@ export default class AnalyticsCtrl {
     }];
 
     this.totalAmountOfGuestsDatasetOverride = [{
-      type: 'bar'
+      type: 'bar',
     }, {
-      type: 'bar'
+      type: 'bar',
     }, {
-      type: 'line'
+      type: 'line',
     }];
   }
 
@@ -45,7 +43,7 @@ export default class AnalyticsCtrl {
   loadProducts() {
     this.Product.getAll(this.current_company_id).then((products) => {
       this.products = products;
-    })
+    });
   }
 
   updateAverageGuestsPerDayType(type) {
@@ -70,7 +68,7 @@ export default class AnalyticsCtrl {
     this.$rootScope.show_spinner = true;
     const data = {
       groupby: this.average_guests_per_day_type,
-    }
+    };
 
     if (this.average_guests_per_day_product) {
       data.perproduct = this.average_guests_per_day_product.id;
@@ -78,7 +76,7 @@ export default class AnalyticsCtrl {
 
     this.Analytics.getAverageGuestsPerDay(this.current_company_id, data)
       .then((result) => {
-        this.analyticsData['getAverageGuestsPerDay'] = result;
+        this.analyticsData.getAverageGuestsPerDay = result;
         this.$rootScope.show_spinner = false;
       }, () => {
         this.$rootScope.show_spinner = false;
@@ -89,7 +87,7 @@ export default class AnalyticsCtrl {
     this.$rootScope.show_spinner = true;
     const data = {
       groupby: this.total_amount_of_guests_type,
-    }
+    };
 
     if (this.total_amount_of_guests_product) {
       data.perproduct = this.total_amount_of_guests_product.id;
@@ -97,7 +95,7 @@ export default class AnalyticsCtrl {
 
     this.Analytics.getTotalAmountOfGuests(this.current_company_id, data)
       .then((result) => {
-        this.analyticsData['getTotalAmountOfGuests'] = result;
+        this.analyticsData.getTotalAmountOfGuests = result;
         this.$rootScope.show_spinner = false;
       }, () => {
         this.$rootScope.show_spinner = false;

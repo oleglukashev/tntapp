@@ -132,7 +132,7 @@
         <div class='panel-heading' translate='analytics.booking_channels'></div>
         <div class='panel-body'>
           <div class='pie-chart col-xs-6 m-t-sm'
-               ng-repeat='value in analytics.analyticsData.getBookingChannels.data'>
+               ng-repeat='value in analytics.analyticsData.getBookingChannels.data track by $index'>
             <div class='pie-chart-graph'>
               <div ui-jq='easyPieChart'
                    ui-options='{
@@ -162,7 +162,7 @@
         <div class='panel-heading' translate='analytics.product_distribution'></div>
         <div class='panel-body'>
           <div class='pie-chart col-xs-6 m-t-sm'
-               ng-repeat='value in analytics.analyticsData.getProductDistribution.data'>
+               ng-repeat='value in analytics.analyticsData.getProductDistribution.data track by $index'>
             <div class='pie-chart-graph'>
               <div ui-jq='easyPieChart'
                    ui-options='{
@@ -192,7 +192,7 @@
         <div class='panel-heading' translate='gender'></div>
         <div class='panel-body'>
           <div class='pie-chart col-xs-6 m-t-sm'
-               ng-repeat='value in analytics.analyticsData.getGender.data'>
+               ng-repeat='value in analytics.analyticsData.getGender.data track by $index'>
             <div class='pie-chart-graph'>
               <div ui-jq='easyPieChart'
                    ui-options='{
