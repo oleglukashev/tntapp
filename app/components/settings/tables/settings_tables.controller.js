@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-=======
 import angular from 'angular';
 import groupTableFormTemplate from './settings_tables.group_table_form.view.html';
 
->>>>>>> 8635b863... #364: add table groups
 export default class SettingsTablesCtrl {
   constructor(User, Zone, Table, GroupTable, filterFilter, $scope, $rootScope, $window, $modal) {
     'ngInject';
