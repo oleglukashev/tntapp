@@ -13,7 +13,10 @@ export default function NewReservationDateFactory(moment, filterFilter, $mdDialo
       instance.current_part.number_of_persons = null;
       instance.current_part.product = null;
       instance.current_part.time = null;
-      instance.selectTab(instance.pagination.date);
+
+      if (instance.current_part.date) {
+        instance.selectTab(instance.pagination.date);
+      }
     };
 
     instance.disableDates = (date) => {
