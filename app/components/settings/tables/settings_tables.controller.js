@@ -22,13 +22,21 @@ export default class SettingsTablesCtrl {
   }
 
   submitForm() {
-    const data = this.getScopeTables().map((item, index) => {
-      return {
-        table_number: item.table_number,
-        number_of_persons: item.number_of_persons,
-        position: index,
-        zones: item.zones,
-      };
+    const dataTableIds = [];
+    const data = [];
+    this.zones.forEach((zone) => {
+      this.tables_by_zone[zone.id].forEach((table) => {
+        if (!dataTableIds.includes(table.id)) {
+          data.push({
+            table_number: table.table_number,
+            number_of_persons: table.number_of_persons,
+            position: table.position,
+            zones: [zone.id],
+          });
+
+          dataTableIds.push(table.id);
+        }
+      });
     });
 
     this.errors = [];
