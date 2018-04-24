@@ -20,7 +20,7 @@ export default function NewReservationProductFactory(moment, filterFilter) {
     };
 
     instance.includeProductLimits = () => {
-      if (instance.current_part.current_product) {
+      if (instance.current_part.current_product && instance.is_customer_reservation) {
         const currentPart = instance.current_part;
         const currentProduct = instance.current_part.current_product;
 
