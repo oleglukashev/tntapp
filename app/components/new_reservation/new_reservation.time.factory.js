@@ -5,7 +5,9 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
     const instance = that;
 
     instance.changeTimePostProcess = () => {
-      instance.selectTab(instance.pagination.time);
+      if (instance.current_part.time) {
+        instance.selectTab(instance.pagination.time);
+      }
 
       if (instance.current_part.time && !instance.is_customer_reservation) {
         instance.loadOccupiedTables();

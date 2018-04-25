@@ -7,13 +7,29 @@ export default function NewReservationProductFactory(moment, filterFilter) {
     instance.changeProductPostProcess = () => {
       instance.current_part.current_product = null;
 
+
       if (instance.current_part.product) {
-        const product = instance.current_part.product;
-        instance.current_part.current_product = filterFilter(instance.products, { id: product })[0];
+        const product = filterFilter(instance.products, { id: instance.current_part.product })[0];
+        instance.current_part.current_product = product;
       }
 
-      instance.clearAndLoadTime();
-      instance.selectTab(instance.pagination.product);
+      if (instance.includeProductLimits() && instance.current_part.product) {
+        instance.clearAndLoadTime();
+        instance.selectTab(instance.pagination.product);
+      }
+    };
+
+    instance.includeProductLimits = () => {
+      if (instance.current_part.current_product && instance.is_customer_reservation) {
+        const currentPart = instance.current_part;
+        const currentProduct = instance.current_part.current_product;
+
+        return currentPart.number_of_persons >= currentProduct.min_persons &&
+          (!currentProduct.max_persons ||
+          currentPart.number_of_persons <= currentProduct.max_persons);
+      }
+
+      return true;
     };
 
     instance.checkProductForTimeRange = (productId) => {
@@ -79,6 +95,6 @@ export default function NewReservationProductFactory(moment, filterFilter) {
       }
 
       return result;
-    }
+    };
   };
 }

@@ -111,6 +111,7 @@ export default {
     guests_more_than_suitable: 'Number of guests is more than of which de tabel is suitable',
     more_than_2mb: "The file can't be larger than 2MB",
     access_only: 'Only accessible with management account',
+    outside_limits: 'The number of persons must be between {{ min }} and {{ max }}',
   },
   auth: {
     activate_description: 'You need set a new password. Together with your e-mail adres this are your login details.',

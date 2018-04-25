@@ -13,6 +13,13 @@
           <h4 translate='reservation.product_title'></h4>
         </div>
       </div>
+      <div class='wrapper red-300 layout-align-space-around-center layout-column'
+           ng-show='!reserv.includeProductLimits()'>
+        <div class='w-xl'>
+          <div translate='notifications.outside_limits'
+               translate-values='{ min: reserv.current_part.current_product.min_persons, max: reserv.current_part.current_product.max_persons }'></div>
+        </div>
+      </div>
       <div class='wrapper'>
         <div class='text-center' ng-show='reserv.products_is_loaded'>
           <label ng-repeat='product in reserv.products'

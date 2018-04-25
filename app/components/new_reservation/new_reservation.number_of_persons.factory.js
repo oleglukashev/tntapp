@@ -12,12 +12,16 @@ export default function NewReservationNumberOfPersonsFactory(Reservation) {
 
     instance.changeNumberOfPersonsInputPostProcess = () => {
       instance.current_part.product = null;
+      instance.current_part.current_product = null;
       instance.clearAndLoadTime();
     };
 
     instance.changeNumberOfPersonsPostProcess = () => {
       instance.changeNumberOfPersonsInputPostProcess();
-      instance.selectTab(instance.pagination.number_of_persons);
+
+      if (instance.current_part.number_of_persons) {
+        instance.selectTab(instance.pagination.number_of_persons);
+      }
     };
 
     instance.changeIsGroupPostProcess = () => {
