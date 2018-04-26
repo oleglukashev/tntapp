@@ -13,7 +13,6 @@ export default class AnalyticsCtrl {
     this.loadProducts();
 
     this.average_guests_per_day_type = 'month';
-    this.total_amount_of_guests_type = 'month';
 
     this.barColors = [{
       backgroundColor: this.AppConstants.chartColors.orange,
@@ -51,11 +50,6 @@ export default class AnalyticsCtrl {
     this.loadAverageGuestsPerDayProcess();
   }
 
-  updateTotalAmountOfGuestsType(type) {
-    this.total_amount_of_guests_type = type;
-    this.loadTotalAmountOfGuestsProcess();
-  }
-
   updateAverageGuestsPerDayProduct() {
     this.loadAverageGuestsPerDayProcess();
   }
@@ -86,7 +80,7 @@ export default class AnalyticsCtrl {
   loadTotalAmountOfGuestsProcess() {
     this.$rootScope.show_spinner = true;
     const data = {
-      groupby: this.total_amount_of_guests_type,
+      groupby: 'month',
     };
 
     if (this.total_amount_of_guests_product) {

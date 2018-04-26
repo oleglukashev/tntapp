@@ -72,18 +72,6 @@
                ng-if='analytics.total_amount_of_guests_product'>
               {{ analytics.total_amount_of_guests_product.name }}
             </p>
-            <button class='md-button md-mini md-icon-button no-margin pull-right'
-                    ng-class='{ "md-fab md-primary": analytics.total_amount_of_guests_type == "month" }'
-                    ng-click='analytics.updateTotalAmountOfGuestsType("month")'
-                    md-ink-ripple>
-              M
-            </button>
-            <button class='md-button md-mini md-icon-button no-margin pull-right'
-                    ng-class='{ "md-fab md-primary": analytics.total_amount_of_guests_type == "day" }'
-                    ng-click='analytics.updateTotalAmountOfGuestsType("day")'
-                    md-ink-ripple>
-              D
-            </button>
           </div>
           <canvas id='total_guests_per_day'
                   class='chart-bar'

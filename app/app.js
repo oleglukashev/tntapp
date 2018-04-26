@@ -91,7 +91,7 @@ angular
   }])
   .config(['ChartJsProvider', (ChartJsProvider) => {
     ChartJsProvider.setOptions({
-      chartColors: ['#787878', '#c8c8c8'],
+      chartColors: ['#303e4d', '#787878', '#ff9800'],
       responsive: true,
     });
   }])
