@@ -3,8 +3,7 @@ import angular from 'angular';
 export default class EditReservationCtrl {
   constructor(User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone,
     Table, moment, filterFilter, $rootScope, $window, $scope, $modalInstance, UserMenuEditFactroy,
-    reservation, reservationPart, customer, customerNotes, customerPreferences, customerAllergies, Confirm,
-    NewReservationGroupFactory, Notification) {
+    reservation, reservationPart, Confirm, UserMenu, NewReservationGroupFactory, Notification) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -17,12 +16,13 @@ export default class EditReservationCtrl {
     this.Settings = Settings;
     this.TimeRange = TimeRange;
     this.Confirm = Confirm;
+    this.UserMenu = UserMenu;
     this.Notification = Notification;
 
-    this.customer = customer;
-    this.customerNotes = customerNotes;
-    this.customerPreferences = customerPreferences;
-    this.customerAllergies = customerAllergies;
+    this.customer = angular.copy(this.UserMenu.customer);
+    this.customerNotes = angular.copy(this.UserMenu.notes);
+    this.customerPreferences = angular.copy(this.UserMenu.preferences);
+    this.customerAllergies = angular.copy(this.UserMenu.allergies);
 
     this.$window = $window;
     this.$scope = $scope;
@@ -35,6 +35,7 @@ export default class EditReservationCtrl {
     this.errors = [];
 
     this.reservation = reservation;
+    this.reservationPart = reservationPart;
     this.old_reservation_pdf = this.reservation.reservation_pdf;
     this.original_reservation_pdf_file = null;
     this.available_time = [];
@@ -44,14 +45,23 @@ export default class EditReservationCtrl {
     // $modal cache input variables
     if (!this.reservation.is_cached) {
       this.reservation.is_cached = true;
-      this.reservation.reservation_parts.forEach((part, index) => {
-        this.reservation.reservation_parts[index] = this.getModifiedPart(part);
-      });
+
+      // get part collection from reservations with the same reservation
+      if (this.UserMenu.reservations.length > 0) {
+        this.reservation.reservation_parts = [];
+        this.UserMenu.reservations.forEach((reservationItem) => {
+          if (reservationItem.id === this.reservation.id) {
+            reservationItem.reservation_parts.forEach((part) => {
+              this.reservation.reservation_parts.push(this.getModifiedPart(part));
+            });
+          }
+        });
+      }
     }
 
     // setup current part. we can't insert it to block above
     this.reservation.reservation_parts.forEach((part, index) => {
-      if (reservationPart.id === part.id) {
+      if (this.reservationPart.id === part.id) {
         this.current_part = this.reservation.reservation_parts[index];
       }
     });
@@ -75,7 +85,9 @@ export default class EditReservationCtrl {
           if (result.status === 200) {
             this.$modalInstance.dismiss('cancel');
             this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
-            this.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId: this.reservation.customer.id });
+            this.UserMenu.loadAndSetFullData(this.current_company_id,
+              this.reservation.customer.id,
+              this.reservationPart.id);
           } else if (result.status === -1 && result.statusText === '') {
             this.errors = ['Een bestand mag niet groter zijn dan 2MB'];
           }
@@ -105,16 +117,27 @@ export default class EditReservationCtrl {
       data.reservation_pdf = null;
     }
 
-    this.reservation.reservation_parts.forEach((part) => {
-      const tableIds = angular.copy(part.table_ids);
+    if (this.reservation.is_group) {
+      this.reservation.reservation_parts.forEach((part) => {
+        const tableIds = angular.copy(part.table_ids);
 
-      data.reservation_parts.push({
-        number_of_persons: part.number_of_persons,
-        product: part.product,
-        tables: tableIds,
-        date_time: `${this.moment(part.date).format('DD-MM-YYYY')} ${part.time}`,
+        data.reservation_parts.push({
+          number_of_persons: part.number_of_persons,
+          product: part.product,
+          tables: tableIds,
+          date_time: `${this.moment(part.date).format('DD-MM-YYYY')} ${part.time}`,
+        });
       });
-    });
+    } else {
+      const tableIds = angular.copy(this.current_part.table_ids);
+
+      data.reservation_parts = [{
+        number_of_persons: this.current_part.number_of_persons,
+        product: this.current_part.product,
+        tables: tableIds,
+        date_time: `${this.moment(this.current_part.date).format('DD-MM-YYYY')} ${this.current_part.time}`,
+      }];
+    }
 
     return data;
   }
@@ -389,8 +412,12 @@ export default class EditReservationCtrl {
     this.loadTime();
   }
 
-  changeIsGroupPostProcess() {
-    this.reservation.reservation_parts = [this.current_part];
+  getFormPartsList() {
+    if (this.reservation.is_group) {
+      return this.reservation.reservation_parts;
+    }
+
+    return [this.current_part];
   }
 
   changeProductPostProcess() {

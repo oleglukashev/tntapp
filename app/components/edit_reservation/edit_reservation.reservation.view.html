@@ -93,13 +93,12 @@
                     translate='reservation.pdf_upload'></button>
             <div class='md-form-group no-padder m-b-sm'>
               <md-checkbox ng-model='reserv.reservation.is_group'
-                           ng-change='reserv.changeIsGroupPostProcess()'
                            aria-label='{{ "reservation.group" | translate }}?'>
                 {{ 'reservation.group' | translate }}?
               </md-checkbox>
             </div>
             <div ng-show='reserv.reservation.is_group'>
-              <label ng-repeat='part in reserv.reservation.reservation_parts'
+              <label ng-repeat='part in reserv.getFormPartsList()'
                      class='btn btn-default block m-b-xs no-shadow text-success text-left'
                      ng-click='reserv.setCurrentPart(part);'
                      ng-model='reserv.current_part'

@@ -1,7 +1,7 @@
 import angular from 'angular';
 
-export default function ReservationItemFactory(AppConstants, ReservationStatus, $mdSidenav,
-  $rootScope, $translate) {
+export default function ReservationItemFactory(AppConstants, ReservationStatus,
+  UserMenu, $mdSidenav, $rootScope, $translate) {
   'ngInject';
 
   return (that) => {
@@ -81,7 +81,10 @@ export default function ReservationItemFactory(AppConstants, ReservationStatus, 
 
     instance.openCustomerMenu = (customerId, reservationPartId) => {
       if (customerId) {
-        $rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId, reservationPartId });
+        if (!UserMenu.isCurrentCustomer(customerId)) {
+          UserMenu.loadAndSetFullData(instance.current_company_id, customerId, reservationPartId);
+        }
+
         $mdSidenav('right').open();
       }
     };

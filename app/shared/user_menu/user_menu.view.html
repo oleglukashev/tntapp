@@ -10,25 +10,30 @@
         </button>
         <button md-ink-ripple
                 class='pull-right md-btn md-flat btn-fw'
-                ng-click='user.openEditModal(user.customer.id)'>
+                ng-click='user.openEditModal()'>
           <i class='mdi mdi-pencil i-26'></i>
         </button>
         <button md-ink-ripple
                 class='pull-right md-btn md-flat btn-fw'
-                ng-class="user.customer.regular ? 'star_active' : ''"
-                ng-click='user.toggleStar(user.customer)'>
+                ng-class="user.UserMenu.customer.regular ? 'star_active' : ''"
+                ng-click='user.toggleStar(user.UserMenu.customer)'>
           <i class='mdi mdi-star i-26'></i>
         </button>
       </div>
       <h1 class='i-30'>
-        <img ng-src='{{ user.Customer.socialImageUrl(user.customer) }}'
-             ng-if='user.Customer.socialImageUrl(user.customer)'
+        <img ng-src='{{ user.Customer.socialImageUrl(user.UserMenu.customer) }}'
+             ng-if='user.Customer.socialImageUrl(user.UserMenu.customer)'
              class='customer_avatar m-r-md' />
-        <i ng-if='!user.Customer.socialImageUrl(user.customer)'
+        <i ng-if='!user.Customer.socialImageUrl(user.UserMenu.customer)'
            class='customer_avatar customer_empty_avatar m-r-xs mdi mdi-account i-24'></i>
-        <span class='user_name'>
-          {{ user.customer.last_name }}
-          {{ user.customer.first_name }}
+        <span class='user_name'
+              ng-if='user.UserMenu.customer.last_name || user.UserMenu.customer.first_name'>
+          {{ user.UserMenu.customer.last_name }}
+          {{ user.UserMenu.customer.first_name }}
+        </span>
+        <span class='user_name'
+              translate='unknown'
+              ng-if='!user.UserMenu.customer.last_name && !user.UserMenu.customer.first_name'>
         </span>
       </h1>
     </div>
@@ -37,112 +42,114 @@
       <li class='hidden-folded padder m-t m-b-sm text-muted text-xs'>
         <span translate='reserv'></span>
       </li>
-      <div class='inset' ng-if='current_part'>
+      <div class='inset' ng-if='user.UserMenu.current_part'>
         <div class='md-list-item-left'>
           <i class='mdi mdi-attachment icon-muted i-24'></i>
         </div>
         <div class='md-list-item-content'>
           <h3 class="text-md">
-            {{ user.parsedDate(user.current_part.date_time) }}
+            {{ user.parsedDate(user.UserMenu.current_part.date_time) }}
           </h3>
           <small class="font-thin">
-            <span ng-if='current_part.product.name'>{{ user.current_part.product.name }},</span>
-            {{ user.current_part.number_of_persons }} <translate class='lowercase' translate='persons'></translate>
+            <span ng-if='user.UserMenu.current_part.product.name'>
+              {{ user.UserMenu.current_part.product.name }},
+            </span>
+            {{ user.UserMenu.current_part.number_of_persons }} <translate class='lowercase' translate='persons'></translate>
           </small>
         </div>
       </div>
 
-      <div class="inset" ng-if='user.customer.primary_phone_number'>
+      <div class="inset" ng-if='user.UserMenu.customer.primary_phone_number'>
         <div class="md-list-item-left">
           <i class="mdi mdi-phone icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
           <h3 class="text-md">
-            {{ user.customer.primary_phone_number }}
+            {{ user.UserMenu.customer.primary_phone_number }}
           </h3>
           <small class="font-thin" translate='phone'></small>
 
         </div>
       </div>
 
-      <div class="inset" ng-if='user.customer.mail'>
+      <div class="inset" ng-if='user.UserMenu.customer.mail'>
         <div class="md-list-item-left">
           <i class="mdi mdi-email icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
           <h3 class="text-md">
-            {{ user.customer.mail }}
+            {{ user.UserMenu.customer.mail }}
           </h3>
           <small class="font-thin" translate='email'></small>
 
         </div>
       </div>
 
-      <div class="inset" ng-if='user.current_reservation.notes'>
+      <div class="inset" ng-if='user.UserMenu.current_reservation.notes'>
         <div class="md-list-item-left">
           <i class="mdi mdi-comment-text icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
           <h3 class="text-md">
-            {{ user.current_reservation.notes }}
+            {{ user.UserMenu.current_reservation.notes }}
           </h3>
           <small class="font-thin" translate='notes'></small>
         </div>
       </div>
 
-      <div class="inset" ng-repeat='note in user.customer_notes'>
+      <div class="inset" ng-repeat='note in user.UserMenu.notes'>
         <div class="md-list-item-left">
           <i class="mdi mdi-information-outline icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
           <h3 class="text-md">
-            {{ user.note.note }}
+            {{ note.note }}
           </h3>
           <small class="font-thin" translate='notes'></small>
         </div>
       </div>
 
-      <div class="inset" ng-repeat='allergy in user.customer_allergies'>
+      <div class="inset" ng-repeat='allergy in user.UserMenu.allergies'>
         <div class="md-list-item-left">
           <i class="mdi mdi-information-outline icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
           <h3 class="text-md">
-            {{ user.allergy.allergy }}
+            {{ allergy.allergy }}
           </h3>
           <small class="font-thin" translate='allergies'></small>
         </div>
       </div>
 
-      <div class="inset" ng-repeat='preference in user.customer_preferences'>
+      <div class="inset" ng-repeat='preference in user.UserMenu.preferences'>
         <div class="md-list-item-left">
           <i class="mdi mdi-information-outline icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
           <h3 class="text-md">
-            {{ user.preference.name }}
-            {{ user.preference.value }}
+            {{ preference.name }}
+            {{ preference.value }}
           </h3>
           <small class="font-thin" translate='preferences'></small>
         </div>
       </div>
 
-      <div class="inset" ng-if='user.customer.average_rating'>
+      <div class="inset" ng-if='user.UserMenu.customer.average_rating'>
         <div class="md-list-item-left ">
           <i class="mdi mdi-star-outline icon-muted i-24"></i>
         </div>
         <div class="md-list-item-content">
-          <h3 class="text-md">{{ user.customer.average_rating }}</h3>
+          <h3 class="text-md">{{ user.UserMenu.customer.average_rating }}</h3>
           <small class="font-thin" translate='av_rating'></small>
         </div>
       </div>
 
       <!-- list -->
 
-      <li ng-if='user.Customer.socialUrl(user.customer)'>
+      <li ng-if='user.Customer.socialUrl(user.UserMenu.customer)'>
         <ul class="nav nav-sub">
           <li ui-sref-active="active">
-            <a href='{{ user.Customer.socialUrl(user.customer) }}'
+            <a href='{{ user.Customer.socialUrl(user.UserMenu.customer) }}'
                target='_blank'
                md-ink-ripple
                class='text-success fb-button'>
@@ -157,7 +164,7 @@
         <span translate='reservation.previous'></span>
       </li>
 
-      <li ng-repeat='reservation in user.reservations'>
+      <li ng-repeat='reservation in user.UserMenu.reservations'>
         <a md-ink-ripple
            ng-repeat='part in reservation.reservation_parts'
            ng-click='user.openEditReservationModal(reservation, part)'>
@@ -214,8 +221,8 @@
       </li>
 
       <div class='inset'
-           ng-if='user.ls_reservations.length > 0'
-           ng-repeat='ls_reservation in user.ls_reservations'>
+           ng-if='user.UserMenu.last_reservations.length > 0'
+           ng-repeat='ls_reservation in user.UserMenu.last_reservations'>
         <div class='md-list-item-left'>
           <i class='mdi mdi-cash icon-muted i-24'></i>
         </div>
