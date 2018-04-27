@@ -58,9 +58,12 @@ export default class ProfilesCtrl {
       this.$rootScope.show_spinner = false;
 
       result.forEach((customer) => {
-        const firstChar = customer.first_name ? customer.first_name[0].toUpperCase() : '#';
-        if (!this.customers[firstChar]) this.customers[firstChar] = [];
-        this.customers[firstChar].push(customer);
+        const lastChar = customer.last_name
+          ? customer.last_name[0].toUpperCase()
+          : customer.first_name[0].toUpperCase();
+
+        if (!this.customers[lastChar]) this.customers[lastChar] = [];
+        this.customers[lastChar].push(customer);
       });
 
       this.pagination.hasMore = !!result.length;

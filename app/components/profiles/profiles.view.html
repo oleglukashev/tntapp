@@ -13,7 +13,7 @@
           <div class='md-list-item-left char'>{{ char }}</div>
           <md-list-item ng-click='profiles.openCustomerMenu(customer.id)'
                         ng-class='{"active": profiles.active_profile == customer.id}'
-                        ng-repeat="customer in customers | orderBy:'customer.last_name':false"
+                        ng-repeat="customer in customers"
                         ng-mouseup='profiles.active_profile = customer.id'
                         class='md-2-line md-no-proxy b-b-none m-l-xxl'>
             <div class='md-avatar'>

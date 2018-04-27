@@ -91,6 +91,9 @@ export default class AgendaWalkInCtrl {
       reservation_parts: [],
     };
 
+    if (data.customer.first_name === '') data.customer.first_name = null;
+    if (data.customer.last_name === '') data.customer.last_name = null;
+
     this.reservation.reservation_parts.forEach((part) => {
       data.reservation_parts.push({
         number_of_persons: part.number_of_persons,

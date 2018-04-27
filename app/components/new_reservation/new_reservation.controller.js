@@ -153,6 +153,9 @@ export default class NewReservationCtrl {
       reservation_parts: [],
     };
 
+    if (data.customer.first_name === '') data.customer.first_name = null;
+    if (data.customer.last_name === '') data.customer.last_name = null;
+
     this.reservation.reservation_parts.forEach((part) => {
       data.reservation_parts.push({
         number_of_persons: part.number_of_persons,
@@ -193,9 +196,9 @@ export default class NewReservationCtrl {
       reservation_parts: [],
     };
 
-    if (this.reservation.reservation_pdf) {
-      data.reservation_pdf = this.reservation.reservation_pdf;
-    }
+    if (data.customer.first_name === '') data.customer.first_name = null;
+    if (data.customer.last_name === '') data.customer.last_name = null;
+    if (this.reservation.reservation_pdf) data.reservation_pdf = this.reservation.reservation_pdf;
 
     this.reservation.reservation_parts.forEach((part) => {
       data.reservation_parts.push({

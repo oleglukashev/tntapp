@@ -98,6 +98,9 @@ export default function UserMenuEditFactory(Customer, CustomerNote, CustomerPref
         gender: customerClone.gender,
       };
 
+      if (data.first_name === '') data.first_name = null;
+      if (data.last_name === '') data.last_name = null;
+
       Customer.edit(instance.current_company_id, customerClone.id, data).then(
         () => {
           instance.is_submitting = false;
