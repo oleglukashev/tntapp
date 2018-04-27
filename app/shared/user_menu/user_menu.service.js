@@ -8,7 +8,7 @@ export default class UserMenu {
 
   setData(data) {
     this.reservations = data.reservations;
-    this.last_reservations = data.last_reservations;
+    this.ls_reservations = data.ls_reservations;
     this.notes = data.notes;
     this.allergies = data.allergies;
     this.preferences = data.preferences;
@@ -24,7 +24,7 @@ export default class UserMenu {
 
         const data = {
           reservations: response.reservations,
-          last_reservations: response.ls_reservations,
+          ls_reservations: response.ls_reservations,
           notes: response.notes,
           allergies: response.allergies,
           preferences: response.preferences,
@@ -46,7 +46,7 @@ export default class UserMenu {
 
   clearData() {
     this.reservations = [];
-    this.last_reservations = [];
+    this.ls_reservations = [];
     this.notes = [];
     this.allergies = [];
     this.preferences = [];
