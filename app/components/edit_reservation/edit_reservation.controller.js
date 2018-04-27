@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export default class EditReservationCtrl {
-  constructor(User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone,
+  constructor(User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone, AppConstants,
     Table, moment, filterFilter, $rootScope, $window, $scope, $modalInstance, UserMenuEditFactroy,
     reservation, reservationPart, Confirm, UserMenu, NewReservationGroupFactory, Notification) {
     'ngInject';
@@ -18,6 +18,7 @@ export default class EditReservationCtrl {
     this.Confirm = Confirm;
     this.UserMenu = UserMenu;
     this.Notification = Notification;
+    this.AppConstants = AppConstants;
 
     this.customer = angular.copy(this.UserMenu.customer);
     this.customerNotes = angular.copy(this.UserMenu.notes);

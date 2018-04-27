@@ -62,9 +62,9 @@
             <input class='md-input'
                    ng-focus='reserv.openDatepicker($event)'
                    ng-model='reserv.reservation.date_of_birth'
-                   datepicker-popup='{{ reserv.Reservation.format }}'
+                   datepicker-popup='{{ reserv.AppConstants.calendar.format }}'
                    is-open='reserv.opened'
-                   datepicker-options='reserv.date_options'
+                   datepicker-options='reserv.AppConstants.calendar.date_options'
                    show-button-bar='false'
                    close-text='Close' />
           </md-input-container>

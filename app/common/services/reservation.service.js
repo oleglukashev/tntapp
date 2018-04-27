@@ -23,17 +23,6 @@ export default class Reservation {
         number_of_persons: 1, product: 2, zone: 3,
       },
     };
-
-    this.init_date = new Date();
-    this.max_date = this.moment().add(1, 'Y');
-    this.format = 'dd-MM-yyyy';
-
-    this.date_options = {
-      formatYear: 'yy',
-      startingDay: 1,
-      showWeeks: false,
-      class: 'datepicker',
-    };
   }
 
   getAll(companyId, date, skipJwtAuth) {

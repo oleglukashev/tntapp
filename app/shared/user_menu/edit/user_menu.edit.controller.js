@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export default class UserMenuEditCtrl {
-  constructor(User, Customer, UserMenu, UserMenuEditFactroy, $rootScope,
+  constructor(User, Customer, UserMenu, AppConstants, UserMenuEditFactroy, $rootScope,
     $modalInstance, moment, $modal) {
     'ngInject';
 
@@ -12,15 +12,9 @@ export default class UserMenuEditCtrl {
     this.moment = moment;
     this.submited_success = false;
     this.UserMenu = UserMenu;
+    this.AppConstants = AppConstants;
 
     this.note = {};
-
-    this.date_options = {
-      formatYear: 'yyyy',
-      startingDay: 1,
-      showWeeks: false,
-      class: 'datepicker',
-    };
 
     this.customer = angular.copy(this.UserMenu.customer);
     this.customerNotes = angular.copy(this.UserMenu.notes);

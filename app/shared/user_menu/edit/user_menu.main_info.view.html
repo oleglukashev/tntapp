@@ -35,11 +35,11 @@
                    class="form-control date-picker"
                    id="BirthDate"
                    ng-model="controller.customer.date_of_birth"
-                   datepicker-popup="dd-MM-yyyy"
+                   datepicker-popup="{{ reserv.AppConstants.calendar.format }}"
                    aw-datepicker-pattern="^(0[1-9]|1\d|2\d|3[01])\-(0[1-9]|1[0-2])\-(19|20)\d{2}$"
                    is-open="Opened"
                    ng-click="Opened=true"
-                   datepicker-options='controller.date_options'
+                   datepicker-options='controller.AppConstants.calendar.date_options'
                    show-button-bar='false'
                    close-text='Close' />
               </md-input-container>

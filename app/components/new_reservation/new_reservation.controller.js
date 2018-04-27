@@ -27,6 +27,7 @@ export default class NewReservationCtrl {
     this.$rootScope = $rootScope;
     this.$window = $window;
     this.$translate = $translate;
+    this.max_date = this.AppConstants.calendar.max_date;
 
     if (this.is_customer_reservation) {
       this.current_company_id = $stateParams.id;
@@ -34,7 +35,7 @@ export default class NewReservationCtrl {
     } else {
       this.current_company_id = User.getCompanyId();
       this.pagination = this.Reservation.pagination.backend;
-      Reservation.max_date = undefined;
+      this.max_date = undefined;
     }
 
     this.tab_index = 0;
