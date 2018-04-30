@@ -281,9 +281,11 @@ export default {
       title: 'Tables/zones',
       add: 'Add table',
       delete: 'Delete table',
-      group_table: 'Table group'
+      table_group: 'Table group',
+      min: 'Min number of persons in the group',
+      max: 'Max number of persons in the group',
     },
-    group_tables: {
+    table_groups: {
       title: 'Table groups',
       edit: 'Edit table group',
       delete: 'Delete table group',

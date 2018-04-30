@@ -45,7 +45,7 @@
             <thead>
               <th translate='tablenumber'></th>
               <th translate='number_of_guests'></th>
-              <th translate='settings.tables.group_table'></th>
+              <th translate='settings.tables.table_group'></th>
               <th></th>
             </thead>
           </table>
@@ -90,15 +90,13 @@
               </div>
               <div class='table_item_group pull-left m-t-sm'>
                 <md-input-container class='no-margin p-t-none'>
-                  <md-select class='pull-left'
-                             ng-change='tables_settings.submitForm()'
-                             ng-model='tables_settings.tables_by_zone[zone.id][$index].group_table_id'>
-                    <md-optgroup label='group tables'>
-                      <md-option ng-value='null'>
-                        {{ 'none' | translate }}
-                      </md-option>
+                  <md-select multiple
+                             class='pull-left'
+                             md-on-close='tables_settings.submitForm()'
+                             ng-model='tables_settings.tables_by_zone[zone.id][$index].table_group_ids'>
+                    <md-optgroup label="{{ 'settings.table_groups.title' | translate }}">
                       <md-option ng-value='item.id'
-                                 ng-repeat='item in tables_settings.groupTables'>
+                                 ng-repeat='item in tables_settings.tableGroups'>
                         <i class='mdi mdi-checkbox-blank-circle i-20'
                            style='color: {{ item.color }};'></i>
                       </md-option>
@@ -143,26 +141,26 @@
   </div>
 </div>
 <div class='col-xs-12 col-md-3'>
-  <button ng-click='tables_settings.addGroupTable()'
+  <button ng-click='tables_settings.addTableGroup()'
           class='panel-add-button md-btn md-fab m-b'
           md-ink-ripple >
-    <md-tooltip>{{ 'settings.group_tables.new' | translate }}?</md-tooltip>
+    <md-tooltip>{{ 'settings.table_groups.new' | translate }}?</md-tooltip>
     <i class='mdi mdi-plus i-24'></i>
   </button>
 
   <div class='panel'>
-    <div class='panel-heading' translate='settings.group_tables.title'></div>
+    <div class='panel-heading' translate='settings.table_groups.title'></div>
     <div class='panel-body no-padder'>
       <table class='table no-margin'>
         <thead>
-          <th translate='settings.group_tables.color'></th>
+          <th translate='settings.table_groups.color'></th>
           <th></th>
         </thead>
-        <tbody ng-if='tables_settings.groupTables.length > 0'>
-          <tr ng-repeat='groupTable in tables_settings.groupTables'>
+        <tbody ng-if='tables_settings.tableGroups.length > 0'>
+          <tr ng-repeat='tableGroup in tables_settings.tableGroups'>
             <td>
                <i class='mdi mdi-checkbox-blank-circle i-20'
-                  style='color: {{ groupTable.color }};'></i>
+                  style='color: {{ tableGroup.color }};'></i>
             </td>
             <td class='text-right'>
               <md-menu>
@@ -177,13 +175,13 @@
                 </button>
                 <md-menu-content>
                   <md-menu-item>
-                    <md-button ng-click='tables_settings.editGroupTable($index)'>
-                      {{ 'settings.group_tables.edit' | translate }}
+                    <md-button ng-click='tables_settings.editTableGroup($index)'>
+                      {{ 'settings.table_groups.edit' | translate }}
                     </md-button>
                   </md-menu-item>
                   <md-menu-item>
-                    <md-button ng-click='tables_settings.deleteGroupTable($index)'>
-                      {{ 'settings.group_tables.delete' | translate }}
+                    <md-button ng-click='tables_settings.deleteTableGroup($index)'>
+                      {{ 'settings.table_groups.delete' | translate }}
                     </md-button>
                   </md-menu-item>
                 </md-menu-content>
@@ -192,7 +190,7 @@
           </tr>
         </tbody>
       </table>
-      <div ng-if='tables_settings.groupTables.length === 0'
+      <div ng-if='tables_settings.tableGroups.length === 0'
          class='md-padding'
          translate='none'></div>
     </div>

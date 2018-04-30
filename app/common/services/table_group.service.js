@@ -1,4 +1,4 @@
-export default class GroupTable {
+export default class TableGroup {
   constructor($http, $q) {
     'ngInject';
 
@@ -12,7 +12,7 @@ export default class GroupTable {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/settings/group_tables`,
+      url: `${API_URL}/company/${companyId}/settings/table_groups`,
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
@@ -24,33 +24,33 @@ export default class GroupTable {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/settings/group_tables`,
+      url: `${API_URL}/company/${companyId}/settings/table_groups`,
       skipAuthorization: skipJwtAuth,
       method: 'POST',
       data,
     }).then(result => result.data);
   }
 
-  update(companyId, groupTableId, data, skipJwtAuth) {
-    if (!companyId || !groupTableId || !data) {
+  update(companyId, tableGroupId, data, skipJwtAuth) {
+    if (!companyId || !tableGroupId || !data) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/settings/group_tables/${groupTableId}`,
+      url: `${API_URL}/company/${companyId}/settings/table_groups/${tableGroupId}`,
       skipAuthorization: skipJwtAuth,
       method: 'PATCH',
       data,
     }).then(result => result.data);
   }
 
-  delete(companyId, groupTableId, skipJwtAuth) {
-    if (!companyId || !groupTableId) {
+  delete(companyId, tableGroupId, skipJwtAuth) {
+    if (!companyId || !tableGroupId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/settings/group_tables/${groupTableId}`,
+      url: `${API_URL}/company/${companyId}/settings/table_groups/${tableGroupId}`,
       skipAuthorization: skipJwtAuth,
       method: 'DELETE',
     }).then(result => result.data);

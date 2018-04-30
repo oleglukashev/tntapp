@@ -1,10 +1,11 @@
-export default class SettingsTablesNewGroupTableCtrl {
-  constructor(groupTables, User, GroupTable, $rootScope, $modalInstance) {
+export default class SettingsTablesNewTableGroupCtrl {
+  constructor(tableGroups, tablesByZone, User, TableGroup, $rootScope, $modalInstance) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
-    this.GroupTableService = GroupTable;
-    this.groupTables = groupTables;
+    this.TableGroupService = TableGroup;
+    this.tableGroups = tableGroups;
+    this.tablesByZone = tablesByZone;
     this.$modalInstance = $modalInstance;
     this.$rootScope = $rootScope;
     this.form_data = {
@@ -25,13 +26,22 @@ export default class SettingsTablesNewGroupTableCtrl {
       max: this.form_data.max,
     };
 
-    this.GroupTableService
+    this.TableGroupService
       .create(this.current_company_id, data)
       .then(
-        (groupTable) => {
+        (tableGroup) => {
           this.is_submitting = false;
           this.$rootScope.show_spinner = false;
-          this.groupTables.push(groupTable);
+          this.tableGroups.push(tableGroup);
+          for (let zoneId in this.tablesByZone) {
+            this.tablesByZone[zoneId].forEach((table, index) => {
+              const tableIds = this.tablesByZone[zoneId][index].table_group_ids;
+
+              if (tableGroup.table_ids.includes(table.id) && !tableIds.includes(tableGroup.id)) {
+                tableIds.push(tableGroup.id);
+              }
+            });
+          }
           this.$modalInstance.dismiss('cancel');
         }, (error) => {
           this.is_submitting = false;
