@@ -1,9 +1,9 @@
 <div class='agenda-charts panel'>
   <div class='panel-heading' translate='reservations'></div>
   <div class='panel-body relative'>
-      <div class='col-xs-6 text-center m-t-sm'
+      <div class='pie-chart col-xs-6 m-t-sm'
            ng-repeat='(productId, productData) in agenda_charts.data.product'>
-        <div class='agenda-charts-graph'>
+        <div class='pie-chart-graph'>
           <div ng-click='agenda_charts.showReservations(productId)'
                ui-jq='easyPieChart'
                ui-options='{
@@ -21,7 +21,7 @@
             </div>
           </div>
         </div>
-        <div class='agenda-charts-title m-t-sm m-b-sm'>{{ productData.name }}</div>
+        <div class='pie-chart-title m-t-sm m-b-sm'>{{ productData.name }}</div>
       </div>
   </div>
 </div>

@@ -39,6 +39,9 @@ export default angular.module('app.constants', [])
       delayed: 'mdi-exclamation',
     },
     letterOfWeek: ['Z', 'M', 'D', 'W', 'D', 'V', 'Z'],
+    chartColors: {
+      orange: 'rgb(255,152,0)',
+    },
     dayOfWeek: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
     productsClasses: {
       lunch: 'mdi-silverware-variant',

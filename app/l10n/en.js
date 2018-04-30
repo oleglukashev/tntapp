@@ -1,7 +1,7 @@
 export default {
   top_menu: {
     dashboard: 'Dashboard',
-    today: 'Today',
+    analytics: 'Analytics',
     calendar: 'Calendar',
     profiles: 'Profiles',
   },
@@ -101,6 +101,14 @@ export default {
   },
   calendar: {
     widget: 'Reservations without a table',
+  },
+  analytics: {
+    average_guests_per_day: 'Average guests per day',
+    total_amount_of_guests: 'Total amount of guests',
+    booking_channels: 'Booking channels',
+    product_distribution: 'Product distribution',
+    reservations_per_hour: 'Reservations per hour',
+    age_of_guests: 'Age of guests'
   },
   notifications: {
     settings_escape: 'Your current settings are not finished and therefore will not be saved',
@@ -398,5 +406,6 @@ export default {
   choose_file: 'Choose file',
   unknown: 'Unknown',
   authorization: 'Authorization',
-  congratulations: 'Congratulations'
+  congratulations: 'Congratulations',
+  gender: 'Gender'
 };
