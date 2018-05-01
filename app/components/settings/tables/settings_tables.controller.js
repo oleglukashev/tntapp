@@ -30,9 +30,9 @@ export default class SettingsTablesCtrl {
     this.zones.forEach((zone) => {
       this.tables_by_zone[zone.id].forEach((table) => {
         if (!dataTableIds.includes(table.id)) {
-          const tableGroups = (item.table_group_ids.length === 1 && item.table_group_ids[0] === null)
+          const tableGroups = (table.table_group_ids.length === 1 && table.table_group_ids[0] === null)
             ? []
-            : item.table_group_ids;
+            : table.table_group_ids;
 
           data.push({
             table_number: table.table_number,
