@@ -6,12 +6,14 @@
         <table class='table'>
           <thead>
             <th translate='title'></th>
+            <th translate='language'></th>
             <th translate='text'></th>
             <th></th>
           </thead>
           <tbody>
             <tr ng-repeat='warning in warnings_settings.warnings'>
               <td class='v-middle' ng-bind='warning.title'></td>
+              <td class='v-middle' ng-bind='warning.language'></td>
               <td class='v-middle' ng-bind='warning.text'></td>
               <td class='v-middle text-right'>
                 <md-menu>

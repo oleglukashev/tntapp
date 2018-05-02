@@ -96,5 +96,15 @@ export default function NewReservationProductFactory(moment, filterFilter) {
 
       return result;
     };
+
+    instance.getProductLimiNotification = () => {
+      if (instance.current_part.current_product) {
+        let text = instance.warnings.product_limits;
+        text = text.replace('%MIN%', instance.current_part.current_product.min_persons);
+        return text.replace('%MAX%', instance.current_part.current_product.max_persons);
+      }
+
+      return null;
+    }
   };
 }

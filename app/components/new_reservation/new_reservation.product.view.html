@@ -16,8 +16,7 @@
       <div class='wrapper red-300 layout-align-space-around-center layout-column'
            ng-show='!reserv.includeProductLimits()'>
         <div class='w-xl'>
-          <div translate='notifications.outside_limits'
-               translate-values='{ min: reserv.current_part.current_product.min_persons, max: reserv.current_part.current_product.max_persons }'></div>
+          <div ng-bind='reserv.getProductLimiNotification()'></div>
         </div>
       </div>
       <div class='wrapper'>

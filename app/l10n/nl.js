@@ -119,7 +119,6 @@ export default {
     guests_more_than_suitable: 'Aantal personen is meer dan waar de tafel(s) geschikt voor is',
     more_than_2mb: 'Een bestand mag niet groter zijn dan 2MB',
     access_only: 'Alleen toegankelijk met een beheerdersaccount',
-    outside_limits: 'Het aantal personen voor dit product moet ten minste {{ min }} en maximaal {{ max }} zijn',
   },
   auth: {
     activate_description: 'U moet een nieuw wachtwoord instellen. Samen met uw e-mail adres zijn dit uw logingegevens. Bewaar deze dus goed.',

@@ -26,6 +26,7 @@ export default class NewReservationCtrl {
     this.filterFilter = filterFilter;
     this.$rootScope = $rootScope;
     this.$window = $window;
+    this.$translate = $translate;
 
     if (this.is_customer_reservation) {
       this.current_company_id = $stateParams.id;
@@ -371,7 +372,9 @@ export default class NewReservationCtrl {
       .getWarningsSettings(this.current_company_id).then(
         (warnings) => {
           warnings.forEach((warning) => {
-            this.warnings[warning.title] = warning.text;
+            if (warning.language.toLowerCase() === this.$translate.proposedLanguage().toLowerCase()) {
+              this.warnings[warning.title] = warning.text;
+            }
           });
         });
   }
