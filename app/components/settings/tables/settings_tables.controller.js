@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 export default class SettingsTablesCtrl {
   constructor(User, Zone, Table, filterFilter, $scope, $rootScope, $window, $modal) {
     'ngInject';
@@ -24,17 +22,19 @@ export default class SettingsTablesCtrl {
   submitForm() {
     const dataTableIds = [];
     const data = [];
+    let index = 0;
     this.zones.forEach((zone) => {
       this.tables_by_zone[zone.id].forEach((table) => {
         if (!dataTableIds.includes(table.id)) {
           data.push({
             table_number: table.table_number,
             number_of_persons: table.number_of_persons,
-            position: table.position,
+            position: index,
             zones: [zone.id],
           });
 
           dataTableIds.push(table.id);
+          index += 1;
         }
       });
     });
@@ -43,8 +43,9 @@ export default class SettingsTablesCtrl {
     this.$rootScope.show_spinner = true;
     this.Table.save(this.current_company_id, { tables: data })
       .then(
-        () => {
+        (tables) => {
           this.$rootScope.show_spinner = false;
+          this.initTablesByZone(tables);
         },
         (error) => {
           this.$rootScope.show_spinner = false;
@@ -58,28 +59,7 @@ export default class SettingsTablesCtrl {
         (tables) => {
           this.is_loaded = true;
           this.$rootScope.show_spinner = false;
-
-          angular.forEach(this.zones, (zone) => {
-            this.tables_by_zone[zone.id] = this.filterFilter(tables, { zones: zone.id }).map((item) => {
-              return {
-                id: item.id,
-                table_number: item.table_number,
-                number_of_persons: parseInt(item.number_of_persons),
-                position: parseInt(item.position),
-                zones: item.zones,
-              };
-            }).sort((a, b) => {
-              let comparison = 0;
-
-              if (a.position > b.position) {
-                comparison = 1;
-              } else if (b.position > a.position) {
-                comparison = -1;
-              }
-
-              return comparison;
-            });
-          });
+          this.initTablesByZone(tables);
         }, () => {
           this.$rootScope.show_spinner = false;
         });
@@ -194,11 +174,11 @@ export default class SettingsTablesCtrl {
   }
 
   getGlobalPosition(table) {
-    // need to find a normal alternative for angular forEach
     let index = -1;
     let keepGoing = true;
+    const list = this.getScopeTables().sort((a, b) => a.position - b.position);
 
-    angular.forEach(this.getScopeTables().sort((a, b) => a.position - b.position), (item) => {
+    list.forEach((item) => {
       if (keepGoing) {
         index += 1;
 
@@ -214,10 +194,36 @@ export default class SettingsTablesCtrl {
   getScopeTables() {
     let result = [];
 
-    angular.forEach(this.tables_by_zone, (item) => {
-      result = result.concat(item);
+    Object.keys(this.tables_by_zone).forEach((key) => {
+      result = result.concat(this.tables_by_zone[key]);
     });
 
     return result;
+  }
+
+  initTablesByZone(tables) {
+    this.tables_by_zone = {};
+    tables.forEach((table) => {
+      let zoneId = table.zones[0];
+
+      if (!this.tables_by_zone[zoneId]) {
+        this.tables_by_zone[zoneId] = [];
+      }
+
+      let index = 0;
+      this.tables_by_zone[zoneId].forEach((sortTable, sortIndex) => {
+        if (parseInt(sortTable.position) < parseInt(table.position)) {
+          index = sortIndex + 1;
+        }
+      });
+
+      this.tables_by_zone[zoneId].splice(index, 0, {
+        id: table.id,
+        table_number: table.table_number,
+        number_of_persons: parseInt(table.number_of_persons),
+        position: parseInt(table.position),
+        zones: [ zoneId ],
+      });
+    });
   }
 }
