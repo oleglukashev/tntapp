@@ -1,4 +1,3 @@
-import angular from 'angular';
 import tableGroupFormTemplate from './settings_tables.table_group_form.view.html';
 
 export default class SettingsTablesCtrl {
@@ -16,58 +15,12 @@ export default class SettingsTablesCtrl {
     this.$window = $window;
     this.is_loaded = false;
     this.tables_by_zone = {};
-    this.errors = [];
+    this.errors = {};
     this.opened = [true];
 
     this.loadZonesAndTables();
     this.loadTableGroups();
     this.$rootScope.show_spinner = true;
-  }
-
-  submitForm() {
-    const dataTableIds = [];
-    const data = [];
-    this.zones.forEach((zone) => {
-      this.tables_by_zone[zone.id].forEach((table) => {
-        if (!dataTableIds.includes(table.id)) {
-          const tableGroups = (table.table_group_ids.length === 1 && table.table_group_ids[0] === null)
-            ? []
-            : table.table_group_ids;
-
-          data.push({
-            table_number: table.table_number,
-            number_of_persons: table.number_of_persons,
-            table_groups: tableGroups,
-            position: table.position,
-            zones: [zone.id],
-          });
-
-          dataTableIds.push(table.id);
-        }
-      });
-    });
-
-    this.errors = [];
-    this.$rootScope.show_spinner = true;
-    this.Table.save(this.current_company_id, { tables: data }).then((tables) => {
-      this.initTablesByZone(tables);
-
-      tables.forEach((table, index) => {
-        this.tableGroups.forEach(($tableGroup) => {
-          if ($tableGroup.table_ids.includes(table.id) && !table.table_group_ids.includes($tableGroup.id)) {
-            const indexOfTable = $tableGroup.table_ids.indexOf(table.id);
-            $tableGroup.table_ids.splice(indexOfTable, 1);
-          } else if (!$tableGroup.table_ids.includes(table.id) && table.table_group_ids.includes($tableGroup.id)) {
-            $tableGroup.table_ids.push(table.id);
-          }
-        });
-      });
-
-      this.$rootScope.show_spinner = false;
-    }, (error) => {
-      this.$rootScope.show_spinner = false;
-      this.errors = error.data.errors;
-    });
   }
 
   addZone() {
@@ -167,44 +120,107 @@ export default class SettingsTablesCtrl {
     }
   }
 
-  addTableByZoneId(id) {
+  addTable(zoneId) {
     const scopeTables = this.getScopeTables();
-    if (!this.tables_by_zone[id]) {
-      this.tables_by_zone[id] = [];
+
+    if (!this.tables_by_zone[zoneId]) {
+      this.tables_by_zone[zoneId] = [];
     }
-    const zoneTables = this.tables_by_zone[id];
+
+    const zoneTables = this.tables_by_zone[zoneId];
     const lastPosition = scopeTables.length ?
       Math.max.apply(Math, scopeTables.map(item => item.position)) :
       null;
 
-    const lastTableNumber = zoneTables.length ?
+    let lastTableNumber = zoneTables.length ?
       Math.max.apply(Math, zoneTables
         .filter((table) => parseInt(table.table_number) >= 0)
         .map(item => parseInt(item.table_number))) :
       null;
 
-    const position = lastPosition ? lastPosition + 1 : 0;
+    const position = lastPosition === null ? 0 : lastPosition + 1;
 
-    let tableNumber = String(1);
+    if (!lastTableNumber) {
+      lastTableNumber = scopeTables.length
+        ? Math.max.apply(Math, scopeTables.map(table => table.table_number))
+        : null;
+    }
+
+    let tableNumber = 1;
     if (lastTableNumber) {
       const lastNumericTableNumber = parseInt(lastTableNumber);
 
       if (lastNumericTableNumber >= 0) {
         tableNumber = lastNumericTableNumber + 1;
       } else {
-        tableNumber = `${zoneTables[zoneTables.length - 1].table_number}2`;
+        tableNumber = `${lastNumericTableNumber.table_number}2`;
       }
     }
 
-    this.tables_by_zone[id].push({
-      table_number: tableNumber,
+    const data = {
+      table_number: String(tableNumber),
       number_of_persons: 0,
       position,
-      table_group_ids: [],
-      zones: [id],
+      table_groups: [],
+      zones: [zoneId],
+    };
+    const index = this.tables_by_zone[zoneId].length;
+    this.tables_by_zone[zoneId].push(data);
+    this.errors = {};
+    this.Table.create(this.current_company_id, data).then((table) => {
+      // insert id of new item
+      this.tables_by_zone[zoneId][index].id = table.id;
+    }, (error) => {
+      if (!this.errors[zoneId]) {
+        this.errors[zoneId] = {};
+      }
+      this.errors[zoneId][this.tables_by_zone[zoneId].length - 1] = error.data.errors.children;
     });
+  }
 
-    this.submitForm();
+  updateTable(zoneId, index) {
+    const table = this.tables_by_zone[zoneId][index];
+
+    if (table) {
+      const data = {
+        table_number: table.table_number,
+        number_of_persons: table.number_of_persons,
+        position: table.position,
+        table_groups: table.table_group_ids,
+        zones: table.zones,
+      };
+
+      this.errors = {};
+
+      if (table.id) {
+        this.Table.update(this.current_company_id, data, table.id)
+          .then((table) => {
+            this.tableGroups.forEach(($tableGroup) => {
+              if ($tableGroup.table_ids.includes(table.id) && !table.table_group_ids.includes($tableGroup.id)) {
+                const indexOfTable = $tableGroup.table_ids.indexOf(table.id);
+                $tableGroup.table_ids.splice(indexOfTable, 1);
+              } else if (!$tableGroup.table_ids.includes(table.id) && table.table_group_ids.includes($tableGroup.id)) {
+                $tableGroup.table_ids.push(table.id);
+              }
+            });
+          }, (error) => {
+          if (!this.errors[zoneId]) {
+            this.errors[zoneId] = {};
+          }
+          this.errors[zoneId][this.tables_by_zone[zoneId].length - 1] = error.data.errors.children;
+        });
+      } else {
+        this.Table.create(this.current_company_id, data)
+          .then((table) => {
+            this.tables_by_zone[zoneId][index].id = table.id;
+          }, (error) => {
+            if (!this.errors[zoneId]) {
+              this.errors[zoneId] = {};
+            }
+            this.errors[zoneId][this.tables_by_zone[zoneId].length - 1] = error.data.errors.children;
+          });
+      }
+    }
   }
 
   deleteTable(zoneId, index) {
@@ -212,8 +228,26 @@ export default class SettingsTablesCtrl {
 
     if (table) {
       this.tables_by_zone[zoneId].splice(index, 1);
-      this.submitForm();
+      this.Table.delete(this.current_company_id, table.id).then((tables) => {
+
+      });
     }
+  }
+
+  updatePositions() {
+    const data = {};
+    let index = 0;
+    
+    this.zones.forEach((zone) => {
+      this.tables_by_zone[zone.id].forEach((table) => {
+        if (table.id) {
+          data[table.id] = index;
+          index += 1;
+        }
+      });
+    });
+
+    this.Table.updatePositions(this.current_company_id, data);
   }
 
   getTableNumberNameByZoneAndIndex(zoneId, index) {
@@ -299,27 +333,27 @@ export default class SettingsTablesCtrl {
 
   initTablesByZone(tables) {
     this.tables_by_zone = {};
+    tables.forEach((table) => {
+      let zoneId = table.zones[0];
 
-    this.zones.forEach((zone) => {
-      this.tables_by_zone[zone.id] = this.filterFilter(tables, { zones: zone.id }).map((item) => {
-        return {
-          id: item.id,
-          table_number: item.table_number,
-          table_group_ids: item.table_group_ids,
-          number_of_persons: parseInt(item.number_of_persons),
-          position: parseInt(item.position),
-          zones: item.zones,
-        };
-      }).sort((a, b) => {
-        let comparison = 0;
+      if (!this.tables_by_zone[zoneId]) {
+        this.tables_by_zone[zoneId] = [];
+      }
 
-        if (a.position > b.position) {
-          comparison = 1;
-        } else if (b.position > a.position) {
-          comparison = -1;
+      let index = 0;
+      this.tables_by_zone[zoneId].forEach((sortTable, sortIndex) => {
+        if (parseInt(sortTable.position) < parseInt(table.position)) {
+          index = sortIndex + 1;
         }
+      });
 
-        return comparison;
+      this.tables_by_zone[zoneId].splice(index, 0, {
+        id: table.id,
+        table_number: table.table_number,
+        number_of_persons: parseInt(table.number_of_persons),
+        table_group_ids: table.table_group_ids,
+        position: parseInt(table.position),
+        zones: [ zoneId ],
       });
     });
   }
