@@ -75,7 +75,7 @@ export default class SettingsProductsLimitsCtrl {
   }
 
   getChangedValue(time, dayOfWeek) {
-    return this.limits[dayOfWeek] && this.limits[dayOfWeek][time] ? null : this.limit;
+    return this.limits[dayOfWeek] && this.limits[dayOfWeek][time] !== null ? null : this.limit;
   }
 
   saveLimit(data) {
@@ -102,6 +102,10 @@ export default class SettingsProductsLimitsCtrl {
         }, () => {
           this.$rootScope.show_spinner = false;
         });
+  }
+
+  showValue(value) {
+    return parseInt(value) >= 0 ? value : '-';
   }
 
   loadGeneralSettings() {
