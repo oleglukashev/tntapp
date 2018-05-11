@@ -7,7 +7,7 @@
 
     <md-input-container ng-show='product_limits.type'>
       <label>{{ product_limits.type }}</label>
-      <input type='number' min='1' ng-model='product_limits.limit' />
+      <input type='number' min='0' ng-model='product_limits.limit' />
     </md-input-container>
 
     <div class='scroll-x'>
@@ -23,7 +23,8 @@
             <td class='clickable' ng-click='product_limits.saveLimitByDay(number_of_day)'>{{ day }}</td>
             <td class='clickable time'
                 ng-repeat='time in product_limits.times'
-                ng-click='product_limits.saveLimitByTimeAndDay(time, number_of_day)'>{{ product_limits.limits[number_of_day][time] || '-' }}</td>
+                ng-click='product_limits.saveLimitByTimeAndDay(time, number_of_day)'
+                ng-bind='product_limits.showValue(product_limits.limits[number_of_day][time])'></td>
           </tr>
         </tbody>
       </table>

@@ -86,13 +86,12 @@ export default class SettingsLimitsCtrl {
   }
 
   getChangedValue(time, dayOfWeek) {
-    return this.limits[dayOfWeek] && this.limits[dayOfWeek][time] ? null : this.limit;
+    return this.limits[dayOfWeek] && this.limits[dayOfWeek][time] !== null ? null : this.limit;
   }
 
   saveLimit(data) {
     this.Settings
-      .saveLimitsSettings(this.current_company_id, data)
-        .then(() => {});
+      .saveLimitsSettings(this.current_company_id, data).then(() => {});
   }
 
   setLimit(time, dayOfWeek, limit) {
@@ -109,11 +108,15 @@ export default class SettingsLimitsCtrl {
     });
   }
 
+  showValue(value) {
+    return parseInt(value) >= 0 ? value : '-';
+  }
+
   buildLimit(time, dayOfWeek, limit) {
     return {
-      dayOfWeek: dayOfWeek,
-      time: time,
-      limit: limit,
+      dayOfWeek,
+      time,
+      limit,
     };
   }
 }

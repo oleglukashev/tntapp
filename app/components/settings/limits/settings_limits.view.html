@@ -6,7 +6,7 @@
 
 		<md-input-container ng-show='limits_settings.type'>
       <label>{{ limits_settings.type | translate }}</label>
-      <input type='number' min='1' ng-model='limits_settings.limit' />
+      <input type='number' min='0' ng-model='limits_settings.limit' />
     </md-input-container>
 
 		<div class='scroll-x'>
@@ -24,9 +24,8 @@
 						</td>
 						<td class='clickable time'
 								ng-repeat='time in limits_settings.times'
-								ng-click='limits_settings.saveLimitByTimeAndDay(time, number_of_day)'>
-							{{ limits_settings.limits[number_of_day][time] >= 0 ? limits_settings.limits[number_of_day][time] : '-' }}
-						</td>
+								ng-click='limits_settings.saveLimitByTimeAndDay(time, number_of_day)'
+								ng-bind='limits_settings.showValue(limits_settings.limits[number_of_day][time])'></td>
 					</tr>
 				</tbody>
 			</table>
