@@ -52,81 +52,91 @@
             </md-checkbox>
           </div>
         </div>
+      </div>
 
-        <div class='w-xl' ng-show='reserv.additional_is_opened'>
-          <md-input-container class='md-block'>
-            <label translate='second_phone'></label>
-            <input ng-model='reserv.reservation.secondary_phone_number' />
-          </md-input-container>
-          <md-input-container class='md-block'>
-            <label translate='birthdate'></label>
-            <input class='md-input'
-                   ng-focus='reserv.openDatepicker($event)'
-                   ng-model='reserv.reservation.date_of_birth'
-                   datepicker-popup='{{ reserv.AppConstants.calendar.format }}'
-                   is-open='reserv.opened'
-                   datepicker-options='reserv.AppConstants.calendar.date_options'
-                   show-button-bar='false'
-                   close-text='Close' />
-          </md-input-container>
-          <md-input-container class='md-block'>
-            <label translate='address'></label>
-            <input ng-model='reserv.reservation.street' />
-          </md-input-container>
-          <md-input-container class='md-block'>
-            <label translate='house_number'></label>
-            <input ng-model='reserv.reservation.house_number' />
-          </md-input-container>
-          <md-input-container class='md-block'>
-            <label translate='postcode'></label>
-            <input ng-model='reserv.reservation.zipcode' />
-          </md-input-container>
-          <md-input-container class='md-block'>
-            <label translate='city'></label>
-            <input ng-model='reserv.reservation.city' />
-          </md-input-container>
-          <md-input-container class='md-block'>
-            <label translate='company_name'></label>
-            <input ng-model='reserv.reservation.company_name' />
-          </md-input-container>
-          <div class='md-form-group no-padder'>
-            <md-radio-group ng-model='reserv.reservation.gender'>
-              <md-radio-button value='Man' class='inline md-success'>
-                {{ 'male' | translate }}
-              </md-radio-button>
-              <md-radio-button value='Vrouw' class='inline md-success'>
-                {{ 'female' | translate }}
-              </md-radio-button>
-            </md-radio-group>
+      <div ng-show='reserv.additional_is_opened'>
+        <div class='wrapper' layout='column' layout-align='space-around center'>
+          <div class='w-xl'>
+            <md-input-container class='md-block'>
+              <label translate='second_phone'></label>
+              <input ng-model='reserv.reservation.secondary_phone_number' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='birthdate'></label>
+              <input class='md-input'
+                     ng-focus='reserv.openDatepicker($event)'
+                     ng-model='reserv.reservation.date_of_birth'
+                     datepicker-popup='{{ reserv.AppConstants.calendar.format }}'
+                     is-open='reserv.opened'
+                     datepicker-options='reserv.AppConstants.calendar.date_options'
+                     show-button-bar='false'
+                     close-text='Close' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='address'></label>
+              <input ng-model='reserv.reservation.street' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='house_number'></label>
+              <input ng-model='reserv.reservation.house_number' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='postcode'></label>
+              <input ng-model='reserv.reservation.zipcode' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='city'></label>
+              <input ng-model='reserv.reservation.city' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='company_name'></label>
+              <input ng-model='reserv.reservation.company_name' />
+            </md-input-container>
+            <div class='md-form-group no-padder'>
+              <md-radio-group ng-model='reserv.reservation.gender'>
+                <md-radio-button value='Man' class='inline md-success'>
+                  {{ 'male' | translate }}
+                </md-radio-button>
+                <md-radio-button value='Vrouw' class='inline md-success'>
+                  {{ 'female' | translate }}
+                </md-radio-button>
+              </md-radio-group>
+            </div>
+
+            <div ng-if='!reserv.is_customer_reservation'
+                 ng-show='reserv.reservation.reservation_pdf'>
+              <label class='btn btn-default block m-b-xs no-shadow text-success text-left'
+                     ng-click='reserv.loadPDF();'>
+                <span class='m-r-sm'>
+                  <i class='mdi mdi-pdf'></i>
+                  <translate>reservation.pdf</translate>
+                </span>
+                <div class='pull-right'>
+                  <i class='mdi mdi-delete' ng-click='reserv.removePdf($event);'></i>
+                </div>
+              </label>
+            </div>
+
+            <button type='button'
+                    ng-if='!reserv.is_customer_reservation'
+                    md-ink-ripple
+                    class='md-btn md-flat m-b m-t btn-fw text-success m-l-6'
+                    ngf-select='reserv.uploadImage($file, $invalidFiles)'
+                    ngf-drop=''
+                    ngf-max-size="1MB"
+                    ngf-pattern="'.pdf'"
+                    accept='application/pdf'
+                    ng-model='reserv.reservation.reservation_pdf'>
+              {{ 'reservation.pdf_upload' | translate }}...
+            </button>
           </div>
-
-          <div ng-if='!reserv.is_customer_reservation'
-               ng-show='reserv.reservation.reservation_pdf'>
-            <label class='btn btn-default block m-b-xs no-shadow text-success text-left'
-                   ng-click='reserv.loadPDF();'>
-              <span class='m-r-sm'>
-                <i class='mdi mdi-pdf'></i>
-                <translate>reservation.pdf</translate>
-              </span>
-              <div class='pull-right'>
-                <i class='mdi mdi-delete' ng-click='reserv.removePdf($event);'></i>
-              </div>
-            </label>
-          </div>
-
-          <button type='button'
-                  ng-if='!reserv.is_customer_reservation'
-                  md-ink-ripple
-                  class='md-btn md-flat m-b m-t btn-fw text-success m-l-6'
-                  ngf-select='reserv.uploadImage($file, $invalidFiles)'
-                  ngf-drop=''
-                  ngf-max-size="1MB"
-                  ngf-pattern="'.pdf'"
-                  accept='application/pdf'
-                  ng-model='reserv.reservation.reservation_pdf'>
-            {{ 'reservation.pdf_upload' | translate }}...
-          </button>
         </div>
+        
+        <hr class='no-margin' />
+
+        <div data-ng-include=" 'new_reservation.person.preferences.view.html' "
+               ng-if='reserv.is_customer_reservation'
+               class='no-margin'></div>
       </div>
       <button type='button'
               md-ink-ripple

@@ -321,7 +321,17 @@ export default {
     },
   },
   receipts: {
-    status: 'Receipt status'
+    status: 'Receipt status',
+  },
+  default_allergies: {
+    glutenfree: 'Glutenvrij',
+    lactose_free: 'Lactoseintolerant',
+    tree_nuts_allergy: 'Notenallergie',
+    peanut_allergy: 'Pinda-allergie',
+    egg_allergy: 'Ei-allergie',
+    shellfish_allergy: 'Schaal en Schelpdieren',
+    vegetarian: 'Vegetariër',
+    vegan: 'Veganist',
   },
   customers: {
     title: 'Profielen',
@@ -350,6 +360,7 @@ export default {
   time: 'Tijd',
   product: 'Producten',
   name: 'Naam',
+  owner: 'Owner',
   full_name: 'Voor- en achternaam',
   persons: 'Personen',
   table: 'Tafel',
@@ -397,6 +408,8 @@ export default {
   description: 'Omschrijving',
   allergies: 'Allergiën',
   allergy: 'Allergië',
+  add_allergy: 'Allergy toevoegen',
+  add_preference: 'Preference toevoegen',
   remove: 'Verwijderen',
   subject: 'Onderwerp',
   message: 'Bericht',

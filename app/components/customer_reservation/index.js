@@ -8,6 +8,8 @@ import newReservationNumberOfPersonsFactory
   from '../new_reservation/new_reservation.number_of_persons.factory';
 import newReservationPersonAutocompleteFactory
   from '../new_reservation/new_reservation.person.autocomplete.factory';
+import newReservationPersonPreferencesFactory
+  from '../new_reservation/new_reservation.person.preferences.factory';
 import newReservationPersonFactory from '../new_reservation/new_reservation.person.factory';
 import newReservationProductFactory from '../new_reservation/new_reservation.product.factory';
 import newReservationTimeFactory from '../new_reservation/new_reservation.time.factory';
@@ -22,6 +24,7 @@ export default angular.module('app.customer_reservation', [uirouter])
   .factory('NewReservationNumberOfPersonsFactory', newReservationNumberOfPersonsFactory, ['Reservation'])
   .factory('NewReservationPersonAutocompleteFactory', newReservationPersonAutocompleteFactory,
     ['Customer', '$timeout'])
+  .factory('NewReservationPersonPreferencesFactory', newReservationPersonPreferencesFactory, [])
   .factory('NewReservationPersonFactory', newReservationPersonFactory, [])
   .factory('NewReservationProductFactory', newReservationProductFactory, ['moment', 'filterFilter'])
   .factory('NewReservationTimeFactory', newReservationTimeFactory, ['moment', 'filterFilter'])

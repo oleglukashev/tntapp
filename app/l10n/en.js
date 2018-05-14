@@ -321,7 +321,17 @@ export default {
     },
   },
   receipts: {
-    status: 'Receipt status'
+    status: 'Receipt status',
+  },
+  default_allergies: {
+    glutenfree: 'Glutenfree',
+    lactose_free: 'Lactose free',
+    tree_nuts_allergy: 'Tree Nuts Allergy',
+    peanut_allergy: 'Peanut Allergy',
+    egg_allergy: 'Egg Allergy',
+    shellfish_allergy: 'Shellfish Allergy',
+    vegetarian: 'Vegetarian',
+    vegan: 'Vegan',
   },
   customers: {
     title: 'Customers',
@@ -350,6 +360,7 @@ export default {
   time: 'Time',
   product: 'Product',
   name: 'Name',
+  owner: 'Owner',
   full_name: 'Full name',
   persons: 'Persons',
   table: 'Table',
@@ -397,6 +408,8 @@ export default {
   description: 'Description',
   allergies: 'Allergies',
   allergy: 'Allergy',
+  add_allergy: 'Add allergy',
+  add_preference: 'Add preference',
   remove: 'Remove',
   subject: 'Subject',
   message: 'Message',

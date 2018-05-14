@@ -39,6 +39,7 @@ export default function templates($templateCache) {
   $templateCache.put('new_reservation.zone.view.html', require('./components/new_reservation/new_reservation.zone.view.html'));
   $templateCache.put('new_reservation.person.view.html', require('./components/new_reservation/new_reservation.person.view.html'));
   $templateCache.put('new_reservation.person.autocomplete.view.html', require('./components/new_reservation/new_reservation.person.autocomplete.view.html'));
+  $templateCache.put('new_reservation.person.preferences.view.html', require('./components/new_reservation/new_reservation.person.preferences.view.html'));
   $templateCache.put('new_reservation.type.view.html', require('./components/new_reservation/new_reservation.type.view.html'));
   $templateCache.put('new_reservation.group.view.html', require('./components/new_reservation/new_reservation.group.view.html'));
   $templateCache.put('new_reservation.walk_in.view.html', require('./components/new_reservation/new_reservation.walk_in.view.html'));

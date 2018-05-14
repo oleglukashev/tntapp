@@ -3,8 +3,8 @@ export default class NewReservationCtrl {
     NewReservation, Table, AppConstants, NewReservationDateFactory, NewReservationGroupFactory,
     NewReservationNumberOfPersonsFactory, NewReservationPersonFactory, NewReservationTimeFactory,
     NewReservationProductFactory, NewReservationTypeFactory, NewReservationZoneFactory,
-    NewReservationPersonAutocompleteFactory, ReservationPart, moment, filterFilter, $state,
-    $stateParams, $scope, $rootScope, $window, $translate) {
+    NewReservationPersonAutocompleteFactory, NewReservationPersonPreferencesFactory,
+    ReservationPart, moment, filterFilter, $state, $stateParams, $scope, $rootScope, $window, $translate) {
     'ngInject';
 
     this.is_dashboard_page = $state.current.name === 'app.dashboard';
@@ -54,6 +54,8 @@ export default class NewReservationCtrl {
       is_group: false,
       send_confirmation: true,
       reservation_parts: [],
+      allergies: [],
+      preferences: [],
     };
 
     this.reservation.reservation_parts.push(this.ReservationPart.getNewReservationPart());
@@ -83,6 +85,7 @@ export default class NewReservationCtrl {
     NewReservationTypeFactory(this);
     NewReservationZoneFactory(this);
     NewReservationPersonAutocompleteFactory(this);
+    NewReservationPersonPreferencesFactory(this);
     this.preloadData();
 
     // run translates
@@ -199,6 +202,8 @@ export default class NewReservationCtrl {
 
     if (data.customer.first_name === '') data.customer.first_name = null;
     if (data.customer.last_name === '') data.customer.last_name = null;
+    if (this.reservation.allergies.length > 0) data.customer.allergies = this.reservation.allergies;
+    if (this.reservation.preferences.length > 0) data.customer.preferences = this.reservation.preferences;
     if (this.reservation.reservation_pdf) data.reservation_pdf = this.reservation.reservation_pdf;
 
     this.reservation.reservation_parts.forEach((part) => {
