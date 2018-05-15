@@ -3,9 +3,8 @@
   "version": "0.0.1",
   "description": "TheNextTableApp",
   "scripts": {
-    "build_beta": "webpack --config webpack.config.beta.js",
     "build_production": "webpack --config webpack.config.production.js",
-    "build_staging2": "webpack --config webpack.config.staging2.js",
+    "build_staging": "webpack --config webpack.config.staging.js",
     "dev": "webpack-dev-server --host tnt.me --port 8082"
   },
   "repository": "https://git.thenextsoftware.io/TheNextSoftware/TheNextTableApp.git",

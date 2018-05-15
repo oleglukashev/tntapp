@@ -2,7 +2,7 @@ image: node
 
 stages:
   - production
-  - staging2
+  - staging
 
 production:staging:
   stage: production
@@ -13,14 +13,14 @@ production:staging:
     - npm run build_production
     - rsync --rsync-path="doas rsync" -ave ssh --delete * oleglukashev@icarus.thenextsoftware.io:/www/dashboard1.thenexttable/
 
-staging2:staging:
-  stage: staging2
+staging:staging:
+  stage: staging
   only:
     - develop
   environment: staging
   script:
-    - npm run build_staging2
-    - rsync --rsync-path="doas rsync" -ave ssh --delete * oleglukashev@icarus.thenextsoftware.io:/www/staging2.thenexttable/
+    - npm run build_staging
+    - rsync --rsync-path="doas rsync" -ave ssh --delete * oleglukashev@icarus.thenextsoftware.io:/www/staging.thenexttable/
 
 before_script:
   - apt-get update -y && apt-get install openssh-client rsync -y
