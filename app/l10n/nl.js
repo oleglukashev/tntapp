@@ -3,7 +3,7 @@ export default {
     dashboard: 'Dashboard',
     analytics: 'Analytics',
     calendar: 'Agenda',
-    profiles: 'Profielen',
+    customers: 'Profielen',
   },
   weekdays: {
     mon: 'Maandag',
@@ -161,7 +161,7 @@ export default {
   },
   settings: {
     lightspeed: {
-      title: 'Lightspeed'
+      title: 'Lightspeed',
     },
     employees: {
       title: 'Medewerkers',
@@ -313,14 +313,26 @@ export default {
   receipts: {
     status: 'Receipt status'
   },
+  customers: {
+    title: 'Profielen',
+    customer_merge: {
+      title: 'Gastprofielen samenvoegen',
+    },
+  },
   email: 'E-mail',
+  mail: 'E-mail',
   first_name: 'Voornaam',
   last_name: 'Achternaam',
   phone: 'Telefoon',
+  primary_phone_number: 'Telefoon',
   second_phone: 'Secundair nummer',
+  secondary_phone_number: 'Secundair nummer',
   birthdate: 'Geboortedatum',
+  date_of_birth: 'Geboortedatum',
+  street: 'Straat',
   address: 'Straat',
-  housenumber: 'Huisnummer',
+  house_number: 'Huisnummer',
+  zipcode: 'Zipcode',
   postcode: 'Postcode',
   city: 'Stad',
   av_rating: 'Gemiddelde score',
@@ -392,7 +404,6 @@ export default {
   via: 'via',
   zone: 'Zone',
   skip_step: 'Stap overslaan',
-  profiles: 'Profielen',
   calend: 'Agenda',
   timeschedule: 'Tijdschema',
   mails: 'Mails',
@@ -406,5 +417,7 @@ export default {
   unknown: 'Onbekend',
   authorization: 'Authorization',
   congratulations: 'Gefeliciteerd',
-  gender: 'Geslacht'
+  gender: 'Geslacht',
+  merge: 'Samenvoegen',
+  ignore: 'Negeren',
 };
