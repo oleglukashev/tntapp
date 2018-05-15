@@ -50,7 +50,7 @@ import searchHeaderController from './components/search/search.header.controller
 import agenda from './components/agenda';
 import settings from './components/settings';
 import auth from './components/auth';
-import profiles from './components/profiles';
+import customer from './components/customer';
 import constants from './config.constants';
 import editUser from './shared/user_menu/edit';
 import './assets/css/app.styl';
