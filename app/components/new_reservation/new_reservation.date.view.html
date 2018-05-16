@@ -17,12 +17,12 @@
         <datepicker ng-change='reserv.changeDatePostProcess()'
                     starting-day='1'
                     show-weeks='false'
-                    datepicker-options='reserv.Reservation.date_options'
+                    datepicker-options='reserv.AppConstants.calendar.date_options'
                     date-disabled='reserv.disableDates(date)'
                     datepicker-refresh='dateDisablePromise'
                     ng-model='reserv.current_part.date'
-                    min-date='reserv.Reservation.init_date'
-                    max-date='reserv.Reservation.max_date'
+                    min-date='reserv.AppConstants.calendar.init_date'
+                    max-date='reserv.max_date'
                     class='datepicker'></datepicker>
       </div>
     </div>

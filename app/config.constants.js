@@ -59,6 +59,17 @@ export default angular.module('app.constants', [])
       hall: 'mdi-food-fork-drink',
     },
     emptyClass: 'mdi-close',
+    calendar: {
+      init_date: new Date(),
+      max_date: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+      format: 'dd-MM-yyyy',
+      date_options: {
+        formatYear: 'yy',
+        startingDay: 1,
+        showWeeks: false,
+        class: 'datepicker',
+      },
+    }
   })
   .constant('JQ_CONFIG', {
     easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],
