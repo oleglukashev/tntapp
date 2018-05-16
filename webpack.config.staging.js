@@ -51,9 +51,10 @@ module.exports = {
       minChunks: Infinity
     }),
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify('https://api.staging2.thenexttable.com/api/v2'),
+      API_URL: JSON.stringify('https://api.staging.thenexttable.com/api/v2'),
       FACEBOOK_ID: '722157017888974',
-      ENV: JSON.stringify('staging2'),
+      BUCKAROO_URL: JSON.stringify('https://testcheckout.buckaroo.nl/html/'),
+      ENV: JSON.stringify('staging'),
     }),
     new ngAnnotatePlugin({
       add: true
