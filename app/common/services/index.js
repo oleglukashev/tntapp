@@ -26,6 +26,7 @@ import LoadedService from './loaded.service';
 import NotificationService from './notification.service';
 import LightspeedService from './lightspeed.service';
 import AnalyticsService from './analytics.service';
+import UserMenuService from '../../shared/user_menu/user_menu.service';
 
 export default angular.module('app.services', [])
   .service('User', UserService)
@@ -55,4 +56,5 @@ export default angular.module('app.services', [])
   .service('Notification', NotificationService)
   .service('Lightspeed', LightspeedService)
   .service('Analytics', AnalyticsService)
+  .service('UserMenu', UserMenuService)
   .name;

@@ -1,9 +1,10 @@
 export default class ProfilesCtrl {
-  constructor(User, Customer, moment, AppConstants, JWT, $mdSidenav, $rootScope, $scope, $modal,
-    PageFilterFactory) {
+  constructor(User, Customer, moment, AppConstants, UserMenu, JWT,
+    $mdSidenav, $rootScope, $scope, $modal, PageFilterFactory) {
     'ngInject';
 
     this.Customer = Customer;
+    this.UserMenu = UserMenu;
     this.current_company_id = User.getCompanyId();
 
     this.customers = {};
@@ -75,7 +76,10 @@ export default class ProfilesCtrl {
   }
 
   openCustomerMenu(customerId) {
-    this.$rootScope.$broadcast('UserMenuCtrl.load_full_data', { customerId });
+    if (!this.UserMenu.isCurrentCustomer(customerId)) {
+      this.UserMenu.loadAndSetFullData(this.current_company_id, customerId);
+    }
+
     this.$mdSidenav('right').open();
   }
 

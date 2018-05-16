@@ -1,6 +1,8 @@
+import angular from 'angular';
+
 export default class UserMenuEditCtrl {
-  constructor(User, Customer, customer, customerNotes, customerPreferences, customerAllergies,
-    UserMenuEditFactroy, $rootScope, $modalInstance, moment, $modal) {
+  constructor(User, Customer, UserMenu, UserMenuEditFactroy, $rootScope,
+    $modalInstance, moment, $modal) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -9,6 +11,7 @@ export default class UserMenuEditCtrl {
     this.$modal = $modal;
     this.moment = moment;
     this.submited_success = false;
+    this.UserMenu = UserMenu;
 
     this.note = {};
 
@@ -19,10 +22,10 @@ export default class UserMenuEditCtrl {
       class: 'datepicker',
     };
 
-    this.customer = customer;
-    this.customerNotes = customerNotes;
-    this.customerPreferences = customerPreferences;
-    this.customerAllergies = customerAllergies;
+    this.customer = angular.copy(this.UserMenu.customer);
+    this.customerNotes = angular.copy(this.UserMenu.notes);
+    this.customerPreferences = angular.copy(this.UserMenu.preferences);
+    this.customerAllergies = angular.copy(this.UserMenu.allergies);
 
     UserMenuEditFactroy(this);
   }

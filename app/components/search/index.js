@@ -15,7 +15,7 @@ export default angular.module('app.search', [uirouter])
   .factory('ReservationItemFactory', reservationItemFactory,
     ['AppConstants', 'ReservationStatus', '$mdSidenav', '$rootScope'])
   .factory('ReservationStatusMenu', reservationStatusMenuFactory,
-    ['ReservationStatus', 'Customer', 'filterFilter', 'moment', '$modal'])
+    ['ReservationStatus', 'Customer', 'UserMenu', 'filterFilter', 'moment', '$modal'])
   .factory('PageFilterFactory', pageFilterFactory,
     ['AppConstants', 'Reservation', 'Customer', '$modal', '$filter', 'moment', 'filterFilter'])
   .name;

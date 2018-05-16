@@ -1,5 +1,5 @@
 export default function reservationStatusMenu(AppConstants, ReservationStatus, filterFilter,
-  Customer, moment, $modal) {
+  Customer, UserMenu, moment, $modal) {
   'ngInject';
 
   return (that) => {
@@ -8,6 +8,7 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
     instance.statuses = AppConstants.reservationStatuses;
     instance.dutch_statuses = AppConstants.reservationDutchStatuses;
     instance.status_icon = AppConstants.reservationStatusClasses;
+    instance.UserMenu = UserMenu;
 
     instance.chooseChangeStatusMethod = (reservation, status, callaback) => {
       if (['confirmed', 'request', 'cancelled'].includes(status)) {
@@ -33,24 +34,17 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
     };
 
     instance.openEditReservationModal = (reservation, reservationPart) => {
-      Customer.searchReservationsByCustomerId(instance.current_company_id, reservation.customer.id)
-        .then((response) => {
-          const modalInstance = $modal.open({
-            templateUrl: 'edit_reservation.view.html',
-            controller: 'EditReservationCtrl as reserv',
-            size: 'md',
-            resolve: {
-              reservationPart: () => reservationPart,
-              reservation: () => reservation,
-              customer: () => response.customer,
-              customerNotes: () => response.notes,
-              customerAllergies: () => response.allergies,
-              customerPreferences: () => response.preferences,
-            },
-          });
+      const modalInstance = $modal.open({
+        templateUrl: 'edit_reservation.view.html',
+        controller: 'EditReservationCtrl as reserv',
+        size: 'md',
+        resolve: {
+          reservationPart: () => reservationPart,
+          reservation: () => reservation,
+        },
+      });
 
-          modalInstance.result.then(() => {}, () => {});
-        });
+      modalInstance.result.then(() => {}, () => {});
     };
   };
 }
