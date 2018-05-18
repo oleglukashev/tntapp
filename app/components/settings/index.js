@@ -33,6 +33,14 @@ import editWarningsController from './warnings/edit/settings_warnings.edit.contr
 import lightspeedController from './lightspeed/settings_lightspeed.controller';
 import lightspeedAuthController from './lightspeed/settings_lightspeed.auth.controller';
 import lightspeedRouting from './lightspeed/settings_lightspeed.route';
+import customerSettingsNamesRouting from
+  './customer_settings_names/settings_customer_settings_names.route';
+import customerSettingsNamesController from
+  './customer_settings_names/settings_customer_settings_names.controller';
+import newCustomerSettingsNamesController from
+  './customer_settings_names/settings_customer_settings_names.new.controller';
+import editCustomerSettingsNamesController from
+  './customer_settings_names/settings_customer_settings_names.edit.controller';
 
 export default angular.module('app.settings', [])
   .controller('SettingsMailsEditMailCtrl', editMailController)
@@ -68,5 +76,9 @@ export default angular.module('app.settings', [])
   .controller('SettingsLightspeedCtrl', lightspeedController)
   .controller('SettingsLightspeedAuthCtrl', lightspeedAuthController)
   .config(lightspeedRouting)
+  .config(customerSettingsNamesRouting)
+  .controller('SettingsCustomerSettingsNamesCtrl', customerSettingsNamesController)
+  .controller('SettingsCustomerSettingsNamesEditCtrl', editCustomerSettingsNamesController)
+  .controller('SettingsCustomerSettingsNamesNewCtrl', newCustomerSettingsNamesController)
   .factory('SettingsTablesZoneFactory', settingsTablesZoneFactory, ['AppConstants'])
   .name;

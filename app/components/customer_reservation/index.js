@@ -24,7 +24,8 @@ export default angular.module('app.customer_reservation', [uirouter])
   .factory('NewReservationNumberOfPersonsFactory', newReservationNumberOfPersonsFactory, ['Reservation'])
   .factory('NewReservationPersonAutocompleteFactory', newReservationPersonAutocompleteFactory,
     ['Customer', '$timeout'])
-  .factory('NewReservationPersonPreferencesFactory', newReservationPersonPreferencesFactory, [])
+  .factory('NewReservationPersonPreferencesFactory', newReservationPersonPreferencesFactory,
+    ['CustomerSettingsName', '$translate'])
   .factory('NewReservationPersonFactory', newReservationPersonFactory, [])
   .factory('NewReservationProductFactory', newReservationProductFactory, ['moment', 'filterFilter'])
   .factory('NewReservationTimeFactory', newReservationTimeFactory, ['moment', 'filterFilter'])

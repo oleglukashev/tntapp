@@ -69,7 +69,7 @@ export default angular.module('app.constants', [])
         showWeeks: false,
         class: 'datepicker',
       },
-    }
+    },
   })
   .constant('JQ_CONFIG', {
     easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],

@@ -1,4 +1,4 @@
-export default function NewReservationPersonPreferencesFactory() {
+export default function NewReservationPersonPreferencesFactory(CustomerSettingsName, $translate) {
   'ngInject';
 
   return (that) => {
@@ -14,17 +14,6 @@ export default function NewReservationPersonPreferencesFactory() {
       name: null,
       value: null,
     };
-
-    instance.default_allergies = [
-      'glutenfree',
-      'lactose_free',
-      'tree_nuts_allergy',
-      'peanut_allergy',
-      'egg_allergy',
-      'shellfish_allergy',
-      'vegetarian',
-      'vegan',
-    ];
 
     instance.addAllergy = () => {
       instance.reservation.allergies.push(instance.allergy_data);
@@ -53,12 +42,34 @@ export default function NewReservationPersonPreferencesFactory() {
       instance.reservation.preferences.splice(index, 1);
     };
 
-    instance.preferenceIsValid = (index) => {
-      return instance.preference_data.owner && instance.preference_data.name && instance.preference_data.value;
+    instance.preferenceIsValid = () =>
+      instance.preference_data.owner && instance.preference_data.name && instance.preference_data.value;
+
+    instance.allergyIsValid = () => instance.allergy_data.owner && instance.allergy_data.allergy;
+
+    instance.searchPreferncesAndAllergies = (query, defaultScope) => {
+      if (query) {
+        return defaultScope
+          .filter(item => item.toLowerCase().indexOf(query.toLowerCase()) >= 0);
+      }
+
+      return defaultScope;
     };
 
-    instance.allergyIsValid = (index) => {
-      return instance.allergy_data.owner && instance.allergy_data.allergy;
-    };
+    instance.allergies = [];
+    instance.preferences = [];
+
+    // load allergies and preferences
+    CustomerSettingsName.getAll(instance.current_company_id).then((result) => {
+      result.forEach((item) => {
+        if (item.language === $translate.proposedLanguage().toUpperCase()) {
+          if (item.type === 'allergy') {
+            instance.allergies.push(item.value);
+          } else if (item.type === 'preference') {
+            instance.preferences.push(item.value);
+          }
+        }
+      });
+    });
   };
 }

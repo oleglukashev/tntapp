@@ -202,9 +202,9 @@ export default class NewReservationCtrl {
 
     if (data.customer.first_name === '') data.customer.first_name = null;
     if (data.customer.last_name === '') data.customer.last_name = null;
-    if (this.reservation.allergies.length > 0) data.customer.allergies = this.reservation.allergies;
-    if (this.reservation.preferences.length > 0) data.customer.preferences = this.reservation.preferences;
     if (this.reservation.reservation_pdf) data.reservation_pdf = this.reservation.reservation_pdf;
+
+    this.preparePreferencesAndAllergies(data);
 
     this.reservation.reservation_parts.forEach((part) => {
       data.reservation_parts.push({
@@ -457,5 +457,20 @@ export default class NewReservationCtrl {
 
   showCustomBackground() {
     return this.settings && this.settings.plugin_image_file_name && this.tab_index === 0;
+  }
+
+
+  // TODO optimize it
+  preparePreferencesAndAllergies(data) {
+    if (this.allergyIsValid()) this.addAllergy();
+    if (this.preferenceIsValid()) this.addPreference();
+
+    if (this.reservation.allergies.length) {
+      data.customer.allergies = this.reservation.allergies;
+    }
+
+    if (this.reservation.preferences.length) {
+      data.customer.preferences = this.reservation.preferences;
+    }
   }
 }

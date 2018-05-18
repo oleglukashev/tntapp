@@ -7,7 +7,9 @@
     <div class='md-content-submit reservation_person' flex>
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <div class='w-xl'>
-
+          <p>
+            <small class='text-muted' translate='reservation.general_info'></small>
+          </p>
           <div data-ng-include=" 'new_reservation.person.autocomplete.view.html' "
                ng-if='reserv.showAutocompleteCustomerName()'
                class='no-margin'></div>
@@ -55,8 +57,17 @@
       </div>
 
       <div ng-show='reserv.additional_is_opened'>
+        <hr class='no-margin' />
+
+        <div data-ng-include=" 'new_reservation.person.preferences.view.html' "
+               ng-if='reserv.is_customer_reservation'
+               class='no-margin'></div>
+
         <div class='wrapper' layout='column' layout-align='space-around center'>
           <div class='w-xl'>
+            <p>
+              <small class='text-muted' translate='reservation.additional_info'></small>
+            </p>
             <md-input-container class='md-block'>
               <label translate='second_phone'></label>
               <input ng-model='reserv.reservation.secondary_phone_number' />
@@ -131,12 +142,6 @@
             </button>
           </div>
         </div>
-        
-        <hr class='no-margin' />
-
-        <div data-ng-include=" 'new_reservation.person.preferences.view.html' "
-               ng-if='reserv.is_customer_reservation'
-               class='no-margin'></div>
       </div>
       <button type='button'
               md-ink-ripple

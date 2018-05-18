@@ -4,19 +4,21 @@
       <small class='text-muted' translate='allergies'></small>
     </p>
     <md-input-container class='md-block'>
-      <label translate='owner'></label>
+      <label translate='guest_name'></label>
       <input ng-model='reserv.allergy_data.owner' />
     </md-input-container>
 
-    <md-input-container class='md-block'>
-      <md-select ng-model='reserv.allergy_data.allergy'
-                 placeholder='{{ "name" | translate }}'>
-        <md-option ng-value='"{{ "default_allergies." + allergy | translate }}"'
-                   ng-repeat='allergy in reserv.default_allergies'>
-          {{ 'default_allergies.' + allergy | translate }}
-        </md-option>
-      </md-select>
-    </md-input-container>
+    <md-autocomplete
+        md-search-text='reserv.allergy_data.allergy'
+        md-items='item in reserv.searchPreferncesAndAllergies(reserv.allergy_data.allergy, reserv.allergies)'
+        md-item-text='item'
+        md-min-length='0'
+        md-menu-container-class='input-suggestion'
+        md-floating-label='{{ "name" | translate }}'>
+      <md-item-template>
+        <span>{{ item }}</span>
+      </md-item-template>
+    </md-autocomplete>
 
     <button type='button'
             md-ink-ripple
@@ -45,13 +47,22 @@
       <small class='text-muted'>Preferences</small>
     </p>
     <md-input-container class='md-block'>
-      <label translate='owner'></label>
+      <label translate='guest_name'></label>
       <input ng-model='reserv.preference_data.owner' />
     </md-input-container>
-    <md-input-container class='md-block'>
-      <label translate='name'></label>
-      <input ng-model='reserv.preference_data.name' />
-    </md-input-container>
+
+    <md-autocomplete
+        md-search-text='reserv.preference_data.name'
+        md-items='item in reserv.searchPreferncesAndAllergies(reserv.preference_data.name, reserv.preferences)'
+        md-item-text='item'
+        md-min-length='0'
+        md-menu-container-class='input-suggestion'
+        md-floating-label='{{ "name" | translate }}'>
+      <md-item-template>
+        <span>{{ item }}</span>
+      </md-item-template>
+    </md-autocomplete>
+
     <md-input-container class='md-block'>
       <label translate='value'></label>
       <input ng-model='reserv.preference_data.value' />
@@ -74,3 +85,5 @@
     </label>
   </div>
 </div>
+
+<hr class='no-margin' />

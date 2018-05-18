@@ -32,6 +32,8 @@
       </span>
       <i class='mdi mdi-silverware-variant' ng-if='item.product_name'></i>
       <span class='font-thin m-r-xs'>{{ item.product_name }}</span>
+      <i class='mdi mdi-information-outline icon-muted'
+         ng-if='item.customer.allergies.length > 0 || item.customer.preferences.length > 0'></i>
     </div>
     <div class='font-thin' ng-if='item.notes' show-more>
       {{ item.notes }}
