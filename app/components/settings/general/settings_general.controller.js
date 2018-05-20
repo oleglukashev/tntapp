@@ -9,6 +9,8 @@ export default class SettingsGeneralCtrl {
     this.moment = moment;
     this.is_loaded = false;
 
+    this.default_penalty = 10;
+
     this.form_data = {
       reservation_deadline_hours: null,
       reservation_deadline_minutes: null,
@@ -17,6 +19,7 @@ export default class SettingsGeneralCtrl {
       request_type_end_hours: null,
       request_type_end_minutes: null,
       enable_deadline: false,
+      enable_penalty: false,
       enable_request_type: false,
     };
 
@@ -55,6 +58,10 @@ export default class SettingsGeneralCtrl {
               this.form_data.enable_request_type = true;
             }
           }
+
+          if (this.form_data.penalty >= 0) {
+            this.form_data.enable_penalty = true;
+          }
         });
   }
 
@@ -76,18 +83,25 @@ export default class SettingsGeneralCtrl {
       booking_api: this.form_data.booking_api,
     };
 
-    if (this.form_data.enable_deadline) {
-      data.reservation_deadline = this.convertedReservationDeadlineToString();
-    } else {
-      data.reservation_deadline = null;
+    data.penalty = null;
+    if (this.form_data.enable_penalty) {
+      data.penalty = this.form_data.penalty;
     }
 
+    if (this.form_data.penalty === null && this.form_data.enable_penalty) {
+      this.form_data.enable_penalty = false;
+    }
+
+    data.reservation_deadline = null;
+    if (this.form_data.enable_deadline) {
+      data.reservation_deadline = this.convertedReservationDeadlineToString();
+    }
+
+    data.request_type_start = null;
+    data.request_type_end = null;
     if (this.form_data.enable_request_type) {
       data.request_type_start = this.convertedRequestTypeStartToString();
       data.request_type_end = this.convertedRequestTypeEndToString();
-    } else {
-      data.request_type_start = null;
-      data.request_type_end = null;
     }
 
     this.Settings.updateGeneralSettings(this.current_company_id, data);
@@ -185,6 +199,16 @@ export default class SettingsGeneralCtrl {
       this.form_data.request_type_start_minutes = 0;
       this.form_data.request_type_end_hours = 0;
       this.form_data.request_type_end_minutes = 0;
+    }
+
+    this.submitForm();
+  }
+
+  updatePenaltyAndSubmitForm() {
+    this.form_data.penalty = null;
+
+    if (this.form_data.enable_penalty) {
+      this.form_data.penalty = this.default_penalty;
     }
 
     this.submitForm();

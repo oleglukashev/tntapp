@@ -204,6 +204,7 @@ export default {
       booking_api: 'Booking Api',
       booking_api_description: 'Do you want to connect TheNextTable to a BookDinners? Use the UUID to create a connection',
       uuid: 'UUID',
+      penalty: 'Maximaal aantal lege stoelen in restaurant wanneer alle tafels bezet jizn',
     },
     mails: {
       title: 'Mails',
@@ -397,7 +398,6 @@ export default {
   date: 'Date',
   number_of_guests: 'Number of guests',
   number_of_visits: 'Number of visits',
-  general: 'General',
   general_info: 'General info',
   male: 'Male',
   female: 'Female',

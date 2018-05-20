@@ -164,9 +164,7 @@ export default class EditReservationCtrl {
 
   // UNITE WITH NEW RESERVATION FUNCTION
   timeIsDisabled(timeObj) {
-    if (!timeObj.is_open ||
-      !this.isEnoughSeats(timeObj) ||
-      timeObj.available_table_count <= 0) {
+    if (!timeObj.is_open || !this.isEnoughSeats(timeObj)) {
       return true;
     }
 
@@ -190,7 +188,7 @@ export default class EditReservationCtrl {
 
   // UNITE WITH NEW RESERVATION FUNCTION
   isEnoughSeats(timeObj) {
-    return (timeObj.available_seat_count.includes(this.current_part.number_of_persons)) ||
+    return (timeObj.available_seats.seats.includes(this.current_part.number_of_persons)) ||
       timeObj.can_overbook;
   }
 
@@ -345,9 +343,8 @@ export default class EditReservationCtrl {
             if (Math.round(durationMinutes / 15) >= (Math.abs(absDiffOfMins) / 15)) {
               this.current_part.table_ids.forEach((tableId) => {
                 const count = this.Reservation.getPersonCountByTableId(this.tables, tableId);
-                itemObj.available_seat_count.push(count);
+                itemObj.available_seats.seats.push(count);
               });
-              itemObj.available_table_count += this.current_part.table_ids.length;
             }
           });
         }, () => {});

@@ -204,6 +204,7 @@ export default {
       booking_api: 'Booking Api',
       booking_api_description: 'Wil je een koppeling maken met een booking systeem? Gebruik de onderstaande UUID om dit te koppelen',
       uuid: 'UUID',
+      penalty: 'Maximaal aantal lege stoelen in restaurant wanneer alle tafels bezet jizn',
     },
     mails: {
       title: 'Mails',
@@ -397,7 +398,6 @@ export default {
   date: 'Datum',
   number_of_guests: 'Aantal personen',
   number_of_visits: 'Aantal bezoeken',
-  general: 'Algemene',
   general_info: 'Algemene informatie',
   male: 'Man',
   female: 'Vrouw',
