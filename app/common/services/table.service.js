@@ -85,7 +85,7 @@ export default class Table {
   }
 
   getTableNumbersByTableIds(tables, tableIds) {
-    if (!tables) return [];
+    if (!tables || !tableIds) return [];
     const result = [];
 
     tableIds.forEach((value) => {

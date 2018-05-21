@@ -93,7 +93,7 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
     };
 
     instance.isEnoughSeats = timeObj =>
-      (timeObj.available_seats.seats.includes(instance.current_part.number_of_persons)) ||
+      (timeObj.available_seats.includes(instance.current_part.number_of_persons)) ||
       timeObj.can_overbook;
 
     instance.loadOccupiedTables = () => {

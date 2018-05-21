@@ -188,7 +188,7 @@ export default class EditReservationCtrl {
 
   // UNITE WITH NEW RESERVATION FUNCTION
   isEnoughSeats(timeObj) {
-    return (timeObj.available_seats.seats.includes(this.current_part.number_of_persons)) ||
+    return (timeObj.available_seats.includes(this.current_part.number_of_persons)) ||
       timeObj.can_overbook;
   }
 
@@ -342,8 +342,24 @@ export default class EditReservationCtrl {
             const absDiffOfMins = Math.abs(itemObjDateTime.diff(currentDateTime) / 1000 / 60);
             if (Math.round(durationMinutes / 15) >= (Math.abs(absDiffOfMins) / 15)) {
               this.current_part.table_ids.forEach((tableId) => {
-                const count = this.Reservation.getPersonCountByTableId(this.tables, tableId);
-                itemObj.available_seats.seats.push(count);
+                const table = this.filterFilter(this.tables, { id: tableId })[0];
+                let startRange = this.settings.penalty != null
+                  ? table.number_of_persons - this.settings.penalty
+                  : 0;
+
+                const length = table.number_of_persons - startRange;
+                const range = Array.from({ length: length + 1 }, (v, k) => k + startRange);
+
+                if (!itemObj.available_seats) {
+                  itemObj.available_seats = range;
+                } else {
+                  range.forEach((seat) => {
+                    if (!itemObj.available_seats.includes(seat)) {
+                      itemObj.available_seats.push(seat);
+                    }
+                  });
+                  itemObj.available_seats.sort();
+                }
               });
             }
           });
