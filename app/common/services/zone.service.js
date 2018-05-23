@@ -12,7 +12,7 @@ export default class Zone {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/zone`,
+      url: `${API_URL}/company/${companyId}/zones`,
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
@@ -24,7 +24,7 @@ export default class Zone {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/zone`,
+      url: `${API_URL}/company/${companyId}/zones`,
       method: 'POST',
       skipAuthorization: skipJwtAuth,
       data,
@@ -37,7 +37,7 @@ export default class Zone {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/zone/${zoneId}`,
+      url: `${API_URL}/company/${companyId}/zones/${zoneId}`,
       method: 'PATCH',
       skipAuthorization: skipJwtAuth,
       data,
@@ -50,7 +50,7 @@ export default class Zone {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/zone/${id}`,
+      url: `${API_URL}/company/${companyId}/zones/${id}`,
       skipAuthorization: skipJwtAuth,
       method: 'DELETE',
     }).then(result => result.data);
