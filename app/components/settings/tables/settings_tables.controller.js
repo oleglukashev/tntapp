@@ -239,12 +239,14 @@ export default class SettingsTablesCtrl {
     let index = 0;
     
     this.zones.forEach((zone) => {
-      this.tables_by_zone[zone.id].forEach((table) => {
-        if (table.id) {
-          data[table.id] = index;
-          index += 1;
-        }
-      });
+      if (this.tables_by_zone[zone.id]) {
+        this.tables_by_zone[zone.id].forEach((table) => {
+          if (table.id) {
+            data[table.id] = index;
+            index += 1;
+          }
+        });
+      }
     });
 
     this.Table.updatePositions(this.current_company_id, data);
