@@ -10,8 +10,8 @@
     </div>
   </md-toolbar>
   <md-content>
-    <div class='wrapper md-content-submit'>
-      <div class='panel' ng-repeat='mergeData in customer_merge.mergeData'>
+    <div class='wrapper'>
+      <div class='panel' ng-repeat='mergeData in customer_merge.auto_merge'>
         <div class='panel-heading'>
           <h4>
             {{ mergeData.source.last_name }} {{ mergeData.source.first_name }} (#{{ mergeData.source.id }})
@@ -19,7 +19,27 @@
             {{ mergeData.target.last_name }} {{ mergeData.target.first_name }} (#{{ mergeData.target.id }})
           </h4>
         </div>
-        <div class='panel-body' ng-if='mergeData.data.is_manual'>
+        <div class='panel-footer'>
+          <button class='md-btn md-flat btn-fw text-success'
+                  ng-click='customer_merge.merge(mergeData)'
+                  type='button'
+                  translate='merge'
+                  md-ink-ripple></button>
+          <button class='md-btn md-flat btn-fw text-success'
+                  ng-click='customer_merge.ignore(mergeData)'
+                  type='button'
+                  translate='ignore'
+                  md-ink-ripple></button>
+        </div>
+      </div>
+
+      <div class='panel' ng-repeat='mergeData in customer_merge.manual_merge'>
+        <div class='panel-heading'>
+          <h4>
+            {{ mergeData.source.last_name }} {{ mergeData.source.first_name }} ({{ mergeData.source.id }}) -> {{ mergeData.target.last_name }} {{ mergeData.target.first_name }} ({{ mergeData.target.id }})
+          </h4>
+        </div>
+        <div class='panel-body'>
           <table class='table m-b-none'>
             <thead>
               <th>Key</th>
@@ -31,13 +51,13 @@
                 <td>{{ key | translate }}</td>
                 <td>
                   <label>
-                    <input type='radio' ng-model='mergeData.data.fields[key]' value='source' />
+                    <input type='radio' ng-model='mergeData.merge.fields[key]' value='source' />
                     {{ value }}
                   </label>
                 </td>
                 <td>
                   <label>
-                    <input type='radio' ng-model='mergeData.data.fields[key]' value='target' />
+                    <input type='radio' ng-model='mergeData.merge.fields[key]' value='target' />
                     {{ mergeData.target[key] }}
                   </label>
                 </td>
@@ -46,29 +66,22 @@
           </table>
         </div>
         <div class='panel-footer'>
-          <md-checkbox ng-model='mergeData.data.merge'
-                       ng-checked='false'
-                       aria-label='{{ "merge" | translate }}'>
-            {{ 'merge' | translate }}
-          </md-checkbox>
-          <md-checkbox ng-model='mergeData.data.ignore'
-                       ng-checked='false'
-                       aria-label='{{ "ignore" | translate }}'>
-            {{ 'ignore' | translate }}
-          </md-checkbox>
+          <button class='md-btn md-flat btn-fw text-success'
+                  ng-click='customer_merge.merge(mergeData)'
+                  type='button'
+                  translate='merge'
+                  md-ink-ripple></button>
+          <button class='md-btn md-flat btn-fw text-success'
+                  ng-click='customer_merge.ignore(mergeData)'
+                  type='button'
+                  translate='ignore'
+                  md-ink-ripple></button>
         </div>
       </div>
 
-      <div ng-show='!customer_merge.mergeData.length'
+      <div ng-show='!customer_merge.auto_merge.length && !customer_merge.manual_merge.length'
            class='md-padding text-center'
            translate='geen'></div>
-
-      <button type='submit'
-              ng-class='{"disabled": !customer_merge.mergeData.length}'
-              ng-click='customer_merge.submitForm()'
-              class='btn btn-lg btn-success w-full no-top-radius md-content-button'>
-        <translate>save</translate>
-      </button>
     </div>
   </md-content>
 </section>

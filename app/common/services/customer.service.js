@@ -83,6 +83,19 @@ export default class Customer {
     }).then(result => result.data);
   }
 
+  ignore(companyId, data, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/customer/ignore`,
+      skipAuthorization: skipJwtAuth,
+      method: 'POST',
+      data,
+    }).then(result => result.data);
+  }
+
   exportCSV(companyId, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;

@@ -8,7 +8,8 @@ export default class CustomerMergeCtrl {
     this.$modalInstance = $modalInstance;
     this.$rootScope = $rootScope;
 
-    this.mergeData = [];
+    this.auto_merge = [];
+    this.manual_merge = [];
 
     this.fields = [
       'first_name',
@@ -30,29 +31,30 @@ export default class CustomerMergeCtrl {
   loadMatchData() {
     this.$rootScope.show_spinner = true;
     this.Customer.getMatchData(this.current_company_id).then((result) => {
-      this.mergeData = [];
-
-      [result.auto_merge, result.manual_merge].forEach((scope, index) => {
-        scope.forEach((item) => {
-          const newItem = item;
-
-          newItem.data = {
-            source: item.source.id,
-            target: item.target.id,
-            is_manual: index === 1,
-          };
-
-          if (index === 1) {
-            newItem.data.fields = {};
-            this.fields.forEach((field) => {
-              newItem.data.fields[field] = 'target';
-            });
-          }
-
-          this.mergeData.push(newItem);
-        });
+      this.auto_merge = result.auto_merge;
+      this.auto_merge.forEach((item, index) => {
+        this.auto_merge[index].merge = {
+          source: item.source.id,
+          target: item.target.id,
+          is_manual: false,
+        };
       });
-  
+
+      this.manual_merge = result.manual_merge;
+      this.manual_merge.forEach((item, index) => {
+        const merge = {
+          source: item.source.id,
+          target: item.target.id,
+          is_manual: true,
+        };
+
+        merge.fields = {};
+        this.fields.forEach((field) => {
+          merge.fields[field] = 'target';
+        });
+
+        this.manual_merge[index].merge = merge;
+      });
       this.$rootScope.show_spinner = false;
     });
   }
@@ -61,12 +63,22 @@ export default class CustomerMergeCtrl {
     return this.fields.includes(field) && value1 !== value2;
   }
 
-  submitForm() {
+  merge(mergeData) {
     this.$rootScope.show_spinner = true;
+    this.Customer.merge(this.current_company_id, mergeData.merge).then(() => {
+      this.loadMatchData();
+      this.CustomerService.initCustomers(this.current_company_id);
+    });
+  }
 
-    const data = this.mergeData.map(item => item.data);
+  ignore(mergeData) {
+    const data = {
+      source: mergeData.merge.source,
+      target: mergeData.merge.target,
+    };
 
-    this.Customer.merge(this.current_company_id, data).then(() => {
+    this.$rootScope.show_spinner = true;
+    this.Customer.ignore(this.current_company_id, data).then(() => {
       this.loadMatchData();
       this.CustomerService.initCustomers(this.current_company_id);
     });
