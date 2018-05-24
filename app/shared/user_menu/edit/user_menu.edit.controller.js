@@ -2,14 +2,13 @@ import angular from 'angular';
 
 export default class UserMenuEditCtrl {
   constructor(User, Customer, UserMenu, AppConstants, UserMenuEditFactroy, $rootScope,
-    $modalInstance, moment, $modal, $state) {
+    $modalInstance, moment, $modal) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.$rootScope = $rootScope;
     this.$modalInstance = $modalInstance;
     this.$modal = $modal;
-    this.$state = $state;
     this.moment = moment;
     this.submited_success = false;
     this.UserMenu = UserMenu;

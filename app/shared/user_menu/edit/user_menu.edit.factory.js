@@ -1,4 +1,4 @@
-export default function UserMenuEditFactory(UserMenu, Customer, CustomerService, CustomerNote, CustomerPreference,
+export default function UserMenuEditFactory(UserMenu, Customer, CustomerNote, CustomerPreference,
   CustomerAllergies, moment, $rootScope) {
   'ngInject';
 
@@ -104,11 +104,7 @@ export default function UserMenuEditFactory(UserMenu, Customer, CustomerService,
       Customer.edit(instance.current_company_id, customerClone.id, data).then(
         (customer) => {
           UserMenu.customer = customer;
-
-          if (instance.$state.current.name === 'app.customers') {
-            CustomerService.initCustomers(instance.current_company_id);
-          }
-
+          instance.$rootScope.$broadcast('ProfilesCtrl.reload_customers');
           instance.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
           instance.is_submitting = false;
           instance.$rootScope.show_spinner = false;
