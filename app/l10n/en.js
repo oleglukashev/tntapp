@@ -3,7 +3,7 @@ export default {
     dashboard: 'Dashboard',
     analytics: 'Analytics',
     calendar: 'Calendar',
-    profiles: 'Profiles',
+    customers: 'Customers',
   },
   weekdays: {
     mon: 'Monday',
@@ -108,7 +108,7 @@ export default {
     booking_channels: 'Booking channels',
     product_distribution: 'Product distribution',
     reservations_per_hour: 'Reservations per hour',
-    age_of_guests: 'Age of guests'
+    age_of_guests: 'Age of guests',
   },
   notifications: {
     settings_escape: 'Your current settings are not finished and therefore will not be saved',
@@ -313,15 +313,27 @@ export default {
   receipts: {
     status: 'Receipt status'
   },
+  customers: {
+    title: 'Customers',
+    customer_merge: {
+      title: 'Merge customers',
+    },
+  },
   email: 'E-mail',
+  mail: 'E-mail',
   first_name: 'First name',
   last_name: 'Last name',
   phone: 'Phone',
+  primary_phone_number: 'Phone',
   second_phone: 'Second phone',
+  secondary_phone_number: 'Second phone',
   birthdate: 'Date of birth',
+  date_of_birth: 'Date of birth',
+  street: 'Address',
   address: 'Address',
-  housenumber: 'Housenumber',
+  house_number: 'Housenumber',
   postcode: 'Postcode',
+  zipcode: 'Zipcode',
   city: 'City',
   av_rating: 'Average rating',
   present: 'Present',
@@ -392,7 +404,6 @@ export default {
   via: 'via',
   zone: 'Zone',
   skip_step: 'Skip step',
-  profiles: 'Profiles',
   calend: 'Calendar',
   timeschedule: 'Time schedule',
   mails: 'Mails',
@@ -406,5 +417,7 @@ export default {
   unknown: 'Unknown',
   authorization: 'Authorization',
   congratulations: 'Congratulations',
-  gender: 'Gender'
+  gender: 'Gender',
+  merge: 'Merge',
+  ignore: 'Ignore',
 };

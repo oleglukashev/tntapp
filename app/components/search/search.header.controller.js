@@ -30,9 +30,19 @@ class SearchHeaderCtrl {
     if (!query) return [];
     return this.Customer.search(this.current_company_id, query).then((result) => {
       return result.map((customer) => {
+        let fullName = customer.last_name;
+
+        if (customer.first_name) {
+          if (fullName) {
+            fullName = `${fullName} ${customer.first_name}`;
+          } else {
+            fullName = customer.first_name;
+          }
+        }
+
         return {
           value: customer.id,
-          display: `${customer.first_name} ${customer.last_name}`,
+          display: fullName,
         };
       });
     });

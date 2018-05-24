@@ -7,6 +7,7 @@ export default class Customer {
 
     this.$http = $http;
     this.$q = $q;
+    this.store = [];
   }
 
   getAll(companyId, skipJwtAuth, options = {}) {
@@ -16,6 +17,18 @@ export default class Customer {
 
     return this.$http({
       url: buildURL(`${API_URL}/company/${companyId}/customer`, options),
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
+    }).then(result => result.data);
+  }
+
+  getMatchData(companyId, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/customer/match`,
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
@@ -54,6 +67,19 @@ export default class Customer {
       url: `${API_URL}/company/${companyId}/customer/${customerId}/full_data`,
       skipAuthorization: skipJwtAuth,
       method: 'POST',
+    }).then(result => result.data);
+  }
+
+  merge(companyId, data, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/customer/merge`,
+      skipAuthorization: skipJwtAuth,
+      method: 'POST',
+      data,
     }).then(result => result.data);
   }
 
