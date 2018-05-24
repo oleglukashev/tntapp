@@ -64,7 +64,7 @@ angular
     angularMessages, angularResource, angularSanitize, angularTouch, angularUiRouter,
     angularUiBootstrap, angularTranslate, angularMoment, angularMaterial, uiLoad,
     uiJq, dndLists, satellizer, search, dashboard, customerReservation, analytics, dnd, agenda,
-    auth, settings, rzModule, chartjs, profiles, constants, editUser, 'app.services', 'app.factories',
+    auth, settings, rzModule, chartjs, customer, constants, editUser, 'app.services', 'app.factories',
     'app.directives', 'app.filters', 'growlNotifications',
   ])
   .controller('AppCtrl', appController)
