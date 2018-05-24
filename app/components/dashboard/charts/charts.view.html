@@ -68,11 +68,11 @@
             <td>{{ item.last_name }}  {{ item.first_name }}</td>
             <td>
               <p ng-if='item.allergies.length'><small class='font-thin' translate='allergies'></small></p>
-              <p ng-repeat='allergy in item.allergies track by $index' ng-bind='allergy'></p>
+              <p ng-repeat='allergy in item.allergies' ng-bind='allergy'></p>
               <p ng-if='item.notes.length'><small class='font-thin' translate='notes'></small></p>
-              <p ng-repeat='note in item.notes track by $index' ng-bind='note'></p>
+              <p ng-repeat='note in item.notes' ng-bind='note'></p>
               <p ng-if='item.preferences.length'><small class='font-thin' translate='preferences'></small></p>
-              <p ng-repeat='preference in item.preferences track by $index'>{{ preference[0] }}: {{ preference[1] }}</p>
+              <p ng-repeat='preference in item.preferences'>{{ preference[0] }}: {{ preference[1] }}</p>
             </td>
           </tr>
         </tbody>
