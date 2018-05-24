@@ -32,12 +32,10 @@ class SearchHeaderCtrl {
       return result.map((customer) => {
         let fullName = customer.last_name;
 
-        if (customer.first_name) {
-          if (fullName) {
-            fullName = `${fullName} ${customer.first_name}`;
-          } else {
-            fullName = customer.first_name;
-          }
+        if (fullName) {
+          fullName = `${fullName} ${customer.first_name}`;
+        } else {
+          fullName = customer.first_name;
         }
 
         return {
