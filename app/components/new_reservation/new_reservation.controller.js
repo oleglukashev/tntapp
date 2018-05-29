@@ -3,7 +3,7 @@ export default class NewReservationCtrl {
     NewReservation, Table, AppConstants, NewReservationDateFactory, NewReservationGroupFactory,
     NewReservationNumberOfPersonsFactory, NewReservationPersonFactory, NewReservationTimeFactory,
     NewReservationProductFactory, NewReservationTypeFactory, NewReservationZoneFactory,
-    NewReservationPersonAutocompleteFactory, NewReservationPersonPreferencesFactory,
+    NewReservationPersonAutocompleteFactory, NewReservationPersonPreferencesFactory, Availability,
     ReservationPart, moment, filterFilter, $state, $stateParams, $scope, $rootScope, $window, $translate) {
     'ngInject';
 
@@ -17,6 +17,7 @@ export default class NewReservationCtrl {
     this.CustomerCompany = CustomerCompany;
     this.Customer = Customer;
     this.Product = Product;
+    this.Availability = Availability;
     this.Zone = Zone;
     this.Table = Table;
     this.Settings = Settings;
@@ -247,8 +248,8 @@ export default class NewReservationCtrl {
       this.$rootScope.show_spinner = true;
 
       this
-        .Product
-        .getAvailableTables(companyId, product, reservationDate, true)
+        .Availability
+        .getAvailabilities(companyId, product, reservationDate, true)
         .then((result) => {
           this.$rootScope.show_spinner = false;
           this.current_part.available_time = result;

@@ -3,7 +3,8 @@ import angular from 'angular';
 export default class EditReservationCtrl {
   constructor(User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone, AppConstants,
     Table, moment, filterFilter, $rootScope, $window, $scope, $modalInstance, UserMenuEditFactroy,
-    reservation, reservationPart, Confirm, UserMenu, NewReservationGroupFactory, Notification) {
+    reservation, reservationPart, Confirm, UserMenu, NewReservationGroupFactory, Notification,
+    Availability) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -11,6 +12,7 @@ export default class EditReservationCtrl {
     this.ReservationPart = ReservationPart;
     this.Reservation = Reservation;
     this.Product = Product;
+    this.Availability = Availability;
     this.Zone = Zone;
     this.Table = Table;
     this.Settings = Settings;
@@ -328,7 +330,7 @@ export default class EditReservationCtrl {
       const product = this.current_part.product;
       const reservationDate = this.moment(this.current_part.date).format('YYYY-MM-DD');
 
-      this.Product.getAvailableTables(companyId, product, reservationDate, true).then(
+      this.Availability.getAvailabilities(companyId, product, reservationDate, true).then(
         (result) => {
           this.available_time = result;
           const date = this.moment(this.current_part.date).format('YYYY-MM-DD');

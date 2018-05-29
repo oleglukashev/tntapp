@@ -67,32 +67,4 @@ export default class Product {
       method: 'POST',
     }).then(result => result.data);
   }
-
-  getAvailableTables(companyId, productId, date, skipJwtAuth) {
-    if (!(companyId && productId && date)) {
-      return this.$q.defer().promise;
-    }
-
-    return this.$http({
-      url: `${API_URL}/company/${companyId}/product/available_tables`,
-      skipAuthorization: skipJwtAuth,
-      method: 'POST',
-      data: { product_id: productId, date, is_front: skipJwtAuth },
-    }).then(result => result.data);
-  }
-
-  getAvailableTablesOfProducts(companyId, dateTime, skipJwtAuth) {
-    if (!(companyId && dateTime)) {
-      return this.$q.defer().promise;
-    }
-
-    return this.$http({
-      url: `${API_URL}/company/${companyId}/product/available_tables_of_products`,
-      skipAuthorization: skipJwtAuth,
-      method: 'POST',
-      data: {
-        date_time: dateTime,
-      },
-    }).then(result => result.data);
-  }
 }
