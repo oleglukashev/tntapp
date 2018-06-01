@@ -25,6 +25,8 @@ import 'core-js/es6/array';
 import 'core-js/es7/array';
 import 'core-js/es7/object';
 
+import '../vendor/angular/angular-bootstrap/ui-bootstrap-tpls.js';
+
 import dnd from './shared/dnd';
 import uiLoad from './common/services/ui-load';
 import uiJq from './common/directives/ui-jq';
