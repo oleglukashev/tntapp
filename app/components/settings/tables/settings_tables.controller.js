@@ -296,29 +296,7 @@ export default class SettingsTablesCtrl {
         (tables) => {
           this.is_loaded = true;
           this.$rootScope.show_spinner = false;
-
-          angular.forEach(this.zones, (zone) => {
-            this.tables_by_zone[zone.id] = this.filterFilter(tables, { zones: zone.id }).map((item) => {
-              return {
-                id: item.id,
-                table_number: item.table_number,
-                group_table_id: item.group_table_id,
-                number_of_persons: parseInt(item.number_of_persons),
-                position: parseInt(item.position),
-                zones: item.zones,
-              };
-            }).sort((a, b) => {
-              let comparison = 0;
-
-              if (a.position > b.position) {
-                comparison = 1;
-              } else if (b.position > a.position) {
-                comparison = -1;
-              }
-
-              return comparison;
-            });
-          });
+          this.initTablesByZone(tables);
         }, () => {
           this.$rootScope.show_spinner = false;
         });

@@ -21,18 +21,30 @@
           <color-picker ng-model='controller.form_data.color'></color-picker>
 
           <md-input-container class='md-block'>
-            <label translate='min'></label>
+            <label translate='tables'></label>
+            <md-select multiple ng-model='controller.form_data.table_ids'>
+              <div ng-repeat='(zone_id, tables) in controller.tablesByZone'>
+                <md-option ng-value='table.id' ng-repeat='table in tables'>
+                  {{ 'table' | translate }} {{ table.table_number }} - {{ table.number_of_persons }} <trasnalte class='lowercase'>persons</trasnalte>
+                </md-option>
+              </div>
+            </md-select>
+            <div class='md-errors-spacer'></div>
+          </md-input-container>
+
+          <md-input-container class='md-block'>
+            <label translate='settings.tables.min'></label>
             <input type='number'
                    ng-model='controller.form_data.min'
-                   min='0'
+                   min='1'
                    required />
           </md-input-container>
 
           <md-input-container class='md-block'>
-            <label translate='max'></label>
+            <label translate='settings.tables.max'></label>
             <input type='number'
                    ng-model='controller.form_data.max'
-                   min='0'
+                   min='1'
                    required />
           </md-input-container>
 

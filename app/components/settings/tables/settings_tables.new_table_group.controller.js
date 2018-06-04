@@ -10,8 +10,9 @@ export default class SettingsTablesNewTableGroupCtrl {
     this.$rootScope = $rootScope;
     this.form_data = {
       color: '#ffffff',
-      min: 0,
-      max: 0,
+      min: 1,
+      max: 1,
+      table_ids: [],
     }
   }
 
@@ -24,6 +25,7 @@ export default class SettingsTablesNewTableGroupCtrl {
       color: this.form_data.color,
       min: this.form_data.min,
       max: this.form_data.max,
+      tables: this.form_data.table_ids,
     };
 
     this.TableGroupService
