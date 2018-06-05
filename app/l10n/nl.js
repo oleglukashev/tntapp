@@ -89,7 +89,7 @@ export default {
     reservation_kind_title: 'Wat voor soort reservering wil je aanmaken?',
     regular: 'Normale reservering',
     walkin: 'Walk-in',
-    more_fields: 'Meer velden',
+    more_fields: 'Meer velden (speciale voorkeuren toevoegen aan reservering)',
     less_fields: 'Minder velden',
     reserve: 'Reserveer',
     product_title: 'Welk product komt de gast voor?',
@@ -98,6 +98,8 @@ export default {
     walkin_title: 'Walk-in reservering plaatsen',
     zone_title: 'Welk tafel komt de klant te zitten?',
     show_zones: 'Toon zones',
+    general_info: 'Algemene informatie',
+    additional_info: 'Extra informatie',
   },
   calendar: {
     widget: 'Reserveringen zonder tafel',
@@ -202,6 +204,7 @@ export default {
       booking_api: 'Booking Api',
       booking_api_description: 'Wil je een koppeling maken met een booking systeem? Gebruik de onderstaande UUID om dit te koppelen',
       uuid: 'UUID',
+      penalty: 'Maximaal aantal lege stoelen in restaurant wanneer alle tafels bezet jizn',
     },
     mails: {
       title: 'Mails',
@@ -272,7 +275,7 @@ export default {
     zones: {
       add: 'Zone toevoegen',
       new: 'Nieuwe zone',
-      remove: 'Zone verwijderen',
+      delete: 'Zone verwijderen',
       edit: 'Zone bewerken',
       what_kind: 'Wat voor soort zone wil je toevoegen?',
       use_for_reserv: 'Gebruiken voor reserveringen via frontoffice',
@@ -280,7 +283,17 @@ export default {
     tables: {
       title: 'Tafels/zones',
       add: 'Tafel toevoegen',
-      remove: 'Tafel verwijderen',
+      delete: 'Tafel verwijderen',
+      table_group: 'Table group',
+      min: 'Minimum aantal personen in de group',
+      max: 'Maximum aantal personen in de group',
+    },
+    table_groups: {
+      title: 'Table groups',
+      edit: 'Edit table group',
+      delete: 'Delete table group',
+      new: 'New table group',
+      color: 'Color',
     },
     themes: {
       title: "Kleuren thema's",
@@ -309,9 +322,15 @@ export default {
       file_title: 'Aangepaste achtergronden',
       file_description: 'Hier kunt u uw eigen achtergrondafbeelding voor de plugins uploaden. De aanbevolen grootte van de afbeelding is 1920x1080, maar kleinere afbeeldingen worden ook geaccepteerd.',
     },
+    customer_settings_names: {
+      title: 'Allergieen en voorkeuren',
+      edit: 'Item bewerken',
+      new: 'Nieuwe Item',
+      delete: 'Item verwijderen',
+    },
   },
   receipts: {
-    status: 'Receipt status'
+    status: 'Receipt status',
   },
   customers: {
     title: 'Profielen',
@@ -340,6 +359,7 @@ export default {
   time: 'Tijd',
   product: 'Producten',
   name: 'Naam',
+  guest_name: 'Naam van de gast',
   full_name: 'Voor- en achternaam',
   persons: 'Personen',
   table: 'Tafel',
@@ -378,7 +398,6 @@ export default {
   date: 'Datum',
   number_of_guests: 'Aantal personen',
   number_of_visits: 'Aantal bezoeken',
-  general: 'Algemene',
   general_info: 'Algemene informatie',
   male: 'Man',
   female: 'Vrouw',
@@ -386,7 +405,9 @@ export default {
   preference: 'Voorkeur',
   description: 'Omschrijving',
   allergies: 'Allergiën',
-  allergy: 'Allergië',
+  allergy: 'Allergie',
+  add_allergy: 'Allergie toevoegen',
+  add_preference: 'Preference toevoegen',
   remove: 'Verwijderen',
   subject: 'Onderwerp',
   message: 'Bericht',

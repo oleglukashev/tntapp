@@ -12,7 +12,7 @@
                  ng-model='controller.preference'
                  uncheckable
                  btn-radio='preference'>
-            <span>{{ preference.name }}</span>
+            <span>{{ preference.owner }}: {{ preference.name }} {{ preference.value }}</span>
             <span class='pull-right' ng-click='controller.deletePreference($index)'>
               <i class='mdi mdi-close i-21'></i>
             </span>
@@ -21,12 +21,15 @@
           <form name='user_preferences_form'>
             <div class='wrapper'>
               <md-input-container class='md-block'>
-                <label translate='preference'></label>
+                <label translate='owner'></label>
+                <input required ng-model='controller.preference.owner' />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label translate='name'></label>
                 <input required ng-model='controller.preference.name' />
               </md-input-container>
-
               <md-input-container class='md-block'>
-                <label translate='description'></label>
+                <label translate='value'></label>
                 <input required ng-model='controller.preference.value' />
               </md-input-container>
 

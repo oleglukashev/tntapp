@@ -3,8 +3,8 @@ export default class NewReservationCtrl {
     NewReservation, Table, AppConstants, NewReservationDateFactory, NewReservationGroupFactory,
     NewReservationNumberOfPersonsFactory, NewReservationPersonFactory, NewReservationTimeFactory,
     NewReservationProductFactory, NewReservationTypeFactory, NewReservationZoneFactory,
-    NewReservationPersonAutocompleteFactory, ReservationPart, moment, filterFilter, $state,
-    $stateParams, $scope, $rootScope, $window, $translate) {
+    NewReservationPersonAutocompleteFactory, NewReservationPersonPreferencesFactory, Availability,
+    ReservationPart, moment, filterFilter, $state, $stateParams, $scope, $rootScope, $window, $translate) {
     'ngInject';
 
     this.is_dashboard_page = $state.current.name === 'app.dashboard';
@@ -17,6 +17,7 @@ export default class NewReservationCtrl {
     this.CustomerCompany = CustomerCompany;
     this.Customer = Customer;
     this.Product = Product;
+    this.Availability = Availability;
     this.Zone = Zone;
     this.Table = Table;
     this.Settings = Settings;
@@ -54,6 +55,8 @@ export default class NewReservationCtrl {
       is_group: false,
       send_confirmation: true,
       reservation_parts: [],
+      allergies: [],
+      preferences: [],
     };
 
     this.reservation.reservation_parts.push(this.ReservationPart.getNewReservationPart());
@@ -83,6 +86,7 @@ export default class NewReservationCtrl {
     NewReservationTypeFactory(this);
     NewReservationZoneFactory(this);
     NewReservationPersonAutocompleteFactory(this);
+    NewReservationPersonPreferencesFactory(this);
     this.preloadData();
 
     // run translates
@@ -201,6 +205,8 @@ export default class NewReservationCtrl {
     if (data.customer.last_name === '') data.customer.last_name = null;
     if (this.reservation.reservation_pdf) data.reservation_pdf = this.reservation.reservation_pdf;
 
+    this.preparePreferencesAndAllergies(data);
+
     this.reservation.reservation_parts.forEach((part) => {
       data.reservation_parts.push({
         number_of_persons: part.number_of_persons,
@@ -242,8 +248,8 @@ export default class NewReservationCtrl {
       this.$rootScope.show_spinner = true;
 
       this
-        .Product
-        .getAvailableTables(companyId, product, reservationDate, true)
+        .Availability
+        .getAvailabilities(companyId, product, reservationDate, true)
         .then((result) => {
           this.$rootScope.show_spinner = false;
           this.current_part.available_time = result;
@@ -452,5 +458,20 @@ export default class NewReservationCtrl {
 
   showCustomBackground() {
     return this.settings && this.settings.plugin_image_file_name && this.tab_index === 0;
+  }
+
+
+  // TODO optimize it
+  preparePreferencesAndAllergies(data) {
+    if (this.allergyIsValid()) this.addAllergy();
+    if (this.preferenceIsValid()) this.addPreference();
+
+    if (this.reservation.allergies.length) {
+      data.customer.allergies = this.reservation.allergies;
+    }
+
+    if (this.reservation.preferences.length) {
+      data.customer.preferences = this.reservation.preferences;
+    }
   }
 }

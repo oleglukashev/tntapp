@@ -70,7 +70,7 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
     };
 
     instance.timeIsDisabled = (timeObj) => {
-      if (!timeObj.is_open || !instance.isEnoughSeats(timeObj) || timeObj.available_table_count <= 0) {
+      if (!timeObj.is_open || !instance.isEnoughSeats(timeObj)) {
         return true;
       }
 
@@ -93,8 +93,7 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
     };
 
     instance.isEnoughSeats = timeObj =>
-      (instance.current_part.number_of_persons <= timeObj.max_personen_voor_tafels &&
-      instance.current_part.number_of_persons <= timeObj.available_seat_count) ||
+      (timeObj.available_seats.includes(instance.current_part.number_of_persons)) ||
       timeObj.can_overbook;
 
     instance.loadOccupiedTables = () => {

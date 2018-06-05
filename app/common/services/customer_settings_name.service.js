@@ -1,4 +1,4 @@
-export default class Zone {
+export default class CustomerSettingsName {
   constructor($http, $q) {
     'ngInject';
 
@@ -12,7 +12,7 @@ export default class Zone {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/zones`,
+      url: `${API_URL}/company/${companyId}/settings/settings_names`,
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
@@ -24,33 +24,33 @@ export default class Zone {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/zones`,
-      method: 'POST',
+      url: `${API_URL}/company/${companyId}/settings/settings_names`,
       skipAuthorization: skipJwtAuth,
+      method: 'POST',
       data,
     }).then(result => result.data);
   }
 
-  update(companyId, data, zoneId, skipJwtAuth) {
-    if (!companyId) {
+  update(companyId, id, data, skipJwtAuth) {
+    if (!companyId || !id) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/zones/${zoneId}`,
-      method: 'PATCH',
+      url: `${API_URL}/company/${companyId}/settings/settings_names/${id}`,
       skipAuthorization: skipJwtAuth,
+      method: 'PATCH',
       data,
     }).then(result => result.data);
   }
 
   delete(companyId, id, skipJwtAuth) {
-    if (!companyId) {
+    if (!companyId || !id) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/zones/${id}`,
+      url: `${API_URL}/company/${companyId}/settings/settings_names/${id}`,
       skipAuthorization: skipJwtAuth,
       method: 'DELETE',
     }).then(result => result.data);

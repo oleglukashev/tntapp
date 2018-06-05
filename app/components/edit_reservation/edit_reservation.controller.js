@@ -3,7 +3,8 @@ import angular from 'angular';
 export default class EditReservationCtrl {
   constructor(User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone, AppConstants,
     Table, moment, filterFilter, $rootScope, $window, $scope, $modalInstance, UserMenuEditFactroy,
-    reservation, reservationPart, Confirm, UserMenu, NewReservationGroupFactory, Notification) {
+    reservation, reservationPart, Confirm, UserMenu, NewReservationGroupFactory, Notification,
+    Availability) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -11,6 +12,7 @@ export default class EditReservationCtrl {
     this.ReservationPart = ReservationPart;
     this.Reservation = Reservation;
     this.Product = Product;
+    this.Availability = Availability;
     this.Zone = Zone;
     this.Table = Table;
     this.Settings = Settings;
@@ -164,7 +166,7 @@ export default class EditReservationCtrl {
 
   // UNITE WITH NEW RESERVATION FUNCTION
   timeIsDisabled(timeObj) {
-    if (!timeObj.is_open || !this.isEnoughSeats(timeObj) || timeObj.available_table_count <= 0) {
+    if (!timeObj.is_open || !this.isEnoughSeats(timeObj)) {
       return true;
     }
 
@@ -188,9 +190,8 @@ export default class EditReservationCtrl {
 
   // UNITE WITH NEW RESERVATION FUNCTION
   isEnoughSeats(timeObj) {
-    return (this.current_part.number_of_persons <= timeObj.max_personen_voor_tafels &&
-           this.current_part.number_of_persons <= timeObj.available_seat_count) ||
-           timeObj.can_overbook;
+    return (timeObj.available_seats.includes(this.current_part.number_of_persons)) ||
+      timeObj.can_overbook;
   }
 
   // UNITE WITH NEW RESERVATION FUNCTION
@@ -329,7 +330,7 @@ export default class EditReservationCtrl {
       const product = this.current_part.product;
       const reservationDate = this.moment(this.current_part.date).format('YYYY-MM-DD');
 
-      this.Product.getAvailableTables(companyId, product, reservationDate, true).then(
+      this.Availability.getAvailabilities(companyId, product, reservationDate, true).then(
         (result) => {
           this.available_time = result;
           const date = this.moment(this.current_part.date).format('YYYY-MM-DD');
@@ -343,11 +344,25 @@ export default class EditReservationCtrl {
             const absDiffOfMins = Math.abs(itemObjDateTime.diff(currentDateTime) / 1000 / 60);
             if (Math.round(durationMinutes / 15) >= (Math.abs(absDiffOfMins) / 15)) {
               this.current_part.table_ids.forEach((tableId) => {
-                const count = this.Reservation.getPersonCountByTableId(this.tables, tableId);
-                itemObj.available_seat_count += count;
-                itemObj.max_personen_voor_tafels += count;
+                const table = this.filterFilter(this.tables, { id: tableId })[0];
+                let startRange = this.settings.penalty != null
+                  ? table.number_of_persons - this.settings.penalty
+                  : 0;
+
+                const length = table.number_of_persons - startRange;
+                const range = Array.from({ length: length + 1 }, (v, k) => k + startRange);
+
+                if (!itemObj.available_seats) {
+                  itemObj.available_seats = range;
+                } else {
+                  range.forEach((seat) => {
+                    if (!itemObj.available_seats.includes(seat)) {
+                      itemObj.available_seats.push(seat);
+                    }
+                  });
+                  itemObj.available_seats.sort();
+                }
               });
-              itemObj.available_table_count += this.current_part.table_ids.length;
             }
           });
         }, () => {});

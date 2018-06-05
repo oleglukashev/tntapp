@@ -89,7 +89,7 @@ export default {
     reservation_kind_title: 'Specify what kind of reservation you want to create',
     regular: 'Regular reservation',
     walkin: 'Walk-in',
-    more_fields: 'More fields',
+    more_fields: 'More fields (add special preferences to reservation)',
     less_fields: 'Less fields',
     reserve: 'Reserve',
     product_title: 'Which product did the guest choose?',
@@ -98,6 +98,8 @@ export default {
     walkin_title: 'Create Walk-In reservation',
     zone_title: 'At which table is the guest seated?',
     show_zones: 'Show zones',
+    general_info: 'General information',
+    additional_info: 'Additional information',
   },
   calendar: {
     widget: 'Reservations without a table',
@@ -202,6 +204,7 @@ export default {
       booking_api: 'Booking Api',
       booking_api_description: 'Do you want to connect TheNextTable to a BookDinners? Use the UUID to create a connection',
       uuid: 'UUID',
+      penalty: 'Maximaal aantal lege stoelen in restaurant wanneer alle tafels bezet jizn',
     },
     mails: {
       title: 'Mails',
@@ -272,7 +275,7 @@ export default {
     zones: {
       add: 'Add zone',
       new: 'New zone',
-      remove: 'Delete zone',
+      delete: 'Delete zone',
       edit: 'Edit zone',
       what_kind: 'What kind of zone do you want to add?',
       use_for_reserv: 'Use for reservation through frontoffice',
@@ -280,7 +283,17 @@ export default {
     tables: {
       title: 'Tables/zones',
       add: 'Add table',
-      remove: 'Delete table',
+      delete: 'Delete table',
+      table_group: 'Table group',
+      min: 'Min number of persons in the group',
+      max: 'Max number of persons in the group',
+    },
+    table_groups: {
+      title: 'Table groups',
+      edit: 'Edit table group',
+      delete: 'Delete table group',
+      new: 'New table group',
+      color: 'Color',
     },
     themes: {
       title: 'Colored themes',
@@ -309,9 +322,15 @@ export default {
       file_title: 'Custom backgrounds',
       file_description: 'Add your own background. The recommended size of the background is 1920x1080.',
     },
+    customer_settings_names: {
+      title: 'Allergies and preferences',
+      edit: 'Edit Item',
+      new: 'New Item',
+      delete: 'Delete Item',
+    },
   },
   receipts: {
-    status: 'Receipt status'
+    status: 'Receipt status',
   },
   customers: {
     title: 'Customers',
@@ -340,6 +359,7 @@ export default {
   time: 'Time',
   product: 'Product',
   name: 'Name',
+  guest_name: 'Name of guest',
   full_name: 'Full name',
   persons: 'Persons',
   table: 'Table',
@@ -378,7 +398,6 @@ export default {
   date: 'Date',
   number_of_guests: 'Number of guests',
   number_of_visits: 'Number of visits',
-  general: 'General',
   general_info: 'General info',
   male: 'Male',
   female: 'Female',
@@ -387,6 +406,8 @@ export default {
   description: 'Description',
   allergies: 'Allergies',
   allergy: 'Allergy',
+  add_allergy: 'Add allergy',
+  add_preference: 'Add preference',
   remove: 'Remove',
   subject: 'Subject',
   message: 'Message',

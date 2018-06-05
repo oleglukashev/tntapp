@@ -16,6 +16,7 @@ import angularMoment from 'angular-moment';
 import rzModule from 'angularjs-slider';
 import satellizer from 'satellizer';
 import chartjs from 'angular-chart.js';
+import 'angular-color-picker';
 import 'angular-growl-notifications';
 
 // Internet Explorer compatibility
@@ -65,7 +66,7 @@ angular
     angularUiBootstrap, angularTranslate, angularMoment, angularMaterial, uiLoad,
     uiJq, dndLists, satellizer, search, dashboard, customerReservation, analytics, dnd, agenda,
     auth, settings, rzModule, chartjs, customer, constants, editUser, 'app.services', 'app.factories',
-    'app.directives', 'app.filters', 'growlNotifications',
+    'app.directives', 'app.filters', 'growlNotifications', 'mp.colorPicker',
   ])
   .controller('AppCtrl', appController)
   .controller('HeaderCtrl', headerController)

@@ -1,77 +1,26 @@
+import tableGroupFormTemplate from './settings_tables.table_group_form.view.html';
+
 export default class SettingsTablesCtrl {
-  constructor(User, Zone, Table, filterFilter, $scope, $rootScope, $window, $modal) {
+  constructor(User, Zone, Table, TableGroup, filterFilter, $scope, $rootScope, $window, $modal) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
     this.Table = Table;
     this.Zone = Zone;
+    this.TableGroup = TableGroup;
     this.filterFilter = filterFilter;
     this.$modal = $modal;
     this.$rootScope = $rootScope;
     this.$window = $window;
     this.is_loaded = false;
     this.tables_by_zone = {};
-    this.errors = [];
+    this.errors = {};
     this.opened = [true];
 
     this.loadZonesAndTables();
+    this.loadTableGroups();
     this.$rootScope.show_spinner = true;
-  }
-
-  submitForm() {
-    const dataTableIds = [];
-    const data = [];
-    let index = 0;
-    this.zones.forEach((zone) => {
-      this.tables_by_zone[zone.id].forEach((table) => {
-        if (!dataTableIds.includes(table.id)) {
-          data.push({
-            table_number: table.table_number,
-            number_of_persons: table.number_of_persons,
-            position: index,
-            zones: [zone.id],
-          });
-
-          dataTableIds.push(table.id);
-          index += 1;
-        }
-      });
-    });
-
-    this.errors = [];
-    this.$rootScope.show_spinner = true;
-    this.Table.save(this.current_company_id, { tables: data })
-      .then(
-        (tables) => {
-          this.$rootScope.show_spinner = false;
-          this.initTablesByZone(tables);
-        },
-        (error) => {
-          this.$rootScope.show_spinner = false;
-          this.errors = error.data.errors;
-        });
-  }
-
-  loadTables() {
-    this.Table.getAll(this.current_company_id)
-      .then(
-        (tables) => {
-          this.is_loaded = true;
-          this.$rootScope.show_spinner = false;
-          this.initTablesByZone(tables);
-        }, () => {
-          this.$rootScope.show_spinner = false;
-        });
-  }
-
-  loadZonesAndTables() {
-    this.Zone.getAll(this.current_company_id)
-      .then(
-        (result) => {
-          this.zones = result;
-          this.loadTables();
-        }, () => {});
   }
 
   addZone() {
@@ -82,6 +31,20 @@ export default class SettingsTablesCtrl {
       size: 'md',
       resolve: {
         zones: () => that.zones,
+      },
+    });
+
+    modalInstance.result.then(() => {}, () => {});
+  }
+
+  addTableGroup() {
+    const modalInstance = this.$modal.open({
+      template: tableGroupFormTemplate,
+      controller: 'SettingsTablesNewTableGroupCtrl as controller',
+      size: 'md',
+      resolve: {
+        tableGroups: () => this.tableGroups,
+        tablesByZone: () => this.tables_by_zone,
       },
     });
 
@@ -103,7 +66,22 @@ export default class SettingsTablesCtrl {
     modalInstance.result.then(() => {}, () => {});
   }
 
-  removeZone(index) {
+  editTableGroup(index) {
+    const modalInstance = this.$modal.open({
+      template: tableGroupFormTemplate,
+      controller: 'SettingsTablesEditTableGroupCtrl as controller',
+      size: 'md',
+      resolve: {
+        tableGroups: () => this.tableGroups,
+        tableGroup: () => this.tableGroups[index],
+        tablesByZone: () => this.tables_by_zone,
+      },
+    });
+
+    modalInstance.result.then(() => {}, () => {});
+  }
+
+  deleteZone(index) {
     const zone = this.zones[index];
     this.$rootScope.show_spinner = true;
 
@@ -120,52 +98,158 @@ export default class SettingsTablesCtrl {
     }
   }
 
-  addTableByZoneId(id) {
-    const scopeTables = this.getScopeTables();
-    if (!this.tables_by_zone[id]) {
-      this.tables_by_zone[id] = [];
+  deleteTableGroup(index) {
+    const tableGroup = this.tableGroups[index];
+    this.$rootScope.show_spinner = true;
+
+    if (tableGroup) {
+      this.TableGroup.delete(this.current_company_id, tableGroup.id)
+        .then(() => {
+          this.$rootScope.show_spinner = false;
+          for (let zoneId in this.tables_by_zone) {
+            this.tables_by_zone[zoneId].forEach((table, index) => {
+              if (table.table_group_id === tableGroup.id) {
+                this.tables_by_zone[zoneId][index].table_group_id = null;
+              }
+            });
+          }
+          this.tableGroups.splice(index, 1);
+        }, () => {
+          this.$rootScope.show_spinner = false;
+        });
     }
-    const zoneTables = this.tables_by_zone[id];
+  }
+
+  addTable(zoneId) {
+    const scopeTables = this.getScopeTables();
+
+    if (!this.tables_by_zone[zoneId]) {
+      this.tables_by_zone[zoneId] = [];
+    }
+
+    const zoneTables = this.tables_by_zone[zoneId];
     const lastPosition = scopeTables.length ?
       Math.max.apply(Math, scopeTables.map(item => item.position)) :
       null;
 
-    const lastTableNumber = zoneTables.length ?
+    let lastTableNumber = zoneTables.length ?
       Math.max.apply(Math, zoneTables
         .filter((table) => parseInt(table.table_number) >= 0)
         .map(item => parseInt(item.table_number))) :
       null;
 
-    const position = lastPosition ? lastPosition + 1 : 0;
+    const position = lastPosition === null ? 0 : lastPosition + 1;
 
-    let tableNumber = String(1);
+    if (!lastTableNumber) {
+      lastTableNumber = scopeTables.length
+        ? Math.max.apply(Math, scopeTables.map(table => table.table_number))
+        : null;
+    }
+
+    let tableNumber = 1;
     if (lastTableNumber) {
       const lastNumericTableNumber = parseInt(lastTableNumber);
 
       if (lastNumericTableNumber >= 0) {
         tableNumber = lastNumericTableNumber + 1;
       } else {
-        tableNumber = `${zoneTables[zoneTables.length - 1].table_number}2`;
+        tableNumber = `${lastNumericTableNumber.table_number}2`;
       }
     }
 
-    this.tables_by_zone[id].push({
-      table_number: tableNumber,
+    const data = {
+      table_number: String(tableNumber),
       number_of_persons: 0,
       position,
-      zones: [id],
+      table_groups: [],
+      zones: [zoneId],
+    };
+    const index = this.tables_by_zone[zoneId].length;
+    this.tables_by_zone[zoneId].push(data);
+    this.errors = {};
+    this.Table.create(this.current_company_id, data).then((table) => {
+      // insert id of new item
+      this.tables_by_zone[zoneId][index].id = table.id;
+    }, (error) => {
+      if (!this.errors[zoneId]) {
+        this.errors[zoneId] = {};
+      }
+      this.errors[zoneId][this.tables_by_zone[zoneId].length - 1] = error.data.errors.children;
     });
-
-    this.submitForm();
   }
 
-  removeTable(zoneId, index) {
+  updateTable(zoneId, index) {
+    const table = this.tables_by_zone[zoneId][index];
+
+    if (table) {
+      const data = {
+        table_number: table.table_number,
+        number_of_persons: table.number_of_persons,
+        position: table.position,
+        table_groups: table.table_group_ids,
+        zones: table.zones,
+      };
+
+      this.errors = {};
+
+      if (table.id) {
+        this.Table.update(this.current_company_id, data, table.id)
+          .then((table) => {
+            this.tableGroups.forEach(($tableGroup) => {
+              if ($tableGroup.table_ids.includes(table.id) && !table.table_group_ids.includes($tableGroup.id)) {
+                const indexOfTable = $tableGroup.table_ids.indexOf(table.id);
+                $tableGroup.table_ids.splice(indexOfTable, 1);
+              } else if (!$tableGroup.table_ids.includes(table.id) && table.table_group_ids.includes($tableGroup.id)) {
+                $tableGroup.table_ids.push(table.id);
+              }
+            });
+          }, (error) => {
+          if (!this.errors[zoneId]) {
+            this.errors[zoneId] = {};
+          }
+          this.errors[zoneId][this.tables_by_zone[zoneId].length - 1] = error.data.errors.children;
+        });
+      } else {
+        this.Table.create(this.current_company_id, data)
+          .then((table) => {
+            this.tables_by_zone[zoneId][index].id = table.id;
+          }, (error) => {
+            if (!this.errors[zoneId]) {
+              this.errors[zoneId] = {};
+            }
+            this.errors[zoneId][this.tables_by_zone[zoneId].length - 1] = error.data.errors.children;
+          });
+      }
+    }
+  }
+
+  deleteTable(zoneId, index) {
     const table = this.tables_by_zone[zoneId][index];
 
     if (table) {
       this.tables_by_zone[zoneId].splice(index, 1);
-      this.submitForm();
+      this.Table.delete(this.current_company_id, table.id).then((tables) => {
+
+      });
     }
+  }
+
+  updatePositions() {
+    const data = {};
+    let index = 0;
+    
+    this.zones.forEach((zone) => {
+      if (this.tables_by_zone[zone.id]) {
+        this.tables_by_zone[zone.id].forEach((table) => {
+          if (table.id) {
+            data[table.id] = index;
+            index += 1;
+          }
+        });
+      }
+    });
+
+    this.Table.updatePositions(this.current_company_id, data);
   }
 
   getTableNumberNameByZoneAndIndex(zoneId, index) {
@@ -200,6 +284,33 @@ export default class SettingsTablesCtrl {
     return result;
   }
 
+  loadTableGroups() {
+    this.TableGroup.getAll(this.current_company_id).then((tableGroups) => {
+      this.tableGroups = tableGroups;
+    })
+  }
+
+  loadTables() {
+    this.Table.getAll(this.current_company_id)
+      .then(
+        (tables) => {
+          this.is_loaded = true;
+          this.$rootScope.show_spinner = false;
+          this.initTablesByZone(tables);
+        }, () => {
+          this.$rootScope.show_spinner = false;
+        });
+  }
+
+  loadZonesAndTables() {
+    this.Zone.getAll(this.current_company_id)
+      .then(
+        (result) => {
+          this.zones = result;
+          this.loadTables();
+        }, () => {});
+  }
+
   initTablesByZone(tables) {
     this.tables_by_zone = {};
     tables.forEach((table) => {
@@ -220,6 +331,7 @@ export default class SettingsTablesCtrl {
         id: table.id,
         table_number: table.table_number,
         number_of_persons: parseInt(table.number_of_persons),
+        table_group_ids: table.table_group_ids,
         position: parseInt(table.position),
         zones: [ zoneId ],
       });

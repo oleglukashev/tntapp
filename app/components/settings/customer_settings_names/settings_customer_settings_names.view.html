@@ -1,0 +1,60 @@
+<div class='settings-names-content'>
+  <button ng-click='settings_names.add()'
+          class='panel-add-button md-btn md-fab m-b'
+          md-ink-ripple>
+    <md-tooltip>{{ 'settings.customer_settings_names.new' | translate }}?</md-tooltip>
+    <i class='mdi mdi-plus i-24'></i>
+  </button>
+
+  <div class='panel'>
+    <div class='panel-heading' translate='settings.customer_settings_names.title'></div>
+    <div class='md-list' ng-show='settings_names.is_loaded'>
+      <div class='md-list-item no-padder'>
+        <table class='table' ng-show='settings_names.settingsNames.length > 0'>
+          <thead>
+            <th translate='language'></th>
+            <th translate='type'></th>
+            <th translate='value'></th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr ng-repeat='settingsName in settings_names.settingsNames'>
+              <td class='v-middle' ng-bind='settingsName.language'></td>
+              <td class='v-middle'>{{ settingsName.type | translate }}</td>
+              <td class='v-middle' ng-bind='settingsName.value'></td>
+              <td class='v-middle text-right'>
+                <md-menu>
+                  <button md-ink-ripple
+                        class='md-btn md-fab no-shadow'
+                        ng-disabled='disabled'
+                        aria-haspopup='true'
+                        aria-expanded='false'
+                        aria-disabled='false'
+                        ng-click='$mdMenu.open($event)'>
+                    <i class='mdi mdi-dots-vertical i-24'></i>
+                  </button>
+                  <md-menu-content>
+                    <md-menu-item>
+                      <md-button ng-click='settings_names.edit($index)'>
+                        {{ 'settings.customer_settings_names.edit' | translate }}
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                      <md-button ng-click='settings_names.showConfirm($index)'>
+                        {{ 'settings.customer_settings_names.delete' | translate }}
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+              </td>
+            </tr>
+          </tbody>
+          <div class='md-padding'
+               ng-hide='settings_names.settingsNames.length > 0'
+               translate='geen'>
+          </div>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

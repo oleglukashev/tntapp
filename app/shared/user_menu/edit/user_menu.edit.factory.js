@@ -177,6 +177,7 @@ export default function UserMenuEditFactory(UserMenu, Customer, CustomerService,
       }
 
       const data = {
+        owner: instance.preference.owner,
         name: instance.preference.name,
         value: instance.preference.value,
       };
@@ -229,6 +230,7 @@ export default function UserMenuEditFactory(UserMenu, Customer, CustomerService,
       }
 
       const data = {
+        owner: instance.allergy.owner,
         allergy: instance.allergy.allergy,
       };
 

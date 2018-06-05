@@ -115,7 +115,7 @@
         </div>
         <div class="md-list-item-content">
           <h3 class="text-md">
-            {{ allergy.allergy }}
+            {{ allergy.owner }}: {{ allergy.allergy }}
           </h3>
           <small class="font-thin" translate='allergies'></small>
         </div>
@@ -127,8 +127,7 @@
         </div>
         <div class="md-list-item-content">
           <h3 class="text-md">
-            {{ preference.name }}
-            {{ preference.value }}
+            {{ preference.owner }}: {{ preference.name }} {{ preference.value }}
           </h3>
           <small class="font-thin" translate='preferences'></small>
         </div>

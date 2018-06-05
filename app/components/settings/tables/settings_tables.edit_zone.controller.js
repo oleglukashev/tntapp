@@ -14,7 +14,7 @@ export default class SettingsTablesEditZoneCtrl {
     this.item = {
       name: this.zoneItem.name,
       icon_class: this.zoneItem.icon_class,
-      use_in_frontoffice_availability: this.zoneItem.use_in_frontoffice_availability === '1',
+      use_in_frontoffice_availability: this.zoneItem.use_in_frontoffice_availability,
     };
 
     this.defaultItem = angular.copy(this.item);

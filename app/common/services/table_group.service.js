@@ -1,4 +1,4 @@
-export default class Zone {
+export default class TableGroup {
   constructor($http, $q) {
     'ngInject';
 
@@ -12,45 +12,45 @@ export default class Zone {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/zones`,
+      url: `${API_URL}/company/${companyId}/settings/table_groups`,
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
   }
 
   create(companyId, data, skipJwtAuth) {
-    if (!companyId) {
+    if (!companyId || !data) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/zones`,
+      url: `${API_URL}/company/${companyId}/settings/table_groups`,
+      skipAuthorization: skipJwtAuth,
       method: 'POST',
-      skipAuthorization: skipJwtAuth,
       data,
     }).then(result => result.data);
   }
 
-  update(companyId, data, zoneId, skipJwtAuth) {
-    if (!companyId) {
+  update(companyId, tableGroupId, data, skipJwtAuth) {
+    if (!companyId || !tableGroupId || !data) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/zones/${zoneId}`,
+      url: `${API_URL}/company/${companyId}/settings/table_groups/${tableGroupId}`,
+      skipAuthorization: skipJwtAuth,
       method: 'PATCH',
-      skipAuthorization: skipJwtAuth,
       data,
     }).then(result => result.data);
   }
 
-  delete(companyId, id, skipJwtAuth) {
-    if (!companyId) {
+  delete(companyId, tableGroupId, skipJwtAuth) {
+    if (!companyId || !tableGroupId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/zones/${id}`,
+      url: `${API_URL}/company/${companyId}/settings/table_groups/${tableGroupId}`,
       skipAuthorization: skipJwtAuth,
       method: 'DELETE',
     }).then(result => result.data);

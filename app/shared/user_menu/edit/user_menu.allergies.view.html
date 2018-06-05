@@ -12,7 +12,7 @@
                  ng-model='controller.allergy'
                  uncheckable
                  btn-radio='allergy'>
-            <span>{{ allergy.allergy }}</span>
+            <span>{{ allergy.owner }}: {{ allergy.allergy }}</span>
             <span class='pull-right' ng-click='controller.deleteAllergy($index)'>
               <i class='mdi mdi-close i-21'></i>
             </span>
@@ -21,7 +21,11 @@
           <form name='user_allergies_form'>
             <div class='wrapper'>
               <md-input-container class='md-block'>
-                <label translate='allergy'></label>
+                <label translate='owner'></label>
+                <textarea required ng-model='controller.allergy.owner'></textarea>
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label translate='name'></label>
                 <textarea required ng-model='controller.allergy.allergy'></textarea>
               </md-input-container>
 
