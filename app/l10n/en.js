@@ -204,7 +204,7 @@ export default {
       booking_api: 'Booking Api',
       booking_api_description: 'Do you want to connect TheNextTable to a BookDinners? Use the UUID to create a connection',
       uuid: 'UUID',
-      penalty: 'Maximaal aantal lege stoelen in restaurant wanneer alle tafels bezet jizn',
+      penalty: 'Max number of empty seats in the restaurant when all tables are occupied',
     },
     mails: {
       title: 'Mails',

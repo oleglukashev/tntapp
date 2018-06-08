@@ -176,7 +176,7 @@ export default {
       title: 'Algemeen',
       average_ocup_time: 'Gemiddelde bezettingstijd (minuten)',
       average_ocup_time_description: 'De gemiddelde tijd aan dat een gast zich in jouw restaurant bevind',
-      limit_type: 'Lemiettype',
+      limit_type: 'Limiettype',
       limit_type_description: 'Welk type limiet wil je gebruiken voor je reserveringen',
       number_of_persons: 'Aantal personen voor aanvraag',
       number_of_persons_description: 'Het maximaal aantal personen op waarmee je een reservering kan plaatsen',
@@ -204,7 +204,7 @@ export default {
       booking_api: 'Booking Api',
       booking_api_description: 'Wil je een koppeling maken met een booking systeem? Gebruik de onderstaande UUID om dit te koppelen',
       uuid: 'UUID',
-      penalty: 'Maximaal aantal lege stoelen in restaurant wanneer alle tafels bezet jizn',
+      penalty: 'Maximaal aantal lege stoelen in restaurant wanneer alle tafels bezet zijn',
     },
     mails: {
       title: 'Mails',
