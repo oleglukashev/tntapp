@@ -109,11 +109,7 @@
               <div class='table_item_actions pull-left text-right'>
                 <md-menu>
                   <button md-ink-ripple
-                        class='md-btn md-fab no-shadow'
-                        ng-disabled='disabled'
-                        aria-haspopup='true'
-                        aria-expanded='false'
-                        aria-disabled='false'
+                        class='md-icon-button md-button'
                         ng-click='$mdMenu.open($event)'>
                     <i class='mdi mdi-dots-vertical i-24'></i>
                   </button>
@@ -154,28 +150,35 @@
     <div class='panel-heading' translate='settings.table_groups.title'></div>
     <div class='panel-body no-padder'>
       <table class='table no-margin'>
-        <thead>
-          <th translate='settings.table_groups.color'></th>
-          <th></th>
-        </thead>
         <tbody ng-if='tables_settings.tableGroups.length > 0'>
           <tr ng-repeat='tableGroup in tables_settings.tableGroups'>
             <td>
               <div>
+                <span class='text-muted'>
+                  <translate>settings.table_groups.color</translate>:
+                </span>
                 <i class='mdi mdi-checkbox-blank-circle i-20'
-                    style='color: {{ tableGroup.color }};'></i>
+                  style='color: {{ tableGroup.color }};'></i>
               </div>
-              <div>{{ tableGroup.min }} / {{ tableGroup.max }}</div>
+              <hr class='no-margin' />
+              <div>
+                <span class='text-muted'>
+                  <translate>settings.table_groups.range</translate>:
+                </span>
+                {{ tableGroup.min }} / {{ tableGroup.max }}</div>
+              <hr class='no-margin' />
+              <div>
+                <span class='text-muted'>
+                  <translate>tables</translate>:
+                </span>
+                {{ tables_settings.getTableNumbersByTableGroup(tableGroup).join(', ') }}</div>
             </td>
             <td class='text-right'>
               <md-menu>
-                <button md-ink-ripple
-                      class='md-btn md-fab no-shadow'
-                      ng-disabled='disabled'
-                      aria-haspopup='true'
-                      aria-expanded='false'
-                      aria-disabled='false'
-                      ng-click='$mdMenu.open($event)'>
+                <button class='md-icon-button md-button'
+                  ng-click='$mdMenu.open($event)'
+                  type='button'
+                  md-ink-ripple>
                   <i class='mdi mdi-dots-vertical i-24'></i>
                 </button>
                 <md-menu-content>

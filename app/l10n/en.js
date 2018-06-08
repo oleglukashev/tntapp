@@ -294,6 +294,8 @@ export default {
       delete: 'Delete table group',
       new: 'New table group',
       color: 'Color',
+      range: 'Range',
+      seats: 'Seats',
     },
     themes: {
       title: 'Colored themes',

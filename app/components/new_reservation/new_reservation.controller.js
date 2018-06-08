@@ -70,6 +70,16 @@ export default class NewReservationCtrl {
       }
     }
 
+    this.start_date = this.AppConstants.calendar.init_date
+    if ($stateParams.start_date) {
+      const startDate = this.moment($stateParams.start_date, 'DD-MM-YYYY').toDate();
+
+      if (startDate !== 'Invalid Date') {
+        this.start_date = startDate;
+        this.current_part.date = startDate;
+      }
+    }
+
     if ($stateParams.aantal_personen) {
       this.current_part.number_of_persons = parseInt($stateParams.aantal_personen);
     }
