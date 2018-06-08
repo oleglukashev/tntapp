@@ -274,6 +274,10 @@ export default class SettingsTablesCtrl {
     return index;
   }
 
+  getTableNumbersByTableGroup(tableGroup) {
+    return this.Table.getTableNumbersByTableIds(this.getScopeTables(), tableGroup.table_ids);
+  }
+
   getScopeTables() {
     let result = [];
 
