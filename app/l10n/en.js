@@ -285,8 +285,6 @@ export default {
       add: 'Add table',
       delete: 'Delete table',
       table_group: 'Table group',
-      min: 'Min number of persons in the group',
-      max: 'Max number of persons in the group',
     },
     table_groups: {
       title: 'Table groups',
@@ -294,8 +292,9 @@ export default {
       delete: 'Delete table group',
       new: 'New table group',
       color: 'Color',
-      range: 'Range',
       seats: 'Seats',
+      min: 'Min number of persons in the group',
+      max: 'Max number of persons in the group',
     },
     themes: {
       title: 'Colored themes',
@@ -443,4 +442,6 @@ export default {
   gender: 'Gender',
   merge: 'Merge',
   ignore: 'Ignore',
+  min: 'Min',
+  max: 'Max',
 };

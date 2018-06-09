@@ -285,8 +285,6 @@ export default {
       add: 'Tafel toevoegen',
       delete: 'Tafel verwijderen',
       table_group: 'Table group',
-      min: 'Minimum aantal personen in de group',
-      max: 'Maximum aantal personen in de group',
     },
     table_groups: {
       title: 'Table groups',
@@ -294,8 +292,9 @@ export default {
       delete: 'Delete table group',
       new: 'New table group',
       color: 'Color',
-      range: 'Reeks',
       seats: 'Stoelen',
+      min: 'Minimum aantal personen in de group',
+      max: 'Maximum aantal personen in de group',
     },
     themes: {
       title: "Kleuren thema's",
@@ -443,4 +442,6 @@ export default {
   gender: 'Geslacht',
   merge: 'Samenvoegen',
   ignore: 'Negeren',
+  min: 'Min',
+  max: 'Max',
 };
