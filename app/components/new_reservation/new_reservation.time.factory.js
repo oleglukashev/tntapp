@@ -105,7 +105,7 @@ export default function NewReservationTimeFactory(moment, filterFilter) {
 
       instance.Table
         .getOccupiedTables(instance.current_company_id,
-          { date_time: dateTime, part_id: null },
+          { datetime: dateTime, part_id: null },
           instance.is_customer_reservation).then(
           (result) => {
             instance.$rootScope.show_spinner = false;

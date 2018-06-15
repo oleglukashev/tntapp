@@ -375,7 +375,7 @@ export default class EditReservationCtrl {
     const dateTime = `${dateForRequest} ${this.current_part.time}`;
 
     this.Table
-      .getOccupiedTables(this.current_company_id, { date_time: dateTime, part_id: null }).then(
+      .getOccupiedTables(this.current_company_id, { datetime: dateTime, part_id: null }).then(
         (result) => {
           this.occupied_tables = result;
           const date = this.moment(this.current_part.date).format('YYYY-MM-DD');
