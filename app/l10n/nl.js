@@ -445,4 +445,5 @@ export default {
   min: 'Min',
   max: 'Max',
   select_all: 'Selecteer alles',
+  reserved_by: 'Reservering gemaakt door'
 };

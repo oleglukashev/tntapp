@@ -97,6 +97,18 @@
         </div>
       </div>
 
+      <div class="inset" ng-if='user.UserMenu.current_reservation.employee'>
+        <div class="md-list-item-left">
+          <i class="mdi mdi-account-edit icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">
+            {{ user.UserMenu.current_reservation.employee.last_name }} {{ user.UserMenu.current_reservation.employee.first_name }}
+          </h3>
+          <small class="font-thin" translate='reserved_by'></small>
+        </div>
+      </div>
+
       <div class="inset" ng-repeat='note in user.UserMenu.notes'>
         <div class="md-list-item-left">
           <i class="mdi mdi-information-outline icon-muted i-24"></i>
@@ -176,7 +188,7 @@
             </h3>
             <small class="font-thin">
               <span ng-if='part.product.name'>{{ part.product.name }},</span>
-              {{ part.number_of_persons }} <translate class='lowercase' translate='persons'></translate>
+              {{ part.number_of_persons }} <translate class='lowercase' translate='persons'></translate><span ng-if='reservation.employee'>, {{ reservation.employee.last_name }} {{ reservation.employee.first_name }}</span>
             </small>
             <div class='pull-right review_score' ng-if='reservation.review'>
               <i class='mdi mdi-star-outline icon-muted i-20'></i>
