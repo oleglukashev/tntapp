@@ -444,4 +444,5 @@ export default {
   ignore: 'Negeren',
   min: 'Min',
   max: 'Max',
+  select_all: 'Selecteer alles',
 };
