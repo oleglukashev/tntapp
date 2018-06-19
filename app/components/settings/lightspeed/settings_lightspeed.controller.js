@@ -93,18 +93,13 @@ export default class SettingsLightspeedCtrl {
     const lightspeedTablesValues = Object
       .keys(this.lightspeed_tables)
       .map(key => this.lightspeed_tables[key]);
+    let data = {};
 
-    const data = this.tables.map((table, index) => {
+    this.tables.forEach((table) => {
       const currentLHTable = lightspeedTablesValues
         .filter(lightspeedTable => lightspeedTable.id === table.lightspeed_table_id)[0];
 
-      console.log(currentLHTable);
-
-      return {
-        table_number: table.table_number,
-        number_of_persons: table.number_of_persons,
-        position: index,
-        zones: table.zones,
+      data[table.id] = {
         lightspeed_table_id: currentLHTable ? parseInt(currentLHTable.id) : null,
         lightspeed_floor_id: currentLHTable ? currentLHTable.floorId : null,
       };
@@ -112,11 +107,10 @@ export default class SettingsLightspeedCtrl {
 
     this.errors = [];
     this.$rootScope.show_spinner = true;
-    this.Table.save(this.current_company_id, { tables: data })
+    this.Table.updateLightSpeedTableData(this.current_company_id, data)
       .then(() => {
         this.$rootScope.show_spinner = false;
-      },
-      (error) => {
+      }, (error) => {
         this.$rootScope.show_spinner = false;
         this.errors = error.data.errors;
       });
