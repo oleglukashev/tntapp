@@ -60,6 +60,19 @@ export default class Table {
     }).then(result => result.data);
   }
 
+  updateLightSpeedTableData(companyId, data, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/tables/update_lightspeed_data`,
+      skipAuthorization: skipJwtAuth,
+      method: 'POST',
+      data,
+    }).then(result => result.data);
+  }
+
   delete(companyId, id, skipJwtAuth) {
     if (!companyId || !id) {
       return this.$q.defer().promise;
