@@ -39,6 +39,13 @@
           <label ng-click='reserv.current_part.zones_is_showed = true'
                  class='btn btn-sm font-bold m-xs text-success no-shadow no-border'
                  translate='reservation.show_zones'></label>
+          <div class='md-form-group no-padder inline'>
+            <md-checkbox ng-model='reserv.current_part.all_tables_selected[reserv.current_part.zone.id]'
+                         ng-change='reserv.changeSelectAllTablesProcess()'
+                         aria-label="{{ 'select_all' | translate }}">
+              {{ 'select_all' | translate }}
+            </md-checkbox>
+          </div>
         </div>
         <button type='button'
                 class='btn btn-lg btn-success w-full no-top-radius md-content-button'

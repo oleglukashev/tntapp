@@ -53,7 +53,7 @@ export default function NewReservationZoneFactory($auth, filterFilter, moment) {
 
       Object.keys(instance.current_part.tables_values).forEach((key) => {
         if (instance.current_part.tables_values[key]) {
-          instance.current_part.tables.push(key);
+          instance.current_part.tables.push(parseInt(key));
         }
       });
     };
@@ -85,5 +85,23 @@ export default function NewReservationZoneFactory($auth, filterFilter, moment) {
 
     instance.classOfTable = (tableId, zoneId) =>
       instance.isDisabledTable(tableId, zoneId) ? 'red-300' : 'btn-default text-success';
+
+    instance.changeSelectAllTablesProcess = () => {
+      if (instance.current_part.all_tables_selected[instance.current_part.zone.id]) {
+        if (!instance.current_part.tables_values) {
+          instance.current_part.tables_values = {};
+        }
+
+        instance.current_part.zone.table_ids.forEach((tableId) => {
+          instance.current_part.tables_values[tableId] = true;
+        });
+      } else {
+        instance.current_part.zone.table_ids.forEach((tableId) => {
+          delete instance.current_part.tables_values[tableId];
+        });
+      }
+
+      instance.changeTableValuesPostProcess();
+    }
   };
 }
