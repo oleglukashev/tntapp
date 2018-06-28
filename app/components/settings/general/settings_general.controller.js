@@ -1,10 +1,11 @@
 export default class SettingsGeneralCtrl {
-  constructor(User, Settings, moment, $scope) {
+  constructor(User, Settings, moment, $scope, $rootScope, $q) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
     this.$scope = $scope;
+    this.$rootScope = $rootScope;
     this.Settings = Settings;
     this.moment = moment;
     this.is_loaded = false;
@@ -23,46 +24,56 @@ export default class SettingsGeneralCtrl {
       enable_request_type: false,
     };
 
-    this.loadGeneralSettings();
+    this.$rootScope.show_spinner = true;
+    $q.all([
+      this.Settings.getGeneralSettings(this.current_company_id),
+      this.Settings.getEmailsSettings(this.current_company_id),
+    ]).then((result) => {
+      this.$rootScope.show_spinner = false;
+      this.initGeneralSettings(result[0]);
+      this.initEmailSettings(result[1]);
+    }, () => {
+      this.$rootScope.show_spinner = false;
+    });
   }
 
-  loadGeneralSettings() {
-    this.Settings
-      .getGeneralSettings(this.current_company_id).then(
-        (generalSettings) => {
-          this.is_loaded = true;
-          this.form_data = generalSettings;
+  initGeneralSettings(generalSettings) {
+    this.is_loaded = true;
+    this.form_data = generalSettings;
 
-          const reservationDeadLine = this.form_data.reservation_deadline;
-          if (reservationDeadLine && this.moment(reservationDeadLine, 'HH:mm').isValid()) {
-            const time = reservationDeadLine.split(':');
-            this.form_data.reservation_deadline_hours = parseInt(time[0], 10);
-            this.form_data.reservation_deadline_minutes = parseInt(time[1], 10);
-            this.form_data.enable_deadline = true;
-          }
+    const reservationDeadLine = this.form_data.reservation_deadline;
+    if (reservationDeadLine && this.moment(reservationDeadLine, 'HH:mm').isValid()) {
+      const time = reservationDeadLine.split(':');
+      this.form_data.reservation_deadline_hours = parseInt(time[0], 10);
+      this.form_data.reservation_deadline_minutes = parseInt(time[1], 10);
+      this.form_data.enable_deadline = true;
+    }
 
-          const requestTypeStart = this.form_data.request_type_start;
-          const requestTypeEnd = this.form_data.request_type_end;
-          if (requestTypeStart && requestTypeEnd) {
-            if (this.moment(requestTypeStart, 'HH:mm').isValid()) {
-              const timeStart = requestTypeStart.split(':');
-              this.form_data.request_type_start_hours = parseInt(timeStart[0], 10);
-              this.form_data.request_type_start_minutes = parseInt(timeStart[1], 10);
-              this.form_data.enable_request_type = true;
-            }
+    const requestTypeStart = this.form_data.request_type_start;
+    const requestTypeEnd = this.form_data.request_type_end;
+    if (requestTypeStart && requestTypeEnd) {
+      if (this.moment(requestTypeStart, 'HH:mm').isValid()) {
+        const timeStart = requestTypeStart.split(':');
+        this.form_data.request_type_start_hours = parseInt(timeStart[0], 10);
+        this.form_data.request_type_start_minutes = parseInt(timeStart[1], 10);
+        this.form_data.enable_request_type = true;
+      }
 
-            if (this.moment(requestTypeEnd, 'HH:mm').isValid()) {
-              const timeEnd = requestTypeEnd.split(':');
-              this.form_data.request_type_end_hours = parseInt(timeEnd[0], 10);
-              this.form_data.request_type_end_minutes = parseInt(timeEnd[1], 10);
-              this.form_data.enable_request_type = true;
-            }
-          }
+      if (this.moment(requestTypeEnd, 'HH:mm').isValid()) {
+        const timeEnd = requestTypeEnd.split(':');
+        this.form_data.request_type_end_hours = parseInt(timeEnd[0], 10);
+        this.form_data.request_type_end_minutes = parseInt(timeEnd[1], 10);
+        this.form_data.enable_request_type = true;
+      }
+    }
 
-          if (this.form_data.penalty >= 0) {
-            this.form_data.enable_penalty = true;
-          }
-        });
+    if (this.form_data.penalty >= 0) {
+      this.form_data.enable_penalty = true;
+    }
+  }
+
+  initEmailSettings(emailSettings) {
+    this.emails_settings = emailSettings;
   }
 
   submitForm() {
@@ -81,6 +92,7 @@ export default class SettingsGeneralCtrl {
       send_mail_after_visit: this.form_data.send_mail_after_visit,
       suggest_customer_name: this.form_data.suggest_customer_name,
       booking_api: this.form_data.booking_api,
+      assist_you_api: this.form_data.assist_you_api,
     };
 
     data.penalty = null;

@@ -3,11 +3,12 @@ import routing from './settings.route';
 import controller from './settings.controller';
 import generalRouting from './general/settings_general.route';
 import generalController from './general/settings_general.controller';
-import mailsRouting from './mails/settings_mails.route';
-import mailsController from './mails/settings_mails.controller';
+import emailsRouting from './emails/settings_emails.route';
+import emailsController from './emails/settings_emails.controller';
 import tablesRouting from './tables/settings_tables.route';
 import tablesController from './tables/settings_tables.controller';
-import editMailController from './mails/settings_mails.edit_mail.controller';
+import editEmailController from './emails/settings_emails.edit_email.controller';
+import editSmsController from './emails/settings_emails.edit_sms.controller';
 import newZoneController from './tables/settings_tables.new_zone.controller';
 import editZoneController from './tables/settings_tables.edit_zone.controller';
 import newTableGroupController from './tables/settings_tables.new_table_group.controller';
@@ -43,7 +44,8 @@ import editCustomerSettingsNamesController from
   './customer_settings_names/settings_customer_settings_names.edit.controller';
 
 export default angular.module('app.settings', [])
-  .controller('SettingsMailsEditMailCtrl', editMailController)
+  .controller('SettingsEmailsEditEmailCtrl', editEmailController)
+  .controller('SettingsEmailsEditSmsCtrl', editSmsController)
   .controller('SettingsTablesNewZoneCtrl', newZoneController)
   .controller('SettingsTablesEditZoneCtrl', editZoneController)
   .controller('SettingsTablesNewTableGroupCtrl', newTableGroupController)
@@ -56,8 +58,8 @@ export default angular.module('app.settings', [])
   .controller('SettingsCtrl', controller)
   .config(generalRouting)
   .controller('SettingsGeneralCtrl', generalController)
-  .config(mailsRouting)
-  .controller('SettingsMailsCtrl', mailsController)
+  .config(emailsRouting)
+  .controller('SettingsEmailsCtrl', emailsController)
   .config(limitsRouting)
   .controller('SettingsLimitsCtrl', limitsController)
   .config(tablesRouting)

@@ -21,25 +21,13 @@ export default class Settings {
     }).then(result => result.data);
   }
 
-  getMailsSettings(companyId, skipJwtAuth) {
+  getEmailsSettings(companyId, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
       url: `${API_URL}/company/${companyId}/settings/mails`,
-      skipAuthorization: skipJwtAuth,
-      method: 'GET',
-    }).then(result => result.data);
-  }
-
-  getMailsTextsSettings(companyId, skipJwtAuth) {
-    if (!companyId) {
-      return this.$q.defer().promise;
-    }
-
-    return this.$http({
-      url: `${API_URL}/company/${companyId}/settings/mails_texts`,
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
@@ -118,7 +106,7 @@ export default class Settings {
     }).then(result => result, error => error);
   }
 
-  updateMailsSettings(companyId, data, skipJwtAuth) {
+  updateEmailsSettings(companyId, data, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
@@ -131,18 +119,6 @@ export default class Settings {
     }).then(result => result.data);
   }
 
-  updateMailtext(companyId, id, data, skipJwtAuth) {
-    if (!companyId) {
-      return this.$q.defer().promise;
-    }
-
-    return this.$http({
-      url: `${API_URL}/company/${companyId}/settings/mails_texts/${id}`,
-      skipAuthorization: skipJwtAuth,
-      method: 'PATCH',
-      data,
-    }).then(result => result.data);
-  }
 
   updateWarning(companyId, id, data, skipJwtAuth) {
     if (!companyId) {
@@ -235,6 +211,43 @@ export default class Settings {
       skipAuthorization: skipJwtAuth,
       method: 'POST',
       data: { sender_email_token: token },
+    }).then(result => result.data);
+  }
+
+  registerTwilioSid(companyId, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/settings/twilio/register`,
+      skipAuthorization: skipJwtAuth,
+      method: 'POST',
+    }).then(result => result.data);
+  }
+
+  updateTwilioStatus(companyId, status, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/settings/twilio/update_status`,
+      skipAuthorization: skipJwtAuth,
+      data: { status },
+      method: 'POST',
+    }).then(result => result.data);
+  }
+
+  twilioBalance(companyId, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/settings/twilio/balance`,
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
     }).then(result => result.data);
   }
 }

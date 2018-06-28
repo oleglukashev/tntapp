@@ -13,7 +13,7 @@ export default class SettingsCtrl {
     this.pages = {
       'settings.general.title': 'app.settings.general',
       'settings.customer_settings_names.title': 'app.settings.customer_settings_names',
-      'settings.mails.title': 'app.settings.mails',
+      'settings.emails.title': 'app.settings.emails',
       'settings.products.title': 'app.settings.products',
       'settings.limits.title': 'app.settings.limits',
       'settings.employees.title': 'app.settings.employees',
