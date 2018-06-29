@@ -122,6 +122,7 @@ export default {
     more_than_2mb: 'Een bestand mag niet groter zijn dan 2MB',
     access_only: 'Alleen toegankelijk met een beheerdersaccount',
     sms_placeholders: 'Let op! Het gebruik van placeholders kan ervoor zorgen dat u de maximale sms limiet van 160 tekens overschrijdt',
+    account_already_exist: 'Het activeren van het SMS account is niet gelukt omdat het account van {{ name }} reeds actief is. Stuur een bericht naar support@thenextsoftware.io om dit probleem op te lossen',
   },
   auth: {
     activate_description: 'U moet een nieuw wachtwoord instellen. Samen met uw e-mail adres zijn dit uw logingegevens. Bewaar deze dus goed.',

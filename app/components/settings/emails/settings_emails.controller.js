@@ -3,7 +3,7 @@ import editSmsView from './settings_emails.edit_sms.view.html'
 
 export default class SettingsEmailsCtrl {
   constructor(User, Settings, SmsText, EmailText, filterFilter, $scope, $modal, $mdDialog,
-    $rootScope, $q, moment) {
+    $rootScope, $q, moment, $translate) {
     'ngInject';
 
     this.User = User;
@@ -18,6 +18,17 @@ export default class SettingsEmailsCtrl {
     this.Settings = Settings;
     this.EmailText = EmailText;
     this.SmsText = SmsText;
+
+    const currentCompany = User.getCompany(User.getCompanyId());
+    const currentCompanyName = `${currentCompany.name} (${currentCompany.id})`;
+
+    // run translates
+    this.account_already_exist = '';
+    $translate('notifications.account_already_exist', { name: currentCompanyName }).then((total) => {
+      this.account_already_exist = total;
+    }, (translationIds) => {
+      this.account_already_exist = translationIds;
+    });
 
     this.$rootScope.show_spinner = true;
     $q.all([
@@ -125,6 +136,16 @@ export default class SettingsEmailsCtrl {
       this.$rootScope.show_spinner = false;
       this.emails_settings_form_data.twilio_sid = emailSettings.twilio_sid;
       this.emails_settings_form_data.twilio_status = emailSettings.twilio_status;
+    }, () => {
+      this.$rootScope.show_spinner = false;
+      const mdDialog = this.$mdDialog;
+      const alert = mdDialog
+        .alert()
+        .title()
+        .textContent(this.account_already_exist)
+        .ok('Ok');
+
+      mdDialog.show(alert).then(() => {}, () => {});
     });
   }
 
@@ -146,13 +167,13 @@ export default class SettingsEmailsCtrl {
 
     this.Settings
       .twilioBalance(this.current_company_id)
-      .then((total) => {
+      .then((result) => {
         this.$rootScope.show_spinner = false;
         const mdDialog = this.$mdDialog;
         const alert = mdDialog
           .alert()
           .title('Balance')
-          .textContent(`Last 30 days - $${total}`)
+          .textContent(`${this.moment(result.date_time).format('MMM YYYY')} - €${result.balance}`)
           .ok('Ok');
 
         mdDialog.show(alert).then(() => {}, () => {});
