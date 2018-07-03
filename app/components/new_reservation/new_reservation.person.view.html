@@ -33,7 +33,8 @@
             <input
               class='phone'
               ng-model='reserv.reservation.primary_phone_number'
-              ui-mask='+99999999999' />
+              ui-mask='+99999999999'
+              model-view-value='true' />
           </md-input-container>
           <md-input-container class='md-block'>
             <label translate='note'></label>
@@ -76,7 +77,8 @@
               <input
                 class='phone'
                 ng-model='reserv.reservation.secondary_phone_number'
-                ui-mask='+99999999999' />
+                ui-mask='+99999999999'
+                model-view-value='true' />
             </md-input-container>
             <md-input-container class='md-block'>
               <label translate='birthdate'></label>

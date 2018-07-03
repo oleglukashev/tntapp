@@ -4,7 +4,7 @@ export default class EditReservationCtrl {
   constructor(User, ReservationPart, Reservation, Settings, TimeRange, Product, Zone, AppConstants,
     Table, moment, filterFilter, $rootScope, $window, $scope, $modalInstance, UserMenuEditFactroy,
     reservation, reservationPart, Confirm, UserMenu, NewReservationGroupFactory, Notification,
-    Availability) {
+    Availability, $state) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -32,6 +32,7 @@ export default class EditReservationCtrl {
     this.$rootScope = $rootScope;
     this.filterFilter = filterFilter;
     this.$modalInstance = $modalInstance;
+    this.$state = $state;
 
     this.moment = moment;
     this.tab_index = 0;
