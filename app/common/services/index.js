@@ -30,6 +30,8 @@ import UserMenuService from '../../shared/user_menu/user_menu.service';
 import TableGroupService from './table_group.service';
 import CustomerSettingsNameService from './customer_settings_name.service';
 import AvailabilityService from './availability.service';
+import EmailTextService from './email_text.service';
+import SmsTextService from './sms_text.service';
 
 export default angular.module('app.services', [])
   .service('User', UserService)
@@ -63,4 +65,6 @@ export default angular.module('app.services', [])
   .service('TableGroup', TableGroupService)
   .service('CustomerSettingsName', CustomerSettingsNameService)
   .service('Availability', AvailabilityService)
+  .service('EmailText', EmailTextService)
+  .service('SmsText', SmsTextService)
   .name;

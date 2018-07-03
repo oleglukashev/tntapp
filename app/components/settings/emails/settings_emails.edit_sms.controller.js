@@ -1,12 +1,11 @@
-export default class SettingsMailsEditMailCtrl {
-  constructor(User, item, Settings, $modalInstance, $rootScope) {
+export default class SettingsEmailsEditSmsCtrl {
+  constructor(User, item, SmsText, $modalInstance, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
-    this.Settings = Settings;
+    this.SmsText = SmsText;
     this.$modalInstance = $modalInstance;
     this.$rootScope = $rootScope;
-
     this.form_data = item;
   }
 
@@ -19,12 +18,10 @@ export default class SettingsMailsEditMailCtrl {
     this.$rootScope.show_spinner = true;
 
     const data = {
-      title: this.form_data.title,
       content: this.form_data.content,
     };
 
-    this.Settings
-      .updateMailtext(this.current_company_id, this.form_data.id, data)
+    this.SmsText.update(this.current_company_id, this.form_data.id, data)
       .then(() => {
         this.is_submitting = false;
         this.$rootScope.show_spinner = false;

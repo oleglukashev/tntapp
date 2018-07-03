@@ -15,7 +15,6 @@ export default function templates($templateCache) {
   $templateCache.put('settings_products.new_product.view.html', require('./components/settings/products/settings_products.new_product.view.html'));
   $templateCache.put('settings_products.limits.view.html', require('./components/settings/products/settings_products.limits.view.html'));
   $templateCache.put('settings_products.edit_minmax.view.html', require('./components/settings/products/settings_products.edit_minmax.view.html'));
-  $templateCache.put('settings_mails.edit_mail.view.html', require('./components/settings/mails/settings_mails.edit_mail.view.html'));
   $templateCache.put('settings_warnings.edit.view.html', require('./components/settings/warnings/edit/settings_warnings.edit.view.html'));
   $templateCache.put('dashboard_invite.view.html', require('./components/dashboard/invite/dashboard_invite.view.html'));
   $templateCache.put('settings_tables.zone.view.html', require('./components/settings/tables/settings_tables.zone.view.html'));
