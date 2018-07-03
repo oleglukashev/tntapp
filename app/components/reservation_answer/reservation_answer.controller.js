@@ -1,5 +1,5 @@
 export default class ReservationsAnswerCtrl {
-  constructor(User, ReservationStatus, reservation, $modalInstance, Settings,
+  constructor(User, ReservationStatus, reservation, $modalInstance, EmailText,
     filterFilter, $rootScope, $window, status) {
     'ngInject';
 
@@ -11,7 +11,7 @@ export default class ReservationsAnswerCtrl {
     this.$rootScope = $rootScope;
     this.$window = $window;
     this.ReservationStatus = ReservationStatus;
-    this.Settings = Settings;
+    this.EmailText = EmailText;
     this.filterFilter = filterFilter;
     this.form_data = {};
     this.type_by_status = {
@@ -21,7 +21,7 @@ export default class ReservationsAnswerCtrl {
     };
 
     if (this.status && this.type_by_status[this.status]) {
-      this.loadMailsTextsSettings(this.type_by_status[this.status]);
+      this.loadEmailTexts(this.type_by_status[this.status]);
     }
   }
 
@@ -78,17 +78,14 @@ export default class ReservationsAnswerCtrl {
     }
   }
 
-  loadMailsTextsSettings(type) {
-    this.Settings.getMailsTextsSettings(this.current_company_id)
-      .then(
-        (mailsSettings) => {
-          this.mails_texts_settings = mailsSettings;
-          const currentMail = this.filterFilter(mailsSettings, { type, language: 'NL' })[0];
+  loadEmailTexts(type) {
+    this.EmailText.getAll(this.current_company_id).then((emailTexts) => {
+      const currentEmail = this.filterFilter(emailTexts, { type, language: 'NL' })[0];
 
-          if (currentMail) {
-            this.form_data.title = currentMail.title;
-            this.form_data.content = currentMail.content;
-          }
-        });
+      if (currentEmail) {
+        this.form_data.title = currentEmail.title;
+        this.form_data.content = currentEmail.content;
+      }
+    });
   }
 }
