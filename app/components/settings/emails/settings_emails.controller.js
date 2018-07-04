@@ -93,7 +93,7 @@ export default class SettingsEmailsCtrl {
   }
 
   canShowRegisterTwilioAccountBlock() {
-    return this.User.current.is_admin &&
+    return this.User.isOwner() &&
       this.emails_settings_form_data &&
       !this.emails_settings_form_data.twilio_sid;
   }

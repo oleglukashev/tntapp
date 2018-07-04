@@ -216,22 +216,40 @@ export default class User {
   isOwnerOrManager() {
     let result = false;
 
-    if (this.getCompanyId()) {
-      if (this.current.owned_companies.length) {
-        this.current.owned_companies.forEach((company) => {
-          if (company.id === this.getCompanyId()) {
-            result = true;
-          }
-        });
-      }
+    if (this.isOwner()) {
+      result = true;
+    }
 
-      if (this.current.company_roles.length) {
-        this.current.company_roles.forEach((role) => {
-          if (role.company.id === this.getCompanyId() && role.manage_access) {
-            result = true;
-          }
-        });
-      }
+    if (this.isManager()) {
+      result = true;
+    }
+
+    return result;
+  }
+
+  isOwner() {
+    let result = false;
+
+    if (this.getCompanyId() && this.current.owned_companies.length) {
+      this.current.owned_companies.forEach((company) => {
+        if (company.id === this.getCompanyId()) {
+          result = true;
+        }
+      });
+    }
+
+    return result;
+  }
+
+  isManager() {
+    let result = false;
+
+    if (this.getCompanyId() && this.current.company_roles.length) {
+      this.current.company_roles.forEach((role) => {
+        if (role.company.id === this.getCompanyId() && role.manage_access) {
+          result = true;
+        }
+      });
     }
 
     return result;
