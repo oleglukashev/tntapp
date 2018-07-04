@@ -381,7 +381,7 @@ export default {
   postcode: 'Postcode',
   city: 'Stad',
   av_rating: 'Gemiddelde score',
-  status: 'Staat',
+  status_name: 'Staat',
   time: 'Tijd',
   product: 'Producten',
   name: 'Naam',
