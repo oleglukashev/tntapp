@@ -1,7 +1,7 @@
 <div class='agenda-content'>
   <ng-include src="'agenda.widget.html'"></ng-include>
 
-  <div class='col-lg-8 col-md-8' ng-show='agenda.is_loaded'>
+  <div class='col-sm-8' ng-show='agenda.is_loaded'>
     <div class='page_filter m-b-md clearfix'>
       <div class='pull-left m-r-xs'
            ng-init='controller = agenda'
@@ -39,13 +39,14 @@
         <table class='table m-b-none' ng-show='agenda.data.length'>
           <thead>
             <tr>
-                <th width='8%' translate='present'></th>
-                <th width='10%' translate='time'></th>
-                <th width='12%' translate='product'></th>
-                <th width='12%' translate='name'></th>
-                <th width='10%' translate='persons'></th>
-                <th width='10%' translate='table'></th>
-                <th translate='note'></th>
+                <th width='8%' translate='status'></th>
+                <th class='hidden-xs hidden-sm' width='10%' translate='time'></th>
+                <th class='hidden-xs hidden-sm' width='12%' translate='product'></th>
+                <th class='hidden-xs hidden-sm' width='12%' translate='name'></th>
+                <th class='hidden-xs hidden-sm' width='10%' translate='persons'></th>
+                <th class='hidden-xs hidden-sm' width='10%' translate='table'></th>
+                <th class='hidden-xs hidden-sm' translate='note'></th>
+                <th class='visible-xs visible-sm'></th>
                 <th width='8%'></th>
             </tr>
           </thead>
@@ -154,7 +155,7 @@
     </accordion>
   </div>
 
-  <div class='agenda-timeranges col-lg-3 col-md-3' ng-show='agenda.time_ranges_is_loaded'>
+  <div class='agenda-timeranges col-sm-4' ng-show='agenda.time_ranges_is_loaded'>
     <div data-ng-include=" 'agenda_charts.view.html' " ng-controller='AgendaChartsCtrl as agenda_charts'></div>
 
     <div class='panel'>
