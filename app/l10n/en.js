@@ -381,7 +381,7 @@ export default {
   zipcode: 'Zipcode',
   city: 'City',
   av_rating: 'Average rating',
-  present: 'Present',
+  status: 'Status',
   time: 'Time',
   product: 'Product',
   name: 'Name',

@@ -8,24 +8,47 @@
     </div>
   </div>
 </td>
-<td>
+<td class='hidden-xs hidden-sm'>
   <i class='mdi mdi-clock'></i>
   {{ item.time }}
 </td>
-<td>{{ item.product_name }}</td>
-<td>{{ item.name }}</td>
-<td>
+<td class='hidden-xs hidden-sm'>{{ item.product_name }}</td>
+<td class='hidden-xs hidden-sm'>{{ item.name }}</td>
+<td class='hidden-xs hidden-sm'>
   <i class='mdi mdi-account-multiple'></i>
   {{ item.number_of_persons }}x
 </td>
-<td>
+<td class='hidden-xs hidden-sm'>
   <span ng-show='item.tables'>
     <img class='table_icon' src='public/images/table.svg' />
     {{ item.tables }}
   </span>
 </td>
-<td show-more show-more-trigger={{agenda.view_type}}>
+<td class='hidden-xs hidden-sm' show-more show-more-trigger={{agenda.view_type}}>
   {{ item.notes }}
+</td>
+<td class='visible-xs visible-sm p-l-none'>
+  <div class='text-md'>{{ item.name }}</div>
+  <div>
+    <i class='mdi mdi-account-multiple'></i>
+    <span class='font-thin m-r-xs'>{{ item.number_of_persons }}x</span>
+    <i class='mdi mdi-clock'></i>
+    <span class='font-thin m-r-xs'>
+      <span ng-if='showDate'>{{ item.date }}</span>
+      {{ item.time }}
+    </span>
+    <span class='m-r-xs' ng-show='item.tables_view'>
+      <img class='table_icon' src='public/images/table.svg' />
+      {{ item.tables_view }}
+    </span>
+    <i class='mdi mdi-silverware-variant' ng-if='item.product_name'></i>
+    <span class='font-thin m-r-xs'>{{ item.product_name }}</span>
+    <i class='mdi mdi-information-outline icon-muted'
+       ng-if='item.customer.allergies.length > 0 || item.customer.preferences.length > 0'></i>
+  </div>
+  <div class='font-thin' ng-if='item.notes' show-more>
+    {{ item.notes }}
+  </div>
 </td>
 <td>
   <div class='pull-right'
