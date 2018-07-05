@@ -23,18 +23,22 @@
               <md-input-container class='md-block'>
                 <label translate='phone'></label>
                 <input
-                  class='phone'
+                  name='primary_phone_number'
                   ng-model="controller.customer.primary_phone_number"
-                  ui-mask='+99999999999'
-                  model-view-value='true' />
+                  phone-valid />
+                <span ng-messages='edit_user_form.primary_phone_number.$error'>
+                  <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
+                </span>
               </md-input-container>
               <md-input-container class='md-block'>
                 <label translate='second_phone'></label>
                 <input
-                  class='phone'
+                  name='secondary_phone_number'
                   ng-model="controller.customer.secondary_phone_number"
-                  ui-mask='+99999999999'
-                  model-view-value='true' />
+                  phone-valid />
+                <span ng-messages='edit_user_form.secondary_phone_number.$error'>
+                  <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
+                </span>
               </md-input-container>
             <md-input-container class='md-block'>
                 <label translate='birthdate'></label>

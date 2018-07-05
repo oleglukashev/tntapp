@@ -117,6 +117,7 @@ export default {
     no_reservations_today_more: 'Today we do not take any online reservations. Please contact us by phone',
     full_name: 'At Least a for or last name is required',
     is_required: 'is required',
+    not_valid: 'not valid',
     not_full: 'not full',
     guests_more_than_suitable: 'Number of guests is more than of which de tabel is suitable',
     more_than_2mb: "The file can't be larger than 2MB",

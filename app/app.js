@@ -12,7 +12,6 @@ import angularTouch from 'angular-touch';
 import angularUiRouter from 'angular-ui-router';
 import angularUiBootstrap from 'angular-bootstrap-npm';
 import angularTranslate from 'angular-translate';
-import angularUiMast from 'angular-ui-mask';
 import angularMoment from 'angular-moment';
 import rzModule from 'angularjs-slider';
 import satellizer from 'satellizer';
@@ -66,7 +65,7 @@ import './common/filters/time_reservation_id_sort.filter';
 angular
   .module('app', [angularJwt, angularAnimate, angularNgUploader, angularAria, angularCookies,
     angularMessages, angularResource, angularSanitize, angularTouch, angularUiRouter,
-    angularUiBootstrap, angularTranslate, angularMoment, angularMaterial, uiLoad, angularUiMast,
+    angularUiBootstrap, angularTranslate, angularMoment, angularMaterial, uiLoad,
     uiJq, dndLists, satellizer, search, dashboard, customerReservation, analytics, dnd, agenda,
     auth, settings, rzModule, chartjs, customer, constants, editUser, 'app.services', 'app.factories',
     'app.directives', 'app.filters', 'growlNotifications', 'mp.colorPicker',

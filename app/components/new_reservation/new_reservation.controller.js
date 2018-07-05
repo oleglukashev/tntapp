@@ -108,8 +108,8 @@ export default class NewReservationCtrl {
     });
   }
 
-  submitForm() {
-    this.validForm();
+  submitForm(form) {
+    this.validForm(form);
     if (this.errors.length) return false;
 
     let data;
@@ -418,12 +418,13 @@ export default class NewReservationCtrl {
            this.current_part.date;
   }
 
-  validForm() {
+  validForm(form) {
     this.errors = this.NewReservation.validForm(
       this.reservation,
       this.settings.phone_number_is_required,
       this.is_customer_reservation,
-      this.reservation.walk_in);
+      this.reservation.walk_in,
+      form);
   }
 
   isPersonTab() {
