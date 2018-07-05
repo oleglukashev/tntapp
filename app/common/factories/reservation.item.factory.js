@@ -81,9 +81,7 @@ export default function ReservationItemFactory(AppConstants, ReservationStatus,
 
     instance.openCustomerMenu = (customerId, reservationPartId) => {
       if (customerId) {
-        if (!UserMenu.isCurrentCustomer(customerId)) {
-          UserMenu.loadAndSetFullData(instance.current_company_id, customerId, reservationPartId);
-        }
+        instance.loadAndSetFullData(customerId, reservationPartId);
 
         $mdSidenav('right').open();
       }
@@ -97,6 +95,12 @@ export default function ReservationItemFactory(AppConstants, ReservationStatus,
       }
 
       return firstName;
+    };
+
+    instance.loadAndSetFullData = (customerId, reservationPartId) => {
+      if (customerId && !UserMenu.isCurrentCustomer(customerId)) {
+        UserMenu.loadAndSetFullData(instance.current_company_id, customerId, reservationPartId);
+      }
     };
 
     $translate('unknown').then((translate) => {
