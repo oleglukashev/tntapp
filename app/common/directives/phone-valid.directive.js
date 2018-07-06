@@ -16,8 +16,10 @@ function PhoneValid($http, $rootScope) {
       const okIcon = element.next('.phone-is-ok');
       okIcon.hide();
 
-      scope.$watch('country', () => {
-        initValidation();
+      scope.$watch('country', (newValue, oldValue) => {
+        if (oldValue || newValue) {
+          initValidation();
+        }
       });
 
       element.bind('keydown', function(event) {

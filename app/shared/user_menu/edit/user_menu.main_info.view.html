@@ -34,25 +34,35 @@
                 <div class='md-errors-spacer'></div>
               </md-input-container>
 
-              <md-input-container class='md-block'>
+              <md-input-container
+                class='md-block'
+                ng-class='{"md-input-invalid": edit_user_form.primary_phone_number.$invalid}'>
                 <label translate='phone'></label>
                 <input
+                  ng-class='{"ng-invalid": edit_user_form.primary_phone_number.$invalid}'
                   name='primary_phone_number'
                   ng-model="controller.customer.primary_phone_number"
                   country='{{ controller.customer.country }}'
                   phone-valid />
-                <span ng-messages='edit_user_form.primary_phone_number.$error'>
+                <span
+                  ng-messages='edit_user_form.primary_phone_number.$error'
+                  ng-show='edit_user_form.primary_phone_number.$invalid'>
                   <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
                 </span>
               </md-input-container>
-              <md-input-container class='md-block'>
+              <md-input-container
+                class='md-block'
+                ng-class='{"md-input-invalid": edit_user_form.secondary_phone_number.$invalid}'>
                 <label translate='second_phone'></label>
                 <input
+                  ng-class='{"ng-invalid": edit_user_form.secondary_phone_number.$invalid}'
                   name='secondary_phone_number'
                   ng-model="controller.customer.secondary_phone_number"
                   country='{{ controller.customer.country }}'
                   phone-valid />
-                <span ng-messages='edit_user_form.secondary_phone_number.$error'>
+                <span
+                  ng-messages='edit_user_form.secondary_phone_number.$error'
+                  ng-show='edit_user_form.secondary_phone_number.$invalid'>
                   <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
                 </span>
               </md-input-container>
