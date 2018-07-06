@@ -1,4 +1,5 @@
 import angular from 'angular';
+import countries from './config.countries.json';
 
 export default angular.module('app.constants', [])
   .constant('AppConstants', {
@@ -70,6 +71,7 @@ export default angular.module('app.constants', [])
         class: 'datepicker',
       },
     },
+    countries,
   })
   .constant('JQ_CONFIG', {
     easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],

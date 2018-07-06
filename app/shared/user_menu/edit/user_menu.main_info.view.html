@@ -20,11 +20,26 @@
                 <label translate='last_name'></label>
                 <input ng-model="controller.customer.last_name" />
               </md-input-container>
+
+              <md-input-container class='md-block'>
+                <label translate='country'></label>
+                <md-select ng-model='controller.customer.country'>
+                  <md-option
+                    ng-value='code'
+                    ng-repeat='(code, name) in controller.AppConstants.countries'
+                    ng-selected='code === controller.customer.country || code === "NL"'>
+                    {{ name }}
+                  </md-option>
+                </md-select>
+                <div class='md-errors-spacer'></div>
+              </md-input-container>
+
               <md-input-container class='md-block'>
                 <label translate='phone'></label>
                 <input
                   name='primary_phone_number'
                   ng-model="controller.customer.primary_phone_number"
+                  country='{{ controller.customer.country }}'
                   phone-valid />
                 <span ng-messages='edit_user_form.primary_phone_number.$error'>
                   <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
@@ -35,6 +50,7 @@
                 <input
                   name='secondary_phone_number'
                   ng-model="controller.customer.secondary_phone_number"
+                  country='{{ controller.customer.country }}'
                   phone-valid />
                 <span ng-messages='edit_user_form.secondary_phone_number.$error'>
                   <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>

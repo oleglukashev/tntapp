@@ -6,13 +6,19 @@ function PhoneValid($http, $rootScope) {
   return {
     restrict: 'A',
     require: 'ngModel',
+    scope: {
+      country: '@country',
+    },
     link: function(scope, element, attrs, ngModel) {
       let submitIsDisabled = false;
-
       element.after("<i class='phone-is-ok mdi mdi-check'></i>");
 
       const okIcon = element.next('.phone-is-ok');
       okIcon.hide();
+
+      scope.$watch('country', () => {
+        initValidation();
+      });
 
       element.bind('keydown', function(event) {
         if (event.keyCode !== 13) {
@@ -33,12 +39,13 @@ function PhoneValid($http, $rootScope) {
 
       function initValidation() {
         const phone = element.val();
+        okIcon.hide();
 
         if (phone.length) {
           $rootScope.show_spinner = true;
 
           return $http({
-            url: buildURL(`${API_URL}/phone_valid`, { phone }),
+            url: buildURL(`${API_URL}/phone_valid`, { phone, country: scope.country }),
             skipAuthorization: true,
             method: 'GET',
           }).then((result) => {
@@ -55,7 +62,6 @@ function PhoneValid($http, $rootScope) {
         } else {
           ngModel.$setValidity('phoneValid', true);
           submitIsDisabled = false;
-          okIcon.hide();
         }
       }
     }

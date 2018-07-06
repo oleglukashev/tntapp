@@ -54,6 +54,7 @@ export default class UserMenuCtrl {
       primary_phone_number: customer.primary_phone_number,
       secondary_phone_number: customer.secondary_phone_number,
       street: customer.street,
+      country: customer.country,
       house_number: customer.house_number,
       zipcode: customer.zipcode,
       city: customer.city,
