@@ -2,7 +2,7 @@
   <section class='reservation_modal panel no-margin'
            ng-class='{ "custom-image": reserv.showCustomBackground() }'
            ng-style="{'background-image': 'url(' + reserv.getBackgroundStyles() + ')'}">
-    <form ng-submit='reserv.submitForm()'>
+    <form name='NewReservationForm' ng-submit='reserv.submitForm(NewReservationForm)'>
       <md-toolbar>
         <div class='md-toolbar-tools'>
           <h2 md-truncate flex ng-hide='reserv.is_success' translate='reserv'></h2>

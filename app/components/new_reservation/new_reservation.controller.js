@@ -108,8 +108,8 @@ export default class NewReservationCtrl {
     });
   }
 
-  submitForm() {
-    this.validForm();
+  submitForm(form) {
+    this.validForm(form);
     if (this.errors.length) return false;
 
     let data;
@@ -163,6 +163,7 @@ export default class NewReservationCtrl {
         first_name: this.reservation.first_name,
         last_name: this.reservation.last_name,
         primary_phone_number: this.reservation.primary_phone_number,
+        country: this.reservation.country,
         mail: this.reservation.mail,
       },
       reservation_parts: [],
@@ -198,6 +199,7 @@ export default class NewReservationCtrl {
         last_name: this.reservation.last_name,
         first_name: this.reservation.first_name,
         primary_phone_number: this.reservation.primary_phone_number,
+        country: this.reservation.country,
         mail: this.reservation.mail,
         secondary_phone_number: this.reservation.secondary_phone_number,
         street: this.reservation.street,
@@ -418,12 +420,13 @@ export default class NewReservationCtrl {
            this.current_part.date;
   }
 
-  validForm() {
+  validForm(form) {
     this.errors = this.NewReservation.validForm(
       this.reservation,
       this.settings.phone_number_is_required,
       this.is_customer_reservation,
-      this.reservation.walk_in);
+      this.reservation.walk_in,
+      form);
   }
 
   isPersonTab() {

@@ -6,8 +6,18 @@ export default class NewReservation {
 
     // run translates
     const translatesArray = [
-      'date', 'product', 'number_of_guests', 'first_name', 'notifications.not_full', 'email',
-      'last_name', 'phone', 'notifications.is_required', 'time', 'notifications.full_name',
+      'date',
+      'product',
+      'number_of_guests',
+      'first_name',
+      'notifications.not_full',
+      'email',
+      'last_name',
+      'phone', 
+      'notifications.is_required',
+      'time',
+      'notifications.full_name',
+      'notifications.not_valid',
     ];
 
     $translate(translatesArray).then((translates) => {
@@ -22,6 +32,7 @@ export default class NewReservation {
       this.time_text = translates.time;
       this.full_name_text = translates['notifications.full_name'];
       this.not_full_text = translates['notifications.not_full'];
+      this.not_valid = translates['notifications.not_valid'];
     }, (translationIds) => {
       this.date_text = translationIds.date;
       this.product_text = translationIds.product;
@@ -34,10 +45,11 @@ export default class NewReservation {
       this.time_text = translationIds.time;
       this.full_name_text = translationIds['notifications.full_name'];
       this.not_full_text = translationIds['notifications.not_full'];
+      this.not_valid = translationIds['notifications.not_valid'];
     });
   }
 
-  validForm(reservation, phoneNumberIsRequired, isCustomerReservation, walkIn) {
+  validForm(reservation, phoneNumberIsRequired, isCustomerReservation, walkIn, form) {
     const errors = [];
     let prefix = '';
     const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -73,6 +85,9 @@ export default class NewReservation {
       if (phoneNumberIsRequired && !reservation.primary_phone_number) errors.push(`${this.phone_text} ${this.is_required_text}`);
     }
 
+    if (form && form.$error && form.$error.phoneValid) {
+      errors.push(`${this.phone_text} ${this.not_valid}`);
+    }
 
     return errors;
   }

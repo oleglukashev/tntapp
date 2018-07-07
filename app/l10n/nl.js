@@ -117,6 +117,7 @@ export default {
     no_reservations_today_more: 'Vandaag nemen wij online geen reserveringen meer aan. Neem telefonisch contact met ons op',
     full_name: 'Vul a.u.b. ten minste een voor- of achternaam in',
     is_required: 'is verplicht',
+    not_valid: 'niet geldig',
     not_full: 'niet vol',
     guests_more_than_suitable: 'Aantal personen is meer dan waar de tafel(s) geschikt voor is',
     more_than_2mb: 'Een bestand mag niet groter zijn dan 2MB',

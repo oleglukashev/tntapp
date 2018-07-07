@@ -1,4 +1,4 @@
-<form ng-submit='reserv.submitForm()'>
+<form name='NewWalkInReservationForm' ng-submit='reserv.submitForm(NewWalkInReservationForm)'>
   <div class='md-content-submit reservation_person b-t walk-in-wrapper' flex>
     <div class='md-list-item'>
       <div class='md-list-item-content text-center'>
@@ -33,14 +33,31 @@
           <label translate='email'></label>
           <input type='email' ng-model='reserv.reservation.mail' ng-required='false' />
         </md-input-container>
+
+        <md-input-container class='md-block'>
+          <label translate='country'></label>
+          <md-select ng-model='reserv.reservation.country'>
+            <md-option
+              ng-value='code'
+              ng-repeat='(code, name) in reserv.AppConstants.countries'
+              ng-selected='code === "NL"'>
+              {{ name }}
+            </md-option>
+          </md-select>
+          <div class='md-errors-spacer'></div>
+        </md-input-container>
+
         <md-input-container class='md-block'>
           <label translate='phone'></label>
           <input
-            class='phone'
+            name='primary_phone_number'
             ng-model='reserv.reservation.primary_phone_number'
-            ui-mask='+99999999999'
-            model-view-value='true'
+            country='{{ reserv.reservation.country }}'
+            phone-valid
             ng-required='false' />
+          <span ng-messages='NewWalkInReservationForm.primary_phone_number.$error'>
+            <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
+          </span>
         </md-input-container>
         <md-input-container class='md-block'>
           <label translate='note'></label>

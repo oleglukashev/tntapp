@@ -20,21 +20,51 @@
                 <label translate='last_name'></label>
                 <input ng-model="controller.customer.last_name" />
               </md-input-container>
+
               <md-input-container class='md-block'>
+                <label translate='country'></label>
+                <md-select ng-model='controller.customer.country'>
+                  <md-option
+                    ng-value='code'
+                    ng-repeat='(code, name) in controller.AppConstants.countries'
+                    ng-selected='code === controller.customer.country || code === "NL"'>
+                    {{ name }}
+                  </md-option>
+                </md-select>
+                <div class='md-errors-spacer'></div>
+              </md-input-container>
+
+              <md-input-container
+                class='md-block'
+                ng-class='{"md-input-invalid": edit_user_form.primary_phone_number.$invalid}'>
                 <label translate='phone'></label>
                 <input
-                  class='phone'
+                  ng-class='{"ng-invalid": edit_user_form.primary_phone_number.$invalid}'
+                  name='primary_phone_number'
                   ng-model="controller.customer.primary_phone_number"
-                  ui-mask='+99999999999'
-                  model-view-value='true' />
+                  country='{{ controller.customer.country }}'
+                  phone-valid />
+                <span
+                  ng-messages='edit_user_form.primary_phone_number.$error'
+                  ng-show='edit_user_form.primary_phone_number.$invalid'>
+                  <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
+                </span>
               </md-input-container>
-              <md-input-container class='md-block'>
+              <md-input-container
+                class='md-block'
+                ng-class='{"md-input-invalid": edit_user_form.secondary_phone_number.$invalid}'>
                 <label translate='second_phone'></label>
                 <input
-                  class='phone'
+                  ng-class='{"ng-invalid": edit_user_form.secondary_phone_number.$invalid}'
+                  name='secondary_phone_number'
                   ng-model="controller.customer.secondary_phone_number"
-                  ui-mask='+99999999999'
-                  model-view-value='true' />
+                  country='{{ controller.customer.country }}'
+                  phone-valid />
+                <span
+                  ng-messages='edit_user_form.secondary_phone_number.$error'
+                  ng-show='edit_user_form.secondary_phone_number.$invalid'>
+                  <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
+                </span>
               </md-input-container>
             <md-input-container class='md-block'>
                 <label translate='birthdate'></label>
