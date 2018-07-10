@@ -231,7 +231,7 @@ export default {
       confirmation_sms_description: 'Bevestiging sms sturen naar een klant',
       sms_before_visit: 'Sms na bezoek',
       sms_before_visit_description: 'Geef aan hoeveel uur na het bezoek je een sms wil versturen',
-      sms_before_visit_hours_delay: 'Sms X uren na bezoek versturen',
+      sms_before_visit_hours_delay: 'Herinnering SMS X uren voor bezoek versturen',
       sms_netherlands: 'Nederlandse sms',
       sms_english: 'Engelse sms',
       sender_email: 'Verifieer afzend adres',

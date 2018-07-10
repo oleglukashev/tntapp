@@ -231,7 +231,7 @@ export default {
       confirmation_sms_description: 'Send confirmation sms to a customer',
       sms_before_visit: 'Sms before visit',
       sms_before_visit_description: 'Provide the number of hours before a visit you want to send an sms',
-      sms_before_visit_hours_delay: 'Send sms X hours before visit',
+      sms_before_visit_hours_delay: 'Reminder SMS X hours before visit',
       sms_netherlands: 'Dutch sms',
       sms_english: 'English sms',
       sender_email: 'Verify mail address',
