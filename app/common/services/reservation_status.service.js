@@ -17,10 +17,11 @@ export default class ReservationStatus {
       return deferred.promise;
     }
 
-    return this.$http.post(
-      `${API_URL}/company/${companyId}/reservation/edit/${reservationId}/status`,
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/reservation/edit/${reservationId}/status`,
+      method: 'PATCH',
       data,
-    ).then(result => result.data);
+    }).then(result => result.data);
   }
 
   changeStatus(companyId, reservation, status) {
