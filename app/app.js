@@ -33,7 +33,7 @@ import uiJq from './common/directives/ui-jq';
 import dndLists from './common/directives/angular-drag-and-drop-lists.directive';
 import mainRoute from './config.router';
 import jwtConfig from './config.jwt';
-import translatesConfig from './config.translates';
+import translatesWithMdDateFormatConfig from './config.translatesWithMdDateFormat';
 import initTemplates from './config.templates';
 import editReservationController from './components/edit_reservation/edit_reservation.controller';
 import search from './components/search';
@@ -108,14 +108,11 @@ angular
       url: API_URL + '/auth/twitter',
     });
   }])
-  .config(['$mdDateLocaleProvider', ($mdDateLocaleProvider) => {
-    $mdDateLocaleProvider.firstDayOfWeek = 1;
-  }])
   .config(jwtConfig)
   .config(['$httpProvider', ($httpProvider) => {
     $httpProvider.interceptors.push('responseFactory');
   }])
-  .config(translatesConfig)
+  .config(translatesWithMdDateFormatConfig)
   .run(initTemplates)
   .run(['$rootScope', '$state', '$stateParams',
     ($rootScope, $state, $stateParams) => {
