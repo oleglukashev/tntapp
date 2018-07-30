@@ -233,7 +233,7 @@
             translate='settings.emails.suspend_twilio_sid' 
             md-ink-ripple></button>
           <button ng-click='emails_settings.updateTwilioStatus("active")'
-            ng-if='emails_settings.canActivateTwilioAccount()'
+            ng-if='emails_settings.emails_settings_form_data.twilio_status != "active"'
             class='md-btn md-flat btn-fw text-success'
             translate='settings.emails.activate_twilio_sid' 
             md-ink-ripple></button>
