@@ -62,13 +62,7 @@ export default class SettingsLightspeedCtrl {
       const lightspeedTablesNames = Object.keys(this.lightspeed_tables);
 
       if (!Object.keys(this.lightspeed_tables).length) {
-        const alert = this.$mdDialog
-          .alert()
-          .title('Lightspeed sync error')
-          .textContent('Please, check Lightspeed connection')
-          .ok('Ok');
-
-        this.$mdDialog.show(alert).then(() => {}, () => {});
+        this.showNoConnectionPopup();
       } else if (!angular.equals(tntTablesNames, lightspeedTablesNames)) {
         const alert = this.$mdDialog
           .alert()
@@ -84,16 +78,18 @@ export default class SettingsLightspeedCtrl {
           this.tables[index].lightspeed_table_id = this.lightspeed_tables[table.table_number].id;
         }
       });
-    })
-
-    
+    }, (error) => {
+      if (error.status === 401) {
+        this.showNoConnectionPopup();
+      }
+    });
   }
 
   saveTables() {
     const lightspeedTablesValues = Object
       .keys(this.lightspeed_tables)
       .map(key => this.lightspeed_tables[key]);
-    let data = {};
+    const data = {};
 
     this.tables.forEach((table) => {
       const currentLHTable = lightspeedTablesValues
@@ -124,6 +120,16 @@ export default class SettingsLightspeedCtrl {
     });
 
     modalInstance.result.then(() => {}, () => {});
+  }
+
+  showNoConnectionPopup() {
+    const alert = this.$mdDialog
+      .alert()
+      .title('Lightspeed sync error')
+      .textContent('Please, check Lightspeed connection')
+      .ok('Ok');
+
+    this.$mdDialog.show(alert).then(() => {}, () => {});
   }
 
   loadTables() {
