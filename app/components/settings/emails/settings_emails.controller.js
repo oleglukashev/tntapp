@@ -86,12 +86,6 @@ export default class SettingsEmailsCtrl {
     return content.replace(/\n/g, "<br />");
   }
 
-  canActivateTwilioAccount() {
-    return this.User.current.is_admin &&
-      this.emails_settings_form_data &&
-      this.emails_settings_form_data.twilio_status != "active";
-  }
-
   canShowRegisterTwilioAccountBlock() {
     return this.User.isOwner() &&
       this.emails_settings_form_data &&
