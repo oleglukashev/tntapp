@@ -1,0 +1,88 @@
+<div class='wrapper' layout='column' layout-align='space-around center'>
+  <div class='w-xl'>
+    <p>
+      <small class='text-muted' translate='allergies'></small>
+    </p>
+    <md-input-container class='md-block'>
+      <label translate='guest_name'></label>
+      <input ng-model='ctrl.allergy_data.owner' />
+    </md-input-container>
+
+    <md-autocomplete
+      md-search-text='ctrl.allergy_data.allergy'
+      md-items='item in ctrl.searchPreferencesAndAllergies(ctrl.allergy_data.allergy, ctrl.allergies)'
+      md-item-text='item'
+      md-min-length='0'
+      md-menu-container-class='input-suggestion'
+      md-floating-label='{{ "name" | translate }}'>
+      <md-item-template>
+        <span>{{ item }}</span>
+      </md-item-template>
+    </md-autocomplete>
+
+    <button type='button'
+      ng-click='ctrl.addAllergy()'
+      ng-disabled='!ctrl.allergyIsValid()'
+      class='md-btn md-flat m-b m-t btn-fw text-success'
+      translate='add_allergy'>
+    </button>
+    <label class='btn btn-default block m-b-xs no-shadow text-success text-left'
+           ng-repeat='allergy in ctrl.reservation.allergies'>
+      <span class='m-r-sm'>
+        {{ allergy.owner }} - {{ allergy.allergy }}
+      </span>
+      <div class='pull-right'>
+        <i class='mdi mdi-delete' ng-click='ctrl.removeAllergy($index);'></i>
+      </div>
+    </label>
+  </div>
+</div>
+
+<hr class='no-margin' />
+
+<div class='wrapper' layout='column' layout-align='space-around center'>
+  <div class='w-xl'>
+    <p>
+      <small class='text-muted' translate='preferences'></small>
+    </p>
+    <md-input-container class='md-block'>
+      <label translate='guest_name'></label>
+      <input ng-model='ctrl.preference_data.owner' />
+    </md-input-container>
+
+    <md-input-container class='md-block'>
+      <label translate='name'></label>
+      <input ng-model='ctrl.preference_data.name' />
+    </md-input-container>
+
+    <md-autocomplete
+      md-search-text='ctrl.preference_data.value'
+      md-items='item in ctrl.searchPreferencesAndAllergies(ctrl.preference_data.value, ctrl.preferences)'
+      md-item-text='item'
+      md-min-length='0'
+      md-menu-container-class='input-suggestion'
+      md-floating-label='{{ "value" | translate }}'>
+      <md-item-template>
+        <span>{{ item }}</span>
+      </md-item-template>
+    </md-autocomplete>
+
+    <button type='button'
+      ng-click='ctrl.addPreference()'
+      ng-disabled='!ctrl.preferenceIsValid()'
+      class='md-btn md-flat m-b m-t btn-fw text-success'
+      translate='add_preference'>
+    </button>
+    <label class='btn btn-default block m-b-xs no-shadow text-success text-left'
+           ng-repeat='preference in ctrl.reservation.preferences'>
+      <span class='m-r-sm'>
+        {{ preference.owner }} - {{ preference.name }} {{ preference.value }}
+      </span>
+      <div class='pull-right'>
+        <i class='mdi mdi-delete' ng-click='ctrl.removePreference($index);'></i>
+      </div>
+    </label>
+  </div>
+</div>
+
+<hr class='no-margin' />

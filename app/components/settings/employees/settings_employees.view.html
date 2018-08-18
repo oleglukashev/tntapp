@@ -1,47 +1,76 @@
-<div class='panel'>
-  <div class='panel-heading' translate='settings.employees.title'></div>
-  <div class='panel-body no-padder'>
-    <table class='table no-margin' ng-show='employees_settings.is_loaded'>
-      <thead>
-        <th translate='name'></th>
-        <th translate='email'></th>
-        <th translate='settings.employees.rights'></th>
-        <th></th>
-      </thead>
-      <tbody>
-        <tr ng-repeat='employee in employees_settings.employees'>
-          <td class='v-middle'>{{ employee.user.first_name }} {{ employee.user.last_name }}</td>
-          <td class='v-middle'>{{ employee.user.email }}</td>
-          <td class='v-middle'>{{ employee.manage_access ? 'yes' : 'no' | translate }}</td>
-          <td class='v-middle text-right'>
-            <md-menu>
-                <button md-ink-ripple
-                      class='md-btn md-fab no-shadow'
-                      ng-disabled='disabled'
-                      aria-haspopup='true'
-                      aria-expanded='false'
-                      aria-disabled='false'
-                      ng-click='$mdMenu.open($event)'>
-                  <i class='mdi mdi-dots-vertical i-24'></i>
-                </button>
-                <md-menu-content>
-                  <md-menu-item>
-                    <md-button ng-click='employees_settings.editEmployee(employee.id)'
-                               translate='settings.employees.edit'></md-button>
-                  </md-menu-item>
-                </md-menu-content>
-              </md-menu>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class='col-lg-8 col-md-8 col-sm-8'> 
+  <div class='panel' ng-if='ctrl.is_loaded'>
+    <div class='panel-heading' translate='settings.employees.title'></div>
+    <div class='panel-body no-padder'>
+      <table class='table no-margin'>
+        <thead>
+          <th translate='name'></th>
+          <th translate='email'></th>
+          <th translate='settings.employees.rights'></th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr ng-repeat='employee in ctrl.employees'>
+            <td class='v-middle'>{{ employee.user.first_name }} {{ employee.user.last_name }}</td>
+            <td class='v-middle'>{{ employee.user.email }}</td>
+            <td class='v-middle'>{{ employee.manage_access ? 'yes' : 'no' | translate }}</td>
+            <td class='v-middle text-right'>
+              <md-menu>
+                  <button md-ink-ripple
+                        class='md-btn md-fab no-shadow'
+                        ng-disabled='disabled'
+                        aria-haspopup='true'
+                        aria-expanded='false'
+                        aria-disabled='false'
+                        ng-click='$mdMenu.open($event)'>
+                    <i class='mdi mdi-dots-vertical i-24'></i>
+                  </button>
+                  <md-menu-content>
+                    <md-menu-item>
+                      <md-button ng-click='ctrl.editEmployee(employee.id)'
+                                 translate='settings.employees.edit'></md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class='panel-footer'>
+      <button md-ink-ripple
+              class='md-btn md-flat btn-fw text-success'
+              ng-click='ctrl.addEmployee();'>
+        <i class='mdi mdi-plus-circle'></i>
+        <translate class='uppercase'>settings.employees.add</translate>
+      </button>
+    </div>
   </div>
-  <div class='panel-footer'>
-    <button md-ink-ripple
-            class='md-btn md-flat btn-fw text-success'
-            ng-click='employees_settings.addEmployee();'>
-      <i class='mdi mdi-plus-circle'></i>
-      <translate class='uppercase'>settings.employees.add</translate>
-    </button>
-  </div>
+
+  <div class='panel' ng-if='!ctrl.is_loaded'>
+    <div class='panel-heading' translate='settings.employees.title'></div>
+    <md-list class='no-padder'>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+    </md-list>
+</div>
+</div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+  <settings-menu></settings-menu>
 </div>

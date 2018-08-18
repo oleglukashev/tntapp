@@ -1,15 +1,16 @@
-import customerSettingsNamesFormTemplate from './settings_customer_settings_names.form.view.html';
+import customerSettingsNamesFormView from './settings_customer_settings_names.form.view.html';
+import newCustomerSettingsNamesController from './settings_customer_settings_names.new.controller';
+import editCustomerSettingsNamesController from './settings_customer_settings_names.edit.controller';
 
-export default class SettingsCustomerSettingsnamesCtrl {
-  constructor(User, CustomerSettingsName, $rootScope, $modal, $translate, filterFilter) {
+export default class Controller {
+  constructor(User, CustomerSettingsName, $rootScope, $uibModal, $translate, filterFilter) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.CustomerSettingsName = CustomerSettingsName;
     this.$rootScope = $rootScope;
-    this.$modal = $modal;
+    this.$modal = $uibModal;
     this.filterFilter = filterFilter;
-    this.$rootScope.show_spinner = true;
     this.is_loaded = false;
     this.settingsNames = [];
     this.loadNames();
@@ -25,17 +26,15 @@ export default class SettingsCustomerSettingsnamesCtrl {
   loadNames() {
     this.CustomerSettingsName.getAll(this.current_company_id).then((settingsNames) => {
       this.settingsNames = settingsNames;
-      this.$rootScope.show_spinner = false;
       this.is_loaded = true;
-    }, () => {
-      this.$rootScope.show_spinner = false;
     });
   }
 
   edit(index) {
     const modalInstance = this.$modal.open({
-      template: customerSettingsNamesFormTemplate,
-      controller: 'SettingsCustomerSettingsNamesEditCtrl as controller',
+      template: customerSettingsNamesFormView,
+      controller: editCustomerSettingsNamesController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         settingsName: () => this.settingsNames[index],
@@ -63,8 +62,9 @@ export default class SettingsCustomerSettingsnamesCtrl {
 
   add() {
     const modalInstance = this.$modal.open({
-      template: customerSettingsNamesFormTemplate,
-      controller: 'SettingsCustomerSettingsNamesNewCtrl as controller',
+      template: customerSettingsNamesFormView,
+      controller: newCustomerSettingsNamesController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         settingsNames: () => this.settingsNames,

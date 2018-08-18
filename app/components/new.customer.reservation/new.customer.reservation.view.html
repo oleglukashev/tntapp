@@ -1,0 +1,23 @@
+<div class='modal-dialog'>
+  <section class='reservation_modal panel no-margin'
+    ng-class='{ "custom-image": ctrl.showCustomBackground() }'
+    ng-style="{'background-image': 'url(' + ctrl.getBackgroundStyles() + ')'}">
+    <md-toolbar>
+      <div class='md-toolbar-tools'>
+        <h2 md-truncate flex ng-hide='ctrl.is_success' translate='reserv'></h2>
+        <h2 md-truncate flex ng-show='ctrl.is_success' translate='new_reservation'></h2>
+        <md-button class='md-icon-button'
+          ng-click='ctrl.$window.location.reload()'>
+          <i class='mdi mdi-close m-r-sm i-24'></i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content>
+      <new-reservation type='customer'></new-reservation>
+    </md-content>
+  </section>
+</div>
+
+<div ng-show='ctrl.$rootScope.show_spinner' id='loading-bar-spinner'>
+  <div class='spinner-icon'></div>
+</div>

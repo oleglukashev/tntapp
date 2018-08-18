@@ -1,0 +1,57 @@
+<!-- navbar header -->
+<div class='header-mobile navbar-header visible-xs'>
+  <button
+    class='header-mobile__menu pull-left visible-xs'
+    ng-click='ctrl.openMobileMenu()'>
+    <i class='mdi mdi-format-align-justify'></i>
+  </button>
+  <!-- brand -->
+
+  <header-user-menu></header-user-menu>
+</div>
+<!-- / navbar header -->
+
+<!-- navbar collapse -->
+<div class='collapse navbar-collapse'>
+  <div class='header-logo pull-left'>
+    <a href='#'></a>
+  </div>
+  <div class='header-menu'>
+    <md-tabs md-no-ink='true'
+             class='header-menu-wrapper'
+             ng-click='ctrl.hideRightSidebar()'>
+      <md-tab md-active='ctrl.isDiactiveState()'></md-tab>
+      <md-tab md-active='ctrl.isActiveState("app.dashboard")' ui-sref='app.dashboard'>
+        <translate>top_menu.dashboard</translate>
+      </md-tab>
+      <md-tab md-active='ctrl.isActiveState("app.analytics")' ui-sref='app.analytics'>
+        <translate>top_menu.analytics</translate>
+      </md-tab>
+      <md-tab md-active='ctrl.isActiveState("app.agenda")' ui-sref='app.agenda'>
+        <translate>top_menu.calendar</translate>
+      </md-tab>
+      <md-tab md-active='ctrl.isActiveState("app.customers")' ui-sref='app.customers'>
+        <translate>top_menu.customers</translate>
+      </md-tab>
+    </md-tabs>
+  </div>
+
+<!--   <div data-ng-include=" 'header.right_menu.view.html' "></div>-->
+  <header-user-menu></header-user-menu>
+
+  <button type='button'
+    class='header-account-menu__avatar bg-light pull-right'
+    ngf-select="ctrl.uploadPhoto($file, $invalidFiles)"
+    accept="image/*"
+    ngf-pattern="'.png,.jpg'"
+    ngf-max-height="2000"
+    ngf-max-size="1MB"
+    ng-model="picFile"
+    ng-click="upload_photo.upload_photo_error=''"
+    ng-style="{'background-image': ctrl.User.current.photo ? 'url(' + ctrl.User.current.photo + ')' : 'none'}"
+    md-ink-ripple></button>
+
+  <header-search></header-search>
+  <!-- <div data-ng-include=" 'header_search.view.html' " ng-controller='HeaderSearchCtrl as search'></div> -->
+</div>
+<!-- / navbar collapse -->

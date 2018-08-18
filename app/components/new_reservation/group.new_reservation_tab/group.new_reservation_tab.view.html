@@ -1,0 +1,54 @@
+<md-tab ng-disabled="!ctrl.reservation.is_group">
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-account-multiple'></i></div>
+    <div class='text-center l-h' class='uppercase' translate='reservation.group'></div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='md-content-submit reservation_group b-t' flex ng-if='ctrl.canShow()'>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4 translate='reservation.group'></h4>
+        </div>
+      </div>
+      <div class='wrapper'>
+        <label ng-repeat='part in ctrl.reservation.reservation_parts'
+          class='btn btn-default block m-b-xs no-shadow text-success text-left'
+          ng-click='ctrl.selectCurrentIndex({ index: $index })'
+          ng-class='{"active": $index === ctrl.current_index}'
+          ng-model='ctrl.current_index'
+          uib-btn-radio='$index'>
+          <span class='m-r-lg'>
+            <i class='mdi mdi-clock'></i>
+            {{ ctrl.moment(part.date).format('DD.MM.YY') }} {{ part.time }}
+          </span>
+          <span class='m-r-lg' ng-show='part.number_of_persons'>
+            <i class='mdi mdi-account-multiple'></i>
+            <small class='font-thin m-r-xs'>{{ part.number_of_persons }}x</small>
+          </span>
+          <span class='m-r-lg' ng-show='part.product'>
+            <i class='mdi mdi-silverware-variant'></i>
+            <small class='font-thin'>{{ part.product.name }}</small>
+          </span>
+          <span class='m-r-lg' ng-show='part.tables.length'>
+            <img class='table_icon' src='public/images/table.svg' />
+            <small class='font-thin' ng-bind='ctrl.namesOfTables(part)'></small>
+          </span>
+          <div class='pull-right'
+               ng-show='ctrl.reservation.reservation_parts.length > 1'>
+            <i class='mdi mdi-delete' ng-click='ctrl.removePart($event, $index);'></i>
+          </div>
+        </label>
+
+        <label ng-click='ctrl.addPart()'
+               class='btn btn-sm font-bold m-xs text-success no-shadow no-border'
+               translate='reservation.add_activity'></label>
+
+        <button type='button'
+                class='btn btn-lg btn-success w-full no-top-radius md-content-button'
+                ng-click='ctrl.selectTab({ index: ctrl.pagination.person })'>
+          <translate>next</translate>        
+        </button>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>

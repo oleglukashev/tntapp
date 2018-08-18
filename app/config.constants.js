@@ -61,17 +61,33 @@ export default angular.module('app.constants', [])
     },
     emptyClass: 'mdi-close',
     calendar: {
-      init_date: new Date(),
-      max_date: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
       format: 'dd-MM-yyyy',
       date_options: {
         formatYear: 'yy',
         startingDay: 1,
         showWeeks: false,
-        class: 'datepicker',
+        maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
       },
     },
     countries,
+    allergyClasses: {
+      glutenfree: 'circle-gluten',
+      lactose_free: 'circle-milk',
+      tree_nuts_allergy: 'circle-nuts',
+      peanut_allergy: 'circle-peanuts',
+      egg_allergy: 'circle-eggs',
+      shellfish_allergy: 'circle-fish',
+      vegetarian: 'circle-vegetarian',
+      vegan: 'circle-vegan',
+      glutenvrij: 'circle-gluten',
+      lactoseintolerant: 'circle-milk',
+      notenallergie: 'circle-nuts',
+      pinda_allergie: 'circle-peanuts',
+      ei_allergie: 'circle-eggs',
+      schaal_en_schelpdieren: 'circle-fish',
+      vegetari_r: 'circle-vegetarian',
+      veganist: 'circle-vegan',
+    }
   })
   .constant('JQ_CONFIG', {
     easyPieChart: ['vendor/jquery/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js'],

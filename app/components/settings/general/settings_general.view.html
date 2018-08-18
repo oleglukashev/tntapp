@@ -1,333 +1,363 @@
-<div class='panel'>
-  <div class='panel-heading' translate='settings.general.title'></div>
-  <form ng-show='general_settings.is_loaded'>
-	  <div class='md-list'>
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.general.average_ocup_time'></h3>
-		  		<small class='text-muted' translate='settings.general.average_ocup_time_description'></small>
-	  		</div>
-	  		<div class='pull-right'>
-	  			<md-input-container class='w-4x no-margin'>
-    				<input type='number'
-    							 class='text-center'
-    							 ng-model='general_settings.form_data.bezettings_minuten'
-    							 ng-change='general_settings.submitForm()'
-    							 required
-    							 ng-maxlength='4'
-    							 minlength='1'
-    							 min='0' />
-  				</md-input-container>
-	  		</div>
-	  	</div>
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.general.limit_type'></h3>
-		  		<small class='text-muted' translate='settings.general.limit_type_description'></small>
-	  		</div>
-	  		<div class='pull-right'>
-	  			<div class='md-form-group no-padder'>
-            <md-radio-group ng-model='general_settings.form_data.limit_type'
-            								ng-change='general_settings.submitForm()'>
-              <md-radio-button value='Tafels' class='inline md-success'>
-                {{ 'tables' | translate }}
-              </md-radio-button>
-              <md-radio-button value='Personen' class='inline md-success m-r-none'>
-                {{ 'persons' | translate }}
-              </md-radio-button>
-            </md-radio-group>
-          </div>
-	  		</div>
-	  	</div>
+<div class='col-lg-8 col-md-8 col-sm-8'>
+  <div class='panel' ng-if='ctrl.is_loaded'>
+    <div class='panel-heading' translate='settings.general.title'></div>
+    <form ng-show='ctrl.is_loaded'>
+  	  <div class='md-list'>
+  	  	<div class='md-list-item clear'>
+  	  		<div class='pull-left'>
+  		  		<h3 class='no-margin text-md' translate='settings.general.average_ocup_time'></h3>
+  		  		<small class='text-muted' translate='settings.general.average_ocup_time_description'></small>
+  	  		</div>
+  	  		<div class='pull-right'>
+  	  			<md-input-container class='w-4x no-margin'>
+      				<input type='number'
+      							 class='text-center'
+      							 ng-model='ctrl.form_data.bezettings_minuten'
+      							 ng-change='ctrl.submitForm()'
+      							 required
+      							 ng-maxlength='4'
+      							 minlength='1'
+      							 min='0' />
+    				</md-input-container>
+  	  		</div>
+  	  	</div>
+  	  	<div class='md-list-item clear'>
+  	  		<div class='pull-left'>
+  		  		<h3 class='no-margin text-md' translate='settings.general.limit_type'></h3>
+  		  		<small class='text-muted' translate='settings.general.limit_type_description'></small>
+  	  		</div>
+  	  		<div class='pull-right'>
+  	  			<div class='md-form-group no-padder'>
+              <md-radio-group ng-model='ctrl.form_data.limit_type'
+              								ng-change='ctrl.submitForm()'>
+                <md-radio-button value='Tafels' class='inline md-success'>
+                  {{ 'tables' | translate }}
+                </md-radio-button>
+                <md-radio-button value='Personen' class='inline md-success m-r-none'>
+                  {{ 'persons' | translate }}
+                </md-radio-button>
+              </md-radio-group>
+            </div>
+  	  		</div>
+  	  	</div>
 
-      <div class='md-list-item clear'>
-        <div class='pull-left'>
-          <h3 class='no-margin text-md' translate='settings.general.penalty'></h3>
-        </div>
-        <div class='pull-right' ng-show='general_settings.form_data.enable_penalty'>
-          <div class='md-form-group no-padder'>
-            <md-input-container class='w-4x no-margin'>
-              <input type='number'
-                     class='text-center'
-                     ng-model='general_settings.form_data.penalty'
-                     ng-change='general_settings.submitForm()'
-                     ng-maxlength='3'
-                     minlength='1'
-                     min='0' />
-            </md-input-container>
+        <div class='md-list-item clear'>
+          <div class='pull-left'>
+            <h3 class='no-margin text-md' translate='settings.general.penalty'></h3>
           </div>
-        </div>
-        <div class='pull-right m-r-sm'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.enable_penalty'
-                       ng-change='general_settings.updatePenaltyAndSubmitForm()'></md-switch>
+          <div class='pull-right' ng-show='ctrl.form_data.enable_penalty'>
+            <div class='md-form-group no-padder'>
+              <md-input-container class='w-4x no-margin'>
+                <input type='number'
+                       class='text-center'
+                       ng-model='ctrl.form_data.penalty'
+                       ng-change='ctrl.submitForm()'
+                       ng-maxlength='3'
+                       minlength='1'
+                       min='0' />
+              </md-input-container>
+            </div>
           </div>
-        </div>
-      </div>
-
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.general.number_of_persons'></h3>
-		  		<small class='text-muted' translate='settings.general.number_of_persons_description'></small>
-	  		</div>
-	  		<div class='pull-right'>
-	  			<md-input-container class='w-3x no-margin'>
-    				<input type='number'
-    							 class='text-center'
-    							 ng-model='general_settings.form_data.auto_accept_reservation_person_limit'
-    							 ng-change='general_settings.submitForm()'
-    							 required
-    							 ng-maxlength='3'
-    							 minlength='1'
-    							 min='0' />
-  				</md-input-container>
-	  		</div>
-	  	</div>
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.general.phone_required'></h3>
-		  		<small class='text-muted' translate='settings.general.phone_required_description'></small>
-	  		</div>
-	  		<div class='pull-right m-r-n-xs'>
-	  			<div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.phone_number_is_required'
-            					 ng-change='general_settings.submitForm()'
-            	></md-switch>
-          </div>
-	  		</div>
-	  	</div>
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.general.quick_reservation'></h3>
-		  		<small class='text-muted' translate='settings.general.quick_reservation_description'></small>
-	  		</div>
-	  		<div class='pull-right m-r-n-xs'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.quick_reservations_enabled'
-            					 ng-change='general_settings.submitForm()'></md-switch>
-          </div>
-	  		</div>
-	  	</div>
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.general.autoassign'></h3>
-		  		<small class='text-muted' translate='settings.general.autoassign_description'></small>
-	  		</div>
-	  		<div class='pull-right m-r-n-xs'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.auto_assign_tables_to_frontoffice_reservations'
-            					 ng-change='general_settings.submitForm()'></md-switch>
-          </div>
-	  		</div>
-	  	</div>
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.general.deadline'></h3>
-		  		<small class='text-muted' translate='settings.general.deadline_description'></small>
-	  		</div>
-	  		<div class='pull-right' ng-show='general_settings.form_data.enable_deadline'>
-          <div class='md-form-group no-padder'>
-  					<md-input-container class='pull-right no-margin'>
-		          <md-select ng-model='general_settings.form_data.reservation_deadline_minutes'
-		          					 placeholder='mm'
-			  								 ng-change='general_settings.submitForm()'
-			  								 required>
-		    				<md-option ng-value='minute'
-		    									 ng-repeat='minute in general_settings.getMinutesArray()'>{{ minute < 10 ? '0' + minute : minute }}</md-option>
-		  				</md-select>
-  					</md-input-container>
-  					<span class='pull-right m-t-sm'>:</span>
-  					<md-input-container class='pull-right no-margin'>
-          		<md-select ng-model='general_settings.form_data.reservation_deadline_hours'
-	  									 	 placeholder='HH'
-		  								 	 ng-change='general_settings.submitForm()'
-		  								   required>
-	    					<md-option ng-value='hour'
-	    										 ng-repeat='hour in general_settings.getHoursArray()'>{{ hour < 10 ? '0' + hour : hour }}</md-option>
-	  					</md-select>
-  					</md-input-container>
-          </div>
-	  		</div>
-        <div class='pull-right m-r-sm'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.enable_deadline'
-                       ng-change='general_settings.updateDeadlineAndSubmitForm()'></md-switch>
-          </div>
-        </div>
-	  	</div>
-
-      <div class='md-list-item clear'>
-        <div class='pull-left not-confirm-period'>
-          <h3 class='no-margin text-md' translate='settings.general.not_confirm_period'></h3>
-          <small class='text-muted' translate='settings.general.not_confirm_period_description'></small>
-        </div>
-        <div class='pull-right' ng-show='general_settings.form_data.enable_request_type'>
-          <div class='md-form-group no-padder'>
-            <md-input-container class='pull-right no-margin'>
-              <md-select ng-model='general_settings.form_data.request_type_start_minutes'
-                         placeholder='mm'
-                         ng-change='general_settings.checkRequestTypeEndAndSubmitForm()'
-                         required>
-                <md-option ng-value='minute'
-                           ng-repeat='minute in general_settings.getMinutesArray()'>{{ minute < 10 ? '0' + minute : minute }}</md-option>
-              </md-select>
-            </md-input-container>
-            <span class='pull-right m-t-sm'>:</span>
-            <md-input-container class='pull-right no-margin'>
-              <md-select ng-model='general_settings.form_data.request_type_start_hours'
-                         placeholder='HH'
-                         ng-change='general_settings.checkRequestTypeEndAndSubmitForm()'
-                         required>
-                <md-option ng-value='hour'
-                           ng-repeat='hour in general_settings.getHoursArray()'>{{ hour < 10 ? '0' + hour : hour }}</md-option>
-              </md-select>
-            </md-input-container>
-          </div>
-          <div class='md-form-group no-padder'>
-            <md-input-container class='pull-right no-margin'>
-              <md-select ng-model='general_settings.form_data.request_type_end_minutes'
-                         placeholder='mm'
-                         ng-change='general_settings.checkRequestTypeStartAndSubmitForm()'
-                         required>
-                <md-option ng-value='minute'
-                           ng-repeat='minute in general_settings.getMinutesArray()'>{{ minute < 10 ? '0' + minute : minute }}</md-option>
-              </md-select>
-            </md-input-container>
-            <span class='pull-right m-t-sm'>:</span>
-            <md-input-container class='pull-right no-margin'>
-              <md-select ng-model='general_settings.form_data.request_type_end_hours'
-                         placeholder='HH'
-                         ng-change='general_settings.checkRequestTypeStartAndSubmitForm()'
-                         required>
-                <md-option ng-value='hour'
-                           ng-repeat='hour in general_settings.getHoursArray()'>{{ hour < 10 ? '0' + hour : hour }}</md-option>
-              </md-select>
-            </md-input-container>
-          </div>
-        </div>
-        <div class='pull-right m-r-sm'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.enable_request_type'
-                       ng-change='general_settings.updateRequestTypePeriod()'></md-switch>
-          </div>
-        </div>
-      </div>
-
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.general.start_with'></h3>
-		  		<small class='text-muted' translate='settings.general.start_with_description'></small>
-	  		</div>
-	  		<div class='pull-right'>
-	  			<div class='md-form-group no-padder'>
-            <md-radio-group ng-model='general_settings.form_data.show_timetable_first'
-            								ng-change='general_settings.submitForm()'>
-              <md-radio-button value='0' class='inline md-success'>
-                {{ 'calend' | translate }}
-              </md-radio-button>
-              <md-radio-button value='1' class='inline md-success m-r-none'>
-                {{ 'timeschedule' | translate }}
-              </md-radio-button>
-            </md-radio-group>
-          </div>
-	  		</div>
-	  	</div>
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.general.add_guest_info'></h3>
-		  		<small class='text-muted' translate='settings.general.add_guest_info_description'></small>
-	  		</div>
-	  		<div class='pull-right m-r-n-xs'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.show_customer_info_popup'
-            					 ng-change='general_settings.submitForm()'></md-switch>
-          </div>
-	  		</div>
-	  	</div>
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.general.reserv_via_twitter'></h3>
-		  		<small class='text-muted' translate='settings.general.reserv_via_twitter_description'></small>
-	  		</div>
-	  		<div class='pull-right m-r-n-xs'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.allow_twitter_login'
-            					 ng-change='general_settings.submitForm()'></md-switch>
-          </div>
-	  		</div>
-	  	</div>
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.general.reserv_via_fb'></h3>
-		  		<small class='text-muted' translate='settings.general.reserv_via_fb_description'></small>
-	  		</div>
-	  		<div class='pull-right m-r-n-xs'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.allow_facebook_login'
-            					 ng-change='general_settings.submitForm()'></md-switch>
-          </div>
-	  		</div>
-	  	</div>
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.general.product_limits'></h3>
-		  		<small class='text-muted' translate='settings.general.product_limits_description'></small>
-	  		</div>
-	  		<div class='pull-right m-r-n-xs'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.enable_product_limits'
-            					 ng-change='general_settings.submitForm()'></md-switch>
-          </div>
-	  		</div>
-	  	</div>
-      <div class='md-list-item clear'>
-        <div class='pull-left'>
-          <h3 class='no-margin text-md' translate='settings.general.autocomplete_guests'></h3>
-        </div>
-        <div class='pull-right m-r-n-xs'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.suggest_customer_name'
-                       ng-change='general_settings.submitForm()'></md-switch>
-          </div>
-        </div>
-      </div>
-      <div class='md-list-item clear'>
-        <div class='pull-left'>
-          <h3 class='no-margin text-md' translate='settings.general.assist_you_api'></h3>
-          <small class='text-muted' translate='settings.general.assist_you_api_description'></small>
-        </div>
-        <div class='pull-right'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.assist_you_api'
-                       ng-disabled='!general_settings.emails_settings.twilio_sid || general_settings.emails_settings.twilio_status != "active"'
-                       ng-change='general_settings.submitForm()'></md-switch>
-          </div>
-        </div>
-      </div>
-      <div class='md-list-item clear'>
-        <div class='pull-left'>
-          <h3 class='no-margin text-md' translate='settings.general.booking_api'></h3>
-          <small class='text-muted' translate='settings.general.booking_api_description'></small>
-        </div>
-        <div class='pull-right'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='general_settings.form_data.booking_api'
-                       ng-change='general_settings.submitForm()'></md-switch>
-          </div>
-        </div>
-      </div>
-      <div class='md-list-item clear'>
-        <div class='pull-left'>
-          <h3 class='no-margin text-md' translate='settings.general.uuid'></h3>
-        </div>
-        <div class='pull-right col-sm-6'>
-          <div class='form-group no-margin'>
-            <div class='no-padder'>
-              <input type='text' class='form-control' ng-model='general_settings.form_data.uuid' readonly />
+          <div class='pull-right m-r-sm'>
+            <div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.enable_penalty'
+                         ng-change='ctrl.updatePenaltyAndSubmitForm()'></md-switch>
             </div>
           </div>
         </div>
-      </div>
-	  </div>
-  </form>
+
+  	  	<div class='md-list-item clear'>
+  	  		<div class='pull-left'>
+  		  		<h3 class='no-margin text-md' translate='settings.general.number_of_persons'></h3>
+  		  		<small class='text-muted' translate='settings.general.number_of_persons_description'></small>
+  	  		</div>
+  	  		<div class='pull-right'>
+  	  			<md-input-container class='w-3x no-margin'>
+      				<input type='number'
+      							 class='text-center'
+      							 ng-model='ctrl.form_data.auto_accept_reservation_person_limit'
+      							 ng-change='ctrl.submitForm()'
+      							 required
+      							 ng-maxlength='3'
+      							 minlength='1'
+      							 min='0' />
+    				</md-input-container>
+  	  		</div>
+  	  	</div>
+  	  	<div class='md-list-item clear'>
+  	  		<div class='pull-left'>
+  		  		<h3 class='no-margin text-md' translate='settings.general.phone_required'></h3>
+  		  		<small class='text-muted' translate='settings.general.phone_required_description'></small>
+  	  		</div>
+  	  		<div class='pull-right m-r-n-xs'>
+  	  			<div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.phone_number_is_required'
+              					 ng-change='ctrl.submitForm()'
+              	></md-switch>
+            </div>
+  	  		</div>
+  	  	</div>
+  	  	<div class='md-list-item clear'>
+  	  		<div class='pull-left'>
+  		  		<h3 class='no-margin text-md' translate='settings.general.quick_reservation'></h3>
+  		  		<small class='text-muted' translate='settings.general.quick_reservation_description'></small>
+  	  		</div>
+  	  		<div class='pull-right m-r-n-xs'>
+            <div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.quick_reservations_enabled'
+              					 ng-change='ctrl.submitForm()'></md-switch>
+            </div>
+  	  		</div>
+  	  	</div>
+  	  	<div class='md-list-item clear'>
+  	  		<div class='pull-left'>
+  		  		<h3 class='no-margin text-md' translate='settings.general.autoassign'></h3>
+  		  		<small class='text-muted' translate='settings.general.autoassign_description'></small>
+  	  		</div>
+  	  		<div class='pull-right m-r-n-xs'>
+            <div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.auto_assign_tables_to_frontoffice_reservations'
+              					 ng-change='ctrl.submitForm()'></md-switch>
+            </div>
+  	  		</div>
+  	  	</div>
+  	  	<div class='md-list-item clear'>
+  	  		<div class='pull-left'>
+  		  		<h3 class='no-margin text-md' translate='settings.general.deadline'></h3>
+  		  		<small class='text-muted' translate='settings.general.deadline_description'></small>
+  	  		</div>
+  	  		<div class='pull-right' ng-show='ctrl.form_data.enable_deadline'>
+            <div class='md-form-group no-padder'>
+    					<md-input-container class='pull-right no-margin'>
+  		          <md-select ng-model='ctrl.form_data.reservation_deadline_minutes'
+  		          					 placeholder='mm'
+  			  								 ng-change='ctrl.submitForm()'
+  			  								 required>
+  		    				<md-option ng-value='minute'
+  		    									 ng-repeat='minute in ctrl.getMinutesArray()'>{{ minute < 10 ? '0' + minute : minute }}</md-option>
+  		  				</md-select>
+    					</md-input-container>
+    					<span class='pull-right m-t-sm'>:</span>
+    					<md-input-container class='pull-right no-margin'>
+            		<md-select ng-model='ctrl.form_data.reservation_deadline_hours'
+  	  									 	 placeholder='HH'
+  		  								 	 ng-change='ctrl.submitForm()'
+  		  								   required>
+  	    					<md-option ng-value='hour'
+  	    										 ng-repeat='hour in ctrl.getHoursArray()'>{{ hour < 10 ? '0' + hour : hour }}</md-option>
+  	  					</md-select>
+    					</md-input-container>
+            </div>
+  	  		</div>
+          <div class='pull-right m-r-sm'>
+            <div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.enable_deadline'
+                         ng-change='ctrl.updateDeadlineAndSubmitForm()'></md-switch>
+            </div>
+          </div>
+  	  	</div>
+
+        <div class='md-list-item clear'>
+          <div class='pull-left not-confirm-period'>
+            <h3 class='no-margin text-md' translate='settings.general.not_confirm_period'></h3>
+            <small class='text-muted' translate='settings.general.not_confirm_period_description'></small>
+          </div>
+          <div class='pull-right' ng-show='ctrl.form_data.enable_request_type'>
+            <div class='md-form-group no-padder'>
+              <md-input-container class='pull-right no-margin'>
+                <md-select ng-model='ctrl.form_data.request_type_start_minutes'
+                           placeholder='mm'
+                           ng-change='ctrl.checkRequestTypeEndAndSubmitForm()'
+                           required>
+                  <md-option ng-value='minute'
+                             ng-repeat='minute in ctrl.getMinutesArray()'>{{ minute < 10 ? '0' + minute : minute }}</md-option>
+                </md-select>
+              </md-input-container>
+              <span class='pull-right m-t-sm'>:</span>
+              <md-input-container class='pull-right no-margin'>
+                <md-select ng-model='ctrl.form_data.request_type_start_hours'
+                           placeholder='HH'
+                           ng-change='ctrl.checkRequestTypeEndAndSubmitForm()'
+                           required>
+                  <md-option ng-value='hour'
+                             ng-repeat='hour in ctrl.getHoursArray()'>{{ hour < 10 ? '0' + hour : hour }}</md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <div class='md-form-group no-padder'>
+              <md-input-container class='pull-right no-margin'>
+                <md-select ng-model='ctrl.form_data.request_type_end_minutes'
+                           placeholder='mm'
+                           ng-change='ctrl.checkRequestTypeStartAndSubmitForm()'
+                           required>
+                  <md-option ng-value='minute'
+                             ng-repeat='minute in ctrl.getMinutesArray()'>{{ minute < 10 ? '0' + minute : minute }}</md-option>
+                </md-select>
+              </md-input-container>
+              <span class='pull-right m-t-sm'>:</span>
+              <md-input-container class='pull-right no-margin'>
+                <md-select ng-model='ctrl.form_data.request_type_end_hours'
+                           placeholder='HH'
+                           ng-change='ctrl.checkRequestTypeStartAndSubmitForm()'
+                           required>
+                  <md-option ng-value='hour'
+                             ng-repeat='hour in ctrl.getHoursArray()'>{{ hour < 10 ? '0' + hour : hour }}</md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+          </div>
+          <div class='pull-right m-r-sm'>
+            <div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.enable_request_type'
+                         ng-change='ctrl.updateRequestTypePeriod()'></md-switch>
+            </div>
+          </div>
+        </div>
+
+  	  	<div class='md-list-item clear'>
+  	  		<div class='pull-left'>
+  		  		<h3 class='no-margin text-md' translate='settings.general.start_with'></h3>
+  		  		<small class='text-muted' translate='settings.general.start_with_description'></small>
+  	  		</div>
+  	  		<div class='pull-right'>
+  	  			<div class='md-form-group no-padder'>
+              <md-radio-group ng-model='ctrl.form_data.show_timetable_first'
+              								ng-change='ctrl.submitForm()'>
+                <md-radio-button value='0' class='inline md-success'>
+                  {{ 'calend' | translate }}
+                </md-radio-button>
+                <md-radio-button value='1' class='inline md-success m-r-none'>
+                  {{ 'timeschedule' | translate }}
+                </md-radio-button>
+              </md-radio-group>
+            </div>
+  	  		</div>
+  	  	</div>
+  	  	<div class='md-list-item clear'>
+  	  		<div class='pull-left'>
+  		  		<h3 class='no-margin text-md' translate='settings.general.add_guest_info'></h3>
+  		  		<small class='text-muted' translate='settings.general.add_guest_info_description'></small>
+  	  		</div>
+  	  		<div class='pull-right m-r-n-xs'>
+            <div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.show_customer_info_popup'
+              					 ng-change='ctrl.submitForm()'></md-switch>
+            </div>
+  	  		</div>
+  	  	</div>
+  	  	<div class='md-list-item clear'>
+  	  		<div class='pull-left'>
+  		  		<h3 class='no-margin text-md' translate='settings.general.reserv_via_twitter'></h3>
+  		  		<small class='text-muted' translate='settings.general.reserv_via_twitter_description'></small>
+  	  		</div>
+  	  		<div class='pull-right m-r-n-xs'>
+            <div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.allow_twitter_login'
+              					 ng-change='ctrl.submitForm()'></md-switch>
+            </div>
+  	  		</div>
+  	  	</div>
+  	  	<div class='md-list-item clear'>
+  	  		<div class='pull-left'>
+  		  		<h3 class='no-margin text-md' translate='settings.general.reserv_via_fb'></h3>
+  		  		<small class='text-muted' translate='settings.general.reserv_via_fb_description'></small>
+  	  		</div>
+  	  		<div class='pull-right m-r-n-xs'>
+            <div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.allow_facebook_login'
+              					 ng-change='ctrl.submitForm()'></md-switch>
+            </div>
+  	  		</div>
+  	  	</div>
+  	  	<div class='md-list-item clear'>
+  	  		<div class='pull-left'>
+  		  		<h3 class='no-margin text-md' translate='settings.general.product_limits'></h3>
+  		  		<small class='text-muted' translate='settings.general.product_limits_description'></small>
+  	  		</div>
+  	  		<div class='pull-right m-r-n-xs'>
+            <div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.enable_product_limits'
+              					 ng-change='ctrl.submitForm()'></md-switch>
+            </div>
+  	  		</div>
+  	  	</div>
+        <div class='md-list-item clear'>
+          <div class='pull-left'>
+            <h3 class='no-margin text-md' translate='settings.general.autocomplete_guests'></h3>
+          </div>
+          <div class='pull-right m-r-n-xs'>
+            <div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.suggest_customer_name'
+                         ng-change='ctrl.submitForm()'></md-switch>
+            </div>
+          </div>
+        </div>
+        <div class='md-list-item clear'>
+          <div class='pull-left'>
+            <h3 class='no-margin text-md' translate='settings.general.assist_you_api'></h3>
+            <small class='text-muted' translate='settings.general.assist_you_api_description'></small>
+          </div>
+          <div class='pull-right'>
+            <div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.assist_you_api'
+                         ng-disabled='!ctrl.emails_settings.twilio_sid || ctrl.emails_settings.twilio_status != "active"'
+                         ng-change='ctrl.submitForm()'></md-switch>
+            </div>
+          </div>
+        </div>
+        <div class='md-list-item clear'>
+          <div class='pull-left'>
+            <h3 class='no-margin text-md' translate='settings.general.booking_api'></h3>
+            <small class='text-muted' translate='settings.general.booking_api_description'></small>
+          </div>
+          <div class='pull-right'>
+            <div class='md-form-group no-padder'>
+              <md-switch ng-model='ctrl.form_data.booking_api'
+                         ng-change='ctrl.submitForm()'></md-switch>
+            </div>
+          </div>
+        </div>
+        <div class='md-list-item clear'>
+          <div class='pull-left'>
+            <h3 class='no-margin text-md' translate='settings.general.uuid'></h3>
+          </div>
+          <div class='pull-right col-sm-6'>
+            <div class='form-group no-margin'>
+              <div class='no-padder'>
+                <input type='text' class='form-control' ng-model='ctrl.form_data.uuid' readonly />
+              </div>
+            </div>
+          </div>
+        </div>
+  	  </div>
+    </form>
+  </div>
+
+
+  <div class='panel' ng-if='!ctrl.is_loaded'>
+    <div class='panel-heading' translate='settings.general.title'></div>
+    <md-list class='no-padder'>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+    </md-list>
+  </div>
+</div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+  <settings-menu></settings-menu>
 </div>

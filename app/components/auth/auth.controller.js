@@ -1,11 +1,13 @@
-class AuthCtrl {
-  constructor(User, $state, $stateParams, $window, $rootScope) {
+export default class Controller {
+  constructor(User, $state, $stateParams, $window, $rootScope, $timeout, $http) {
     'ngInject';
 
     this.User = User;
     this.$state = $state;
+    this.$http = $http;
     this.$stateParams = $stateParams;
     this.$window = $window;
+    this.$timeout = $timeout;
     this.$rootScope = $rootScope;
     this.authType = $state.current.name.replace('auth.', '');
   }
@@ -17,7 +19,11 @@ class AuthCtrl {
     this.User.auth(path, this.formData).then(
       () => {
         this.$rootScope.show_spinner = false;
-        this.$state.go('app.dashboard');
+        this.User.verifyAuth(true).then((authValid) => {
+          if (authValid === true) {
+            this.$state.go('app.dashboard');
+          }
+        });
       },
       (error) => {
         this.isSubmitting = false;
@@ -56,7 +62,11 @@ class AuthCtrl {
       this.sendResetPasswordForm();
     } else if (this.$state.current.name === 'auth_admin.login_via_admin') {
       this.User.authViaAdmin(this.$stateParams.token);
-      this.$state.go('app.dashboard');
+      this.User.verifyAuth(true).then((authValid) => {
+        if (authValid === true) {
+          this.$state.go('app.dashboard');
+        }
+      });
     } else {
       let path = '/authenticate_check';
 
@@ -70,5 +80,3 @@ class AuthCtrl {
     }
   }
 }
-
-export default AuthCtrl;

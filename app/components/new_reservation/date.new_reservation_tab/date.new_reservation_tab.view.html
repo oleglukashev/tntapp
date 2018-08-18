@@ -1,0 +1,28 @@
+<md-tab md-on-select='ctrl.refreshDatepicker()'>
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-calendar'></i></div>
+    <div class='text-center l-h'>
+      <span ng-show='ctrl.current_part.date'>{{ ctrl.current_part.date | date:'d MMMM' }}</span>
+      <span class='uppercase' ng-hide='ctrl.current_part.date' translate='date'></span>
+    </div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='b-t' flex ng-if='ctrl.canShow()'>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4 translate='dashboard.pick_date'></h4>
+        </div>
+      </div>
+      <div class='wrapper'
+        layout='column'
+        layout-align='space-around center'>
+        <div
+          uib-datepicker
+          ng-change='ctrl.changeDatePostProcess()'
+          datepicker-options='ctrl.dateOptions'
+          ng-model='ctrl.current_part.date'
+          class='datepicker'></div>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>

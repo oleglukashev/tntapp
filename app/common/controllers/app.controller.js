@@ -1,5 +1,5 @@
 export default class AppCtrl {
-  constructor($cookieStore, $scope, $rootScope, AppConstants, Notification) {
+  constructor(User, $cookieStore, $scope, $rootScope, AppConstants, Notification) {
     'ngInject';
 
     this.Notification = Notification;

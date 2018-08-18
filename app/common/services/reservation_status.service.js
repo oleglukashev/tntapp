@@ -78,7 +78,7 @@ export default class ReservationStatus {
     return this.AppConstants.reservationStatusClasses[status];
   }
 
-  getIconColor(part, reservation) {
+  getIconColor(icon) {
     const colors = {
       'mdi-star-outline': 'yellow-300',
       'mdi-checkbox-blank-circle-outline': 'orange-500',
@@ -88,6 +88,6 @@ export default class ReservationStatus {
       'mdi-clock': 'orange-500',
     };
 
-    return colors[this.getIcon(part, reservation)];
+    return colors[icon];
   }
 }

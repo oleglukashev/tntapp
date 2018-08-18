@@ -1,18 +1,17 @@
-<div class='col-xs-12 col-md-8'>
-  <div ng-show='tables_settings.is_loaded'>
-    <button ng-click='tables_settings.addZone()' md-ink-ripple class='panel-add-button md-btn md-fab m-b'>
+<div class='col-lg-8 col-md-8 col-sm-8'>
+  <div class='col-xs-12 col-md-8' ng-if='ctrl.tablesLoaded'>
+    <button ng-click='ctrl.addZone()' md-ink-ripple class='panel-add-button md-btn md-fab m-b'>
       <i class='mdi mdi-plus i-24'></i>
     </button>
 
-    <div class='settings_tables panel' ng-hide='tables_settings.zones.length'>
-      <div class='panel-heading'>
-        <span class='accordion-toggle' translate='settings.zones.new'></span>
-      </div>
-    </div>
-
-    <accordion class='settings_tables' close-others='true'>
-      <accordion-group ng-repeat='zone in tables_settings.zones' is-open='tables_settings.opened[$index]'>
-        <accordion-heading>
+    <uib-accordion
+      class='settings_tables'
+      close-others='true'>
+      <div
+        uib-accordion-group
+        ng-repeat='zone in ctrl.zones'
+        is-open='ctrl.opened[$index]'>
+        <uib-accordion-heading>
           <div class='clearfix'>
             <div class='pull-left'>
             {{ zone.name }}
@@ -22,22 +21,22 @@
               <i class='mdi mdi-dots-vertical i-20' ng-click='$mdMenu.open($event);'></i>
               <md-menu-content>
                 <md-menu-item>
-                  <md-button ng-click='tables_settings.editZone(zone)'>
+                  <md-button ng-click='ctrl.editZone(zone)'>
                     {{ 'settings.zones.edit' | translate }}
                   </md-button>
                 </md-menu-item>
                 <md-menu-item>
-                  <md-button ng-click='tables_settings.deleteZone($index)'>
+                  <md-button ng-click='ctrl.deleteZone($index)'>
                     {{ 'settings.zones.delete' | translate }}
                   </md-button>
                 </md-menu-item>
               </md-menu-content>
             </md-menu>
           </div>
-        </accordion-heading>
+        </uib-accordion-heading>
 
         <form name='tables_form'>
-          <table class='table no-margin' ng-show='tables_settings.is_loaded'>
+          <table class='table no-margin'>
             <col width='25%'>
             <col width='25%'>
             <col width='25%'>
@@ -49,30 +48,30 @@
               <th></th>
             </thead>
           </table>
-          <ul class='tables md-list no-padder no-margin' dnd-list='tables_settings.tables_by_zone[zone.id]'>
+          <ul class='tables md-list no-padder no-margin' dnd-list='ctrl.tables_by_zone[zone.id]'>
             <li class='table_item md-list-item clear'
-                ng-repeat="table in tables_settings.tables_by_zone[zone.id]"
+                ng-repeat="table in ctrl.tables_by_zone[zone.id]"
                 dnd-draggable="table"
-                dnd-moved="tables_settings.tables_by_zone[zone.id].splice($index, 1)"
+                dnd-moved="ctrl.tables_by_zone[zone.id].splice($index, 1)"
                 dnd-effect-allowed="move"
-                dnd-selected="tables_settings.selected = table"
-                dnd-dragend='tables_settings.updatePositions();'
-                ng-class="{'selected': tables_settings.selected === table}">
+                dnd-selected="ctrl.selected = table"
+                dnd-dragend='ctrl.updatePositions();'
+                ng-class="{'selected': ctrl.selected === table}">
               <div class='table_item_number pull-left m-t-sm'>
                 <md-input-container class='no-margin'>
                   <input type='text'
                          class='text-center w-40'
                          name='table_number_{{$index}}'
-                         ng-model='tables_settings.tables_by_zone[zone.id][$index].table_number'
-                         ng-blur='tables_settings.updateTable(zone.id, $index);'
+                         ng-model='ctrl.tables_by_zone[zone.id][$index].table_number'
+                         ng-blur='ctrl.updateTable(zone.id, $index);'
                          required />
 
-                  <div ng-messages='tables_form[tables_settings.getTableNumberNameByZoneAndIndex(zone.id, $index)].$error'>
+                  <div ng-messages='tables_form[ctrl.getTableNumberNameByZoneAndIndex(zone.id, $index)].$error'>
                     <div ng-message='required' translate='notifications.is_required'></div>
                   </div>
-                  <div ng-messages='tables_form[tables_settings.getTableNumberNameByZoneAndIndex(zone.id, $index)].$error'
-                       ng-show='tables_settings.errors[zone.id][$index].table_number'>
-                    <div ng-repeat='error in tables_settings.errors[zone.id][$index].table_number.errors'>
+                  <div ng-messages='tables_form[ctrl.getTableNumberNameByZoneAndIndex(zone.id, $index)].$error'
+                       ng-show='ctrl.errors[zone.id][$index].table_number'>
+                    <div ng-repeat='error in ctrl.errors[zone.id][$index].table_number.errors'>
                       {{ error }}
                     </div>
                   </div>
@@ -82,8 +81,8 @@
                 <md-input-container class='no-margin'>
                   <input type='number'
                          class='text-center w-40'
-                         ng-model='tables_settings.tables_by_zone[zone.id][$index].number_of_persons'
-                         ng-change='tables_settings.updateTable(zone.id, $index)'
+                         ng-model='ctrl.tables_by_zone[zone.id][$index].number_of_persons'
+                         ng-change='ctrl.updateTable(zone.id, $index)'
                          required
                          ng-maxlength='3'
                          minlength='1'
@@ -94,11 +93,11 @@
                 <md-input-container class='no-margin p-t-none'>
                   <md-select multiple
                              class='pull-left'
-                             md-on-close='tables_settings.updateTable(zone.id, $index)'
-                             ng-model='tables_settings.tables_by_zone[zone.id][$index].table_group_ids'>
+                             md-on-close='ctrl.updateTable(zone.id, $index)'
+                             ng-model='ctrl.tables_by_zone[zone.id][$index].table_group_ids'>
                     <md-optgroup label="{{ 'settings.table_groups.title' | translate }}">
                       <md-option ng-value='item.id'
-                                 ng-repeat='item in tables_settings.tableGroups'>
+                                 ng-repeat='item in ctrl.tableGroups'>
                         <i class='mdi mdi-checkbox-blank-circle i-20'
                            style='color: {{ item.color }};'></i>
                       </md-option>
@@ -115,7 +114,7 @@
                   </button>
                   <md-menu-content>
                     <md-menu-item>
-                      <md-button ng-click='tables_settings.deleteTable(zone.id, $index)'>
+                      <md-button ng-click='ctrl.deleteTable(zone.id, $index)'>
                         {{ 'settings.tables.delete' | translate }}
                       </md-button>
                     </md-menu-item>
@@ -129,78 +128,143 @@
         <div class='wrapper b-t'>
           <button md-ink-ripple
                   class='md-btn md-flat btn-fw text-success'
-                  ng-click='tables_settings.addTable(zone.id)'>
+                  ng-click='ctrl.addTable(zone.id)'>
             <i class='mdi mdi-plus-circle-outline'></i>
             <translate class='uppercase'>settings.tables.add</translate>
           </button>
         </div>
-      </accordion-group>
-    </accordion>
+      </div>
+    </uib-accordion>
   </div>
-</div>
-<div class='col-xs-12 col-md-4'>
-  <button ng-click='tables_settings.addTableGroup()'
-          class='panel-add-button md-btn md-fab m-b'
-          md-ink-ripple >
-    <md-tooltip>{{ 'settings.table_groups.new' | translate }}?</md-tooltip>
-    <i class='mdi mdi-plus i-24'></i>
-  </button>
 
-  <div class='panel'>
-    <div class='panel-heading' translate='settings.table_groups.title'></div>
-    <div class='panel-body no-padder'>
-      <table class='table no-margin'>
-        <tbody ng-if='tables_settings.tableGroups.length > 0'>
-          <tr ng-repeat='tableGroup in tables_settings.tableGroups'>
-            <td>
-              <div>
-                <span class='text-muted'>
-                  <translate>settings.table_groups.color</translate>:
-                </span>
-                <i class='mdi mdi-checkbox-blank-circle i-20'
-                  style='color: {{ tableGroup.color }};'></i>
-              </div>
-              <hr class='no-margin' />
-              <div>
-                <span class='text-muted'>
-                  <translate>min</translate> / <translate>max</translate>:
-                </span>
-                {{ tableGroup.min }} / {{ tableGroup.max }}</div>
-              <hr class='no-margin' />
-              <div>
-                <span class='text-muted'>
-                  <translate>tables</translate>:
-                </span>
-                {{ tables_settings.getTableNumbersByTableGroup(tableGroup).join(', ') }}</div>
-            </td>
-            <td class='text-right'>
-              <md-menu>
-                <button class='md-icon-button md-button'
-                  ng-click='$mdMenu.open($event)'
-                  type='button'
-                  md-ink-ripple>
-                  <i class='mdi mdi-dots-vertical i-24'></i>
-                </button>
-                <md-menu-content>
-                  <md-menu-item>
-                    <md-button ng-click='tables_settings.editTableGroup($index)'>
-                      {{ 'settings.table_groups.edit' | translate }}
-                    </md-button>
-                  </md-menu-item>
-                  <md-menu-item>
-                    <md-button ng-click='tables_settings.deleteTableGroup($index)'>
-                      {{ 'settings.table_groups.delete' | translate }}
-                    </md-button>
-                  </md-menu-item>
-                </md-menu-content>
-              </md-menu>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div ng-if='tables_settings.tableGroups.length === 0'
-         class='md-padding'
-         translate='none'></div>
+  <div class='col-xs-12 col-md-8' ng-if='!ctrl.tablesLoaded'>
+    <button md-ink-ripple class='panel-add-button md-btn md-fab m-b'>
+      <i class='mdi mdi-plus i-24'></i>
+    </button>
+    <div class='panel'>
+      <div class='panel-heading'>&nbsp;</div>
+      <md-list class='no-padder'>
+        <md-list-item class='md-no-proxy'>
+          <fix-settings-item></fix-settings-item>
+        </md-list-item>
+        <md-list-item class='md-no-proxy'>
+          <fix-settings-item></fix-settings-item>
+        </md-list-item>
+        <md-list-item class='md-no-proxy'>
+          <fix-settings-item></fix-settings-item>
+        </md-list-item>
+        <md-list-item class='md-no-proxy'>
+          <fix-settings-item></fix-settings-item>
+        </md-list-item>
+        <md-list-item class='md-no-proxy'>
+          <fix-settings-item></fix-settings-item>
+        </md-list-item>
+        <md-list-item class='md-no-proxy'>
+          <fix-settings-item></fix-settings-item>
+        </md-list-item>
+      </md-list>
     </div>
   </div>
+
+  <div class='col-xs-12 col-md-4' ng-if='ctrl.groupsLoaded'>
+    <button ng-click='ctrl.addTableGroup()'
+            class='panel-add-button md-btn md-fab m-b'
+            md-ink-ripple >
+      <md-tooltip>{{ 'settings.table_groups.new' | translate }}?</md-tooltip>
+      <i class='mdi mdi-plus i-24'></i>
+    </button>
+
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.table_groups.title'></div>
+      <div class='panel-body no-padder'>
+        <table class='table no-margin'>
+          <tbody ng-if='ctrl.tableGroups.length > 0'>
+            <tr ng-repeat='tableGroup in ctrl.tableGroups'>
+              <td>
+                <div>
+                  <span class='text-muted'>
+                    <translate>settings.table_groups.color</translate>:
+                  </span>
+                  <i class='mdi mdi-checkbox-blank-circle i-20'
+                    style='color: {{ tableGroup.color }};'></i>
+                </div>
+                <hr class='no-margin' />
+                <div>
+                  <span class='text-muted'>
+                    <translate>min</translate> / <translate>max</translate>:
+                  </span>
+                  {{ tableGroup.min }} / {{ tableGroup.max }}</div>
+                <hr class='no-margin' />
+                <div>
+                  <span class='text-muted'>
+                    <translate>tables</translate>:
+                  </span>
+                  {{ ctrl.getTableNumbersByTableGroup(tableGroup).join(', ') }}</div>
+              </td>
+              <td class='text-right'>
+                <md-menu>
+                  <button class='md-icon-button md-button'
+                    ng-click='$mdMenu.open($event)'
+                    type='button'
+                    md-ink-ripple>
+                    <i class='mdi mdi-dots-vertical i-24'></i>
+                  </button>
+                  <md-menu-content>
+                    <md-menu-item>
+                      <md-button ng-click='ctrl.editTableGroup($index)'>
+                        {{ 'settings.table_groups.edit' | translate }}
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                      <md-button ng-click='ctrl.deleteTableGroup($index)'>
+                        {{ 'settings.table_groups.delete' | translate }}
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div ng-if='ctrl.tableGroups.length === 0'
+           class='md-padding'
+           translate='none'></div>
+      </div>
+    </div>
+  </div>
+
+  <div class='col-xs-12 col-md-4' ng-if='!ctrl.groupsLoaded'>
+    <button md-ink-ripple class='panel-add-button md-btn md-fab m-b'>
+      <i class='mdi mdi-plus i-24'></i>
+    </button>
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.table_groups.title'></div>
+      <md-list class='no-padder'>
+        <md-list-item class='md-no-proxy'>
+          <div class='block w-full'>
+            <div class='fix-text grey-300 m-t-sm m-b-sm'>&nbsp;</div>
+            <div class='fix-text grey-300 m-b-sm'>&nbsp;</div>
+            <div class='fix-text grey-300 m-b-sm'>&nbsp;</div>
+          </div>
+        </md-list-item>
+        <md-list-item class='md-no-proxy'>
+          <div class='block w-full'>
+            <div class='fix-text grey-300 m-t-sm m-b-sm'>&nbsp;</div>
+            <div class='fix-text grey-300 m-b-sm'>&nbsp;</div>
+            <div class='fix-text grey-300 m-b-sm'>&nbsp;</div>
+          </div>
+        </md-list-item>
+        <md-list-item class='md-no-proxy'>
+          <div class='block w-full'>
+            <div class='fix-text grey-300 m-t-sm m-b-sm'>&nbsp;</div>
+            <div class='fix-text grey-300 m-b-sm'>&nbsp;</div>
+            <div class='fix-text grey-300 m-b-sm'>&nbsp;</div>
+          </div>
+        </md-list-item>
+      </md-list>
+    </div>
+  </div>
+</div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+  <settings-menu></settings-menu>
 </div>

@@ -1,8 +1,8 @@
 import angular from 'angular';
 
-class SearchCtrl {
-  constructor(Table, User, Zone, ReservationItemFactory, Customer, Product, ReservationPart,
-    ReservationStatus, PageFilterFactory, ReservationStatusMenu, filterFilter, moment,
+export default class Controller {
+  constructor(Table, User, Zone, ReservationItem, Customer, Product, ReservationPart,
+    ReservationStatus, PageFilterFactory, filterFilter, moment,
     $state, $rootScope, $stateParams, $scope) {
     'ngInject';
 
@@ -17,6 +17,7 @@ class SearchCtrl {
     this.$stateParams = $stateParams;
     this.Customer = Customer;
     this.ReservationPart = ReservationPart;
+    this.ReservationItem = ReservationItem;
     this.ReservationStatus = ReservationStatus;
     this.tables = {};
     this.zones = {};
@@ -36,8 +37,6 @@ class SearchCtrl {
       this.changeReservatinItemStatus(data.reservation.id, data.status);
     });
 
-    ReservationItemFactory(this);
-    ReservationStatusMenu(this);
     PageFilterFactory(this);
 
     this.setData();
@@ -46,7 +45,7 @@ class SearchCtrl {
   }
 
   changeStatus(reservation, status) {
-    this.ReservationStatus
+    return this.ReservationStatus
       .changeStatus(this.current_company_id, reservation, status).then(() => {
         this.changeReservatinItemStatus(reservation.id, status);
       });
@@ -68,7 +67,8 @@ class SearchCtrl {
           this.data[date].splice(i, 1);
 
           if (dataItem.reservation.status !== 'cancelled' || this.cancelFilterIsOn()) {
-            this.data[date].splice(i, 0, this.rowPart(dataItem.part, reservation));
+            const newItem = this.ReservationItem.prepareData(dataItem.part, reservation, Object.values(this.zones));
+            this.data[date].splice(i, 0, newItem);
           }
         }
       }
@@ -119,7 +119,8 @@ class SearchCtrl {
     reservations.forEach((reservation) => {
       reservation.reservation_parts.forEach((part) => {
         if (this.moment(part.date_time).format('YYYY-MM-DD') === dateTimeString) {
-          result.push(this.rowPart(part, reservation));
+          const item = this.ReservationItem.prepareData(part, reservation, Object.values(this.zones));
+          result.push(item);
         }
       });
     });
@@ -132,24 +133,16 @@ class SearchCtrl {
       .then(
         (zones) => {
           this.zones = {};
+          this.tables = {};
           zones.forEach((zone) => {
             this.zones[zone.id] = zone;
+            zone.tables.forEach((table) => {
+              if (!this.tables[table.id]) {
+                this.tables[table.id] = table;
+              }
+            });
           });
-          this.loadTables();
         }, () => {});
-  }
-
-  loadTables() {
-    this.tables = {};
-
-    this.Table.getAll(this.current_company_id).then(
-      (tables) => {
-        tables.forEach((table) => {
-          this.tables[table.id] = table;
-        });
-
-        this.setData();
-      }, () => {});
   }
 
   loadProducts() {
@@ -168,5 +161,3 @@ class SearchCtrl {
       });
   }
 }
-
-export default SearchCtrl;

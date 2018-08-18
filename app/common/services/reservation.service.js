@@ -16,7 +16,7 @@ export default class Reservation {
       customer: {
         type: 1, date: 2, number_of_persons: 3, product: 4, time: 5, person: 6,
       },
-      backend: {
+      dashboard: {
         date: 1, number_of_persons: 2, product: 3, time: 4, zone: 5, group: 6, person: 7,
       },
       edit: {
@@ -134,18 +134,6 @@ export default class Reservation {
       method: 'PATCH',
       data,
     }).then(result => result, error => error);
-  }
-
-  removePdf(companyId, reservationId, skipJwtAuth) {
-    if (!companyId) {
-      return this.$q.defer().promise;
-    }
-
-    return this.$http({
-      url: `${API_URL}/company/${companyId}/reservation/${reservationId}/remove_pdf`,
-      skipAuthorization: skipJwtAuth,
-      method: 'POST',
-    }).then(result => result.data);
   }
 
   createWalkIn(companyId, data, skipJwtAuth) {

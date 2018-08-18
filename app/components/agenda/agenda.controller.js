@@ -1,11 +1,8 @@
-import walkInTemplate from './walk_in/agenda_walk_in.view.html';
-
-
-export default class AgendaCtrl {
-  constructor(User, Settings, Zone, Table, TimeRange, Product, ReservationItemFactory,
-    PageFilterFactory, PageFilterTimeRange, ReservationStatusMenu, Reservation,
+export default class Controller {
+  constructor(User, Settings, Zone, Table, TimeRange, Product,
+    PageFilterFactory, PageFilterTimeRange, Reservation, ReservationItem,
     ReservationStatus, ReservationPart, filterFilter, AppConstants, $scope, $rootScope,
-    $modal, moment, $timeout) {
+    $uibModal, moment, $timeout, $q) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -17,11 +14,12 @@ export default class AgendaCtrl {
     this.TimeRange = TimeRange;
     this.Reservation = Reservation;
     this.ReservationPart = ReservationPart;
+    this.ReservationItem = ReservationItem;
     this.ReservationStatus = ReservationStatus;
     this.PageFilterTimeRange = PageFilterTimeRange;
     this.filterFilter = filterFilter;
     this.moment = moment;
-    this.$modal = $modal;
+    this.$modal = $uibModal;
     this.$timeout = $timeout;
     this.$scope = $scope;
     this.$rootScope = $rootScope;
@@ -82,19 +80,22 @@ export default class AgendaCtrl {
       this.changeReservatinItemStatus(data.reservation.id, data.status);
     });
 
-    ReservationItemFactory(this);
     PageFilterFactory(this);
-    ReservationStatusMenu(this);
-
-    this.loadGeneralSettings();
-    this.loadZonesAndTables();
 
     this.is_loaded = false;
-    this.$rootScope.show_spinner = true;
+    this.time_ranges_is_loaded = false;
+
+    $q.all([
+      this.Settings.getGeneralSettings(this.current_company_id),
+      this.Zone.getAll(this.current_company_id)
+    ]).then((result) => {
+      this.initGeneralSettings(result[0]);
+      this.initZones(result[1]);
+    })
   }
 
   changeStatus(reservation, status) {
-    this.ReservationStatus
+    return this.ReservationStatus
       .changeStatus(this.current_company_id, reservation, status).then(() => {
         this.changeReservatinItemStatus(reservation.id, status);
       });
@@ -116,7 +117,8 @@ export default class AgendaCtrl {
         this.data.splice(i, 1);
 
         if (dataItem.reservation.status !== 'cancelled' || this.cancelFilterIsOn()) {
-          this.data.splice(i, 0, this.rowPart(dataItem.part, reservation));
+          const newItem = this.ReservationItem.prepareData(dataItem.part, reservation, Object.values(this.zones));
+          this.data.splice(i, 0, newItem);
         }
       }
     }
@@ -125,9 +127,9 @@ export default class AgendaCtrl {
   }
 
   changeGraphsItemStatus(dataItem, reservationId) {
-    if (!dataItem.source_table_ids) return false;
+    if (!dataItem.table_ids) return false;
 
-    dataItem.source_table_ids.forEach((tableId) => {
+    dataItem.table_ids.forEach((tableId) => {
       for (let i = this.graph_data[tableId].length - 1; i >= 0; i -= 1) {
         const graphItem = this.graph_data[tableId][i];
         if (graphItem.reservation.id === reservationId) {
@@ -305,14 +307,24 @@ export default class AgendaCtrl {
   }
 
   filterDataForGraph(zoneId, tableId) {
-    return this.data.filter(item => item.source_table_ids.includes(tableId));
+    return this.data.filter(item => item.table_ids.includes(tableId));
   }
 
   openReservation() {
     const modalInstance = this.$modal.open({
-      templateUrl: 'dashboard_reservations.new.view.html',
-      controller: 'DashboardReservationsReservationCtrl as dash_reserv',
+      component: 'newDashboardReservation',
       size: 'md',
+      resolve: {
+        load: ['$ocLazyLoad', ($ocLazyLoad) => {
+          return import(/* webpackChunkName: "new.dashboard.reservation.module" */ "../new.dashboard.reservation")
+            .then(mod => $ocLazyLoad.load({
+              name: "newDashboardReservation"
+            }))
+            .catch(err => {
+              throw new Error("Ooops, something went wrong, " + err);
+            });
+        }],
+      },
     });
 
     modalInstance.result.then(() => {
@@ -324,8 +336,7 @@ export default class AgendaCtrl {
 
   openWalkIn(tableId, tableNumber, hour, quarter) {
     const modalInstance = this.$modal.open({
-      template: walkInTemplate,
-      controller: 'AgendaWalkInCtrl as reserv',
+      component: 'agendaWalkIn',
       size: 'md',
       resolve: {
         datetime: () => {
@@ -335,6 +346,15 @@ export default class AgendaCtrl {
         },
         tableNumber: () => tableNumber,
         tableId: () => tableId,
+        load: ['$ocLazyLoad', ($ocLazyLoad) => {
+          return import(/* webpackChunkName: "new.dashboard.reservation.module" */ "./walk_in")
+            .then(mod => $ocLazyLoad.load({
+              name: "agendaWalkIn"
+            }))
+            .catch(err => {
+              throw new Error("Ooops, something went wrong, " + err);
+            });
+        }],
       },
     });
 
@@ -422,7 +442,7 @@ export default class AgendaCtrl {
     if (!this.zones[zoneId]) return null;
 
     return {
-      height: (this.zones[zoneId].table_ids.length * this.top_margin) + this.reservation_height,
+      height: (this.zones[zoneId].tables.length * this.top_margin) + this.reservation_height,
       left: this.now_left_px + this.hour_width,
     };
   }
@@ -437,13 +457,14 @@ export default class AgendaCtrl {
     this.data_without_tables = [];
     const reservations = this.applyFilterToReservations();
 
+    let dataResult = [];
     reservations.forEach((reservation) => {
       reservation.reservation_parts.forEach((part) => {
         if ((this.moment(part.date_time).format('YYYY-MM-DD') ===
             this.moment(this.date_filter).format('YYYY-MM-DD'))) {
           // list
-          const rowItem = this.rowPart(part, reservation);
-          this.data.push(rowItem);
+          const rowItem = this.ReservationItem.prepareData(part, reservation, Object.values(this.zones));
+          dataResult.push(rowItem);
 
           // calendar
           if (part.table_ids.length) {
@@ -461,7 +482,7 @@ export default class AgendaCtrl {
       });
     });
 
-    this.data = this.applySort(this.data);
+    this.data = this.applySort(dataResult);
     this.calculateTotalsForPrint();
 
     this.$rootScope.$broadcast('agenda.load_reservations_data_and_date_filter',
@@ -475,7 +496,7 @@ export default class AgendaCtrl {
     }
 
     Object.keys(this.zones).forEach((zoneId) => {
-      const indexOf = this.zones[zoneId].table_ids.indexOf(tableId);
+      const indexOf = this.zones[zoneId].tables.map(table => table.id).indexOf(tableId);
       if (indexOf >= 0) {
         tableIndex = indexOf;
       }
@@ -497,7 +518,7 @@ export default class AgendaCtrl {
   }
 
   calculateTotalsForPrint() {
-    const dataReservationIds = this.data.map(dataItem => dataItem.reservation_id);
+    const dataReservationIds = this.data.map(dataItem => dataItem.reservation.id);
     this.totalNumberOfReservations = dataReservationIds
       .filter((value, index) => dataReservationIds.indexOf(value) === index).length;
 
@@ -537,24 +558,6 @@ export default class AgendaCtrl {
     }
   }
 
-  loadTables() {
-    this.Table.getAll(this.current_company_id)
-      .then(
-        (tables) => {
-          this.is_loaded = true;
-          this.$rootScope.show_spinner = false;
-
-          this.tables = {};
-          tables.forEach((table) => {
-            this.tables[table.id] = table;
-          });
-          this.loadReservations();
-          this.iniAndScrolltToNowLine();
-          this.loadProducts();
-          this.loadTimeRanges();
-        });
-  }
-
   loadTimeRanges() {
     const date = this.moment(this.date_filter).format('YYYY-MM-DD');
     this.time_ranges = [];
@@ -584,12 +587,10 @@ export default class AgendaCtrl {
     const date = this.moment(this.date_filter).format('YYYY-MM-DD');
     this.Reservation.getAll(this.current_company_id, date)
       .then((result) => {
+        this.is_loaded = true;
         this.$rootScope.show_spinner = false;
         this.reservations = result;
-
-        if (this.tables) {
-          this.setData();
-        }
+        this.setData();
       });
   }
 
@@ -609,25 +610,29 @@ export default class AgendaCtrl {
       });
   }
 
-  loadZonesAndTables() {
-    this.Zone.getAll(this.current_company_id)
-      .then(
-        (zones) => {
-          this.zones = {};
-          zones.forEach((zone) => {
-            this.zones[zone.id] = zone;
-          });
-          this.loadTables();
-        }, () => {});
+  initZones(zones) {
+    this.zones = {};
+    this.tables = {};
+
+    zones.forEach((zone) => {
+      this.zones[zone.id] = zone;
+      zone.tables.forEach((table) => {
+        if (!this.tables[table.id]) {
+          this.tables[table.id] = table;
+        }
+      });
+    });
+
+    this.loadReservations();
+    this.iniAndScrolltToNowLine();
+    this.loadProducts();
+    this.loadTimeRanges();
   }
 
-  loadGeneralSettings() {
-    this.Settings.getGeneralSettings(this.current_company_id)
-      .then((generalSettings) => {
-        this.general_settings = generalSettings;
-        this.reservation_block_width = (this.hour_width / 60) * generalSettings.bezettings_minuten;
-        const view = (generalSettings.show_timetable_first ? 'list' : 'calendar');
-        this.changeView(view);
-      });
+  initGeneralSettings(generalSettings) {
+    this.general_settings = generalSettings;
+    this.reservation_block_width = (this.hour_width / 60) * generalSettings.bezettings_minuten;
+    const view = (generalSettings.show_timetable_first ? 'list' : 'calendar');
+    this.changeView(view);
   }
 }

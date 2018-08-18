@@ -19,7 +19,7 @@ export default class Confirm {
     });
   }
 
-  onCloseModal($modalInstance) {
+  onCloseModal(dismiss) {
     const confirm = this.$mdDialog.confirm()
       .title(this.title_text)
       .textContent(this.confirm_text)
@@ -27,7 +27,7 @@ export default class Confirm {
       .cancel(this.back_text);
 
     this.$mdDialog.show(confirm).then(() => {
-      $modalInstance.close();
+      dismiss({$value: 'cancel'});
     }, () => {});
   }
 }

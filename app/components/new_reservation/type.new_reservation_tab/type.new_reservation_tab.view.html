@@ -1,0 +1,38 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-format-list-bulleted-type'></i></div>
+    <div class='text-center l-h'>
+      <span ng-show='ctrl.reservation.social'>{{ ctrl.reservation.social }}</span>
+      <span ng-hide='ctrl.reservation.social' class='uppercase' translate='type'></span>
+    </div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='b-t' flex>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4 translate='reservation.reserve_title'
+              translate-values='{ name: ctrl.socials.restaurant_name }'></h4>
+        </div>
+      </div>
+      <div class='md-list text-center'>
+        <a ng-if='ctrl.socials.allow_facebook_login'
+           class='md-list-item text-success text-md'
+           ng-click='ctrl.authenticate("facebook");'>
+          <i class='mdi mdi-facebook m-r-lg' />
+          <translate class='uppercase'>reserv</translate>  <translate class='uppercase'>via</translate> FACEBOOK
+        </a>
+        <a ng-if='ctrl.socials.allow_twitter_login'
+           class='md-list-item text-success text-md'
+           ng-click='ctrl.authenticate("twitter");'>
+          <i class='mdi mdi-twitter m-r-lg' />
+          <translate class='uppercase'>reserv</translate>  <translate class='uppercase'>via</translate> TWITTER
+        </a>
+        <a class='md-list-item text-success text-md'
+           ng-click='ctrl.authenticate("email");'>
+          <i class='mdi mdi-email m-r-lg' />
+          <translate class='uppercase'>reserv</translate>  <translate class='uppercase'>via</translate> E-MAIL
+        </a>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>

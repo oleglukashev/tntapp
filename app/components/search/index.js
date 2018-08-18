@@ -1,21 +1,33 @@
 import angular from 'angular';
-import uirouter from 'angular-ui-router';
+import angularUiRouter from '@uirouter/angularjs';
+import modal from 'angular-ui-bootstrap/src/modal';
 
-import routing from './search.route';
 import decorator from './search.decorator';
 import controller from './search.controller';
-import reservationItemFactory from '../../common/factories/reservation.item.factory';
+import view from './search.results.view.html';
+
 import pageFilterFactory from '../../shared/page_filter/page_filter.factory';
 import reservationStatusMenuFactory from '../../shared/reservation_status_menu/reservation_status_menu.factory';
+import TableService from '../../common/services/table.service';
+import ZoneService from '../../common/services/zone.service';
+import ProductService from '../../common/services/product.service';
+import ReservationStatusService from '../../common/services/reservation_status.service';
+import ReservationItemService from '../reservation.item/reservation.item.service';
 
-export default angular.module('app.search', [uirouter])
-  .config(routing)
+import reservationItem from '../reservation.item';
+
+export default angular.module('search', [angularUiRouter, modal, reservationItem])
+  .component('search', {
+    controller,
+    controllerAs: 'ctrl',
+    template: view,
+  })
   .config(decorator)
-  .controller('SearchCtrl', controller)
-  .factory('ReservationItemFactory', reservationItemFactory,
-    ['AppConstants', 'ReservationStatus', '$mdSidenav', '$rootScope'])
-  .factory('ReservationStatusMenu', reservationStatusMenuFactory,
-    ['ReservationStatus', 'Customer', 'UserMenu', 'filterFilter', 'moment', '$modal'])
+  .service('Table', TableService)
+  .service('Zone', ZoneService)
+  .service('Product', ProductService)
+  .service('ReservationStatus', ReservationStatusService)
+  .service('ReservationItem', ReservationItemService)
   .factory('PageFilterFactory', pageFilterFactory,
-    ['AppConstants', 'Reservation', 'Customer', '$modal', '$filter', 'moment', 'filterFilter'])
+    ['AppConstants', 'Reservation', 'Customer', '$uibModal', '$filter', 'moment', 'filterFilter'])
   .name;

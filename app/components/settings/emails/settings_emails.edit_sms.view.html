@@ -1,9 +1,9 @@
 <section class='no-margin'>
   <md-toolbar>
     <div class='md-toolbar-tools'>
-      <h2 md-truncate flex>{{ 'settings.emails.sms_statuses.' + edit_sms.form_data.type | translate }}</h2>
+      <h2 md-truncate flex>{{ 'settings.emails.sms_statuses.' + ctrl.form_data.type | translate }}</h2>
       <md-button class='md-icon-button'
-                 ng-click='edit_sms.closeModal();'
+                 ng-click='ctrl.closeModal();'
                  md-no-ink>
         <i class='mdi mdi-close m-r-sm i-24'></i>
       </md-button>
@@ -12,18 +12,18 @@
   <md-content>
     <form class='md-content-submit'
           name='edit_sms_form'
-          ng-submit='edit_sms.submitForm(edit_sms_form.$valid)'>
+          ng-submit='ctrl.submitForm(edit_sms_form.$valid)'>
       <div class='wrapper'>
         <md-input-container class='md-block'>
           <label translate='content'></label>
           <textarea rows='10'
                     max-rows='12'
-                    ng-model='edit_sms.form_data.content'
+                    ng-model='ctrl.form_data.content'
                     md-maxlength='1500'></textarea>
         </md-input-container>
       </div>
       <button type='submit'
-              ng-class="{ 'disabled': !edit_sms_form.$valid || edit_sms.is_submitting }"
+              ng-class="{ 'disabled': !edit_sms_form.$valid || ctrl.is_submitting }"
               class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
               translate='save'>
       </button>

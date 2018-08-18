@@ -1,0 +1,51 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-clock'></i></div>
+    <div class='text-center l-h'>
+      <span ng-show='ctrl.current_part.time'>{{ ctrl.current_part.time }}</span>
+      <span ng-hide='ctrl.current_part.time' class='uppercase' translate='time'></span>
+    </div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='b-t' flex ng-if='ctrl.canShow()'>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4 translate='reservation.time_title'></h4>
+          <div ng-show='ctrl.disabledTimes().length'>
+            <i class="mdi mdi-checkbox-blank-circle i-16 red-color-200"></i>
+            –
+            <span ng-bind='ctrl.warnings.no_seats_available'></span>
+          </div>
+        </div>
+      </div>
+      <div class='wrapper red-300 layout-align-space-around-center layout-column'
+           ng-show='!ctrl.current_part.date || !ctrl.current_part.number_of_persons || !ctrl.current_part.product'>
+        <div class='w-xl'>
+          <div ng-repeat='item in ["date", "number_of_persons", "product"]'
+               ng-show='!ctrl.current_part[item]'>
+            {{ item.split('_').join(' ') }} {{ 'notifications.is_required' | translate }}
+          </div>
+        </div>
+      </div>
+      <div class='wrapper red-300 layout-align-space-around-center layout-column'
+           ng-show='!ctrl.openedTimeRangePeriod().length'>
+        <div class='w-xl' ng-bind='ctrl.warnings.product_not_available'></div>
+      </div>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-xl'>
+          <label ng-repeat='time_obj in ctrl.openedTimeRangePeriod()'
+                 ng-change='ctrl.changeTimePostProcess()'
+                 ng-class="{ 'btn-success': ctrl.current_part.time == time_obj.time,
+                             'red-300': ctrl.timeIsDisabled(time_obj),
+                             'btn-default text-success': !ctrl.timeIsDisabled(time_obj),
+                             'disabled': ctrl.type === 'customer' && ctrl.timeIsDisabled(time_obj) }"
+                 class='time_item btn btn-lg no-shadow'
+                 ng-model='ctrl.current_part.time'
+                 uib-uncheckable
+                 uib-btn-radio='time_obj.time'>{{ time_obj.time }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>

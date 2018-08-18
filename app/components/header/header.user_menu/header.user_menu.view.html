@@ -1,0 +1,69 @@
+<ul class='nav navbar-nav navbar-right'>
+  <li ng-click='ctrl.hideRightSidebar()'>
+    <div class='header-account-menu pull-right m-l-sm' uib-dropdown on-toggle='toggled(open)'>
+      <div class='clearfix m-r-sm' uib-dropdown-toggle>
+        <div class='header-account-menu__info pull-left m-l-sm'>
+          <p class='header-account-menu__name'>{{ ctrl.User.current.first_name }}</p>
+          <div class='header-account-menu__info'>
+            <p>{{ ctrl.User.current_company.name }}</p>
+          </div>
+        </div>
+        <b class='pull-right caret m-l-sm m-t'></b>
+      </div>
+
+      <!-- dropdown -->
+      <ul class='header-account-menu-box dropdown-menu' uib-dropdown-menu>
+        <li ng-repeat='company in ctrl.User.getCompanies()'>
+          <a href='javascript://' ng-click='ctrl.setDefaultCompany(company.id)'>
+            <span>{{ company.name }}</span>
+            <i ng-show='company.id === ctrl.User.getCompanyId()' class='mdi mdi-check pull-right'></i>
+          </a>
+        </li>
+
+        <li>
+          <a href='javascript://'
+             ng-click='ctrl.changeLang("en")'
+             ng-if='ctrl.$translate.proposedLanguage() === "nl"'>
+            <span class='lang en'></span>
+          </a>
+          <a href='#'
+             ng-click='ctrl.changeLang("nl")'
+             ng-if='ctrl.$translate.proposedLanguage() === "en"'>
+            <span class='lang nl'></span>
+          </a>
+        </li>
+
+        <li class='m-t-sm'>
+          <a href='javascript://'
+             ui-sref='app.general_settings'
+             ng-show='ctrl.userIsOwnerOrManager()'>
+            <span translate='right_menu.settings'></span>
+          </a>
+          <span ng-hide='ctrl.userIsOwnerOrManager()'
+                title='{{ "notifications.access_only" | translate }}'
+                translate='right_menu.settings'></span>
+        </li>
+        <li>
+          <a href='javascript://'
+             ui-sref='app.upgrade'
+             ng-show='ctrl.userIsOwnerOrManager()'>
+            <span translate='right_menu.upgrade'></span>
+          </a>
+          <span ng-hide='ctrl.userIsOwnerOrManager()'
+                title='{{ "notifications.access_only" | translate }}'
+                translate='right_menu.upgrade'></span>
+        </li>
+        <li>
+          <a href='https://thenextsoftware.slaask.help'
+             target='_blank'><span translate='help'></span></a>
+        </li>
+        <li>
+          <a href='javascript://' ng-click='ctrl.logout()'>
+            <span translate='right_menu.logout'></span>
+          </a>
+        </li>
+      </ul>
+      <!-- / dropdown -->
+    </div>
+  </li>
+</ul>

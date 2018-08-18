@@ -1,7 +1,12 @@
 import tableGroupFormTemplate from './settings_tables.table_group_form.view.html';
+import editZoneTablesSettingsController from './settings_tables.edit_zone.controller';
+import newZoneTablesSettingsController from './settings_tables.new_zone.controller';
+import zoneTablesSettingsView from './settings_tables.zone.view.html';
+import newTableGroupTablesSettingsController from './settings_tables.new_table_group.controller';
+import editTableGroupTablesSettingsController from './settings_tables.edit_table_group.controller';
 
-export default class SettingsTablesCtrl {
-  constructor(User, Zone, Table, TableGroup, filterFilter, $scope, $rootScope, $window, $modal) {
+export default class Controller {
+  constructor(User, Zone, Table, TableGroup, filterFilter, $scope, $rootScope, $window, $uibModal) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -10,24 +15,24 @@ export default class SettingsTablesCtrl {
     this.Zone = Zone;
     this.TableGroup = TableGroup;
     this.filterFilter = filterFilter;
-    this.$modal = $modal;
+    this.$modal = $uibModal;
     this.$rootScope = $rootScope;
     this.$window = $window;
-    this.is_loaded = false;
+    this.tablesLoaded = false;
+    this.groupsLoaded = false;
     this.tables_by_zone = {};
     this.errors = {};
     this.opened = [true];
 
-    this.loadZonesAndTables();
-    this.loadTableGroups();
-    this.$rootScope.show_spinner = true;
+    this.loadZones();
   }
 
   addZone() {
     const that = this;
     const modalInstance = this.$modal.open({
-      templateUrl: 'settings_tables.zone.view.html',
-      controller: 'SettingsTablesNewZoneCtrl as controller',
+      template: zoneTablesSettingsView,
+      controller: newZoneTablesSettingsController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         zones: () => that.zones,
@@ -40,7 +45,8 @@ export default class SettingsTablesCtrl {
   addTableGroup() {
     const modalInstance = this.$modal.open({
       template: tableGroupFormTemplate,
-      controller: 'SettingsTablesNewTableGroupCtrl as controller',
+      controller: newTableGroupTablesSettingsController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         tableGroups: () => this.tableGroups,
@@ -54,8 +60,9 @@ export default class SettingsTablesCtrl {
   editZone(zone) {
     const that = this;
     const modalInstance = this.$modal.open({
-      templateUrl: 'settings_tables.zone.view.html',
-      controller: 'SettingsTablesEditZoneCtrl as controller',
+      template: zoneTablesSettingsView,
+      controller: editZoneTablesSettingsController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         zones: () => that.zones,
@@ -69,7 +76,8 @@ export default class SettingsTablesCtrl {
   editTableGroup(index) {
     const modalInstance = this.$modal.open({
       template: tableGroupFormTemplate,
-      controller: 'SettingsTablesEditTableGroupCtrl as controller',
+      controller: editTableGroupTablesSettingsController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         tableGroups: () => this.tableGroups,
@@ -291,47 +299,31 @@ export default class SettingsTablesCtrl {
   loadTableGroups() {
     this.TableGroup.getAll(this.current_company_id).then((tableGroups) => {
       this.tableGroups = tableGroups;
+      this.groupsLoaded = true;
     })
   }
 
-  loadTables() {
-    this.Table.getAll(this.current_company_id)
-      .then(
-        (tables) => {
-          this.is_loaded = true;
-          this.$rootScope.show_spinner = false;
-          this.initTablesByZone(tables);
-        }, () => {
-          this.$rootScope.show_spinner = false;
-        });
-  }
-
-  loadZonesAndTables() {
+  loadZones() {
     this.Zone.getAll(this.current_company_id)
       .then(
         (result) => {
+          this.tablesLoaded = true;
           this.zones = result;
-          this.loadTables();
-        }, () => {});
+          this.tables_by_zone = {};
+          this.zones.forEach((zone) => {
+            this.initTablesByZone(zone.id, zone.tables);
+          });
+          this.loadTableGroups();
+        });
   }
 
-  initTablesByZone(tables) {
-    this.tables_by_zone = {};
-    tables.forEach((table) => {
-      let zoneId = table.zones[0];
-
+  initTablesByZone(zoneId, zoneTables) {
+    zoneTables.forEach((table) => {
       if (!this.tables_by_zone[zoneId]) {
         this.tables_by_zone[zoneId] = [];
       }
 
-      let index = 0;
-      this.tables_by_zone[zoneId].forEach((sortTable, sortIndex) => {
-        if (parseInt(sortTable.position) < parseInt(table.position)) {
-          index = sortIndex + 1;
-        }
-      });
-
-      this.tables_by_zone[zoneId].splice(index, 0, {
+      this.tables_by_zone[zoneId].push({
         id: table.id,
         table_number: table.table_number,
         number_of_persons: parseInt(table.number_of_persons),

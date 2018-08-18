@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-export default class SettingsLimitsCtrl {
+export default class Controller {
   constructor(User, Settings, AppConstants, moment, $window, $rootScope) {
     'ngInject';
 
@@ -20,34 +20,26 @@ export default class SettingsLimitsCtrl {
     this.limits = {};
 
     this.is_loaded = false;
-    this.$rootScope.show_spinner = true;
   }
 
   loadLimits() {
-    this.Settings
-      .getLimitsSettings(this.current_company_id).then(
-        (limits) => {
-          this.is_loaded = true;
-          this.$rootScope.show_spinner = false;
-          this.times = limits.times;
-          this.setLimits(limits.limits);
-        }, () => {
-          this.$rootScope.show_spinner = false;
-        });
+    this.Settings.getLimitsSettings(this.current_company_id).then((limits) => {
+      this.is_loaded = true;
+      this.times = limits.times;
+      this.setLimits(limits.limits);
+    });
   }
 
   loadGeneralSettings() {
-    this.Settings
-      .getGeneralSettings(this.current_company_id).then(
-        (generalSettings) => {
-          const result = generalSettings;
+    this.Settings.getGeneralSettings(this.current_company_id).then((generalSettings) => {
+      const result = generalSettings;
 
-          if (result.limit_type === 'Tafels') {
-            this.type = 'tables';
-          } else if (result.limit_type === 'Personen') {
-            this.type = 'persons';
-          }
-        });
+      if (result.limit_type === 'Tafels') {
+        this.type = 'tables';
+      } else if (result.limit_type === 'Personen') {
+        this.type = 'persons';
+      }
+    });
   }
 
   saveLimitByTimeAndDay(time, dayOfWeek) {
@@ -90,8 +82,7 @@ export default class SettingsLimitsCtrl {
   }
 
   saveLimit(data) {
-    this.Settings
-      .saveLimitsSettings(this.current_company_id, data).then(() => {});
+    this.Settings.saveLimitsSettings(this.current_company_id, data).then(() => {});
   }
 
   setLimit(time, dayOfWeek, limit) {

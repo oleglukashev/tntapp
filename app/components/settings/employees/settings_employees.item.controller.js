@@ -1,12 +1,12 @@
-export default class SettingsEmployeesItemCtrl {
-  constructor(User, Employee, item, items, $modalInstance, $rootScope) {
+export default class Controller {
+  constructor(User, Employee, item, items, $uibModalInstance, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.item = item;
     this.items = items;
     this.Employee = Employee;
-    this.$modalInstance = $modalInstance;
+    this.$modalInstance = $uibModalInstance;
     this.$rootScope = $rootScope;
   }
 

@@ -7,7 +7,7 @@
 
   <h2 class='text-center'
       translate='trial.expired_time'
-      translate-values='{ days: days }'></h2>
+      translate-values='{ days: payment.days }'></h2>
 
   <div class='w-xl'>
     <form name='passthrough'
@@ -21,7 +21,7 @@
 
       <button class='btn btn-lg btn-success btn-block rounded-md m-t-md m-b-md'
               ng-click='payment.submitForm(passthrough)'
-              type='submit'
+              type='button'
               translate='trial.verify_bank_account'
               md-no-ink></button>
     </form>

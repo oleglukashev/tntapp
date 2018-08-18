@@ -1,5 +1,8 @@
+import { buildURL } from "../utils/index";
+
 export default class User {
-  constructor(JWT, Upload, Settings, $http, $state, $q, $location, $window, $rootScope, $cookieStore) {
+  constructor(JWT, Upload, Settings, $http, $state, $q, $location, $window, $rootScope, $cookieStore,
+    $timeout) {
     'ngInject';
 
     this.JWT = JWT;
@@ -10,6 +13,7 @@ export default class User {
     this.$location = $location;
     this.$q = $q;
     this.$window = $window;
+    this.$timeout = $timeout;
     this.$rootScope = $rootScope;
     this.$cookieStore = $cookieStore;
     this.current = null;
@@ -55,11 +59,23 @@ export default class User {
   }
 
   getCompanyId() {
-    return this.current_company ? this.current_company.id : null;
+    let result = this.$window.localStorage.getItem('current_company_id');
+
+    if (result) {
+      return parseInt(result);
+    } else if (this.current_company) {
+      return this.current_company.id;
+    }
+
+    return null;
   }
 
   getCompanies() {
     let result = [];
+
+    if (!this.current) {
+      return result;
+    }
 
     for (let company_data of this.current.company_roles) {
       result.push(company_data.company);
@@ -94,17 +110,24 @@ export default class User {
     );
   }
 
-  logout() {
+  clearAuthorization() {
     this.current = null;
     this.JWT.destroy();
     this.removeDefaultCompany();
-    this.$state.go('auth.login', null, { reload: true });
   }
 
-  verifyAuth() {
+  logout() {
+    this.clearAuthorization();
+    this.$timeout(() => {
+      console.log('reload to login');
+      this.$state.go('auth.login', null, { reload: true });
+    }, 0);
+  }
+
+  verifyAuth(withCheckingJWT = false) {
     let deferred = this.$q.defer();
 
-    if (!this.JWT.get()) {
+    if (!withCheckingJWT && !this.JWT.get()) {
       deferred.resolve(false);
       return deferred.promise;
     }
@@ -117,31 +140,37 @@ export default class User {
         method: 'GET',
       }).then(
         (result) => {
-          this.current = result.data;
-
-          let currentCompanyId = parseInt(this.$window.localStorage.getItem('current_company_id'), 10);
-          const availableIds = this.getCompanies().map(item => item.id);
-
-          if (availableIds.length) {
-            if (!currentCompanyId || !availableIds.includes(currentCompanyId)) {
-              currentCompanyId = availableIds[0];
-            }
-
-            this.setDefaultCompany(currentCompanyId);
-            this.loadTheme();
-          }
-
+          this.userSuccessCallback(result);
           deferred.resolve(true);
-        },
-        () => {
-          this.JWT.destroy();
-          this.removeDefaultCompany();
+        }, () => {
+          this.userErrorCallback();
           deferred.resolve(false);
         },
       );
     }
 
     return deferred.promise;
+  }
+
+  userSuccessCallback(result) {
+    this.current = result.data;
+
+    let currentCompanyId = parseInt(this.$window.localStorage.getItem('current_company_id'), 10);
+    const availableIds = this.getCompanies().map(item => item.id);
+
+    if (availableIds.length) {
+      if (!currentCompanyId || !availableIds.includes(currentCompanyId)) {
+        currentCompanyId = availableIds[0];
+      }
+
+      this.setDefaultCompany(currentCompanyId);
+      this.loadTheme();
+    }
+  }
+
+  userErrorCallback() {
+    this.JWT.destroy();
+    this.removeDefaultCompany();
   }
 
   ensureAuthForClosedPages() {
@@ -151,7 +180,10 @@ export default class User {
       if (authValid === true) {
         deferred.resolve(true);
       } else {
-        this.$state.go('auth.login');
+        this.$timeout(() => {
+          console.log('reload to login');
+          this.$state.go('auth.login');
+        }, 0);
         deferred.resolve(false);
       }
     });
@@ -164,7 +196,10 @@ export default class User {
 
     this.verifyAuth().then((authValid) => {
       if (authValid === true) {
-        this.$state.go('app.dashboard');
+        this.$timeout(() => {
+          console.log('reload to dashboard');
+          this.$state.go('app.dashboard');
+        }, 0);
         deferred.resolve(true);
       } else {
         deferred.resolve(false);
@@ -193,6 +228,31 @@ export default class User {
       data: { photo: file },
       headers: header,
     });
+  }
+
+  // move subscription methods to separate service
+  startSubscription(companyId) {
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/subscription/start`,
+      method: 'POST',
+    }).then(result => result.data);
+  }
+
+  finishSubscription(companyId, transactionId) {
+    return this.$http({
+      url: buildURL(`${API_URL}/company/${companyId}/subscription/finish`, {
+        transaction_id: transactionId,
+      }),
+      method: 'POST',
+    }).then(result => result.data);
+  }
+
+  inviteFriend(companyId, email) {
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/subscription/invite`,
+      method: 'POST',
+      data: { email },
+    }).then(result => result.data);
   }
 
   loadTheme() {
@@ -230,7 +290,10 @@ export default class User {
   isOwner() {
     let result = false;
 
-    if (this.getCompanyId() && this.current.owned_companies.length) {
+    if (this.getCompanyId() &&
+      this.current &&
+      this.current.owned_companies.length) {
+
       this.current.owned_companies.forEach((company) => {
         if (company.id === this.getCompanyId()) {
           result = true;
@@ -244,7 +307,10 @@ export default class User {
   isManager() {
     let result = false;
 
-    if (this.getCompanyId() && this.current.company_roles.length) {
+    if (this.getCompanyId() &&
+      this.current &&
+      this.current.company_roles.length) {
+
       this.current.company_roles.forEach((role) => {
         if (role.company.id === this.getCompanyId() && role.manage_access) {
           result = true;

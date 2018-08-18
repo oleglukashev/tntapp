@@ -1,0 +1,23 @@
+<md-dialog>
+  <md-dialog-content>
+    <div class='md-dialog-content'>
+      <h2>Bill: {{ ctrl.inReserv.status }}</h2>
+      <p><b>type:</b> {{ ctrl.inReserv.type }}</p>
+      <div ng-if='ctrl.inReserv.products.length'>
+        <p><b>Products:</b></p>
+        <p ng-repeat='product in ctrl.inReserv.products'>{{ product.name }}</p>
+        <hr />
+      </div>
+      <div ng-if='ctrl.inReserv.notes.length'>
+        <p><b>Notes:</b></p>
+        <p ng-repeat='note in ctrl.inReserv.notes'>{{ note.text }}</p>
+        <hr />
+      </div>
+      <p><b>Price:</b> {{ ctrl.inReserv.price }}</p>
+      <p><b>Payment:</b> {{ ctrl.inReserv.payment }}</p>
+    </div>
+  </md-dialog-content>
+  <md-dialog-actions layout='row'>
+    <md-button ng-click='ctrl.close()'>Ok</md-button>
+  </md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,10 @@
+<div class='list-group list-group-md no-radius m-b-none no-bg'>
+  <div ng-repeat='(page, state) in ctrl.pages'
+       ng-class="{ 'b-l-success' : ctrl.$state.current.name == state }"
+       class='list-group-item no-border b-l-3x'>
+    <a class='text-md font-bold uppercase'
+       ng-class="{ 'text-muted' : ctrl.$state.current.name != state }"
+       href='#'
+       ui-sref='{{ state }}'>{{ page | translate }}</a>
+  </div>
+</div>

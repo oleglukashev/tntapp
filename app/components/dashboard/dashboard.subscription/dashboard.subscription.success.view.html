@@ -1,0 +1,41 @@
+<div class='wrapper' layout='column' layout-align='space-around center'>
+  <div class='text-center m-t-xxl'>
+    <img src='public/images/connected.png'
+         srcset='public/images/connected.png'
+         title='connected' />
+  </div>
+
+  <h2 class='text-center'>IBAN {{ dash_subscription.iban }} gekoppeld</h2>
+
+  <div class='w-xl'>
+    <button class='btn btn-lg btn-success btn-block rounded-md m-t-md m-b-md'
+          ng-show='!dash_subscription.show_form'
+          ng-click='dash_subscription.show_form = true;'
+          type='button'
+          md-no-ink>Tip een ondernemer</button>
+
+    <div ng-show='dash_subscription.show_form'>
+      <form name='add_invite'
+            ng-submit='dash_subscription.submitForm(add_invite.$valid)'>
+        <md-input-container class='md-block'>
+          <label>Voor- en achternaam</label>
+          <input type='string'
+                 ng-model='dash_subscription.form_data.full_name'
+                 required />
+        </md-input-container>
+        <md-input-container class='md-block'>
+          <label>E-mail</label>
+          <input type='email'
+                 ng-model='dash_subscription.form_data.email'
+                 required/>
+        </md-input-container>
+        <button class='btn btn-lg btn-success btn-block rounded-md m-t-md m-b-md'
+                ng-class="{ 'disabled': !add_invite.$valid || dash_subscription.is_submitting }"
+                type='submit'
+                md-no-ink>Uitnodigen</button>
+      </form>
+    </div>
+
+    <p class='text-center'>Voor elke ondernemer die jij aanmeld krijg je een maan gratis The Next Table</p>
+  </div>
+</div>

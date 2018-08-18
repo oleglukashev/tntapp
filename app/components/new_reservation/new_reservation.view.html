@@ -1,0 +1,114 @@
+<form ng-submit='ctrl.submitForm()' ng-if='!ctrl.is_success'>
+  <md-tabs class='reservation_tabs'
+    flex
+    md-selected='ctrl.tab_index'
+    md-no-pagination
+    md-stretch-tabs
+    md-dynamic-height>
+
+    <type-new-reservation-tab
+      ng-if='ctrl.type === "customer"'
+      type='ctrl.type'
+      select-tab='ctrl.selectTab(index)'
+      pagination='ctrl.Reservation.pagination[ctrl.type]'
+      reservation='ctrl.reservation'
+      socials='ctrl.socials'
+      current-tab-index='ctrl.tab_index'></type-new-reservation-tab>
+
+    <date-new-reservation-tab
+      type='ctrl.type'
+      zones='ctrl.zones'
+      zone-time-ranges='ctrl.zone_time_ranges'
+      products='ctrl.products'
+      settings='ctrl.settings'
+      open-time-ranges='ctrl.open_time_ranges'
+      product-week-time-ranges='ctrl.product_week_time_ranges'
+      product-time-ranges = 'ctrl.product_time_ranges'
+      pagination='ctrl.Reservation.pagination[ctrl.type]'
+      select-tab='ctrl.selectTab(index)'
+      refresh-datepicker='ctrl.refreshDatepicker()'
+      current-index='ctrl.current_index'
+      reservation='ctrl.reservation'
+      current-tab-index='ctrl.tab_index'></date-new-reservation-tab>
+
+    <number-of-persons-new-reservation-tab
+      type='ctrl.type'
+      tables='ctrl.tables'
+      reservation='ctrl.reservation'
+      current-index='ctrl.current_index'
+      clear-and-load-time='ctrl.clearAndLoadTime()'
+      pagination='ctrl.Reservation.pagination[ctrl.type]'
+      select-tab='ctrl.selectTab(index)'
+      current-tab-index='ctrl.tab_index'></number-of-persons-new-reservation-tab>
+
+    <product-new-reservation-tab
+      type='ctrl.type'
+      products='ctrl.products'
+      warnings='ctrl.warnings'
+      reservation='ctrl.reservation'
+      current-index='ctrl.current_index'
+      product-week-time-ranges='ctrl.product_week_time_ranges'
+      open-time-ranges='ctrl.open_time_ranges'
+      product-time-ranges='ctrl.product_time_ranges'
+      clear-and-load-time='ctrl.clearAndLoadTime()'
+      pagination='ctrl.Reservation.pagination[ctrl.type]'
+      select-tab='ctrl.selectTab(index)'
+      current-tab-index='ctrl.tab_index'></product-new-reservation-tab>
+
+    <time-new-reservation-tab
+      type='ctrl.type'
+      current-index='ctrl.current_index'
+      reservation='ctrl.reservation'
+      pagination='ctrl.Reservation.pagination[ctrl.type]'
+      select-tab='ctrl.selectTab(index)'
+      product-week-time-ranges='ctrl.product_week_time_ranges'
+      current-company-id='ctrl.current_company_id'
+      warnings='ctrl.warnings'
+      current-tab-index='ctrl.tab_index'></time-new-reservation-tab>
+
+    <zone-new-reservation-tab
+      ng-if='ctrl.type === "dashboard"'
+      type='ctrl.type'
+      current-index='ctrl.current_index'
+      reservation='ctrl.reservation'
+      pagination='ctrl.Reservation.pagination[ctrl.type]'
+      select-tab='ctrl.selectTab(index)'
+      zone-time-ranges='ctrl.zone_time_ranges'
+      zones='ctrl.zones'
+      tables='ctrl.tables'
+      selected-zone='ctrl.selected_zone'
+      current-tab-index='ctrl.tab_index'></zone-new-reservation-tab>
+
+    <group-new-reservation-tab
+      ng-if='ctrl.type === "dashboard"'
+      type='ctrl.type'
+      current-index='ctrl.current_index'
+      reservation='ctrl.reservation'
+      pagination='ctrl.Reservation.pagination[ctrl.type]'
+      select-tab='ctrl.selectTab(index)'
+      select-current-index='ctrl.selectCurrentIndex(index)'
+      current-tab-index='ctrl.tab_index'></group-new-reservation-tab>
+
+    <person-new-reservation-tab
+      type='ctrl.type'
+      current-index='ctrl.current_index'
+      settings='ctrl.settings'
+      reservation='ctrl.reservation'
+      pagination='ctrl.Reservation.pagination[ctrl.type]'
+      select-tab='ctrl.selectTab(index)'
+      current-company-id='ctrl.current_company_id'
+      errors='ctrl.errors'
+      allergy-data='ctrl.allergy_data'
+      preference-data='ctrl.preference_data'
+      allergy-is-valid='ctrl.allergyIsValid()'
+      preference-is-valid='ctrl.preferenceIsValid()'
+      add-allergy='ctrl.addAllergy()'
+      add-preference='ctrl.addPreference()'
+      current-tab-index='ctrl.tab_index'></person-new-reservation-tab>
+
+  </md-tabs>
+</form>
+
+<success-new-reservation
+  ng-if='ctrl.is_success'
+  reservation='ctrl.response'></success-new-reservation>

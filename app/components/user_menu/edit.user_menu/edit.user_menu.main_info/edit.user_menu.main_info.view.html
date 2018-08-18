@@ -1,0 +1,120 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h' translate='general'></div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='md-content-submit'>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-xl'>
+          <form name='edit_user_form' ng-submit='crtl.submitForm(edit_user_form.$valid)'>
+            <div class='wrapper'>
+              <md-input-container class='md-block'>
+                <label translate='email'></label>
+                <input type='email' ng-model="crtl.customer.mail" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label translate='first_name'></label>
+                <input ng-model="crtl.customer.first_name" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label translate='last_name'></label>
+                <input ng-model="crtl.customer.last_name" />
+              </md-input-container>
+
+              <md-input-container class='md-block'>
+                <label translate='country'></label>
+                <md-select ng-model='crtl.customer.country'>
+                  <md-option
+                    ng-value='code'
+                    ng-repeat='(code, name) in crtl.AppConstants.countries'
+                    ng-selected='code === crtl.customer.country || code === "NL"'>
+                    {{ name }}
+                  </md-option>
+                </md-select>
+                <div class='md-errors-spacer'></div>
+              </md-input-container>
+              <md-input-container
+                class='md-block'
+                ng-class='{"md-input-invalid": edit_user_form.primary_phone_number.$invalid}'>
+                <label translate='phone'></label>
+                <input
+                  ng-class='{"ng-invalid": edit_user_form.primary_phone_number.$invalid}'
+                  name='primary_phone_number'
+                  ng-model="crtl.customer.primary_phone_number"
+                  country='{{ crtl.customer.country }}'
+                  phone-valid />
+                <span
+                  ng-messages='edit_user_form.primary_phone_number.$error'
+                  ng-show='edit_user_form.primary_phone_number.$invalid'>
+                  <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
+                </span>
+              </md-input-container>
+              <md-input-container
+                class='md-block'
+                ng-class='{"md-input-invalid": edit_user_form.secondary_phone_number.$invalid}'>
+                <label translate='second_phone'></label>
+                <input
+                  ng-class='{"ng-invalid": edit_user_form.secondary_phone_number.$invalid}'
+                  name='secondary_phone_number'
+                  ng-model="crtl.customer.secondary_phone_number"
+                  country='{{ crtl.customer.country }}'
+                  phone-valid />
+                <span
+                  ng-messages='edit_user_form.secondary_phone_number.$error'
+                  ng-show='edit_user_form.secondary_phone_number.$invalid'>
+                  <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
+                </span>
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label translate='birthdate'></label>
+                <input
+                  type='text'
+                  class='form-control'
+                  ng-model='crtl.customer.date_of_birth'
+                  uib-datepicker-popup="{{ crtl.AppConstants.calendar.format }}"
+                  is-open='Opened'
+                  ng-click='Opened=true'
+                  datepicker-options='crtl.AppConstants.calendar.date_options'
+                  show-button-bar='false'
+                  close-text='Close' />
+              </md-input-container>
+
+              <md-input-container class='md-block'>
+                <label translate='address'></label>
+                <input ng-model="crtl.customer.street" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label translate='house_number'></label>
+                <input ng-model="crtl.customer.house_number" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label translate='postcode'></label>
+                <input ng-model="crtl.customer.zipcode" />
+              </md-input-container>
+              <md-input-container class='md-block'>
+                <label translate='city'></label>
+                <input ng-model="crtl.customer.city" />
+              </md-input-container>
+              <div class='md-form-group no-padder'>
+                <md-radio-group ng-model="crtl.customer.gender">
+                  <md-radio-button value='Man' class='inline md-success'>
+                    {{ 'male' | translate }}
+                  </md-radio-button>
+                  <md-radio-button value='Vrouw' class='inline md-success'>
+                    {{ 'female' | translate }}
+                  </md-radio-button>
+                </md-radio-group>
+              </div>
+            </div>
+
+            <button type='submit'
+                    ng-class="{ 'disabled': !edit_user_form.$valid || crtl.is_submitting }"
+                    class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
+              <translate>save</translate>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>

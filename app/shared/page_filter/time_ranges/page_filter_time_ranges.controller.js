@@ -1,6 +1,6 @@
 export default class PageFiltertime_rangesCtrl {
   constructor(date, type, User, Product, Zone, Slider, PageFilterTimeRange,
-    filterFilter, moment, $modalInstance, $window, $rootScope, $translate) {
+    filterFilter, moment, $uibModalInstance, $window, $rootScope, $translate) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -14,7 +14,7 @@ export default class PageFiltertime_rangesCtrl {
     this.$window = $window;
     this.$rootScope = $rootScope;
     this.filterFilter = filterFilter;
-    this.$modalInstance = $modalInstance;
+    this.$modalInstance = $uibModalInstance;
     this.slider = this.Slider.getOptions();
     this.type = type;
     this.value_label = type === 'overbooking' ? 'overbooking' : 'opened';

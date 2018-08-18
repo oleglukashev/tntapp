@@ -1,50 +1,38 @@
 <div class='search-result-content col-lg-8 col-md-8 col-sm-8 col-md-offset-1'>
   <div class='clearfix m-b-md'>
     <div class='pull-left m-t-sm m-r-sm'>
-      <p translate='search.results' translate-values='{ count: search.getDataLength(), first_name: search.reservations[0].customer.first_name, last_name: search.reservations[0].customer.last_name }'></p>
+      <p translate='search.results' translate-values='{ count: ctrl.getDataLength(), first_name: ctrl.reservations[0].customer.first_name, last_name: ctrl.reservations[0].customer.last_name }'></p>
     </div>
 
     <div class='page_filter pull-left'>
       <div class='pull-left'
-           ng-init='controller = search'
+           ng-init='controller = ctrl'
            data-ng-include=" 'page_filter.print.view.html' "></div>
       <div class='pull-left m-r-xs'
-           ng-init='controller = search'
+           ng-init='controller = ctrl'
            data-ng-include=" 'page_filter.filter.view.html' "></div>
       <div class='page_sort pull-left'
-           ng-init='controller = search'
+           ng-init='controller = ctrl'
            data-ng-include=" 'page_filter.sort.view.html' "></div>
     </div>
   </div>
 
   <div class='dashboard-ad panel'
-       ng-repeat='(date, dataItems) in search.data'
+       ng-repeat='(date, dataItems) in ctrl.data'
        ng-if='dataItems.length'>
-    <div class='panel-heading'>{{ search.moment(date).lang('nl').format('DD MMM') }}</div>
-    <table class='table m-b-none'>
-      <thead>
-        <tr>
-            <th width='8%' translate='status_name'></th>
-            <th class='hidden-xs hidden-sm' width='10%' translate='time'></th>
-            <th class='hidden-xs hidden-sm' width='12%' translate='product'></th>
-            <th class='hidden-xs hidden-sm' width='12%' translate='name'></th>
-            <th class='hidden-xs hidden-sm' width='10%' translate='persons'></th>
-            <th class='hidden-xs hidden-sm' width='10%' translate='table'></th>
-            <th class='hidden-xs hidden-sm' translate='note'></th>
-            <th class='visible-xs visible-sm'></th>
-            <th width='8%'></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-ng-include=" 'agenda.item.view.html' "
-            ng-click='search.openCustomerMenu(item.customer_id, item.id)'
-            ng-class='{"active": agenda.active_part == item.id,
-                       "cancelled": item.reservation.status == "cancelled"}'
-            ng-repeat='item in search_data = dataItems'
-            ng-mouseup='search.active_part = item.id'
-            ng-init='controller = search;hideIcon = item.reservation.id === search_data[$index - 1].reservation.id;'></tr>
-      </tbody>
-    </table>
+    <div class='panel-heading'>{{ ctrl.moment(date).lang('nl').format('DD MMM') }}</div>
+    <div class='agenda-reservation-item-wrapper'>
+      <agenda-reservation-item
+        ng-class='{"active": ctrl.active_part == item.part.id,
+                  "cancelled": item.reservation.status == "cancelled",
+                  "b-b-none": item.reservation.id === search_data[$index + 1].reservation.id}'
+        ng-repeat='item in search_data = dataItems track by $index'
+        ng-mouseup='ctrl.active_part = item.part.id'
+        hide-icon='item.reservation.id === search_data[$index - 1].reservation.id'
+        change-status='ctrl.changeStatus(reservation, status)'
+        show-date=true
+        data='item'></agenda-reservation-item>
+    </div>
   </div>
 </div>
 

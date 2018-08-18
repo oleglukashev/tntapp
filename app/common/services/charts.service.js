@@ -2,8 +2,7 @@ export default class Charts {
   constructor(User, Product, AppConstants, $translate) {
     'ngInject';
 
-    this.current_company = User.current_company;
-
+    this.current_company_id = User.getCompanyId();
     this.letterOfWeek = AppConstants.letterOfWeek;
     this.Product = Product;
     this.total_text = '';
@@ -40,23 +39,25 @@ export default class Charts {
     if (!reservations.today) reservations.today = [];
 
     reservations.count_by_week.forEach((n) => { countPerDays[n.pday] = n.cnt; });
-    reservations.today.forEach((reservationData) => {
-      if (reservationData.reservation.status !== 'cancelled') {
-        const personsCount = parseInt(reservationData.number_of_persons, 10);
-        this.charts.reservations[reservationData.part.product_id] =
-          (this.charts.reservations[reservationData.part.product_id] || 0) +
-          personsCount;
+    reservations.today.forEach((reservation) => {
+      if (reservation.status !== 'cancelled') {
+        reservation.reservation_parts.forEach((part) => {
+          const personsCount = parseInt(part.number_of_persons, 10);
+          this.charts.reservations[part.product_id] =
+            (this.charts.reservations[part.product_id] || 0) +
+            personsCount;
 
-        const date = new Date(reservationData.date_time);
-        const day = Math.floor(date.getTime() / mSecInDay);
-        this.charts.day_guests[day] = (this.charts.day_guests[day] || 0) + personsCount;
-        if (reservationData.part.product_id) {
-          if (!this.charts.guests_by_product[reservationData.part.product_id]) {
-            this.charts.guests_by_product[reservationData.part.product_id] = 0;
+          const date = new Date(part.date_time);
+          const day = Math.floor(date.getTime() / mSecInDay);
+          this.charts.day_guests[day] = (this.charts.day_guests[day] || 0) + personsCount;
+          if (part.product_id) {
+            if (!this.charts.guests_by_product[part.product_id]) {
+              this.charts.guests_by_product[part.product_id] = 0;
+            }
+            this.charts.guests_by_product[part.product_id] += personsCount;
           }
-          this.charts.guests_by_product[reservationData.part.product_id] += personsCount;
-        }
-        this.charts.guests_by_product[0] += personsCount;
+          this.charts.guests_by_product[0] += personsCount;
+        });
       }
     });
     const now = new Date();
@@ -83,7 +84,7 @@ export default class Charts {
 
   getProducts() {
     this.Product
-      .getAll(this.current_company.id, true)
+      .getAll(this.current_company_id, true)
       .then((products) => {
         products.forEach((product) => {
           if (product.id) {
@@ -96,3 +97,4 @@ export default class Charts {
     return this.charts;
   }
 }
+

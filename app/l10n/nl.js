@@ -110,7 +110,10 @@ export default {
     booking_channels: 'Reserveringskanalen',
     product_distribution: 'Omzet productgroepen',
     reservations_per_hour: 'Reserveringen per tijdstip',
-    age_of_guests: 'Leeftijd gasten'
+    age_of_guests: 'Leeftijd gasten',
+    average_payment_per_month: 'Gemiddelde omzet per maand',
+    average_seating_per_month: 'Gemiddelde bezettingstijd per maand/notulen',
+    product_integrations: 'Hardlopers',
   },
   notifications: {
     settings_escape: 'Het huidige werk is niet afgerond en wordt daarom niet opgeslagen',
@@ -348,6 +351,9 @@ export default {
       api_description: 'Hieronder staat het API-token dat gebruikt kan worden voor communicatie met de TheNextTable API.',
       file_title: 'Aangepaste achtergronden',
       file_description: 'Hier kunt u uw eigen achtergrondafbeelding voor de plugins uploaden. De aanbevolen grootte van de afbeelding is 1920x1080, maar kleinere afbeeldingen worden ook geaccepteerd.',
+      links_title: 'Koppelingen',
+      untill_link: 'Koppeling gelegd met Untill!',
+      delete_link: 'Koppeling verwijderen',
     },
     customer_settings_names: {
       title: 'Allergieen en voorkeuren',
@@ -461,8 +467,8 @@ export default {
   text: 'Tekst',
   lang: 'Taal',
   help: 'Helpen',
-  choose_file: 'Choose file',
   unknown: 'Onbekend',
+  choose_file: 'Choose file',
   authorization: 'Authorization',
   congratulations: 'Gefeliciteerd',
   gender: 'Geslacht',

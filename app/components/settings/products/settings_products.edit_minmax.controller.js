@@ -1,12 +1,12 @@
-export default class SettingsProductsEditMinMaxCtrl {
-  constructor(User, Product, product, $modalInstance, $rootScope) {
+export default class Controller {
+  constructor(User, Product, product, $uibModalInstance, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.User = User;
     this.ProductService = Product;
     this.product = product;
-    this.$modalInstance = $modalInstance;
+    this.$modalInstance = $uibModalInstance;
     this.$rootScope = $rootScope;
   }
 

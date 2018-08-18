@@ -1,0 +1,53 @@
+<div class='reservation_wrapper'>
+  <span>
+    <md-menu>
+      <button
+        class='md-icon-button md-button'
+        ng-click='$mdMenu.open($event);ctrl.UserMenu.loadAndSetFullData(ctrl.data.reservation.customer.id, ctrl.data.id)'>
+        <i class='mdi i-20'
+           ng-class='ctrl.ReservationStatus.getIcon(ctrl.data.part, ctrl.data.reservation)'
+           title='{{ ctrl.AppConstants.reservationDutchStatuses[ctrl.data.reservation.status] }}'></i>
+      </button>
+      <md-menu-content width='4' class='reservation_menu'>
+        <md-menu-item>
+          <md-button
+            ng-click='ctrl.openEditReservationModal(ctrl.data.reservation, ctrl.data.part)'
+            ng-disabled='!ctrl.UserMenu.current_reservation'>
+            <md-icon aria-label>
+              <i class='mdi mdi-pencil' />
+            </md-icon>
+            <translate>edit</translate>
+          </md-button>
+        </md-menu-item>
+        <md-menu-divider role='separator'></md-menu-divider>
+        <md-menu-item ng-repeat='status in ctrl.statuses'>
+          <md-button
+            ng-click='ctrl.chooseChangeStatusMethod(ctrl.data.reservation, status)'
+            ng-disabled='ctrl.data.reservation.status == status'>
+            <md-icon aria-label>
+              <i class='mdi mdi-with-button-padding'
+                 ng-class='ctrl.status_icon[status]'></i>
+            </md-icon>
+            <translate translate='status.{{ status }}'></translate>
+          </md-button>
+        </md-menu-item>
+        <md-menu-divider role='separator'></md-menu-divider>
+        <md-menu-item>
+          <md-button ng-click='ctrl.answer(ctrl.data.reservation);'>
+            <md-icon aria-label>
+              <i class='mdi mdi-reply' />
+            </md-icon>
+            <translate>answer</translate>
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+  </span>
+
+  <a ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
+    {{ ctrl.data.number_of_persons }}
+    {{ ctrl.data.product_name }}
+    <strong ng-bind='ctrl.data.name'></strong>
+  </a>
+  <div class='resizer' ui-draggable='true' drag-channel='resize'></div>
+</div>

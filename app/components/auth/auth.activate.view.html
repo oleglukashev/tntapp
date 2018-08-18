@@ -6,9 +6,9 @@
       </div>
       <div>
         <div class='text-muted wrapper text-center' translate='auth.activate_description'></div>
-        <form ng-submit='auth.submitForm()'>
-          <div class='text-default wrapper text-center bg-danger' ng-show='auth.errors'>
-            <div ng-repeat='error in auth.errors'>
+        <form ng-submit='ctrl.submitForm()'>
+          <div class='text-default wrapper text-center bg-danger' ng-show='ctrl.errors'>
+            <div ng-repeat='error in ctrl.errors'>
               {{ error.message }}
             </div>
           </div>
@@ -16,8 +16,8 @@
           <div class='list-group-item'>
             <input type='password'
                    class='form-control no-border'
-                   ng-model='auth.formData.plainPassword.first'
-                   ng-required='auth.authType == "reset_password_finish"'
+                   ng-model='ctrl.formData.plainPassword.first'
+                   ng-required='ctrl.authType == "reset_password_finish"'
                    placeholder='Wachtwoord'
                    autocomplete='new-password' />
           </div>
@@ -25,8 +25,8 @@
           <div class='list-group-item'>
             <input type='password'
                    class='form-control no-border'
-                   ng-model='auth.formData.plainPassword.second'
-                   ng-required='auth.authType == "reset_password_finish"'
+                   ng-model='ctrl.formData.plainPassword.second'
+                   ng-required='ctrl.authType == "reset_password_finish"'
                    placeholder='Wachtwoord herhalen'
                    autocomplete='new-password' />
           </div>
@@ -35,7 +35,7 @@
             <button type='submit'
                     style='height: 42px;'
                     class='md-btn md-flat btn-fw btn-block m-t-md'
-                    ng-class="{ 'disabled': auth.isSubmitting }">
+                    ng-class="{ 'disabled': ctrl.isSubmitting }">
               <span translate='next'></span>
             </button>
 

@@ -1,5 +1,5 @@
 export default function PageFilterFactory(AppConstants, Reservation, Customer,
-  $modal, $filter, $translate, moment) {
+  $uibModal, $filter, $translate, moment) {
   'ngInject';
 
   return (that) => {
@@ -127,7 +127,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     };
 
     instance.openTimeRangeSettings = (type) => {
-      const modalInstance = $modal.open({
+      const modalInstance = $uibModal.open({
         templateUrl: 'page_filter_time_ranges.view.html',
         controller: 'PageFilterTimeRangesCtrl as page_filter_time_ranges',
         size: 'md',

@@ -3,6 +3,8 @@ body
   background-color background-color
   width 100%
   height auto
+  // https://github.com/angular/material/issues/1967
+  // If we don't do this, angular material will break when loading modal windows, don't remove this unless you have a better alternative
 
 html
   height 100%
@@ -13,7 +15,6 @@ body
   -webkit-font-smoothing antialiased
   line-height line-height
   color font-color
-  overflow-x hidden
   min-height 100%
 
 .app
@@ -314,21 +315,21 @@ blockquote
   padding-right 12px
   padding-left 12px
 
-.datepicker
+.uib-datepicker
   margin 0 5px
 
-.datepicker .btn-default
+.uib-datepicker .btn-default
   border-width 0
   box-shadow none
 
-.datepicker .btn[disabled]
+.uib-datepicker .btn[disabled]
   opacity 0.4
 
-.datepicker .btn-info .text-info
+.uib-datepicker .btn-info .text-info
   color #fff !important
 
 @media (max-width: 768px)
-  .datepicker
+  .uib-datepicker
     .btn-group-sm>.btn, .btn-sm
       padding 7px 10px
 
@@ -908,6 +909,12 @@ blockquote
   border-right 6px solid transparent
   border-left 6px solid transparent
 
+button[disabled]
+  opacity 0.3
+
+.cancelled
+  opacity 0.3
+
 .box-line
   display block
   width 92%
@@ -975,7 +982,7 @@ blockquote
   margin-right 16px
   margin-bottom -28px
 
-.datepicker
+.uib-datepicker
   tr > td > .btn
     border-radius 21px
 
@@ -1110,3 +1117,56 @@ md-progress-linear
   left -23px
   top 5px
   font-size 20px
+
+
+// accordion
+div[uib-accordion-group] .panel-heading
+  padding 8px 16px
+
+span[uib-accordion-header] > .clearfix > .pull-left
+  line-height 28px
+  margin-right 0.5rem
+
+
+// fix
+.fix-text
+  line-height 1.143rem
+  border-radius 0.5rem
+
+.fix-chart
+  width 84px
+  height 84px
+  border-radius 42px
+  margin 0 auto
+
+.fix-block
+  width 10rem
+  height 150px
+
+.fix-chart-bar
+  width 25rem
+  margin 0 auto
+
+  div
+    width 5rem
+    margin-left 5rem
+
+    &:first-child
+      margin-left 0
+
+    &:nth-child(1)
+      height 200px
+
+    &:nth-child(2)
+      height 150px
+      margin-top 50px
+
+    &:nth-child(3)
+      height 80px
+      margin-top 120px
+
+// search
+md-virtual-repeat-container
+  md-autocomplete-parent-scope > div
+    margin 0 -15px
+    padding 0 15px

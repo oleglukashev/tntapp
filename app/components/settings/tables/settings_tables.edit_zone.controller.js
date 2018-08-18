@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export default class SettingsTablesEditZoneCtrl {
-  constructor(User, Zone, SettingsTablesZoneFactory, zones, zone, $rootScope, $modalInstance) {
+  constructor(User, Zone, SettingsTablesZoneFactory, zones, zone, $rootScope, $uibModalInstance) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -10,7 +10,7 @@ export default class SettingsTablesEditZoneCtrl {
     this.zonesList = zones;
     this.zoneItem = zone;
     this.$rootScope = $rootScope;
-    this.$modalInstance = $modalInstance;
+    this.$modalInstance = $uibModalInstance;
     this.item = {
       name: this.zoneItem.name,
       icon_class: this.zoneItem.icon_class,

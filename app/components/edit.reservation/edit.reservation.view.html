@@ -1,0 +1,195 @@
+<section class='edit_reservation no-margin'>
+  <md-toolbar class='blue-grey-900'>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex translate='edit'></h2>
+      <md-button class="md-icon-button" ng-click='ctrl.Confirm.onCloseModal(ctrl.dismiss);' md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <div ng-hide='ctrl.is_success'>
+      <md-tabs class='edit_reservation_tabs'
+               flex
+               md-selected='ctrl.tab_index'
+               md-no-pagination
+               md-stretch-tabs
+               md-dynamic-height>
+
+        <md-tab>
+          <md-tab-label>
+            <div class='text-center l-h uppercase' translate='reserv'></div>
+          </md-tab-label>
+          <md-tab-body>
+            <form ng-submit='ctrl.submitReservationForm()'>
+              <div class='md-content-submit b-t' flex>
+                <div class='wrapper' layout='column' layout-align='space-around center'>
+                  <div class='w-xl'>
+                    <md-input-container class='md-block'>
+                      <label translate='date'></label>
+                      <md-datepicker ng-model='ctrl.current_part.date'
+                                     ng-change='ctrl.changeDatePostProcess()'></md-datepicker>
+                    </md-input-container>
+                    <md-input-container class='md-block'>
+                      <label translate='number_of_guests'></label>
+                      <md-icon><i class='mdi mdi-account-multiple i-20' /></md-icon>
+                      <input type='number'
+                             ng-model='ctrl.current_part.number_of_persons'
+                             ng-change='ctrl.changeNumberOfPersonsPostProcess()'
+                             ng-required='false' />
+                    </md-input-container>
+                    <md-input-container class='md-block'>
+                      <label translate='product'></label>
+                      <md-icon><i class='mdi mdi-silverware-variant i-20' /></md-icon>
+                      <md-select ng-change='ctrl.changeProductPostProcess()'
+                                 ng-model='ctrl.current_part.product'>
+                        <md-option ng-value='item.id' ng-repeat='item in ctrl.products'>
+                          {{ item.name }}
+                        </md-option>
+                      </md-select>
+                      <div class='md-errors-spacer'></div>
+                    </md-input-container>
+                    <md-input-container class='md-block'>
+                      <label translate='time'></label>
+                      <md-icon><i class='mdi mdi-clock i-20' /></md-icon>
+                      <md-select ng-change='ctrl.changeTimePostProcess()'
+                                 ng-disabled='!ctrl.canLoadTime()'
+                                 ng-model='ctrl.current_part.time'>
+                        <md-option ng-value='item.time'
+                                   ng-class="{ 'red-300': ctrl.timeIsDisabled(item) }"
+                                   ng-repeat='item in ctrl.openedTimeRangePeriod()'>{{ item.time }}</md-option>
+                      </md-select>
+                      <div ng-show='ctrl.disabledTimes().length'>
+                        <i class="mdi mdi-checkbox-blank-circle i-16 red-color-200"></i>
+                        – <translate>reservation.not_enough_seats</translate>
+                      </div>
+                      <div class='md-errors-spacer'>
+                      </div>
+                    </md-input-container>
+                    <md-input-container class='md-block'>
+                      <label translate='table'></label>
+                      <md-icon><i class='mdi mdi-border-horizontal i-20' /></md-icon>
+                      <md-select multiple
+                                 ng-change='ctrl.changeFilterPostProcess()'
+                                 ng-disabled='!ctrl.current_part.time'
+                                 ng-model='ctrl.current_part.table_ids'>
+                        <md-optgroup ng-repeat='zone in ctrl.zones' label='{{ zone.name }}'>
+                          <md-option ng-value='table.id' ng-repeat='table in zone.tables'
+                                     ng-disabled='ctrl.isDisabledTableByTableId(table.id)'>
+                            {{ 'table' | translate }} {{table.table_number}} - {{ table.number_of_persons }} <trasnalte class='lowercase'>persons</trasnalte>
+                          </md-option>
+                        </md-optgroup>
+                      </md-select>
+                      <div class='md-errors-spacer'></div>
+                    </md-input-container>
+                    <md-input-container class='md-block'>
+                      <label translate='note'></label>
+                      <md-icon><i class='mdi mdi-message-text i-20' /></md-icon>
+                      <textarea ng-model='ctrl.current_part.notes' ng-required='false'></textarea>
+                    </md-input-container>
+                    <div ng-show='ctrl.reservation.reservation_pdf'>
+                      <label class='btn btn-default block m-b-xs no-shadow text-success text-left'
+                             ng-click='ctrl.loadPDF();'>
+                        <span class='m-r-sm'>
+                          <i class='mdi mdi-pdf'></i>
+                          <translate>reservation.pdf</translate>
+                        </span>
+                        <div class='pull-right'>
+                          <i class='mdi mdi-delete' ng-click='ctrl.removePdf($event);'></i>
+                        </div>
+                      </label>
+                    </div>
+                    <button type='button'
+                            md-ink-ripple
+                            class='md-btn md-flat m-b m-t btn-fw text-success m-l-6'
+                            ngf-select='ctrl.uploadImage($file, $invalidFiles)'
+                            ngf-drop=''
+                            ngf-max-size="1MB"
+                            ngf-pattern="'.pdf'"
+                            accept='application/pdf'
+                            ng-model='ctrl.reservation.reservation_pdf'
+                            translate='reservation.pdf_upload'></button>
+                    <div class='md-form-group no-padder m-b-sm'>
+                      <md-checkbox ng-model='ctrl.reservation.is_group'
+                                   aria-label='{{ "reservation.group" | translate }}?'>
+                        {{ 'reservation.group' | translate }}?
+                      </md-checkbox>
+                    </div>
+                    <div ng-show='ctrl.reservation.is_group'>
+                      <label ng-repeat='part in ctrl.getFormPartsList()'
+                        class='btn btn-default block m-b-xs no-shadow text-success text-left'
+                        ng-click='ctrl.setCurrentPart(part);'
+                        ng-model='ctrl.current_part'
+                        uib-btn-radio='part'>
+                        <span class='m-r-sm'>
+                          <i class='mdi mdi-clock'></i>
+                          {{ ctrl.moment(part.date).format('DD.MM.YY') }} {{ part.time }}
+                        </span>
+                        <span class='m-r-sm' ng-show='part.number_of_persons'>
+                          <i class='mdi mdi-account-multiple'></i>
+                          <small class='font-thin m-r-xs'>{{ part.number_of_persons }}x</small>
+                        </span>
+                        <span class='m-r-sm' ng-show='part.product'>
+                          <i class='mdi mdi-silverware-variant'></i>
+                          <small class='font-thin'>{{ ctrl.Reservation.getProductNameByProductId(ctrl.products, part.product) }}</small>
+                        </span>
+                        <span class='m-r-sm' ng-show='part.tables.length'>
+                          <img class='table_icon' src='public/images/table.svg' />
+                          <small class='font-thin' ng-bind='ctrl.Table.getTableNumbersByTableIds(Object.values(ctrl.tables), part.tables).join(", ")'></small>
+                        </span>
+                        <div class='pull-right'
+                             ng-show='ctrl.reservation.reservation_parts.length > 1'>
+                          <i class='mdi mdi-delete' ng-click='ctrl.removePart($event, $index);'></i>
+                        </div>
+                      </label>
+
+                      <label ng-click='ctrl.addPart()'
+                             class='btn btn-sm font-bold m-xs text-success no-shadow no-border'
+                             translate='reservation.add_activity'></label>
+                    </div>
+                  </div>
+                </div>
+                <div class='wrapper red-300 layout-align-space-around-center layout-column'
+                     ng-show='ctrl.errors.length'>
+                  <div class='w-xl'>
+                    <div ng-repeat='error in ctrl.errors'>
+                      {{ error }}
+                    </div>
+                  </div>
+                </div>
+                <button type='submit'
+                        class='btn btn-lg btn-success w-full no-top-radius md-content-button'
+                        ng-class="{ 'disabled': ctrl.is_submitting }">
+                  <translate>save</translate>
+                </button>
+              </div>
+            </form>
+          </md-tab-body>
+        </md-tab>
+
+        <!-- <div ng-init='controller = edit_user' data-ng-include=" 'user_menu.main_info.view.html' "></div> -->
+        <user-menu-main-info
+          customer='ctrl.customer'
+          dismiss='ctrl.dismiss'></user-menu-main-info>
+
+        <!-- <div ng-init='controller = edit_user' data-ng-include=" 'user_menu.comments.view.html' "></div> -->
+        <user-menu-notes
+          customer='ctrl.customer'
+          customer-notes='ctrl.customerNotes'
+          dismiss='ctrl.dismiss'></user-menu-notes>
+
+        <!-- <div ng-init='controller = edit_user' data-ng-include=" 'user_menu.preferences.view.html' "></div> -->
+        <user-menu-preferences
+          customer='ctrl.customer'
+          customer-preferences='ctrl.customerPreferences'
+          dismiss='ctrl.dismiss'></user-menu-preferences>
+
+        <!-- <div ng-init='controller = edit_user' data-ng-include=" 'user_menu.allergies.view.html' "></div> -->
+        <user-menu-allergies
+          customer='ctrl.customer'
+          customer-allergies='ctrl.customerAllergies'
+          dismiss='ctrl.dismiss'></user-menu-allergies>
+      </md-tabs>
+    </div>
+  </md-content>
+</section>

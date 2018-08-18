@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-export default class SettingsProductsLimitsCtrl {
+export default class Controller {
   constructor(User, Settings, AppConstants, productId, $window, $rootScope) {
     'ngInject';
 

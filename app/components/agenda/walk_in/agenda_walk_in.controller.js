@@ -1,10 +1,9 @@
-export default class AgendaWalkInCtrl {
-  constructor(User, Zone, Table, Reservation, ReservationPart, tableId, tableNumber, datetime,
-    moment, $window, $modalInstance, $rootScope, $translate, Confirm) {
+export default class Controller {
+  constructor(User, Zone, Table, Reservation, ReservationPart, moment, $window,
+    $rootScope, $translate, Confirm) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
-    this.datetime = datetime;
     this.Confirm = Confirm;
     this.Zone = Zone;
     this.Table = Table;
@@ -12,26 +11,9 @@ export default class AgendaWalkInCtrl {
     this.ReservationPart = ReservationPart;
     this.$window = $window;
     this.$rootScope = $rootScope;
-    this.$modalInstance = $modalInstance;
     this.moment = moment;
     this.errors = [];
     this.additional_is_opened = false;
-
-    this.reservation = {
-      language: $translate.proposedLanguage().toUpperCase() || 'NL',
-      gender: 'Man',
-      social: null,
-      is_group: false,
-      send_confirmation: true,
-      reservation_parts: [],
-    };
-
-    this.current_part = this.ReservationPart.getNewReservationPart();
-    this.current_part.date_time = this.moment(datetime).format('YYYY-MM-DD HH:mm:ss');
-    this.current_part.number_of_persons = 2;
-    this.current_part.tables = [tableId];
-    this.reservation.reservation_parts.push(this.current_part);
-    this.loadZones();
 
     // translates
     $translate(['number_of_guests', 'notifications.is_required']).then((translates) => {
@@ -41,6 +23,28 @@ export default class AgendaWalkInCtrl {
       this.number_of_guests_text = translationIds.number_of_guests;
       this.is_required_text = translationIds['notifications.is_required'];
     });
+
+    this.$onInit = () => {
+      this.tableId = this.resolve.tableId;
+      this.tableNumber = this.resolve.tableNumber;
+      this.datetime = this.resolve.datetime;
+
+      this.reservation = {
+        language: $translate.proposedLanguage().toUpperCase() || 'NL',
+        gender: 'Man',
+        social: null,
+        is_group: false,
+        send_confirmation: true,
+        reservation_parts: [],
+      };
+
+      this.current_part = this.ReservationPart.getNewReservationPart();
+      this.current_part.date_time = this.moment(this.datetime).format('YYYY-MM-DD HH:mm:ss');
+      this.current_part.number_of_persons = 2;
+      this.current_part.tables = [this.tableId];
+      this.reservation.reservation_parts.push(this.current_part);
+      this.loadZones();
+    }
   }
 
   validForm() {
@@ -66,7 +70,7 @@ export default class AgendaWalkInCtrl {
           this.$rootScope.show_spinner = false;
           this.is_submitting = false;
           this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
-          this.$modalInstance.dismiss('cancel');
+          this.dismiss({ $value: 'cancel' });
         },
         (error) => {
           this.$rootScope.show_spinner = false;
@@ -111,20 +115,16 @@ export default class AgendaWalkInCtrl {
 
   loadZones() {
     this.zones = [];
+    this.tables = [];
 
     this.Zone.getAll(this.current_company_id, this.is_customer_reservation).then(
       (result) => {
         this.zones = result;
-        this.loadTables();
-      }, () => {});
-  }
-
-  loadTables() {
-    this.tables = [];
-
-    this.Table.getAll(this.current_company_id, this.is_customer_reservation).then(
-      (result) => {
-        this.tables = result;
+        this.zones.forEach((zone) => {
+          zone.tables.forEach((table) => {
+            this.tables.push(table);
+          })
+        });
       }, () => {});
   }
 }

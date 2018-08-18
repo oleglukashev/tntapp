@@ -1,8 +1,9 @@
 import angular from 'angular';
 import authTemplate from './settings_lightspeed.auth.view.html';
+import authController from './settings_lightspeed.auth.controller';
 
-export default class SettingsLightspeedCtrl {
-  constructor(User, Table, Settings, Lightspeed, $modal, $rootScope, $mdDialog) {
+export default class Controller {
+  constructor(User, Table, Settings, Lightspeed, $uibModal, $rootScope, $mdDialog) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -10,11 +11,12 @@ export default class SettingsLightspeedCtrl {
     this.Settings = Settings;
     this.Lightspeed = Lightspeed;
     this.$rootScope = $rootScope;
-    this.$modal = $modal;
+    this.$modal = $uibModal;
     this.$mdDialog = $mdDialog;
 
     this.lightspeed_tables = {};
-    this.$rootScope.show_spinner = true;
+
+    this.is_loaded = false;
     this.loadGeneralSettings();
     this.loadTables();
     this.loadLightspeedTables();
@@ -49,10 +51,6 @@ export default class SettingsLightspeedCtrl {
           seats: table.seats,
         };
       });
-
-      this.$rootScope.show_spinner = false;
-    }, () => {
-      this.$rootScope.show_spinner = false;
     });
   }
 
@@ -115,7 +113,8 @@ export default class SettingsLightspeedCtrl {
   showAuthPopup() {
     const modalInstance = this.$modal.open({
       template: authTemplate,
-      controller: 'SettingsLightspeedAuthCtrl as lightspeed_auth',
+      controller: authController,
+      controllerAs: 'ctrl',
       size: 'md',
     });
 
@@ -137,9 +136,7 @@ export default class SettingsLightspeedCtrl {
       .then(
         (tables) => {
           this.tables = tables;
-          this.$rootScope.show_spinner = false;
-        }, () => {
-          this.$rootScope.show_spinner = false;
+          this.is_loaded = true;
         });
   }
 

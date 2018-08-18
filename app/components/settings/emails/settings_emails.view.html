@@ -1,416 +1,448 @@
-<div class='panel'>
-  <div class='panel-heading' translate='settings.emails.emails_title'></div>
-  <form>
-	  <div class='md-list'>
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.emails.request_confirm'></h3>
-		  		<small class='text-muted' translate='settings.emails.request_confirm_description'></small>
-	  		</div>
-	  		<div class='pull-right m-r-n-xs'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='emails_settings.emails_settings_form_data.send_mail_to_owner_on_request'
-            					 ng-change='emails_settings.submitEmailsSettingsForm()'></md-switch>
+<div class='col-lg-8 col-md-8 col-sm-8'>
+  <div ng-if='ctrl.is_loaded'>
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.emails.emails_title'></div>
+      <form>
+    	  <div class='md-list'>
+    	  	<div class='md-list-item clear'>
+    	  		<div class='pull-left'>
+    		  		<h3 class='no-margin text-md' translate='settings.emails.request_confirm'></h3>
+    		  		<small class='text-muted' translate='settings.emails.request_confirm_description'></small>
+    	  		</div>
+    	  		<div class='pull-right m-r-n-xs'>
+              <div class='md-form-group no-padder'>
+                <md-switch ng-model='ctrl.emails_settings_form_data.send_mail_to_owner_on_request'
+                					 ng-change='ctrl.submitEmailsSettingsForm()'></md-switch>
+              </div>
+    	  		</div>
+    	  	</div>
+    	  	<div class='md-list-item clear'>
+    	  		<div class='pull-left'>
+    		  		<h3 class='no-margin text-md' translate='settings.emails.reserv_confirm'></h3>
+    		  		<small class='text-muted' translate='settings.emails.reserv_confirm_description'></small>
+    	  		</div>
+    	  		<div class='pull-right m-r-n-xs'>
+              <div class='md-form-group no-padder'>
+                <md-switch ng-model='ctrl.emails_settings_form_data.send_confirmation_mail_to_owner'
+                					 ng-change='ctrl.submitEmailsSettingsForm()'></md-switch>
+              </div>
+    	  		</div>
+    	  	</div>
+          <div class='md-list-item clear'>
+            <div class='pull-left'>
+              <h3 class='no-margin text-md' translate='settings.emails.email_after_visit'></h3>
+              <small class='text-muted' translate='settings.emails.email_after_visit_description'></small>
+            </div>
+            <div class='pull-right m-r-n-xs'>
+              <div class='md-form-group no-padder'>
+                <md-switch ng-model='ctrl.emails_settings_form_data.send_mail_after_visit'
+                           ng-change='ctrl.submitEmailsSettingsForm()'></md-switch>
+              </div>
+            </div>
           </div>
-	  		</div>
-	  	</div>
-	  	<div class='md-list-item clear'>
-	  		<div class='pull-left'>
-		  		<h3 class='no-margin text-md' translate='settings.emails.reserv_confirm'></h3>
-		  		<small class='text-muted' translate='settings.emails.reserv_confirm_description'></small>
-	  		</div>
-	  		<div class='pull-right m-r-n-xs'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='emails_settings.emails_settings_form_data.send_confirmation_mail_to_owner'
-            					 ng-change='emails_settings.submitEmailsSettingsForm()'></md-switch>
+          <div class='md-list-item clear'>
+            <div class='pull-left m-t-sm'>
+              <h3 class='no-margin text-md' translate='settings.emails.email_after_visit_hours_delay'></h3>
+            </div>
+            <div class='pull-right'>
+              <md-input-container class='w-3x no-margin'>
+                <input type='number'
+                       class='text-center'
+                       ng-model='ctrl.emails_settings_form_data.send_mail_after_visit_hours_delay'
+                       ng-change='ctrl.submitEmailsSettingsForm()'
+                       required
+                       ng-maxlength='3'
+                       minlength='1'
+                       min='0' />
+              </md-input-container>
+            </div>
           </div>
-	  		</div>
-	  	</div>
-      <div class='md-list-item clear'>
-        <div class='pull-left'>
-          <h3 class='no-margin text-md' translate='settings.emails.email_after_visit'></h3>
-          <small class='text-muted' translate='settings.emails.email_after_visit_description'></small>
-        </div>
-        <div class='pull-right m-r-n-xs'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='emails_settings.emails_settings_form_data.send_mail_after_visit'
-                       ng-change='emails_settings.submitEmailsSettingsForm()'></md-switch>
+          <div class='md-list-item clear'>
+            <div class='pull-left m-t-sm'>
+              <h3 class='text-md no-margin' translate='settings.emails.sender_email'></h3>
+              <small class='text-muted' translate='settings.emails.sender_email_description'></small>
+              <md-input-container class='md-block m-t-sm m-b-none w-xl'>
+                <input type='email'
+                       ng-model='ctrl.emails_settings_form_data.sender_email'
+                       ng-blur='ctrl.submitEmailsSettingsForm()' />
+              </md-input-container>
+              <button ng-click='ctrl.sendConfirmSenderEmail()'
+                      ng-if='ctrl.sender_email_is_loaded && !ctrl.emails_settings_form_data.sender_email_confirmed'
+                      target='_blank'
+                      class='block md-btn md-flat btn-fw text-success'
+                      translate='settings.emails.send_conf_email' 
+                      md-ink-ripple></button>
+              <p class='m-t-sm m-b-none'
+                 ng-if='ctrl.email_has_sent'
+                 translate='settings.emails.email_has_sent'></p>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class='md-list-item clear'>
-        <div class='pull-left m-t-sm'>
-          <h3 class='no-margin text-md' translate='settings.emails.email_after_visit_hours_delay'></h3>
-        </div>
-        <div class='pull-right'>
-          <md-input-container class='w-3x no-margin'>
-            <input type='number'
-                   class='text-center'
-                   ng-model='emails_settings.emails_settings_form_data.send_mail_after_visit_hours_delay'
-                   ng-change='emails_settings.submitEmailsSettingsForm()'
-                   required
-                   ng-maxlength='3'
-                   minlength='1'
-                   min='0' />
-          </md-input-container>
-        </div>
-      </div>
-      <div class='md-list-item clear'>
-        <div class='pull-left m-t-sm'>
-          <h3 class='text-md no-margin' translate='settings.emails.sender_email'></h3>
-          <small class='text-muted' translate='settings.emails.sender_email_description'></small>
-          <md-input-container class='md-block m-t-sm m-b-none w-xl'>
-            <input type='email'
-                   ng-model='emails_settings.emails_settings_form_data.sender_email'
-                   ng-blur='emails_settings.submitEmailsSettingsForm()' />
-          </md-input-container>
-          <button ng-click='emails_settings.sendConfirmSenderEmail()'
-                  ng-if='emails_settings.sender_email_is_loaded && !emails_settings.emails_settings_form_data.sender_email_confirmed'
-                  target='_blank'
-                  class='block md-btn md-flat btn-fw text-success'
-                  translate='settings.emails.send_conf_email' 
-                  md-ink-ripple></button>
-          <p class='m-t-sm m-b-none'
-             ng-if='emails_settings.email_has_sent'
-             translate='settings.emails.email_has_sent'></p>
-        </div>
-      </div>
-	  </div>
-  </form>
-</div>
-
-<div class='panel blue-50'>
-  <div class='panel-body'>
-    <p translate='settings.emails.following_placeholders'></p>
-    <ul>
-      <li translate='settings.emails.placeholders.notes'></li>
-      <li translate='settings.emails.placeholders.status'></li>
-      <li translate='settings.emails.placeholders.company_name'></li>
-      <li translate='settings.emails.placeholders.number_of_guests'></li>
-      <li translate='settings.emails.placeholders.time'></li>
-      <li translate='settings.emails.placeholders.first_name'></li>
-      <li translate='settings.emails.placeholders.last_name'></li>
-      <li translate='settings.emails.placeholders.primary_phone'></li>
-      <li translate='settings.emails.placeholders.second_phone'></li>
-      <li translate='settings.emails.placeholders.street'></li>
-      <li translate='settings.emails.placeholders.house_number'></li>
-      <li translate='settings.emails.placeholders.zipcode'></li>
-      <li translate='settings.emails.placeholders.city'></li>
-      <li translate='settings.emails.placeholders.email'></li>
-      <li translate='settings.emails.placeholders.date_of_birth'></li>
-      <li translate='settings.emails.placeholders.gender'></li>
-      <li translate='settings.emails.placeholders.restaurant_name'></li>
-      <li translate='settings.emails.placeholders.product'></li>
-      <li translate='settings.emails.placeholders.end_time'></li>
-      <li translate='settings.emails.placeholders.start_time'></li>
-      <li translate='settings.emails.placeholders.date'></li>
-      <li translate='settings.emails.placeholders.ical_link'></li>
-      <li translate='settings.emails.placeholders.google_cal_link'></li>
-      <li translate='settings.emails.placeholders.tnr_link'></li>
-    </ul>
-  </div>
-</div>
-
-<div class='panel'>
-  <div class='panel-heading' translate='settings.emails.netherlands'></div>
-  <div class='md-list'>
-    <div class='md-list-item no-padder'>
-      <table class='table'>
-        <thead>
-          <th translate='type'></th>
-          <th translate='title'></th>
-          <th></th>
-        </thead>
-        <tbody>
-          <tr ng-repeat="email in emails_settings.email_texts | filter:{ language: 'NL' }">
-            <td class='v-middle'>{{ 'settings.emails.statuses.' + email.type | translate }}</td>
-            <td class='v-middle'>{{ email.title }}</td>
-            <td class='v-middle text-right'>
-              <md-menu>
-                <button md-ink-ripple
-                      class='md-btn md-fab no-shadow'
-                      ng-disabled='disabled'
-                      aria-haspopup='true'
-                      aria-expanded='false'
-                      aria-disabled='false'
-                      ng-click='$mdMenu.open($event)'>
-                  <i class='mdi mdi-dots-vertical i-24'></i>
-                </button>
-                <md-menu-content>
-                  <md-menu-item>
-                    <md-button ng-click='emails_settings.editEmail(email.id)'>
-                      {{ 'settings.emails.edit' | translate }}
-                    </md-button>
-                  </md-menu-item>
-                </md-menu-content>
-              </md-menu>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    	  </div>
+      </form>
     </div>
-  </div>
-</div>
 
-<div class='panel'>
-  <div class='panel-heading' translate='settings.emails.english'></div>
-  <div class='md-list'>
-    <div class='md-list-item no-padder'>
-      <table class='table'>
-        <thead>
-          <th translate='type'></th>
-          <th translate='title'></th>
-          <th></th>
-        </thead>
-        <tbody>
-          <tr ng-repeat="email in emails_settings.email_texts | filter:{ language: 'EN' }">
-            <td class='v-middle'>{{ 'settings.emails.statuses.' + email.type | translate }}</td>
-            <td class='v-middle'>{{ email.title }}</td>
-            <td class='v-middle text-right'>
-              <md-menu>
-                <button md-ink-ripple
-                      class='md-btn md-fab no-shadow'
-                      ng-disabled='disabled'
-                      aria-haspopup='true'
-                      aria-expanded='false'
-                      aria-disabled='false'
-                      ng-click='$mdMenu.open($event)'>
-                  <i class='mdi mdi-dots-vertical i-24'></i>
-                </button>
-                <md-menu-content>
-                  <md-menu-item>
-                    <md-button ng-click='emails_settings.editEmail(email.id)'>
-                      {{ 'settings.emails.edit' | translate }}
-                    </md-button>
-                  </md-menu-item>
-                </md-menu-content>
-              </md-menu>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class='panel blue-50'>
+      <div class='panel-body'>
+        <p translate='settings.emails.following_placeholders'></p>
+        <ul>
+          <li translate='settings.emails.placeholders.notes'></li>
+          <li translate='settings.emails.placeholders.status'></li>
+          <li translate='settings.emails.placeholders.company_name'></li>
+          <li translate='settings.emails.placeholders.number_of_guests'></li>
+          <li translate='settings.emails.placeholders.time'></li>
+          <li translate='settings.emails.placeholders.first_name'></li>
+          <li translate='settings.emails.placeholders.last_name'></li>
+          <li translate='settings.emails.placeholders.primary_phone'></li>
+          <li translate='settings.emails.placeholders.second_phone'></li>
+          <li translate='settings.emails.placeholders.street'></li>
+          <li translate='settings.emails.placeholders.house_number'></li>
+          <li translate='settings.emails.placeholders.zipcode'></li>
+          <li translate='settings.emails.placeholders.city'></li>
+          <li translate='settings.emails.placeholders.email'></li>
+          <li translate='settings.emails.placeholders.date_of_birth'></li>
+          <li translate='settings.emails.placeholders.gender'></li>
+          <li translate='settings.emails.placeholders.restaurant_name'></li>
+          <li translate='settings.emails.placeholders.product'></li>
+          <li translate='settings.emails.placeholders.end_time'></li>
+          <li translate='settings.emails.placeholders.start_time'></li>
+          <li translate='settings.emails.placeholders.date'></li>
+          <li translate='settings.emails.placeholders.ical_link'></li>
+          <li translate='settings.emails.placeholders.google_cal_link'></li>
+          <li translate='settings.emails.placeholders.tnr_link'></li>
+        </ul>
+      </div>
     </div>
-  </div>
-</div>
 
-<div class='panel'
-  ng-if='emails_settings.canShowRegisterTwilioAccountBlock()'>
-  <div class='panel-heading' translate='settings.emails.sms_title'></div>
-  <form>
-    <div class='md-list'>
-      <div class='md-list-item clear'>
-        <div class='pull-left m-t-sm'>
-          <h3 class='no-margin text-md' translate='settings.emails.twilio_sid'></h3>
-        </div>
-        <div class='pull-right'>
-          <button ng-click='emails_settings.registerTwilioSid()'
-            class='block md-btn md-flat btn-fw text-success'
-            translate='settings.emails.register_twilio_sid' 
-            md-ink-ripple></button>
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.emails.netherlands'></div>
+      <div class='md-list'>
+        <div class='md-list-item no-padder'>
+          <table class='table'>
+            <thead>
+              <th translate='type'></th>
+              <th translate='title'></th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="email in ctrl.email_texts | filter:{ language: 'NL' }">
+                <td class='v-middle'>{{ 'settings.emails.statuses.' + email.type | translate }}</td>
+                <td class='v-middle'>{{ email.title }}</td>
+                <td class='v-middle text-right'>
+                  <md-menu>
+                    <button md-ink-ripple
+                          class='md-btn md-fab no-shadow'
+                          ng-disabled='disabled'
+                          aria-haspopup='true'
+                          aria-expanded='false'
+                          aria-disabled='false'
+                          ng-click='$mdMenu.open($event)'>
+                      <i class='mdi mdi-dots-vertical i-24'></i>
+                    </button>
+                    <md-menu-content>
+                      <md-menu-item>
+                        <md-button ng-click='ctrl.editEmail(email.id)'>
+                          {{ 'settings.emails.edit' | translate }}
+                        </md-button>
+                      </md-menu-item>
+                    </md-menu-content>
+                  </md-menu>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  </form>
-</div>
 
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.emails.english'></div>
+      <div class='md-list'>
+        <div class='md-list-item no-padder'>
+          <table class='table'>
+            <thead>
+              <th translate='type'></th>
+              <th translate='title'></th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="email in ctrl.email_texts | filter:{ language: 'EN' }">
+                <td class='v-middle'>{{ 'settings.emails.statuses.' + email.type | translate }}</td>
+                <td class='v-middle'>{{ email.title }}</td>
+                <td class='v-middle text-right'>
+                  <md-menu>
+                    <button md-ink-ripple
+                          class='md-btn md-fab no-shadow'
+                          ng-disabled='disabled'
+                          aria-haspopup='true'
+                          aria-expanded='false'
+                          aria-disabled='false'
+                          ng-click='$mdMenu.open($event)'>
+                      <i class='mdi mdi-dots-vertical i-24'></i>
+                    </button>
+                    <md-menu-content>
+                      <md-menu-item>
+                        <md-button ng-click='ctrl.editEmail(email.id)'>
+                          {{ 'settings.emails.edit' | translate }}
+                        </md-button>
+                      </md-menu-item>
+                    </md-menu-content>
+                  </md-menu>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-<div class='panel' ng-show='emails_settings.emails_settings_form_data.twilio_sid'>
-  <div class='panel-heading' translate='settings.emails.sms_title'></div>
-  <form>
-    <div class='md-list'>
-      <div class='md-list-item clear'>
-        <div class='pull-left m-t-sm'>
-          <h3 class='no-margin text-md' translate='settings.emails.twilio_sid'></h3>
-        </div>
-        <div class='pull-right'>
-          <button ng-click='emails_settings.twilioBalance()'
-            class='md-btn md-flat btn-fw text-success'
-            translate='settings.emails.twilio_balance' 
-            md-ink-ripple></button>
-          <button ng-click='emails_settings.updateTwilioStatus("suspended")'
-            ng-if='emails_settings.emails_settings_form_data.twilio_status != "suspended"'
-            class='md-btn md-flat btn-fw text-success'
-            translate='settings.emails.suspend_twilio_sid' 
-            md-ink-ripple></button>
-          <button ng-click='emails_settings.updateTwilioStatus("active")'
-            ng-if='emails_settings.emails_settings_form_data.twilio_status != "active"'
-            class='md-btn md-flat btn-fw text-success'
-            translate='settings.emails.activate_twilio_sid' 
-            md-ink-ripple></button>
-        </div>
-      </div>
-      <div class='md-list-item clear'>
-        <div class='pull-left m-t-sm'>
-          <h3 class='no-margin text-md' translate='settings.emails.twilio_token'></h3>
-        </div>
-        <div class='pull-right'>
-          <md-input-container class='no-margin'>
-            <input type='text'
-                   ng-model='emails_settings.emails_settings_form_data.twilio_token'
-                   ng-change='emails_settings.submitEmailsSettingsForm()' />
-          </md-input-container>
-        </div>
-      </div>
-      <div class='md-list-item clear'>
-        <div class='pull-left m-t-sm'>
-          <h3 class='no-margin text-md' translate='settings.emails.twilio_phone_number'></h3>
-        </div>
-        <div class='pull-right'>
-          <md-input-container class='no-margin'>
-            <input type='text'
-                   ng-model='emails_settings.emails_settings_form_data.twilio_phone_number'
-                   ng-change='emails_settings.submitEmailsSettingsForm()' />
-          </md-input-container>
-        </div>
-      </div>
-      <div class='md-list-item clear'>
-        <div class='pull-left'>
-          <h3 class='no-margin text-md' translate='settings.emails.confirmation_sms'></h3>
-          <small class='text-muted' translate='settings.emails.confirmation_sms_description'></small>
-        </div>
-        <div class='pull-right m-r-n-xs'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='emails_settings.emails_settings_form_data.send_confirmation_sms'
-                       ng-change='emails_settings.submitEmailsSettingsForm()'></md-switch>
+    <div
+      class='panel'
+      ng-if='ctrl.canShowRegisterTwilioAccountBlock()'>
+      <div class='panel-heading' translate='settings.emails.sms_title'></div>
+      <form>
+        <div class='md-list'>
+          <div class='md-list-item clear'>
+            <div class='pull-left m-t-sm'>
+              <h3 class='no-margin text-md' translate='settings.emails.twilio_sid'></h3>
+            </div>
+            <div class='pull-right'>
+              <button ng-click='ctrl.registerTwilioSid()'
+                class='block md-btn md-flat btn-fw text-success'
+                translate='settings.emails.register_twilio_sid' 
+                md-ink-ripple></button>
+            </div>
           </div>
         </div>
-      </div>
-      <div class='md-list-item clear'>
-        <div class='pull-left'>
-          <h3 class='no-margin text-md' translate='settings.emails.sms_before_visit'></h3>
-          <small class='text-muted' translate='settings.emails.sms_before_visit_description'></small>
-        </div>
-        <div class='pull-right m-r-n-xs'>
-          <div class='md-form-group no-padder'>
-            <md-switch ng-model='emails_settings.emails_settings_form_data.send_sms_before_visit'
-                       ng-change='emails_settings.submitEmailsSettingsForm()'></md-switch>
+      </form>
+    </div>
+
+
+    <div class='panel' ng-show='ctrl.emails_settings_form_data.twilio_sid'>
+      <div class='panel-heading' translate='settings.emails.sms_title'></div>
+      <form>
+        <div class='md-list'>
+          <div class='md-list-item clear'>
+            <div class='pull-left m-t-sm'>
+              <h3 class='no-margin text-md' translate='settings.emails.twilio_sid'></h3>
+            </div>
+            <div class='pull-right'>
+              <button ng-click='ctrl.twilioBalance()'
+                class='md-btn md-flat btn-fw text-success'
+                translate='settings.emails.twilio_balance' 
+                md-ink-ripple></button>
+              <button ng-click='ctrl.updateTwilioStatus("suspended")'
+                ng-if='ctrl.emails_settings_form_data.twilio_status != "suspended"'
+                class='md-btn md-flat btn-fw text-success'
+                translate='settings.emails.suspend_twilio_sid' 
+                md-ink-ripple></button>
+              <button ng-click='ctrl.updateTwilioStatus("active")'
+                ng-if='ctrl.emails_settings_form_data.twilio_status != "active"'
+                class='md-btn md-flat btn-fw text-success'
+                translate='settings.emails.activate_twilio_sid' 
+                md-ink-ripple></button>
+            </div>
+          </div>
+          <div class='md-list-item clear'>
+            <div class='pull-left m-t-sm'>
+              <h3 class='no-margin text-md' translate='settings.emails.twilio_token'></h3>
+            </div>
+            <div class='pull-right'>
+              <md-input-container class='no-margin'>
+                <input type='text'
+                       ng-model='ctrl.emails_settings_form_data.twilio_token'
+                       ng-change='ctrl.submitEmailsSettingsForm()' />
+              </md-input-container>
+            </div>
+          </div>
+          <div class='md-list-item clear'>
+            <div class='pull-left m-t-sm'>
+              <h3 class='no-margin text-md' translate='settings.emails.twilio_phone_number'></h3>
+            </div>
+            <div class='pull-right'>
+              <md-input-container class='no-margin'>
+                <input type='text'
+                       ng-model='ctrl.emails_settings_form_data.twilio_phone_number'
+                       ng-change='ctrl.submitEmailsSettingsForm()' />
+              </md-input-container>
+            </div>
+          </div>
+          <div class='md-list-item clear'>
+            <div class='pull-left'>
+              <h3 class='no-margin text-md' translate='settings.emails.confirmation_sms'></h3>
+              <small class='text-muted' translate='settings.emails.confirmation_sms_description'></small>
+            </div>
+            <div class='pull-right m-r-n-xs'>
+              <div class='md-form-group no-padder'>
+                <md-switch ng-model='ctrl.emails_settings_form_data.send_confirmation_sms'
+                           ng-change='ctrl.submitEmailsSettingsForm()'></md-switch>
+              </div>
+            </div>
+          </div>
+          <div class='md-list-item clear'>
+            <div class='pull-left'>
+              <h3 class='no-margin text-md' translate='settings.emails.sms_before_visit'></h3>
+              <small class='text-muted' translate='settings.emails.sms_before_visit_description'></small>
+            </div>
+            <div class='pull-right m-r-n-xs'>
+              <div class='md-form-group no-padder'>
+                <md-switch ng-model='ctrl.emails_settings_form_data.send_sms_before_visit'
+                           ng-change='ctrl.submitEmailsSettingsForm()'></md-switch>
+              </div>
+            </div>
+          </div>
+          <div class='md-list-item clear'>
+            <div class='pull-left m-t-sm'>
+              <h3 class='no-margin text-md' translate='settings.emails.sms_before_visit_hours_delay'></h3>
+            </div>
+            <div class='pull-right'>
+              <md-input-container class='w-3x no-margin'>
+                <input type='number'
+                       class='text-center'
+                       ng-model='ctrl.emails_settings_form_data.send_sms_before_visit_hours_delay'
+                       ng-change='ctrl.submitEmailsSettingsForm()'
+                       required
+                       ng-maxlength='3'
+                       minlength='1'
+                       min='0' />
+              </md-input-container>
+            </div>
+          </div>
+          <div class='md-list-item clear'>
+            <div class='pull-left'>
+              <i class='mdi mdi-alert-circle i-24 m-r-sm'></i>
+            </div>
+            <div class='pull-left'>
+              <div>1 SMS = 153 characters</div>
+              <div>1 SMS = €0,15</div>
+              <div class='font-bold' translate='notifications.sms_placeholders'></div>
+            </div>
+          </div>
+          <div class='md-list-item clear'>
+            <div class='pull-left'>
+              <h3 class='no-margin text-md'>Status</h3>
+            </div>
+            <div class='pull-right'>
+              <span
+                class='uppercase label text-md'
+                ng-class="{ 'label-success': ctrl.emails_settings_form_data.twilio_status == 'active',
+                            'label-warning': ctrl.emails_settings_form_data.twilio_status == 'suspended',
+                            'label-dander': ctrl.emails_settings_form_data.twilio_status == 'closed'
+              }">        
+                {{ ctrl.emails_settings_form_data.twilio_status }}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <div class='md-list-item clear'>
-        <div class='pull-left m-t-sm'>
-          <h3 class='no-margin text-md' translate='settings.emails.sms_before_visit_hours_delay'></h3>
-        </div>
-        <div class='pull-right'>
-          <md-input-container class='w-3x no-margin'>
-            <input type='number'
-                   class='text-center'
-                   ng-model='emails_settings.emails_settings_form_data.send_sms_before_visit_hours_delay'
-                   ng-change='emails_settings.submitEmailsSettingsForm()'
-                   required
-                   ng-maxlength='3'
-                   minlength='1'
-                   min='0' />
-          </md-input-container>
-        </div>
-      </div>
-      <div class='md-list-item clear'>
-        <div class='pull-left'>
-          <i class='mdi mdi-alert-circle i-24 m-r-sm'></i>
-        </div>
-        <div class='pull-left'>
-          <div>1 SMS = 153 characters</div>
-          <div>1 SMS = €0,15</div>
-          <div class='font-bold' translate='notifications.sms_placeholders'></div>
-        </div>
-      </div>
-      <div class='md-list-item clear'>
-        <div class='pull-left'>
-          <h3 class='no-margin text-md'>Status</h3>
-        </div>
-        <div class='pull-right'>
-          <span
-            class='uppercase label text-md'
-            ng-class="{ 'label-success': emails_settings.emails_settings_form_data.twilio_status == 'active',
-                        'label-warning': emails_settings.emails_settings_form_data.twilio_status == 'suspended',
-                        'label-dander': emails_settings.emails_settings_form_data.twilio_status == 'closed'
-          }">        
-            {{ emails_settings.emails_settings_form_data.twilio_status }}
-          </span>
+      </form>
+    </div>
+
+    <div class='panel' ng-show='ctrl.emails_settings_form_data.twilio_sid'>
+      <div class='panel-heading' translate='settings.emails.sms_netherlands'></div>
+      <div class='md-list'>
+        <div class='md-list-item no-padder'>
+          <table class='table'>
+            <thead>
+              <th translate='type'></th>
+              <th translate='title'></th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="sms in ctrl.sms_texts | filter:{ language: 'NL' }">
+                <td class='v-middle'>{{ 'settings.emails.sms_statuses.' + sms.type | translate }}</td>
+                <td class='v-middle' ng-bind-html='ctrl.convertContent(sms.content)'></td>
+                <td class='v-middle text-right'>
+                  <md-menu>
+                    <button md-ink-ripple
+                          class='md-btn md-fab no-shadow'
+                          ng-disabled='disabled'
+                          aria-haspopup='true'
+                          aria-expanded='false'
+                          aria-disabled='false'
+                          ng-click='$mdMenu.open($event)'>
+                      <i class='mdi mdi-dots-vertical i-24'></i>
+                    </button>
+                    <md-menu-content>
+                      <md-menu-item>
+                        <md-button ng-click='ctrl.editSms(sms.id)'>
+                          {{ 'settings.emails.edit_sms' | translate }}
+                        </md-button>
+                      </md-menu-item>
+                    </md-menu-content>
+                  </md-menu>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  </form>
-</div>
 
-<div class='panel' ng-show='emails_settings.emails_settings_form_data.twilio_sid'>
-  <div class='panel-heading' translate='settings.emails.sms_netherlands'></div>
-  <div class='md-list'>
-    <div class='md-list-item no-padder'>
-      <table class='table'>
-        <thead>
-          <th translate='type'></th>
-          <th translate='title'></th>
-          <th></th>
-        </thead>
-        <tbody>
-          <tr ng-repeat="sms in emails_settings.sms_texts | filter:{ language: 'NL' }">
-            <td class='v-middle'>{{ 'settings.emails.sms_statuses.' + sms.type | translate }}</td>
-            <td class='v-middle' ng-bind-html='emails_settings.convertContent(sms.content)'></td>
-            <td class='v-middle text-right'>
-              <md-menu>
-                <button md-ink-ripple
-                      class='md-btn md-fab no-shadow'
-                      ng-disabled='disabled'
-                      aria-haspopup='true'
-                      aria-expanded='false'
-                      aria-disabled='false'
-                      ng-click='$mdMenu.open($event)'>
-                  <i class='mdi mdi-dots-vertical i-24'></i>
-                </button>
-                <md-menu-content>
-                  <md-menu-item>
-                    <md-button ng-click='emails_settings.editSms(sms.id)'>
-                      {{ 'settings.emails.edit_sms' | translate }}
-                    </md-button>
-                  </md-menu-item>
-                </md-menu-content>
-              </md-menu>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class='panel' ng-show='ctrl.emails_settings_form_data.twilio_sid'>
+      <div class='panel-heading' translate='settings.emails.sms_english'></div>
+      <div class='md-list'>
+        <div class='md-list-item no-padder'>
+          <table class='table'>
+            <thead>
+              <th translate='type'></th>
+              <th translate='title'></th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="sms in ctrl.sms_texts | filter:{ language: 'EN' }">
+                <td class='v-middle'>{{ 'settings.emails.sms_statuses.' + sms.type | translate }}</td>
+                <td class='v-middle' ng-bind-html='ctrl.convertContent(sms.content)'></td>
+                <td class='v-middle text-right'>
+                  <md-menu>
+                    <button md-ink-ripple
+                          class='md-btn md-fab no-shadow'
+                          ng-disabled='disabled'
+                          aria-haspopup='true'
+                          aria-expanded='false'
+                          aria-disabled='false'
+                          ng-click='$mdMenu.open($event)'>
+                      <i class='mdi mdi-dots-vertical i-24'></i>
+                    </button>
+                    <md-menu-content>
+                      <md-menu-item>
+                        <md-button ng-click='ctrl.editSms(sms.id)'>
+                          {{ 'settings.emails.edit_sms' | translate }}
+                        </md-button>
+                      </md-menu-item>
+                    </md-menu-content>
+                  </md-menu>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<div class='panel' ng-show='emails_settings.emails_settings_form_data.twilio_sid'>
-  <div class='panel-heading' translate='settings.emails.sms_english'></div>
-  <div class='md-list'>
-    <div class='md-list-item no-padder'>
-      <table class='table'>
-        <thead>
-          <th translate='type'></th>
-          <th translate='title'></th>
-          <th></th>
-        </thead>
-        <tbody>
-          <tr ng-repeat="sms in emails_settings.sms_texts | filter:{ language: 'EN' }">
-            <td class='v-middle'>{{ 'settings.emails.sms_statuses.' + sms.type | translate }}</td>
-            <td class='v-middle' ng-bind-html='emails_settings.convertContent(sms.content)'></td>
-            <td class='v-middle text-right'>
-              <md-menu>
-                <button md-ink-ripple
-                      class='md-btn md-fab no-shadow'
-                      ng-disabled='disabled'
-                      aria-haspopup='true'
-                      aria-expanded='false'
-                      aria-disabled='false'
-                      ng-click='$mdMenu.open($event)'>
-                  <i class='mdi mdi-dots-vertical i-24'></i>
-                </button>
-                <md-menu-content>
-                  <md-menu-item>
-                    <md-button ng-click='emails_settings.editSms(sms.id)'>
-                      {{ 'settings.emails.edit_sms' | translate }}
-                    </md-button>
-                  </md-menu-item>
-                </md-menu-content>
-              </md-menu>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class='panel' ng-if='!ctrl.is_loaded'>
+    <div class='panel-heading' translate='settings.emails.emails_title'></div>
+    <md-list class='no-padder'>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+    </md-list>
   </div>
+</div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+  <settings-menu></settings-menu>
 </div>

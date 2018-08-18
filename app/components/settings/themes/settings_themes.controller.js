@@ -1,4 +1,4 @@
-export default class SettingsThemesCtrl {
+export default class Controller {
   constructor(User, Settings, AppConstants, $rootScope, $cookieStore) {
     'ngInject';
 
@@ -12,7 +12,6 @@ export default class SettingsThemesCtrl {
     this.loadTheme();
 
     this.is_loaded = false;
-    this.$rootScope.show_spinner = true;
   }
 
   submitForm() {
@@ -34,14 +33,10 @@ export default class SettingsThemesCtrl {
       .getThemeSettings(this.current_company_id).then(
         (result) => {
           this.is_loaded = true;
-          this.$rootScope.show_spinner = false;
 
           if (result.plugin_theme_name) {
             this.plugin_theme_name = result.plugin_theme_name;
           }
-        },
-        () => {
-          this.$rootScope.show_spinner = false;
         });
   }
 }

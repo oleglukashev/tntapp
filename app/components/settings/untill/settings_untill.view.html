@@ -1,0 +1,66 @@
+<div class='col-lg-8 col-md-8 col-sm-8'>
+  <div class='panel' ng-if='ctrl.is_loaded'>
+    <div class='panel-heading clearfix'>
+      Untill
+    </div>
+    <div class='md-list'>
+      <div class='md-list-item clear'
+           ng-repeat='table in ctrl.tables'>
+        <div class='pull-left'>
+          <h3 class='no-margin text-md'>
+            {{ 'table' | translate }}: {{ table.table_number }}
+          </h3>
+          <small class='text-muted'></small>
+        </div>
+        <div class='pull-right'>
+          <md-autocomplete
+            md-search-text='table.untill_table_id'
+            md-search-text-change='ctrl.changeSearch(table, table.untill_table_id)'
+            md-items='item in ctrl.searchUntillTable(table.untill_table_id)'
+            md-item-text='item'
+            md-min-length='1'
+            md-menu-container-class='input-suggestion'
+            md-floating-label='{{ "table" | translate }}'>
+            <md-item-template>
+              <div ng-click='ctrl.updateTable(table, item)'>{{ item }}</div>
+            </md-item-template>
+          </md-autocomplete>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='panel' ng-if='!ctrl.is_loaded'>
+    <div class='panel-heading clearfix'>
+      Untill
+    </div>
+    <md-list class='no-padder'>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+    </md-list>
+  </div>
+  <pagination
+    check-next-page='ctrl.checkNextPage(page, perPage)'
+    page='ctrl.page'
+    per-page='ctrl.per_page'
+    next='ctrl.next()'
+    prev='ctrl.prev()'></pagination>
+</div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+  <settings-menu></settings-menu>
+</div>

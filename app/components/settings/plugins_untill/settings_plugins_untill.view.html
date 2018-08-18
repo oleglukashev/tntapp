@@ -1,0 +1,55 @@
+<div class='col-lg-8 col-md-8 col-sm-8'>
+  <div class='panel'>
+    <div class='panel-heading'>
+      Untill Auth
+    </div>
+    <form ng-submit='ctrl.submitFormUntill();'>
+      <div class='panel-body clearfix form-horizontal'>
+        <div class='row'>
+          <label class='col-sm-2 col-xs-12 text-left control-label'>Auth</label>
+          <div class='col-sm-4 col-xs-5 p-r-none'>
+            <input type='text'
+                   placeholder='Login'
+                   class='form-control'
+                   ng-model='ctrl.untill_login' />
+          </div>
+          <div class='col-sm-6 col-xs-7'>
+            <input type='password'
+                   placeholder='Password'
+                   class='form-control'
+                   ng-model='ctrl.untill_password' />
+          </div>
+        </div>
+      </div>
+      <div class='panel-footer clearfix form-horizontal'>
+        <div class='row'>
+          <label class='col-sm-2 col-xs-12 text-left control-label'>Server URL</label>
+          <div class='col-sm-4 col-xs-5 p-r-none'>
+            <div class='input-group'>
+              <input type='text'
+                     placeholder='api.untill.com'
+                     class='form-control'
+                     ng-model='ctrl.untill_server' />
+              <span class='input-group-btn'>
+                <button type='submit'
+                        class='md-button btn-success no-margin'
+                        translate='save'></button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-sm-4 col-sm-offset-9 p-r-none'>
+            <button type='button'
+                  class='md-button btn-danger no-margin'
+                  ng-click='ctrl.removeLink()'
+                  translate='settings.plugins.delete_link'></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+  <settings-menu></settings-menu>
+</div>

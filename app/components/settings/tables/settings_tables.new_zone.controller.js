@@ -1,5 +1,5 @@
 export default class SettingsTablesNewZoneCtrl {
-  constructor(User, Zone, SettingsTablesZoneFactory, zones, $rootScope, $modalInstance) {
+  constructor(User, Zone, SettingsTablesZoneFactory, zones, $rootScope, $uibModalInstance) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -7,7 +7,7 @@ export default class SettingsTablesNewZoneCtrl {
     this.ZoneService = Zone;
     this.zonesList = zones;
     this.$rootScope = $rootScope;
-    this.$modalInstance = $modalInstance;
+    this.$modalInstance = $uibModalInstance;
     this.item = {};
 
     SettingsTablesZoneFactory(this);

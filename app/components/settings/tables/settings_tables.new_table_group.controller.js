@@ -1,12 +1,12 @@
 export default class SettingsTablesNewTableGroupCtrl {
-  constructor(tableGroups, tablesByZone, User, TableGroup, $rootScope, $modalInstance) {
+  constructor(tableGroups, tablesByZone, User, TableGroup, $rootScope, $uibModalInstance) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.TableGroupService = TableGroup;
     this.tableGroups = tableGroups;
     this.tablesByZone = tablesByZone;
-    this.$modalInstance = $modalInstance;
+    this.$modalInstance = $uibModalInstance;
     this.$rootScope = $rootScope;
     this.form_data = {
       color: '#ffffff',

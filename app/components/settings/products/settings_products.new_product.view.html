@@ -3,11 +3,11 @@
     <div class='md-toolbar-tools'>
       <h2 md-truncate flex>
         <i class='mdi mdi-arrow-left m-r-sm'
-           ng-click='new_product.tabIndex=0'
-           ng-if="new_product.tabIndex==1"></i>
+           ng-click='ctrl.tabIndex=0'
+           ng-if="ctrl.tabIndex==1"></i>
         {{ 'settings.products.add_title' | translate }}
       </h2>
-      <md-button md-no-ink class="md-icon-button" ng-click='new_product.closeModal();'>
+      <md-button md-no-ink class="md-icon-button" ng-click='ctrl.closeModal();'>
         <i class='mdi mdi-close m-r-sm i-24'></i>
       </md-button>
     </div>
@@ -16,7 +16,7 @@
 
   <md-tabs class='product_tabs'
            flex
-           md-selected='new_product.tabIndex'
+           md-selected='ctrl.tabIndex'
            md-no-pagination
            md-stretch-tabs
            md-dynamic-height>
@@ -30,15 +30,15 @@
           </div>
           <div class='settings_add_items'>
             <div class='clearfix'>
-              <label ng-repeat="(product, className) in new_product.iconsClasses"
-                     ng-class="{ 'disabled': new_product.productsNames().includes(product) }"
-                     ng-click='new_product.changeClass(className)'
-                     class='box'
-                     ng-model='new_product.item.name'
-                     uncheckable
-                     btn-radio='product'>
+              <label ng-repeat="(product, className) in ctrl.iconsClasses"
+                ng-class="{ 'disabled': ctrl.productsNames().includes(product) }"
+                ng-click='ctrl.changeClass(className)'
+                class='box'
+                ng-model='ctrl.item.name'
+                uib-uncheckable
+                uib-btn-radio='product'>
                 <i class='box_active_icon mdi mdi-check'></i>
-                <i class='box_icon mdi {{ new_product.iconsClasses[product] }}'></i>
+                <i class='box_icon mdi {{ ctrl.iconsClasses[product] }}'></i>
                 <p class='no-margin'>
                   {{ product }}
                 </p>
@@ -49,22 +49,22 @@
           <div class='m-l-sm'>
             <form name="new_product_form">
             <button
-                  ng-hide='new_product.add_name_is_opened'
+                  ng-hide='ctrl.add_name_is_opened'
                   class='md-btn md-flat btn-fw m-t-md m-l-xs text-success'
-                  ng-click='new_product.add_name_is_opened = true;'>
+                  ng-click='ctrl.add_name_is_opened = true;'>
               <i class='mdi mdi-plus-circle-outline'></i>
               <translate class='uppercase'>{{ 'add_name' | translate }}</translate>
             </button>
 
-            <md-input-container class='m-l-sm' ng-show='new_product.add_name_is_opened'>
+            <md-input-container class='m-l-sm' ng-show='ctrl.add_name_is_opened'>
               <label translate='add_name'></label>
-              <input ng-model='new_product.item.name' required />
+              <input ng-model='ctrl.item.name' required />
             </md-input-container>
 
-            <md-input-container ng-show="new_product.add_name_is_opened" class="m-t-n-s">
+            <md-input-container ng-show="ctrl.add_name_is_opened" class="m-t-n-s">
               <label translate='icon'></label>
-              <md-select ng-model="new_product.item.icon_class" required>
-                <md-option ng-repeat="icon_class in new_product.uniqIcons" ng-value="icon_class">
+              <md-select ng-model="ctrl.item.icon_class" required>
+                <md-option ng-repeat="icon_class in ctrl.uniqIcons" ng-value="icon_class">
                   <i class="mdi {{ icon_class }} i-24"></i>
                 </md-option>
               </md-select>
@@ -74,8 +74,8 @@
 
           <button class='btn btn-lg btn-success text-success no-top-radius md-content-button'
                   ng-class="{ 'disabled': !new_product_form.$valid }"
-                  ng-click='new_product.selectProduct();new_product.tabIndex=1'>
-            <span ng-hide='new_product.is_submitting' class='uppercase'>next</span>
+                  ng-click='ctrl.selectProduct();ctrl.tabIndex=1'>
+            <span ng-hide='ctrl.is_submitting' class='uppercase'>next</span>
           </button>
         </div>
       </md-tab-body>
@@ -87,7 +87,7 @@
           <div class='md-list-item'>
             <div class='md-list-item-content text-center'>
               <h4 translate='settings.products.what_time'
-                  translate-values='{ name: new_product.item.name }'></h4>
+                  translate-values='{ name: ctrl.item.name }'></h4>
             </div>
           </div>
           <div class='wrapper'>
@@ -102,13 +102,13 @@
                   <th class="eleven-o-clock"><div>11:00</div></th>
                   <th class="twenty-four-o-clock2"><div>23:45</div></th>
                 </thead>
-                <tr ng-repeat="slider in new_product.sliders track by $index">
+                <tr ng-repeat="slider in ctrl.sliders track by $index">
                   <td>{{ slider.name | translate }}</td>
                   <td colspan="2">
                      <rzslider
-                      rz-slider-model="new_product.sliders[$index].slider.minValue"
-                      rz-slider-high="new_product.sliders[$index].slider.maxValue"
-                      rz-slider-options="new_product.sliderOptions"
+                      rz-slider-model="ctrl.sliders[$index].slider.minValue"
+                      rz-slider-high="ctrl.sliders[$index].slider.maxValue"
+                      rz-slider-options="ctrl.sliderOptions"
                     ></rzslider>
                   </td>
                 </tr>
@@ -117,9 +117,9 @@
             </div>
           </div>
           <button class='btn btn-lg btn-success text-success no-top-radius md-content-button'
-                  ng-class="{ 'disabled': !new_product.item.name || new_product.is_submitting }"
-                  ng-click='new_product.submitForm();'
-                  ng-disabled="new_product.is_submitting"
+                  ng-class="{ 'disabled': !ctrl.item.name || ctrl.is_submitting }"
+                  ng-click='ctrl.submitForm();'
+                  ng-disabled="ctrl.is_submitting"
                   translate='complete'>
           </button>
         </div>

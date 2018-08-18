@@ -1,0 +1,53 @@
+<section class='reservation_modal no-margin'>
+  <md-toolbar>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex>
+        <i class='mdi mdi-arrow-left m-r-sm'
+           ng-click='ctrl.selected_type_index=0'
+           ng-if='ctrl.selected_type_index > 0'></i>
+        {{ 'new_reservation' | translate }}
+      </h2>
+      <md-button class='md-icon-button'
+        ng-click='ctrl.closeModalOrConfirm(ctrl.is_success)'>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <div
+      ng-if='!ctrl.type'
+      class='md-content-submit select-product-wrapper b-t walk-in-wrapper'
+      flex>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4 translate='reservation.reservation_kind_title'></h4>
+        </div>
+      </div>
+      <div class='settings_add_items m-t-md text-center'>
+        <div class='clearfix'>
+          <label ng-click='ctrl.setType("regular")'
+            class='box'
+            uib-uncheckable>
+            <i class='box_icon mdi mdi-clipboard-outline i-40'></i>
+            <div class='m-t-sm' translate='reservation.regular'></div>
+          </label>
+          <label ng-click='ctrl.setType("walkin")'
+            class='box'
+            uib-uncheckable>
+            <i class='box_icon mdi mdi-walk i-40'></i>
+            <div class='m-t-sm' translate='reservation.walkin'></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <new-reservation
+      ng-show='ctrl.type === "regular"'
+      type='dashboard'></new-reservation>
+
+    <walkin-new-reservation
+      ng-if='ctrl.type === "walkin"'
+      type='dashboard'></walkin-new-reservation>
+
+  </md-content>
+</section>

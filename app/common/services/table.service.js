@@ -9,13 +9,13 @@ export default class Table {
     this.filterFilter = filterFilter;
   }
 
-  getAll(companyId, skipJwtAuth) {
+  getAll(companyId, page, perPage, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/tables`,
+      url: buildURL(`${API_URL}/company/${companyId}/tables`, { page, per_page: perPage }),
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);

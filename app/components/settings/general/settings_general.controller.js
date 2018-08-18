@@ -1,4 +1,4 @@
-export default class SettingsGeneralCtrl {
+export default class Controller {
   constructor(User, Settings, moment, $scope, $rootScope, $q) {
     'ngInject';
 
@@ -8,7 +8,6 @@ export default class SettingsGeneralCtrl {
     this.$rootScope = $rootScope;
     this.Settings = Settings;
     this.moment = moment;
-    this.is_loaded = false;
 
     this.default_penalty = 10;
 
@@ -24,16 +23,14 @@ export default class SettingsGeneralCtrl {
       enable_request_type: false,
     };
 
-    this.$rootScope.show_spinner = true;
+    this.is_loaded = false;
     $q.all([
       this.Settings.getGeneralSettings(this.current_company_id),
       this.Settings.getEmailsSettings(this.current_company_id),
     ]).then((result) => {
-      this.$rootScope.show_spinner = false;
+      this.is_loaded = true;
       this.initGeneralSettings(result[0]);
       this.initEmailSettings(result[1]);
-    }, () => {
-      this.$rootScope.show_spinner = false;
     });
   }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang='en' data-ng-app='app'>
+<html lang='en'>
 <head>
   <meta charset='utf-8' />
   <title>TheNextTable</title>
@@ -7,12 +7,12 @@
   <meta name='keywords' content='TheNextTable' />
   <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1' />
   <link rel='icon' type='image/png' href='/favicon.png'>
-  <link rel='stylesheet' href='/public/assets/app.min.css?v=0.0.34' type='text/css' />
+  <link rel='stylesheet' href='/public/assets/app.min.css?v=0.0.20' type='text/css' />
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
 </head>
-<body ng-controller='AppCtrl as app' ng-class='app.theme_class'>
+<body data-ng-app='app' ng-controller='AppCtrl as app' ng-class='app.theme_class'>
   <div class='app' id='app' ui-view></div>
-  <script src='/public/assets/vendor.min.js?v=0.0.34'></script>
-  <script src='/public/assets/app.min.js?v=0.0.34'></script>
+  <script src='/public/assets/vendor.min.js?v=0.0.20'></script>
+  <script src='/public/assets/app.min.js?v=0.0.20'></script>
 </body>
 </html>

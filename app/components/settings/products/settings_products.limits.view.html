@@ -1,13 +1,13 @@
-<div class='panel seats-free' ng-show='product_limits.is_loaded'>
+<div class='panel seats-free' ng-show='ctrl.is_loaded'>
   <div class='panel-heading'>Productlimieten</div>
 
   <div class='wrapper'>
     <p class='text-muted'>Het limiet staat op manage.general.limittypes.tafels. Dit kan aangepast worden in de algemene instellingen.</p>
     <p class='text-muted'>Hier kunt u het aantal personen / tafels dat per tijdslot gereserveerd kan worden aanpassen. Selecteer een waarde en klik op een tijdslot om de limieten in te stellen. Klik nogmaals om een limiet te verwijderen.</p>
 
-    <md-input-container ng-show='product_limits.type'>
-      <label>{{ product_limits.type }}</label>
-      <input type='number' min='0' ng-model='product_limits.limit' />
+    <md-input-container ng-show='ctrl.type'>
+      <label>{{ ctrl.type }}</label>
+      <input type='number' min='0' ng-model='ctrl.limit' />
     </md-input-container>
 
     <div class='scroll-x'>
@@ -15,16 +15,16 @@
         <thead>
           <th>Dag</th>
           <th class='clickable'
-              ng-repeat='time in product_limits.times'
-              ng-click='product_limits.saveLimitByTime(time)'>{{ time }}</th>
+              ng-repeat='time in ctrl.times'
+              ng-click='ctrl.saveLimitByTime(time)'>{{ time }}</th>
         </thead>
         <tbody>
-          <tr ng-repeat='(number_of_day, day) in product_limits.days'>
-            <td class='clickable' ng-click='product_limits.saveLimitByDay(number_of_day)'>{{ day }}</td>
+          <tr ng-repeat='(number_of_day, day) in ctrl.days'>
+            <td class='clickable' ng-click='ctrl.saveLimitByDay(number_of_day)'>{{ day }}</td>
             <td class='clickable time'
-                ng-repeat='time in product_limits.times'
-                ng-click='product_limits.saveLimitByTimeAndDay(time, number_of_day)'
-                ng-bind='product_limits.showValue(product_limits.limits[number_of_day][time])'></td>
+                ng-repeat='time in ctrl.times'
+                ng-click='ctrl.saveLimitByTimeAndDay(time, number_of_day)'
+                ng-bind='ctrl.showValue(ctrl.limits[number_of_day][time])'></td>
           </tr>
         </tbody>
       </table>
