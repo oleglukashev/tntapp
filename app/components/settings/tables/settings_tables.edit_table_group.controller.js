@@ -21,6 +21,7 @@ export default class SettingsTablesEditTableGroupCtrl {
       color: this.form_data.color,
       min: this.form_data.min,
       max: this.form_data.max,
+      can_be_combined: this.form_data.can_be_combined,
       tables: this.form_data.table_ids,
     };
 

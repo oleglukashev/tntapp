@@ -12,8 +12,9 @@ export default class SettingsTablesNewTableGroupCtrl {
       color: '#ffffff',
       min: 1,
       max: 1,
+      can_be_combined: true,
       table_ids: [],
-    }
+    };
   }
 
   submitForm() {
@@ -25,6 +26,7 @@ export default class SettingsTablesNewTableGroupCtrl {
       color: this.form_data.color,
       min: this.form_data.min,
       max: this.form_data.max,
+      can_be_combined: this.form_data.can_be_combined,
       tables: this.form_data.table_ids,
     };
 

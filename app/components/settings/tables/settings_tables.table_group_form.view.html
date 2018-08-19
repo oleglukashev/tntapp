@@ -48,6 +48,13 @@
                    required />
           </md-input-container>
 
+          <div class='md-form-group no-padder'>
+            <md-checkbox ng-model='ctrl.form_data.can_be_combined'
+              aria-label='Can be combined?'>
+              Can be combined?
+            </md-checkbox>
+          </div>
+
           <button type='submit'
               ng-class="{ 'disabled': ctrl.is_submitting }"
               class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
