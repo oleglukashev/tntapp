@@ -69,8 +69,11 @@
       </span>
       <i class='mdi mdi-silverware-variant' ng-show='ctrl.data.product_name'></i>
       <span class='font-thin m-r-xs' ng-bind='ctrl.data.product_name'></span>
+      <i class='eicon eicon-{{ ctrl.getAllergyClass(allergy.allergy) }} m-r-xs'
+        ng-if='ctrl.getAllergyClass(allergy.allergy)'
+        ng-repeat='allergy in ctrl.data.customer.allergies'></i>
       <i class='mdi mdi-information-outline icon-muted'
-         ng-show='ctrl.data.customer.allergies.length > 0 || ctrl.data.customer.preferences.length > 0'></i>
+        ng-show='ctrl.data.customer.preferences.length > 0'></i>
     </div>
     <div
       class='font-thin'

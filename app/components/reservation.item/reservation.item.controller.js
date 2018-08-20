@@ -1,8 +1,11 @@
+import toSnakeCase from 'to-snake-case';
+
 export default class DashboardReservationItemCtrl {
   constructor(UserMenu, ReservationStatus, AppConstants, $mdSidenav, $uibModal) {
     'ngInject';
 
     this.UserMenu = UserMenu;
+    this.AppConstants = AppConstants;
     this.ReservationStatus = ReservationStatus;
     this.$mdSidenav = $mdSidenav;
     this.$uibModal = $uibModal;
@@ -77,5 +80,9 @@ export default class DashboardReservationItemCtrl {
     });
 
     modalInstance.result.then(() => {}, () => {});
-  };
+  }
+
+  getAllergyClass(name) {
+    return this.AppConstants.allergyClasses[toSnakeCase(name)];
+  }
 }

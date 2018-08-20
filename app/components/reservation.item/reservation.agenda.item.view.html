@@ -16,7 +16,14 @@
 <div class='hidden-xs hidden-sm'
   ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>{{ ctrl.data.product_name }}</div>
 <div class='hidden-xs hidden-sm'
-  ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>{{ ctrl.data.name }}</div>
+  ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
+  {{ ctrl.data.name }}
+  <i class='eicon eicon-{{ ctrl.getAllergyClass(allergy.allergy) }} m-r-xs'
+    ng-if='ctrl.getAllergyClass(allergy.allergy)'
+    ng-repeat='allergy in ctrl.data.customer.allergies'></i>
+  <i class='mdi mdi-information-outline icon-muted'
+    ng-show='ctrl.data.customer.preferences.length > 0'></i>
+</div>
 <div class='hidden-xs hidden-sm'
   ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
   <i class='mdi mdi-account-multiple'></i>
@@ -53,8 +60,11 @@
     </span>
     <i class='mdi mdi-silverware-variant' ng-if='ctrl.data.product_name'></i>
     <span class='font-thin m-r-xs'>{{ ctrl.data.product_name }}</span>
+    <i class='eicon eicon-{{ ctrl.getAllergyClass(allergy.allergy) }} m-r-xs'
+      ng-if='ctrl.getAllergyClass(allergy.allergy)'
+      ng-repeat='allergy in ctrl.data.customer.allergies'></i>
     <i class='mdi mdi-information-outline icon-muted'
-       ng-if='ctrl.data.customer.allergies.length > 0 || ctrl.data.customer.preferences.length > 0'></i>
+      ng-show='ctrl.data.customer.preferences.length > 0'></i>
   </div>
   <div class='font-thin' ng-if='ctrl.data.notes' show-more>
     {{ ctrl.data.notes }}
