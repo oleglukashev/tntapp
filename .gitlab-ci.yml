@@ -16,7 +16,7 @@ production:staging:
 staging:staging:
   stage: staging
   only:
-    - develop
+    - release
   environment: staging
   script:
     - npm run build_staging
