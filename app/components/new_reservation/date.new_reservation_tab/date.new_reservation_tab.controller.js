@@ -29,8 +29,6 @@ export default class Controller {
       if (this.type !== 'customer') {
         this.max_date = undefined;
       }
-
-      console.log(this);
     };
   }
 
@@ -89,9 +87,9 @@ export default class Controller {
 
   disableDates(date) {
     // TODO REFACTOR AFTER NEW RESERVATION REFACTORING
-    // if (this.type !== 'customer') {
-    //   return false;
-    // }
+    if (this.type !== 'customer') {
+      return false;
+    }
 
     let result = true;
 
@@ -124,10 +122,6 @@ export default class Controller {
           this.product_week_time_ranges[dateWeekDay][product.id]) {
           const timeRange = this.product_week_time_ranges[dateWeekDay][product.id];
           data[product.id] = !timeRange.value;
-
-          // console.log('-- product week time range --');
-          // console.log(`disabled: ${data[product.id]}`);
-          // console.log(timeRange);
         }
 
         if (this.open_time_ranges[dateFormat]) {
@@ -138,10 +132,6 @@ export default class Controller {
           } else if (!timeRange.value && timeRange.whole_day) {
             data[product.id] = true;
           }
-
-          // console.log('-- open time range --');
-          // console.log(`disabled: ${data[product.id]}`);
-          // console.log(timeRange);
         }
 
         if (this.product_time_ranges[dateFormat] &&
@@ -153,10 +143,6 @@ export default class Controller {
           } else if (!timeRange.value && timeRange.whole_day) {
             data[product.id] = true;
           }
-
-          // console.log('-- product --');
-          // console.log(`disabled: ${data[product.id]}`);
-          // console.log(timeRange);
         }
 
         if (product.shaded) {
@@ -182,9 +168,6 @@ export default class Controller {
 
           if (!timeRange.value && timeRange.whole_day) {
             data[zone.id] = true;
-            // console.log('-- zone time range --');
-            // console.log(`disabled: ${data[zone.id]}`);
-            // console.log(timeRange);
           }
         }
       });

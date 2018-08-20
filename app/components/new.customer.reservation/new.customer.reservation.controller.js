@@ -6,6 +6,8 @@ export default class Controller {
     this.Settings = Settings;
     this.$rootScope = $rootScope;
     this.$window = $window;
+    this.pluginImageFileName = null;
+    this.tabIndex = 0;
 
     if ($state.current.name === 'customer_reservation.alternative') {
       const params = {
@@ -28,10 +30,10 @@ export default class Controller {
 
   getBackgroundStyles() {
     if (!this.showCustomBackground()) return null;
-    return this.settings.plugin_image_file_name;
+    return this.pluginImageFileName;
   }
 
   showCustomBackground() {
-    return this.settings && this.settings.plugin_image_file_name && this.tab_index === 0;
+    return this.pluginImageFileName && this.tabIndex === 0;
   }
 }

@@ -1,9 +1,9 @@
-<md-tab>
+<md-tab ng-disabled='!ctrl.current_part.product'>
   <md-tab-label>
     <div class='text-center l-h'><i class='mdi mdi-clock'></i></div>
     <div class='text-center l-h'>
-      <span ng-show='ctrl.current_part.time'>{{ ctrl.current_part.time }}</span>
-      <span ng-hide='ctrl.current_part.time' class='uppercase' translate='time'></span>
+      <span ng-if='ctrl.current_part.time'>{{ ctrl.current_part.time }}</span>
+      <span ng-if='!ctrl.current_part.time' class='uppercase' translate='time'></span>
     </div>
   </md-tab-label>
   <md-tab-body>

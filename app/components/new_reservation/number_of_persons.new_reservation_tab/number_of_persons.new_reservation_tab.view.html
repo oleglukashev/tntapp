@@ -1,11 +1,11 @@
-<md-tab>
+<md-tab ng-disabled='!ctrl.current_part.date'>
   <md-tab-label>
     <div class='text-center l-h'><i class='mdi mdi-account-multiple'></i></div>
     <div class='text-center l-h'>
-      <span ng-show='ctrl.current_part.number_of_persons'>
+      <span ng-if='ctrl.current_part.number_of_persons'>
         {{ ctrl.current_part.number_of_persons }} <translate class='uppercase'>persons</translate>
       </span>
-      <span ng-hide='ctrl.current_part.number_of_persons' translate='number'></span>
+      <span ng-if='!ctrl.current_part.number_of_persons' translate='number'></span>
     </div>
   </md-tab-label>
   <md-tab-body>

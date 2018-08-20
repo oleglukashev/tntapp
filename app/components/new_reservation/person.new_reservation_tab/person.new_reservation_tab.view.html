@@ -52,9 +52,9 @@
               ng-model='ctrl.reservation.primary_phone_number'
               country='{{ ctrl.reservation.country }}'
               phone-valid />
-            <span ng-messages='NewReservationForm.primary_phone_number.$error'>
-             <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
-            </span>
+            <span
+              ng-show='ctrl.form.primary_phone_number.$error.phoneValid'
+              translate='notifications.not_valid'></span>
           </md-input-container>
           <md-input-container class='md-block'>
             <label translate='note'></label>
@@ -106,9 +106,9 @@
                 ng-model='ctrl.reservation.secondary_phone_number'
                 country='{{ ctrl.reservation.country }}'
                 phone-valid />
-              <span ng-messages='NewReservationForm.secondary_phone_number.$error'>
-                <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
-              </span>
+              <span
+                ng-show='ctrl.form.secondary_phone_number.$error.phoneValid'
+                translate='notifications.not_valid'></span>
             </md-input-container>
             <md-input-container class='md-block'>
               <label translate='birthdate'></label>
@@ -206,7 +206,7 @@
       <button type='submit'
         class='btn btn-lg btn-success w-full no-top-radius md-content-button'
         ng-class="{ 'disabled': ctrl.is_submitting }"
-        ng-show='ctrl.canShow() && !ctrl.is_success'>
+        ng-show='ctrl.canShow() && !ctrl.isSuccess'>
         <translate>reservation.reserve</translate>
       </button>
     </div>

@@ -25,8 +25,6 @@ export default class Controller {
         });
       }
     };
-
-    console.log(this);
   }
 
   removeAllergy(index) {

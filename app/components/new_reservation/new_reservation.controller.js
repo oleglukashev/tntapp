@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export default class Controller {
-  constructor(User, Reservation, Settings, TimeRange, CustomerCompany, Product, Zone,
+  constructor(User, Reservation, Settings, TimeRange, Product, Zone,
     NewReservation, AppConstants, Availability, ReservationPart, moment, $stateParams,
     $rootScope, $window, $translate, $q, $timeout) {
     'ngInject';
@@ -9,7 +9,6 @@ export default class Controller {
     this.Reservation = Reservation;
     this.ReservationPart = ReservationPart;
     this.NewReservation = NewReservation;
-    this.CustomerCompany = CustomerCompany;
     this.Product = Product;
     this.Availability = Availability;
     this.Zone = Zone;
@@ -24,7 +23,6 @@ export default class Controller {
     this.$q = $q;
     this.$timeout = $timeout;
 
-    this.tab_index = 0;
     this.errors = [];
 
     this.product_week_time_ranges = {};
@@ -36,20 +34,19 @@ export default class Controller {
     this.allergy_data = { owner: null, allergy: null };
     this.preference_data = { owner: null, name: null, value: null };
 
-    this.is_success = false;
     this.is_submitting = false;
     this.reservation = this.getReservationSamlpe();
     this.current_index = 0;
 
-    if (this.type === 'customer') {
-      this.current_company_id = $stateParams.id;
-      this.pagination = this.Reservation.pagination.customer;
-    } else {
-      this.current_company_id = User.getCompanyId();
-      this.pagination = this.Reservation.pagination.backend;
-    }
-
     this.$onInit = () => {
+      if (this.type === 'customer') {
+        this.current_company_id = $stateParams.id;
+        this.pagination = this.Reservation.pagination.customer;
+      } else {
+        this.current_company_id = User.getCompanyId();
+        this.pagination = this.Reservation.pagination.backend;
+      }
+
       this.reservation.reservation_parts.push(this.ReservationPart.getNewReservationPart());
       this.current_part = this.reservation.reservation_parts[this.current_index];
       if ($stateParams.aantal_personen) {
@@ -61,39 +58,22 @@ export default class Controller {
 
   preloadData() {
     const isCustomer = this.type === 'customer';
-    const loadedResources = [
+
+    this.Settings.getGeneralSettings(this.current_company_id, isCustomer)
+      .then((generalSettings) => {
+        this.initGeneralSettings(generalSettings);
+      });
+
+    this.$q.all([
       this.Product.getAll(this.current_company_id, false, isCustomer),
       this.Zone.getAll(this.current_company_id, isCustomer),
       this.TimeRange.getAll(this.current_company_id, null, isCustomer),
-    ];
-
-    if (isCustomer) {
-      loadedResources
-        .push(this.CustomerCompany.getSocialUrls(this.current_company_id, isCustomer));
-    }
-
-    this.$q.all(loadedResources).then((result) => {
+      this.Settings.getWarningsSettings(this.current_company_id),
+    ]).then((result) => {
       this.initProducts(result[0]);
       this.initZones(result[1]);
       this.initTimeRanges(result[2]);
-
-      if (isCustomer) {
-        this.initSocialUrls(result[3]);
-      }
-
-      this.preloadAdditionalData();
-    });
-  }
-
-  preloadAdditionalData() {
-    const isCustomer = this.type === 'customer';
-
-    this.$q.all([
-      this.Settings.getGeneralSettings(this.current_company_id, isCustomer),
-      this.Settings.getWarningsSettings(this.current_company_id),
-    ]).then((subResult) => {
-      this.initGeneralSettings(subResult[0]);
-      this.initWarningsSettings(subResult[1]);
+      this.initWarningsSettings(result[3]);
     });
   }
 
@@ -112,7 +92,7 @@ export default class Controller {
         if (result.status === 200) {
           this.response = result.data;
           this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
-          this.is_success = true;
+          this.isSuccess = true;
         } else if (result.status === 400) {
           this.errors = result.data.errors.errors;
         }
@@ -224,7 +204,9 @@ export default class Controller {
   }
 
   selectTab(index) {
-    this.tab_index = index;
+    this.$timeout(() => {
+      this.tabIndex = index;
+    }, 100);
   }
 
   selectCurrentIndex(index) {
@@ -312,10 +294,10 @@ export default class Controller {
 
   initGeneralSettings(generalSettings) {
     this.settings = generalSettings;
-  }
 
-  initSocialUrls(socials) {
-    this.socials = socials;
+    if (generalSettings.plugin_image_file_name) {
+      this.pluginImageFileName = generalSettings.plugin_image_file_name;
+    }
   }
 
   initTimeRanges(ranges) {

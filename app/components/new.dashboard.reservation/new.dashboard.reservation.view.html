@@ -8,7 +8,7 @@
         {{ 'new_reservation' | translate }}
       </h2>
       <md-button class='md-icon-button'
-        ng-click='ctrl.closeModalOrConfirm(ctrl.is_success)'>
+        ng-click='ctrl.closeModalOrConfirm(ctrl.isSuccess)'>
         <i class='mdi mdi-close m-r-sm i-24'></i>
       </md-button>
     </div>
@@ -43,10 +43,14 @@
 
     <new-reservation
       ng-show='ctrl.type === "regular"'
+      is-success='ctrl.isSuccess'
+      tab-index='ctrl.tabIndex'
+      plugin-image-file-name='null'
       type='dashboard'></new-reservation>
 
     <walkin-new-reservation
       ng-if='ctrl.type === "walkin"'
+      is-success='ctrl.isSuccess'
       type='dashboard'></walkin-new-reservation>
 
   </md-content>

@@ -6,38 +6,12 @@ function PhoneValid($http, $rootScope) {
   return {
     restrict: 'A',
     require: 'ngModel',
-    scope: {
-      country: '@country',
-    },
-    link: function(scope, element, attrs, ngModel) {
+    link: (scope, element, attrs, ngModel) => {
       let submitIsDisabled = false;
       element.after("<i class='phone-is-ok mdi mdi-check'></i>");
 
       const okIcon = element.next('.phone-is-ok');
       okIcon.hide();
-
-      scope.$watch('country', (newValue, oldValue) => {
-        if (oldValue || newValue) {
-          initValidation();
-        }
-      });
-
-      element.bind('keydown', function(event) {
-        if (event.keyCode !== 13) {
-          submitIsDisabled = true;
-          okIcon.hide();
-        }
-      });
-
-      element.bind('keypress', function(event) {
-        if (event.keyCode === 13 && submitIsDisabled) {
-          return false;
-        }
-      });
-
-      element.bind('change', function() {
-        initValidation();
-      });
 
       function initValidation() {
         const phone = element.val();
@@ -61,12 +35,35 @@ function PhoneValid($http, $rootScope) {
           }, () => {
             submitIsDisabled = false;
           });
-        } else {
-          ngModel.$setValidity('phoneValid', true);
-          submitIsDisabled = false;
         }
+
+        ngModel.$setValidity('phoneValid', true);
+        submitIsDisabled = false;
+
+        return null;
       }
-    }
+
+      attrs.$observe('country', () => {
+        initValidation();
+      });
+
+      element.bind('keydown', (event) => {
+        if (event.keyCode !== 13) {
+          submitIsDisabled = true;
+          okIcon.hide();
+        }
+      });
+
+      element.bind('keypress', (event) => {
+        if (event.keyCode === 13 && submitIsDisabled) {
+          return false;
+        }
+      });
+
+      element.bind('change', () => {
+        initValidation();
+      });
+    },
   };
 }
 

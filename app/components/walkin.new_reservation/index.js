@@ -10,8 +10,6 @@ import SettingsService from '../../common/services/settings.service';
 import AppConstants from '../../config.constants';
 import NewReservationService from '../new_reservation/new_reservation.service';
 
-import phoneValidDirective from '../../common/directives/phone-valid.directive';
-
 import SuccessNewReservation from '../success.new_reservation';
 
 export default angular.module('walkinNewReservation', [angularMoment, AppConstants, SuccessNewReservation])
@@ -22,6 +20,7 @@ export default angular.module('walkinNewReservation', [angularMoment, AppConstan
     bindings: {
       type: '<',
       resolve: '<',
+      isSuccess: '=',
     },
   })
   .service('Reservation', ReservationService)
@@ -29,5 +28,4 @@ export default angular.module('walkinNewReservation', [angularMoment, AppConstan
   .service('ReservationPart', ReservationPartService)
   .service('NewReservation', NewReservationService)
   .service('Zone', ZoneService)
-  .directive('phoneValid', phoneValidDirective)
   .name;

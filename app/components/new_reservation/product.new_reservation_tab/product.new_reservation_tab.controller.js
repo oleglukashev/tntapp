@@ -87,7 +87,6 @@ export default class Controller {
   }
 
   getProductLimiNotification() {
-    console.log(this.warnings);
     if (this.current_part && this.current_part.product) {
       let text = this.warnings.product_limits;
       text = text.replace('%MIN%', this.current_part.product.min_persons);

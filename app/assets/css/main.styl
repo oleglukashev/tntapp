@@ -3,8 +3,6 @@ body
   background-color background-color
   width 100%
   height auto
-  // https://github.com/angular/material/issues/1967
-  // If we don't do this, angular material will break when loading modal windows, don't remove this unless you have a better alternative
 
 html
   height 100%
@@ -16,6 +14,9 @@ body
   line-height line-height
   color font-color
   min-height 100%
+
+  &.modal-open
+    top 0 !important
 
 .app
   position relative

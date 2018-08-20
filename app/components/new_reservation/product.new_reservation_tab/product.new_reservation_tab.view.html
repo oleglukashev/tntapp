@@ -1,9 +1,9 @@
-<md-tab>
+<md-tab ng-disabled='!ctrl.current_part.number_of_persons'>
   <md-tab-label>
     <div class='text-center l-h'><i class='mdi mdi-silverware-variant'></i></div>
     <div class='text-center l-h'>
-      <span ng-show='ctrl.current_part.product'>{{ ctrl.current_part.product.name }}</span>
-      <span ng-hide='ctrl.current_part.product' class='uppercase' translate='product'></span>
+      <span ng-if='ctrl.current_part.product'>{{ ctrl.current_part.product.name }}</span>
+      <span ng-if='!ctrl.current_part.product' class='uppercase' translate='product'></span>
     </div>
   </md-tab-label>
   <md-tab-body>

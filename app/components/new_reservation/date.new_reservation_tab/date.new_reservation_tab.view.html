@@ -2,8 +2,8 @@
   <md-tab-label>
     <div class='text-center l-h'><i class='mdi mdi-calendar'></i></div>
     <div class='text-center l-h'>
-      <span ng-show='ctrl.current_part.date'>{{ ctrl.current_part.date | date:'d MMMM' }}</span>
-      <span class='uppercase' ng-hide='ctrl.current_part.date' translate='date'></span>
+      <span ng-if='ctrl.current_part.date'>{{ ctrl.current_part.date | date:'d MMMM' }}</span>
+      <span class='uppercase' ng-if='!ctrl.current_part.date' translate='date'></span>
     </div>
   </md-tab-label>
   <md-tab-body>

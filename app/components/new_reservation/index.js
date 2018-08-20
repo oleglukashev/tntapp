@@ -29,6 +29,9 @@ export default angular.module('newReservation', [
     template: view,
     bindings: {
       type: '@',
+      isSuccess: '=',
+      tabIndex: '=',
+      pluginImageFileName: '=',
     },
   })
   .name;

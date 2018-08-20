@@ -10,6 +10,8 @@ import SettingsService from '../../common/services/settings.service';
 import NewReservation from '../new_reservation';
 import WalkinNewReservation from '../walkin.new_reservation';
 
+import phoneValidDirective from '../../common/directives/phone-valid.directive';
+
 export default angular.module('newCustomerReservation', [
   buttons,
   satellizer,
@@ -26,6 +28,7 @@ export default angular.module('newCustomerReservation', [
   })
   .service('Confirm', ConfirmService)
   .service('Settings', SettingsService)
+  .directive('phoneValid', phoneValidDirective)
   .config(['$authProvider', ($authProvider) => {
     $authProvider.facebook({
       clientId: FACEBOOK_ID,

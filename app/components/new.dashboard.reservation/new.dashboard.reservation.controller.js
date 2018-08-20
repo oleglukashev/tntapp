@@ -4,6 +4,7 @@ export default class Controller {
 
     this.Settings = Settings;
     this.Confirm = Confirm;
+    this.tabIndex = 0;
   }
 
   setType(type) {

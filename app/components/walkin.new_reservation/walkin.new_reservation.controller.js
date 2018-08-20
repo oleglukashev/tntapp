@@ -33,7 +33,6 @@ export default class Controller {
     });
 
     this.$onInit = () => {
-      console.log(this);
       this.reservation.reservation_parts.push(this.ReservationPart.getNewReservationPart());
       this.current_part = this.reservation.reservation_parts[0];
 
@@ -71,7 +70,7 @@ export default class Controller {
     this.Reservation.createWalkIn(this.current_company_id, data, false).then((result) => {
       if (result.status === 200) {
         this.response = result;
-        this.is_success = true;
+        this.isSuccess = true;
         this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
       } else if (result.status === 400) {
         this.errors = result.data.errors.errors;

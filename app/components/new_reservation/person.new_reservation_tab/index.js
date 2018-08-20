@@ -13,7 +13,6 @@ import CustomerService from '../../../common/services/customer.service';
 import CustomerSettingsNameService from '../../../common/services/customer_settings_name.service';
 import phoneValidDirective from '../../../common/directives/phone-valid.directive';
 import TimeRangeService from '../../../common/services/time_range.service';
-import CustomerCompanyService from '../../../common/services/customer_company.service';
 import NewReservationService from '../../new_reservation/new_reservation.service';
 import TableService from '../../../common/services/table.service';
 import ProductService from '../../../common/services/product.service';
@@ -41,6 +40,7 @@ export default angular.module('personNewReservationTab', [AppConstants])
       allergyIsValid: '&',
       addAllergy: '&',
       addPreference: '&',
+      form: '=',
       errors: '=',
     },
   })
@@ -71,7 +71,6 @@ export default angular.module('personNewReservationTab', [AppConstants])
   .service('Customer', CustomerService)
   .service('CustomerSettingsName', CustomerSettingsNameService)
   .service('TimeRange', TimeRangeService)
-  .service('CustomerCompany', CustomerCompanyService)
   .service('NewReservation', NewReservationService)
   .service('Table', TableService)
   .service('Product', ProductService)

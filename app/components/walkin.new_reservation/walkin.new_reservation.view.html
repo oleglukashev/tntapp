@@ -1,6 +1,6 @@
 <form name='NewWalkInReservationForm'
   ng-submit='ctrl.submitForm(NewWalkInReservationForm)'
-  ng-if='!ctrl.is_success'>
+  ng-if='!ctrl.isSuccess'>
   <div class='md-content-submit reservation_person b-t walk-in-wrapper' flex>
     <div class='md-list-item'>
       <div class='md-list-item-content text-center'>
@@ -60,9 +60,9 @@
             country='{{ ctrl.reservation.country }}'
             phone-valid
             ng-required='false' />
-          <span ng-messages='NewWalkInReservationForm.primary_phone_number.$error'>
-            <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
-          </span>
+          <span
+            ng-show='NewWalkInReservationForm.primary_phone_number.$error.phoneValid'
+            translate='notifications.not_valid'></span>
         </md-input-container>
         <md-input-container class='md-block'>
           <label translate='note'></label>
@@ -110,12 +110,12 @@
     <button type='submit'
             class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
             ng-class="{ 'disabled': ctrl.is_submitting }"
-            ng-show='!ctrl.is_success'>
+            ng-show='!ctrl.isSuccess'>
       <translate>reservation.reserve</translate>
     </button>
   </div>
 </form>
 
 <success-new-reservation
-  ng-if='ctrl.is_success'
+  ng-if='ctrl.isSuccess'
   reservation='ctrl.response'></success-new-reservation>

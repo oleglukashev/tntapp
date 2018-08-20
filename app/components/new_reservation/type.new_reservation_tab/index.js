@@ -14,7 +14,7 @@ export default angular.module('typeNewReservationTab', [])
       selectTab: '&',
       pagination: '<',
       currentTabIndex: '<',
-      socials: '<',
+      settings: '<',
     },
   })
   .name;

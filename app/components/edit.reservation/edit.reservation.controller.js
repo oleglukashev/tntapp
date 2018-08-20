@@ -26,7 +26,7 @@ export default class EditReservationCtrl {
     this.filterFilter = filterFilter;
 
     this.moment = moment;
-    this.tab_index = 0;
+    this.tabIndex = 0;
     this.errors = [];
     this.available_time = [];
 

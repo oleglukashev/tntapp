@@ -44,10 +44,8 @@
                   country='{{ crtl.customer.country }}'
                   phone-valid />
                 <span
-                  ng-messages='edit_user_form.primary_phone_number.$error'
-                  ng-show='edit_user_form.primary_phone_number.$invalid'>
-                  <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
-                </span>
+                  ng-show='edit_user_form.primary_phone_number.$error.phoneValid'
+                  translate='notifications.not_valid'></span>
               </md-input-container>
               <md-input-container
                 class='md-block'
@@ -60,10 +58,8 @@
                   country='{{ crtl.customer.country }}'
                   phone-valid />
                 <span
-                  ng-messages='edit_user_form.secondary_phone_number.$error'
-                  ng-show='edit_user_form.secondary_phone_number.$invalid'>
-                  <span class='invalid' ng-message='phoneValid' translate='notifications.not_valid'></span>
-                </span>
+                  ng-show='edit_user_form.secondary_phone_number.$error.phoneValid'
+                  translate='notifications.not_valid'></span>
               </md-input-container>
               <md-input-container class='md-block'>
                 <label translate='birthdate'></label>
