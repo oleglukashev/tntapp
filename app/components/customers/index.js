@@ -9,6 +9,7 @@ import view from './customers.view.html';
 import customerMergeController from './merge/customers.merge.controller';
 import CustomerService from './customer.service';
 import scrollMore from '../../common/directives/scroll-more';
+import Alphabet from '../../common/directives/alphabet';
 import pageFilterFactory from '../../shared/page_filter/page_filter.factory';
 
 import ReservationStatusService from '../../common/services/reservation_status.service';
@@ -16,7 +17,8 @@ import ReservationStatusService from '../../common/services/reservation_status.s
 import fixReservationsItemView from '../fix.reservations.item/fix.reservations.item.view.html';
 import fixCustomersView from './fix.customers/fix.customers.view.html';
 
-export default angular.module('customers', [angularUiRouter, satellizer, modal])
+
+export default angular.module('customers', [angularUiRouter, satellizer, modal, Alphabet])
   .component('customers', {
     controller,
     controllerAs: 'ctrl',
@@ -34,4 +36,5 @@ export default angular.module('customers', [angularUiRouter, satellizer, modal])
   .factory('PageFilterFactory', pageFilterFactory,
     ['Reservation', 'Customer', 'CustomerService', '$modal', 'moment'])
   .directive('scrollMore', scrollMore)
+  .directive('alphabet', () => new Alphabet())
   .name;
