@@ -106,7 +106,7 @@
                              ng-class='{ closed: ctrl.isClosedTime(hour, quarter, zone.id) }'
                              ng-mouseenter="hover=true"
                              ng-mouseleave="hover=false"
-                             drop-channel='move,resize'><div></div></div>
+                             drop-channel='move,resize'></div>
                       </div>
                       <div class='reservation'
                         ng-repeat='item in ctrl.graph_data[table.id] track by $index'

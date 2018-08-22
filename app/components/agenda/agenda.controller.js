@@ -158,21 +158,24 @@ export default class Controller {
   }
 
   dragHover(obj, event) {
-    $(this.itemMoveEvent.target).addClass('z-index-1');
-    if (this.channel === 'resize') return;
     const quarter = $(event.target);
 
-    // when moving item on other zone
-    if (quarter.data('zoneId') && this.itemShadowZone !== quarter.data('zoneId')) {
-      this.calendarWrapper = quarter.closest('.calendar_wrapper');
-      this.dragStart(this.itemMoveEvent, 'move', this.calendarWrapper);
-    }
+    if (this.channel === 'move') {
+      // when moving item on other zone
+      if (quarter.data('zoneId') && this.itemShadowZone !== quarter.data('zoneId')) {
+        this.calendarWrapper = quarter.closest('.calendar_wrapper');
+        this.dragStart(this.itemMoveEvent, 'move', this.calendarWrapper);
+      }
 
-    const left = ((quarter.data('hour') * this.hour_width) +
-      ((quarter.data('quarter') * this.hour_width) / 4)) -
-      ((this.offsetHours * this.hour_width) + ((this.offsetQuarters * this.hour_width) / 4));
-    const top = quarter.offset().top - this.calendarWrapper.offset().top;
-    this.itemShadow.css({ left, top, backgroundColor: '#ccc' });
+      const left = ((quarter.data('hour') * this.hour_width) +
+        ((quarter.data('quarter') * this.hour_width) / 4)) -
+        ((this.offsetHours * this.hour_width) + ((this.offsetQuarters * this.hour_width) / 4));
+      const top = quarter.offset().top - this.calendarWrapper.offset().top;
+      this.itemShadow.css({ left, top });
+    } else if (this.channel === 'resize') {
+      const part = $(this.itemMoveEvent.target).closest('.reservation');
+      part.css('width', quarter.position().left - part.position().left);
+    }
   }
 
   dragStart(event, channel, calendarWrapper) {
@@ -180,11 +183,11 @@ export default class Controller {
       this.channel = channel;
     }
 
-    if (channel === 'move') {
-      const part = $(event.target);
+    const part = $(event.target);
+    this.calendarWrapper = calendarWrapper || part.closest('.calendar_wrapper');
 
+    if (channel === 'move') {
       if (this.channel === 'move') {
-        this.calendarWrapper = calendarWrapper || part.closest('.calendar_wrapper');
         const wrapperScrollX = this.calendarWrapper.scrollLeft() - this.calendarWrapper.offset().left;
         const mouseX = event.originalEvent.pageX;
         const clickedX = wrapperScrollX + mouseX;
@@ -200,12 +203,17 @@ export default class Controller {
         if (this.itemShadow) {
           this.itemShadow.remove();
         }
-        this.itemShadow = part.clone().appendTo(this.calendarWrapper);
-        this.itemShadow.removeClass('reservation').addClass('reservationShadow');
+
+        this.itemShadow = $('<div>').appendTo(this.calendarWrapper);
+        const position = part.position();
+        this.itemShadow.css({
+          'width': part.width(),
+          'left': position.left,
+          'top': position.top,
+        }).addClass('reservationShadow');
         this.itemShadowZone = this.calendarWrapper.data('zoneId');
       }
 
-      part.removeClass('z-index-1');
       this.itemMoveEvent = event;
 
       if (event.target.attributes['data-product-id']) {
@@ -214,11 +222,11 @@ export default class Controller {
     }
 
     this.draggable_class = 'dragged';
+    this.calendarWrapper.addClass('dragging');
   }
 
   dragEnd() {
     const part = $(this.itemMoveEvent.target);
-    part.removeClass('z-index-1');
 
     if (this.itemShadow) {
       this.itemShadow.remove();
@@ -226,6 +234,7 @@ export default class Controller {
 
     this.draggedProduct = 0;
     this.draggable_class = '';
+    this.calendarWrapper.removeClass('dragging');
   }
 
   onDrop(targetTableId, tablePosition, hour, quarter, dragData) {
