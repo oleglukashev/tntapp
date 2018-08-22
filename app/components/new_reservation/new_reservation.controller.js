@@ -59,11 +59,6 @@ export default class Controller {
   preloadData() {
     const isCustomer = this.type === 'customer';
 
-    this.Settings.getGeneralSettings(this.current_company_id, isCustomer)
-      .then((generalSettings) => {
-        this.initGeneralSettings(generalSettings);
-      });
-
     this.$q.all([
       this.Product.getAll(this.current_company_id, false, isCustomer),
       this.Zone.getAll(this.current_company_id, isCustomer),
@@ -138,8 +133,8 @@ export default class Controller {
       reservation_parts: [],
     };
 
-    if (data.customer.first_name === '') data.customer.first_name = null;
-    if (data.customer.last_name === '') data.customer.last_name = null;
+    if (!data.customer.first_name) data.customer.first_name = null;
+    if (!data.customer.last_name) data.customer.last_name = null;
     if (this.reservation.reservation_pdf) data.reservation_pdf = this.reservation.reservation_pdf;
 
     this.preparePreferencesAndAllergies(data);
@@ -290,14 +285,6 @@ export default class Controller {
         this.warnings[warning.title] = warning.text;
       }
     });
-  }
-
-  initGeneralSettings(generalSettings) {
-    this.settings = generalSettings;
-
-    if (generalSettings.plugin_image_file_name) {
-      this.pluginImageFileName = generalSettings.plugin_image_file_name;
-    }
   }
 
   initTimeRanges(ranges) {

@@ -1,12 +1,11 @@
 export default class Controller {
-  constructor(User, Reservation, Settings, ReservationPart, AppConstants, NewReservation, Zone,
+  constructor(User, Reservation, ReservationPart, AppConstants, NewReservation, Zone,
     moment, $rootScope, $translate) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.Reservation = Reservation;
     this.Zone = Zone;
-    this.Settings = Settings;
     this.NewReservation = NewReservation;
     this.AppConstants = AppConstants;
     this.ReservationPart = ReservationPart;
@@ -43,10 +42,6 @@ export default class Controller {
 
       this.current_part.number_of_persons = 2;
 
-      this.Settings.getGeneralSettings(this.current_company_id).then((settings) => {
-        this.settings = settings;
-      });
-
       this.Zone.getAll(this.current_company_id, true).then((zones) => {
         this.tables = [];
         this.zones = zones;
@@ -69,13 +64,11 @@ export default class Controller {
     this.$rootScope.show_spinner = true;
     this.Reservation.createWalkIn(this.current_company_id, data, false).then((result) => {
       if (result.status === 200) {
-        this.response = result;
+        this.response = result.data;
         this.isSuccess = true;
         this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
       } else if (result.status === 400) {
         this.errors = result.data.errors.errors;
-      } else if (result.status === -1 && result.statusText === '') {
-        this.errors = [this.more_than_2mb_error_text];
       }
 
       this.is_submitting = false;
@@ -111,8 +104,8 @@ export default class Controller {
       reservation_parts: [],
     };
 
-    if (data.customer.first_name === '') data.customer.first_name = null;
-    if (data.customer.last_name === '') data.customer.last_name = null;
+    if (!data.customer.first_name) data.customer.first_name = null;
+    if (!data.customer.last_name) data.customer.last_name = null;
 
     this.reservation.reservation_parts.forEach((part) => {
       data.reservation_parts.push({

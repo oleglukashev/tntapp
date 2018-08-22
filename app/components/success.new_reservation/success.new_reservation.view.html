@@ -10,7 +10,7 @@
           <i class='mdi mdi-calendar icon-muted i-24'></i>
         </div>
         <div class='md-list-item-content'>
-          <h3 class='text-md'>{{ ctrl.moment(part.date).format('DD MMMM YYYY') }} {{ part.time }}</h3>
+          <h3 class='text-md'>{{ ctrl.moment(part.date_time).format('DD MMMM YYYY HH:mm') }}</h3>
           <small class='font-thin'>
             <span ng-if='part.product'>{{ part.product.name }},</span> {{ part.number_of_persons }} <translate class='lowercase'>persons</translate>
           </small>

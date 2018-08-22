@@ -46,11 +46,13 @@
       is-success='ctrl.isSuccess'
       tab-index='ctrl.tabIndex'
       plugin-image-file-name='null'
+      settings='ctrl.settings'
       type='dashboard'></new-reservation>
 
     <walkin-new-reservation
       ng-if='ctrl.type === "walkin"'
       is-success='ctrl.isSuccess'
+      settings='ctrl.settings'
       type='dashboard'></walkin-new-reservation>
 
   </md-content>

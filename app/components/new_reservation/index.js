@@ -31,6 +31,7 @@ export default angular.module('newReservation', [
       type: '@',
       isSuccess: '=',
       tabIndex: '=',
+      settings: '<',
       pluginImageFileName: '=',
     },
   })

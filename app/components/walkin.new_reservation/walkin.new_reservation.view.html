@@ -34,6 +34,17 @@
           current-company-id='ctrl.current_company_id'
           reservation='ctrl.reservation'></name-new-reservation>
 
+        <div ng-if='!ctrl.showAutocompleteCustomerName()'>
+          <md-input-container class='md-block'>
+            <label translate='last_name'></label>
+            <input ng-model='ctrl.reservation.last_name' />
+          </md-input-container>
+          <md-input-container class='md-block'>
+            <label translate='first_name'></label>
+            <input ng-model='ctrl.reservation.first_name' />
+          </md-input-container>
+        </div>
+
         <md-input-container class='md-block'>
           <label translate='email'></label>
           <input type='email' ng-model='ctrl.reservation.mail' ng-required='false' />
