@@ -26,7 +26,7 @@ export default angular.module('walkinNewReservation', [angularMoment, AppConstan
       settings: '<',
     },
   })
-  .component('nameNewReservation', {
+  .component('walkinNameNewReservation', {
     controller: nameController,
     controllerAs: 'ctrl',
     template: nameView,

@@ -28,11 +28,11 @@
         </md-input-container>
       </div>
       <div class='w-xl m-t-md' ng-show='ctrl.additional_is_opened'>
-        <name-new-reservation
+        <walkin-name-new-reservation
           class='no-margin'
           ng-if='ctrl.showAutocompleteCustomerName()'
           current-company-id='ctrl.current_company_id'
-          reservation='ctrl.reservation'></name-new-reservation>
+          reservation='ctrl.reservation'></walkin-name-new-reservation>
 
         <div ng-if='!ctrl.showAutocompleteCustomerName()'>
           <md-input-container class='md-block'>
