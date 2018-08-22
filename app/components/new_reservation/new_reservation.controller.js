@@ -52,6 +52,7 @@ export default class Controller {
       if ($stateParams.aantal_personen) {
         this.current_part.number_of_persons = parseInt($stateParams.aantal_personen);
       }
+
       this.preloadData();
     };
   }
@@ -59,6 +60,7 @@ export default class Controller {
   preloadData() {
     const isCustomer = this.type === 'customer';
 
+    console.log(2);
     this.$q.all([
       this.Product.getAll(this.current_company_id, false, isCustomer),
       this.Zone.getAll(this.current_company_id, isCustomer),

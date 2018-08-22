@@ -256,13 +256,13 @@ export default class Controller {
           duration_minutes: difference * 15,
         };
 
-        this.ReservationPart.update(this.current_company_id, graphItem.id, data)
-          .then((reservationPart) => {
-            graphItem.part.duration_minutes = reservationPart.duration_minutes;
-            graphItem.width = this.durationToWidth(graphItem.part.duration_minutes);
-            this.dragEnd();
-            this.setData();
-          });
+        graphItem.part.duration_minutes = data.duration_minutes;
+        graphItem.width = this.durationToWidth(graphItem.part.duration_minutes);
+        this.dragEnd();
+
+        this.ReservationPart.update(this.current_company_id, graphItem.id, data).then(() => {
+          this.setData();
+        });
       }
     } else if (this.channel === 'move') {
       let minutes = quarter * 15;
@@ -294,22 +294,21 @@ export default class Controller {
         tables: graphItem.part.table_ids,
       };
 
-      this.ReservationPart.update(this.current_company_id, graphItem.id, data)
-        .then((loadedPart) => {
-          const newHour = newDateTime.format('HH');
-          const newQuarter = Math.floor(newDateTime.format('mm') / 15);
-          const left = this.left_margin + (newHour * this.hour_width)
-            + ((newQuarter * this.hour_width) / 4);
-          const top = this.top_margin + (tablePosition * this.reservation_height);
+      const newHour = newDateTime.format('HH');
+      const newQuarter = Math.floor(newDateTime.format('mm') / 15);
+      const left = this.left_margin + (newHour * this.hour_width)
+        + ((newQuarter * this.hour_width) / 4);
+      const top = this.top_margin + (tablePosition * this.reservation_height);
 
-          graphItem.left = left;
-          graphItem.top = top;
-          graphItem.part.date_time = loadedPart.date_time;
-          graphItem.part.table_ids = Object.values(graphItem.part.table_ids);
-          graphItem.part.fromWidget = false;
+      graphItem.left = left;
+      graphItem.top = top;
+      graphItem.part.date_time = data.date_time;
+      graphItem.part.table_ids = Object.values(graphItem.part.table_ids);
+      graphItem.part.fromWidget = false;
 
-          this.setData();
-        });
+      this.ReservationPart.update(this.current_company_id, graphItem.id, data).then((loadedPart) => {
+        this.setData();
+      });
     }
 
     this.channel = '';

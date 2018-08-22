@@ -27,10 +27,12 @@ export default class Controller {
       $state.go('customer_reservation.new', params);
     }
 
-    this.Settings.getGeneralSettings(this.current_company_id)
-      .then((generalSettings) => {
-        this.initGeneralSettings(generalSettings);
-      });
+    this.$onInit = () => {
+      this.Settings.getGeneralSettings(this.current_company_id)
+        .then((generalSettings) => {
+          this.initGeneralSettings(generalSettings);
+        });
+    };
   }
 
   initGeneralSettings(generalSettings) {
