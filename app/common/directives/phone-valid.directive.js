@@ -21,7 +21,7 @@ function PhoneValid($http, $rootScope) {
           $rootScope.show_spinner = true;
 
           return $http({
-            url: buildURL(`${API_URL}/phone_valid`, { phone, country: scope.country }),
+            url: buildURL(`${API_URL}/phone_valid`, { phone, country: attrs.country }),
             skipAuthorization: true,
             method: 'GET',
           }).then((result) => {
