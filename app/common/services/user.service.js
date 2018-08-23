@@ -1,12 +1,13 @@
-import { buildURL } from "../utils/index";
+import { buildURL } from '../utils/index';
 
 export default class User {
-  constructor(JWT, Upload, Settings, $http, $state, $q, $location, $window, $rootScope, $cookieStore,
-    $timeout) {
+  constructor(JWT, Upload, Settings, Theme, $http, $state, $q, $location, $window,
+    $rootScope, $cookieStore, $timeout) {
     'ngInject';
 
     this.JWT = JWT;
     this.Upload = Upload;
+    this.Theme = Theme;
     this.Settings = Settings;
     this.$http = $http;
     this.$state = $state;
@@ -26,19 +27,19 @@ export default class User {
       method: 'POST',
       skipAuthorization: true,
       data: formData,
-    }).then(
-      (result) => {
-        this.JWT.save({ token: result.data.token, refresh_token: result.data.refresh_token });
-        return result;
-      },
-    );
+    }).then((result) => {
+      this.clearAuthorization();
+      this.saveAuthorization(result.data);
+      return result;
+    });
   }
 
   authViaAdmin(token) {
     this.current = null;
     this.JWT.destroy();
     this.removeDefaultCompany();
-    this.JWT.save({ token: token, refresh_token: token });
+    this.JWT.save({ token, refresh_token: token });
+    this.loadTheme();
   }
 
   resetPassword(formData) {
@@ -47,6 +48,10 @@ export default class User {
       method: 'POST',
       data: formData,
     }).then(result => result);
+  }
+
+  getCurrentCompany() {
+    return this.getCompany(this.getCompanyId());
   }
 
   setDefaultCompany(id) {
@@ -59,15 +64,18 @@ export default class User {
   }
 
   getCompanyId() {
-    let result = this.$window.localStorage.getItem('current_company_id');
+    const result = this.$window.localStorage.getItem('current_company_id');
 
     if (result) {
       return parseInt(result);
-    } else if (this.current_company) {
-      return this.current_company.id;
     }
 
     return null;
+  }
+
+  removeDefaultCompany() {
+    this.current_company = null;
+    this.$window.localStorage.removeItem('current_company_id');
   }
 
   getCompanies() {
@@ -89,12 +97,11 @@ export default class User {
   }
 
   getCompany(id) {
-    return this.getCompanies().filter(item => item.id === id)[0];
-  }
+    if (!id) {
+      return null;
+    }
 
-  removeDefaultCompany() {
-    this.current_company = null;
-    this.$window.localStorage.removeItem('current_company_id');
+    return this.getCompanies().filter(item => item.id === id)[0];
   }
 
   update(fields) {
@@ -102,18 +109,22 @@ export default class User {
       url: `${API_URL}/user`,
       method: 'PUT',
       data: { user: fields },
-    }).then(
-      (result) => {
-        this.current = result.data;
-        return result.data;
-      },
-    );
+    }).then((result) => {
+      this.current = result.data;
+      return result.data;
+    });
   }
 
   clearAuthorization() {
     this.current = null;
+    this.$window.localStorage.removeItem('current');
     this.JWT.destroy();
     this.removeDefaultCompany();
+    this.Theme.remove();
+  }
+
+  saveAuthorization(data) {
+    this.JWT.save({ token: data.token, refresh_token: data.refresh_token });
   }
 
   logout() {
@@ -124,36 +135,20 @@ export default class User {
     }, 0);
   }
 
-  verifyAuth(withCheckingJWT = false) {
-    let deferred = this.$q.defer();
-
-    if (!withCheckingJWT && !this.JWT.get()) {
-      deferred.resolve(false);
-      return deferred.promise;
-    }
-
-    if (this.current) {
-      deferred.resolve(true);
-    } else {
-      this.$http({
-        url: `${API_URL}/user`,
-        method: 'GET',
-      }).then(
-        (result) => {
-          this.userSuccessCallback(result);
-          deferred.resolve(true);
-        }, () => {
-          this.userErrorCallback();
-          deferred.resolve(false);
-        },
-      );
-    }
-
-    return deferred.promise;
+  loadUserData() {
+    return this.$http({
+      url: `${API_URL}/user`,
+      method: 'GET',
+    }).then((result) => {
+      this.userSuccessCallback(result);
+    }, () => {
+      this.userErrorCallback();
+    });
   }
 
   userSuccessCallback(result) {
     this.current = result.data;
+    this.$window.localStorage.setItem('current', JSON.stringify(this.current));
 
     let currentCompanyId = parseInt(this.$window.localStorage.getItem('current_company_id'), 10);
     const availableIds = this.getCompanies().map(item => item.id);
@@ -164,8 +159,9 @@ export default class User {
       }
 
       this.setDefaultCompany(currentCompanyId);
-      this.loadTheme();
     }
+
+    this.loadTheme();
   }
 
   userErrorCallback() {
@@ -173,20 +169,31 @@ export default class User {
     this.removeDefaultCompany();
   }
 
+  setCurrentUser() {
+    const user = this.$window.localStorage.getItem('current');
+
+    if (user) {
+      this.current = JSON.parse(user);
+    } else {
+      this.loadUserData();
+    }
+
+    this.current_company = this.getCurrentCompany();
+  }
+
   ensureAuthForClosedPages() {
     const deferred = this.$q.defer();
 
-    this.verifyAuth().then((authValid) => {
-      if (authValid === true) {
-        deferred.resolve(true);
-      } else {
-        this.$timeout(() => {
-          console.log('reload to login');
-          this.$state.go('auth.login');
-        }, 0);
-        deferred.resolve(false);
-      }
-    });
+    if (this.JWT.get()) {
+      this.setCurrentUser();
+      deferred.resolve(true);
+    } else {
+      this.$timeout(() => {
+        console.log('reload to login');
+        this.$state.go('auth.login');
+      });
+      deferred.resolve(false);
+    }
 
     return deferred.promise;
   }
@@ -194,17 +201,18 @@ export default class User {
   ensureAuthForLoginPages() {
     const deferred = this.$q.defer();
 
-    this.verifyAuth().then((authValid) => {
-      if (authValid === true) {
-        this.$timeout(() => {
-          console.log('reload to dashboard');
-          this.$state.go('app.dashboard');
-        }, 0);
-        deferred.resolve(true);
-      } else {
-        deferred.resolve(false);
-      }
-    });
+    if (this.JWT.get()) {
+      this.setCurrentUser();
+
+      this.$timeout(() => {
+        console.log('reload to dashboard');
+        this.$state.go('app.dashboard');
+      });
+
+      deferred.resolve(true);
+    } else {
+      deferred.resolve(false);
+    }
 
     return deferred.promise;
   }
@@ -224,7 +232,7 @@ export default class User {
     const header = skipJwtAuth ? null : { Authorization: `Bearer ${this.JWT.get()}` };
 
     return this.Upload.upload({
-      url: `${API_URL}/company/${this.current_company.id}/user/${userId}/upload`,
+      url: `${API_URL}/company/${this.getCompanyId()}/user/${userId}/upload`,
       data: { photo: file },
       headers: header,
     });
@@ -257,20 +265,18 @@ export default class User {
 
   loadTheme() {
     this.Settings
-      .getThemeSettings(this.current_company.id).then(
-        (result) => {
-          const currentTheme = this.$cookieStore.get('theme');
-          let themeClass = null;
+      .getThemeSettings(this.getCompanyId()).then((result) => {
+        const currentThemeClass = this.Theme.get();
+        let themeClass = null;
 
-          if (result.plugin_theme_name) {
-            themeClass = `${result.plugin_theme_name.toLowerCase()}-theme`;
-          }
+        if (result.plugin_theme_name) {
+          themeClass = result.plugin_theme_name.toLowerCase();
+        }
 
-          if (currentTheme != themeClass) {
-            this.Settings.saveThemeToCookie(themeClass);
-            this.$rootScope.$broadcast('AppCtrl.change_plugin_theme_name', themeClass);
-          }
-        });
+        if (currentThemeClass !== themeClass) {
+          this.Theme.save(themeClass);
+        }
+      });
   }
 
   isOwnerOrManager() {

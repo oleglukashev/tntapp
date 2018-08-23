@@ -9,7 +9,7 @@ export default class DashboardIviteCtrl {
     this.$rootScope.show_spinner = false;
 
     this.$onInit = () => {
-    }
+    };
   }
 
   submitForm(isValid) {
@@ -23,10 +23,12 @@ export default class DashboardIviteCtrl {
     this.Invite.send(this.current_company_id, this.form_data).then(() => {
       this.is_submitting = false;
       this.$rootScope.show_spinner = false;
-      this.dismiss({$value: 'cancel'});
+      this.dismiss({ $value: 'cancel' });
     }, () => {
       this.is_submitting = false;
       this.$rootScope.show_spinner = false;
     });
+
+    return null;
   }
 }

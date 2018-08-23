@@ -10,7 +10,7 @@
   <link rel='stylesheet' href='/public/assets/app.min.css?v=0.0.20' type='text/css' />
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
 </head>
-<body data-ng-app='app' ng-controller='AppCtrl as app' ng-class='app.theme_class'>
+<body data-ng-app='app' ng-controller='AppCtrl as app' class='{{ app.Theme.get() }}-theme'>
   <div class='app' id='app' ui-view></div>
   <script src='/public/assets/vendor.min.js?v=0.0.20'></script>
   <script src='/public/assets/app.min.js?v=0.0.20'></script>

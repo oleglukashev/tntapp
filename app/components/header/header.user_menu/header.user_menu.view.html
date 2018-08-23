@@ -4,8 +4,9 @@
       <div class='clearfix m-r-sm' uib-dropdown-toggle>
         <div class='header-account-menu__info pull-left m-l-sm'>
           <p class='header-account-menu__name'>{{ ctrl.User.current.first_name }}</p>
-          <div class='header-account-menu__info'>
-            <p>{{ ctrl.User.current_company.name }}</p>
+          <div class='header-account-menu__info'
+            ng-show='ctrl.User.getCurrentCompany()'>
+            <p>{{ ctrl.User.getCurrentCompany().name }}</p>
           </div>
         </div>
         <b class='pull-right caret m-l-sm m-t'></b>

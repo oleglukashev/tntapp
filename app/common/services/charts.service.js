@@ -1,18 +1,9 @@
 export default class Charts {
-  constructor(User, Product, AppConstants, $translate) {
+  constructor(User, AppConstants) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.letterOfWeek = AppConstants.letterOfWeek;
-    this.Product = Product;
-    this.total_text = '';
-
-    // run translates
-    $translate('total').then((total) => {
-      this.total_text = total;
-    }, (translationIds) => {
-      this.total_text = translationIds;
-    });
   }
 
   get(reservations) {
@@ -43,20 +34,25 @@ export default class Charts {
       if (reservation.status !== 'cancelled') {
         reservation.reservation_parts.forEach((part) => {
           const personsCount = parseInt(part.number_of_persons, 10);
-          this.charts.reservations[part.product_id] =
-            (this.charts.reservations[part.product_id] || 0) +
-            personsCount;
+          if (part.product) {
+            this.charts.reservations[part.product.id] =
+              (this.charts.reservations[part.product.id] || 0) +
+              personsCount;
 
-          const date = new Date(part.date_time);
-          const day = Math.floor(date.getTime() / mSecInDay);
-          this.charts.day_guests[day] = (this.charts.day_guests[day] || 0) + personsCount;
-          if (part.product_id) {
-            if (!this.charts.guests_by_product[part.product_id]) {
-              this.charts.guests_by_product[part.product_id] = 0;
+            const date = new Date(part.date_time);
+            const day = Math.floor(date.getTime() / mSecInDay);
+            this.charts.day_guests[day] = (this.charts.day_guests[day] || 0) + personsCount;
+
+            if (!this.charts.guests_by_product[part.product.id]) {
+              this.charts.guests_by_product[part.product.id] = 0;
             }
-            this.charts.guests_by_product[part.product_id] += personsCount;
+            this.charts.guests_by_product[part.product.id] += personsCount;
+            this.charts.guests_by_product[0] += personsCount;
+
+            if (part.product) {
+              this.charts.products[part.product.id] = part.product.name;
+            }
           }
-          this.charts.guests_by_product[0] += personsCount;
         });
       }
     });
@@ -71,7 +67,8 @@ export default class Charts {
       x += 1;
     }
 
-    return this.getProducts();
+    this.charts.products[0] = 'total';
+    return this.charts;
   }
 
   getPercent(totalGuests, guestsCount) {
@@ -80,21 +77,6 @@ export default class Charts {
     }
 
     return 100 - ((guestsCount / totalGuests) * 100);
-  }
-
-  getProducts() {
-    this.Product
-      .getAll(this.current_company_id, true)
-      .then((products) => {
-        products.forEach((product) => {
-          if (product.id) {
-            this.charts.products[product.id] = product.name;
-          }
-        });
-        this.charts.products[0] = this.total_text;
-      });
-
-    return this.charts;
   }
 }
 

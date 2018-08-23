@@ -35,6 +35,7 @@ import JWTService from './common/services/jwt.service';
 import SettingsService from './common/services/settings.service';
 import responseFactory from './common/factories/response.factory';
 import modalOptionsFactory from './common/factories/modal-options.factory';
+import ThemeService from './common/services/theme.service';
 
 angular
   .module('app', [angularJwt, angularMaterial, angularCookies, angularSanitize, angularUiRouter,
@@ -46,6 +47,7 @@ angular
   .service('User', UserService)
   .service('Settings', SettingsService)
   .service('JWT', JWTService)
+  .service('Theme', ThemeService)
   .controller('AppCtrl', appController)
   .config(['$mdThemingProvider', ($mdThemingProvider) => {
     $mdThemingProvider.disableTheming();
