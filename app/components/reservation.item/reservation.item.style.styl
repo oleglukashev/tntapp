@@ -18,6 +18,17 @@ reservation-item
   display table
   border-collapse collapse
 
+.agenda-reservation-header
+  display none
+
+  & > div
+    display table-cell
+    vertical-align middle
+    font-size 14px
+    padding 8px 0 8px 16px
+    min-width 72px
+    border-bottom 1px solid border-color
+
 agenda-reservation-item
   font-size 0
   display table-row
@@ -31,9 +42,14 @@ agenda-reservation-item
     vertical-align middle
     font-size 14px
     padding 8px 16px
+    min-width 72px
 
     &.agenda-item-icon
       width 72px
+
+    &.agenda-item-time
+      min-width 82px
+      width 82px
 
   .eicon
     font-size 16px
@@ -45,7 +61,11 @@ agenda-reservation-item
 @media (max-width: 767px)
   agenda-reservation-item
     .visible-xs
-      display table-cell !important  
+      display table-cell !important
+
+@media (min-width: 992px)
+  .agenda-reservation-header
+    display table-row !important
 
 @media (max-width: 991px) and (min-width: 768px)
   agenda-reservation-item

@@ -37,6 +37,16 @@
         </div>
 
         <div class='agenda-reservation-item-wrapper'>
+          <div class='agenda-reservation-header text-muted'>
+            <div translate='status_name'></div>
+            <div translate='time'></div>
+            <div translate='product'></div>
+            <div translate='name'></div>
+            <div translate='persons'></div>
+            <div translate='table'></div>
+            <div translate='note'></div>
+            <div></div>
+          </div>
           <agenda-reservation-item
             ng-class='{"active": ctrl.active_part == item.part.id,
                       "cancelled": item.reservation.status == "cancelled",
