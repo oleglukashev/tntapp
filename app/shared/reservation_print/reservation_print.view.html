@@ -1,38 +1,38 @@
 <div class='print-block'>
-    <div class='totals'>
-        <div ng-if='controller.date_filter'>
-            {{ "date" | translate }}: {{ controller.moment(controller.date_filter).format('DD-MM-YYYY') }},
-        </div>
-        <div translate='search.print.total_of_guests'
-             translate-values='{ total: controller.totalNumberOfPersons }'></div>
-        <div translate='search.print.total_of_reservations'
-             translate-values='{ total: controller.totalNumberOfReservations }'></div>
+  <div class='totals'>
+    <div ng-if='controller.date_filter'>
+      {{ "date" | translate }}: {{ controller.moment(controller.date_filter).format('DD-MM-YYYY') }},
     </div>
-    <table border='1' cellpadding='0' cellspacing='0' width='100%' class='print-reservation'>
-        <thead>
-            <th width='15%' translate='status_name'></th>
-            <th translate='table'></th>
-            <th translate='time'></th>
-            <th translate='persons'></th>
-            <th translate='name'></th>
-            <th translate='product'></th>
-            <th width='15%' translate='note'></th>
-            <th width='10%' translate='phone'></th>
-        </thead>
-        <tbody>
-            <tr ng-repeat='item in controller.data'
-                ng-if='reservation.status !== "cancelled"'>
-                <td align="center">
-                    <input type='checkbox' />
-                </td>
-                <td><small class='font-thin' ng-bind='item.tables'></small></td>
-                <td ng-bind='item.time'></td>
-                <td ng-bind='item.number_of_persons'></td>
-                <td ng-bind='item.name'></td>
-                <td ng-bind='item.product_name'></td>
-                <td ng-bind='item.notes'></td>
-                <td ng-bind='item.customer.primary_phone_number'></td>
-            </tr>
-        </tbody>
-    </table>
+    <div translate='search.print.total_of_guests'
+      translate-values='{ total: controller.totalNumberOfPersons }'></div>
+    <div translate='search.print.total_of_reservations'
+      translate-values='{ total: controller.totalNumberOfReservations }'></div>
+  </div>
+  <table border='1' cellpadding='0' cellspacing='0' width='100%' class='print-reservation'>
+    <thead>
+      <th width='15%' translate='status_name'></th>
+      <th translate='table'></th>
+      <th translate='time'></th>
+      <th translate='persons'></th>
+      <th translate='name'></th>
+      <th translate='product'></th>
+      <th width='15%' translate='note'></th>
+      <th width='10%' translate='phone'></th>
+    </thead>
+    <tbody>
+      <tr ng-repeat='item in controller.data'
+        ng-if='reservation.status !== "cancelled"'>
+        <td align="center">
+          <input type='checkbox' />
+        </td>
+        <td ng-bind='item.table_numbers.join(", ")'></td>
+        <td ng-bind='item.time'></td>
+        <td ng-bind='item.number_of_persons'></td>
+        <td ng-bind='item.name'></td>
+        <td ng-bind='item.product_name'></td>
+        <td ng-bind='item.notes'></td>
+        <td ng-bind='item.customer.primary_phone_number'></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
