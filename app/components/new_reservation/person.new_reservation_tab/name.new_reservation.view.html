@@ -4,6 +4,7 @@
       md-selected-item-change='ctrl.selectedItemChange(item)'
       md-items='item in ctrl.search(ctrl.reservation.last_name)'
       md-item-text='item.last_name'
+      md-menu-container-class='input-suggestion'
       md-min-length='2'
       md-delay='500'
       md-floating-label='{{ "last_name" | translate }}'>
@@ -18,6 +19,7 @@
       md-selected-item-change='ctrl.selectedItemChange(item)'
       md-items='item in ctrl.search(ctrl.reservation.first_name)'
       md-item-text='item.first_name'
+      md-menu-container-class='input-suggestion'
       md-min-length='2'
       md-delay='500'
       md-floating-label='{{ "first_name" | translate }}'>
