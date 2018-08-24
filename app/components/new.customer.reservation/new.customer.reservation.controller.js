@@ -2,7 +2,6 @@ export default class Controller {
   constructor(User, Settings, $stateParams, $state, $rootScope, $window) {
     'ngInject';
 
-    this.current_company_id = User.getCompanyId();
     this.Settings = Settings;
     this.$rootScope = $rootScope;
     this.$window = $window;
@@ -28,7 +27,7 @@ export default class Controller {
     }
 
     this.$onInit = () => {
-      this.Settings.getGeneralSettings(this.current_company_id)
+      this.Settings.getGeneralSettings($stateParams.id)
         .then((generalSettings) => {
           this.initGeneralSettings(generalSettings);
         });
