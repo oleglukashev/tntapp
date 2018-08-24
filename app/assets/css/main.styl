@@ -1144,6 +1144,9 @@ span[uib-accordion-header] > .clearfix > .pull-left
   width 10rem
   height 150px
 
+.fix-avatar
+  border-radius 50%
+
 .fix-chart-bar
   width 25rem
   margin 0 auto
@@ -1165,6 +1168,34 @@ span[uib-accordion-header] > .clearfix > .pull-left
     &:nth-child(3)
       height 80px
       margin-top 120px
+
+.fix-text,
+.fix-avatar,
+.fix-chart,
+.fix-block,
+.fix-chart-bar div
+  background: linear-gradient(270deg, #ebebeb, #c3c3c3);
+  background-size: 400% 400%;
+
+  -webkit-animation: fix 2s ease infinite;
+  -moz-animation: fix 2s ease infinite;
+  animation: fix 2s ease infinite;
+
+  @-webkit-keyframes fix {
+      0%{background-position:0% 51%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 51%}
+  }
+  @-moz-keyframes fix {
+      0%{background-position:0% 51%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 51%}
+  }
+  @keyframes fix { 
+      0%{background-position:0% 51%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 51%}
+  }
 
 // search
 md-virtual-repeat-container
