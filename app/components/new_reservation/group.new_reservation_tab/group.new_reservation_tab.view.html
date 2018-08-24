@@ -13,7 +13,7 @@
       <div class='wrapper'>
         <label ng-repeat='part in ctrl.reservation.reservation_parts'
           class='btn btn-default block m-b-xs no-shadow text-success text-left'
-          ng-click='ctrl.selectCurrentIndex({ index: $index })'
+          ng-click='ctrl.selectCurrentIndex({ index: $index });ctrl.selectTab({ index: 0 })'
           ng-class='{"active": $index === ctrl.current_index}'
           ng-model='ctrl.current_index'
           uib-btn-radio='$index'>

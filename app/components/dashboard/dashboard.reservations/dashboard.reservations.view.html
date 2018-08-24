@@ -53,13 +53,12 @@
 
   <div class='panel'>
     <div class='panel-heading' translate='today'></div>
-    <md-list class='no-padder'
-             ng-show='ctrl.ReservationPart.partsByDate(ctrl.today, ctrl.moment()).length'>
+    <md-list class='no-padder' ng-show='ctrl.today.length'>
       <md-list-item class='md-no-proxy'
         ng-class='{"active": ctrl.active_part == item.part.id,
                   "cancelled": item.reservation.status == "cancelled",
                   "b-b-none": item.reservation.id === today_data[$index + 1].reservation.id}'
-        ng-repeat='item in today_data = ctrl.ReservationPart.partsByDate(ctrl.today, ctrl.moment()) track by $index'
+        ng-repeat='item in today_data = ctrl.today track by $index'
         ng-mouseup='ctrl.active_part = item.part.id'>
         <reservation-item
           hide-icon='item.reservation.id === today_data[$index - 1].reservation.id'
@@ -69,8 +68,8 @@
       </md-list-item>
     </md-list>
     <div class='md-padding empty_reservations'
-         ng-hide='ctrl.ReservationPart.partsByDate(ctrl.today, ctrl.moment()).length'
-         translate='make_first_reservation'></div>
+      ng-hide='ctrl.today.length'
+      translate='make_first_reservation'></div>
   </div>
 
   <div class='panel'>

@@ -46,13 +46,6 @@ export default class ReservationPart {
     return result;
   }
 
-  partsByDate(parts, date) {
-    return parts.filter((part) => {
-      return this.moment(part.date_time, 'DD.MM.YYYY HH:mm').format('YYYY-MM-DD') ===
-             this.moment(date).format('YYYY-MM-DD');
-    });
-  }
-
   getNewReservationPart() {
     return {
       date: null,
