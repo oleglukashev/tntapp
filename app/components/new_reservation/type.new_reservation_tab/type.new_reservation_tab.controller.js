@@ -26,7 +26,7 @@ export default class Controller {
 
         if (response.data.gender) {
           this.reservation.gender =
-            this.parseGenderFromSocialResponse(response.data.gender);
+            Controller.parseGenderFromSocialResponse(response.data.gender);
         }
 
         this.selectTab({ index: this.pagination.type });
