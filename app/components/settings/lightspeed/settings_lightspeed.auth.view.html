@@ -3,7 +3,7 @@
     <div class='md-toolbar-tools'>
       <h2 md-truncate flex translate='authorization'></h2>
       <md-button class='md-icon-button'
-                 ng-click='lightspeed_auth.$modalInstance.close()'
+                 ng-click='ctrl.$modalInstance.close()'
                  md-no-ink>
         <i class='mdi mdi-close m-r-sm i-24'></i>
       </md-button>
@@ -16,17 +16,17 @@
       <div class='w-xl'>
         <form name='lightspeed_auth_form'
               novalidate
-              ng-submit='lightspeed_auth.submitForm(lightspeed_auth_form.$valid);'>
+              ng-submit='ctrl.submitForm(lightspeed_auth_form.$valid);'>
           <md-input-container class='md-block'>
             <label translate='username'></label>
-            <input ng-model='lightspeed_auth.form_data.username' />
+            <input ng-model='ctrl.form_data.username' />
           </md-input-container>
           <md-input-container class='md-block'>
             <label translate='password'></label>
-            <input ng-model='lightspeed_auth.form_data.password' />
+            <input ng-model='ctrl.form_data.password' />
           </md-input-container>
           <button type='submit'
-                  ng-class="{ 'disabled': !lightspeed_auth_form.$valid || lightspeed_auth.is_submitting }"
+                  ng-class="{ 'disabled': !lightspeed_auth_form.$valid || ctrl.is_submitting }"
                   class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
                   translate='save'>
           </button>

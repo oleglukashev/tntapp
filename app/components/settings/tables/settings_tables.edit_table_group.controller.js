@@ -1,5 +1,5 @@
 export default class SettingsTablesEditTableGroupCtrl {
-  constructor(tableGroup, tableGroups, tablesByZone, User, TableGroup, Table, $rootScope, $modalInstance) {
+  constructor(tableGroup, tableGroups, tablesByZone, User, TableGroup, Table, $rootScope, $uibModalInstance) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -8,7 +8,7 @@ export default class SettingsTablesEditTableGroupCtrl {
     this.tablesByZone = tablesByZone;
     this.form_data = tableGroup;
     this.$rootScope = $rootScope;
-    this.$modalInstance = $modalInstance;
+    this.$modalInstance = $uibModalInstance;
     this.tableGroups = tableGroups;
   }
 
@@ -21,6 +21,7 @@ export default class SettingsTablesEditTableGroupCtrl {
       color: this.form_data.color,
       min: this.form_data.min,
       max: this.form_data.max,
+      can_be_combined: this.form_data.can_be_combined,
       tables: this.form_data.table_ids,
     };
 

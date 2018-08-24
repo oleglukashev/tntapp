@@ -3,7 +3,7 @@
     <div class='md-toolbar-tools'>
       <h2 md-truncate flex translate='settings.customer_settings_names.edit'></h2>
       <md-button class='md-icon-button'
-                 ng-click='controller.$modalInstance.dismiss("cancel");'
+                 ng-click='ctrl.$modalInstance.dismiss("cancel");'
                  md-no-ink>
         <i class='mdi mdi-close m-r-sm i-24'></i>
       </md-button>
@@ -11,15 +11,15 @@
   </md-toolbar>
   <md-content>
     <form name='edit_settings_name'
-          ng-submit='controller.submitForm(edit_settings_name.$valid)'>
+          ng-submit='ctrl.submitForm(edit_settings_name.$valid)'>
       <div class='wrapper md-content-submit' layout='column' layout-align='space-around center'>
         <div class='w-xl'>
           <md-input-container class='md-block'>
             <label translate='value'></label>
-            <input ng-model='controller.form_data.value' required />
+            <input ng-model='ctrl.form_data.value' required />
           </md-input-container>
           <div class='md-form-group no-padder'>
-            <md-radio-group ng-model='controller.form_data.language'>
+            <md-radio-group ng-model='ctrl.form_data.language'>
               <md-radio-button value='NL' class='inline md-success'>
                 {{ 'language.netherlands' | translate }}
               </md-radio-button>
@@ -29,7 +29,7 @@
             </md-radio-group>
           </div>
           <div class='md-form-group no-padder'>
-            <md-radio-group ng-model='controller.form_data.type'>
+            <md-radio-group ng-model='ctrl.form_data.type'>
               <md-radio-button value='allergy' class='inline md-success'>
                 {{ 'allergy' | translate }}
               </md-radio-button>
@@ -41,7 +41,7 @@
         </div>
       </div>
       <button type='submit'
-              ng-class="{ 'disabled': !edit_settings_name.$valid || controller.is_submitting }"
+              ng-class="{ 'disabled': !edit_settings_name.$valid || ctrl.is_submitting }"
               class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
               translate='save'>
       </button>

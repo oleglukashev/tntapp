@@ -1,12 +1,15 @@
-export default class SettingsWarningsCtrl {
-  constructor(User, Settings, $modal, $rootScope, filterFilter) {
+import editSettingsWarningsView from './edit/settings_warnings.edit.view.html';
+import editSettingsWarningsController from './edit/settings_warnings.edit.controller';
+
+export default class Controller {
+  constructor(User, Settings, $uibModal, $rootScope, filterFilter) {
     'ngInject';
 
     this.Settings = Settings;
     this.current_company_id = User.getCompanyId();
     this.filterFilter = filterFilter;
 
-    this.$modal = $modal;
+    this.$modal = $uibModal;
     this.$rootScope = $rootScope;
 
     this.warnings = [];
@@ -14,7 +17,6 @@ export default class SettingsWarningsCtrl {
     this.loadWarningsSettings();
 
     this.is_loaded = false;
-    this.$rootScope.show_spinner = true;
   }
 
   loadWarningsSettings() {
@@ -22,15 +24,15 @@ export default class SettingsWarningsCtrl {
       .getWarningsSettings(this.current_company_id).then(
         (warnings) => {
           this.is_loaded = true;
-          this.$rootScope.show_spinner = false;
           this.warnings = warnings;
         });
   }
 
   editWarning(id) {
     const modalInstance = this.$modal.open({
-      templateUrl: 'settings_warnings.edit.view.html',
-      controller: 'SettingsWarningsEditCtrl as edit_warnings',
+      template: editSettingsWarningsView,
+      controller: editSettingsWarningsController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         item: () => this.filterFilter(this.warnings, { id })[0],

@@ -1,30 +1,47 @@
+import dashboardInviteController from './dashboard.invite/dashboard.invite.controller';
+import dashboardInviteView from './dashboard.invite/dashboard.invite.view.html';
+import dashboardSubscriptionProcessController
+  from './dashboard.subscription/dashboard.subscription.process.controller';
+
 export default class DashboardCtrl {
-  constructor(User, Settings, $modal, $mdDialog, $modalStack, $stateParams, $state, $translate) {
+  constructor(User, Reservation, Zone, Settings, $uibModal, $mdDialog, $uibModalStack, $stateParams, $translate,
+    $scope, $q) {
     'ngInject';
 
     // Close all others windows
-    $modalStack.dismissAll();
+    $uibModalStack.dismissAll();
 
     this.current_company_id = User.getCompanyId();
 
-    this.$modal = $modal;
-    this.$state = $state;
-    this.$modalStack = $modalStack;
-    this.$mdDialog = $mdDialog;
-    this.Settings = Settings;
+    this.$uibModal = $uibModal;
+    this.Reservation = Reservation;
+    this.Zone = Zone;
+    this.zones = {};
 
+    const status = $stateParams.status;
+    const iban = $stateParams.iban;
     const senderEmailToken = $stateParams.sender_email_token;
 
+    if (status && status !== 'pending') {
+      this.openProcessPopup(status, iban);
+    }
+
     if (senderEmailToken) {
-      this.Settings.confirmSenderEmail(this.current_company_id, senderEmailToken).then((result) => {
-        const alert = this.$mdDialog.alert()
+      Settings.confirmSenderEmail(senderEmailToken).then(() => {
+        const alert = $mdDialog.alert()
           .title(this.sender_email_title)
           .textContent(this.sender_email_text)
-          .ok('Ok')
+          .ok('Ok');
 
-        this.$mdDialog.show(alert).then(() => {}, () => {});
+        $mdDialog.show(alert).then(() => {}, () => {});
       });
     }
+
+    $scope.$on('NewReservationCtrl.reload_reservations', () => {
+      this.Reservation.getAllGrouped(this.current_company_id).then((reservations) => {
+        this.initReservations(reservations);
+      });
+    });
 
     // run translates
     this.sender_email_title = '';
@@ -36,25 +53,48 @@ export default class DashboardCtrl {
       this.sender_email_title = translationIds.congratulations;
       this.sender_email_text = translationIds['dashboard.sender_email_text'];
     });
-  }
 
-  openReservation() {
-    const modalInstance = this.$modal.open({
-      templateUrl: 'dashboard_reservations.new.view.html',
-      controller: 'DashboardReservationsReservationCtrl as dash_reserv',
-      size: 'md',
+    $q.all([
+      this.Zone.getAll(this.current_company_id),
+      this.Reservation.getAllGrouped(this.current_company_id),
+    ]).then((result) => {
+      this.initZones(result[0]);
+      this.initReservations(result[1]);
     });
-
-    modalInstance.result.then(() => {}, () => {});
   }
 
   openInvitePopup() {
-    const modalInstance = this.$modal.open({
-      templateUrl: 'dashboard_invite.view.html',
-      controller: 'DashboardInviteCtrl as dash_invite',
+    const modalInstance = this.$uibModal.open({
+      component: 'dashboardInviteComponent',
       size: 'md',
     });
 
     modalInstance.result.then(() => {}, () => {});
+  }
+
+  openProcessPopup(status, iban) {
+    const modalInstance = this.$uibModal.open({
+      windowClass: 'subscription-modal',
+      templateUrl: `dashboard_subscription.${status}.view.html`,
+      controller: dashboardSubscriptionProcessController,
+      controllerAs: 'dash_subscription',
+      size: 'md',
+      resolve: {
+        iban: () => iban,
+      },
+    });
+
+    modalInstance.result.then(() => {}, () => {});
+  }
+
+  initReservations(reservations) {
+    this.reservations = reservations;
+  }
+
+  initZones(zones) {
+    this.zones = {};
+    zones.forEach((zone) => {
+      this.zones[zone.id] = zone;
+    });
   }
 }

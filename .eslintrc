@@ -13,6 +13,7 @@
   },
   "globals": {
     "API_URL": true,
+    "FACEBOOK_ID": true,
     "require": true,
     "describe": true,
     "it": true,
@@ -20,5 +21,7 @@
     "by": true,
     "element": true,
     "expect": true,
+    "import": true,
+    "parseInt": true,
   }
 }

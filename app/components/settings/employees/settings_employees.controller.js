@@ -1,24 +1,27 @@
-export default class SettingsEmployeesCtrl {
-  constructor(User, Employee, filterFilter, $modal, $rootScope) {
+import itemSettingsEmployeesView from './settings_employees.item.view.html';
+import itemSettingsEmployeesController from './settings_employees.item.controller';
+
+export default class Controller {
+  constructor(User, Employee, filterFilter, $uibModal, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
 
     this.filterFilter = filterFilter;
     this.Employee = Employee;
-    this.$modal = $modal;
+    this.$modal = $uibModal;
     this.$rootScope = $rootScope;
 
     this.loadEmployees();
 
     this.is_loaded = false;
-    this.$rootScope.show_spinner = true;
   }
 
   addEmployee() {
     const modalInstance = this.$modal.open({
-      templateUrl: 'settings_employees.item.view.html',
-      controller: 'SettingsEmployeesItemCtrl as employee',
+      template: itemSettingsEmployeesView,
+      controller: itemSettingsEmployeesController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         items: () => this.employees,
@@ -31,8 +34,9 @@ export default class SettingsEmployeesCtrl {
 
   editEmployee(id) {
     const modalInstance = this.$modal.open({
-      templateUrl: 'settings_employees.item.view.html',
-      controller: 'SettingsEmployeesItemCtrl as employee',
+      template: itemSettingsEmployeesView,
+      controller: itemSettingsEmployeesController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         items: () => this.employees,
@@ -44,12 +48,9 @@ export default class SettingsEmployeesCtrl {
   }
 
   loadEmployees() {
-    this.Employee
-      .getAll(this.current_company_id)
-      .then((employees) => {
-        this.$rootScope.show_spinner = false;
-        this.is_loaded = true;
-        this.employees = employees;
-      });
+    this.Employee.getAll(this.current_company_id).then((employees) => {
+      this.is_loaded = true;
+      this.employees = employees;
+    });
   }
 }

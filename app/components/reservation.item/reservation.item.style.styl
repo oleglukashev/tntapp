@@ -1,0 +1,53 @@
+reservation-item
+  display flex
+  flex 1 1 auto
+  min-height 72px
+
+  .md-avatar
+    margin-top 1rem
+  .md-list-item-text
+    margin 1rem 0
+    flex 1 1 auto
+  .md-list-item-content
+    .mdi.mdi-information-outline
+      font-size 19px
+      margin-left -5px
+
+.agenda-reservation-item-wrapper
+  width 100%
+  display table
+  border-collapse collapse
+
+agenda-reservation-item
+  font-size 0
+  display table-row
+  border-bottom: 1px solid border-color
+
+  &.active
+    background-color rgba(88, 102, 110, 0.1)
+
+  & > div
+    display table-cell
+    vertical-align middle
+    font-size 14px
+    padding 8px 16px
+
+    &.agenda-item-icon
+      width 72px
+
+  .eicon
+    font-size 16px
+
+  .mdi.mdi-information-outline
+    font-size 19px
+    margin-left -5px
+
+@media (max-width: 767px)
+  agenda-reservation-item
+    .visible-xs
+      display table-cell !important  
+
+@media (max-width: 991px) and (min-width: 768px)
+  agenda-reservation-item
+    .visible-sm
+      display table-cell !important

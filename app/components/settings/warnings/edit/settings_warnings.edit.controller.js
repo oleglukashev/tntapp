@@ -1,14 +1,14 @@
-export default class SettingsWarningsEditCtrl {
-  constructor(User, Settings, item, $modal, $rootScope, $modalInstance, filterFilter) {
+export default class Controller {
+  constructor(User, Settings, item, $uibModal, $rootScope, $uibModalInstance, filterFilter) {
     'ngInject';
 
     this.Settings = Settings;
     this.current_company_id = User.getCompanyId();
     this.filterFilter = filterFilter;
 
-    this.$modal = $modal;
+    this.$modal = $uibModal;
     this.$rootScope = $rootScope;
-    this.$modalInstance = $modalInstance;
+    this.$modalInstance = $uibModalInstance;
 
     this.item = item;
     this.form_data = item;

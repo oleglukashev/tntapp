@@ -1,0 +1,28 @@
+<md-input-container class='md-block no-margin no-padder'>
+  <md-autocomplete
+      md-search-text='ctrl.reservation.last_name'
+      md-selected-item-change='ctrl.selectedItemChange(item)'
+      md-items='item in ctrl.search(ctrl.reservation.last_name)'
+      md-item-text='item.last_name'
+      md-min-length='2'
+      md-delay='500'
+      md-floating-label='{{ "last_name" | translate }}'>
+    <md-item-template>
+      <span md-highlight-text='ctrl.reservation.last_name' md-highlight-flags='^i'>{{ item.display }}</span>
+    </md-item-template>
+  </md-autocomplete>
+</md-input-container>
+<md-input-container class='md-block no-margin no-padder'>
+  <md-autocomplete
+      md-search-text='ctrl.reservation.first_name'
+      md-selected-item-change='ctrl.selectedItemChange(item)'
+      md-items='item in ctrl.search(ctrl.reservation.first_name)'
+      md-item-text='item.first_name'
+      md-min-length='2'
+      md-delay='500'
+      md-floating-label='{{ "first_name" | translate }}'>
+    <md-item-template>
+      <span md-highlight-text='ctrl.reservation.first_name' md-highlight-flags='^i'>{{ item.display }}</span>
+    </md-item-template>
+  </md-autocomplete>
+</md-input-container>

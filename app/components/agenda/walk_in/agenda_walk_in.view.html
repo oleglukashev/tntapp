@@ -3,13 +3,17 @@
     <div class='md-toolbar-tools'>
       <h2 md-truncate flex translate='reservation.walkin'></h2>
       <md-button class='md-icon-button'
-                 ng-click='reserv.Confirm.onCloseModal(reserv.$modalInstance)'
-                 md-no-ink>
+        ng-click='ctrl.closeModalOrConfirm(ctrl.isSuccess)'
+        md-no-ink>
         <i class='mdi mdi-close m-r-sm i-24'></i>
       </md-button>
     </div>
   </md-toolbar>
   <md-content>
-    <div data-ng-include=" 'new_reservation.walk_in.view.html' "></div>
+    <walkin-new-reservation
+      type='dashboard'
+      settings='ctrl.settings'
+      is-success='ctrl.isSuccess'
+      resolve='ctrl.resolve'></walkin-new-reservation>
   </md-content>
 </section>

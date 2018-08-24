@@ -1,149 +1,130 @@
 <div class='agenda-content'>
   <ng-include src="'agenda.widget.html'"></ng-include>
 
-  <div class='col-sm-8' ng-show='agenda.is_loaded'>
+  <div class='col-sm-8' ng-show='ctrl.is_loaded'>
     <div class='page_filter m-b-md clearfix'>
       <div class='pull-left m-r-xs'
-           ng-init='controller = agenda'
+           ng-init='controller = ctrl'
            data-ng-include=" 'page_filter.print.view.html' "></div>
       <div class='pull-left m-r-xs'
-           ng-init='controller = agenda'
+           ng-init='controller = ctrl'
            data-ng-include=" 'page_filter.date.view.html' "></div>
       <div class='pull-left'
-           ng-init='controller = agenda'
+           ng-init='controller = ctrl'
            data-ng-include=" 'page_filter.settings.view.html' "></div>
       <div class='pull-left m-r-xs'
-           ng-init='controller = agenda'
+           ng-init='controller = ctrl'
            data-ng-include=" 'page_filter.filter.view.html' "></div>
       <div class='page_sort pull-left'
-           ng-init='controller = agenda'
+           ng-init='controller = ctrl'
            data-ng-include=" 'page_filter.sort.view.html' "></div>
       <div class='pull-right'
-           ng-init='controller = agenda'
+           ng-init='controller = ctrl'
            data-ng-include=" 'page_filter.change_view.view.html' "></div>
     </div>
 
-    <button ng-click='agenda.openReservation()' md-ink-ripple class='panel-add-button md-btn md-fab m-b'>
+    <button ng-click='ctrl.openReservation()' md-ink-ripple class='panel-add-button md-btn md-fab m-b'>
       <md-tooltip>{{ 'new_reservation' | translate }}?</md-tooltip>
       <i class='mdi mdi-plus i-24'></i>
     </button>
 
-    <div class='panel' ng-show='agenda.view_type == "list"'>
+    <div class='panel' ng-show='ctrl.view_type == "list"'>
       <div class='panel-heading' translate='reservations'></div>
       <div class='panel-body no-padder'>
-        <div ng-hide='agenda.data.length'
-             class='empty_reservations'
-             translate='make_first_reservation'>
+        <div ng-if='ctrl.is_loaded && !ctrl.data.length'
+          class='empty_reservations'
+          translate='make_first_reservation'>
         </div>
 
-        <table class='table m-b-none' ng-show='agenda.data.length'>
-          <thead>
-            <tr>
-                <th width='8%' translate='status_name'></th>
-                <th class='hidden-xs hidden-sm' width='10%' translate='time'></th>
-                <th class='hidden-xs hidden-sm' width='12%' translate='product'></th>
-                <th class='hidden-xs hidden-sm' width='12%' translate='name'></th>
-                <th class='hidden-xs hidden-sm' width='10%' translate='persons'></th>
-                <th class='hidden-xs hidden-sm' width='10%' translate='table'></th>
-                <th class='hidden-xs hidden-sm' translate='note'></th>
-                <th class='visible-xs visible-sm'></th>
-                <th width='8%'></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr data-ng-include=" 'agenda.item.view.html' "
-                ng-click='agenda.openCustomerMenu(item.customer_id, item.id)'
-                ng-class='{"active": agenda.active_part == item.id,
-                           "cancelled": item.reservation.status == "cancelled",
-                           "hide-icon": item.reservation.id === agenda_data[$index - 1].reservation.id}'
-                ng-repeat='item in agenda_data = agenda.data'
-                ng-mouseup='agenda.active_part = item.id'
-                ng-init='controller = agenda;'>
-                </tr>
-          </tbody>
-        </table>
+        <div class='agenda-reservation-item-wrapper'>
+          <agenda-reservation-item
+            ng-class='{"active": ctrl.active_part == item.part.id,
+                      "cancelled": item.reservation.status == "cancelled",
+                      "b-b-none": item.reservation.id === agenda_data[$index + 1].reservation.id}'
+            ng-repeat='item in agenda_data = ctrl.data track by $index'
+            ng-mouseup='ctrl.active_part = item.part.id'
+            hide-icon='item.reservation.id === agenda_data[$index - 1].reservation.id'
+            change-status='ctrl.changeStatus(reservation, status)'
+            show-date=true
+            data='item'></agenda-reservation-item>
+        </div>
       </div>
     </div>
 
-    <accordion class='agenda'
-               close-others='false'
-               ng-show='agenda.view_type == "calendar"'>
-      <accordion-group ng-repeat='(zoneId, zone) in agenda.zones'
-                       is-open='agenda.opened[$index]'
-                       ng-if='agenda.zones'>
-        <accordion-heading>
-          <div class='clearfix' ng-click='agenda.scrollToNow($index)'>
+    <uib-accordion
+      class='agenda'
+      close-others='false'
+      ng-show='ctrl.view_type == "calendar"'>
+      <div
+        uib-accordion-group
+        ng-repeat='(zoneId, zone) in ctrl.zones'
+        is-open='ctrl.opened[$index]'
+        ng-if='ctrl.zones'>
+        
+        <uib-accordion-heading>
+          <div class='clearfix' ng-click='ctrl.scrollToNow($index)'>
             <div class='pull-left'>
               {{ zone.name }}
-              <i class='mdi mdi-chevron-down i-24' ng-show='!agenda.opened[$index]'></i>
-              <i class='mdi mdi-chevron-up i-24' ng-show='agenda.opened[$index]'></i>
+            </div>
+            <div class='pull-left'>
+              <i class='mdi mdi-chevron-down i-24' ng-show='!ctrl.opened[$index]'></i>
+              <i class='mdi mdi-chevron-up i-24' ng-show='ctrl.opened[$index]'></i>
             </div>
           </div>
-        </accordion-heading>
+        </uib-accordion-heading>
 
-        <div ng-if='agenda.opened[$index]'>
+        <div ng-if='ctrl.opened[$index]'>
           <div class='tables_wrapper'>
-            <div ng-repeat='(tableIndex, tableId) in zone.table_ids | orderBy:"position"'>
+            <div ng-repeat='(tableIndex, table) in zone.tables | orderBy:"position"'>
               <div class='table_item_number pull-left m-t-sm'
-                   ng-style='{ top: tableIndex * agenda.reservation_height }'
-                   ng-bind='agenda.tables[tableId].table_number'></div>
+                   ng-style='{ top: tableIndex * ctrl.reservation_height }'
+                   ng-bind='table.table_number'></div>
             </div>
           </div>
 
           <div class='calendar_wrapper' data-zone-id='{{ zone.id }}'>
             <div class='scroll-wrapper'>
-              <div class='hours-timeline' ng-show='zone.table_ids.length'>
-                <div class='hour' ng-repeat='hour in agenda.hours'>
+              <div class='hours-timeline' ng-show='zone.tables.length'>
+                <div class='hour' ng-repeat='hour in ctrl.hours'>
                   {{ hour }}:00
                 </div>
               </div>
-              <div class='timeline-wrapper' ng-show='zone.table_ids.length'>
-                <div class='now' ng-style='agenda.nowLineStyle(zone.id)' ng-show='agenda.is_today'></div>
+              <div class='timeline-wrapper' ng-show='zone.tables.length'>
+                <div class='now' ng-style='ctrl.nowLineStyle(zone.id)' ng-show='ctrl.is_today'></div>
                 <ul class='tables md-list no-padder no-margin'>
                   <li class='table_item md-list-item no-padder no-margin z-index1'
-                      ng-repeat='(tableIndex, tableId) in zone.table_ids | orderBy:"position"'
-                      ng-if='agenda.tables[tableId]'>
+                      ng-repeat='(tableIndex, table) in zone.tables | orderBy:"position"'>
                     <div class='hours-wrapper'>
-                      <div class='hour' ng-repeat='hour in agenda.hours'>
+                      <div class='hour' ng-repeat='hour in ctrl.hours'>
                         <div class='quarter'
                              data-hour='{{ hour }}'
                              data-quarter='{{ quarter }}'
                              data-zone-id='{{ zone.id }}'
                              ng-repeat='quarter in [0,1,2,3]'
-                             ui-on-drop='agenda.onDrop(tableId, tableIndex, hour, quarter, $data)'
-                             ng-click='agenda.openWalkIn(tableId, agenda.tables[tableId].table_number, hour, quarter)'
-                             ng-class='{ closed: agenda.isClosedTime(hour, quarter, zone.id) }'
+                             ui-on-drop='ctrl.onDrop(table.id, tableIndex, hour, quarter, $data)'
+                             ng-click='ctrl.openWalkIn(table.id, table.table_number, hour, quarter)'
+                             ng-class='{ closed: ctrl.isClosedTime(hour, quarter, zone.id) }'
                              ng-mouseenter="hover=true"
                              ng-mouseleave="hover=false"
-                             drop-channel='move,resize'><div></div></div>
+                             drop-channel='move,resize'></div>
                       </div>
                       <div class='reservation'
-                           ng-repeat='item in agenda.graph_data[tableId]'
-                           ng-if='agenda.graph_data[tableId]'
-                           ui-on-drop=''
-                           drop-channel='resize'
-                           ui-draggable='true'
-                           drag='[item.id, tableId]'
-                           ng-style='agenda.reservationBlockStyle(tableIndex, tableId, item)'
-                           on-drop-failure='agenda.dragEnd()'
-                           ng-class='agenda.draggable_class'
-                           data-product-id='{{ item.product.id }}'
-                           data-id='{{ item.id }}'
-                           drag-channel='move'>
-                        <div class='reservation_wrapper'>
-                          <span
-                             data-ng-include=" 'reservation_status_menu.view.html' "
-                             ng-init='controller = agenda; agendaIcon = true'
-                          ></span>
-                          <a ng-click='agenda.openCustomerMenu(item.customer.id, item.id)'>
-                            {{ item.number_of_persons }}
-                            {{ item.product_name }}
-                            <strong ng-bind='item.name'></strong>
-                          </a>
-                          <div class='resizer' ui-draggable='true' drag-channel='resize'></div>
-                        </div>
+                        ng-repeat='item in ctrl.graph_data[table.id] track by $index'
+                        ng-if='ctrl.graph_data[table.id]'
+                        ui-on-drop=''
+                        drop-channel='resize'
+                        ui-draggable='true'
+                        drag='[item.id, table.id]'
+                        ng-style='ctrl.reservationBlockStyle(tableIndex, table.id, item)'
+                        on-drop-failure='ctrl.dragEnd()'
+                        ng-class='ctrl.draggable_class'
+                        data-product-id='{{ item.product.id }}'
+                        data-id='{{ item.id }}'
+                        drag-channel='move'>
+                        <agenda-calendar-reservation-item
+                          change-status='ctrl.changeStatus(reservation, status)'
+                          data='item'></agenda-calendar-reservation-item>
                       </div>
-
                     </div>
                   </li>
                 </ul>
@@ -151,11 +132,15 @@
             </div>
           </div>
         </div>
-      </accordion-group>
-    </accordion>
+      </div>
+    </uib-accordion>
   </div>
 
-  <div class='agenda-timeranges col-sm-4' ng-show='agenda.time_ranges_is_loaded'>
+  <div class='col-sm-8' ng-if='!ctrl.is_loaded'>
+    <fix-agenda-reservations></fix-agenda-reservations>
+  </div>
+
+  <div class='agenda-timeranges col-sm-4' ng-show='ctrl.time_ranges_is_loaded'>
     <div data-ng-include=" 'agenda_charts.view.html' " ng-controller='AgendaChartsCtrl as agenda_charts'></div>
 
     <div class='panel'>
@@ -168,13 +153,13 @@
             <th translate='time'></th>
           </thead>
           <tbody>
-            <tr ng-repeat='time_range in agenda.time_ranges'>
+            <tr ng-repeat='time_range in ctrl.time_ranges'>
               <td class='v-middle'>
                 <span ng-if='time_range.type !== "zone" && time_range.type !== "product"'>
                   {{ time_range.type }}
                 </span>
-                <span ng-if='time_range.type == "zone"'>{{ agenda.getZoneNameByRange(time_range) }}</span>
-                <span ng-if='time_range.type == "product"'>{{ agenda.getProductsName(time_range) }}</span>
+                <span ng-if='time_range.type == "zone"'>{{ ctrl.getZoneNameByRange(time_range) }}</span>
+                <span ng-if='time_range.type == "product"'>{{ ctrl.getProductsName(time_range) }}</span>
               </td>
               <td ng-if='["open", "zone", "product", "multiproduct"].includes(time_range.type)'
                   class='v-middle'>{{ time_range.value ? 'opened' : 'closed' | translate }}</td>
@@ -192,6 +177,10 @@
       </div>
     </div>
   </div>
+
+  <div class='agenda-timeranges col-sm-4' ng-if='!ctrl.time_ranges_is_loaded'>
+    <fix-agenda-charts></fix-agenda-charts>
+  </div>
 </div>
 
-<div data-ng-include=" 'reservation_print.view.html' " ng-init='controller = agenda'></div>
+<div data-ng-include=" 'reservation_print.view.html' " ng-init='controller = ctrl'></div>

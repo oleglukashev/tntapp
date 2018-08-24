@@ -1,38 +1,68 @@
-<div class='panel'>
-  <div class='panel-heading clearfix'>
-    {{ 'settings.lightspeed.title' | translate }}
-    <button ng-click='lightspeed_settings.showAuthPopup()'
-            class='md-btn md-flat btn-fw text-success pull-right'
-            translate='authorization'></button>
-  </div>
-  <div class='md-list'>
-    <div class='md-list-item clear'
-         ng-repeat='table in lightspeed_settings.tables'>
-      <div class='pull-left'>
-        <h3 class='no-margin text-md'>
-          {{ 'table' | translate }}: {{ table.table_number }}
-        </h3>
-        <small class='text-muted'></small>
-      </div>
-      <div class='pull-right'>
-        <md-input-container class='no-margin p-t-none'>
-          <md-select ng-model='table.lightspeed_table_id'>
-            <md-option ></md-option>
-            <md-option ng-value='item.id'
-                       ng-repeat='(name, item) in lightspeed_settings.lightspeed_tables'>
-              {{ name }}
-            </md-option>
-          </md-select>
-        </md-input-container>
+<div class='col-lg-8 col-md-8 col-sm-8'>
+  <div class='panel' ng-if='ctrl.is_loaded'>
+    <div class='panel-heading clearfix'>
+      {{ 'settings.lightspeed.title' | translate }}
+      <button ng-click='ctrl.showAuthPopup()'
+              class='md-btn md-flat btn-fw text-success pull-right'
+              translate='authorization'></button>
+    </div>
+    <div class='md-list'>
+      <div class='md-list-item clear'
+           ng-repeat='table in ctrl.tables'>
+        <div class='pull-left'>
+          <h3 class='no-margin text-md'>
+            {{ 'table' | translate }}: {{ table.table_number }}
+          </h3>
+          <small class='text-muted'></small>
+        </div>
+        <div class='pull-right'>
+          <md-input-container class='no-margin p-t-none'>
+            <md-select ng-model='table.lightspeed_table_id'>
+              <md-option ></md-option>
+              <md-option ng-value='item.id'
+                         ng-repeat='(name, item) in ctrl.lightspeed_tables'>
+                {{ name }}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
       </div>
     </div>
+    <div class='panel-footer'>
+      <button ng-click='ctrl.saveTables()'
+              class='md-btn md-flat btn-fw text-success'
+              translate='save'></button>
+      <button ng-click='ctrl.sync()'
+              class='md-btn md-flat btn-fw text-success'
+              translate='sync'></button>
+    </div>
   </div>
-  <div class='panel-footer'>
-    <button ng-click='lightspeed_settings.saveTables()'
-            class='md-btn md-flat btn-fw text-success'
-            translate='save'></button>
-    <button ng-click='lightspeed_settings.sync()'
-            class='md-btn md-flat btn-fw text-success'
-            translate='sync'></button>
+
+  <div class='panel' ng-if='!ctrl.is_loaded'>
+    <div class='panel-heading clearfix' translate='settings.lightspeed.title'></div>
+    <md-list class='no-padder'>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+    </md-list>
   </div>
 </div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+  <settings-menu></settings-menu>
+</div>
+

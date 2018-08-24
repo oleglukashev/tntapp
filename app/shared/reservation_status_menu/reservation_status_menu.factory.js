@@ -1,5 +1,5 @@
 export default function reservationStatusMenu(AppConstants, ReservationStatus, filterFilter,
-  Customer, UserMenu, moment, $modal) {
+  Customer, UserMenu, moment, $uibModal) {
   'ngInject';
 
   return (that) => {
@@ -19,7 +19,7 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
     };
 
     instance.answer = (reservation, status) => {
-      const modalInstance = $modal.open({
+      const modalInstance = $uibModal.open({
         templateUrl: 'reservation_answer.view.html',
         controller: 'ReservationAnswerCtrl as antwoord',
         size: 'md',
@@ -34,7 +34,7 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
     };
 
     instance.openEditReservationModal = (reservation, reservationPart) => {
-      const modalInstance = $modal.open({
+      const modalInstance = $uibModal.open({
         templateUrl: 'edit_reservation.view.html',
         controller: 'EditReservationCtrl as reserv',
         size: 'md',

@@ -1,8 +1,8 @@
 import angular from 'angular';
 
-export default class SettingsProductsNewProductCtrl {
+export default class Controller {
   constructor(User, TimeRange, AppConstants, products, Slider, $timeout, $rootScope,
-    $scope, $modalInstance, $translate) {
+    $scope, $uibModalInstance, $translate) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -39,7 +39,7 @@ export default class SettingsProductsNewProductCtrl {
       },
     ];
 
-    this.$modalInstance = $modalInstance;
+    this.$modalInstance = $uibModalInstance;
 
     this.sliderOptions = this.Slider.getOptions().options;
 

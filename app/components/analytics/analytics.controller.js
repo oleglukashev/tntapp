@@ -1,5 +1,5 @@
-export default class AnalyticsCtrl {
-  constructor(User, Analytics, AppConstants, Charts, Product, $rootScope) {
+export default class Controller {
+  constructor(User, Analytics, AppConstants, Charts, Product, $rootScope, $q) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -9,8 +9,15 @@ export default class AnalyticsCtrl {
     this.AppConstants = AppConstants;
     this.$rootScope = $rootScope;
 
-    this.loadAnalytics();
-    this.loadProducts();
+    this.analyticsLoaded = false;
+    $q.all([
+      this.Analytics.getAll(this.current_company_id),
+      this.Product.getAll(this.current_company_id)
+    ]).then((result) => {
+      this.initAnalytics(result[0]);
+      this.initProducts(result[1]);
+      this.analyticsLoaded = true;
+    });
 
     this.average_guests_per_day_type = 'month';
 
@@ -28,21 +35,12 @@ export default class AnalyticsCtrl {
     }];
   }
 
-  loadAnalytics() {
-    this.$rootScope.show_spinner = true;
-
-    this.Analytics.getAll(this.current_company_id).then((result) => {
-      this.analyticsData = result;
-      this.$rootScope.show_spinner = false;
-    }, () => {
-      this.$rootScope.show_spinner = false;
-    });
+  initAnalytics(data) {
+    this.analyticsData = data;
   }
 
-  loadProducts() {
-    this.Product.getAll(this.current_company_id).then((products) => {
-      this.products = products;
-    });
+  initProducts(products) {
+    this.products = products;
   }
 
   updateAverageGuestsPerDayType(type) {

@@ -6,18 +6,17 @@
       </div>
       <div class='text-muted m-b m-t text-center'
            translate='auth.welcome'></div>
-      <form ng-submit='auth.submitForm()'>
-        <div ng-show='auth.authType == "login"'>
-          <div class='text-default wrapper text-center bg-danger'
-               ng-show='auth.errors'>
-            {{ auth.errors.message }}
+      <form ng-submit='ctrl.submitForm()'>
+        <div ng-show='ctrl.authType == "login"'>
+          <div class='text-default wrapper text-center bg-danger' ng-show='ctrl.errors'>
+            {{ ctrl.errors.message }}
           </div>
 
           <div class='list-group-item'>
             <input type='email'
                    class='form-control no-border'
-                   ng-model='auth.formData._username'
-                   ng-required='auth.authType == "login"'
+                   ng-model='ctrl.formData._username'
+                   ng-required='ctrl.authType == "login"'
                    placeholder='E-mail'
                    autocomplete='new-password' />
           </div>
@@ -25,16 +24,16 @@
           <div class='list-group-item'>
             <input type='password'
                    class='form-control no-border'
-                   ng-model='auth.formData._password'
+                   ng-model='ctrl.formData._password'
                    placeholder='Wachtwoord'
                    autocomplete='new-password' />
           </div>
         </div>
 
-        <div ng-show='auth.authType == "register"'>
+        <div ng-show='ctrl.authType == "register"'>
           <div class='text-default wrapper text-center bg-danger'
-               ng-show='auth.errors'>
-            <div ng-repeat='error in auth.errors'>
+               ng-show='ctrl.errors'>
+            <div ng-repeat='error in ctrl.errors'>
               {{ error.origin }}: {{ error.message }}
             </div>
           </div>
@@ -42,8 +41,8 @@
           <div class='list-group-item'>
             <input type='email'
                    class='form-control no-border'
-                   ng-model='auth.formData.email'
-                   ng-required='auth.authType == "register"'
+                   ng-model='ctrl.formData.email'
+                   ng-required='ctrl.authType == "register"'
                    placeholder='E-mail'
                    autocomplete='new-password' />
           </div>
@@ -51,24 +50,24 @@
           <div class='list-group-item'>
             <input type='text'
                    class='form-control no-border'
-                   ng-model='auth.formData.first_name'
-                   ng-required='auth.authType == "register"'
+                   ng-model='ctrl.formData.first_name'
+                   ng-required='ctrl.authType == "register"'
                    placeholder='Voornaam' />
           </div>
 
           <div class='list-group-item'>
             <input type='text'
                    class='form-control no-border'
-                   ng-model='auth.formData.last_name'
-                   ng-required='auth.authType == "register"'
+                   ng-model='ctrl.formData.last_name'
+                   ng-required='ctrl.authType == "register"'
                    placeholder='Achternaam' />
           </div>
 
           <div class='list-group-item'>
             <input type='password'
                    class='form-control no-border'
-                   ng-model='auth.formData.plainPassword.first'
-                   ng-required='auth.authType == "register"'
+                   ng-model='ctrl.formData.plainPassword.first'
+                   ng-required='ctrl.authType == "register"'
                    placeholder='Wachtwoord'
                    autocomplete='new-password' />
           </div>
@@ -76,7 +75,7 @@
           <div class='list-group-item no-border'>
             <input type='password'
                    class='form-control no-border'
-                   ng-model='auth.formData.plainPassword.second'
+                   ng-model='ctrl.formData.plainPassword.second'
                    placeholder='Wachtwoord herhalen'
                    autocomplete='new-password' />
           </div>
@@ -85,20 +84,20 @@
         <div class='wrapper'>
           <button type='submit'
                   class='md-btn md-flat btn-fw btn-block m-t-md'
-                  ng-class="{ 'disabled': auth.isSubmitting }">
+                  ng-class="{ 'disabled': ctrl.isSubmitting }">
             <span>
-              <span ng-show='auth.authType == "login"' translate='auth.login'></span>
-              <span ng-show='auth.authType == "register"' translate='auth.create_account'></span>
+              <span ng-show='ctrl.authType == "login"' translate='auth.login'></span>
+              <span ng-show='ctrl.authType == "register"' translate='auth.create_account'></span>
             </span>
           </button>
 
           <div class='text-center bold'>
             <div class='m-t-lg'>
-              <a ng-show='auth.authType == "login"'
+              <a ng-show='ctrl.authType == "login"'
                  class='text-success'
                  target='_blank'
                  href='https://calendly.com/thenextsoftware'>VRAAG HIER EEN DEMO AAN</a>
-              <a ng-show='auth.authType == "register"'
+              <a ng-show='ctrl.authType == "register"'
                  class='text-success uppercase'
                  ui-sref='auth.login'
                  translate='auth.signin'></a>

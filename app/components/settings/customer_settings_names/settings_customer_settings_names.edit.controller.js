@@ -1,12 +1,12 @@
-export default class SettingsCustomerSettingsNamesEditCtrl {
-  constructor(User, CustomerSettingsName, settingsName, $modal, $rootScope, $modalInstance) {
+export default class Controller {
+  constructor(User, CustomerSettingsName, settingsName, $uibModal, $rootScope, $uibModalInstance) {
     'ngInject';
 
     this.CustomerSettingsName = CustomerSettingsName;
     this.current_company_id = User.getCompanyId();
-    this.$modal = $modal;
+    this.$modal = $uibModal;
     this.$rootScope = $rootScope;
-    this.$modalInstance = $modalInstance;
+    this.$modalInstance = $uibModalInstance;
     this.settingsName = settingsName;
     this.form_data = {
       value: settingsName.value,

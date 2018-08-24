@@ -1,4 +1,4 @@
-<md-fab-speed-dial ng-show='agenda.view_type == "calendar"'
+<md-fab-speed-dial ng-show='ctrl.view_type == "calendar"'
                    md-direction="left"
                    md-open="false"
                    md-is-locked-open='false'
@@ -7,26 +7,26 @@
     <md-button class="md-fab widget-button" md-ink-ripple="false">
       {{ 'calendar.widget' | translate }}
     </md-button>
-    <div class="widget-count" >{{ agenda.getEmptyTableReservations() }}</div>
+    <div class="widget-count" >{{ ctrl.getEmptyTableReservations() }}</div>
   </md-fab-trigger>
 
-  <md-fab-actions ng-click="agenda.dontHideWidget($event)">
+  <md-fab-actions ng-click="ctrl.dontHideWidget($event)">
     <div class='calendar_wrapper'>
-      <div ng-repeat='item in agenda.data_without_tables'>
+      <div ng-repeat='item in ctrl.data_without_tables'>
         <div class="pull-left widget-time">{{ item.time }}</div>
         <div class='reservation'
              ui-draggable='true'
              drag='[item.id, null]'
-             on-drop-failure='agenda.dragEnd()'
-             ng-class='agenda.draggable_class'
-             data-product-id='{{ item.product_id }}'
+             on-drop-failure='ctrl.dragEnd()'
+             ng-class='ctrl.draggable_class'
+             data-product-id='{{ item.product.id }}'
              data-id='{{ item.id }}'
              drag-channel='move'>
           <i class='mdi i-20'
-             ng-class='agenda.ReservationStatus.getIcon(item, item.reservation)'
-             title='{{ agenda.AppConstants.reservationDutchStatuses[item.reservation.status] }}'
+             ng-class='ctrl.ReservationStatus.getIcon(item, item.reservation)'
+             title='{{ ctrl.AppConstants.reservationDutchStatuses[item.reservation.status] }}'
           ></i>
-          <a ng-click='user.openCustomerMenu(item.customer_id, item.id)' ng-controller='UserMenuCtrl as user'>
+          <a ng-click='ctrl.openCustomerMenu(item.customer_id, item.id)'>
             {{ item.number_of_persons }}
             {{ item.product_name }}
             <strong>

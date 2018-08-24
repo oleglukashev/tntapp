@@ -1,127 +1,209 @@
-<div ng-show='plugins_settings.is_loaded'>
-  <div class='panel'>
-    <div class='panel-heading' translate='settings.plugins.wordpress_title'></div>
-    <div class='panel-body'>
-      <p class='m-b-md' translate='settings.plugins.wordpress_description'></p>
-      <ul class='list_number_point'>
-        <li><span class='number_point'>1</span>{{ 'settings.plugins.wordpress_point1' | translate }}</li>
-        <li><span class='number_point'>2</span>{{ 'settings.plugins.wordpress_point2' | translate }}</li>
-        <li><span class='number_point'>3</span>{{ 'settings.plugins.wordpress_point3' | translate }}</li>
-        <li><span class='number_point'>4</span>{{ 'settings.plugins.wordpress_point4' | translate }}</li>
-      </ul>
+<div class='col-lg-8 col-md-8 col-sm-8'>
+  <div ng-if='ctrl.is_loaded'>
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.plugins.wordpress_title'></div>
+      <div class='panel-body'>
+        <p class='m-b-md' translate='settings.plugins.wordpress_description'></p>
+        <ul class='list_number_point'>
+          <li><span class='number_point'>1</span>{{ 'settings.plugins.wordpress_point1' | translate }}</li>
+          <li><span class='number_point'>2</span>{{ 'settings.plugins.wordpress_point2' | translate }}</li>
+          <li><span class='number_point'>3</span>{{ 'settings.plugins.wordpress_point3' | translate }}</li>
+          <li><span class='number_point'>4</span>{{ 'settings.plugins.wordpress_point4' | translate }}</li>
+        </ul>
+      </div>
+      <div class='panel-footer clearfix form-horizontal'>
+        <div class='form-group no-margin'>
+          <label class='col-sm-2 text-left p-l-none control-label'
+                 translate='settings.plugins.link_code_title'></label>
+
+          <div class='col-sm-10 no-padder'>
+            <input type='text' class='form-control' ng-model='ctrl.wordpress_token' readonly />
+          </div>
+        </div>
+      </div>
     </div>
-    <div class='panel-footer clearfix form-horizontal'>
-      <div class='form-group no-margin'>
+
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.plugins.iframe_title'></div>
+      <div class='panel-body'>
+        <p class='m-b-md' translate='settings.plugins.iframe_description'></p>
+        <p class='no-margin' translate='settings.plugins.iframe_text'></p>
+      </div>
+      <div class='panel-footer clearfix form-horizontal'>
+        <div class='form-group no-margin'>
+          <label class='col-sm-2 text-left p-l-none control-label'
+                 translate='settings.plugins.link_code_title'></label>
+
+          <div class='col-sm-10 no-padder'>
+            <textarea class='form-control' readonly>{{ ctrl.iframe_widget }}</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.plugins.tnr_link_title'></div>
+      <div class='panel-body'>
+        <p class='m-b-md' translate='settings.plugins.tnr_link_description'></p>
+      </div>
+      <div class='panel-footer clearfix form-horizontal'>
+        <form ng-submit='ctrl.submitForm();'>
+          <label class='col-sm-2 col-xs-12 text-left p-l-none control-label'
+                 translate='settings.plugins.link_code_title'></label>
+          <div class='col-sm-8 col-xs-8 no-padder'>
+            <input type='text' class='form-control' ng-model='ctrl.tnr_sync_token' />
+          </div>
+          <div class='col-sm-2 col-xs-4 no-padder text-right'>
+            <button type='submit'
+                    class='md-button btn-success no-margin'
+                    translate='save'></button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.plugins.file_title'></div>
+      <div class='panel-body clearfix'>
+        <p class='m-b-md' translate='settings.plugins.file_description'></p>
+        <div ng-if='ctrl.percent_upload_file'
+             class='m-b-sm'>
+          <md-progress-linear md-mode='determinate'
+                              value='{{ ctrl.percent_upload_file }}'></md-progress-linear>
+        </div>
+        <div class='plugin-image m-b-sm'
+             ng-if='ctrl.canShowImage()'>
+          <img ng-src='{{ ctrl.plugin_image_file_name }}' />
+          <div>
+            <i class='mdi mdi-delete i-16' ng-click='ctrl.removeImage();'></i>
+          </div>
+        </div>
+        <button type='button'
+                class='md-button btn-success no-margin'
+                ngf-select='ctrl.uploadImage($file, $invalidFiles)'
+                accept="image/*"
+                ngf-pattern="'.png,.jpg'"
+                ngf-max-height="2000"
+                ngf-max-size="1MB"
+                ng-model='ctrl.plugin_image_file_name'>
+          {{ 'choose_file' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.plugins.links_title'></div>
+        <div class='panel-body clearfix form-horizontal'>
+          <div class='untill-logo pull-left'>
+            <a href='#' ui-sref='app.untill_credintails_settings'></a>
+          </div>
+          <div class='pull-left'>
+            <div class='api-checked'
+                 ng-if='ctrl.canShowUntillLinked()'>
+              <i class='mdi mdi-checkbox-marked-circle i-16'></i>
+              {{ 'settings.plugins.untill_link' | translate }}
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.plugins.api_title'></div>
+      <div class='panel-body'>
+        <p class='m-b-md' translate='settings.plugins.api_description'></p>
+      </div>
+      <div class='panel-footer clearfix form-horizontal'>
         <label class='col-sm-2 text-left p-l-none control-label'
-               translate='settings.plugins.link_code_title'></label>
+               translate='settings.plugins.api_title'></label>
 
         <div class='col-sm-10 no-padder'>
-          <input type='text' class='form-control' ng-model='plugins_settings.wordpress_token' readonly />
+          <input type='text' class='form-control' ng-model='ctrl.api_token' readonly />
         </div>
       </div>
     </div>
   </div>
 
-  <div class='panel'>
-    <div class='panel-heading' translate='settings.plugins.iframe_title'></div>
-    <div class='panel-body'>
-      <p class='m-b-md' translate='settings.plugins.iframe_description'></p>
-      <p class='no-margin' translate='settings.plugins.iframe_text'></p>
-    </div>
-    <div class='panel-footer clearfix form-horizontal'>
-      <div class='form-group no-margin'>
-        <label class='col-sm-2 text-left p-l-none control-label'
-               translate='settings.plugins.link_code_title'></label>
-
-        <div class='col-sm-10 no-padder'>
-          <textarea class='form-control' readonly>{{ plugins_settings.iframe_widget }}</textarea>
+  <div>
+    <div class='panel' ng-if='!ctrl.is_loaded'>
+      <div class='panel-heading' translate='settings.plugins.wordpress_title'></div>
+      <div class='panel-body'>
+        <div class='fix-text grey-300 m-b-sm'>&nbsp;</div>
+        <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+        <ul class='list_number_point clearix'>
+          <li>
+            <div class='pull-left fix-text w-4x m-b-md m-r-md grey-300'>&nbsp;</div>
+            <div class='pull-left fix-text w-xxl m-b-md grey-300'>&nbsp;</div>
+          </li>
+          <li>
+            <div class='pull-left fix-text w-4x m-b-md m-r-md grey-300'>&nbsp;</div>
+            <div class='pull-left fix-text w-lg m-b-md grey-300'>&nbsp;</div>
+          </li>
+          <li>
+            <div class='pull-left fix-text w-4x m-b-md m-r-md grey-300'>&nbsp;</div>
+            <div class='pull-left fix-text w-xl m-b-md grey-300'>&nbsp;</div>
+          </li>
+          <li>
+            <div class='pull-left fix-text w-4x m-b-md m-r-md grey-300'>&nbsp;</div>
+            <div class='pull-left fix-text w-xxl m-b-md grey-300'>&nbsp;</div>
+          </li>
+        </ul>
+      </div>
+      <div class='panel-footer clearfix form-horizontal'>
+        <div class='form-group no-margin'>
+          <div class='fix-text grey-300'>&nbsp;</div>
         </div>
       </div>
     </div>
-  </div>
 
-<!-- <div ng-show='plugins_settings.is_loaded'>
-  <div class='panel'>
-    <div class='panel-heading'>
-      Koppeling The Next Review
-    </div>
-    <div class='panel-body'>
-      <p class='m-b-md'>Link TheNextReview en TheNextTable, en zie de beoordelingen van je gasten direct vanuit TheNextTable.</p>
-    </div>
-    <div class='panel-footer clearfix form-horizontal'>
-      <label class='col-sm-3 text-left p-l-none control-label'>Probeer 30 dagen gratis</label>
-
-      <div class='col-sm-9 no-padder'>
-        <button type='button' class='md-button btn-success no-margin'>KOPPELEN</button>
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.plugins.iframe_title'></div>
+      <div class='panel-body'>
+        <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+        <div class='fix-text w-xxl m-b-md grey-300'>&nbsp;</div>
+        <div class='fix-text w-xl m-b-md grey-300'>&nbsp;</div>
       </div>
-    </div>
-  </div>
-</div> -->
-
-  <div class='panel'>
-    <div class='panel-heading' translate='settings.plugins.tnr_link_title'></div>
-    <div class='panel-body'>
-      <p class='m-b-md' translate='settings.plugins.tnr_link_description'></p>
-    </div>
-    <div class='panel-footer clearfix form-horizontal'>
-      <form ng-submit='plugins_settings.submitForm();'>
-        <label class='col-sm-2 col-xs-12 text-left p-l-none control-label'
-               translate='settings.plugins.link_code_title'></label>
-        <div class='col-sm-8 col-xs-8 no-padder'>
-          <input type='text' class='form-control' ng-model='plugins_settings.tnr_sync_token' />
-        </div>
-        <div class='col-sm-2 col-xs-4 no-padder text-right'>
-          <button type='submit'
-                  class='md-button btn-success no-margin'
-                  translate='save'></button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div class='panel'>
-    <div class='panel-heading' translate='settings.plugins.file_title'></div>
-    <div class='panel-body clearfix'>
-      <p class='m-b-md' translate='settings.plugins.file_description'></p>
-      <div ng-if='plugins_settings.percent_upload_file'
-           class='m-b-sm'>
-        <md-progress-linear md-mode='determinate'
-                            value='{{ plugins_settings.percent_upload_file }}'></md-progress-linear>
-      </div>
-      <div class='plugin-image m-b-sm'
-           ng-if='plugins_settings.canShowImage()'>
-        <img ng-src='{{ plugins_settings.plugin_image_file_name }}' />
-        <div>
-          <i class='mdi mdi-delete i-16' ng-click='plugins_settings.removeImage();'></i>
+      <div class='panel-footer clearfix form-horizontal'>
+        <div class='form-group no-margin'>
+          <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+          <div class='fix-text grey-300'>&nbsp;</div>
         </div>
       </div>
-      <button type='button'
-              class='md-button btn-success no-margin'
-              ngf-select='plugins_settings.uploadImage($file, $invalidFiles)'
-              accept="image/*"
-              ngf-pattern="'.png,.jpg'"
-              ngf-max-height="2000"
-              ngf-max-size="1MB"
-              ng-model='plugins_settings.plugin_image_file_name'>
-        {{ 'choose_file' | translate }}
-      </button>
     </div>
-  </div>
+
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.plugins.tnr_link_title'></div>
+      <div class='panel-body'>
+        <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+        <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+        <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+      </div>
+      <div class='panel-footer clearfix form-horizontal'>
+        <div class='form-group no-margin'>
+          <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+          <div class='fix-text grey-300'>&nbsp;</div>
+        </div>
+      </div>
+    </div>
+
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.plugins.file_title'></div>
+      <div class='panel-body'>
+        <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+        <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+        <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+      </div>
+    </div>
+
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.plugins.api_title'></div>
+      <div class='panel-body'>
+        <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+        <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+        <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+      </div>
+    </div>
 </div>
-
-<div ng-show='plugins_settings.is_loaded'>
-  <div class='panel'>
-    <div class='panel-heading' translate='settings.plugins.api_title'></div>
-    <div class='panel-body'>
-      <p class='m-b-md' translate='settings.plugins.api_description'></p>
-    </div>
-    <div class='panel-footer clearfix form-horizontal'>
-      <label class='col-sm-2 text-left p-l-none control-label'
-             translate='settings.plugins.api_title'></label>
-
-      <div class='col-sm-10 no-padder'>
-        <input type='text' class='form-control' ng-model='plugins_settings.api_token' readonly />
-      </div>
-    </div>
-  </div>
+</div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+  <settings-menu></settings-menu>
 </div>

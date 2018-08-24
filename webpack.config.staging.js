@@ -10,25 +10,13 @@ module.exports = {
     app: './app/app.js',
     vendor: [
       'angular',
-      'angular-animate',
-      'angular-aria',
-      'angular-cookies',
-      'angular-messages',
-      'angular-resource',
-      'angular-sanitize',
-      'angular-touch',
-      'angular-ui-router',
-      'angular-bootstrap-npm',
-      'angular-translate',
-      'angular-translate-storage-local',
-      'angular-translate-storage-cookie',
-      'angular-moment',
-      'angular-material'
+      'angular-material',
     ]
   },
 
   output: {
     path: path.join(process.cwd(), 'public', 'assets'),
+    publicPath: "/public/assets/",
     filename: '[name].min.js',
   },
 

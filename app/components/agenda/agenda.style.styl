@@ -1,4 +1,9 @@
 .agenda
+    .calendar_wrapper.dragging
+        .quarter:hover
+            background-color transparent !important
+
+.agenda
     .reservation
         height 30px
         border-width 1px
@@ -31,11 +36,13 @@
             height 30px
             background-color transparent
             cursor col-resize
+            opacity 0
+
     .reservationShadow
         position absolute
         border-radius 3px
         background-color #ccc
-        opacity 0.3
+        opacity 0.8
         z-index 0
         left 0
         top 0
@@ -62,20 +69,8 @@
     opacity 0.6
 
 .agenda
-    .quarter
-        background-color #fff
-
-        &.closed
-            background-color #000
-
-        &:hover
-            div
-                display block
-
-        div
-            display none
-            height 100%
-            border-radius 3px
+    .quarter.closed
+        background-color #000
 
 .agenda .panel-body
     padding 0
@@ -134,9 +129,6 @@ accordion.agenda
 .agenda .panel-group .panel
     border-radius 6px
 
-.agenda .panel-heading
-    padding 5px 16px 8px 16px
-
 .hours-timeline
     .hour
         padding-left 7px
@@ -183,6 +175,7 @@ accordion.agenda
 
 for theme in 'default' 'aqua' 'lego' 'chocolate'
   .{theme}-theme
-    .agenda .reservation
+    .agenda .reservation,
+    .reservationShadow
       color lookup(theme + '-success-color')
       border 1px lookup(theme + '-success-color') solid

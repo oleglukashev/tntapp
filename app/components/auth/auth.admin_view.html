@@ -1,10 +1,10 @@
 <div class='fade-in-right-big smooth ng-scope'>
   <div class='container w-xxl w-auto-xs ng-scope'>
-    <form ng-submit='auth.submitForm()'>
+    <form ng-submit='ctrl.submitForm()'>
       <div class='text-center bold'>
         <button type='submit'
                 class='md-btn md-flat btn-fw btn-block m-t-md'
-                ng-class="{ 'disabled': auth.isSubmitting }">
+                ng-class="{ 'disabled': ctrl.isSubmitting }">
           <translate>auth.login</translate>
         </button>
       </div>

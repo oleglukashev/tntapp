@@ -1,0 +1,56 @@
+<div class='md-content-submit b-t' flex>
+  <div class='md-list-item'>
+    <div class='md-list-item-content'>
+      <h4 translate='reservation.success'></h4>
+    </div>
+  </div>
+  <div class='wrapper'>
+    <div class='md-list-item inset' ng-repeat='part in ctrl.reservation.reservation_parts'>
+        <div class='md-list-item-left'>
+          <i class='mdi mdi-calendar icon-muted i-24'></i>
+        </div>
+        <div class='md-list-item-content'>
+          <h3 class='text-md'>{{ ctrl.moment(part.date_time).format('DD MMMM YYYY HH:mm') }}</h3>
+          <small class='font-thin'>
+            <span ng-if='part.product'>{{ part.product.name }},</span> {{ part.number_of_persons }} <translate class='lowercase'>persons</translate>
+          </small>
+        </div>
+      </div>
+    <div class='md-list-item inset' ng-if='ctrl.reservation.customer.primary_phone_number'>
+      <div class='md-list-item-left'>
+        <i class='mdi mdi-phone icon-muted i-24'></i>
+      </div>
+      <div class='md-list-item-content'>
+        <h3 class='text-md'>{{ ctrl.reservation.customer.primary_phone_number }}</h3>
+        <small class='font-thin' translate='phone'></small>
+      </div>
+    </div>
+    <div class='md-list-item inset' ng-if='ctrl.reservation.customer.mail'>
+      <div class='md-list-item-left'>
+        <i class='mdi mdi-email icon-muted i-24'></i>
+      </div>
+      <div class='md-list-item-content'>
+        <h3 class='text-md'>{{ ctrl.reservation.customer.mail }}</h3>
+        <small class='font-thin' translate='email'></small>
+      </div>
+    </div>
+    <div class='md-list-item inset' ng-if='ctrl.reservation.notes'>
+      <div class='md-list-item-left'>
+        <i class='mdi mdi-comment-text icon-muted i-24'></i>
+      </div>
+      <div class='md-list-item-content'>
+        <h3 class='text-md'>{{ ctrl.reservation.notes }}</h3>
+        <small class='font-thin' translate='note'></small>
+      </div>
+    </div>
+    <div class='md-list-item' ng-if='ctrl.reservation.reservation_pdf'>
+      <div class='md-list-item-left'>
+        <i class='mdi mdi-attachment icon-muted i-24'></i>
+      </div>
+      <div class='md-list-item-content'>
+        <h3 class='text-md' translate='reservation.pdf'></h3>
+        <small class='font-thin' translate='reservation.attachment'></small>
+      </div>
+    </div>
+  </div>
+</div>

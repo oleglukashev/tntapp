@@ -1,0 +1,64 @@
+<md-tab ng-disabled='!ctrl.current_part.time'>
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-border-horizontal'></i></div>
+    <div class='text-center l-h'>
+      <span translate='zone'></span>
+    </div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='md-content-submit reservation_zone b-t' flex ng-if='ctrl.canShow()'>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4 translate='reservation.zone_title'></h4>
+        </div>
+      </div>
+      <div class='wrapper orange-500 layout-align-space-around-center layout-column'
+           ng-show='ctrl.numberOfPersonsMoreThanTableSeats() && ctrl.current_part.tables.length'
+           translate='notifications.guests_more_than_suitable'></div>
+      <div class='wrapper'>
+        <div class='zones_boxes clearfix text-center m-b-sm' ng-hide='ctrl.selected_zone'>
+          <div ng-repeat="zone in ctrl.zones"
+               ng-click='ctrl.setZone(zone);'
+               class='box'>
+            <i class='box_icon mdi mdi-martini'></i>
+            <p class='no-margin'>{{ zone.name }}</p>
+          </div>
+        </div>
+        <div class='tables_boxes' ng-show='ctrl.selected_zone'>
+          <p><small class='text-muted'>{{ ctrl.current_part.zone.name }}:</small></p>
+          <label ng-repeat='table in ctrl.current_part.zone.tables'
+                 ng-change='ctrl.changeTableValuesPostProcess()'
+                 ng-class='ctrl.classOfTable(table.id, ctrl.current_part.zone.id)'
+                 class='btn block m-b-xs no-shadow text-left'
+                 ng-model='ctrl.current_part.tables_values[table.id]'
+                 uib-uncheckable
+                 uib-btn-checkbox>
+            <span class='m-r-lg'><translate>table</translate> {{ table.table_number }}</span><span>{{ table.number_of_persons }} <translate class='lowercase'>persons</translate></span>
+          </label>
+
+          <label ng-click='ctrl.selected_zone = null'
+                 class='btn btn-sm font-bold m-xs text-success no-shadow no-border'
+                 translate='reservation.show_zones'></label>
+          <div class='md-form-group no-padder inline'>
+            <md-checkbox ng-model='ctrl.current_part.all_tables_selected[ctrl.current_part.zone.id]'
+                         ng-change='ctrl.changeSelectAllTablesProcess()'
+                         aria-label="{{ 'select_all' | translate }}">
+              {{ 'select_all' | translate }}
+            </md-checkbox>
+          </div>
+        </div>
+        <button type='button'
+                class='btn btn-lg btn-success w-full no-top-radius md-content-button'
+                ng-show='ctrl.current_part.tables.length'
+                ng-click='ctrl.selectTab({ index: ctrl.pagination.zone });'
+                translate='next'></button>
+        <button type='button'
+                class='btn btn-lg bg-white text-success w-full no-top-radius md-content-button'
+                ng-hide='ctrl.current_part.tables.length'
+                ng-click='ctrl.selectTab({ index: ctrl.pagination.zone });'
+                translate='skip_step'></button>
+
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>

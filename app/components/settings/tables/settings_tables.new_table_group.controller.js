@@ -1,19 +1,20 @@
 export default class SettingsTablesNewTableGroupCtrl {
-  constructor(tableGroups, tablesByZone, User, TableGroup, $rootScope, $modalInstance) {
+  constructor(tableGroups, tablesByZone, User, TableGroup, $rootScope, $uibModalInstance) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.TableGroupService = TableGroup;
     this.tableGroups = tableGroups;
     this.tablesByZone = tablesByZone;
-    this.$modalInstance = $modalInstance;
+    this.$modalInstance = $uibModalInstance;
     this.$rootScope = $rootScope;
     this.form_data = {
       color: '#ffffff',
       min: 1,
       max: 1,
+      can_be_combined: true,
       table_ids: [],
-    }
+    };
   }
 
   submitForm() {
@@ -25,6 +26,7 @@ export default class SettingsTablesNewTableGroupCtrl {
       color: this.form_data.color,
       min: this.form_data.min,
       max: this.form_data.max,
+      can_be_combined: this.form_data.can_be_combined,
       tables: this.form_data.table_ids,
     };
 

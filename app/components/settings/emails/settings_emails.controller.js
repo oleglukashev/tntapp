@@ -1,8 +1,10 @@
+import editEmailController from './settings_emails.edit_email.controller';
+import editSmsController from './settings_emails.edit_sms.controller';
 import editEmailView from './settings_emails.edit_email.view.html'
 import editSmsView from './settings_emails.edit_sms.view.html'
 
-export default class SettingsEmailsCtrl {
-  constructor(User, Settings, SmsText, EmailText, filterFilter, $scope, $modal, $mdDialog,
+export default class Controller {
+  constructor(User, Settings, SmsText, EmailText, filterFilter, $scope, $uibModal, $mdDialog,
     $rootScope, $q, moment, $translate) {
     'ngInject';
 
@@ -12,25 +14,30 @@ export default class SettingsEmailsCtrl {
     this.$scope = $scope;
     this.$rootScope = $rootScope;
     this.moment = moment;
-    this.$modal = $modal;
+    this.$modal = $uibModal;
     this.$mdDialog = $mdDialog;
     this.filterFilter = filterFilter;
     this.Settings = Settings;
     this.EmailText = EmailText;
     this.SmsText = SmsText;
 
-    const currentCompany = User.getCompany(User.getCompanyId());
-    const currentCompanyName = `${currentCompany.name} (${currentCompany.id})`;
+    if (this.current_company_id) {
+      const currentCompany = User.getCompany(this.current_company_id);
 
-    // run translates
-    this.account_already_exist = '';
-    $translate('notifications.account_already_exist', { name: currentCompanyName }).then((total) => {
-      this.account_already_exist = total;
-    }, (translationIds) => {
-      this.account_already_exist = translationIds;
-    });
+      if (currentCompany) {
+        const currentCompanyName = `${currentCompany.name} (${this.current_company_id})`;
 
-    this.$rootScope.show_spinner = true;
+        // run translates
+        this.account_already_exist = '';
+        $translate('notifications.account_already_exist', { name: currentCompanyName }).then((total) => {
+          this.account_already_exist = total;
+        }, (translationIds) => {
+          this.account_already_exist = translationIds;
+        });
+      }
+    }
+
+    this.is_loaded = false;
     $q.all([
       this.Settings.getEmailsSettings(this.current_company_id),
       this.EmailText.getAll(this.current_company_id),
@@ -39,8 +46,7 @@ export default class SettingsEmailsCtrl {
       this.initEmailSettings(result[0]);
       this.initEmailTexts(result[1]);
       this.initSmsTexts(result[2]);
-    }, () => {
-      this.$rootScope.show_spinner = false;
+      this.is_loaded = true;
     });
   }
 
@@ -59,7 +65,8 @@ export default class SettingsEmailsCtrl {
   editEmail(id) {
     const modalInstance = this.$modal.open({
       template: editEmailView,
-      controller: 'SettingsEmailsEditEmailCtrl as edit_email',
+      controller: editEmailController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         item: () => this.filterFilter(this.email_texts, { id })[0],

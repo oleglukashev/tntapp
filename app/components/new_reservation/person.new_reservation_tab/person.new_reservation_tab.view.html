@@ -1,0 +1,214 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-account'></i></div>
+    <div class='text-center l-h' translate='persons'></div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='md-content-submit reservation_person' flex ng-if='ctrl.canShow()'>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-xl'>
+          <p>
+            <small class='text-muted' translate='reservation.general_info'></small>
+          </p>
+
+          <name-new-reservation
+            class='no-margin'
+            ng-if='ctrl.showAutocompleteCustomerName()'
+            current-company-id='ctrl.current_company_id'
+            reservation='ctrl.reservation'></name-new-reservation>
+
+          <div ng-if='!ctrl.showAutocompleteCustomerName()'>
+            <md-input-container class='md-block'>
+              <label translate='last_name'></label>
+              <input ng-model='ctrl.reservation.last_name' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='first_name'></label>
+              <input ng-model='ctrl.reservation.first_name' />
+            </md-input-container>
+          </div>
+          <md-input-container class='md-block'>
+            <label translate='email'></label>
+            <input type='email' ng-model='ctrl.reservation.mail' />
+          </md-input-container>
+
+          <md-input-container class='md-block'>
+            <label translate='country'></label>
+            <md-select ng-model='ctrl.reservation.country'>
+              <md-option
+                ng-value='code'
+                ng-repeat='(code, name) in ctrl.AppConstants.countries'
+                ng-selected='code === "NL"'>
+                {{ name }}
+              </md-option>
+            </md-select>
+            <div class='md-errors-spacer'></div>
+          </md-input-container>
+
+          <md-input-container class='md-block'>
+            <label translate='phone'></label>
+            <input
+              name='primary_phone_number'
+              ng-model='ctrl.reservation.primary_phone_number'
+              country='{{ ctrl.reservation.country }}'
+              phone-valid />
+            <span
+              ng-show='ctrl.form.primary_phone_number.$error.phoneValid'
+              translate='notifications.not_valid'></span>
+          </md-input-container>
+          <md-input-container class='md-block'>
+            <label translate='note'></label>
+            <input ng-model='ctrl.reservation.notes' />
+          </md-input-container>
+          <div class='md-form-group no-padder'>
+            <md-radio-group ng-model="ctrl.reservation.language">
+              <md-radio-button value='NL' class='inline md-success'>
+                {{ 'language.netherlands' | translate }}
+              </md-radio-button>
+              <md-radio-button value='EN' class='inline md-success'>
+                {{ 'language.english' | translate }}
+              </md-radio-button>
+            </md-radio-group>
+          </div>
+          <div class='md-form-group no-padder' ng-if='ctrl.type !== "customer"'>
+            <md-checkbox ng-model='ctrl.reservation.send_confirmation'
+                         ng-checked='true'
+                         aria-label='{{ "mail_confirmation" | translate }}'>
+              {{ 'mail_confirmation' | translate }}
+            </md-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div ng-show='ctrl.additional_is_opened'>
+        <hr class='no-margin' />
+
+        <preferences-new-reservation
+          class='no-margin'
+          current-company-id='ctrl.current_company_id'
+          allergy-data='ctrl.allergy_data'
+          preference-data='ctrl.preference_data'
+          preference-is-valid='ctrl.preferenceIsValid()',
+          allergy-is-valid='ctrl.allergyIsValid()',
+          add-allergy='ctrl.addAllergy()',
+          add-preference='ctrl.addPreference()',
+          reservation='ctrl.reservation'></preferences-new-reservation>
+
+        <div class='wrapper' layout='column' layout-align='space-around center'>
+          <div class='w-xl'>
+            <p>
+              <small class='text-muted' translate='reservation.additional_info'></small>
+            </p>
+            <md-input-container class='md-block'>
+              <label translate='second_phone'></label>
+              <input
+                name='secondary_phone_number'
+                ng-model='ctrl.reservation.secondary_phone_number'
+                country='{{ ctrl.reservation.country }}'
+                phone-valid />
+              <span
+                ng-show='ctrl.form.secondary_phone_number.$error.phoneValid'
+                translate='notifications.not_valid'></span>
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='birthdate'></label>
+              <input class='md-input'
+                ng-focus='ctrl.openDatepicker($event)'
+                ng-model='ctrl.reservation.date_of_birth'
+                uib-datepicker-popup='{{ ctrl.AppConstants.calendar.format }}'
+                is-open='ctrl.opened'
+                datepicker-options='ctrl.AppConstants.calendar.date_options'
+                show-button-bar='false'
+                close-text='Close' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='address'></label>
+              <input ng-model='ctrl.reservation.street' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='house_number'></label>
+              <input ng-model='ctrl.reservation.house_number' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='postcode'></label>
+              <input ng-model='ctrl.reservation.zipcode' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='city'></label>
+              <input ng-model='ctrl.reservation.city' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='company_name'></label>
+              <input ng-model='ctrl.reservation.company_name' />
+            </md-input-container>
+            <div class='md-form-group no-padder'>
+              <md-radio-group ng-model='ctrl.reservation.gender'>
+                <md-radio-button value='Man' class='inline md-success'>
+                  {{ 'male' | translate }}
+                </md-radio-button>
+                <md-radio-button value='Vrouw' class='inline md-success'>
+                  {{ 'female' | translate }}
+                </md-radio-button>
+              </md-radio-group>
+            </div>
+
+            <div ng-if='ctrl.type !== "customer"'
+                 ng-show='ctrl.reservation.reservation_pdf'>
+              <label class='btn btn-default block m-b-xs no-shadow text-success text-left'
+                     ng-click='ctrl.loadPDF();'>
+                <span class='m-r-sm'>
+                  <i class='mdi mdi-pdf'></i>
+                  <translate>reservation.pdf</translate>
+                </span>
+                <div class='pull-right'>
+                  <i class='mdi mdi-delete' ng-click='ctrl.removePdf($event);'></i>
+                </div>
+              </label>
+            </div>
+
+            <button type='button'
+              ng-if='ctrl.type !== "customer"'
+              md-ink-ripple
+              class='md-btn md-flat m-b m-t btn-fw text-success m-l-6'
+              ngf-select='ctrl.uploadImage($file, $invalidFiles)'
+              ngf-drop=''
+              ngf-max-size="1MB"
+              ngf-pattern="'.pdf'"
+              accept='application/pdf'
+              ng-model='ctrl.reservation.reservation_pdf'>
+              {{ 'reservation.pdf_upload' | translate }}...
+            </button>
+          </div>
+        </div>
+      </div>
+      <button type='button'
+        md-ink-ripple
+        ng-click='ctrl.triggerAdditionalInfo()'
+        class='md-btn w-full md-flat btn-fw no-radius text-success'>
+        <span ng-hide='ctrl.additional_is_opened'>
+          <i class='mdi mdi-plus-circle-outline'></i>
+          <translate class='uppercase'>reservation.more_fields</translate>
+        </span>
+        <span ng-show='ctrl.additional_is_opened'>
+          <i class='mdi mdi-minus-circle-outline'></i>
+          <translate class='uppercase'>reservation.less_fields</translate>
+        </span>
+      </button>
+
+      <div class='wrapper red-300 layout-align-space-around-center layout-column'
+        ng-show='ctrl.errors.length'>
+        <div class='w-xl'>
+          <div ng-repeat='error in ctrl.errors'>
+            {{ error }}
+          </div>
+        </div>
+      </div>
+      <button type='submit'
+        class='btn btn-lg btn-success w-full no-top-radius md-content-button'
+        ng-class="{ 'disabled': ctrl.is_submitting }"
+        ng-show='ctrl.canShow() && !ctrl.isSuccess'>
+        <translate>reservation.reserve</translate>
+      </button>
+    </div>
+  </md-tab-body>
+</md-tab>

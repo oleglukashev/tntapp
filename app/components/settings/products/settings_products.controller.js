@@ -1,10 +1,14 @@
 import angular from 'angular';
+import limitsSettingsProductsView from './settings_products.limits.view.html';
+import limitsSettingsProductsController from './settings_products.limits.controller';
+import editMinMaxSettingsProductsView from './settings_products.edit_minmax.view.html';
+import editMinMaxSettingsProductsController from './settings_products.edit_minmax.controller';
+import newProductSettingsProductView from './settings_products.new_product.view.html';
+import newProductSettingsProductController from './settings_products.new_product.controller';
 
-export default class SettingsProductsCtrl {
-  constructor(
-    User, Product, AppConstants, TimeRange, Slider, $scope, $rootScope, $timeout, $window,
-    $modal, filterFilter,
-  ) {
+export default class Controller {
+  constructor(User, Product, AppConstants, TimeRange, Slider, $scope, $rootScope,
+    $timeout, $window, $uibModal, filterFilter) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -13,7 +17,7 @@ export default class SettingsProductsCtrl {
     this.Product = Product;
     this.TimeRange = TimeRange;
     this.Slider = Slider;
-    this.$modal = $modal;
+    this.$modal = $uibModal;
     this.$window = $window;
     this.$scope = $scope;
     this.$rootScope = $rootScope;
@@ -30,7 +34,6 @@ export default class SettingsProductsCtrl {
     this.slider = this.Slider.getOptions();
 
     this.loadProducts();
-    this.$rootScope.show_spinner = true;
   }
 
   sliderChanged(id, timeRange) {
@@ -85,8 +88,9 @@ export default class SettingsProductsCtrl {
 
   showLimits(productId) {
     const modalInstance = this.$modal.open({
-      templateUrl: 'settings_products.limits.view.html',
-      controller: 'SettingsProductsLimitsCtrl as product_limits',
+      template: limitsSettingsProductsView,
+      controller: limitsSettingsProductsController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         productId: () => productId,
@@ -98,8 +102,9 @@ export default class SettingsProductsCtrl {
 
   editMinMax(product) {
     const modalInstance = this.$modal.open({
-      templateUrl: 'settings_products.edit_minmax.view.html',
-      controller: 'SettingsProductsEditMinMaxCtrl as product_minmax',
+      template: editMinMaxSettingsProductsView,
+      controller: editMinMaxSettingsProductsController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         product: () => product,
@@ -127,7 +132,6 @@ export default class SettingsProductsCtrl {
     this.TimeRange.getAllProductTimeRanges(this.current_company_id)
       .then(
         (ranges) => {
-          this.$rootScope.show_spinner = false;
           this.data = {};
           this.days.map((day) => {
             if (typeof this.data[day] === 'undefined') {
@@ -170,17 +174,15 @@ export default class SettingsProductsCtrl {
 
           this.redrawSliders();
           this.is_loaded = true;
-        }, () => {
-          this.$rootScope.show_spinner = false;
-        },
-      );
+        });
   }
 
   addProduct() {
 
     const modalInstance = this.$modal.open({
-      templateUrl: 'settings_products.new_product.view.html',
-      controller: 'SettingsProductsNewProductCtrl as new_product',
+      template: newProductSettingsProductView,
+      controller: newProductSettingsProductController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         products: () => this.products,

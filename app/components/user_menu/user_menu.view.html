@@ -1,0 +1,265 @@
+<md-sidenav class='md-sidenav-right md-whiteframe-z2 pos-fix customer-sidenav'
+            md-component-id='right'
+            md-disable-backdrop
+            ng-swipe-left='ctrl.closeCustomerMenu()'>
+  <md-content>
+    <div class='wrapper'>
+      <div class='clear'>
+        <button md-ink-ripple class='md-btn md-flat btn-fw' ng-click='ctrl.closeCustomerMenu()'>
+          <i class='mdi mdi-close i-30' ></i>
+        </button>
+        <button md-ink-ripple
+                class='pull-right md-btn md-flat btn-fw'
+                ng-click='ctrl.openEditModal()'>
+          <i class='mdi mdi-pencil i-26'></i>
+        </button>
+        <button md-ink-ripple
+                class='pull-right md-btn md-flat btn-fw'
+                ng-class="ctrl.UserMenu.customer.regular ? 'star_active' : ''"
+                ng-click='ctrl.toggleStar(ctrl.UserMenu.customer)'>
+          <i class='mdi mdi-star i-26'></i>
+        </button>
+      </div>
+      <h1 class='i-30'>
+        <img ng-src='{{ ctrl.Customer.socialImageUrl(ctrl.UserMenu.customer) }}'
+             ng-if='ctrl.Customer.socialImageUrl(ctrl.UserMenu.customer)'
+             class='customer_avatar m-r-md' />
+        <i ng-if='!ctrl.Customer.socialImageUrl(ctrl.UserMenu.customer)'
+           class='customer_avatar customer_empty_avatar m-r-xs mdi mdi-account i-24'></i>
+        <span class='user_name'
+              ng-if='ctrl.UserMenu.customer.last_name || ctrl.UserMenu.customer.first_name'>
+          {{ ctrl.UserMenu.customer.last_name }}
+          {{ ctrl.UserMenu.customer.first_name }}
+        </span>
+        <span class='user_name'
+              translate='unknown'
+              ng-if='!ctrl.UserMenu.customer.last_name && !ctrl.UserMenu.customer.first_name'>
+        </span>
+      </h1>
+    </div>
+
+    <ul class='nav'>
+      <li class='hidden-folded padder m-t m-b-sm text-muted text-xs'>
+        <span translate='reserv'></span>
+      </li>
+      <div class='inset' ng-if='ctrl.UserMenu.current_part'>
+        <div class='md-list-item-left'>
+          <i class='mdi mdi-attachment icon-muted i-24'></i>
+        </div>
+        <div class='md-list-item-content'>
+          <h3 class="text-md">
+            {{ ctrl.parsedDate(ctrl.UserMenu.current_part.date_time) }}
+          </h3>
+          <small class="font-thin">
+            <span ng-if='ctrl.UserMenu.current_part.product.name'>
+              {{ ctrl.UserMenu.current_part.product.name }},
+            </span>
+            {{ ctrl.UserMenu.current_part.number_of_persons }} <translate class='lowercase' translate='persons'></translate>
+          </small>
+        </div>
+      </div>
+
+      <div class="inset" ng-if='ctrl.UserMenu.customer.primary_phone_number'>
+        <div class="md-list-item-left">
+          <i class="mdi mdi-phone icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">
+            {{ ctrl.UserMenu.customer.primary_phone_number }}
+          </h3>
+          <small class="font-thin" translate='phone'></small>
+
+        </div>
+      </div>
+
+      <div class="inset" ng-if='ctrl.UserMenu.customer.mail'>
+        <div class="md-list-item-left">
+          <i class="mdi mdi-email icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">
+            {{ ctrl.UserMenu.customer.mail }}
+          </h3>
+          <small class="font-thin" translate='email'></small>
+
+        </div>
+      </div>
+
+      <div class="inset" ng-if='ctrl.UserMenu.current_reservation.notes'>
+        <div class="md-list-item-left">
+          <i class="mdi mdi-comment-text icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">
+            {{ ctrl.UserMenu.current_reservation.notes }}
+          </h3>
+          <small class="font-thin" translate='notes'></small>
+        </div>
+      </div>
+
+      <div class="inset" ng-if='ctrl.UserMenu.current_reservation.employee'>
+        <div class="md-list-item-left">
+          <i class="mdi mdi-account-edit icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">
+            {{ ctrl.UserMenu.current_reservation.employee.last_name }} {{ ctrl.UserMenu.current_reservation.employee.first_name }}
+          </h3>
+          <small class="font-thin" translate='reserved_by'></small>
+        </div>
+      </div>
+
+      <div class="inset" ng-if='ctrl.UserMenu.current_reservation.type === "assist_you"'>
+        <div class="md-list-item-left">
+          <i class="mdi mdi-account-edit icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">
+            AssistYou
+          </h3>
+          <small class="font-thin" translate='reserved_by'></small>
+        </div>
+      </div>
+
+      <div class="inset" ng-repeat='note in ctrl.UserMenu.notes'>
+        <div class="md-list-item-left">
+          <i class="mdi mdi-information-outline icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">
+            {{ note.note }}
+          </h3>
+          <small class="font-thin" translate='notes'></small>
+        </div>
+      </div>
+
+      <div class="inset" ng-repeat='allergy in ctrl.UserMenu.allergies'>
+        <div class="allergy-icon md-list-item-left">
+          <i ng-if='!ctrl.getAllergyClass(allergy.allergy)'
+            class="mdi mdi-information-outline icon-muted m-t-xs"></i>
+          <i ng-if='ctrl.getAllergyClass(allergy.allergy)'
+            class="eicon eicon-{{ ctrl.getAllergyClass(allergy.allergy) }} m-t-xs"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">
+            {{ allergy.owner }}: {{ allergy.allergy }}
+          </h3>
+          <small class="font-thin" translate='allergies'></small>
+        </div>
+      </div>
+
+      <div class="inset" ng-repeat='preference in ctrl.UserMenu.preferences'>
+        <div class="preference-icon md-list-item-left">
+          <i class="mdi mdi-information-outline icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">
+            {{ preference.owner }}: {{ preference.name }} {{ preference.value }}
+          </h3>
+          <small class="font-thin" translate='preferences'></small>
+        </div>
+      </div>
+
+      <div class="inset" ng-if='ctrl.UserMenu.customer.average_rating'>
+        <div class="md-list-item-left ">
+          <i class="mdi mdi-star-outline icon-muted i-24"></i>
+        </div>
+        <div class="md-list-item-content">
+          <h3 class="text-md">{{ ctrl.UserMenu.customer.average_rating }}</h3>
+          <small class="font-thin" translate='av_rating'></small>
+        </div>
+      </div>
+
+      <!-- list -->
+
+      <li ng-if='ctrl.Customer.socialUrl(ctrl.UserMenu.customer)'>
+        <ul class="nav nav-sub">
+          <li ui-sref-active="active">
+            <a href='{{ ctrl.Customer.socialUrl(ctrl.UserMenu.customer) }}'
+               target='_blank'
+               md-ink-ripple
+               class='text-success fb-button'>
+              <span translate='view_profile'></span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class='hidden-folded padder m-t m-b-sm text-muted text-xs'
+          ng-show='ctrl.getPartByReservations().length'>
+        <span translate='reservation.previous'></span>
+      </li>
+
+      <li ng-repeat='reservation in ctrl.UserMenu.reservations'>
+        <a md-ink-ripple
+           ng-repeat='part in reservation.reservation_parts'
+           ng-click='ctrl.openEditReservationModal(reservation, part)'>
+          <div class="md-list-item-left">
+            <i class="mdi mdi-book icon-muted i-24"></i>
+          </div>
+          <div class="md-list-item-content">
+            <h3 class="text-md">
+              {{ ctrl.parsedDate(part.date_time) }}
+              <i ng-click='ctrl.openIntegrationReservationByPart($event, inReserv)'
+                ng-repeat='inReserv in ctrl.UserMenu.integration_reservations | filter:{ part_id: part.id }'
+                class='mdi mdi-file-document icon-muted'></i>
+            </h3>
+            <small class="font-thin">
+              <span ng-if='part.product.name'>{{ part.product.name }},</span>
+              {{ part.number_of_persons }} <translate class='lowercase' translate='persons'></translate><span ng-if='reservation.employee'>, {{ reservation.employee.last_name }} {{ reservation.employee.first_name }}</span>
+            </small>
+            <div class='pull-right review_score' ng-if='reservation.review'>
+              <i class='mdi mdi-star-outline icon-muted i-20'></i>
+              <small class='font-thin'>{{ reservation.review.score }}</small>
+            </div>
+          </div>
+        </a>
+
+        <a md-ink-ripple
+           ng-if='reservation.reservation_pdf'
+           ng-click='ctrl.loadPDF(reservation.id)'>
+          <div class="md-list-item-left">
+            <i class="mdi mdi-attachment icon-muted i-24"></i>
+          </div>
+          <div class="md-list-item-content">
+            <h3 class='text-md'
+                translate='reservation.pdf_for'
+                translate-values='{ text: ctrl.parsedDate(reservation.reservation_parts[0].date_time) }'>
+            </h3>
+            <small class='font-thin' translate='reservation.pdf'></small>
+          </div>
+        </a>
+
+        <a md-ink-ripple
+           ng-if='reservation.review'
+           href='{{ reservation.review.url }}'
+           target='_blank'>
+          <div class="md-list-item-left">
+            <i class="mdi mdi-star-outline icon-muted i-24"></i>
+          </div>
+          <div class="md-list-item-content">
+            <h3 class="text-md">
+              Score TheNextReview:
+              <chart-rating tnrrating='reservation.review.score'></chart-rating>
+            </h3>
+            <small class="font-thin">
+              {{ reservation.review.notes }}
+            </small>
+          </div>
+        </a>
+      </li>
+
+      <div class='inset'
+           ng-if='ctrl.UserMenu.last_reservations.length > 0'
+           ng-repeat='ls_reservation in ctrl.UserMenu.last_reservations'>
+        <div class='md-list-item-left'>
+          <i class='mdi mdi-cash icon-muted i-24'></i>
+        </div>
+        <div class='md-list-item-content'>
+          <h3 class='text-md'>{{ 'receipts.status' | translate }}: {{ ls_reservation.status }}</h3>
+          <small class='font-thin'>{{ 'date' | translate }}: {{ ctrl.moment(ls_reservation.paid_on).format('DD.MM.YYYY HH:mm') }}, {{ 'total' | translate }}: {{ ls_reservation.total }}, Amount: {{ ls_reservation.amount || 0 }}</small>
+        </div>
+      </div>
+    </ul>
+  </md-content>
+</md-sidenav>

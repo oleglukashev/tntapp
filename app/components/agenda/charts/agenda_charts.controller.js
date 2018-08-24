@@ -17,15 +17,16 @@ export default class AgendaChartsCtrl {
 
       data.reservations_data.forEach((item) => {
         const numberOfPersons = parseInt(item.number_of_persons, 10);
+        const productId = item.part.product ? item.part.product.id : null;
 
-        if (!this.data.product[item.product_id]) {
-          this.data.product[item.product_id] = {
+        if (!this.data.product[productId]) {
+          this.data.product[productId] = {
             numberOfPersons: 0,
             name: item.product_name,
           };
         }
 
-        this.data.product[item.product_id].numberOfPersons += numberOfPersons;
+        this.data.product[productId].numberOfPersons += numberOfPersons;
         this.data.totalNumberOfPersons += numberOfPersons;
       });
 

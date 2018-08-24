@@ -1,44 +1,73 @@
-<div class='settings-warnings-content'>
-  <div class='panel'>
-    <div class='panel-heading' translate='settings.warnings.title'></div>
-    <div class='md-list' ng-show='warnings_settings.is_loaded'>
-      <div class='md-list-item no-padder'>
-        <table class='table'>
-          <thead>
-            <th translate='title'></th>
-            <th translate='language'></th>
-            <th translate='text'></th>
-            <th></th>
-          </thead>
-          <tbody>
-            <tr ng-repeat='warning in warnings_settings.warnings'>
-              <td class='v-middle' ng-bind='warning.title'></td>
-              <td class='v-middle' ng-bind='warning.language'></td>
-              <td class='v-middle' ng-bind='warning.text'></td>
-              <td class='v-middle text-right'>
-                <md-menu>
-                  <button md-ink-ripple
-                        class='md-btn md-fab no-shadow'
-                        ng-disabled='disabled'
-                        aria-haspopup='true'
-                        aria-expanded='false'
-                        aria-disabled='false'
-                        ng-click='$mdMenu.open($event)'>
-                    <i class='mdi mdi-dots-vertical i-24'></i>
-                  </button>
-                  <md-menu-content>
-                    <md-menu-item>
-                      <md-button ng-click='warnings_settings.editWarning(warning.id)'>
-                        {{ 'settings.warnings.edit' | translate }}
-                      </md-button>
-                    </md-menu-item>
-                  </md-menu-content>
-                </md-menu>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+<div class='col-lg-8 col-md-8 col-sm-8'>
+  <div class='settings-warnings-content' ng-if='ctrl.is_loaded'>
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.warnings.title'></div>
+      <div class='md-list' ng-show='ctrl.is_loaded'>
+        <div class='md-list-item no-padder'>
+          <table class='table'>
+            <thead>
+              <th translate='title'></th>
+              <th translate='language'></th>
+              <th translate='text'></th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr ng-repeat='warning in ctrl.warnings'>
+                <td class='v-middle' ng-bind='warning.title'></td>
+                <td class='v-middle' ng-bind='warning.language'></td>
+                <td class='v-middle' ng-bind='warning.text'></td>
+                <td class='v-middle text-right'>
+                  <md-menu>
+                    <button md-ink-ripple
+                          class='md-btn md-fab no-shadow'
+                          ng-disabled='disabled'
+                          aria-haspopup='true'
+                          aria-expanded='false'
+                          aria-disabled='false'
+                          ng-click='$mdMenu.open($event)'>
+                      <i class='mdi mdi-dots-vertical i-24'></i>
+                    </button>
+                    <md-menu-content>
+                      <md-menu-item>
+                        <md-button ng-click='ctrl.editWarning(warning.id)'>
+                          {{ 'settings.warnings.edit' | translate }}
+                        </md-button>
+                      </md-menu-item>
+                    </md-menu-content>
+                  </md-menu>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
+
+  <div class='panel' ng-if='!ctrl.is_loaded'>
+    <div class='panel-heading' translate='settings.warnings.title'></div>
+    <md-list class='no-padder'>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+      <md-list-item class='md-no-proxy'>
+        <fix-settings-item></fix-settings-item>
+      </md-list-item>
+    </md-list>
+  </div>
+</div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+  <settings-menu></settings-menu>
 </div>

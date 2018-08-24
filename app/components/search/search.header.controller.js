@@ -1,4 +1,4 @@
-import angular from 'angular';
+import { getName } from '../../common/utils/name';
 
 class SearchHeaderCtrl {
   constructor(Customer, Search, User, moment, ReservationStatus,
@@ -30,19 +30,9 @@ class SearchHeaderCtrl {
     if (!query) return [];
     return this.Customer.search(this.current_company_id, query).then((result) => {
       return result.map((customer) => {
-        let fullName = customer.last_name;
-
-        if (customer.first_name) {
-          if (fullName) {
-            fullName = `${fullName} ${customer.first_name}`;
-          } else {
-            fullName = customer.first_name;
-          }
-        }
-
         return {
           value: customer.id,
-          display: fullName,
+          display: getName(customer.last_name, customer.first_name),
         };
       });
     });

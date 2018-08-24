@@ -1,34 +1,116 @@
-<div class='panel seats-free'>
-  <div class='panel-heading' translate='settings.limits.title'></div>
+<div class='col-lg-8 col-md-8 col-sm-8'>
+	<div class='panel seats-free' ng-if='ctrl.is_loaded'>
+	  <div class='panel-heading' translate='settings.limits.title'></div>
 
-	<div class='wrapper' ng-show='limits_settings.is_loaded'>
-		<p class='text-muted' translate='settings.limits.description'></p>
+		<div class='wrapper'>
+			<p class='text-muted' translate='settings.limits.description'></p>
 
-		<md-input-container ng-show='limits_settings.type'>
-      <label>{{ limits_settings.type | translate }}</label>
-      <input type='number' min='0' ng-model='limits_settings.limit' />
-    </md-input-container>
+			<md-input-container ng-show='ctrl.type'>
+	      <label>{{ ctrl.type | translate }}</label>
+	      <input type='number' min='0' ng-model='ctrl.limit' />
+	    </md-input-container>
 
-		<div class='scroll-x'>
-			<table class='table'>
-				<thead>
-					<th></th>
-					<th class='clickable'
-							ng-repeat='time in limits_settings.times'
-							ng-click='limits_settings.saveLimitByTime(time)'>{{ time }}</th>
-				</thead>
-				<tbody>
-					<tr ng-repeat='(number_of_day, day) in limits_settings.days'>
-						<td class='clickable' ng-click='limits_settings.saveLimitByDay(number_of_day)'>
-							{{ 'weekdays.' + day | translate }}
-						</td>
-						<td class='clickable time'
-								ng-repeat='time in limits_settings.times'
-								ng-click='limits_settings.saveLimitByTimeAndDay(time, number_of_day)'
-								ng-bind='limits_settings.showValue(limits_settings.limits[number_of_day][time])'></td>
-					</tr>
-				</tbody>
-			</table>
+			<div class='scroll-x'>
+				<table class='table'>
+					<thead>
+						<th></th>
+						<th class='clickable'
+								ng-repeat='time in ctrl.times'
+								ng-click='ctrl.saveLimitByTime(time)'>{{ time }}</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat='(number_of_day, day) in ctrl.days'>
+							<td class='clickable' ng-click='ctrl.saveLimitByDay(number_of_day)'>
+								{{ 'weekdays.' + day | translate }}
+							</td>
+							<td class='clickable time'
+									ng-repeat='time in ctrl.times'
+									ng-click='ctrl.saveLimitByTimeAndDay(time, number_of_day)'
+									ng-bind='ctrl.showValue(ctrl.limits[number_of_day][time])'></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
+
+	<div class='panel' ng-if='!ctrl.is_loaded'>
+	  <div class='panel-heading' translate='settings.limits.title'></div>
+	  
+	  <div class='wrapper'>
+			<div class='fix-text grey-300 m-b-sm'>&nbsp;</div>
+			<div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+			<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+
+			<div class='scroll-x'>
+				<table class='table'>
+					<thead>
+						<th></th>
+						<th class='clickable'>00:00</th>
+						<th class='clickable'>00:15</th>
+						<th class='clickable'>00:30</th>
+						<th class='clickable'>00:45</th>
+						<th class='clickable'>01:00</th>
+						<th class='clickable'>01:15</th>
+						<th class='clickable'>01:30</th>
+						<th class='clickable'>01:45</th>
+						<th class='clickable'>02:00</th>
+						<th class='clickable'>02:15</th>
+						<th class='clickable'>02:30</th>
+						<th class='clickable'>02:45</th>
+						<th class='clickable'>03:00</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat='(number_of_day, day) in ctrl.days'>
+							<td class='clickable'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+							<td class='clickable time'>
+								<div class='fix-text grey-300 w-xs'>&nbsp;</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+  <settings-menu></settings-menu>
 </div>

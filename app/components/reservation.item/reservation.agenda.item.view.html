@@ -1,0 +1,114 @@
+<div class='agenda-item-icon'>
+  <div ng-class='ctrl.data.icon_color'
+       ng-hide='hideIcon'
+       class='md-list-item-left img-circle'>
+    <md-tooltip>{{ ctrl.data.dutch_status }}</md-tooltip>
+    <div class='pull-left m-l-sm'>
+      <i ng-class='ctrl.data.icon' class='mdi i-20'></i>
+    </div>
+  </div>
+</div>
+<div class='hidden-xs hidden-sm'
+  ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
+  <i class='mdi mdi-clock'></i>
+  {{ ctrl.data.time }}
+</div>
+<div class='hidden-xs hidden-sm'
+  ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>{{ ctrl.data.product_name }}</div>
+<div class='hidden-xs hidden-sm'
+  ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
+  {{ ctrl.data.name }}
+  <i class='eicon eicon-{{ ctrl.getAllergyClass(allergy.allergy) }} m-r-xs'
+    ng-if='ctrl.getAllergyClass(allergy.allergy)'
+    ng-repeat='allergy in ctrl.data.customer.allergies'></i>
+  <i class='mdi mdi-information-outline icon-muted'
+    ng-show='ctrl.data.customer.preferences.length > 0'></i>
+</div>
+<div class='hidden-xs hidden-sm'
+  ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
+  <i class='mdi mdi-account-multiple'></i>
+  {{ ctrl.data.number_of_persons }}x
+</div>
+<div class='hidden-xs hidden-sm'
+  ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
+  <span ng-show='ctrl.data.tables_view'>
+    <img class='table_icon' src='public/images/table.svg' />
+    {{ ctrl.data.tables_view }}
+  </span>
+</div>
+<div
+  ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'
+  class='hidden-xs hidden-sm'
+  show-more
+  show-more-trigger={{agenda.view_type}}>
+  {{ ctrl.data.notes }}
+</div>
+<div class='visible-xs visible-sm p-l-none'
+  ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
+  <div class='text-md'>{{ ctrl.data.name }}</div>
+  <div>
+    <i class='mdi mdi-account-multiple'></i>
+    <span class='font-thin m-r-xs'>{{ ctrl.data.number_of_persons }}x</span>
+    <i class='mdi mdi-clock'></i>
+    <span class='font-thin m-r-xs'>
+      <span ng-if='showDate'>{{ ctrl.data.date }}</span>
+      {{ ctrl.data.time }}
+    </span>
+    <span class='m-r-xs' ng-show='ctrl.data.tables_view'>
+      <img class='table_icon' src='public/images/table.svg' />
+      {{ ctrl.data.tables_view }}
+    </span>
+    <i class='mdi mdi-silverware-variant' ng-if='ctrl.data.product_name'></i>
+    <span class='font-thin m-r-xs'>{{ ctrl.data.product_name }}</span>
+    <i class='eicon eicon-{{ ctrl.getAllergyClass(allergy.allergy) }} m-r-xs'
+      ng-if='ctrl.getAllergyClass(allergy.allergy)'
+      ng-repeat='allergy in ctrl.data.customer.allergies'></i>
+    <i class='mdi mdi-information-outline icon-muted'
+      ng-show='ctrl.data.customer.preferences.length > 0'></i>
+  </div>
+  <div class='font-thin' ng-if='ctrl.data.notes' show-more>
+    {{ ctrl.data.notes }}
+  </div>
+</div>
+<div>
+  <md-menu class='pull-right'>
+    <button
+      class='md-icon-button md-button'
+      ng-click='$mdMenu.open($event);ctrl.UserMenu.loadAndSetFullData(ctrl.data.customer.id, ctrl.data.id)'>
+      <i class='mdi mdi-dots-vertical i-24'></i>
+    </button>
+    <md-menu-content width='4' class='reservation_menu'>
+      <md-menu-item>
+        <md-button
+          ng-click='ctrl.openEditReservationModal(ctrl.data.reservation, ctrl.data.part)'
+          ng-disabled='!ctrl.UserMenu.current_reservation'>
+          <md-icon aria-label>
+            <i class='mdi mdi-pencil' />
+          </md-icon>
+          <translate>edit</translate>
+        </md-button>
+      </md-menu-item>
+      <md-menu-divider role='separator'></md-menu-divider>
+      <md-menu-item ng-repeat='status in ctrl.statuses'>
+        <md-button
+          ng-click='ctrl.chooseChangeStatusMethod(ctrl.data.reservation, status)'
+          ng-disabled='ctrl.data.reservation.status == status'>
+          <md-icon aria-label>
+            <i class='mdi mdi-with-button-padding'
+               ng-class='ctrl.status_icon[status]'></i>
+          </md-icon>
+          <translate translate='status.{{ status }}'></translate>
+        </md-button>
+      </md-menu-item>
+      <md-menu-divider role='separator'></md-menu-divider>
+      <md-menu-item>
+        <md-button ng-click='ctrl.answer(ctrl.data.reservation);'>
+          <md-icon aria-label>
+            <i class='mdi mdi-reply' />
+          </md-icon>
+          <translate>answer</translate>
+        </md-button>
+      </md-menu-item>
+    </md-menu-content>
+  </md-menu>
+</div>

@@ -1,0 +1,43 @@
+<section class='no-margin user_edit'>
+  <md-toolbar>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex translate='general_info'></h2>
+      <md-button class="md-icon-button" ng-click='ctrl.dismiss({ $value: "cancel" })' md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <md-tabs class='user_menu_tabs'
+             flex
+             md-selected='ctrl.tabIndex'
+             md-no-pagination
+             md-stretch-tabs
+             md-dynamic-height>
+      
+      <!-- <div ng-init='controller = edit_user' data-ng-include=" 'user_menu.main_info.view.html' "></div> -->
+
+      <user-menu-main-info
+        customer='ctrl.customer'
+        dismiss='ctrl.dismiss'></user-menu-main-info>
+
+      <!-- <div ng-init='controller = edit_user' data-ng-include=" 'user_menu.comments.view.html' "></div> -->
+      <user-menu-notes
+        customer='ctrl.customer'
+        customer-notes='ctrl.customerNotes'
+        dismiss='ctrl.dismiss'></user-menu-notes>
+
+      <!-- <div ng-init='controller = edit_user' data-ng-include=" 'user_menu.preferences.view.html' "></div> -->
+      <user-menu-preferences
+        customer='ctrl.customer'
+        customer-preferences='ctrl.customerPreferences'
+        dismiss='ctrl.dismiss'></user-menu-preferences>
+
+      <!-- <div ng-init='controller = edit_user' data-ng-include=" 'user_menu.allergies.view.html' "></div> -->
+      <user-menu-allergies
+        customer='ctrl.customer'
+        customer-allergies='ctrl.customerAllergies'
+        dismiss='ctrl.dismiss'></user-menu-allergies>
+    </md-tabs>
+  </md-content>
+</section>

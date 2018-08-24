@@ -1,0 +1,41 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h' translate='notes'></div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='md-content-submit'>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-xl'>
+          <label ng-repeat='note in ctrl.customerNotes'
+            class='btn btn-default block m-b-xs no-shadow text-success text-left'
+            ng-model='ctrl.item'
+            uib-uncheckable
+            uib-btn-radio='note'>
+            <span>{{ note.note }}</span>
+            <span class='pull-right' ng-click='ctrl.delete($index)'>
+              <i class='mdi mdi-close i-21'></i>
+            </span>
+          </label>
+
+          <form name='user_notes_form'>
+            <div class='wrapper'>
+              <md-input-container class='md-block'>
+                <label translate='note'></label>
+                <textarea required ng-model='ctrl.item.note'></textarea>
+              </md-input-container>
+
+              <input type="hidden" ng-model='ctrl.item.id' />
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <button type='submit'
+              ng-class="{ 'disabled': !user_notes_form.$valid || ctrl.notes_is_submitting }"
+              ng-click="ctrl.submitForm(user_notes_form)"
+              class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
+        <translate>save</translate>
+      </button>
+    </div>
+  </md-tab-body>
+</md-tab>

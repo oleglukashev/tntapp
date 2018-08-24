@@ -1,0 +1,61 @@
+<md-tab ng-disabled='!ctrl.current_part.date'>
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-account-multiple'></i></div>
+    <div class='text-center l-h'>
+      <span ng-if='ctrl.current_part.number_of_persons'>
+        {{ ctrl.current_part.number_of_persons }} <translate class='uppercase'>persons</translate>
+      </span>
+      <span ng-if='!ctrl.current_part.number_of_persons' translate='number'></span>
+    </div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='reservation_person_count b-t' flex ng-if='ctrl.canShow()'>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4 translate='number_of_guests'></h4>
+        </div>
+      </div>
+      <div class='wrapper orange-500 layout-align-space-around-center layout-column'
+           ng-show='ctrl.numberOfPersonsMoreThanTableSeats() && ctrl.current_part.tables.length'
+           ng-bind='ctrl.warnings.max_number_of_persons'></div>
+      <div class='wrapper' layout='column' layout-align='space-around center'>
+        <div class='w-lg'>
+          <label ng-repeat='number in [1,2,3,4,5,6,7,8,9,10]'
+            ng-change='ctrl.changeNumberOfPersonsPostProcess()'
+            ng-class="{ 'btn-success': ctrl.current_part.number_of_persons == number }"
+            class='btn btn-default btn-sm font-bold m-xs text-success'
+            ng-model='ctrl.current_part.number_of_persons'
+            uib-uncheckable
+            uib-btn-radio='number'>{{ number }}</label>
+
+          <label ng-click='ctrl.triggerChooseNumberOfPersons()'
+                 ng-hide='ctrl.choose_number_of_persons_is_opened'
+                 class='btn btn-sm font-bold m-xs text-success no-shadow no-border'>
+            {{ 'more' | translate }}...
+          </label>
+
+          <div class='m-t-md' ng-show='ctrl.choose_number_of_persons_is_opened'>
+            <md-input-container class='md-block'>
+              <label translate='number_of_guests'></label>
+              <input type='number'
+                     class='md-input'
+                     ng-required='false'
+                     ng-change='ctrl.changeNumberOfPersonsInputPostProcess()'
+                     ng-model='ctrl.current_part.number_of_persons' required />
+            </md-input-container>
+            <button type='button'
+                    class='btn m-b-sm btn-md btn-success text-success'
+                    ng-click='ctrl.triggerChooseNumberOfPersons();ctrl.selectTab(ctrl.pagination.number_of_persons);'>Ok</button>
+          </div>
+          <div class='md-form-group no-padder' ng-if='ctrl.type !== "customer"'>
+            <md-checkbox ng-model="ctrl.reservation.is_group"
+                         ng-change='ctrl.changeIsGroupPostProcess()'
+                         aria-label="Group?">
+              {{ 'reservation.group' | translate }}?
+            </md-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+  </md-tab-body>
+</md-tab>

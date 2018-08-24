@@ -185,10 +185,6 @@ export default class Settings {
     }).then(result => result.data);
   }
 
-  saveThemeToCookie(value) {
-    this.$cookieStore.put('theme', value);
-  }
-
   sendConfirmSenderEmail(companyId, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;

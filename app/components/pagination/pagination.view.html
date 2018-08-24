@@ -1,0 +1,21 @@
+<div class='paginator clearfix'>
+  <div class='row'>
+    <div class='col-xs-4 text-right'>
+      <button
+        ng-click='ctrl.prev()'
+        class='md-btn md-fab m-b'
+        ng-disabled='ctrl.page <= 1'>
+        <i class='mdi mdi-arrow-left' />
+      </button>
+    </div>
+    <div class='col-xs-4'></div>
+    <div class='col-xs-4'>
+      <button
+        ng-click='ctrl.next()'
+        class='md-btn md-fab m-b'
+        ng-disabled='ctrl.next_is_disabled'>
+        <i class='mdi mdi-arrow-right' />
+      </button>
+    </div>
+  </div>
+</div>

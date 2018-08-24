@@ -1,15 +1,20 @@
+import { buildURL } from '../utils/index';
+
 export default class User {
-  constructor(JWT, Upload, Settings, $http, $state, $q, $location, $window, $rootScope, $cookieStore) {
+  constructor(JWT, Upload, Settings, Theme, $http, $state, $q, $location, $window,
+    $rootScope, $cookieStore, $timeout) {
     'ngInject';
 
     this.JWT = JWT;
     this.Upload = Upload;
+    this.Theme = Theme;
     this.Settings = Settings;
     this.$http = $http;
     this.$state = $state;
     this.$location = $location;
     this.$q = $q;
     this.$window = $window;
+    this.$timeout = $timeout;
     this.$rootScope = $rootScope;
     this.$cookieStore = $cookieStore;
     this.current = null;
@@ -22,19 +27,19 @@ export default class User {
       method: 'POST',
       skipAuthorization: true,
       data: formData,
-    }).then(
-      (result) => {
-        this.JWT.save({ token: result.data.token, refresh_token: result.data.refresh_token });
-        return result;
-      },
-    );
+    }).then((result) => {
+      this.clearAuthorization();
+      this.saveAuthorization(result.data);
+      return result;
+    });
   }
 
   authViaAdmin(token) {
     this.current = null;
     this.JWT.destroy();
     this.removeDefaultCompany();
-    this.JWT.save({ token: token, refresh_token: token });
+    this.JWT.save({ token, refresh_token: token });
+    this.loadTheme();
   }
 
   resetPassword(formData) {
@@ -43,6 +48,10 @@ export default class User {
       method: 'POST',
       data: formData,
     }).then(result => result);
+  }
+
+  getCurrentCompany() {
+    return this.getCompany(this.getCompanyId());
   }
 
   setDefaultCompany(id) {
@@ -55,11 +64,26 @@ export default class User {
   }
 
   getCompanyId() {
-    return this.current_company ? this.current_company.id : null;
+    const result = this.$window.localStorage.getItem('current_company_id');
+
+    if (result) {
+      return parseInt(result);
+    }
+
+    return null;
+  }
+
+  removeDefaultCompany() {
+    this.current_company = null;
+    this.$window.localStorage.removeItem('current_company_id');
   }
 
   getCompanies() {
     let result = [];
+
+    if (!this.current) {
+      return result;
+    }
 
     for (let company_data of this.current.company_roles) {
       result.push(company_data.company);
@@ -73,12 +97,11 @@ export default class User {
   }
 
   getCompany(id) {
-    return this.getCompanies().filter(item => item.id === id)[0];
-  }
+    if (!id) {
+      return null;
+    }
 
-  removeDefaultCompany() {
-    this.current_company = null;
-    this.$window.localStorage.removeItem('current_company_id');
+    return this.getCompanies().filter(item => item.id === id)[0];
   }
 
   update(fields) {
@@ -86,75 +109,91 @@ export default class User {
       url: `${API_URL}/user`,
       method: 'PUT',
       data: { user: fields },
-    }).then(
-      (result) => {
-        this.current = result.data;
-        return result.data;
-      },
-    );
+    }).then((result) => {
+      this.current = result.data;
+      return result.data;
+    });
+  }
+
+  clearAuthorization() {
+    this.current = null;
+    this.$window.localStorage.removeItem('current');
+    this.JWT.destroy();
+    this.removeDefaultCompany();
+    this.Theme.remove();
+  }
+
+  saveAuthorization(data) {
+    this.JWT.save({ token: data.token, refresh_token: data.refresh_token });
   }
 
   logout() {
-    this.current = null;
-    this.JWT.destroy();
-    this.removeDefaultCompany();
-    this.$state.go('auth.login', null, { reload: true });
+    this.clearAuthorization();
+    this.$timeout(() => {
+      console.log('reload to login');
+      this.$state.go('auth.login', null, { reload: true });
+    }, 0);
   }
 
-  verifyAuth() {
-    let deferred = this.$q.defer();
+  loadUserData() {
+    return this.$http({
+      url: `${API_URL}/user`,
+      method: 'GET',
+    }).then((result) => {
+      this.userSuccessCallback(result);
+    }, () => {
+      this.userErrorCallback();
+    });
+  }
 
-    if (!this.JWT.get()) {
-      deferred.resolve(false);
-      return deferred.promise;
+  userSuccessCallback(result) {
+    this.current = result.data;
+    this.$window.localStorage.setItem('current', JSON.stringify(this.current));
+
+    let currentCompanyId = parseInt(this.$window.localStorage.getItem('current_company_id'), 10);
+    const availableIds = this.getCompanies().map(item => item.id);
+
+    if (availableIds.length) {
+      if (!currentCompanyId || !availableIds.includes(currentCompanyId)) {
+        currentCompanyId = availableIds[0];
+      }
+
+      this.setDefaultCompany(currentCompanyId);
     }
 
-    if (this.current) {
-      deferred.resolve(true);
+    this.loadTheme();
+  }
+
+  userErrorCallback() {
+    this.JWT.destroy();
+    this.removeDefaultCompany();
+  }
+
+  setCurrentUser() {
+    const user = this.$window.localStorage.getItem('current');
+
+    if (user) {
+      this.current = JSON.parse(user);
     } else {
-      this.$http({
-        url: `${API_URL}/user`,
-        method: 'GET',
-      }).then(
-        (result) => {
-          this.current = result.data;
-
-          let currentCompanyId = parseInt(this.$window.localStorage.getItem('current_company_id'), 10);
-          const availableIds = this.getCompanies().map(item => item.id);
-
-          if (availableIds.length) {
-            if (!currentCompanyId || !availableIds.includes(currentCompanyId)) {
-              currentCompanyId = availableIds[0];
-            }
-
-            this.setDefaultCompany(currentCompanyId);
-            this.loadTheme();
-          }
-
-          deferred.resolve(true);
-        },
-        () => {
-          this.JWT.destroy();
-          this.removeDefaultCompany();
-          deferred.resolve(false);
-        },
-      );
+      this.loadUserData();
     }
 
-    return deferred.promise;
+    this.current_company = this.getCurrentCompany();
   }
 
   ensureAuthForClosedPages() {
     const deferred = this.$q.defer();
 
-    this.verifyAuth().then((authValid) => {
-      if (authValid === true) {
-        deferred.resolve(true);
-      } else {
+    if (this.JWT.get()) {
+      this.setCurrentUser();
+      deferred.resolve(true);
+    } else {
+      this.$timeout(() => {
+        console.log('reload to login');
         this.$state.go('auth.login');
-        deferred.resolve(false);
-      }
-    });
+      });
+      deferred.resolve(false);
+    }
 
     return deferred.promise;
   }
@@ -162,14 +201,18 @@ export default class User {
   ensureAuthForLoginPages() {
     const deferred = this.$q.defer();
 
-    this.verifyAuth().then((authValid) => {
-      if (authValid === true) {
+    if (this.JWT.get()) {
+      this.setCurrentUser();
+
+      this.$timeout(() => {
+        console.log('reload to dashboard');
         this.$state.go('app.dashboard');
-        deferred.resolve(true);
-      } else {
-        deferred.resolve(false);
-      }
-    });
+      });
+
+      deferred.resolve(true);
+    } else {
+      deferred.resolve(false);
+    }
 
     return deferred.promise;
   }
@@ -189,28 +232,51 @@ export default class User {
     const header = skipJwtAuth ? null : { Authorization: `Bearer ${this.JWT.get()}` };
 
     return this.Upload.upload({
-      url: `${API_URL}/company/${this.current_company.id}/user/${userId}/upload`,
+      url: `${API_URL}/company/${this.getCompanyId()}/user/${userId}/upload`,
       data: { photo: file },
       headers: header,
     });
   }
 
+  // move subscription methods to separate service
+  startSubscription(companyId) {
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/subscription/start`,
+      method: 'POST',
+    }).then(result => result.data);
+  }
+
+  finishSubscription(companyId, transactionId) {
+    return this.$http({
+      url: buildURL(`${API_URL}/company/${companyId}/subscription/finish`, {
+        transaction_id: transactionId,
+      }),
+      method: 'POST',
+    }).then(result => result.data);
+  }
+
+  inviteFriend(companyId, email) {
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/subscription/invite`,
+      method: 'POST',
+      data: { email },
+    }).then(result => result.data);
+  }
+
   loadTheme() {
     this.Settings
-      .getThemeSettings(this.current_company.id).then(
-        (result) => {
-          const currentTheme = this.$cookieStore.get('theme');
-          let themeClass = null;
+      .getThemeSettings(this.getCompanyId()).then((result) => {
+        const currentThemeClass = this.Theme.get();
+        let themeClass = null;
 
-          if (result.plugin_theme_name) {
-            themeClass = `${result.plugin_theme_name.toLowerCase()}-theme`;
-          }
+        if (result.plugin_theme_name) {
+          themeClass = result.plugin_theme_name.toLowerCase();
+        }
 
-          if (currentTheme != themeClass) {
-            this.Settings.saveThemeToCookie(themeClass);
-            this.$rootScope.$broadcast('AppCtrl.change_plugin_theme_name', themeClass);
-          }
-        });
+        if (currentThemeClass !== themeClass) {
+          this.Theme.save(themeClass);
+        }
+      });
   }
 
   isOwnerOrManager() {
@@ -230,7 +296,10 @@ export default class User {
   isOwner() {
     let result = false;
 
-    if (this.getCompanyId() && this.current.owned_companies.length) {
+    if (this.getCompanyId() &&
+      this.current &&
+      this.current.owned_companies.length) {
+
       this.current.owned_companies.forEach((company) => {
         if (company.id === this.getCompanyId()) {
           result = true;
@@ -244,7 +313,10 @@ export default class User {
   isManager() {
     let result = false;
 
-    if (this.getCompanyId() && this.current.company_roles.length) {
+    if (this.getCompanyId() &&
+      this.current &&
+      this.current.company_roles.length) {
+
       this.current.company_roles.forEach((role) => {
         if (role.company.id === this.getCompanyId() && role.manage_access) {
           result = true;

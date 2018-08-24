@@ -1,10 +1,10 @@
-export default class SettingsEmailsEditSmsCtrl {
-  constructor(User, item, SmsText, $modalInstance, $rootScope) {
+export default class Controller {
+  constructor(User, item, SmsText, $uibModalInstance, $rootScope) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
     this.SmsText = SmsText;
-    this.$modalInstance = $modalInstance;
+    this.$modalInstance = $uibModalInstance;
     this.$rootScope = $rootScope;
     this.form_data = item;
   }

@@ -1,11 +1,14 @@
-class AuthCtrl {
-  constructor(User, $state, $stateParams, $window, $rootScope) {
+export default class Controller {
+  constructor(User, JWT, $state, $stateParams, $window, $rootScope, $timeout, $http) {
     'ngInject';
 
     this.User = User;
+    this.JWT = JWT;
     this.$state = $state;
+    this.$http = $http;
     this.$stateParams = $stateParams;
     this.$window = $window;
+    this.$timeout = $timeout;
     this.$rootScope = $rootScope;
     this.authType = $state.current.name.replace('auth.', '');
   }
@@ -13,26 +16,28 @@ class AuthCtrl {
   sendAuthForm(path) {
     this.isSubmitting = true;
     this.$rootScope.show_spinner = true;
+    this.User.auth(path, this.formData).then(() => {
+      this.$rootScope.show_spinner = false;
 
-    this.User.auth(path, this.formData).then(
-      () => {
-        this.$rootScope.show_spinner = false;
-        this.$state.go('app.dashboard');
-      },
-      (error) => {
-        this.isSubmitting = false;
-        this.$rootScope.show_spinner = false;
-
-        if (this.authType === 'login') {
-          this.errors = error.data;
-        } else {
-          this.errors = error.data.errors;
-
-          if (error.data.message) {
-            this.errors = [error.data];
-          }
+      this.User.loadUserData().then(() => {
+        if (this.JWT.get()) {
+          this.$state.go('app.dashboard');
         }
       });
+    }, (error) => {
+      this.isSubmitting = false;
+      this.$rootScope.show_spinner = false;
+
+      if (this.authType === 'login') {
+        this.errors = error.data;
+      } else {
+        this.errors = error.data.errors;
+
+        if (error.data.message) {
+          this.errors = [error.data];
+        }
+      }
+    });
   }
 
   sendResetPasswordForm() {
@@ -55,8 +60,13 @@ class AuthCtrl {
     if (this.authType === 'reset_password') {
       this.sendResetPasswordForm();
     } else if (this.$state.current.name === 'auth_admin.login_via_admin') {
-      this.User.authViaAdmin(this.$stateParams.token);
-      this.$state.go('app.dashboard');
+      this.User.clearAuthorization();
+      this.User.saveAuthorization({ token: this.$stateParams.token, refresh_token: null });
+      this.User.loadUserData().then(() => {
+        if (this.JWT.get()) {
+          this.$state.go('app.dashboard');
+        }
+      });
     } else {
       let path = '/authenticate_check';
 
@@ -70,5 +80,3 @@ class AuthCtrl {
     }
   }
 }
-
-export default AuthCtrl;
