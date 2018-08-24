@@ -1,8 +1,9 @@
 export default class Controller {
-  constructor($auth) {
+  constructor($auth, $window) {
     'ngInject';
 
     this.$auth = $auth;
+    this.$window = $window;
 
     this.$onChanges = () => {
       this.current_tab_index = this.currentTabIndex;
