@@ -60,7 +60,6 @@ export default class Controller {
   preloadData() {
     const isCustomer = this.type === 'customer';
 
-    console.log(2);
     this.$q.all([
       this.Product.getAll(this.current_company_id, false, isCustomer),
       this.Zone.getAll(this.current_company_id, isCustomer),
@@ -248,6 +247,7 @@ export default class Controller {
 
   getReservationSamlpe() {
     return {
+      country: 'NL',
       language: this.$translate.proposedLanguage().toUpperCase() || 'NL',
       gender: 'Man',
       social: null,

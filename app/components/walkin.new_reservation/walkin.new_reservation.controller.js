@@ -13,6 +13,7 @@ export default class Controller {
     this.$rootScope = $rootScope;
 
     this.reservation = {
+      country: 'NL',
       language: $translate.proposedLanguage().toUpperCase() || 'NL',
       gender: 'Man',
       social: null,
