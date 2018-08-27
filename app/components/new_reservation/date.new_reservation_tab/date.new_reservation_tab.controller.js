@@ -13,14 +13,7 @@ export default class Controller {
     this.$scope = $scope;
     this.max_date = this.AppConstants.calendar.date_options.maxDate;
 
-    this.$onChanges = () => {
-      this.current_part = this.reservation.reservation_parts[this.currentIndex];
-      this.product_week_time_ranges = this.productWeekTimeRanges;
-      this.zone_time_ranges = this.zoneTimeRanges;
-      this.open_time_ranges = this.openTimeRanges;
-      this.product_time_ranges = this.productTimeRanges;
-      this.current_tab_index = this.currentTabIndex;
-
+    this.$onInit = () => {
       this.initTranslates();
       this.initDate();
       this.initMinDate();
@@ -29,6 +22,15 @@ export default class Controller {
       if (this.type !== 'customer') {
         this.max_date = undefined;
       }
+    };
+
+    this.$onChanges = () => {
+      this.current_part = this.reservation.reservation_parts[this.currentIndex];
+      this.product_week_time_ranges = this.productWeekTimeRanges;
+      this.zone_time_ranges = this.zoneTimeRanges;
+      this.open_time_ranges = this.openTimeRanges;
+      this.product_time_ranges = this.productTimeRanges;
+      this.current_tab_index = this.currentTabIndex;
     };
   }
 

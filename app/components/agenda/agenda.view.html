@@ -31,12 +31,13 @@
     <div class='panel' ng-show='ctrl.view_type == "list"'>
       <div class='panel-heading' translate='reservations'></div>
       <div class='panel-body no-padder'>
-        <div ng-if='ctrl.is_loaded && !ctrl.data.length'
+        <div ng-if='!ctrl.data.length'
           class='empty_reservations'
           translate='make_first_reservation'>
         </div>
 
-        <div class='agenda-reservation-item-wrapper'>
+        <div ng-if='ctrl.data.length'
+          class='agenda-reservation-item-wrapper'>
           <div class='agenda-reservation-header text-muted'>
             <div translate='status_name'></div>
             <div translate='time'></div>

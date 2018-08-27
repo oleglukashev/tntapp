@@ -1089,6 +1089,8 @@ for theme in 'default' 'aqua' 'lego' 'chocolate'
 // progress bar
 
 md-progress-linear
+  bottom 0 !important
+
   .md-container
     background-color border-color
 
@@ -1111,6 +1113,12 @@ md-progress-linear
 // autocomplete
 .input-suggestion
   margin-top 18px
+
+@media (max-width 500px)
+  .input-suggestion
+    min-width 158px !important
+    width 158px !important
+    margin-left 158px
 
 
 .phone-is-ok
@@ -1202,3 +1210,8 @@ md-virtual-repeat-container
   md-autocomplete-parent-scope > div
     margin 0 -15px
     padding 0 15px
+
+md-autocomplete
+  md-progress-linear
+    bottom 22px !important
+

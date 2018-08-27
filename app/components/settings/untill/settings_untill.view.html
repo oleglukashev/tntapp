@@ -19,7 +19,7 @@
             md-items='item in ctrl.searchUntillTable(table.untill_table_id)'
             md-item-text='item'
             md-min-length='1'
-            md-menu-container-class='input-suggestion'
+            md-menu-container-class='input-suggestion untill-input-suggestion'
             md-floating-label='{{ "table" | translate }}'>
             <md-item-template>
               <div ng-click='ctrl.updateTable(table, item)'>{{ item }}</div>

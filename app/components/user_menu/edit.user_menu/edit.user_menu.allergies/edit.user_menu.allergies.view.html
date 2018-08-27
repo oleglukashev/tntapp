@@ -6,7 +6,6 @@
     <div class='md-content-submit'>
       <div class='wrapper' layout='column' layout-align='space-around center'>
         <div class='w-xl'>
-
           <label ng-repeat='allergy in ctrl.customerAllergies'
             class='user-menu-allergy btn btn-default block m-b-xs no-shadow text-success text-left'
             ng-model='ctrl.item'
@@ -24,19 +23,18 @@
           </label>
 
           <form name='user_allergies_form'>
-            <div class='wrapper'>
-              <md-input-container class='md-block'>
-                <label translate='guest_name'></label>
-                <textarea required ng-model='ctrl.item.owner'></textarea>
-              </md-input-container>
-              <md-autocomplete
-                md-search-text='ctrl.item.allergy'
-                md-items='item in ctrl.searchAllergies(ctrl.item.allergy, ctrl.allergies)'
-                md-item-text='item'
-                md-min-length='0'
-                md-menu-container-class='input-suggestion'
-                md-floating-label='{{ "name" | translate }}'
-                required>
+            <md-input-container class='md-block'>
+              <label translate='guest_name'></label>
+              <textarea required ng-model='ctrl.item.owner'></textarea>
+            </md-input-container>
+            <md-autocomplete
+              md-search-text='ctrl.item.allergy'
+              md-items='item in ctrl.searchAllergies(ctrl.item.allergy, ctrl.allergies)'
+              md-item-text='item'
+              md-min-length='0'
+              md-menu-container-class='input-suggestion'
+              md-floating-label='{{ "name" | translate }}'
+              required>
               <md-item-template>
                 <span>
                   <i class="eicon eicon-{{ ctrl.getAllergyClass(item) }} m-r-xs"></i>
@@ -44,8 +42,7 @@
               </md-item-template>
             </md-autocomplete>
 
-              <input type="hidden" ng-model='ctrl.item.id' />
-            </div>
+            <input type="hidden" ng-model='ctrl.item.id' />
           </form>
         </div>
       </div>

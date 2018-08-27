@@ -19,30 +19,28 @@
           </label>
 
           <form name='user_preferences_form'>
-            <div class='wrapper'>
-              <md-input-container class='md-block'>
-                <label translate='guest_name'></label>
-                <input required ng-model='ctrl.item.owner' />
-              </md-input-container>
-              <md-input-container class='md-block'>
-                <label translate='name'></label>
-                <input required ng-model='ctrl.item.name' />
-              </md-input-container>
-              <md-autocomplete
-                md-search-text='ctrl.item.value'
-                md-items='item in ctrl.searchPreference(ctrl.item.value, ctrl.preferences)'
-                md-item-text='item'
-                md-min-length='0'
-                md-menu-container-class='input-suggestion'
-                md-floating-label='{{ "value" | translate }}'
-                required>
-                <md-item-template>
-                  <span>{{ item }}</span>
-                </md-item-template>
-              </md-autocomplete>
+            <md-input-container class='md-block'>
+              <label translate='guest_name'></label>
+              <input required ng-model='ctrl.item.owner' />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='name'></label>
+              <input required ng-model='ctrl.item.name' />
+            </md-input-container>
+            <md-autocomplete
+              md-search-text='ctrl.item.value'
+              md-items='item in ctrl.searchPreference(ctrl.item.value, ctrl.preferences)'
+              md-item-text='item'
+              md-min-length='0'
+              md-menu-container-class='input-suggestion'
+              md-floating-label='{{ "value" | translate }}'
+              required>
+              <md-item-template>
+                <span>{{ item }}</span>
+              </md-item-template>
+            </md-autocomplete>
 
-              <input type='hidden' ng-model='ctrl.item.id' />
-            </div>
+            <input type='hidden' ng-model='ctrl.item.id' />
           </form>
         </div>
       </div>
