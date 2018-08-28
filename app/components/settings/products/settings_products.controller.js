@@ -209,7 +209,10 @@ export default class Controller {
 
         this.Product
           .create(this.current_company_id, data)
-          .then(product => this.addTimeRange(newProduct, product.id));
+          .then(product => {
+            this.addTimeRange(newProduct, product.id)
+            this.$rootScope.show_spinner = false;
+          });
       } else {
         this.addTimeRange(newProduct, productId);
       }

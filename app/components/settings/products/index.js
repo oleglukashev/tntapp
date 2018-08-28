@@ -1,5 +1,6 @@
 import angular from 'angular';
 import accordion from 'angular-ui-bootstrap/src/accordion';
+import buttons from 'angular-ui-bootstrap/src/buttons';
 import modal from 'angular-ui-bootstrap/src/modal';
 import rzModule from 'angularjs-slider';
 
@@ -13,7 +14,7 @@ import SliderService from '../../../common/services/slider.service';
 import fixSettingsItemView from '../../fix.settings.item/fix.settings.item.view.html';
 import menu from '../menu';
 
-export default angular.module('productsSettings', [accordion, modal, rzModule, menu])
+export default angular.module('productsSettings', [accordion, modal, buttons, rzModule, menu])
   .component('productsSettings', {
     controller,
     controllerAs: 'ctrl',
