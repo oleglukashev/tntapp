@@ -22,7 +22,11 @@ export default class Controller {
         });
   }
 
-  submitFormUntill() {
+  submitFormUntill(isValid) {
+    if (!isValid) {
+      return false;
+    }
+
     this.is_submited = true;
     this.$rootScope.show_spinner = true;
 

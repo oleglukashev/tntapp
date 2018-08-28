@@ -15,20 +15,19 @@
          layout-align='space-around center'>
       <div class='w-xl'>
         <form name='lightspeed_auth_form'
-              novalidate
-              ng-submit='ctrl.submitForm(lightspeed_auth_form.$valid);'>
+          ng-submit='ctrl.submitForm(lightspeed_auth_form.$valid);'>
           <md-input-container class='md-block'>
             <label translate='username'></label>
-            <input ng-model='ctrl.form_data.username' />
+            <input ng-model='ctrl.form_data.username' required />
           </md-input-container>
           <md-input-container class='md-block'>
             <label translate='password'></label>
-            <input ng-model='ctrl.form_data.password' />
+            <input ng-model='ctrl.form_data.password' required />
           </md-input-container>
           <button type='submit'
-                  ng-class="{ 'disabled': !lightspeed_auth_form.$valid || ctrl.is_submitting }"
-                  class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
-                  translate='save'>
+            ng-class="{ 'disabled': !lightspeed_auth_form.$valid || ctrl.is_submitting }"
+            class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
+            translate='save'>
           </button>
         </form>
       </div>

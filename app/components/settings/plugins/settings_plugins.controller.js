@@ -122,6 +122,6 @@ export default class Controller {
   }
 
   canShowUntillLinked() {
-    return this.untill_login && this.untill_password && this.untill_server;
+    return this.untill_login && this.untill_server;
   }
 }

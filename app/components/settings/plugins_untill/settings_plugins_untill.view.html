@@ -3,21 +3,23 @@
     <div class='panel-heading'>
       Untill Auth
     </div>
-    <form ng-submit='ctrl.submitFormUntill();'>
+    <form name='untill_form' ng-submit='ctrl.submitFormUntill(untill_form.$valid);'>
       <div class='panel-body clearfix form-horizontal'>
         <div class='row'>
           <label class='col-sm-2 col-xs-12 text-left control-label'>Auth</label>
           <div class='col-sm-4 col-xs-5 p-r-none'>
             <input type='text'
-                   placeholder='Login'
-                   class='form-control'
-                   ng-model='ctrl.untill_login' />
+              placeholder='Login'
+              class='form-control'
+              ng-model='ctrl.untill_login'
+              required />
           </div>
           <div class='col-sm-6 col-xs-7'>
             <input type='password'
-                   placeholder='Password'
-                   class='form-control'
-                   ng-model='ctrl.untill_password' />
+              placeholder='Password'
+              class='form-control'
+              ng-model='ctrl.untill_password'
+              required />
           </div>
         </div>
       </div>
@@ -27,13 +29,15 @@
           <div class='col-sm-4 col-xs-5 p-r-none'>
             <div class='input-group'>
               <input type='text'
-                     placeholder='api.untill.com'
-                     class='form-control'
-                     ng-model='ctrl.untill_server' />
+                placeholder='api.untill.com'
+                class='form-control'
+                ng-model='ctrl.untill_server'
+                required />
               <span class='input-group-btn'>
                 <button type='submit'
-                        class='md-button btn-success no-margin'
-                        translate='save'></button>
+                  class='md-button btn-success no-margin'
+                  ng-class='{ "disabled": !untill_form.$valid }'
+                  translate='save'></button>
               </span>
             </div>
           </div>
@@ -41,9 +45,9 @@
         <div class='row'>
           <div class='col-sm-4 col-sm-offset-9 p-r-none'>
             <button type='button'
-                  class='md-button btn-danger no-margin'
-                  ng-click='ctrl.removeLink()'
-                  translate='settings.plugins.delete_link'></button>
+              class='md-button btn-danger no-margin'
+              ng-click='ctrl.removeLink()'
+              translate='settings.plugins.delete_link'></button>
           </div>
         </div>
       </div>
