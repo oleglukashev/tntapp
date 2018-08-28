@@ -478,4 +478,5 @@ export default {
   max: 'Max',
   select_all: 'Select all',
   reserved_by: 'Reserved by',
+  from: 'from',
 };

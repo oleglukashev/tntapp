@@ -103,7 +103,7 @@
         </div>
         <div class="md-list-item-content">
           <h3 class="text-md">
-            {{ ctrl.UserMenu.current_reservation.employee.last_name }} {{ ctrl.UserMenu.current_reservation.employee.first_name }}
+            {{ ctrl.UserMenu.current_reservation.employee.last_name }} {{ ctrl.UserMenu.current_reservation.employee.first_name }} <translate>from</translate> {{ ctrl.moment(ctrl.UserMenu.current_reservation.created_on).format('DD/MM/YY') }}
           </h3>
           <small class="font-thin" translate='reserved_by'></small>
         </div>
