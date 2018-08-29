@@ -45,7 +45,7 @@
             </md-input-container>
             <button type='button'
                     class='btn m-b-sm btn-md btn-success text-success'
-                    ng-click='ctrl.triggerChooseNumberOfPersons();ctrl.selectTab(ctrl.pagination.number_of_persons);'>Ok</button>
+                    ng-click='ctrl.triggerChooseNumberOfPersons();ctrl.selectTab({ index: ctrl.pagination.number_of_persons});'>Ok</button>
           </div>
           <div class='md-form-group no-padder' ng-if='ctrl.type !== "customer"'>
             <md-checkbox ng-model="ctrl.reservation.is_group"

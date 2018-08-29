@@ -189,7 +189,7 @@ export default class Controller {
       const moreThanDeadline = now >= todayDeadline && now <= todayEnd;
 
       if (moreThanDeadline) {
-        this.selectTab(1);
+        this.selectTab({ index: 1 });
         this.current_part.date = null;
         this.$mdDialog.show(this.$mdDialog.alert()
           .parent(angular.element(document.querySelector('.modal-dialog')))
