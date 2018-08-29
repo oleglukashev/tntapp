@@ -106,8 +106,8 @@ export default class EditReservationCtrl {
             this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
             this.UserMenu.loadAndSetFullData(this.reservation.customer.id,
               this.reservationPart.id);
-          } else if (result.status === -1 && result.statusText === '') {
-            this.errors = ['Een bestand mag niet groter zijn dan 2MB'];
+          } else if (result.status === 400) {
+            this.errors = result.data.errors.errors;
           }
 
           this.is_submitting = false;
@@ -476,5 +476,9 @@ export default class EditReservationCtrl {
     if (theSameDate && this.current_part.time === this.current_part.old_time) {
       this.current_part.table_ids = this.current_part.old_table_ids;
     }
+  }
+
+  setCurrentPart(part) {
+    this.current_part = part;
   }
 }
