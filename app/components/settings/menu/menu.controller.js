@@ -32,7 +32,7 @@ export default class Controller {
 
   loadUntillSettings() {
     this.Untill.getSettings(this.current_company_id).then((settings) => {
-      if (settings.untill_login && settings.untill_password) {
+      if (settings.untill_login) {
         this.pages.Untill = 'app.untill_settings';
       }
     });
