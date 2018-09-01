@@ -66,7 +66,6 @@ export default angular.module('app.constants', [])
         formatYear: 'yy',
         startingDay: 1,
         showWeeks: false,
-        maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
       },
     },
     countries,

@@ -11,17 +11,12 @@ export default class Controller {
     this.$translate = $translate;
     this.$stateParams = $stateParams;
     this.$scope = $scope;
-    this.max_date = this.AppConstants.calendar.date_options.maxDate;
 
     this.$onInit = () => {
       this.initTranslates();
       this.initDate();
       this.initMinDate();
       this.initDateOptions();
-
-      if (this.type !== 'customer') {
-        this.max_date = undefined;
-      }
     };
 
     this.$onChanges = () => {
@@ -83,7 +78,6 @@ export default class Controller {
   initDateOptions() {
     this.dateOptions = Object.assign({}, this.AppConstants.calendar.date_options);
     this.dateOptions.minDate = this.min_date;
-    this.dateOptions.maxDate = this.max_date;
     this.dateOptions.dateDisabled = ({ date }) => this.disableDates(date);
   }
 
