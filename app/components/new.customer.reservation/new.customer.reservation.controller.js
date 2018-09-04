@@ -7,23 +7,28 @@ export default class Controller {
     this.$window = $window;
     this.pluginImageFileName = null;
     this.tabIndex = 0;
+    this.$state = $state;
 
-    if ($state.current.name === 'customer_reservation.alternative') {
-      const params = {
-        id: $stateParams.rid,
-        date: $stateParams.date,
-        aantal_personen: $stateParams.aantal_personen,
-      };
+    if (this.isAlternativeUrl()) {
+      if ($state.current.name === 'customer_reservation.alternative') {
+        const params = {
+          id: $stateParams.rid,
+          date: $stateParams.date,
+          aantal_personen: $stateParams.aantal_personen,
+        };
 
-      $state.go('customer_reservation.new', params);
-    } else if ($state.current.name === 'customer_reservation.alternative_start') {
-      const params = {
-        id: $stateParams.id,
-        date: $stateParams.date,
-        aantal_personen: $stateParams.aantal_personen,
-      };
+        $state.go('customer_reservation.new', params);
+      } else if ($state.current.name === 'customer_reservation.alternative_start') {
+        const params = {
+          id: $stateParams.id,
+          date: $stateParams.date,
+          aantal_personen: $stateParams.aantal_personen,
+        };
 
-      $state.go('customer_reservation.new', params);
+        $state.go('customer_reservation.new', params);
+      }
+
+      return false;
     }
 
     this.$onInit = () => {
@@ -32,6 +37,13 @@ export default class Controller {
           this.initGeneralSettings(generalSettings);
         });
     };
+  }
+
+  isAlternativeUrl() {
+    return [
+      'customer_reservation.alternative',
+      'customer_reservation.alternative_start'
+    ].includes(this.$state.current.name);
   }
 
   initGeneralSettings(generalSettings) {

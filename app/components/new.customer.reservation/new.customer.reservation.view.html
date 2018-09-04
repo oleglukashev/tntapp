@@ -1,4 +1,4 @@
-<div class='modal-dialog'>
+<div ng-if='!ctrl.isAlternativeUrl()' class='modal-dialog'>
   <section class='reservation_modal panel no-margin'
     ng-class='{ "custom-image": ctrl.showCustomBackground() }'
     ng-style="{'background-image': 'url(' + ctrl.getBackgroundStyles() + ')'}">

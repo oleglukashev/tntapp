@@ -19,7 +19,7 @@ export default function Config($httpProvider, jwtOptionsProvider) {
 
         // TODO find more good solution
         const isntAuthPage = $state.current.name !== '' &&
-          $state.current.name !== 'customer_reservation.new' &&
+          $state.current.name.indexOf('customer_reservation') < 0 &&
           $state.current.name.indexOf('auth') < 0;
 
         if (token) {
