@@ -13,7 +13,17 @@ import TableGroupService from '../../../common/services/table_group.service';
 import fixSettingsItemView from '../../fix.settings.item/fix.settings.item.view.html';
 import menu from '../menu';
 
-export default angular.module('tablesSettings', [modal, buttons, accordion, menu])
+import dnd from '../../../shared/dnd';
+import dndLists from '../../../common/directives/angular-drag-and-drop-lists.directive';
+
+export default angular.module('tablesSettings', [
+    modal,
+    buttons,
+    accordion,
+    menu,
+    dnd,
+    dndLists,
+  ])
   .component('tablesSettings', {
     controller,
     controllerAs: 'ctrl',
