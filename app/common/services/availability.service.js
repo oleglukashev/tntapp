@@ -8,14 +8,14 @@ export default class Availability {
     this.$q = $q;
   }
 
-  getAvailabilities(companyId, productId, date, isFrontend, skipJwtAuth) {
+  getAvailabilities(companyId, productId, date, numberOfPersons, skipJwtAuth) {
     if (!companyId || !productId || !date) {
       return this.$q.defer().promise;
     }
 
     const options = {
       product_id: productId,
-      is_frontend: isFrontend || true,
+      number_of_persons: numberOfPersons,
       date,
     };
 
