@@ -81,8 +81,8 @@ export default class ReservationItem {
     });
 
     Object.keys(tablesByZone).forEach((zoneId) => {
-      const sortedTablesByZone = tablesByZone[zoneId].map(tableData => tableData.id);
-      const sortedZonesTableIds = zones[zoneId].tables.map(table => table.id);
+      const sortedTablesByZone = tablesByZone[zoneId].map(tableData => tableData.id).sort();
+      const sortedZonesTableIds = zones[zoneId].tables.map(table => table.id).sort();
 
       if (angular.equals(sortedTablesByZone, sortedZonesTableIds)) {
         result.push(zones[zoneId].name);
