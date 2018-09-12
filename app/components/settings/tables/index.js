@@ -1,4 +1,5 @@
 import angular from 'angular';
+import 'angular-color-picker';
 import modal from 'angular-ui-bootstrap/src/modal';
 import accordion from 'angular-ui-bootstrap/src/accordion';
 import buttons from 'angular-ui-bootstrap/src/buttons';
@@ -23,6 +24,7 @@ export default angular.module('tablesSettings', [
     menu,
     dnd,
     dndLists,
+    'mp.colorPicker',
   ])
   .component('tablesSettings', {
     controller,
