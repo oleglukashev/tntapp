@@ -1,0 +1,28 @@
+<div class='col-lg-8 col-md-8 col-sm-8'>
+  <div class='panel'>
+    <div class='panel-heading' translate='settings.tni.title'></div>
+    <div class='panel-body'>
+      <p translate='settings.tni.description'></p>
+      <div class='wrapper md-content-submit'
+        layout='column'
+        layout-align='space-around center'>
+        <div class='w-xl m-t-xl m-b-xl'>
+          <md-input-container class='md-block'>
+            <label translate='username'></label>
+            <input ng-model='ctrl.form_data.username' ng-change='ctrl.submitForm()' />
+          </md-input-container>
+          <md-input-container class='md-block'>
+            <label translate='password'></label>
+            <input
+              ng-model='ctrl.form_data.password'
+              ng-change='ctrl.submitForm()'
+              reqiured />
+          </md-input-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+  <settings-menu></settings-menu>
+</div>

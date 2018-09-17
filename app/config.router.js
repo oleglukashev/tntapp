@@ -411,6 +411,21 @@ export default function routes($stateProvider, $urlRouterProvider, $locationProv
       }
     })
 
+    // TNI SETTINGS
+    .state('app.tni_settings', {
+      url: '/settings/tni',
+      component: 'tniSettings',
+      lazyLoad: ($transition$) => {
+        const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+
+        return import(/* webpackChunkName: "tni.settings.module" */ "./components/settings/tni")
+          .then(mod => $ocLazyLoad.load({ name: 'tniSettings' }))
+          .catch(err => {
+            throw new Error("Ooops, something went wrong, " + err);
+          });
+      }
+    })
+
 
     // CUSTOMER RESERVATIONS
     .state('customer_reservation', {

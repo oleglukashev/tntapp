@@ -362,6 +362,10 @@ export default {
       new: 'Nieuwe Item',
       delete: 'Item verwijderen',
     },
+    tni: {
+      title: 'TheNextInvoice account',
+      description: 'TheNextInvoice account description'
+    },
   },
   receipts: {
     status: 'Receipt status',
