@@ -15,8 +15,9 @@ export default class Controller {
 
   pay() {
     this.$rootScope.show_spinner = true;
-    this.Tni.sendInvoice(this.currentCompanyId, this.inReserv.id).then((result) => {
+    this.Tni.sendInvoice(this.currentCompanyId, this.inReserv.id).then((bill) => {
       this.$rootScope.show_spinner = false;
+      this.inReserv.bill = bill;
     });
   }
 }
