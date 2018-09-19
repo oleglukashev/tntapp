@@ -364,7 +364,7 @@ export default {
     },
     tni: {
       title: 'TheNextInvoice account',
-      description: 'TheNextInvoice account description'
+      description: 'To connect TheNextInvoice to your TheNextTable account please login here. With this integration you are able to get open tabs from Untill or LIghtspeed, create an invoice and send the invoice to your client by e-mail. You can find this function in the settingsmenu of TheNextTable.',
     },
   },
   receipts: {
@@ -484,4 +484,5 @@ export default {
   select_all: 'Select all',
   reserved_by: 'Reserved by',
   from: 'from',
+  connection_succesful_with_account: 'Connection succesful with account:',
 };

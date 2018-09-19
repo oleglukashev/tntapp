@@ -18,8 +18,8 @@
     </div>
   </md-dialog-content>
   <md-dialog-actions layout='row'>
-    <md-button ng-click='ctrl.pay()' ng-hide='ctrl.inReserv.bill.invoice_id'>Pay</md-button>
-    <md-button ng-click='ctrl.showInvoice()' ng-show='ctrl.inReserv.bill.invoice_id'>Show Invoice</md-button>
+    <md-button ng-click='ctrl.sendInvoice()' ng-hide='ctrl.inReserv.bill.invoice_id'>Send invoice</md-button>
+    <md-button ng-click='ctrl.showInvoice()' ng-show='ctrl.inReserv.bill.invoice_id'>Show invoice</md-button>
     <md-button ng-click='ctrl.close()'>Ok</md-button>
   </md-dialog-actions>
 </md-dialog>
