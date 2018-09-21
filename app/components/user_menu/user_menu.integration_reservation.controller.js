@@ -47,4 +47,35 @@ export default class Controller {
 
     this.$mdDialog.show(alert).then(() => {}, () => {});
   }
+
+  getVat() {
+    return this.inReserv.products[0].vat * this.inReserv.price / 100;
+  }
+
+  getDiscount() {
+    return this.inReserv.products.reduce((a, b) => {
+      const aDiscount = a.discount || 0;
+      const bDiscount = b.discount || 0;
+
+      return aDiscount + bDiscount;
+    }, 0);
+  }
+
+  getPricesWithVats() {
+    const result = {};
+
+    this.inReserv.products.forEach((item) => {
+      if (!result[item.vat]) {
+        result[item.vat] = 0;
+      }
+
+      result[item.vat] += item.price * item.vat / 100;
+    });
+
+    return result;
+  }
+
+  getExclPrice() {
+    return this.inReserv.price - Object.values(this.getPricesWithVats()).reduce((a, b) => a + b, 0);
+  }
 }
