@@ -69,7 +69,7 @@ export default class Controller {
         result[item.vat] = 0;
       }
 
-      result[item.vat] += item.price * item.vat / 100;
+      result[item.vat] += item.price - (item.price / (item.vat / 100 + 1));
     });
 
     return result;
