@@ -16,8 +16,8 @@
             <tr ng-repeat='product in ctrl.inReserv.products'>
               <td>{{ product.number }}</td>
               <td>{{ product.name }}</td>
-              <td class='text-right'>{{ product.price }}</td>
-              <td class='text-right'>{{ product.price * product.number}}</td>
+              <td class='text-right'>{{ product.price.toFixed(2) }}</td>
+              <td class='text-right'>{{ (product.price * product.number).toFixed(2)}}</td>
             </tr>
           </tbody>
         </table>
@@ -28,13 +28,13 @@
         <p ng-repeat='note in ctrl.inReserv.notes'>{{ note.text }}</p>
         <hr />
       </div>
-      <p><b>Incl.:</b> {{ ctrl.inReserv.price }}</p>
+      <p><b>Incl.:</b> {{ ctrl.inReserv.price.toFixed(2) }}</p>
       <p ng-repeat='(vat, value) in ctrl.getPricesWithVats()'>
-        <b>Vat {{ vat }}%:</b> {{ value }}
+        <b>Vat {{ vat }}%:</b> {{ value.toFixed(2) }}
       </p>
-      <p><b>Excl.:</b> {{ ctrl.getExclPrice() }}</p>
-      <p><b>Discount:</b> {{ ctrl.getDiscount() }}</p>
-      <p><b>Payment:</b> {{ ctrl.inReserv.payment }}</p>
+      <p><b>Excl.:</b> {{ ctrl.getExclPrice().toFixed(2) }}</p>
+      <p ng-show='ctrl.getDiscount() > 0'><b>Discount:</b> {{ ctrl.getDiscount().toFixed(2) }}</p>
+      <p><b>Payment:</b> {{ ctrl.inReserv.payment.toFixed(2) }}</p>
     </div>
   </md-dialog-content>
   <md-dialog-actions layout='row'>
