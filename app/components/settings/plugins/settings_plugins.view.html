@@ -123,8 +123,8 @@
     </div>
   </div>
 
-  <div>
-    <div class='panel' ng-if='!ctrl.is_loaded'>
+  <div ng-if='!ctrl.is_loaded'>
+    <div class='panel'>
       <div class='panel-heading' translate='settings.plugins.wordpress_title'></div>
       <div class='panel-body'>
         <div class='fix-text grey-300 m-b-sm'>&nbsp;</div>
@@ -202,7 +202,7 @@
         <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
       </div>
     </div>
-</div>
+  </div>
 </div>
 <div class='col-lg-4 col-md-4 col-sm-4'>
   <settings-menu></settings-menu>

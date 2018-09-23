@@ -127,6 +127,7 @@ export default {
     access_only: 'Only accessible with management account',
     sms_placeholders: 'Warning! The use of placeholders might exceed the maximum number of 160 characters',
     account_already_exist: 'The SMS account is not activated because account {{ name }} already exist. Send a message to support@thenextsoftware.io to get this sorted out',
+    drag_and_frop_to_sort: 'Drag and drop to sort',
   },
   auth: {
     activate_description: 'You need set a new password. Together with your e-mail adres this are your login details.',
