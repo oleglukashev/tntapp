@@ -79,7 +79,8 @@ export default class Controller {
   editSms(id) {
     const modalInstance = this.$modal.open({
       template: editSmsView,
-      controller: 'SettingsEmailsEditSmsCtrl as edit_sms',
+      controller: editSmsController,
+      controllerAs: 'ctrl',
       size: 'md',
       resolve: {
         item: () => this.filterFilter(this.sms_texts, { id })[0],
