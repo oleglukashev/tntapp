@@ -27,6 +27,7 @@ export default class Controller {
       'settings.warnings.title': 'app.warnings_settings',
       'settings.themes.title': 'app.themes_settings',
       'settings.lightspeed.title': 'app.lightspeed_settings',
+      'settings.tni.title': 'app.tni_settings',
     };
   }
 

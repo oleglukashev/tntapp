@@ -1,0 +1,68 @@
+<div ng-if='ctrl.is_loaded' class='col-lg-8 col-md-8 col-sm-8'>
+  <form name='settings_tni_form'
+    ng-hide='ctrl.isTniDataExist()'
+    ng-submit='ctrl.submitForm(settings_tni_form.$valid)'>
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.tni.title'></div>
+      <div class='panel-body'>
+        <p translate='settings.tni.description'></p>
+        <div class='wrapper md-content-submit'
+          layout='column'
+          layout-align='space-around center'>
+          <div class='w-xl m-t-xl m-b-xl'>
+            <md-input-container class='md-block'>
+              <label translate='username'></label>
+              <input
+                ng-model='ctrl.form_data.username'
+                type='email'
+                required />
+            </md-input-container>
+            <md-input-container class='md-block'>
+              <label translate='password'></label>
+              <input
+                ng-model='ctrl.form_data.password'
+                type='password'
+                required />
+            </md-input-container>
+          </div>
+        </div>
+      </div>
+      <div class='panel-footer no-padder no-border'>
+        <button type='submit'
+          class='btn btn-lg btn-success w-full no-top-radius md-content-button'
+          ng-class="{ 'disabled': !settings_tni_form.$valid || ctrl.is_submitting }">
+          <translate>save</translate>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class='panel' ng-show='ctrl.isTniDataExist()'>
+    <div class='panel-heading' translate='settings.tni.title'></div>
+    <div class='panel-body'>
+      <p translate='settings.tni.description'></p>
+      <p><translate>connection_succesful_with_account</translate> <b>{{ ctrl.settings.tni_username }}</b></p>
+      <div class='text-center m-t-md m-b-sm'>
+        <span
+          ng-click='ctrl.removeTniData()'
+          md-ink-ripple
+          class='md-btn md-flat btn-fw text-success'
+          translate='logout'></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-if='!ctrl.is_loaded' class='col-lg-8 col-md-8 col-sm-8'>
+  <div class='panel'>
+    <div class='panel-heading' translate='settings.tni.title'></div>
+    <div class='panel-body'>
+      <div class='fix-text grey-300 m-b-sm'>&nbsp;</div>
+      <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+      <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+    </div>
+  </div>
+</div>
+<div class='col-lg-4 col-md-4 col-sm-4'>
+  <settings-menu></settings-menu>
+</div>

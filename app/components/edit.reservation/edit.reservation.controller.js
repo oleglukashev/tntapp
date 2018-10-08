@@ -404,7 +404,13 @@ export default class EditReservationCtrl {
   loadTime() {
     const product = this.current_part.product;
     const reservationDate = this.moment(this.current_part.date).format('YYYY-MM-DD');
-    return this.Availability.getAvailabilities(this.current_company_id, product, reservationDate, true);
+    const numberOfPersons = this.current_part.number_of_persons;
+    return this.Availability.getAvailabilities(
+      this.current_company_id,
+      product,
+      reservationDate,
+      numberOfPersons
+    );
   }
 
   initTime(times) {

@@ -3,9 +3,24 @@
     <div class='md-dialog-content'>
       <h2>Bill: {{ ctrl.inReserv.status }}</h2>
       <p><b>type:</b> {{ ctrl.inReserv.type }}</p>
+      <hr />
       <div ng-if='ctrl.inReserv.products.length'>
-        <p><b>Products:</b></p>
-        <p ng-repeat='product in ctrl.inReserv.products'>{{ product.name }}</p>
+        <table class='w-full'>
+          <thead>
+            <th>Qty</th>
+            <th translate='name'></th>
+            <th class='text-right'>U.P.</th>
+            <th class='text-right'>Total</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat='product in ctrl.inReserv.products'>
+              <td>{{ product.number }}</td>
+              <td>{{ product.name }}</td>
+              <td class='text-right'>{{ product.price.toFixed(2) }}</td>
+              <td class='text-right'>{{ (product.price * product.number).toFixed(2)}}</td>
+            </tr>
+          </tbody>
+        </table>
         <hr />
       </div>
       <div ng-if='ctrl.inReserv.notes.length'>
@@ -13,11 +28,18 @@
         <p ng-repeat='note in ctrl.inReserv.notes'>{{ note.text }}</p>
         <hr />
       </div>
-      <p><b>Price:</b> {{ ctrl.inReserv.price }}</p>
-      <p><b>Payment:</b> {{ ctrl.inReserv.payment }}</p>
+      <p><b>Incl.:</b> {{ ctrl.inReserv.price.toFixed(2) }}</p>
+      <p ng-repeat='(vat, value) in ctrl.getPricesWithVats()'>
+        <b>Vat {{ vat }}%:</b> {{ value.toFixed(2) }}
+      </p>
+      <p><b>Excl.:</b> {{ ctrl.getExclPrice().toFixed(2) }}</p>
+      <p ng-show='ctrl.getDiscount() > 0'><b>Discount:</b> {{ ctrl.getDiscount().toFixed(2) }}</p>
+      <p><b>Payment:</b> {{ ctrl.inReserv.payment.toFixed(2) }}</p>
     </div>
   </md-dialog-content>
   <md-dialog-actions layout='row'>
+    <md-button ng-click='ctrl.sendInvoice()' ng-hide='ctrl.inReserv.bill.invoice_id'>Send invoice</md-button>
+    <md-button ng-click='ctrl.showInvoice()' ng-show='ctrl.inReserv.bill.invoice_id'>Show invoice</md-button>
     <md-button ng-click='ctrl.close()'>Ok</md-button>
   </md-dialog-actions>
 </md-dialog>

@@ -10,19 +10,20 @@
     </div>
   </md-toolbar>
   <md-content>
-    <div class='wrapper md-content-submit'
+    <div ng-if='ctrl.is_loaded'
+         class='wrapper md-content-submit'
          layout='column'
          layout-align='space-around center'>
-      <div class='w-xl'>
+      <div class='w-xl' ng-hide='ctrl.isLightspeedDataExist()'>
         <form name='lightspeed_auth_form'
           ng-submit='ctrl.submitForm(lightspeed_auth_form.$valid);'>
           <md-input-container class='md-block'>
             <label translate='username'></label>
-            <input ng-model='ctrl.form_data.username' required />
+            <input type='email' ng-model='ctrl.form_data.username' required />
           </md-input-container>
           <md-input-container class='md-block'>
             <label translate='password'></label>
-            <input ng-model='ctrl.form_data.password' required />
+            <input type='password' ng-model='ctrl.form_data.password' required />
           </md-input-container>
           <button type='submit'
             ng-class="{ 'disabled': !lightspeed_auth_form.$valid || ctrl.is_submitting }"
@@ -30,6 +31,17 @@
             translate='save'>
           </button>
         </form>
+      </div>
+
+      <div ng-show='ctrl.isLightspeedDataExist()'>
+        <p><translate>connection_succesful_with_account</translate> <b>{{ ctrl.settings.lightspeed_username }}</b></p>
+        <div class='text-center m-t-md m-b-sm'>
+          <span
+            ng-click='ctrl.removeLightspeedData()'
+            md-ink-ripple
+            class='md-btn md-flat btn-fw text-success'
+            translate='logout'></span>
+        </div>
       </div>
     </div>
   </md-content>

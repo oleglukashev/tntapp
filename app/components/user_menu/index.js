@@ -7,6 +7,7 @@ import userMenuService from './user_menu.service';
 import customerService from '../../common/services/customer.service';
 import reservationService from '../../common/services/reservation.service';
 import reservationPartService from '../../common/services/reservation_part.service';
+import TniService from '../../common/services/tni.service';
 
 export default angular.module('UserMenu', [modal])
   .component('userMenu', {
@@ -18,4 +19,5 @@ export default angular.module('UserMenu', [modal])
   .service('Customer', customerService)
   .service('Reservation', reservationService)
   .service('ReservationPart', reservationPartService)
+  .service('Tni', TniService)
   .name;

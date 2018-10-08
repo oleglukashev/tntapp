@@ -362,6 +362,10 @@ export default {
       new: 'Nieuwe Item',
       delete: 'Item verwijderen',
     },
+    tni: {
+      title: 'TheNextInvoice account',
+      description: 'Log hier in om TheNextInvoice te koppelen aan je TheNextTable account. Hiermee kan je facturen uit Untill of Lightspeed mailen naar klanten indien deze koppeling is gelegd met TheNextTable. Dit kan je doen via het instellingenmenu van TheNextTable.',
+    },
   },
   receipts: {
     status: 'Receipt status',
@@ -480,4 +484,5 @@ export default {
   select_all: 'Selecteer alles',
   reserved_by: 'Reservering gemaakt door',
   from: 'op',
+  connection_succesful_with_account: 'Connection succesful met account:',
 };

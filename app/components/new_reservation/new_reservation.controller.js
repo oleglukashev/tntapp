@@ -164,11 +164,12 @@ export default class Controller {
       const companyId = this.current_company_id;
       const product = this.current_part.product;
       const reservationDate = this.moment(this.current_part.date).format('YYYY-MM-DD');
+      const numberOfPersons = this.current_part.number_of_persons;
       this.$rootScope.show_spinner = true;
 
       this
         .Availability
-        .getAvailabilities(companyId, product.id, reservationDate, true)
+        .getAvailabilities(companyId, product.id, reservationDate, numberOfPersons, this.type === 'customer')
         .then((result) => {
           this.$rootScope.show_spinner = false;
           this.current_part.available_time = result;

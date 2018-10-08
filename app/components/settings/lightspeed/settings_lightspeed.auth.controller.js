@@ -19,7 +19,9 @@ export default class Controller {
       lightspeed_password: this.form_data.password,
     };
 
-    this.Settings.updateGeneralSettings(this.current_company_id, data).then(() => {
+    this.Settings.updateGeneralSettings(this.current_company_id, data).then((result) => {
+      this.settings = result.data;
+      this.form_data = { username: this.settings.tni_username, password: atob(this.settings.tni_password) };
       this.$rootScope.show_spinner = false;
       this.$modalInstance.close();
     }, (error) => {
@@ -27,12 +29,31 @@ export default class Controller {
     });
   }
 
+  removeLightspeedData() {
+    this.$rootScope.show_spinner = true;
+    const data = { lightspeed_username: null, lightspeed_password: null };
+
+    this.Settings.updateGeneralSettings(this.current_company_id, data).then((result) => {
+      this.settings = result.data;
+      this.form_data = data;
+      this.$rootScope.show_spinner = false;
+    }, (error) => {
+      this.errors = error.data;
+    });
+  }
+
   loadGeneralSettings() {
     this.Settings.getGeneralSettings(this.current_company_id).then((settings) => {
+      this.settings = settings;
       this.form_data = {
         username: settings.lightspeed_username,
-        password: settings.lightspeed_password,
+        password: atob(settings.lightspeed_password),
       };
+      this.is_loaded = true;
     });
+  }
+
+  isLightspeedDataExist() {
+    return this.settings.lightspeed_username || this.settings.lightspeed_password;
   }
 }
