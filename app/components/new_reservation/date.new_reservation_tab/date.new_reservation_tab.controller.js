@@ -194,11 +194,6 @@ export default class Controller {
     }
   }
 
-  refreshDatepicker() {
-    // hook for datepicker bootstrap
-    this.$scope.$broadcast('refreshDatepickers');
-  }
-
   canShow() {
     return this.current_tab_index === this.pagination.date - 1;
   }
