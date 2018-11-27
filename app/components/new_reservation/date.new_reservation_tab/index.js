@@ -26,7 +26,6 @@ export default angular.module('dateNewReservationTab', [angularMoment, AppConsta
       productTimeRanges: '=',
       currentIndex: '<',
       selectTab: '&',
-      refreshDatepicker: '&',
       pagination: '<',
       currentTabIndex: '<',
     },

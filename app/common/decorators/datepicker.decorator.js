@@ -1,7 +1,7 @@
 config.$inject = ['$provide'];
 
 export default function config($provide) {
-  $provide.decorator('uibDatepickerDirective', ['$delegate', function($delegate) {
+  $provide.decorator('uibDatepickerDirective', ['$delegate', '$timeout', function($delegate, $timeout) {
     var directive = $delegate[0];
     var link = directive.link;
 
@@ -13,9 +13,11 @@ export default function config($provide) {
         var ngModelCtrl = ctrls[1];
 
         if (ngModelCtrl) {
-          // Listen for 'refreshDatepickers' event...
           scope.$on('refreshDatepickers', function refreshView() {
-            datepickerCtrl.refreshView();
+            // settimeout fix problem when dates dont refresh after broadcasting sometimes
+            $timeout(function() {
+              datepickerCtrl.refreshView();
+            }, 100);
           });
         }
       }

@@ -3,7 +3,7 @@ import angular from 'angular';
 export default class Controller {
   constructor(User, Reservation, Settings, TimeRange, Product, Zone,
     NewReservation, AppConstants, Availability, ReservationPart, moment, $stateParams,
-    $rootScope, $window, $translate, $q, $timeout) {
+    $rootScope, $window, $translate, $q, $scope, $timeout) {
     'ngInject';
 
     this.Reservation = Reservation;
@@ -20,6 +20,7 @@ export default class Controller {
     this.$window = $window;
     this.$translate = $translate;
     this.selected_zone = null;
+    this.$scope = $scope;
     this.$q = $q;
     this.$timeout = $timeout;
 
@@ -340,6 +341,9 @@ export default class Controller {
         this.open_time_ranges[timeRange.fixed_date] = timeRange;
       });
     }
+
+    // refresh datePicker
+    this.$scope.$broadcast('refreshDatepickers');
   }
 
   initZones(zones) {
@@ -350,9 +354,15 @@ export default class Controller {
         this.tables.push(table);
       });
     });
+
+    // refresh datePicker
+    this.$scope.$broadcast('refreshDatepickers');
   }
 
   initProducts(products) {
     this.products = products;
+
+    // refresh datePicker
+    this.$scope.$broadcast('refreshDatepickers');
   }
 }
