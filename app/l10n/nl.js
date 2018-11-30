@@ -376,6 +376,12 @@ export default {
       title: 'Gastprofielen samenvoegen',
     },
   },
+  integration_bill: {
+    tni_connection_title_error: 'TheNextInvoice sync error',
+    tni_connection_title_body: 'Please, check TheNextInvoice connection',
+    tni_bill_sent_title: 'Succes',
+    tni_bill_sent_body: 'Mooi! De factuur staat klaar voor verzending bij concepten in je account bij TheNextInvoice',
+  },
   email: 'E-mail',
   mail: 'E-mail',
   first_name: 'Voornaam',

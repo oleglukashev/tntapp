@@ -376,6 +376,12 @@ export default {
       title: 'Merge customers',
     },
   },
+  integration_bill: {
+    tni_connection_title_error: 'TheNextInvoice sync error',
+    tni_connection_title_body: 'Please, check TheNextInvoice connection',
+    tni_bill_sent_title: 'Success',
+    tni_bill_sent_body: 'Great! Your invoice is ready to send from Concepts in your TheNextInvoice account',
+  },
   email: 'E-mail',
   mail: 'E-mail',
   first_name: 'First name',
