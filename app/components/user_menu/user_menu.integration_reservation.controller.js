@@ -1,7 +1,7 @@
 import b64toBlob from 'b64-to-blob';
 
 export default class Controller {
-  constructor(User, Tni, inReserv, $rootScope, $mdDialog) {
+  constructor(User, Tni, inReserv, $rootScope, $mdDialog, $translate) {
     'ngInject';
 
     this.currentCompanyId = User.getCompanyId();
@@ -9,6 +9,22 @@ export default class Controller {
     this.Tni = Tni;
     this.$mdDialog = $mdDialog;
     this.$rootScope = $rootScope;
+
+    $translate([
+      'integration_bill.tni_connection_title_error',
+      'integration_bill.tni_connection_title_body',
+      'integration_bill.tni_bill_sent_title',
+      'integration_bill.tni_bill_sent_body']).then((translates) => {
+      this.tni_connection_title_error = translates['integration_bill.tni_connection_title_error'];
+      this.tni_connection_title_body = translates['integration_bill.tni_connection_title_body'];
+      this.tni_bill_sent_title = translates['integration_bill.tni_bill_sent_title'];
+      this.tni_bill_sent_body = translates['integration_bill.tni_bill_sent_body'];
+    }, (translationIds) => {
+      this.tni_connection_title_error = translationIds['integration_bill.tni_connection_title_error'];
+      this.tni_connection_title_body = translationIds['integration_bill.tni_connection_title_body'];
+      this.tni_bill_sent_title = translationIds['integration_bill.tni_bill_sent_title'];
+      this.tni_bill_sent_body = translationIds['integration_bill.tni_bill_sent_body'];
+    });
   }
 
   close() {
@@ -20,6 +36,7 @@ export default class Controller {
     this.Tni.sendInvoice(this.currentCompanyId, this.inReserv.id).then((bill) => {
       this.$rootScope.show_spinner = false;
       this.inReserv.bill = bill;
+      this.showSuccessTNIPopup();
     }, (error) => {
       if (error.status === 404) {
         this.$rootScope.show_spinner = false;
@@ -38,11 +55,21 @@ export default class Controller {
     });
   }
 
+  showSuccessTNIPopup() {
+    const alert = this.$mdDialog
+      .alert()
+      .title(this.tni_bill_sent_title)
+      .textContent(this.tni_bill_sent_body)
+      .ok('Ok');
+
+    this.$mdDialog.show(alert).then(() => {}, () => {});
+  }
+
   showNoConnectionTNIPopup() {
     const alert = this.$mdDialog
       .alert()
-      .title('TheNextInvoice sync error')
-      .textContent('Please, check TheNextInvoice connection')
+      .title(this.tni_connection_title_error)
+      .textContent(this.tni_connection_title_body)
       .ok('Ok');
 
     this.$mdDialog.show(alert).then(() => {}, () => {});
