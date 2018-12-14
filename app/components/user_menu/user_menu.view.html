@@ -201,7 +201,7 @@
             <h3 class="text-md">
               {{ ctrl.parsedDate(part.date_time) }}
               <i ng-click='ctrl.openIntegrationReservationByPart($event, inReserv)'
-                ng-repeat='inReserv in ctrl.UserMenu.integration_reservations | filter:{ part_id: part.id }'
+                ng-repeat='inReserv in ctrl.UserMenu.getFinishedInReservationsByPartId(part.id)'
                 class='mdi mdi-file-document icon-muted'></i>
             </h3>
             <small class="font-thin">

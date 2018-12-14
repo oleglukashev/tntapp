@@ -61,4 +61,10 @@ export default class UserMenu {
   isCurrentCustomer(customerId) {
     return this.customer && parseInt(this.customer.id) === customerId;
   }
+
+  getFinishedInReservationsByPartId(partId) {
+    console.log(this.integration_reservations);
+    return this.integration_reservations
+      .filter(inReservation => inReservation.finished_on != null && inReservation.part_id === partId);
+  }
 }
