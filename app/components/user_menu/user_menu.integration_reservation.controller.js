@@ -80,12 +80,15 @@ export default class Controller {
   }
 
   getDiscount() {
-    return this.inReserv.products.reduce((a, b) => {
-      const aDiscount = a.discount || 0;
-      const bDiscount = b.discount || 0;
+    return this.inReserv
+      .products
+      .map(inReservationProduct => inReservationProduct.discount)
+      .reduce((a, b) => {
+        const aDiscount = a || 0;
+        const bDiscount = b || 0;
 
-      return aDiscount + bDiscount;
-    }, 0);
+        return aDiscount + bDiscount;
+      }, 0);
   }
 
   getPricesWithVats() {
