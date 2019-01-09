@@ -18,8 +18,8 @@ export default class Controller {
     } else {
       this.$auth.authenticate(provider).then((response) => {
         this.$window.localStorage.setItem('social_account', JSON.stringify(response.data));
-        this.reservation.first_name = response.data.name.split(' ')[0];
-        this.reservation.last_name = response.data.name.split(' ')[1] || this.reservation.first_name;
+        this.reservation.first_name = response.data.first_name || '';
+        this.reservation.last_name = response.data.last_name || '';
         this.reservation.mail = response.data.email;
         this.reservation.date_of_birth = response.data.date_of_birth;
         this.reservation.primary_phone_number = response.data.primary_phone_number;
