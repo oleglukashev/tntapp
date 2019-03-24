@@ -1,6 +1,7 @@
 import angular from 'angular';
 import buttons from 'angular-ui-bootstrap/src/buttons';
 import satellizer from 'satellizer';
+import socialLogin from '../../common/services/angularjs-social-login';
 import controller from './new.customer.reservation.controller';
 import view from './new.customer.reservation.view.html';
 
@@ -15,6 +16,7 @@ import phoneValidDirective from '../../common/directives/phone-valid.directive';
 export default angular.module('newCustomerReservation', [
   buttons,
   satellizer,
+  socialLogin,
   NewReservation,
   WalkinNewReservation])
   .component('newCustomerReservation', {
@@ -29,11 +31,8 @@ export default angular.module('newCustomerReservation', [
   .service('Confirm', ConfirmService)
   .service('Settings', SettingsService)
   .directive('phoneValid', phoneValidDirective)
-  .config(['$authProvider', ($authProvider) => {
-    $authProvider.facebook({
-      clientId: FACEBOOK_ID,
-      url: API_URL + '/auth/facebook/',
-    });
+  .config(['$authProvider', 'socialProvider', ($authProvider, socialProvider) => {
+    socialProvider.setFbKey({appId: FACEBOOK_ID, apiVersion: 'v2.8'});
     $authProvider.twitter({
       url: API_URL + '/auth/twitter',
     });

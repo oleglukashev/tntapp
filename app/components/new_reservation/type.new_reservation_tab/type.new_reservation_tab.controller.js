@@ -1,5 +1,5 @@
 export default class Controller {
-  constructor($auth, $window) {
+  constructor($auth, $window, $rootScope) {
     'ngInject';
 
     this.$auth = $auth;
@@ -8,6 +8,10 @@ export default class Controller {
     this.$onChanges = () => {
       this.current_tab_index = this.currentTabIndex;
     };
+
+    $rootScope.$on('event:social-sign-in-success', (event, data) => {
+      this.postAuthProcess(data);
+    });
   }
 
   authenticate(provider) {
@@ -17,21 +21,24 @@ export default class Controller {
       this.selectTab({ index: this.pagination.type });
     } else {
       this.$auth.authenticate(provider).then((response) => {
-        this.$window.localStorage.setItem('social_account', JSON.stringify(response.data));
-        this.reservation.first_name = response.data.first_name || '';
-        this.reservation.last_name = response.data.last_name || '';
-        this.reservation.mail = response.data.email;
-        this.reservation.date_of_birth = response.data.date_of_birth;
-        this.reservation.primary_phone_number = response.data.primary_phone_number;
-
-        if (response.data.gender) {
-          this.reservation.gender =
-            Controller.parseGenderFromSocialResponse(response.data.gender);
-        }
-
-        this.selectTab({ index: this.pagination.type });
+        this.postAuthProcess(response.data);
       }, () => {});
     }
+  }
+
+  postAuthProcess(data) {
+    this.$window.localStorage.setItem('social_account', JSON.stringify(data));
+    this.reservation.first_name = data.first_name || '';
+    this.reservation.last_name = data.last_name || '';
+    this.reservation.mail = data.email;
+    this.reservation.date_of_birth = data.date_of_birth;
+    this.reservation.primary_phone_number = data.primary_phone_number;
+
+    if (data.gender) {
+      this.reservation.gender = this.parseGenderFromSocialResponse(data.gender);
+    }
+
+    this.selectTab({ index: this.pagination.type });
   }
 
   static parseGenderFromSocialResponse(genderStr) {
