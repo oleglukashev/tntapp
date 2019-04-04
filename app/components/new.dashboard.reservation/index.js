@@ -16,6 +16,7 @@ import phoneValidDirective from '../../common/directives/phone-valid.directive';
 export default angular.module('newDashboardReservation', [
   buttons,
   satellizer,
+  socialLogin,
   NewReservation,
   WalkinNewReservation])
   .component('newDashboardReservation', {
