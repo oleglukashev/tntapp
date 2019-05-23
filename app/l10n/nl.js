@@ -94,7 +94,7 @@ export default {
     reserve: 'Reserveer',
     product_title: 'Welk product komt de gast voor?',
     time_title: 'Beschikbare tijden',
-    reserve_title: 'Reserveer nu direct bij {{ name }} met onderstaande reserveringsknop',
+    reserve_title: 'Reserveer direct bij {{ name }} door te klikken op onderstaande knop',
     walkin_title: 'Walk-in reservering plaatsen',
     zone_title: 'Welk tafel komt de klant te zitten?',
     show_zones: 'Toon zones',
