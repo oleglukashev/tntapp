@@ -62,7 +62,7 @@ export default class Controller {
     const isCustomer = this.type === 'customer';
 
     this.$q.all([
-      this.Product.getAll(this.current_company_id, false, isCustomer),
+      this.Product.getAll(this.current_company_id, !isCustomer, isCustomer),
       this.Zone.getAll(this.current_company_id, isCustomer),
       this.TimeRange.getAll(this.current_company_id, null, isCustomer),
       this.Settings.getWarningsSettings(this.current_company_id),
