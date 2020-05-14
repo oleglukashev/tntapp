@@ -166,7 +166,8 @@ export default {
     iban_connected: 'IBAN {{ iban }} gekoppeld',
     notify_restaurant: 'Tip een ondernemer',
     verify_bank_account: 'Verifieer je bankrekening',
-    expired_time: 'Je trial verloopt over {{ days }} dag',
+    expired_time_in_days: 'Je trial verloopt over {{ days }} dag',
+    expired_time: 'Je trial verloopt',
   },
   settings: {
     lightspeed: {

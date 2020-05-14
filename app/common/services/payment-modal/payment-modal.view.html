@@ -6,8 +6,13 @@
   </div>
 
   <h2 class='text-center'
-      translate='trial.expired_time'
+      ng-if='payment.days > 0'
+      translate='trial.expired_time_in_days'
       translate-values='{ days: payment.days }'></h2>
+
+  <h2 class='text-center'
+      ng-if='!payment.days'
+      translate='trial.expired_time'></h2>
 
   <div class='w-xl'>
     <form name='passthrough'

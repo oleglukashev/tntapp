@@ -4,13 +4,22 @@ export default class Controller {
 
     const company = User.current_company;
 
-    this.trial = company && company.subscription.status === 'pending';
+    this.trial = company && (
+      company.subscription.status === 'pending' ||
+      company.subscription.status === 'cancelled'
+    );
+
     if (!this.trial) {
       return;
     }
 
-    this.days = 7 - moment().diff(company.subscription.started_on, 'days');
-    if (this.days <= 0) {
+    if (company.subscription.status === 'pending') {
+      this.days = 7 - moment().diff(company.subscription.started_on, 'days');
+
+      if (this.days <= 0) {
+        this.days = 0;
+      }
+    } else {
       this.days = 0;
     }
 

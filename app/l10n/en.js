@@ -166,7 +166,8 @@ export default {
     iban_connected: 'IBAN {{ iban }} connected',
     notify_restaurant: 'Notify a restaurant',
     verify_bank_account: 'Verify your bank account',
-    expired_time: 'Your trial expires in {{ days }} days',
+    expired_time_in_days: 'Your trial expires in {{ days }} days',
+    expired_time: 'Your trial expired',
   },
   settings: {
     lightspeed: {
