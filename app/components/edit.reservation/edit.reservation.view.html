@@ -115,6 +115,12 @@
                         {{ 'reservation.group' | translate }}?
                       </md-checkbox>
                     </div>
+                    <div class='md-form-group no-padder'>
+                      <md-checkbox ng-model='ctrl.reservation.corona_confirmation'
+                                   aria-label='{{ "corona_confirmation" | translate }}'>
+                        {{ 'corona_confirmation' | translate }}
+                      </md-checkbox>
+                    </div>
                     <div ng-show='ctrl.reservation.is_group'>
                       <label ng-repeat='part in ctrl.getFormPartsList()'
                         class='btn btn-default block m-b-xs no-shadow text-success text-left'

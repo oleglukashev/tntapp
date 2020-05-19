@@ -1,8 +1,8 @@
-<ul class='nav navbar-nav navbar-right'>
+<ul class='nav navbar-nav navbar-right m-l-sm'>
   <li ng-click='ctrl.hideRightSidebar()'>
     <div class='header-account-menu pull-right m-l-sm' uib-dropdown on-toggle='toggled(open)'>
-      <div class='clearfix m-r-sm' uib-dropdown-toggle>
-        <div class='header-account-menu__info pull-left m-l-sm'>
+      <div class='clearfix' uib-dropdown-toggle>
+        <div class='header-account-menu__info pull-left'>
           <p class='header-account-menu__name'>{{ ctrl.User.current.first_name }}</p>
           <div class='header-account-menu__info'
             ng-show='ctrl.User.getCurrentCompany()'>
@@ -66,5 +66,17 @@
       </ul>
       <!-- / dropdown -->
     </div>
+
+    <button type='button'
+      class='header-account-menu__avatar bg-light pull-right'
+      ngf-select="ctrl.uploadPhoto($file, $invalidFiles)"
+      accept="image/*"
+      ngf-pattern="'.png,.jpg'"
+      ngf-max-height="2000"
+      ngf-max-size="1MB"
+      ng-model="picFile"
+      ng-click="upload_photo.upload_photo_error=''"
+      ng-style="{'background-image': ctrl.User.current.photo ? 'url(' + ctrl.User.current.photo + ')' : 'none'}"
+      md-ink-ripple></button>
   </li>
 </ul>

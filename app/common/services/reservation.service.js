@@ -14,10 +14,10 @@ export default class Reservation {
 
     this.pagination = {
       customer: {
-        type: 1, date: 2, number_of_persons: 3, product: 4, time: 5, person: 6,
+        type: 1, date: 2, number_of_persons: 3, product: 4, time: 5, corona: 6, person: 7,
       },
       dashboard: {
-        date: 1, number_of_persons: 2, product: 3, time: 4, zone: 5, group: 6, person: 7,
+        date: 1, number_of_persons: 2, product: 3, time: 4, zone: 5, group: 6, corona: 7, person: 8,
       },
       edit: {
         number_of_persons: 1, product: 2, zone: 3,

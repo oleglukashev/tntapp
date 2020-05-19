@@ -1,0 +1,42 @@
+<md-tab>
+  <md-tab-label>
+    <div class='text-center l-h'>
+      <img class='new-reservation-corona-icon' src='/public/images/corona.svg' title='corona' />
+    </div>
+    <div class='text-center l-h'>
+      <span class='uppercase' translate='reservation.corona'></span>
+    </div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='b-t' flex>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4 translate='reservation.corona_title'></h4>
+        </div>
+      </div>
+      <div class='wrapper'
+        layout='column'
+        layout-align='space-around center'>
+        <ul class='w-xxxl m-b-none'>
+          <li class='m-b-md' translate='reservation.{{ctrl.translate_prefix}}_p1'></li>
+          <li class='m-b-md' translate='reservation.{{ctrl.translate_prefix}}_p2'></li>
+          <li class='m-b-md' translate='reservation.{{ctrl.translate_prefix}}_p3'></li>
+          <li class='m-b-md' translate='reservation.{{ctrl.translate_prefix}}_p4'></li>
+          <li class='m-b-md' translate='reservation.{{ctrl.translate_prefix}}_p5'></li>
+        </ul>
+        <md-checkbox
+          class='m-b-sm'
+          ng-model='ctrl.reservation.corona_confirmation'
+          ng-checked='false'
+          aria-label='{{ "reservation." + ctrl.translate_prefix + "_confirmation" | translate }}'>
+          {{ 'reservation.' + ctrl.translate_prefix + '_confirmation' | translate }}
+        </md-checkbox>
+      </div>
+      <button type='button'
+        class='btn btn-lg btn-success w-full no-top-radius md-content-button'
+        ng-class="{ 'disabled': !ctrl.reservation.corona_confirmation }"
+        ng-click='ctrl.selectTab({ index: ctrl.pagination.person });'
+        translate='confirm'></button>
+    </div>
+  </md-tab-body>
+</md-tab>

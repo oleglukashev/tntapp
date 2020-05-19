@@ -88,6 +88,17 @@
       select-current-index='ctrl.selectCurrentIndex(index)'
       current-tab-index='ctrl.tabIndex'></group-new-reservation-tab>
 
+    <corona-new-reservation-tab
+      type='ctrl.type'
+      current-index='ctrl.current_index'
+      reservation='ctrl.reservation'
+      pagination='ctrl.Reservation.pagination[ctrl.type]'
+      select-tab='ctrl.selectTab(index)'
+      current-company-id='ctrl.current_company_id'
+      errors='ctrl.errors'
+      form='NewReservationForm'
+      current-tab-index='ctrl.tabIndex'></corona-new-reservation-tab>
+
     <person-new-reservation-tab
       type='ctrl.type'
       current-index='ctrl.current_index'
@@ -105,7 +116,6 @@
       add-preference='ctrl.addPreference()'
       form='NewReservationForm'
       current-tab-index='ctrl.tabIndex'></person-new-reservation-tab>
-
   </md-tabs>
 </form>
 

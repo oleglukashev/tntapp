@@ -26,6 +26,13 @@
             </md-optgroup>
           </md-select>
         </md-input-container>
+        <div class='md-form-group'>
+          <md-checkbox ng-model='ctrl.reservation.corona_confirmation'
+                       ng-checked='true'
+                       aria-label='{{ "corona_confirmation" | translate }}'>
+            {{ 'corona_confirmation' | translate }}
+          </md-checkbox>
+        </div>
       </div>
       <div class='w-xl m-t-md' ng-show='ctrl.additional_is_opened'>
         <walkin-name-new-reservation
