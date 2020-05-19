@@ -39,18 +39,6 @@
 <!--   <div data-ng-include=" 'header.right_menu.view.html' "></div>-->
   <header-user-menu></header-user-menu>
 
-  <button type='button'
-    class='header-account-menu__avatar bg-light pull-right'
-    ngf-select="ctrl.uploadPhoto($file, $invalidFiles)"
-    accept="image/*"
-    ngf-pattern="'.png,.jpg'"
-    ngf-max-height="2000"
-    ngf-max-size="1MB"
-    ng-model="picFile"
-    ng-click="upload_photo.upload_photo_error=''"
-    ng-style="{'background-image': ctrl.User.current.photo ? 'url(' + ctrl.User.current.photo + ')' : 'none'}"
-    md-ink-ripple></button>
-
   <header-search></header-search>
   <!-- <div data-ng-include=" 'header_search.view.html' " ng-controller='HeaderSearchCtrl as search'></div> -->
 </div>

@@ -1,4 +1,4 @@
-<md-tab>
+<md-tab ng-disabled='!ctrl.reservation.corona_confirmation'>
   <md-tab-label>
     <div class='text-center l-h'><i class='mdi mdi-account'></i></div>
     <div class='text-center l-h' translate='persons'></div>
@@ -70,7 +70,7 @@
               </md-radio-button>
             </md-radio-group>
           </div>
-          <div class='md-form-group no-padder' ng-if='ctrl.type !== "customer"'>
+          <div ng-if='ctrl.type !== "customer"' class='md-form-group no-padder'>
             <md-checkbox ng-model='ctrl.reservation.send_confirmation'
                          ng-checked='true'
                          aria-label='{{ "mail_confirmation" | translate }}'>

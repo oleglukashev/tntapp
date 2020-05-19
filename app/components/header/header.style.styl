@@ -59,7 +59,6 @@
 
   @media (max-width 962px)
     .navbar-right
-      margin-right -20px !important
       .dropdown
         .header-account-menu
           .dropdown-toggle
@@ -67,7 +66,7 @@
             min-width 165px
 
     .header-menu
-      width 340px
+      width 350px
 
       md-tabs.header-menu-wrapper
         md-tabs-canvas
@@ -103,9 +102,7 @@
     border-radius 50%
     border 1px solid #fff
     background-color #fff
-    position relative
-    top 18px
-    left 25px
+    margin-top 20px
     background-clip border-box
     background-origin padding-box
     background-position-x 50%
@@ -115,20 +112,21 @@
       margin-left -3px
 
   .header-account-menu
+    padding-right 15px
+
     .dropdown-toggle
-      min-width 200px
-      padding 18px 15px
+      padding 18px 0
       cursor pointer
       transition all .3s ease-in-out
 
     .header-account-menu__info
       text-transform uppercase
-      max-width 102px
+      max-width 110px
       overflow hidden
 
       p
-        width 1000px
         margin 0
+        height 18px
 
     .header-account-menu__name,
     .header-account-menu__info
@@ -141,7 +139,8 @@
       letter-spacing 0.3px
 
     .header-account-menu-box
-      width 196px
+      position absolute !important
+      width 170px
       margin 0
       padding 6px 0 12px
       border-width 0
@@ -180,10 +179,6 @@
             &.nl
               background-image url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNjAwIiB2aWV3Qm94PSIwIDAgOSA2Ij4NCjxwYXRoIGZpbGw9IiMyMTQ2OGIiIGQ9Im0wLDBoOXY2aC05eiIvPg0KPHBhdGggZmlsbD0iI2ZmZiIgZD0ibTAsMGg5djRoLTl6Ii8+DQo8cGF0aCBmaWxsPSIjYWUxYzI4IiBkPSJtMCwwaDl2MmgtOXoiLz4NCjwvc3ZnPg0K')
 
-  @media (min-width 1200px)
-    .header-account-menu
-      width 196px
-
 
   .navbar-nav
     .dropdown
@@ -202,10 +197,13 @@
       height 32px
       text-align center
       padding 0
-      margin 20px 24px
+      margin 20px 24px 20px 15px
 
       i
         font-size 25px
+
+    .navbar-nav
+      margin 0
 
 
 

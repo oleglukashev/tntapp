@@ -54,7 +54,13 @@
 
   <div class='md-list-item-content'
        ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
-    <h3 class='text-md' ng-bind='ctrl.data.name'></h3>
+    <h3 class='text-md'>
+      <span ng-bind='ctrl.data.name'></span>
+      <img
+        ng-if='ctrl.data.reservation.corona_confirmation'
+        src='/public/images/corona-dark.svg'
+        title='corona' />
+    </h3>
     <div>
       <i class='mdi mdi-account-multiple'></i>
       <span class='font-thin m-r-xs'>{{ ctrl.data.number_of_persons }}x</span>

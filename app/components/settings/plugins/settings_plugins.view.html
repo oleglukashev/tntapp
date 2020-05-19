@@ -3,6 +3,46 @@
     <div class='panel'>
       <div class='panel-heading' translate='settings.plugins.wordpress_title'></div>
       <div class='panel-body'>
+        <form ng-show='ctrl.is_loaded'>
+          <div class='md-list'>
+            <div class='md-list-item clear'>
+              <div class='pull-left'>
+                <h3 class='no-margin text-md' translate='settings.general.quick_reservation'></h3>
+                <small class='text-muted' translate='settings.general.quick_reservation_description'></small>
+              </div>
+              <div class='pull-right m-r-n-xs'>
+                <div class='md-form-group no-padder'>
+                  <md-switch ng-model='ctrl.form_data.quick_reservations_enabled'
+                             ng-change='ctrl.submitForm()'></md-switch>
+                </div>
+              </div>
+            </div>
+            <div class='md-list-item clear'>
+              <div class='pull-left'>
+                <h3 class='no-margin text-md' translate='settings.general.number_of_persons'></h3>
+                <small class='text-muted' translate='settings.general.number_of_persons_description'></small>
+              </div>
+              <div class='pull-right'>
+                <md-input-container class='w-md no-margin'>
+                  <input type='number'
+                         class='text-center'
+                         ng-model='ctrl.form_data.auto_accept_reservation_person_limit'
+                         ng-change='ctrl.submitForm()'
+                         required
+                         ng-maxlength='3'
+                         minlength='1'
+                         min='0' />
+                </md-input-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.plugins.wordpress_title'></div>
+      <div class='panel-body'>
         <p class='m-b-md' translate='settings.plugins.wordpress_description'></p>
         <ul class='list_number_point'>
           <li><span class='number_point'>1</span>{{ 'settings.plugins.wordpress_point1' | translate }}</li>
