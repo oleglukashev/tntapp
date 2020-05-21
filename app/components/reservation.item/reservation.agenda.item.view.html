@@ -18,6 +18,11 @@
 <div class='hidden-xs hidden-sm'
   ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
   {{ ctrl.data.name }}
+  <img
+      class='reservation-corona-icon'
+      ng-if='ctrl.data.reservation.corona_confirmation'
+      src='/public/images/corona-dark.svg'
+      title='corona' />
   <i class='eicon eicon-{{ ctrl.getAllergyClass(allergy.allergy) }} m-r-xs'
     ng-if='ctrl.getAllergyClass(allergy.allergy)'
     ng-repeat='allergy in ctrl.data.customer.allergies'></i>
@@ -45,7 +50,14 @@
 </div>
 <div class='visible-xs visible-sm p-l-none'
   ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
-  <div class='text-md'>{{ ctrl.data.name }}</div>
+  <div class='text-md'>
+    {{ ctrl.data.name }}
+    <img
+      class='reservation-corona-icon'
+      ng-if='ctrl.data.reservation.corona_confirmation'
+      src='/public/images/corona-dark.svg'
+      title='corona' />
+  </div>
   <div>
     <i class='mdi mdi-account-multiple'></i>
     <span class='font-thin m-r-xs'>{{ ctrl.data.number_of_persons }}x</span>

@@ -13,9 +13,12 @@ reservation-item
       font-size 19px
       margin-left -5px
     h3 > img
-      height 16px
-      vertical-align top
-      margin-left 5px
+      margin-top 0
+
+.reservation-corona-icon
+  height 16px
+  vertical-align top
+  margin 0 0 0 5px
 
 .agenda-reservation-item-wrapper
   width 100%
@@ -66,12 +69,18 @@ agenda-reservation-item
   agenda-reservation-item
     .visible-xs
       display table-cell !important
+    .reservation-corona-icon
+      margin 3px 0 0 5px
 
 @media (min-width: 992px)
   .agenda-reservation-header
     display table-row !important
+  agenda-reservation-item .reservation-corona-icon
+    margin 0 2px 0 0
 
 @media (max-width: 991px) and (min-width: 768px)
   agenda-reservation-item
     .visible-sm
       display table-cell !important
+    .reservation-corona-icon
+      margin 3px 0 0 5px
