@@ -31,6 +31,13 @@
           aria-label='{{ "reservation." + ctrl.translate_prefix + "_confirmation" | translate }}'>
           {{ 'reservation.' + ctrl.translate_prefix + '_confirmation' | translate }}
         </md-checkbox>
+        <md-checkbox
+          class='m-b-sm'
+          ng-model='ctrl.reservation.household_confirmation'
+          ng-checked='false'
+          aria-label='{{ "reservation.household_confirmation" | translate }}'>
+          {{ 'reservation.household_confirmation' | translate }}
+        </md-checkbox>
       </div>
       <button type='button'
         class='btn btn-lg btn-success w-full no-top-radius md-content-button'

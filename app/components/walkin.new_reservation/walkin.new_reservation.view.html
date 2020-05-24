@@ -33,6 +33,13 @@
             {{ 'corona_confirmation' | translate }}
           </md-checkbox>
         </div>
+        <div class='md-form-group'>
+          <md-checkbox ng-model='ctrl.reservation.household_confirmation'
+                       ng-checked='true'
+                       aria-label='{{ "household_confirmation" | translate }}'>
+            {{ 'household_confirmation' | translate }}
+          </md-checkbox>
+        </div>
       </div>
       <div class='w-xl m-t-md' ng-show='ctrl.additional_is_opened'>
         <walkin-name-new-reservation

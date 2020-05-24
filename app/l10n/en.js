@@ -114,6 +114,7 @@ export default {
     corona_p4: 'Guest <b>has not been</b> in contact with roommates who have tested positive for corona in the past 14 days',
     corona_p5: 'Guest is <b>not</b> currently in home quarantine because he <b>has not been</b> in contact with someone with corona',
     corona_confirmation: 'Guest hereby confirm that he meets all of the above',
+    household_confirmation: 'We are from the same household',
   },
   calendar: {
     widget: 'Reservations without a table',
@@ -482,6 +483,7 @@ export default {
   more: 'More',
   mail_confirmation: 'Mail confirmation',
   corona_confirmation: 'Corona check',
+  household_confirmation: 'Household check',
   company_name: 'Company Name',
   via: 'via',
   zone: 'Zone',

@@ -114,6 +114,7 @@ export default {
     corona_p4: 'Gast is <b>niet</b> in contact geweest met huisgenoten die positief getest zijn op corona de afgelopen 14 dagen',
     corona_p5: 'Gast zit op dit moment <b>niet</b> in thuisisolatie omdat hij/zij met iemand in contact geweest ben met corona',
     corona_confirmation: 'Gast bevestigd hierbij dat hij/zij aan al het bovenstaande voldoet',
+    household_confirmation: 'Wij komen uit hetzelfde huishouden',
   },
   calendar: {
     widget: 'Reserveringen zonder tafel',
@@ -482,6 +483,7 @@ export default {
   more: 'Meer',
   mail_confirmation: 'Bevestiging mailen',
   corona_confirmation: 'Corona check',
+  household_confirmation: 'Huishouden check',
   company_name: 'Bedrijfsnaam',
   via: 'via',
   zone: 'Zone',

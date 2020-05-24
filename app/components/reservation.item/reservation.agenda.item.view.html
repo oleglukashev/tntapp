@@ -23,6 +23,7 @@
       ng-if='ctrl.data.reservation.corona_confirmation'
       src='/public/images/corona-dark.svg'
       title='corona' />
+  <i ng-if='ctrl.data.reservation.household_confirmation' class='mdi mdi-home' />
   <i class='eicon eicon-{{ ctrl.getAllergyClass(allergy.allergy) }} m-r-xs'
     ng-if='ctrl.getAllergyClass(allergy.allergy)'
     ng-repeat='allergy in ctrl.data.customer.allergies'></i>
@@ -57,6 +58,7 @@
       ng-if='ctrl.data.reservation.corona_confirmation'
       src='/public/images/corona-dark.svg'
       title='corona' />
+    <i ng-if='ctrl.data.reservation.household_confirmation' class='mdi mdi-home' />
   </div>
   <div>
     <i class='mdi mdi-account-multiple'></i>
