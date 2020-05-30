@@ -3,6 +3,10 @@ import countries from './config.countries.json';
 
 export default angular.module('app.constants', [])
   .constant('AppConstants', {
+    mollieAuthUrl: `https://www.mollie.com/oauth2/authorize?client_id=${MOLLIE_CLIENT_ID}&
+                      redirect_uri=${MOLLIE_REDIRECT_URI}&state=TheNextSoftware&
+                      scope=payments.read payments.write organizations.read profiles.read&
+                      response_type=code&approval_prompt=auto`,
     twitterUrl: 'https://twitter.com',
     jwtKey: 'jwtToken',
     jwtRefresh: 'jwtRefresh',
@@ -37,6 +41,8 @@ export default angular.module('app.constants', [])
       request: 'mdi-star-outline',
       expected: 'mdi-clock',
       present: 'mdi-check',
+      paid: 'mdi-currency-usd',
+      unpaid: 'mdi-currency-usd-off',
       delayed: 'mdi-exclamation',
     },
     letterOfWeek: ['Z', 'M', 'D', 'W', 'D', 'V', 'Z'],

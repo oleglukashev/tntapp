@@ -1,42 +1,102 @@
 <div class='col-lg-8 col-md-8 col-sm-8'>
   <div ng-if='ctrl.is_loaded'>
     <div class='panel'>
-      <div class='panel-heading' translate='settings.plugins.wordpress_title'></div>
+      <div class='panel-heading' translate='settings.plugins.prepayment_title'></div>
       <div class='panel-body'>
-        <form ng-show='ctrl.is_loaded'>
+        <p class='m-b-md' translate='settings.plugins.prepayment_description'></p>
+        <form>
           <div class='md-list'>
-            <div class='md-list-item clear'>
+            <div class='md-list-item b-b-none p-b-none clear'>
               <div class='pull-left'>
-                <h3 class='no-margin text-md' translate='settings.general.quick_reservation'></h3>
-                <small class='text-muted' translate='settings.general.quick_reservation_description'></small>
+                <h3
+                  class='no-margin text-md'
+                  translate='settings.plugins.prepayment_accept_title'></h3>
+                <small
+                  class='text-muted'
+                  translate='settings.plugins.prepayment_accept_description'></small>
               </div>
               <div class='pull-right m-r-n-xs'>
                 <div class='md-form-group no-padder'>
-                  <md-switch ng-model='ctrl.form_data.quick_reservations_enabled'
-                             ng-change='ctrl.submitForm()'></md-switch>
+                  <md-switch ng-model='ctrl.accept_prepayment'
+                    ng-change='ctrl.submitForm()'></md-switch>
                 </div>
               </div>
             </div>
-            <div class='md-list-item clear'>
+
+            <div class='md-list-item b-b-none clear'>
               <div class='pull-left'>
-                <h3 class='no-margin text-md' translate='settings.general.number_of_persons'></h3>
-                <small class='text-muted' translate='settings.general.number_of_persons_description'></small>
+                <h3
+                  class='no-margin text-md'
+                  translate='settings.plugins.prepayment_type_title'></h3>
+                <small
+                  class='text-muted'
+                  translate='settings.plugins.prepayment_type_description'></small>
               </div>
               <div class='pull-right'>
+                <div class='md-form-group no-padder'>
+                  <md-radio-group ng-model='ctrl.prepayment_type'
+                                  ng-change='ctrl.submitForm()'>
+                    <md-radio-button value='fixed' class='inline md-success'>
+                      {{ 'settings.plugins.prepayment_fixed' | translate }}
+                    </md-radio-button>
+                    <md-radio-button value='per_person' class='inline md-success m-r-none'>
+                      {{ 'settings.plugins.prepayment_per_person' | translate }}
+                    </md-radio-button>
+                  </md-radio-group>
+                </div>
+              </div>
+            </div>
+
+            <div class='md-list-item b-b-none p-b-none clear'>
+              <div>
                 <md-input-container class='w-md no-margin'>
-                  <input type='number'
-                         class='text-center'
-                         ng-model='ctrl.form_data.auto_accept_reservation_person_limit'
-                         ng-change='ctrl.submitForm()'
-                         required
-                         ng-maxlength='3'
-                         minlength='1'
-                         min='0' />
+                  <label translate='settings.plugins.prepayment_value'></label>
+                  <input
+                    type='number'
+                    ng-change='ctrl.submitForm()'
+                    ng-model='ctrl.prepayment_value'
+                    ng-required='ctrl.accept_prepayment'
+                    ng-maxlength='3'
+                    minlength='1'
+                    min='0'
+                  />
+                </md-input-container>
+              </div>
+            </div>
+
+            <div class='md-list-item p-b-none clear'>
+              <div>
+                <md-input-container class='w-md no-margin'>
+                  <label translate='settings.plugins.mollie_profile_id'></label>
+                  <input
+                    type='text'
+                    ng-change='ctrl.submitForm()'
+                    ng-model='ctrl.mollie_profile_id'
+                    ng-required='ctrl.mollie_access_token'
+                    minlength='1'
+                    min='0'
+                  />
                 </md-input-container>
               </div>
             </div>
           </div>
-        </div>
+        </form>
+      </div>
+      <div class='panel-footer'>
+        <button ng-if='!ctrl.mollie_access_token || !ctrl.mollie_refresh_token'
+                md-ink-ripple
+                class='md-btn md-flat btn-fw text-success'
+                ng-click='ctrl.connectToMollie();'>
+          <i class='mdi mdi-plus-circle'></i>
+          <translate class='uppercase'>settings.plugins.connect_to_mollie</translate>
+        </button>
+        <button ng-if='ctrl.mollie_access_token && ctrl.mollie_refresh_token'
+                md-ink-ripple
+                class='md-btn md-flat btn-fw text-success'
+                ng-click='ctrl.removeConnectionToMollie();'>
+          <i class='mdi mdi-minus-circle'></i>
+          <translate class='uppercase'>settings.plugins.remove_connection_to_mollie</translate>
+        </button>
       </div>
     </div>
 
@@ -45,17 +105,24 @@
       <div class='panel-body'>
         <p class='m-b-md' translate='settings.plugins.wordpress_description'></p>
         <ul class='list_number_point'>
-          <li><span class='number_point'>1</span>{{ 'settings.plugins.wordpress_point1' | translate }}</li>
-          <li><span class='number_point'>2</span>{{ 'settings.plugins.wordpress_point2' | translate }}</li>
-          <li><span class='number_point'>3</span>{{ 'settings.plugins.wordpress_point3' | translate }}</li>
-          <li><span class='number_point'>4</span>{{ 'settings.plugins.wordpress_point4' | translate }}</li>
+          <li>
+            <span class='number_point'>1</span>{{ 'settings.plugins.wordpress_point1' | translate }}
+          </li>
+          <li>
+            <span class='number_point'>2</span>{{ 'settings.plugins.wordpress_point2' | translate }}
+          </li>
+          <li>
+            <span class='number_point'>3</span>{{ 'settings.plugins.wordpress_point3' | translate }}
+          </li>
+          <li>
+            <span class='number_point'>4</span>{{ 'settings.plugins.wordpress_point4' | translate }}
+          </li>
         </ul>
       </div>
       <div class='panel-footer clearfix form-horizontal'>
         <div class='form-group no-margin'>
           <label class='col-sm-2 text-left p-l-none control-label'
                  translate='settings.plugins.link_code_title'></label>
-
           <div class='col-sm-10 no-padder'>
             <input type='text' class='form-control' ng-model='ctrl.wordpress_token' readonly />
           </div>
@@ -133,18 +200,18 @@
 
     <div class='panel'>
       <div class='panel-heading' translate='settings.plugins.links_title'></div>
-        <div class='panel-body clearfix form-horizontal'>
-          <div class='untill-logo pull-left'>
-            <a href='#' ui-sref='app.untill_credintails_settings'></a>
-          </div>
-          <div class='pull-left'>
-            <div class='api-checked'
-                 ng-if='ctrl.canShowUntillLinked()'>
-              <i class='mdi mdi-checkbox-marked-circle i-16'></i>
-              {{ 'settings.plugins.untill_link' | translate }}
-            </div>
+      <div class='panel-body clearfix form-horizontal'>
+        <div class='untill-logo pull-left'>
+          <a href='#' ui-sref='app.untill_credintails_settings'></a>
+        </div>
+        <div class='pull-left'>
+          <div class='api-checked'
+               ng-if='ctrl.canShowUntillLinked()'>
+            <i class='mdi mdi-checkbox-marked-circle i-16'></i>
+            {{ 'settings.plugins.untill_link' | translate }}
           </div>
         </div>
+      </div>
     </div>
 
     <div class='panel'>
@@ -164,6 +231,17 @@
   </div>
 
   <div ng-if='!ctrl.is_loaded'>
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.plugins.prepayment_title'></div>
+      <div class='panel-body'>
+        <div class='fix-text grey-300 m-b-md'>&nbsp;</div>
+        <div class='fix-text w-xxl m-b-md grey-300'>&nbsp;</div>
+        <div class='fix-text w-xl m-b-md grey-300'>&nbsp;</div>
+        <div class='fix-text w-xl m-b-md grey-300'>&nbsp;</div>
+        <div class='fix-text w-xl m-b-md grey-300'>&nbsp;</div>
+      </div>
+    </div>
+
     <div class='panel'>
       <div class='panel-heading' translate='settings.plugins.wordpress_title'></div>
       <div class='panel-body'>

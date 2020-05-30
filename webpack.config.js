@@ -4,6 +4,7 @@ var webpack = require('webpack');
 var path    = require('path');
 var Extract = require('extract-text-webpack-plugin');
 var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -20,28 +21,34 @@ module.exports = {
 
   output: {
     path: path.join(process.cwd(), 'public', 'assets'),
-    publicPath: "/public/assets/",
-    filename: '[name].min.js',
+    publicPath: "",
+    filename: '[name].[hash].min.js',
   },
 
   watch: true,
 
   plugins: [
-    new Extract('app.min.css'),
+    new Extract('app.[hash].min.css'),
     new webpack.optimize.CommonsChunkPlugin({
       name     : 'vendor',
       chunks   : ['app'],
-      filename : 'vendor.min.js',
+      filename : 'vendor.[hash].min.js',
       minChunks: Infinity
     }),
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify('http://api.tnt.me/api/v2'),
+      API_URL: JSON.stringify('http://api.tnt.me:8000/api/v2'),
+      MOLLIE_CLIENT_ID: JSON.stringify('app_WURzGppruyyJhdcK6rcr4jrH'),
+      MOLLIE_REDIRECT_URI: JSON.stringify('https://api.staging.thenexttable.com/api/v2/auth/mollie'),
       FACEBOOK_ID: '722157017888974',
       BUCKAROO_URL: JSON.stringify('https://testcheckout.buckaroo.nl/html/'),
       ENV: JSON.stringify('dev'),
     }),
     new ngAnnotatePlugin({
       add: true
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'index.template.html'
     })
   ],
 

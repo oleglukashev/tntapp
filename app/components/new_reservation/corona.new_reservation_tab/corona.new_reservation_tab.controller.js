@@ -3,6 +3,7 @@ export default class Controller {
     'ngInject';
 
     this.$onChanges = () => {
+      this.current_part = this.reservation.reservation_parts[this.currentIndex];
       this.translate_prefix = 'corona';
 
       if (this.type === 'customer') {

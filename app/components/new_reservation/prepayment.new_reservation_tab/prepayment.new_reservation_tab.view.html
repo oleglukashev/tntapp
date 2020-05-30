@@ -1,0 +1,41 @@
+<md-tab ng-disabled='ctrl.errors == null || ctrl.errors.length'>
+  <md-tab-label>
+    <div class='text-center l-h'><i class='mdi mdi-forward'></i></div>
+    <div class='text-center l-h'>
+      <span class='uppercase' translate='prepayment'></span>
+    </div>
+  </md-tab-label>
+  <md-tab-body>
+    <div class='b-t' flex>
+      <div class='md-list-item'>
+        <div class='md-list-item-content text-center'>
+          <h4 translate='reservation.prepayment'></h4>
+        </div>
+      </div>
+      <div class='wrapper'
+        layout='column'
+        layout-align='space-around center'>
+        <div class='w-xxxl'>
+          <p
+            translate='reservation.prepayment_p1'
+            translate-values='{ restaurant_name: ctrl.settings.restaurant_name }'></p>
+          <h2>{{ ctrl.reservation.prepayment_value }} euro</h2>
+          <p translate='reservation.prepayment_p2'></p>
+          <p translate='reservation.prepayment_p3'></p>
+        </div>
+      </div>
+      <div class='wrapper red-300 layout-align-space-around-center layout-column'
+        ng-show='ctrl.errors.length'>
+        <div class='w-xl'>
+          <div ng-repeat='error in ctrl.errors'>
+            {{ error }}
+          </div>
+        </div>
+      </div>
+      <button type='submit'
+              class='btn btn-lg btn-success w-full no-top-radius md-content-button'
+              translate='reservation.prepayment_button'>
+      </button>
+    </div>
+  </md-tab-body>
+</md-tab>

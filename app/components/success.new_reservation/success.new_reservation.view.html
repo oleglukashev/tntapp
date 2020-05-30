@@ -1,7 +1,14 @@
 <div class='md-content-submit b-t' flex>
   <div class='md-list-item'>
     <div class='md-list-item-content'>
-      <h4 translate='reservation.success'></h4>
+      <h4 ng-if='!ctrl.reservation.prepayment_value' translate='reservation.success'></h4>
+      <h4
+        ng-if='ctrl.reservation.prepayment_value && ctrl.reservation.prepayment_status == "paid"'
+        translate='reservation.prepayment_success'></h4>
+      <h4
+        ng-if='ctrl.reservation.prepayment_value && ctrl.reservation.prepayment_status != "paid"'
+        translate='reservation.prepayment_failed'>
+      </h4>
     </div>
   </div>
   <div class='wrapper'>
@@ -50,6 +57,33 @@
       <div class='md-list-item-content'>
         <h3 class='text-md' translate='reservation.pdf'></h3>
         <small class='font-thin' translate='reservation.attachment'></small>
+      </div>
+    </div>
+    <div class='md-list-item inset' ng-if='ctrl.reservation.prepayment_value'>
+      <div class='md-list-item-left'>
+        <i
+          class='mdi mdi-forward icon-muted i-24'
+          ng-class='{"text-success": ctrl.reservation.prepayment_status === "paid",
+          "text-danger": ctrl.reservation.prepayment_status !== "paid"}'></i>
+      </div>
+      <div class='md-list-item-content'>
+        <h3
+          class='text-md'
+          ng-class='{"text-success": ctrl.reservation.prepayment_status === "paid",
+          "text-danger": ctrl.reservation.prepayment_status !== "paid"}'>{{ ctrl.reservation.prepayment_value }} euro</h3>
+        <small
+          class='font-thin text-success'
+          translate='reservation.amount_satisfied'
+          ng-if='ctrl.reservation.prepayment_status === "paid"'></small>
+        <small
+          class='font-bold text-danger'
+          ng-if='ctrl.reservation.prepayment_status !== "paid"'>
+          <translate>reservation.amount_not_satisfied</translate> 
+          <a
+            class='font-underline'
+            ng-click='ctrl.goToPayment()'
+            translate='reservation.prepayment_button'></a>  
+        </small>
       </div>
     </div>
   </div>

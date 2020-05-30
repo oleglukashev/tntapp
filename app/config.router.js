@@ -1,5 +1,6 @@
 import appLayout from './components/layout/app.html';
 import loginLayout from './components/layout/login.html';
+import reservationLayout from './components/layout/reservation.html';
 
 export default function routes($stateProvider, $urlRouterProvider, $locationProvider) {
   'ngInject';
@@ -319,7 +320,7 @@ export default function routes($stateProvider, $urlRouterProvider, $locationProv
 
     // PLUGINS SETTINGS
     .state('app.plugins_settings', {
-      url: '/settings/plugins',
+      url: '/settings/plugins?access_token&refresh_token&action',
       component: 'pluginsSettings',
       lazyLoad: ($transition$) => {
         const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
@@ -429,7 +430,7 @@ export default function routes($stateProvider, $urlRouterProvider, $locationProv
 
     // CUSTOMER RESERVATIONS
     .state('customer_reservation', {
-      template: '<div ui-view></div>',
+      template: reservationLayout,
     })
     .state('customer_reservation.new', {
       url: '/reservation/:id?date&aantal_personen&start_date',
@@ -439,6 +440,19 @@ export default function routes($stateProvider, $urlRouterProvider, $locationProv
 
         return import(/* webpackChunkName: "new.customer.reservation.module" */ "./components/new.customer.reservation")
           .then(mod => $ocLazyLoad.load({ name: 'newCustomerReservation' }))
+          .catch(err => {
+            throw new Error("Ooops, something went wrong, " + err);
+          });
+      }
+    })
+    .state('customer_reservation.finish', {
+      url: '/company/:company_id/reservation/:id/finish?secure_token',
+      component: 'finishCustomerReservation',
+      lazyLoad: ($transition$) => {
+        const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
+
+        return import(/* webpackChunkName: "finish.customer.reservation.module" */ "./components/finish.customer.reservation")
+          .then(mod => $ocLazyLoad.load({ name: 'finishCustomerReservation' }))
           .catch(err => {
             throw new Error("Ooops, something went wrong, " + err);
           });

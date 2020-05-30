@@ -2,7 +2,13 @@
   <div ng-class='ctrl.data.icon_color'
        ng-hide='hideIcon'
        class='md-list-item-left img-circle'>
-    <md-tooltip>{{ ctrl.data.dutch_status }}</md-tooltip>
+    <md-tooltip
+      ng-if='!ctrl.data.reservation.prepayment_value'
+      ng-bind='ctrl.data.dutch_status'></md-tooltip>
+    <md-tooltip
+      ng-if='ctrl.data.reservation.prepayment_value'>
+      <span translate='reservation.prepayment_status.{{ctrl.data.reservation.prepayment_status}}'></span>: {{ ctrl.data.reservation.prepayment_value }} euro 
+    </md-tooltip>
     <div class='pull-left m-l-sm'>
       <i ng-class='ctrl.data.icon' class='mdi i-20'></i>
     </div>

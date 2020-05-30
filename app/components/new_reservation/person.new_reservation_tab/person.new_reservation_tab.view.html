@@ -181,10 +181,11 @@
           </div>
         </div>
       </div>
-      <button type='button'
+      <button 
+        type='button'
         md-ink-ripple
         ng-click='ctrl.triggerAdditionalInfo()'
-        class='md-btn w-full md-flat btn-fw no-radius text-success'>
+        class='reservtion-show-more md-btn w-full md-flat btn-fw no-radius text-success'>
         <span ng-hide='ctrl.additional_is_opened'>
           <i class='mdi mdi-plus-circle-outline'></i>
           <translate class='uppercase'>reservation.more_fields</translate>
@@ -203,11 +204,21 @@
           </div>
         </div>
       </div>
-      <button type='submit'
+      <button
+        ng-if='!ctrl.prepaymentIsEnabled()'
+        type='submit'
         class='btn btn-lg btn-success w-full no-top-radius md-content-button'
         ng-class="{ 'disabled': ctrl.is_submitting }"
         ng-show='ctrl.canShow() && !ctrl.isSuccess'>
         <translate>reservation.reserve</translate>
+      </button>
+      <button
+        ng-if='ctrl.prepaymentIsEnabled()'
+        type='button'
+        class='reservation-person-next btn btn-lg btn-success w-full no-top-radius md-content-button'
+        ng-click='ctrl.validatePerson(ctrl.form)'
+        ng-show='ctrl.canShow() && !ctrl.isSuccess'>
+        <translate>next</translate>
       </button>
     </div>
   </md-tab-body>

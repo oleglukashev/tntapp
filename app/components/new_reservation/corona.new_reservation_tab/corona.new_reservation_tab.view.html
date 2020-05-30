@@ -1,4 +1,4 @@
-<md-tab>
+<md-tab ng-disabled='!ctrl.current_part.time'>
   <md-tab-label>
     <div class='text-center l-h'>
       <img class='new-reservation-corona-icon' src='/public/images/corona.svg' title='corona' />
@@ -14,7 +14,7 @@
           <h4 translate='reservation.corona_title'></h4>
         </div>
       </div>
-      <div class='wrapper'
+      <div class='wrapper m-b-lg'
         layout='column'
         layout-align='space-around center'>
         <ul class='w-xxxl m-b-none'>
@@ -42,7 +42,7 @@
       <button type='button'
         class='btn btn-lg btn-success w-full no-top-radius md-content-button'
         ng-class="{ 'disabled': !ctrl.reservation.corona_confirmation }"
-        ng-click='ctrl.selectTab({ index: ctrl.pagination.person });'
+        ng-click='ctrl.selectTab({ index: ctrl.pagination.corona });'
         translate='confirm'></button>
     </div>
   </md-tab-body>

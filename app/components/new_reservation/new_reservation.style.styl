@@ -26,9 +26,12 @@
           md-pagination-wrapper
             height new-reserv-tab-height
 
-            md-tab-item.md-tab
-              width 16.66%
-              height new-reserv-tab-height
+            md-tab-item
+              .text-center
+                font-size 14px
+              &.md-tab
+                width 16.66%
+                height new-reserv-tab-height
 
       md-tabs-content-wrapper
         md-tab-content
@@ -39,11 +42,13 @@
           .reservation_group
             padding-bottom 78px
 
-            & > button[type='submit']
+            & > button[type='submit'],
+            .reservation-person-next
               position absolute
               bottom 0
 
-            & > button[type='button']
+          .reservation_person
+            .reservtion-show-more
               position absolute
               bottom 46px
 

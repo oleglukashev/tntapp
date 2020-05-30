@@ -159,13 +159,13 @@ export default class Settings {
     }).then(result => result.data);
   }
 
-  updateTnrSyncTokenSettings(companyId, data, skipJwtAuth) {
+  updatePluginSettings(companyId, data, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/settings/plugins/update_tnr_sync_token`,
+      url: `${API_URL}/company/${companyId}/settings/plugins`,
       skipAuthorization: skipJwtAuth,
       method: 'PATCH',
       data,

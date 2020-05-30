@@ -24,7 +24,7 @@ export default class Controller {
     this.$q = $q;
     this.$timeout = $timeout;
 
-    this.errors = [];
+    this.errors = null;
 
     this.product_week_time_ranges = {};
     this.product_time_ranges = {};
@@ -87,11 +87,19 @@ export default class Controller {
       .create(this.current_company_id, data, this.type === 'customer')
       .then((result) => {
         if (result.status === 200) {
+          // go to payment page if result = array with payment link
+          if (result.data.payment_link) {
+            window.location.href = result.data.payment_link;
+            return false;
+          }
+
           this.response = result.data;
           this.$rootScope.$broadcast('NewReservationCtrl.reload_reservations');
           this.isSuccess = true;
         } else if (result.status === 400) {
           this.errors = result.data.errors.errors;
+        } else if (result.status == 422 && result.data.message) {
+          this.errors = [result.data.message];
         }
 
         this.is_submitting = false;
@@ -105,6 +113,12 @@ export default class Controller {
     return true;
   }
 
+  validatePerson(form) {
+    this.validForm(form);
+    if (this.errors.length) return false;
+    this.selectTab(this.pagination.person);
+  }
+
   prepareFormData() {
     const dateOfBirth = this.reservation.date_of_birth ?
       this.moment(this.reservation.date_of_birth).format('DD-MM-YYYY') :
@@ -115,6 +129,7 @@ export default class Controller {
       language: this.reservation.language,
       send_confirmation: this.reservation.send_confirmation,
       corona_confirmation: this.reservation.corona_confirmation,
+      prepayment_value: this.reservation.prepayment_value,
       household_confirmation: this.reservation.household_confirmation,
       notes: this.reservation.notes,
       is_group: this.reservation.is_group,
@@ -368,5 +383,13 @@ export default class Controller {
 
     // refresh datePicker
     this.$scope.$broadcast('refreshDatepickers');
+  }
+
+  prepaymentIsEnabled() {
+    return this.type === "customer" &&
+      this.settings &&
+      this.settings.accept_prepayment &&
+      this.settings.mollie_profile_id &&
+      this.settings.mollie_access_token;
   }
 }

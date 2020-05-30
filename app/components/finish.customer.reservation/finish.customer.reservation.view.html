@@ -1,0 +1,16 @@
+<div class='modal-dialog' ng-if='ctrl.reservation'>
+  <section class='reservation_modal panel no-margin'>
+    <md-toolbar>
+      <div class='md-toolbar-tools'>
+        <h2 md-truncate flex translate='new_reservation'></h2>
+        <md-button class='md-icon-button'
+          ng-click='ctrl.goToNewReservation()'>
+          <i class='mdi mdi-close m-r-sm i-24'></i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content>
+      <success-new-reservation reservation='ctrl.reservation'></success-new-reservation>
+    </md-content>
+  </section>
+</div>

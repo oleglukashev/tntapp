@@ -75,6 +75,10 @@ export default class ReservationStatus {
       status = 'expected';
     }
 
+    if (reservation.prepayment_value) {
+      status = reservation.prepayment_status === 'paid' ? 'paid' : 'unpaid';
+    }
+
     return this.AppConstants.reservationStatusClasses[status];
   }
 
@@ -86,6 +90,8 @@ export default class ReservationStatus {
       'mdi-close': 'red-100',
       'mdi-exclamation': 'red-500',
       'mdi-clock': 'orange-500',
+      'mdi-currency-usd': 'green-500',
+      'mdi-currency-usd-off': 'red-500',
     };
 
     return colors[icon];

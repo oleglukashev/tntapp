@@ -1,5 +1,6 @@
 export default class Controller {
-  constructor(User, Settings, Untill, Notification, $rootScope, $interval, $state) {
+  constructor(User, Settings, AppConstants, Untill, Notification, $rootScope, $interval,
+    $state, $stateParams, $q, $location) {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
@@ -10,21 +11,45 @@ export default class Controller {
     this.$state = $state;
     this.$interval = $interval;
     this.is_loaded = false;
+    this.AppConstants = AppConstants;
     this.iframe_widget = '<iframe src="https://dashboard.thenexttable.com/thenexttable-embed/iframe.php?rid=' + this.current_company_id + '" style="display: block; margin: 0 auto;" frameborder="0" seamless="seamless" height="440px;" width="300px;"></iframe>';
 
-    this.loadGeneralSettings();
-    this.loadPluginsSettings();
-  }
+   
+    $q.all([
+      this.Settings.getGeneralSettings(this.current_company_id),
+      this.Settings.getPluginsSettings(this.current_company_id)
+    ]).then((result) => {
+      this.plugin_image_file_name = result[0].plugin_image_file_name;
+      this.api_token = result[1].api_token.token;
+      this.wordpress_token = result[1].wordpress_token;
+      this.tnr_sync_token = result[1].tnr_sync_token;
+      this.accept_prepayment = result[1].accept_prepayment;
+      this.prepayment_type = result[1].prepayment_type;
+      this.prepayment_value = result[1].prepayment_value;
+      this.mollie_access_token = result[1].mollie_access_token;
+      this.mollie_refresh_token = result[1].mollie_refresh_token;
+      this.mollie_profile_id = result[1].mollie_profile_id;
 
-  loadPluginsSettings() {
-    this.Settings
-      .getPluginsSettings(this.current_company_id).then(
-        (pluginsSettings) => {
-          this.api_token = pluginsSettings.api_token.token;
-          this.wordpress_token = pluginsSettings.wordpress_token;
-          this.tnr_sync_token = pluginsSettings.tnr_sync_token;
-          this.loadUntillSettings();
+      if ($stateParams.access_token &&
+        $stateParams.refresh_token &&
+        ($stateParams.access_token !== this.mollie_access_token ||
+         $stateParams.refresh_token !== this.mollie_refresh_token) &&
+        $stateParams.action === 'update') {
+        Settings.updatePluginSettings(this.current_company_id, {
+          mollie_access_token: $stateParams.access_token,
+          mollie_refresh_token: $stateParams.refresh_token
+        }).then((pluginsSettings) => {
+          this.mollie_access_token = pluginsSettings.mollie_access_token;
+          this.mollie_refresh_token = pluginsSettings.mollie_refresh_token;
+          $location.search('access_token', null);
+          $location.search('refresh_token', null);
+          $location.search('action', null);
         });
+      }
+
+      this.$rootScope.show_spinner = false;
+      this.loadUntillSettings();
+    });
   }
 
   loadUntillSettings() {
@@ -38,24 +63,19 @@ export default class Controller {
         });
   }
 
-  loadGeneralSettings() {
-    this.Settings
-      .getGeneralSettings(this.current_company_id).then(
-        (generalSettings) => {
-          this.plugin_image_file_name = generalSettings.plugin_image_file_name;
-          this.$rootScope.show_spinner = false;
-        });
-  }
-
   submitForm() {
     this.$rootScope.show_spinner = true;
 
     const data = {
+      accept_prepayment: this.accept_prepayment,
+      prepayment_type: this.prepayment_type,
+      prepayment_value: this.prepayment_value || null,
       tnr_sync_token: this.tnr_sync_token,
+      mollie_profile_id: this.mollie_profile_id
     };
 
     this.Settings
-      .updateTnrSyncTokenSettings(this.current_company_id, data).then(() => {
+      .updatePluginSettings(this.current_company_id, data).then(() => {
         this.$rootScope.show_spinner = false;
       },
       (error) => {
@@ -123,5 +143,19 @@ export default class Controller {
 
   canShowUntillLinked() {
     return this.untill_login && this.untill_server;
+  }
+
+  connectToMollie() {
+    window.location.href = this.AppConstants.mollieAuthUrl;
+  }
+
+  removeConnectionToMollie() {
+    this.Settings.updatePluginSettings(this.current_company_id, {
+      mollie_access_token: null,
+      mollie_refresh_token: null
+    }).then((pluginsSettings) => {
+      this.mollie_access_token = pluginsSettings.mollie_access_token;
+      this.mollie_refresh_token = pluginsSettings.mollie_refresh_token;
+    });
   }
 }

@@ -1,4 +1,7 @@
-<form name='NewReservationForm' ng-submit='ctrl.submitForm(NewReservationForm)' ng-if='!ctrl.isSuccess'>
+<form 
+  name='NewReservationForm'
+  ng-submit='ctrl.submitForm(NewReservationForm)'
+  ng-if='!ctrl.isSuccess'>
   <md-tabs class='reservation_tabs'
     flex
     md-selected='ctrl.tabIndex'
@@ -106,6 +109,7 @@
       reservation='ctrl.reservation'
       pagination='ctrl.Reservation.pagination[ctrl.type]'
       select-tab='ctrl.selectTab(index)'
+      validate-person='ctrl.validatePerson(NewReservationForm)'
       current-company-id='ctrl.current_company_id'
       errors='ctrl.errors'
       allergy-data='ctrl.allergy_data'
@@ -114,8 +118,21 @@
       preference-is-valid='ctrl.preferenceIsValid()'
       add-allergy='ctrl.addAllergy()'
       add-preference='ctrl.addPreference()'
+      prepayment-is-enabled='ctrl.prepaymentIsEnabled()'
       form='NewReservationForm'
       current-tab-index='ctrl.tabIndex'></person-new-reservation-tab>
+
+    <prepayment-new-reservation-tab
+      ng-if='ctrl.prepaymentIsEnabled()'
+      type='ctrl.type'
+      settings='ctrl.settings'
+      current-index='ctrl.current_index'
+      reservation='ctrl.reservation'
+      pagination='ctrl.Reservation.pagination[ctrl.type]'
+      current-company-id='ctrl.current_company_id'
+      errors='ctrl.errors'
+      form='NewReservationForm'
+      current-tab-index='ctrl.tabIndex'></prepayment-new-reservation-tab>
   </md-tabs>
 </form>
 
