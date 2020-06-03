@@ -80,6 +80,7 @@ export default class Controller {
       },
       (error) => {
         this.errors = error.data;
+        this.$rootScope.show_spinner = false;
       });
   }
 
@@ -154,8 +155,9 @@ export default class Controller {
       mollie_access_token: null,
       mollie_refresh_token: null
     }).then((pluginsSettings) => {
-      this.mollie_access_token = pluginsSettings.mollie_access_token;
-      this.mollie_refresh_token = pluginsSettings.mollie_refresh_token;
+      this.mollie_access_token = null;
+      this.mollie_refresh_token = null;
+      this.mollie_profile_id = null;
     });
   }
 }

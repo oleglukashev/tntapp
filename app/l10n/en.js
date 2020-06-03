@@ -120,8 +120,8 @@ export default {
     corona_confirmation: 'Guest hereby confirm that he meets all of the above',
     prepayment: 'Deposit for your reservation',
     prepayment_p1: 'To complete your reservation of restaurant {{ restaurant_name }} we require a deposit of:',
-    prepayment_p2: 'An additional € 1 in transaction fees will be added. For this deposit you will be forwarded to the Mollie Payment system that arranges our online payment.',
-    prepayment_p3: 'You will receive the amount of the deposit back on your account, when you visit our venue. Should you not show up for your reservation, there will not be a refund for the prepayment.',
+    prepayment_p2: 'The amount includes € 1 transaction fees. For this deposit you will be forwarded to the Mollie Payment system that arranges our online payment.',
+    prepayment_p3: 'You will receive the amount of the deposit (excluding transaction fees) back on your account, when you visit our venue. Should you not show up for your reservation, there will not be a refund for the prepayment.',
     prepayment_button: 'Pay through Mollie',
     prepayment_status: {
       open: 'Open',

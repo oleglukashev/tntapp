@@ -64,18 +64,26 @@
               </div>
             </div>
 
-            <div class='md-list-item p-b-none clear'>
+            <div 
+              ng-if='ctrl.mollie_access_token && ctrl.mollie_refresh_token'
+              class='md-list-item p-b-none clear'>
               <div>
                 <md-input-container class='w-md no-margin'>
                   <label translate='settings.plugins.mollie_profile_id'></label>
                   <input
                     type='text'
+                    required
                     ng-change='ctrl.submitForm()'
                     ng-model='ctrl.mollie_profile_id'
                     ng-required='ctrl.mollie_access_token'
                     minlength='1'
                     min='0'
                   />
+                  <div
+                    class='text-danger'
+                    ng-message="ctrl.errors.errors.children.mollie_profile_id.errors">
+                    {{ctrl.errors.errors.children.mollie_profile_id.errors[0]}}
+                  </div>
                 </md-input-container>
               </div>
             </div>

@@ -120,8 +120,8 @@ export default {
     corona_confirmation: 'Gast bevestigd hierbij dat hij/zij aan al het bovenstaande voldoet',
     prepayment: 'Aanbetaling voor uw reservering',
     prepayment_p1: 'Om uw reservering compleet te maken van restaurant {{ restaurant_name }} vragen wij een aanbetaling van:',
-    prepayment_p2: 'Hier komt €1 aan transactiekosten bij. Voor deze aanbetaling wordt u doorgestuurd naar het systeem van Mollie die onze online betaling regelt.',
-    prepayment_p3: 'Het bedrag van de aanbetaling krijgt u terug op uw rekening die u krijgt in onze horeca gelegenheid. Mocht u niet op komen dagen bij de reservering dan krijgt u dit bedrag niet terug.',
+    prepayment_p2: 'Dit bedrag is inclusief €1 aan transactiekosten. Voor deze aanbetaling wordt u doorgestuurd naar het systeem van Mollie die onze online betaling regelt.',
+    prepayment_p3: 'Het bedrag van de aanbetaling (exclusief transactiekosten) krijgt u terug op uw rekening die u krijgt in onze horeca gelegenheid. Mocht u niet op komen dagen bij de reservering dan krijgt u dit bedrag niet terug.',
     prepayment_button: 'Betalen via mollie',
     prepayment_status: {
       open: 'Open',
