@@ -37,10 +37,12 @@ export default class Controller {
         $stateParams.action === 'update') {
         Settings.updatePluginSettings(this.current_company_id, {
           mollie_access_token: $stateParams.access_token,
-          mollie_refresh_token: $stateParams.refresh_token
+          mollie_refresh_token: $stateParams.refresh_token,
+          prepayment_value: 1
         }).then((pluginsSettings) => {
           this.mollie_access_token = pluginsSettings.mollie_access_token;
           this.mollie_refresh_token = pluginsSettings.mollie_refresh_token;
+          this.prepayment_value = 1;
           $location.search('access_token', null);
           $location.search('refresh_token', null);
           $location.search('action', null);
@@ -69,7 +71,7 @@ export default class Controller {
     const data = {
       accept_prepayment: this.accept_prepayment,
       prepayment_type: this.prepayment_type,
-      prepayment_value: this.prepayment_value || null,
+      prepayment_value: this.prepayment_value,
       tnr_sync_token: this.tnr_sync_token,
       mollie_profile_id: this.mollie_profile_id
     };
