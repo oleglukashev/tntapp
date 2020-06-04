@@ -7,7 +7,7 @@
       ng-bind='ctrl.data.dutch_status'></md-tooltip>
     <md-tooltip
       ng-if='ctrl.data.reservation.prepayment_value'>
-      <span translate='reservation.prepayment_status.{{ctrl.data.reservation.prepayment_status}}'></span>: {{ ctrl.data.reservation.prepayment_value }} euro 
+      <span translate='reservation.prepayment_status.{{ctrl.data.reservation.prepayment_status}}'></span>: {{ ctrl.data.reservation.prepayment_value - 1 }} euro 
     </md-tooltip>
     <div class='pull-left m-l-sm'>
       <i ng-class='ctrl.data.icon' class='mdi i-20'></i>
