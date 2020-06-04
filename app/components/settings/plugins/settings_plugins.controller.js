@@ -155,11 +155,13 @@ export default class Controller {
   removeConnectionToMollie() {
     this.Settings.updatePluginSettings(this.current_company_id, {
       mollie_access_token: null,
-      mollie_refresh_token: null
+      mollie_refresh_token: null,
+      prepayment_value: 0,
     }).then((pluginsSettings) => {
       this.mollie_access_token = null;
       this.mollie_refresh_token = null;
       this.mollie_profile_id = null;
+      this.prepayment_value = 0;
     });
   }
 }
