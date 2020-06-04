@@ -19,6 +19,7 @@ export default class Controller {
       // + 1 for fee
       if (this.reservation.prepayment_value) {
         this.reservation.prepayment_value += 1;
+        this.reservation.prepayment_value = Math.round((this.reservation.prepayment_value + Number.EPSILON) * 100) / 100;
       }
     };
   }
