@@ -40,9 +40,9 @@ module.exports = {
       minChunks: Infinity
     }),
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify('https://api.dashboard.thenexttable.com/api/v2'),
+      API_URL: JSON.stringify('https://api.dashboard.deroohorecagroep.nl/api/v2'),
       MOLLIE_CLIENT_ID: JSON.stringify('app_WURzGppruyyJhdcK6rcr4jrH'),
-      MOLLIE_REDIRECT_URI: JSON.stringify('https://api.dashboard.thenexttable.com/api/v2/auth/mollie'),
+      MOLLIE_REDIRECT_URI: JSON.stringify('https://api.dashboard.deroohorecagroep.nl/api/v2/auth/mollie'),
       FACEBOOK_ID: '698477453590264',
       BUCKAROO_URL: JSON.stringify('https://checkout.buckaroo.nl/'),
       ENV: JSON.stringify('production'),

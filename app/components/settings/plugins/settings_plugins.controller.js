@@ -12,7 +12,7 @@ export default class Controller {
     this.$interval = $interval;
     this.is_loaded = false;
     this.AppConstants = AppConstants;
-    this.iframe_widget = '<iframe src="https://dashboard.thenexttable.com/thenexttable-embed/iframe.php?rid=' + this.current_company_id + '" style="display: block; margin: 0 auto;" frameborder="0" seamless="seamless" height="440px;" width="300px;"></iframe>';
+    this.iframe_widget = '<iframe src="https://dashboard.deroohorecagroep.nl/thenexttable-embed/iframe.php?rid=' + this.current_company_id + '" style="display: block; margin: 0 auto;" frameborder="0" seamless="seamless" height="440px;" width="300px;"></iframe>';
 
    
     $q.all([

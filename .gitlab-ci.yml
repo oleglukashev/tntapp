@@ -11,7 +11,7 @@ production:staging:
   environment: staging
   script:
     - npm run build_production
-    - rsync --rsync-path="doas rsync" -ave ssh --delete * oleglukashev@icarus.thenextsoftware.io:/www/dashboard1.thenexttable/
+    - rsync --rsync-path="sudo rsync" -ave ssh --delete * develop@dashboard.deroohorecagroep.nl:/var/www/dashboard.deroohorecagroep/
 
 staging:staging:
   stage: staging
@@ -20,7 +20,7 @@ staging:staging:
   environment: staging
   script:
     - npm run build_staging
-    - rsync --rsync-path="doas rsync" -ave ssh --delete * oleglukashev@icarus.thenextsoftware.io:/www/staging.thenexttable/
+    - rsync --rsync-path="sudo rsync" -ave ssh --delete * develop@dashboard.deroohorecagroep.nl:/var/www/staging.deroohorecagroep/
 
 before_script:
   - apt-get update -y && apt-get install openssh-client rsync -y
@@ -31,3 +31,4 @@ before_script:
   - 'echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   - npm install
   - npm install babel-loader babel-core webpack
+  
