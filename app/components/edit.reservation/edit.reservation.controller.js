@@ -71,7 +71,7 @@ export default class EditReservationCtrl {
       this.$rootScope.show_spinner = true;
       $q.all([
         this.loadGeneralSettings(),
-        this.loadProducts(),
+        this.loadProducts(this.reservation.type === 'direct'),
         this.loadZones(),
       ]).then((result) => {
         this.$rootScope.show_spinner = false;
@@ -356,8 +356,8 @@ export default class EditReservationCtrl {
     this.settings = generalSettings;
   }
 
-  loadProducts() {
-    return this.Product.getAll(this.current_company_id, false);
+  loadProducts(showHidden) {
+    return this.Product.getAll(this.current_company_id, showHidden);
   }
 
   initProducts(products) {
