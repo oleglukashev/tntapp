@@ -175,12 +175,46 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     };
 
     instance.applySort = (parts) => {
-      if (instance.sort.name === 'Reserveringen') {
-        return $filter('orderByTimeAndRestaurantId')(parts);
+      // if (instance.sort.name === 'Reserveringen') {
+      //   return $filter('orderByTimeAndRestaurantId')(parts);
+      // }
+
+      if (['Reserveringen', 'Reservation'].includes(instance.sort.name)) {
+        return instance.defaultSort(parts);
       }
 
       return $filter('orderBy')(parts, instance.sort.value, instance.sort.reverse);
     };
+
+    instance.defaultSort = (parts) => {
+      parts.sort((a, b) => {
+        if (a.date_time < b.date_time){
+          return -1;
+        }
+        if (a.date_time > b.date_time){
+          return 1;
+        }
+        return 0;
+      });
+      const result = [];
+      const groupedParts = [];
+      const reservationsIdsPositions = {};
+
+      for(const item of parts) {
+        if (item.reservation.id in reservationsIdsPositions) {
+          groupedParts[reservationsIdsPositions[item.reservation.id]].push(item);
+        } else {
+          groupedParts.push([item]);
+          reservationsIdsPositions[item.reservation.id] = groupedParts.length - 1;
+        }
+      }
+      for(const item of groupedParts) {
+        for(const subItem of item) {
+          result.push(subItem);
+        }
+      }
+      return result;
+    }
 
 
     // run sort translates
