@@ -125,7 +125,6 @@ export default class EditReservationCtrl {
     const data = {
       notes: this.current_part.notes,
       is_group: this.reservation.is_group,
-      corona_confirmation: this.reservation.corona_confirmation,
       household_confirmation: this.reservation.household_confirmation,
       reservation_parts: [],
     };

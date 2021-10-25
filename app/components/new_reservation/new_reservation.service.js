@@ -18,7 +18,6 @@ export default class NewReservation {
       'time',
       'notifications.full_name',
       'notifications.not_valid',
-      'corona_confirmation',
     ];
 
     $translate(translatesArray).then((translates) => {
@@ -34,7 +33,6 @@ export default class NewReservation {
       this.full_name_text = translates['notifications.full_name'];
       this.not_full_text = translates['notifications.not_full'];
       this.not_valid = translates['notifications.not_valid'];
-      this.corona_confirmation_text = translates.corona_confirmation;
     }, (translationIds) => {
       this.date_text = translationIds.date;
       this.product_text = translationIds.product;
@@ -48,7 +46,6 @@ export default class NewReservation {
       this.full_name_text = translationIds['notifications.full_name'];
       this.not_full_text = translationIds['notifications.not_full'];
       this.not_valid = translationIds['notifications.not_valid'];
-      this.corona_confirmation_text = translationIds.corona_confirmation;
     });
   }
 
@@ -86,10 +83,6 @@ export default class NewReservation {
       }
 
       if (phoneNumberIsRequired && !reservation.primary_phone_number) errors.push(`${this.phone_text} ${this.is_required_text}`);
-    }
-
-    if (!reservation.corona_confirmation) {
-      errors.push(`${this.corona_confirmation_text} ${this.is_required_text}`);
     }
 
     if (form && form.$error && form.$error.phoneValid) {

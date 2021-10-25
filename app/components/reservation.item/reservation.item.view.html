@@ -62,11 +62,6 @@
        ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
     <h3 class='text-md'>
       <span ng-bind='ctrl.data.name'></span>
-      <img
-        class='reservation-corona-icon'
-        ng-if='ctrl.data.reservation.corona_confirmation'
-        src='/public/images/corona-dark.svg'
-        title='corona' />
       <i ng-if='ctrl.data.reservation.household_confirmation' class='mdi mdi-home' />
     </h3>
     <div>

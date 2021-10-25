@@ -24,11 +24,6 @@
 <div class='hidden-xs hidden-sm'
   ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
   {{ ctrl.data.name }}
-  <img
-      class='reservation-corona-icon'
-      ng-if='ctrl.data.reservation.corona_confirmation'
-      src='/public/images/corona-dark.svg'
-      title='corona' />
   <i ng-if='ctrl.data.reservation.household_confirmation' class='mdi mdi-home' />
   <i class='eicon eicon-{{ ctrl.getAllergyClass(allergy.allergy) }} m-r-xs'
     ng-if='ctrl.getAllergyClass(allergy.allergy)'
@@ -59,11 +54,6 @@
   ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
   <div class='text-md'>
     {{ ctrl.data.name }}
-    <img
-      class='reservation-corona-icon'
-      ng-if='ctrl.data.reservation.corona_confirmation'
-      src='/public/images/corona-dark.svg'
-      title='corona' />
     <i ng-if='ctrl.data.reservation.household_confirmation' class='mdi mdi-home' />
   </div>
   <div>

@@ -10,7 +10,6 @@ import TimeNewReservationTab from './time.new_reservation_tab';
 import ZoneNewReservationTab from './zone.new_reservation_tab';
 import GroupNewReservationTab from './group.new_reservation_tab';
 import PersonNewReservationTab from './person.new_reservation_tab';
-import CoronaNewReservationTab from './corona.new_reservation_tab';
 import PrepaymentNewReservationTab from './prepayment.new_reservation_tab';
 
 import SuccessNewReservation from '../success.new_reservation';
@@ -24,7 +23,6 @@ export default angular.module('newReservation', [
   ZoneNewReservationTab,
   GroupNewReservationTab,
   PersonNewReservationTab,
-  CoronaNewReservationTab,
   PrepaymentNewReservationTab,
   SuccessNewReservation])
   .component('newReservation', {
