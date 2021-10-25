@@ -597,7 +597,23 @@ export default class Controller {
       .then((result) => {
         this.is_loaded = true;
         this.$rootScope.show_spinner = false;
-        this.reservations = result;
+        const reservations = [];
+        this.reservations = [];
+        const reservationsIdsPositions = {};
+        for(const item of result) {
+          if (item.id in reservationsIdsPositions) {
+            reservations[reservationsIdsPositions[item.id]].push(item);
+          } else {
+            reservations.push([item]);
+            reservationsIdsPositions[item.id] = reservations.length - 1;
+          }
+        }
+        for(const item of reservations) {
+          for(const subItem of item) {
+            this.reservations.push(subItem);
+          }
+        }
+
         this.setData();
       });
   }
