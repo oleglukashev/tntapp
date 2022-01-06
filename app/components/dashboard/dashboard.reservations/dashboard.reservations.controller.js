@@ -34,6 +34,7 @@ export default class DashboardReservationsCtrl {
       component: 'newDashboardReservation',
       size: 'md',
       animation: true,
+      backdrop: 'static',
       resolve: {
         load: ['$ocLazyLoad', ($ocLazyLoad) => {
           return import(/* webpackChunkName: "new.dashboard.reservation.module" */ "../../new.dashboard.reservation")

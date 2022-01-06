@@ -34,6 +34,7 @@ export default class Controller {
       controller: editSettingsWarningsController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         item: () => this.filterFilter(this.warnings, { id })[0],
       },

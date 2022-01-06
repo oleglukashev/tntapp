@@ -131,6 +131,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
         templateUrl: 'page_filter_time_ranges.view.html',
         controller: 'PageFilterTimeRangesCtrl as page_filter_time_ranges',
         size: 'md',
+        backdrop: 'static',
         resolve: {
           date: () => that.date_filter,
           type: () => type,

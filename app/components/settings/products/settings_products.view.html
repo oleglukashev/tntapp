@@ -93,6 +93,12 @@
                     </md-menu-item>
 
                     <md-menu-item>
+                      <md-button ng-click='ctrl.renameProduct(ctrl.products[time_range.product_id])'>
+                        {{ 'settings.products.rename' | translate }}
+                      </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item>
                       <md-button ng-click='ctrl.removeProduct(time_range.product_id)'
                                  class='remove-button'>
                         {{ 'settings.products.remove' | translate }}

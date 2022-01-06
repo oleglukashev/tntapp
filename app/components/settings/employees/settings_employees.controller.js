@@ -23,6 +23,7 @@ export default class Controller {
       controller: itemSettingsEmployeesController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         items: () => this.employees,
         item: () => null,
@@ -38,6 +39,7 @@ export default class Controller {
       controller: itemSettingsEmployeesController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         items: () => this.employees,
         item: () => this.filterFilter(this.employees, { id })[0],

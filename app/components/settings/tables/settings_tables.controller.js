@@ -34,6 +34,7 @@ export default class Controller {
       controller: newZoneTablesSettingsController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         zones: () => that.zones,
       },
@@ -48,6 +49,7 @@ export default class Controller {
       controller: newTableGroupTablesSettingsController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         tableGroups: () => this.tableGroups,
         tablesByZone: () => this.tables_by_zone,
@@ -64,6 +66,7 @@ export default class Controller {
       controller: editZoneTablesSettingsController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         zones: () => that.zones,
         zone: () => zone,
@@ -79,6 +82,7 @@ export default class Controller {
       controller: editTableGroupTablesSettingsController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         tableGroups: () => this.tableGroups,
         tableGroup: () => this.tableGroups[index],

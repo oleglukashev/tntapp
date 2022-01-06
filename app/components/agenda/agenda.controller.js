@@ -322,6 +322,7 @@ export default class Controller {
     const modalInstance = this.$modal.open({
       component: 'newDashboardReservation',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         load: ['$ocLazyLoad', ($ocLazyLoad) => {
           return import(/* webpackChunkName: "new.dashboard.reservation.module" */ "../new.dashboard.reservation")
@@ -346,6 +347,7 @@ export default class Controller {
     const modalInstance = this.$modal.open({
       component: 'agendaWalkIn',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         datetime: () => {
           const datetime = this.moment(this.date_filter);

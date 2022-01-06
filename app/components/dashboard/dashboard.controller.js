@@ -67,6 +67,7 @@ export default class DashboardCtrl {
     const modalInstance = this.$uibModal.open({
       component: 'dashboardInviteComponent',
       size: 'md',
+      backdrop: 'static',
     });
 
     modalInstance.result.then(() => {}, () => {});
@@ -79,6 +80,7 @@ export default class DashboardCtrl {
       controller: dashboardSubscriptionProcessController,
       controllerAs: 'dash_subscription',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         iban: () => iban,
       },

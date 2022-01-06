@@ -49,6 +49,7 @@ export default class PaymentModal {
       windowClass: 'subscription-modal', // components/subscription/subscription.style.styl
       controller: PaymentController,
       controllerAs: 'payment',
+      backdrop: 'static',
       resolve: {
         days: () => days,
         company: () => company,

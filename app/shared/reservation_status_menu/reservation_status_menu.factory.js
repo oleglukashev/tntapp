@@ -23,6 +23,7 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
         templateUrl: 'reservation_answer.view.html',
         controller: 'ReservationAnswerCtrl as antwoord',
         size: 'md',
+        backdrop: 'static',
         resolve: {
           reservation: () => reservation,
           status: () => status,
@@ -38,6 +39,7 @@ export default function reservationStatusMenu(AppConstants, ReservationStatus, f
         templateUrl: 'edit_reservation.view.html',
         controller: 'EditReservationCtrl as reserv',
         size: 'md',
+        backdrop: 'static',
         resolve: {
           reservationPart: () => reservationPart,
           reservation: () => reservation,

@@ -41,6 +41,7 @@ export default class DashboardReservationItemCtrl {
     const modalInstance = this.$uibModal.open({
       component: 'reservationAnswerComponent',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         reservation: () => reservation,
         status: () => status,
@@ -64,6 +65,7 @@ export default class DashboardReservationItemCtrl {
     const modalInstance = this.$uibModal.open({
       component: 'editReservationComponent',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         reservationPart: () => reservationPart,
         reservation: () => reservation,

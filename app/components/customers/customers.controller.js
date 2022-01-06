@@ -54,6 +54,7 @@ export default class CustomerCtrl {
       template: customerMergeTemplate,
       controller: 'CustomerMergeCtrl as customer_merge',
       size: 'md',
+      backdrop: 'static',
     });
 
     modalInstance.result.then(() => {}, () => {});

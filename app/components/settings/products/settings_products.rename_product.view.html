@@ -1,0 +1,41 @@
+<section class='no-margin'>
+  <md-toolbar>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex>Name product</h2>
+      <md-button class='md-icon-button'
+                 ng-click='ctrl.closeModal();'
+                 md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <form name='edit_name_form' ng-submit='ctrl.submitForm(edit_name_form.$valid)'>
+      <div class='md-content-submit' flex>
+        <div class='wrapper md-content-submit'
+             layout='column'
+             layout-align='space-around center'>
+          <div class='w-xl'>
+            <md-input-container class='m-l-sm'>
+              <label translate='edit_name'></label>
+              <input ng-model='ctrl.product.name' required />
+            </md-input-container>
+          </div>
+        </div>
+        <div class='wrapper red-300 layout-align-space-around-center layout-column'
+             ng-show='ctrl.errors.length'>
+          <div class='w-xl'>
+            <div ng-repeat='error in ctrl.errors'>
+              {{ error }}
+            </div>
+          </div>
+        </div>
+        <button type='submit'
+                ng-class="{ 'disabled': !edit_name_form.$valid || ctrl.is_submitting }"
+                class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'>
+        <span>OPSLAAN</span>
+      </button>
+      </div>
+    </form>
+  </md-content>
+</section>

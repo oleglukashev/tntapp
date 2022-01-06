@@ -33,6 +33,7 @@ export default class Controller {
     const modalInstance = this.$uibModal.open({
       component: 'editReservationComponent',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         reservation: () => angular.copy(reservation),
         reservationPart: () => angular.copy(reservationPart),
@@ -55,6 +56,7 @@ export default class Controller {
     const modalInstance = this.$uibModal.open({
       component: 'editUserMenu',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         load: ['$ocLazyLoad', ($ocLazyLoad) => {
           return import(/* webpackChunkName: "edit.user_menu.module" */ "./edit.user_menu")

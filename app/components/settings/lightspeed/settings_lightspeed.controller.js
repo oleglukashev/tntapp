@@ -116,6 +116,7 @@ export default class Controller {
       controller: authController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
     });
 
     modalInstance.result.then(() => {}, () => {});

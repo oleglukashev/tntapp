@@ -36,6 +36,7 @@ export default class Controller {
       controller: editCustomerSettingsNamesController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         settingsName: () => this.settingsNames[index],
       },
@@ -66,6 +67,7 @@ export default class Controller {
       controller: newCustomerSettingsNamesController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         settingsNames: () => this.settingsNames,
       },

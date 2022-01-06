@@ -5,6 +5,8 @@ import editMinMaxSettingsProductsView from './settings_products.edit_minmax.view
 import editMinMaxSettingsProductsController from './settings_products.edit_minmax.controller';
 import newProductSettingsProductView from './settings_products.new_product.view.html';
 import newProductSettingsProductController from './settings_products.new_product.controller';
+import renameProductSettingsProductView from './settings_products.rename_product.view.html';
+import renameProductSettingsProductController from './settings_products.rename_product.controller';
 
 export default class Controller {
   constructor(User, Product, AppConstants, TimeRange, Slider, $scope, $rootScope,
@@ -32,6 +34,17 @@ export default class Controller {
     this.products_used = [];
 
     this.slider = this.Slider.getOptions();
+
+    $scope.$on('SettingsProduct.rename_product', (data, params) => {
+      this.products[params.product_id].name = params.name;
+      for (const weekDay in this.data) {
+        for (const timeRangeId in this.data[weekDay].time_ranges) {
+          if (this.data[weekDay].time_ranges[timeRangeId].product_id === params.product_id) {
+            this.data[weekDay].time_ranges[timeRangeId].name = params.name;
+          }
+        }
+      }
+    });
 
     this.loadProducts();
   }
@@ -92,6 +105,7 @@ export default class Controller {
       controller: limitsSettingsProductsController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         productId: () => productId,
       },
@@ -106,6 +120,7 @@ export default class Controller {
       controller: editMinMaxSettingsProductsController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         product: () => product,
       },
@@ -184,6 +199,7 @@ export default class Controller {
       controller: newProductSettingsProductController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         products: () => this.products,
       },
@@ -296,6 +312,21 @@ export default class Controller {
       );
 
     this.calculateMinMax();
+  }
+
+  renameProduct(product) {
+    const modalInstance = this.$modal.open({
+      template: renameProductSettingsProductView,
+      controller: renameProductSettingsProductController,
+      controllerAs: 'ctrl',
+      size: 'md',
+      backdrop: 'static',
+      resolve: {
+        product: () => product,
+      },
+    });
+
+    modalInstance.result.then((data) => {}, () => {});
   }
 
   hidden(productId) {

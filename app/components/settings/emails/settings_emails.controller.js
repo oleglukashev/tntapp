@@ -68,6 +68,7 @@ export default class Controller {
       controller: editEmailController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         item: () => this.filterFilter(this.email_texts, { id })[0],
       },
@@ -82,6 +83,7 @@ export default class Controller {
       controller: editSmsController,
       controllerAs: 'ctrl',
       size: 'md',
+      backdrop: 'static',
       resolve: {
         item: () => this.filterFilter(this.sms_texts, { id })[0],
       },
