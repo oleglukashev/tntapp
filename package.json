@@ -5,7 +5,7 @@
   "scripts": {
     "build_production": "webpack --config webpack.config.production.js",
     "build_staging": "webpack --config webpack.config.staging.js",
-    "dev": "webpack-dev-server --port 8082 --public tnt.me:8082"
+    "dev": "webpack-dev-server"
   },
   "repository": "https://git.thenextsoftware.io/TheNextSoftware/TheNextTableApp.git",
   "author": "TheNextTableSoftware",

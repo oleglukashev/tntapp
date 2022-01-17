@@ -73,11 +73,13 @@ export default class EditReservationCtrl {
         this.loadGeneralSettings(),
         this.loadProducts(this.reservation.type === 'direct'),
         this.loadZones(),
+        this.loadHistory(this.reservation.id),
       ]).then((result) => {
         this.$rootScope.show_spinner = false;
         this.initGeneralSettings(result[0]);
         this.initProducts(result[1]);
         this.initZones(result[2]);
+        this.initHistory(result[3]);
 
         $q.all([
           this.loadOccupiedTables(),
@@ -379,6 +381,104 @@ export default class EditReservationCtrl {
         }
       })
     });
+  }
+
+  loadHistory(reservationId) {
+    return this.Reservation.getHistory(this.current_company_id, this.reservation.id);
+  }
+
+  initHistory(historyParts) {
+    this.historyParts = historyParts;
+    const formattedhistoryHash = [];
+    let currentDateTime, currentDurationMinutes, currentNumberOfPersons, currentProduct, currentStatus;
+    this.historyParts.forEach((historyPart) => {
+      if (historyPart.type === 'create') {
+        formattedhistoryHash.push({
+          date_time: {
+            old: null,
+            new: historyPart.date_time,
+          },
+          duration_minutes: {
+            old: null,
+            new: historyPart.duration_minutes,
+          },
+          number_of_persons: {
+            old: null,
+            new: historyPart.number_of_persons,
+          },
+          product: {
+            old: null,
+            new: historyPart.product,
+          },
+          status: {
+            old: null,
+            new: historyPart.status,
+          },
+          type: historyPart.type,
+          user_id: historyPart.user_id,
+          author_name: historyPart.author_name,
+          created_on: historyPart.created_on,
+        });
+        currentDateTime = historyPart.date_time;
+        currentDurationMinutes = historyPart.duration_minutes;
+        currentNumberOfPersons = historyPart.number_of_persons;
+        currentProduct = historyPart.product;
+        currentStatus = historyPart.status;
+      } else {
+        const hash = {};
+        if (historyPart.date_time) {
+          hash.date_time = {
+            old: currentDateTime,
+            new: historyPart.date_time,
+          }
+          if (currentDateTime) {
+            currentDateTime = historyPart.date_time;
+          }
+        }
+        if (historyPart.duration_minutes) {
+          hash.duration_minutes = {
+            old: currentDurationMinutes,
+            new: historyPart.duration_minutes,
+          }
+          if (currentDurationMinutes) {
+            currentDurationMinutes = historyPart.duration_minutes;
+          }
+        }
+        if (historyPart.number_of_persons) {
+          hash.number_of_persons = {
+            old: currentNumberOfPersons,
+            new: historyPart.number_of_persons,
+          }
+          if (currentNumberOfPersons) {
+            currentNumberOfPersons = historyPart.number_of_persons;
+          }
+        }
+        if (historyPart.product) {
+          hash.product = {
+            old: currentProduct,
+            new: historyPart.product,
+          }
+          if (currentProduct) {
+            currentProduct = historyPart.product;
+          }
+        }
+        if (historyPart.status) {
+          hash.status = {
+            old: currentStatus,
+            new: historyPart.status,
+          }
+          if (currentStatus) {
+            currentStatus = historyPart.status;
+          }
+        }
+        hash.type = historyPart.type;
+        hash.user_id = historyPart.user_id;
+        hash.author_name = historyPart.author_name;
+        hash.created_on = historyPart.created_on;
+        formattedhistoryHash.push(hash);
+      }
+    });
+    this.historyParts = formattedhistoryHash;
   }
 
   loadTimeRanges() {

@@ -195,6 +195,78 @@
           customer='ctrl.customer'
           customer-allergies='ctrl.customerAllergies'
           dismiss='ctrl.dismiss'></user-menu-allergies>
+
+        <md-tab>
+          <md-tab-label>
+            <div class='text-center l-h uppercase' translate='history'></div>
+          </md-tab-label>
+          <md-tab-body>
+            <div class='md-content-submit b-t' flex>
+              <div class='wrapper' layout='column' layout-align='space-around center'>
+                <div class='w-xl'>
+                  <div class="inset" ng-repeat='part in ctrl.historyParts | orderBy:"created_on":true' ng-if='ctrl.historyParts.length'>
+                    <div class="md-list-item-left">
+                      <i class="mdi mdi-account-edit icon-muted i-24"></i>
+                    </div>
+                    <div class="md-list-item-content">
+                      <h3 class="text-md uppercase">
+                        {{ part.type }}
+                        <span ng-if='part.author_name'>:{{ part.author_name }}</span>
+                      </h3>
+                      <small class='font-thin'>
+                        {{ ctrl.moment(part.created_on).format('DD.MM.YYYY HH:mm') }}
+                      </small>
+                      <br />
+                      <small class='font-thin'>
+                        <span ng-if='part.date_time.new'>
+                          {{ 'date' | translate }}:
+                          <span ng-if='part.date_time.old'>
+                            {{ ctrl.moment(part.date_time.old).format('DD.MM.YYYY HH:mm') }} -> 
+                          </span>
+                          {{ ctrl.moment(part.date_time.new).format('DD.MM.YYYY HH:mm') }}
+                          /
+                        </span>
+                        <span ng-if='part.product.new'>
+                          {{ 'product' | translate }}:
+                          <span ng-if='part.product.old'>
+                            {{ part.product.old.name }} -> 
+                          </span>
+                          {{ part.product.new.name }}
+                          /
+                        </span>
+                        <span ng-if='part.number_of_persons.new'>
+                          {{ 'persons' | translate }}:
+                          <span ng-if='part.number_of_persons.old'>
+                            {{ part.number_of_persons.old }} -> 
+                          </span>
+                          {{ part.number_of_persons.new }}
+                          /
+                        </span>
+                        <span ng-if='part.duration_minutes.new'>
+                          {{ 'duration_minutes' | translate }}:
+                          <span ng-if='part.duration_minutes.old'>
+                            {{ part.duration_minutes.old }} -> 
+                          </span>
+                          {{ part.duration_minutes.new }}
+                          /
+                        </span>
+                        <span ng-if='part.status.new'>
+                          {{ 'status_name' | translate }}:
+                          <span ng-if='part.status.old'>
+                            <translate translate='status.{{ part.status.old }}'></translate> -> 
+                          </span>
+                          <translate translate='status.{{ part.status.new }}'></translate>
+                          /
+                        </span>
+                      </small>
+                    </div>
+                  </div>
+                  <div ng-if='!ctrl.historyParts.length' class='text-center' translate='empty'></div>
+                </div>
+              </div>
+            </div>
+          </md-tab-body>
+        </md-tab>
       </md-tabs>
     </div>
   </md-content>

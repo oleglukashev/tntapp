@@ -529,4 +529,7 @@ export default {
   reserved_by: 'Reservering gemaakt door',
   from: 'op',
   connection_succesful_with_account: 'Connection succesful met account:',
+  duration_minutes: 'Duur minuten',
+  history: 'Geschiedenis',
+  empty: 'Leeg',
 };
