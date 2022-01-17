@@ -529,4 +529,7 @@ export default {
   reserved_by: 'Reserved by',
   from: 'from',
   connection_succesful_with_account: 'Connection succesful with account:',
+  duration_minutes: 'Duration minutes',
+  history: 'History',
+  empty: 'Empty',
 };

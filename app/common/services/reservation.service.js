@@ -42,6 +42,20 @@ export default class Reservation {
     }).then(result => result.data);
   }
 
+  getHistory(companyId, reservationId, skipJwtAuth) {
+    const deferred = this.$q.defer();
+
+    if (!companyId) {
+      return deferred.promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/reservation/${reservationId}/history`,
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
+    }).then(result => result.data);
+  }
+
   checkBySecureToken(companyId, id, secureToken, skipJwtAuth) {
     const deferred = this.$q.defer();
 
