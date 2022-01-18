@@ -31,10 +31,7 @@ export default class CustomerCtrl {
   }
 
   openCustomerMenu(customerId) {
-    if (!this.UserMenu.isCurrentCustomer(customerId)) {
-      this.UserMenu.loadAndSetFullData(customerId);
-    }
-
+    this.UserMenu.loadAndSetFullData(customerId);
     this.$mdSidenav('right').open();
   }
 

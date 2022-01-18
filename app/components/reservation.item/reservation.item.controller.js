@@ -21,10 +21,7 @@ export default class DashboardReservationItemCtrl {
 
   openCustomerMenu(customerId, reservationPartId) {
     if (customerId) {
-      if (!this.UserMenu.isCurrentCustomer(customerId)) {
-        this.UserMenu.loadAndSetFullData(customerId, reservationPartId);
-      }
-
+      this.UserMenu.loadAndSetFullData(customerId, reservationPartId);
       this.$mdSidenav('right').open();
     }
   }
