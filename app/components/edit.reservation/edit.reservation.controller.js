@@ -441,54 +441,42 @@ export default class EditReservationCtrl {
             old: currentDateTime,
             new: historyPart.date_time,
           }
-          if (currentDateTime) {
-            currentDateTime = historyPart.date_time;
-          }
+          currentDateTime = historyPart.date_time;
         }
         if (historyPart.duration_minutes) {
           hash.duration_minutes = {
             old: currentDurationMinutes,
             new: historyPart.duration_minutes,
           }
-          if (currentDurationMinutes) {
-            currentDurationMinutes = historyPart.duration_minutes;
-          }
+          currentDurationMinutes = historyPart.duration_minutes;
         }
         if (historyPart.number_of_persons) {
           hash.number_of_persons = {
             old: currentNumberOfPersons,
             new: historyPart.number_of_persons,
           }
-          if (currentNumberOfPersons) {
-            currentNumberOfPersons = historyPart.number_of_persons;
-          }
+          currentNumberOfPersons = historyPart.number_of_persons;
         }
         if (historyPart.product) {
           hash.product = {
             old: currentProduct,
             new: historyPart.product,
           }
-          if (currentProduct) {
-            currentProduct = historyPart.product;
-          }
+          currentProduct = historyPart.product;
         }
         if (historyPart.status) {
           hash.status = {
             old: currentStatus,
             new: historyPart.status,
           }
-          if (currentStatus) {
-            currentStatus = historyPart.status;
-          }
+          currentStatus = historyPart.status;
         }
         if (historyPart.notes) {
           hash.notes = {
             old: currentNotes,
             new: historyPart.notes,
           }
-          if (currentNotes) {
-            currentNotes = historyPart.notes;
-          }
+          currentNotes = historyPart.notes;
         }
         hash.type = historyPart.type;
         hash.user_id = historyPart.user_id;
