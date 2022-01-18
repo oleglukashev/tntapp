@@ -390,7 +390,12 @@ export default class EditReservationCtrl {
   initHistory(historyParts) {
     this.historyParts = historyParts;
     const formattedhistoryHash = [];
-    let currentDateTime, currentDurationMinutes, currentNumberOfPersons, currentProduct, currentStatus;
+    let currentDateTime,
+        currentDurationMinutes,
+        currentNumberOfPersons,
+        currentProduct,
+        currentStatus,
+        currentNotes;
     this.historyParts.forEach((historyPart) => {
       if (historyPart.type === 'create') {
         formattedhistoryHash.push({
@@ -414,6 +419,10 @@ export default class EditReservationCtrl {
             old: null,
             new: historyPart.status,
           },
+          notes: {
+            old: null,
+            new: historyPart.notes,
+          },
           type: historyPart.type,
           user_id: historyPart.user_id,
           author_name: historyPart.author_name,
@@ -424,6 +433,7 @@ export default class EditReservationCtrl {
         currentNumberOfPersons = historyPart.number_of_persons;
         currentProduct = historyPart.product;
         currentStatus = historyPart.status;
+        currentNotes = historyPart.notes;
       } else {
         const hash = {};
         if (historyPart.date_time) {
@@ -469,6 +479,15 @@ export default class EditReservationCtrl {
           }
           if (currentStatus) {
             currentStatus = historyPart.status;
+          }
+        }
+        if (historyPart.notes) {
+          hash.notes = {
+            old: currentNotes,
+            new: historyPart.notes,
+          }
+          if (currentNotes) {
+            currentNotes = historyPart.notes;
           }
         }
         hash.type = historyPart.type;

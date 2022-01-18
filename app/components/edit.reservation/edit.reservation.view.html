@@ -258,6 +258,14 @@
                           <translate translate='status.{{ part.status.new }}'></translate>
                           /
                         </span>
+                        <span ng-if='part.notes.new'>
+                          {{ 'notes' | translate }}:
+                          <span ng-if='part.notes.old'>
+                            {{ part.notes.old }} -> 
+                          </span>
+                          {{ part.notes.new }}
+                          /
+                        </span>
                       </small>
                     </div>
                   </div>
