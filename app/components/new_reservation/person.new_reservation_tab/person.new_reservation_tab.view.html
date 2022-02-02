@@ -77,6 +77,13 @@
               {{ 'mail_confirmation' | translate }}
             </md-checkbox>
           </div>
+          <div ng-if='ctrl.type === "customer"' class='md-form-group no-padder'>
+            <md-checkbox ng-model='ctrl.reservation.news_subscribed'
+                         ng-checked='true'
+                         aria-label='{{ "news_subscribed" | translate }}'>
+              {{ 'news_subscribed' | translate }}
+            </md-checkbox>
+          </div>
         </div>
       </div>
 

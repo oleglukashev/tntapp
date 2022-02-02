@@ -501,6 +501,7 @@ export default {
   number: 'Aantal',
   more: 'Meer',
   mail_confirmation: 'Bevestiging mailen',
+  news_subscribed: 'Inschrijven nieuwsbrief',
   household_confirmation: 'Huishouden check',
   company_name: 'Bedrijfsnaam',
   via: 'via',

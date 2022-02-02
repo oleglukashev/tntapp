@@ -501,6 +501,7 @@ export default {
   number: 'Number',
   more: 'More',
   mail_confirmation: 'Mail confirmation',
+  news_subscribed: 'Subscribe to the newsletter',
   household_confirmation: 'Household check',
   company_name: 'Company Name',
   via: 'via',
