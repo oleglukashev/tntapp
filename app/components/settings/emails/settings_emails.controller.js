@@ -185,4 +185,8 @@ export default class Controller {
         this.$rootScope.show_spinner = false;
       });
   }
+
+  exportNewsSubscribersCSV() {
+    this.Settings.exportNewsSubscribersCSV(this.current_company_id);
+  }
 }

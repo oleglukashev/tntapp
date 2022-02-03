@@ -246,4 +246,23 @@ export default class Settings {
       method: 'GET',
     }).then(result => result.data);
   }
+
+  exportNewsSubscribersCSV(companyId, skipJwtAuth) {
+    if (!companyId) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/settings/news_subscribers`,
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
+    }).then((result) => {
+      const anchor = angular.element('<a/>');
+      anchor.attr({
+        href: `data:attachment/csv;charset=utf-8,${encodeURI(result.data)}`,
+        target: '_blank',
+        download: 'export.csv',
+      })[0].click();
+    });
+  }
 }

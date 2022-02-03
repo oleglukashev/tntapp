@@ -70,11 +70,24 @@
                       ng-if='ctrl.sender_email_is_loaded && !ctrl.emails_settings_form_data.sender_email_confirmed'
                       target='_blank'
                       class='block md-btn md-flat btn-fw text-success'
-                      translate='settings.emails.send_conf_email' 
+                      translate='settings.emails.send_conf_email'
                       md-ink-ripple></button>
               <p class='m-t-sm m-b-none'
                  ng-if='ctrl.email_has_sent'
                  translate='settings.emails.email_has_sent'></p>
+            </div>
+          </div>
+          <div class='md-list-item clear'>
+            <div class='pull-left'>
+              <h3 class='no-margin text-md' translate='settings.emails.download_news_subscribers'></h3>
+            </div>
+            <div class='pull-right m-r-n-xs'>
+              <div class='md-form-group no-padder'>
+                <button type='button'
+                    class='md-button btn-success no-margin'
+                    ng-click='ctrl.exportNewsSubscribersCSV()'
+                    translate='download'></button>
+              </div>
             </div>
           </div>
     	  </div>

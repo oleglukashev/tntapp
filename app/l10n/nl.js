@@ -269,6 +269,7 @@ export default {
       register_twilio_sid: 'Registreer nieuw account',
       suspend_twilio_sid: 'Account opschorten',
       activate_twilio_sid: 'Activeer account',
+      download_news_subscribers: 'Download nieuwsbrief abonnee’s (csv)',
       statuses: {
         na_bezoek: 'Mail na bezoek',
         reservering_bevestigd: 'Bevestigingsmail',
