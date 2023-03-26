@@ -8,6 +8,11 @@
     	  		<div class='pull-left'>
     		  		<h3 class='no-margin text-md' translate='settings.emails.request_confirm'></h3>
     		  		<small class='text-muted' translate='settings.emails.request_confirm_description'></small>
+              <md-input-container class='md-block m-t-sm m-b-none w-xl'>
+                <input type='email'
+                       ng-model='ctrl.emails_settings_form_data.owner_request_mail'
+                       ng-blur='ctrl.submitEmailsSettingsForm()' />
+              </md-input-container>
     	  		</div>
     	  		<div class='pull-right m-r-n-xs'>
               <div class='md-form-group no-padder'>
