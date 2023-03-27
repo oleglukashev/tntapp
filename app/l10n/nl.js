@@ -346,6 +346,8 @@ export default {
         payment: '%BETALING% (alleen voor klantenboekingen)',
         guest_satisfaction: '%GASTTEVREDENHEID%'
       },
+      news_delivery: 'Levering',
+      build_email: 'E-mail opbouwen',
     },
     products: {
       title: 'Openingstijden/producten',
@@ -439,6 +441,10 @@ export default {
     tni: {
       title: 'TheNextInvoice account',
       description: 'Log hier in om TheNextInvoice te koppelen aan je TheNextTable account. Hiermee kan je facturen uit Untill of Lightspeed mailen naar klanten indien deze koppeling is gelegd met TheNextTable. Dit kan je doen via het instellingenmenu van TheNextTable.',
+    },
+    news_delivery: {
+      run: 'Rennen',
+      remove: 'Verwijderen',
     },
   },
   receipts: {

@@ -346,6 +346,8 @@ export default {
         payment: '%PAYMENT% (for customer bookings only)',
         guest_satisfaction: '%GUEST_SATISFACTION%'
       },
+      news_delivery: 'Delivery',
+      build_email: 'Build email',
     },
     products: {
       title: 'Opening hours/products',
@@ -439,6 +441,10 @@ export default {
     tni: {
       title: 'TheNextInvoice account',
       description: 'To connect TheNextInvoice to your TheNextTable account please login here. With this integration you are able to get open tabs from Untill or LIghtspeed, create an invoice and send the invoice to your client by e-mail. You can find this function in the settingsmenu of TheNextTable.',
+    },
+    news_delivery: {
+      run: 'Run',
+      remove: 'Remove',
     },
   },
   receipts: {

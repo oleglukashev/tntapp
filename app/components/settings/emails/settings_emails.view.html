@@ -449,6 +449,67 @@
     </div>
   </div>
 
+  <div class='panel'>
+      <div class='panel-heading' translate='settings.emails.news_delivery'></div>
+      <div class='md-list'>
+        <div class='md-list-item no-padder'>
+          <table class='table'>
+            <thead>
+              <th translate='title'></th>
+              <th translate='status'></th>
+              <th translate='date'></th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in ctrl.news_deliveries">
+                <td class='v-middle'>{{ item.title }}</td>
+                <td class='v-middle'>{{ item.completed }}</td>
+                <td class='v-middle'>{{ item.created_at }}</td>
+                <td class='v-middle text-right'>
+                  <md-menu>
+                    <button md-ink-ripple
+                          class='md-btn md-fab no-shadow'
+                          ng-disabled='disabled'
+                          aria-haspopup='true'
+                          aria-expanded='false'
+                          aria-disabled='false'
+                          ng-click='$mdMenu.open($event)'>
+                      <i class='mdi mdi-dots-vertical i-24'></i>
+                    </button>
+                    <md-menu-content>
+                      <md-menu-item>
+                        <md-button ng-click='ctrl.runNewsDelivery(item)'>
+                          {{ 'settings.news_delivery.run' | translate }}
+                        </md-button>
+                      </md-menu-item>
+                      <md-menu-item>
+                        <md-button ng-click='ctrl.removeNewsDelivery(item)'>
+                          {{ 'settings.news_delivery.remove' | translate }}
+                        </md-button>
+                      </md-menu-item>
+                    </md-menu-content>
+                  </md-menu>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class='md-list-item clear'>
+          <button ng-click='ctrl.createNewsDelivery()'
+                  class='md-button btn-success no-margin'
+                  translate='settings.emails.register_twilio_sid' 
+                  md-ink-ripple></button>
+
+          <a
+            target="_blank"
+            ng-href='/grapes'
+            md-ink-ripple
+            class='md-button btn-success no-margin'
+            translate='settings.emails.build_email'></a>
+        </div>
+      </div>
+    </div>
+
   <div class='panel' ng-if='!ctrl.is_loaded'>
     <div class='panel-heading' translate='settings.emails.emails_title'></div>
     <md-list class='no-padder'>

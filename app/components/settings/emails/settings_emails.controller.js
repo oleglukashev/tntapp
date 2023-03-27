@@ -1,10 +1,12 @@
 import editEmailController from './settings_emails.edit_email.controller';
 import editSmsController from './settings_emails.edit_sms.controller';
-import editEmailView from './settings_emails.edit_email.view.html'
-import editSmsView from './settings_emails.edit_sms.view.html'
+import createNewsDeliveryController from './settings_emails.news_delivery.controller';
+import editEmailView from './settings_emails.edit_email.view.html';
+import editSmsView from './settings_emails.edit_sms.view.html';
+import createNewsDeliveryView from './settings_emails.news_delivery.view.html';
 
 export default class Controller {
-  constructor(User, Settings, SmsText, EmailText, filterFilter, $scope, $uibModal, $mdDialog,
+  constructor(User, Settings, SmsText, EmailText, NewsDelivery, filterFilter, $scope, $uibModal, $mdDialog,
     $rootScope, $q, moment, $translate) {
     'ngInject';
 
@@ -20,6 +22,7 @@ export default class Controller {
     this.Settings = Settings;
     this.EmailText = EmailText;
     this.SmsText = SmsText;
+    this.NewsDelivery = NewsDelivery;
 
     if (this.current_company_id) {
       const currentCompany = User.getCompany(this.current_company_id);
@@ -44,10 +47,12 @@ export default class Controller {
         this.Settings.getEmailsSettings(this.current_company_id),
         this.EmailText.getAll(this.current_company_id),
         this.SmsText.getAll(this.current_company_id),
+        this.NewsDelivery.getAll(this.current_company_id),
       ]).then((result) => {
         this.initEmailSettings(result[0]);
         this.initEmailTexts(result[1]);
         this.initSmsTexts(result[2]);
+        this.initNewsDeliveries(result[3]);
         this.is_loaded = true;
       });
     } else {
@@ -83,6 +88,23 @@ export default class Controller {
     modalInstance.result.then(() => {}, () => {});
   }
 
+  createNewsDelivery() {
+    const modalInstance = this.$modal.open({
+      template: createNewsDeliveryView,
+      controller: createNewsDeliveryController,
+      controllerAs: 'ctrl',
+      size: 'md',
+      backdrop: 'static',
+      resolve: {
+        news_deliveries: () => this.news_deliveries,
+      },
+    });
+
+    modalInstance.result.then((data) => {
+    }, (data) => {
+    });
+  }
+
   editSms(id) {
     const modalInstance = this.$modal.open({
       template: editSmsView,
@@ -96,6 +118,20 @@ export default class Controller {
     });
 
     modalInstance.result.then(() => {}, () => {});
+  }
+
+  removeNewsDelivery(item) {
+    this.NewsDelivery.remove(this.current_company_id, item.id).then(() => {
+      const index = this.news_deliveries.indexOf(item);
+      this.news_deliveries.splice(index, 1);
+    });
+  }
+
+  runNewsDelivery(item) {
+    this.NewsDelivery.run(this.current_company_id, item.id).then(() => {
+      const index = this.news_deliveries.indexOf(item);
+      this.news_deliveries[index].completed = true;
+    });
   }
 
   convertContent(content) {
@@ -137,6 +173,10 @@ export default class Controller {
 
   initSmsTexts(smsTexts) {
     this.sms_texts = smsTexts;
+  }
+
+  initNewsDeliveries(newsDeliveries) {
+    this.news_deliveries = newsDeliveries
   }
 
   registerTwilioSid() {
