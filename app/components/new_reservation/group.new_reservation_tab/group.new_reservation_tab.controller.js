@@ -39,4 +39,10 @@ export default class Controller {
   canShow() {
     return this.current_tab_index === this.pagination.group - 1;
   }
+
+  changeRepeat() {
+    if (this.reservation.repeat) {
+      this.reservation.repeat_type = 'daily';
+    }
+  }
 }

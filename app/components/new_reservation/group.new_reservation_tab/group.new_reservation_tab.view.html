@@ -43,6 +43,41 @@
                class='btn btn-sm font-bold m-xs text-success no-shadow no-border'
                translate='reservation.add_activity'></label>
 
+        <div class='wrapper' layout='column' layout-align='space-around center'>
+          <div align="center">
+
+            <md-switch
+              class='justify-content-center'
+              ng-model='ctrl.reservation.repeat'
+              ng-change='ctrl.changeRepeat()'
+            >
+              Repeat
+            </md-switch>
+
+            <div ng-if='ctrl.reservation.repeat'>
+              <md-radio-group ng-model='ctrl.reservation.repeat_type' class='justify-content-center'>
+                <md-radio-button value='daily' class='inline md-success'>
+                  {{ 'Daily' | translate }}
+                </md-radio-button>
+                <md-radio-button value='weekly' class='inline md-success'>
+                  {{ 'Weekly' | translate }}
+                </md-radio-button>
+                <md-radio-button value='yearly' class='inline md-success'>
+                  {{ 'Yearly' | translate }}
+                </md-radio-button>
+              </md-radio-group>
+              <div><b>Finish date</b></div>
+              <div
+                uib-datepicker
+                ng-change='ctrl.changeDatePostProcess()'
+                datepicker-options='ctrl.dateOptions'
+                ng-model='ctrl.reservation.repat_end_date'
+                class='datepicker'></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <button type='button'
                 class='btn btn-lg btn-success w-full no-top-radius md-content-button'
                 ng-click='ctrl.selectTab({ index: ctrl.pagination.person })'>

@@ -134,6 +134,8 @@ export default class Controller {
       notes: this.reservation.notes,
       is_group: this.reservation.is_group,
       company_name: this.reservation.company_name,
+      repeat_type: this.reservation.repeat_type,
+      repeat_end_date: this.reservation.repat_end_date ? `${this.moment(this.reservation.repat_end_date).format('DD-MM-YYYY')} 23:59` : null,
       customer: {
         last_name: this.reservation.last_name,
         first_name: this.reservation.first_name,
@@ -271,6 +273,7 @@ export default class Controller {
       gender: 'Man',
       social: null,
       is_group: false,
+      repeat: false,
       send_confirmation: true,
       household_confirmation: true,
       reservation_parts: [],
