@@ -271,7 +271,7 @@ export default class Controller {
       country: 'NL',
       language: this.$translate.proposedLanguage().toUpperCase() || 'NL',
       gender: 'Man',
-      social: null,
+      social: 'email',
       is_group: false,
       repeat: false,
       send_confirmation: true,

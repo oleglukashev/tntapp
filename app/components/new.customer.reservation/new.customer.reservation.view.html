@@ -1,7 +1,5 @@
 <div ng-if='!ctrl.isAlternativeUrl()' class='modal-dialog'>
-  <section class='reservation_modal panel no-margin'
-    ng-class='{ "custom-image": ctrl.showCustomBackground() }'
-    ng-style="{'background-image': 'url(' + ctrl.getBackgroundStyles() + ')'}">
+  <section class='reservation_modal panel no-margin'>
     <md-toolbar>
       <div class='md-toolbar-tools'>
         <h2 md-truncate flex ng-hide='ctrl.isSuccess' translate='reserv'></h2>

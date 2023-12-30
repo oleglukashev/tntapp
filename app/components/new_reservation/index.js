@@ -2,7 +2,7 @@ import angular from 'angular';
 import controller from './new_reservation.controller';
 import view from './new_reservation.view.html';
 
-import TypeNewReservationTab from './type.new_reservation_tab';
+// import TypeNewReservationTab from './type.new_reservation_tab';
 import DateNewReservationTab from './date.new_reservation_tab';
 import NumberOfPersonsNewReservationTab from './number_of_persons.new_reservation_tab';
 import ProductNewReservationTab from './product.new_reservation_tab';
@@ -15,7 +15,7 @@ import PrepaymentNewReservationTab from './prepayment.new_reservation_tab';
 import SuccessNewReservation from '../success.new_reservation';
 
 export default angular.module('newReservation', [
-  TypeNewReservationTab,
+  // TypeNewReservationTab,
   DateNewReservationTab,
   NumberOfPersonsNewReservationTab,
   ProductNewReservationTab,

@@ -9,15 +9,6 @@
     md-stretch-tabs
     md-dynamic-height>
 
-    <type-new-reservation-tab
-      ng-if='ctrl.type === "customer"'
-      type='ctrl.type'
-      select-tab='ctrl.selectTab(index)'
-      pagination='ctrl.Reservation.pagination[ctrl.type]'
-      reservation='ctrl.reservation'
-      settings='ctrl.settings'
-      current-tab-index='ctrl.tabIndex'></type-new-reservation-tab>
-
     <date-new-reservation-tab
       type='ctrl.type'
       zones='ctrl.zones'
