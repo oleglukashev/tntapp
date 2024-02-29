@@ -51,13 +51,6 @@ export default class Controller {
     const selectedDate = this.moment(this.current_part.date).format('YYYY-MM-DD');
 
     if (selectedDayOfWeek) {
-      if (product.id === 2509) {
-        console.log(selectedDayOfWeek);
-        console.log('product_week_time_ranges', this.product_week_time_ranges);
-        console.log('open_time_ranges', this.open_time_ranges);
-        console.log('product_time_ranges', this.product_time_ranges);
-      }
-
       let productWeekTimeRange = null;
       if (this.product_week_time_ranges[selectedDayOfWeek] &&
         this.product_week_time_ranges[selectedDayOfWeek][product.id]) {
