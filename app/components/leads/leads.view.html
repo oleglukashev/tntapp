@@ -1,0 +1,52 @@
+<div class='agenda-content'>
+  <div class='col-sm-12' ng-show='ctrl.is_loaded'>
+    <div class='page_filter m-b-md clearfix'>
+      <div class='pull-left m-r-xs'
+           ng-init='controller = ctrl'
+           data-ng-include=" 'page_filter.daterange.view.html' "></div>
+      <div class='page_sort pull-left'
+           ng-init='controller = ctrl'
+           data-ng-include=" 'page_filter.sort.view.html' "></div>
+    </div>
+
+    <button
+      ng-click='ctrl.openReservation()'
+      md-ink-ripple
+      class='panel-add-button panel-add-button-blue md-btn md-fab m-b'
+    >
+      <md-tooltip>{{ 'new_reservation' | translate }}?</md-tooltip>
+      <i class='mdi mdi-plus i-24'></i>
+    </button>
+
+    <div class='panel'>
+      <div class='panel-heading'>
+        <div class='pull-right m-r-xxl'>
+          <span style='margin-right: 40px;' translate='leads.options_title.type'></span>
+          <span style='margin-right: 30px;' translate='leads.options_title.quotation'></span>
+          <span style='margin-right: 70px;' translate='leads.options_title.last_contact'></span>
+          <span style='margin-right: 20px;' translate='leads.options_title.signed'></span>
+          <span style='margin-right: 90px;' translate='leads.options_title.remarks'></span>
+        </div>
+        <div translate='reservations'></div>
+      </div>
+      <md-list
+        class='no-padder'
+        ng-show='ctrl.data.length'>
+        <md-list-item class='md-no-proxy'
+          ng-class='{"active": ctrl.active_part == item.part.id,
+                      "cancelled": item.reservation.status == "cancelled",
+                      "b-b-none": item.reservation.id === leads_data[$index + 1].reservation.id}'
+          ng-repeat='item in leads_data = ctrl.data track by $index'
+        >
+          <lead-reservation-item
+            hide-icon='item.reservation.id === leads_data[$index - 1].reservation.id'
+            change-status='ctrl.changeStatus(reservation, status)'
+            show-date=true
+            data='item'></lead-reservation-item>
+        </md-list-item>
+      </md-list>
+      <div class='md-padding'
+           ng-hide='ctrl.data.length'
+           translate='none'></div>
+    </div>  
+</div>

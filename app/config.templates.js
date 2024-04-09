@@ -10,6 +10,7 @@ export default function templates($templateCache) {
   $templateCache.put('search.print.view.html', require('./components/search/search.print.view.html'));
 
   $templateCache.put('page_filter.date.view.html', require('./shared/page_filter/page_filter.date.view.html'));
+  $templateCache.put('page_filter.daterange.view.html', require('./shared/page_filter/page_filter.daterange.view.html'));
   $templateCache.put('page_filter.print.view.html', require('./shared/page_filter/page_filter.print.view.html'));
   $templateCache.put('page_filter.change_view.view.html', require('./shared/page_filter/page_filter.change_view.view.html'));
   $templateCache.put('page_filter.settings.view.html', require('./shared/page_filter/page_filter.settings.view.html'));

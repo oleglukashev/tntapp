@@ -24,7 +24,13 @@ export default class Controller {
     this.errors = {};
     this.opened = [true];
 
-    this.loadZones();
+    this.userIsManager = User.isManager.bind(User);
+    if (this.userIsManager()) {
+      this.loadZones();
+    } else {
+      // no access
+      window.location.href = '/';
+    }
   }
 
   addZone() {

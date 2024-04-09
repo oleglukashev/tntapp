@@ -77,6 +77,10 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
       translate: 'delayed',
     }, {
       name: 'status',
+      value: 'lead',
+      translate: 'lead',
+    }, {
+      name: 'status',
       value: 'cancelled',
       translate: 'cancelled',
     }];

@@ -6,15 +6,31 @@
         <thead>
           <th translate='name'></th>
           <th translate='email'></th>
-          <th translate='settings.employees.rights'></th>
-          <th></th>
+          <th translate='settings.employees.rights' ng-show='ctrl.isOwner'></th>
+          <th ng-show='ctrl.isOwner'></th>
         </thead>
         <tbody>
           <tr ng-repeat='employee in ctrl.employees'>
             <td class='v-middle'>{{ employee.user.first_name }} {{ employee.user.last_name }}</td>
             <td class='v-middle'>{{ employee.user.email }}</td>
-            <td class='v-middle'>{{ employee.manage_access ? 'yes' : 'no' | translate }}</td>
-            <td class='v-middle text-right'>
+            <td class='v-middle' ng-show='ctrl.isOwner'>
+              <form
+                name='employee_form'
+                ng-submit='ctrl.submitForm(employee.user.id);'>
+                <md-input-container class='no-margin p-t-none'>
+                    <md-select class='pull-left'
+                               name='name'
+                               md-on-close='ctrl.submitForm(employee.id);'
+                               ng-model='ctrl.employee_form[employee.id].name'>
+                      <md-option value='waiter' translate='settings.employees.rights_list.waiter'></md-option>
+                      <md-option value='restaurant_manager' translate='settings.employees.rights_list.restaurant_manager'></md-option>
+                      <md-option value='backoffice_manager' translate='settings.employees.rights_list.backoffice_manager'></md-option>
+                      <md-option value='owner' translate='settings.employees.rights_list.owner'></md-option>
+                    </md-select>
+                  </md-input-container>
+                </form>
+            </td>
+            <td class='v-middle text-right' ng-if='ctrl.isOwner'>
               <md-menu>
                   <button md-ink-ripple
                         class='md-btn md-fab no-shadow'
@@ -27,8 +43,8 @@
                   </button>
                   <md-menu-content>
                     <md-menu-item>
-                      <md-button ng-click='ctrl.editEmployee(employee.id)'
-                                 translate='settings.employees.edit'></md-button>
+                      <md-button ng-click='ctrl.destroyEmployee(employee)'
+                                 translate='settings.employees.remove'></md-button>
                     </md-menu-item>
                   </md-menu-content>
                 </md-menu>
@@ -39,6 +55,7 @@
     </div>
     <div class='panel-footer'>
       <button md-ink-ripple
+              ng-show='ctrl.isOwner'
               class='md-btn md-flat btn-fw text-success'
               ng-click='ctrl.addEmployee();'>
         <i class='mdi mdi-plus-circle'></i>

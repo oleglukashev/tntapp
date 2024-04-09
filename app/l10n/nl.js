@@ -4,6 +4,7 @@ export default {
     analytics: 'Analytics',
     calendar: 'Agenda',
     customers: 'Profielen',
+    leads: 'Leads',
   },
   weekdays: {
     mon: 'Maandag',
@@ -55,6 +56,7 @@ export default {
     request: 'Aanvraag',
     present: 'Aanwezig',
     delayed: 'Niet aanwezig',
+    lead: 'Lead',
     cancelled: 'Geannuleerd',
   },
   filter_settings: {
@@ -134,6 +136,25 @@ export default {
     average_seating_per_month: 'Gemiddelde bezettingstijd per maand/notulen',
     product_integrations: 'Hardlopers',
   },
+  leads: {
+    options_title: {
+      quotation: 'Offerte',
+      last_contact: 'Laatste contact',
+      signed: 'Getekend',
+      remarks: 'Opmerkingen',
+      type: 'Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+    },
+    types: {
+      drinks: 'Borrel',
+      wedding: 'Bruiloft',
+      dinner: 'Diner',
+      party: 'Feest',
+      gala: 'Gala',
+      lunch: 'Lunch',
+      meeting: 'Vergadering',
+      other: 'Overig',
+    },
+  },
   notifications: {
     settings_escape: 'Het huidige werk is niet afgerond en wordt daarom niet opgeslagen',
     no_reservations_today_more: 'Vandaag nemen wij online geen reserveringen meer aan. Neem telefonisch contact met ons op',
@@ -198,6 +219,12 @@ export default {
       edit: 'Medewerker bewerken',
       rights: 'Beheers rechten',
       remove: 'Profiel verwijderen',
+      rights_list: {
+        waiter: 'Bediening',
+        restaurant_manager: 'Restaurant manager',
+        backoffice_manager: 'Backoffice manager',
+        owner: 'Eigenaar'
+      }
     },
     general: {
       title: 'Algemeen',

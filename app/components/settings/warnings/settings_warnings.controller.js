@@ -14,7 +14,13 @@ export default class Controller {
 
     this.warnings = [];
 
-    this.loadWarningsSettings();
+    this.userIsManager = User.isManager.bind(User);
+    if (this.userIsManager()) {
+      this.loadWarningsSettings();
+    } else {
+      // no access
+      window.location.href = '/';
+    }
 
     this.is_loaded = false;
   }

@@ -279,29 +279,60 @@ export default class User {
       });
   }
 
-  isOwnerOrManager() {
+  isManager() {
     let result = false;
 
     if (this.isOwner()) {
       result = true;
     }
 
-    if (this.isManager()) {
+    if (this.isRestaurantManager()) {
+      result = true;
+    }
+
+    if (this.isBackofficeManager()) {
       result = true;
     }
 
     return result;
   }
 
+
+
   isOwner() {
+    let result = false;
+
+    if (this.getCompanyId() && this.current) {
+      if (this.current.company_roles &&
+        this.current.company_roles.length) {
+        this.current.company_roles.forEach((role) => {
+          if (role.company.id === this.getCompanyId() && role.name === 'owner') {
+            result = true;
+          }
+        });
+      }
+
+      if (this.current.owned_companies.length) {
+        this.current.owned_companies.forEach((company) => {
+          if (company.id === this.getCompanyId()) {
+            result = true;
+          }
+        });
+      }
+    }
+
+    return result;
+  }
+
+  isRestaurantManager() {
     let result = false;
 
     if (this.getCompanyId() &&
       this.current &&
-      this.current.owned_companies.length) {
-
-      this.current.owned_companies.forEach((company) => {
-        if (company.id === this.getCompanyId()) {
+      this.current.company_roles &&
+      this.current.company_roles.length) {
+      this.current.company_roles.forEach((role) => {
+        if (role.company.id === this.getCompanyId() && role.name === 'restaurant_manager') {
           result = true;
         }
       });
@@ -310,15 +341,15 @@ export default class User {
     return result;
   }
 
-  isManager() {
+  isBackofficeManager() {
     let result = false;
 
     if (this.getCompanyId() &&
       this.current &&
+      this.current.company_roles &&
       this.current.company_roles.length) {
-
       this.current.company_roles.forEach((role) => {
-        if (role.company.id === this.getCompanyId() && role.manage_access) {
+        if (role.company.id === this.getCompanyId() && role.name === 'backoffice_manager') {
           result = true;
         }
       });

@@ -21,12 +21,18 @@ export default angular.module('app.constants', [])
       'delayed',
       'cancelled',
     ],
+    leadReservationStatuses: [
+      'confirmed',
+      'lead',
+      'cancelled',
+    ],
     reservationDutchStatuses: {
       confirmed: 'Bevestigd',
       request: 'Aanvraag',
       present: 'Aanwezig',
       delayed: 'Niet aanwezig',
       cancelled: 'Geannuleerd',
+      lead: 'Lead',
     },
     reservationEnglishStatuses: {
       'Bevestigd': 'confirmed',
@@ -34,6 +40,16 @@ export default angular.module('app.constants', [])
       'Aanwezig': 'present',
       'Niet aanwezig': 'delayed',
       'Geannuleerd': 'cancelled',
+    },
+    leadTypes: {
+      drinks: 'drinks',
+      wedding: 'wedding',
+      dinner: 'dinner',
+      party: 'party',
+      gala: 'gala',
+      lunch: 'lunch',
+      meeting: 'meeting',
+      other: 'other',
     },
     reservationStatusClasses: {
       confirmed: 'mdi-checkbox-blank-circle-outline',
@@ -43,6 +59,7 @@ export default angular.module('app.constants', [])
       present: 'mdi-check',
       paid: 'mdi-currency-usd',
       unpaid: 'mdi-currency-usd-off',
+      lead: 'mdi-timer-sand',
       delayed: 'mdi-exclamation',
     },
     letterOfWeek: ['Z', 'M', 'D', 'W', 'D', 'V', 'Z'],

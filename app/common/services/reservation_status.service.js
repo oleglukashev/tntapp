@@ -92,6 +92,7 @@ export default class ReservationStatus {
       'mdi-clock': 'orange-500',
       'mdi-currency-usd': 'green-500',
       'mdi-currency-usd-off': 'red-500',
+      'mdi-timer-sand': 'blue-600',
     };
 
     return colors[icon];

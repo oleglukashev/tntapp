@@ -266,6 +266,46 @@
                           {{ part.notes.new }}
                           /
                         </span>
+                        <span ng-if='part.quotation.new'>
+                          {{ 'quotation' | translate }}:
+                          <span ng-if='part.quotation.old'>
+                            {{ part.quotation.old }} -> 
+                          </span>
+                          {{ part.quotation.new }}
+                          /
+                        </span>
+                        <span ng-if='part.lastContact.new'>
+                          {{ 'last_contact' | translate }}:
+                          <span ng-if='part.lastContact.old'>
+                            {{ part.last_contact.old }} -> 
+                          </span>
+                          {{ part.last_contact.new }}
+                          /
+                        </span>
+                        <span ng-if='part.signed.new'>
+                          {{ 'signed' | translate }}:
+                          <span ng-if='part.signed.old'>
+                            {{ part.signed.old }} -> 
+                          </span>
+                          {{ part.signed.new }}
+                          /
+                        </span>
+                        <span ng-if='part.remark.new'>
+                          {{ 'remark' | translate }}:
+                          <span ng-if='part.remark.old'>
+                            {{ part.remark.old }} -> 
+                          </span>
+                          {{ part.remark.new }}
+                          /
+                        </span>
+                        <span ng-if='part.lead_type.new'>
+                          {{ 'lead_type' | translate }}:
+                          <span ng-if='part.lead_type.old'>
+                            {{ part.lead_type.old }} -> 
+                          </span>
+                          {{ part.lead_type.new }}
+                          /
+                        </span>
                       </small>
                     </div>
                   </div>

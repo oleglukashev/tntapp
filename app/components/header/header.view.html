@@ -14,16 +14,16 @@
 <!-- navbar collapse -->
 <div class='collapse navbar-collapse'>
   <div class='header-logo pull-left'>
-    <a href='#'></a>
+    <a ui-sref='app.dashboard'></a>
   </div>
   <div class='header-menu'>
     <md-tabs md-no-ink='true'
              class='header-menu-wrapper'
              ng-click='ctrl.hideRightSidebar()'>
       <md-tab md-active='ctrl.isDiactiveState()'></md-tab>
-      <md-tab md-active='ctrl.isActiveState("app.dashboard")' ui-sref='app.dashboard'>
+      <!-- <md-tab md-active='ctrl.isActiveState("app.dashboard")' ui-sref='app.dashboard'>
         <translate>top_menu.dashboard</translate>
-      </md-tab>
+      </md-tab> -->
       <md-tab md-active='ctrl.isActiveState("app.analytics")' ui-sref='app.analytics'>
         <translate>top_menu.analytics</translate>
       </md-tab>
@@ -32,6 +32,9 @@
       </md-tab>
       <md-tab md-active='ctrl.isActiveState("app.customers")' ui-sref='app.customers'>
         <translate>top_menu.customers</translate>
+      </md-tab>
+      <md-tab ng-if='ctrl.userIsManager()' md-active='ctrl.isActiveState("app.leads")' ui-sref='app.leads'>
+        <translate>top_menu.leads</translate>
       </md-tab>
     </md-tabs>
   </div>

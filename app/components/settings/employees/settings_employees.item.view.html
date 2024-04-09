@@ -48,9 +48,17 @@
               </md-input-container>
             </div>
             <div class='md-form-group'>
-              <md-checkbox ng-model="ctrl.item.manage_access" aria-label='Beheers rechten'>
-                {{ 'settings.employees.rights' | translate }}
-              </md-checkbox>
+              <md-input-container class='no-margin p-t-none'>
+                <label translate='role'></label>
+                <md-select class='pull-left'
+                           name='name'
+                           ng-model='ctrl.item.name'>
+                  <md-option value='waiter' translate='settings.employees.rights_list.waiter'></md-option>
+                  <md-option value='restaurant_manager' translate='settings.employees.rights_list.restaurant_manager'></md-option>
+                  <md-option value='backoffice_manager' translate='settings.employees.rights_list.backoffice_manager'></md-option>
+                  <md-option value='owner' translate='settings.employees.rights_list.owner'></md-option>
+                </md-select>
+              </md-input-container>
             </div>
             <p ng-if='ctrl.item.id'>
               <span class='text-danger uppercase'

@@ -31,6 +31,8 @@ export default angular.module('newReservation', [
     template: view,
     bindings: {
       type: '@',
+      isGroup: '@',
+      isLead: '=',
       isSuccess: '=',
       tabIndex: '=',
       settings: '<',

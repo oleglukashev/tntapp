@@ -48,7 +48,8 @@
                     ng-click='ctrl.triggerChooseNumberOfPersons();ctrl.selectTab({ index: ctrl.pagination.number_of_persons});'>Ok</button>
           </div>
           <div class='md-form-group no-padder' ng-if='ctrl.type !== "customer"'>
-            <md-checkbox ng-model="ctrl.reservation.is_group"
+            <md-checkbox ng-checked="ctrl.reservation.is_group"
+                         ng-model="ctrl.reservation.is_group"
                          ng-change='ctrl.changeIsGroupPostProcess()'
                          aria-label="Group?">
               {{ 'reservation.group' | translate }}?

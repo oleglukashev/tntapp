@@ -24,14 +24,22 @@ export default class Controller {
     };
 
     this.is_loaded = false;
-    $q.all([
-      this.Settings.getGeneralSettings(this.current_company_id),
-      this.Settings.getEmailsSettings(this.current_company_id),
-    ]).then((result) => {
-      this.is_loaded = true;
-      this.initGeneralSettings(result[0]);
-      this.initEmailSettings(result[1]);
-    });
+
+
+    this.userIsManager = User.isManager.bind(User);
+    if (this.userIsManager()) {
+      $q.all([
+        this.Settings.getGeneralSettings(this.current_company_id),
+        this.Settings.getEmailsSettings(this.current_company_id),
+      ]).then((result) => {
+        this.is_loaded = true;
+        this.initGeneralSettings(result[0]);
+        this.initEmailSettings(result[1]);
+      });
+    } else {
+      // no access
+      window.location.href = '/';
+    }
   }
 
   initGeneralSettings(generalSettings) {

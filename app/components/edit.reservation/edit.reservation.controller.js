@@ -395,7 +395,12 @@ export default class EditReservationCtrl {
         currentNumberOfPersons,
         currentProduct,
         currentStatus,
-        currentNotes;
+        currentNotes,
+        currentQuotation,
+        currentSigned,
+        currentLastContact,
+        currentRemark,
+        currentLeadType;
     this.historyParts.forEach((historyPart) => {
       if (historyPart.type === 'create') {
         formattedhistoryHash.push({
@@ -423,6 +428,26 @@ export default class EditReservationCtrl {
             old: null,
             new: historyPart.notes,
           },
+          quotation: {
+            old: null,
+            new: historyPart.quotation,
+          },
+          signed: {
+            old: null,
+            new: historyPart.signed,
+          },
+          lastContact: {
+            old: null,
+            new: historyPart.last_contact,
+          },
+          remark: {
+            old: null,
+            new: historyPart.remark,
+          },
+          lead_type: {
+            old: null,
+            new: historyPart.lead_type,
+          },
           type: historyPart.type,
           user_id: historyPart.user_id,
           author_name: historyPart.author_name,
@@ -434,6 +459,11 @@ export default class EditReservationCtrl {
         currentProduct = historyPart.product;
         currentStatus = historyPart.status;
         currentNotes = historyPart.notes;
+        currentQuotation = historyPart.quotation;
+        currentSigned = historyPart.signed;
+        currentLastContact = historyPart.last_contact ? this.moment(historyPart.last_contact).format('YYYY-MM-DD') : null;
+        currentRemark = historyPart.remark;
+        currentLeadType = historyPart.lead_type;
       } else {
         const hash = {};
         if (historyPart.date_time) {
@@ -477,6 +507,42 @@ export default class EditReservationCtrl {
             new: historyPart.notes,
           }
           currentNotes = historyPart.notes;
+        }
+        if (historyPart.quotation != currentQuotation) {
+          hash.quotation = {
+            old: currentQuotation,
+            new: historyPart.quotation,
+          }
+          currentQuotation = historyPart.quotation;
+        }
+        if (historyPart.signed != currentSigned) {
+          hash.signed = {
+            old: currentSigned,
+            new: historyPart.signed,
+          }
+          currentSigned = historyPart.signed;
+        }
+        const formLastContact = historyPart.last_contact ? this.moment(historyPart.last_contact).format('YYYY-MM-DD') : null;
+        if (formLastContact != currentLastContact) {
+          hash.last_contact = {
+            old: currentLastContact ? this.moment(currentLastContact).format('YYYY-MM-DD') : null,
+            new: historyPart.last_contact ? this.moment(historyPart.last_contact).format('YYYY-MM-DD') : null,
+          }
+          currentLastContact = formLastContact;
+        }
+        if (historyPart.remark != currentRemark) {
+          hash.remark = {
+            old: currentRemark,
+            new: historyPart.remark,
+          }
+          currentRemark = historyPart.remark;
+        }
+        if (historyPart.lead_type != currentLeadType) {
+          hash.lead_type = {
+            old: currentLeadType,
+            new: historyPart.lead_type,
+          }
+          currentLeadType = historyPart.lead_type;
         }
         hash.type = historyPart.type;
         hash.user_id = historyPart.user_id;

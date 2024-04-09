@@ -9,7 +9,7 @@ export default class Controller {
     this.$stateParams = $stateParams;
     this.$window = $window;
 
-    if (this.$state.current.name.indexOf('app.settings') >= 0 && !User.isOwnerOrManager()) {
+    if (this.$state.current.name.indexOf('app.settings') >= 0 && !User.isManager()) {
       this.$state.go('app.dashboard');
     }
 

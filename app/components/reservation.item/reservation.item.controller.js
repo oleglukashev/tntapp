@@ -1,18 +1,26 @@
 import toSnakeCase from 'to-snake-case';
 
 export default class DashboardReservationItemCtrl {
-  constructor(UserMenu, ReservationStatus, AppConstants, $mdSidenav, $uibModal) {
+  constructor(User, UserMenu, ReservationStatus, Reservation, AppConstants, moment, $mdSidenav, $uibModal) {
     'ngInject';
 
     this.UserMenu = UserMenu;
+    this.current_company_id = User.getCompanyId();
     this.AppConstants = AppConstants;
     this.ReservationStatus = ReservationStatus;
+    this.Reservation = Reservation;
     this.$mdSidenav = $mdSidenav;
     this.$uibModal = $uibModal;
+    this.moment = moment;
 
     this.statuses = AppConstants.reservationStatuses;
+    this.lead_statuses = AppConstants.leadReservationStatuses;
     this.dutch_statuses = AppConstants.reservationDutchStatuses;
     this.status_icon = AppConstants.reservationStatusClasses;
+
+    this.User = User;
+
+    this.isOwnerOrBackofficeManager = this.User.isOwner() || this.User.isBackofficeManager();
 
     this.$onInit = () => {
       this.customer_id = this.data.reservation.customer ? this.data.reservation.customer.id : null
@@ -83,5 +91,15 @@ export default class DashboardReservationItemCtrl {
 
   getAllergyClass(name) {
     return this.AppConstants.allergyClasses[toSnakeCase(name)];
+  }
+
+  updateReservation() {
+    this.Reservation.update(this.current_company_id, this.data.reservation.id, {
+      remark: this.data.reservation.remark,
+      quotation: this.data.reservation.quotation,
+      last_contact: this.moment(this.data.reservation.last_contact).format('YYYY-MM-DD'),
+      signed: this.data.reservation.signed,
+      lead_type: this.data.reservation.lead_type,
+    })
   }
 }

@@ -595,7 +595,7 @@ export default class Controller {
   loadReservations() {
     this.reservations = [];
     const date = this.moment(this.date_filter).format('YYYY-MM-DD');
-    this.Reservation.getAll(this.current_company_id, date)
+    this.Reservation.getAll(this.current_company_id, date, false)
       .then((result) => {
         this.is_loaded = true;
         this.$rootScope.show_spinner = false;

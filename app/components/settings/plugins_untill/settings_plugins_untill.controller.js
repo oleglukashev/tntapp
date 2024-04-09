@@ -8,7 +8,14 @@ export default class Controller {
     this.$rootScope = $rootScope;
     this.$state = $state;
     this.is_loaded = false;
-    this.loadUntillSettings();
+
+    this.userIsManager = User.isManager.bind(User);
+    if (this.userIsManager()) {
+      this.loadUntillSettings();
+    } else {
+      // no access
+      window.location.href = '/';
+    }
   }
 
   loadUntillSettings() {

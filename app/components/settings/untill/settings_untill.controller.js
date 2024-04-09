@@ -18,7 +18,14 @@ export default class Controller {
     this.per_page = 5;
 
     this.is_loaded = false;
-    this.loadTables();
+
+    this.userIsManager = User.isManager.bind(User);
+    if (this.userIsManager()) {
+      this.loadTables();
+    } else {
+      // no access
+      window.location.href = '/';
+    }
   }
 
   updateTable(table, untill_table_id) {

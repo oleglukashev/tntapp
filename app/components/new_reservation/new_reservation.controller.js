@@ -40,6 +40,12 @@ export default class Controller {
     this.current_index = 0;
 
     this.$onInit = () => {
+      if (this.isGroup) {
+        this.reservation.is_group = this.isGroup;
+      }
+      if (this.isLead) {
+        this.reservation.is_lead = this.isLead;
+      }
       if (this.type === 'customer') {
         this.current_company_id = $stateParams.id;
         this.pagination = this.Reservation.pagination.customer;
@@ -133,6 +139,7 @@ export default class Controller {
       household_confirmation: this.reservation.household_confirmation,
       notes: this.reservation.notes,
       is_group: this.reservation.is_group,
+      is_lead: this.reservation.is_lead,
       company_name: this.reservation.company_name,
       repeat_type: this.reservation.repeat_type,
       repeat_end_date: this.reservation.repat_end_date ? `${this.moment(this.reservation.repat_end_date).format('DD-MM-YYYY')} 23:59` : null,
@@ -267,12 +274,14 @@ export default class Controller {
   }
 
   getReservationSamlpe() {
+    console.log(this.isGroup);
     return {
       country: 'NL',
       language: this.$translate.proposedLanguage().toUpperCase() || 'NL',
       gender: 'Man',
       social: 'email',
       is_group: false,
+      is_lead: false,
       repeat: false,
       send_confirmation: true,
       household_confirmation: true,

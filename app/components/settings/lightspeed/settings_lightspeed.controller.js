@@ -17,9 +17,16 @@ export default class Controller {
     this.lightspeed_tables = {};
 
     this.is_loaded = false;
-    this.loadGeneralSettings();
-    this.loadTables();
-    this.loadLightspeedTables();
+
+    this.userIsManager = User.isManager.bind(User);
+    if (this.userIsManager()) {
+      this.loadGeneralSettings();
+      this.loadTables();
+      this.loadLightspeedTables();
+    } else {
+      // no access
+      window.location.href = '/';
+    }
   }
 
   submitForm() {

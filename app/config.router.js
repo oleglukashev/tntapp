@@ -98,7 +98,20 @@ export default function routes($stateProvider, $urlRouterProvider, $locationProv
       }
     })
 
+    // LEADS
+    .state('app.leads', {
+      url: '/leads',
+      component: 'leads',
+      lazyLoad: ($transition$) => {
+        const $ocLazyLoad = $transition$.injector().get("$ocLazyLoad");
 
+        return import(/* webpackChunkName: "leads.module" */ "./components/leads")
+          .then(mod => $ocLazyLoad.load({ name: 'leads' }))
+          .catch(err => {
+            throw new Error("Ooops, something went wrong, " + err);
+          });
+      }
+    })
 
     // AUTH
     .state('auth', {

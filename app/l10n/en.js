@@ -4,6 +4,7 @@ export default {
     analytics: 'Analytics',
     calendar: 'Calendar',
     customers: 'Customers',
+    leads: 'Leads',
   },
   weekdays: {
     mon: 'Monday',
@@ -55,6 +56,7 @@ export default {
     request: 'Request',
     present: 'Present',
     delayed: 'Delayed',
+    lead: 'Lead',
     cancelled: 'Cancelled',
   },
   filter_settings: {
@@ -134,6 +136,25 @@ export default {
     average_seating_per_month: 'Average seating time per month/minutes',
     product_integrations: 'Best sellers',
   },
+  leads: {
+    options_title: {
+      quotation: 'Quotation',
+      last_contact: 'Last contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+      signed: 'Signed&nbsp;&nbsp;',
+      remarks: 'Remarks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+      type: 'Type',
+    },
+    types: {
+      drinks: 'Drinks',
+      wedding: 'Wedding',
+      dinner: 'Dinner',
+      party: 'Party',
+      gala: 'Gala',
+      lunch: 'Lunch',
+      meeting: 'Meeting',
+      other: 'Other',
+    },
+  },
   notifications: {
     settings_escape: 'Your current settings are not finished and therefore will not be saved',
     no_reservations_today_more: 'Today we do not take any online reservations. Please contact us by phone',
@@ -198,6 +219,12 @@ export default {
       edit: 'Edit employee',
       rights: 'Management rights',
       remove: 'Delete profile',
+      rights_list: {
+        waiter: 'Waiter',
+        restaurant_manager: 'Restaurant manager',
+        backoffice_manager: 'Backoffice manager',
+        owner: 'Owner'
+      }
     },
     general: {
       title: 'General',

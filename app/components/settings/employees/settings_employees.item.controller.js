@@ -4,6 +4,13 @@ export default class Controller {
 
     this.current_company_id = User.getCompanyId();
     this.item = item;
+
+    if (!this.item) {
+      this.item = {
+        name: 'waiter',
+      };
+    }
+
     this.items = items;
     this.Employee = Employee;
     this.$modalInstance = $uibModalInstance;
@@ -11,11 +18,7 @@ export default class Controller {
   }
 
   submitForm() {
-    if (this.item.id) {
-      this.updateEmployee();
-    } else {
-      this.createEmployee();
-    }
+    this.createEmployee();
   }
 
   closeModal() {
@@ -24,7 +27,7 @@ export default class Controller {
 
   createEmployee() {
     const data = {
-      manage_access: this.item.manage_access,
+      name: this.item.name,
       email: this.item.email,
       last_name: this.item.last_name,
       first_name: this.item.first_name,
@@ -38,29 +41,6 @@ export default class Controller {
           this.is_submitting = false;
           this.$rootScope.show_spinner = false;
           this.items.push(employee);
-          this.$modalInstance.dismiss('cancel');
-        },
-        (error) => {
-          this.is_submitting = false;
-          this.$rootScope.show_spinner = false;
-          this.errors = error.data.errors;
-        },
-      );
-  }
-
-  updateEmployee() {
-    this.is_submitting = true;
-    this.$rootScope.show_spinner = true;
-
-    const data = {
-      manage_access: this.item.manage_access,
-    };
-
-    this.Employee
-      .update(this.current_company_id, this.item.id, data).then(
-        () => {
-          this.is_submitting = false;
-          this.$rootScope.show_spinner = false;
           this.$modalInstance.dismiss('cancel');
         },
         (error) => {

@@ -42,6 +42,25 @@ export default class Reservation {
     }).then(result => result.data);
   }
 
+  getAllLeads(companyId, dataRange, skipJwtAuth) {
+    const deferred = this.$q.defer();
+
+    if (!companyId) {
+      return deferred.promise;
+    }
+
+    let dateParam = '';
+    if (dataRange) {
+      dateParam = `from=${dataRange[0]}&to=${dataRange[1]}`;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/reservation/lead?${dateParam}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'GET',
+    }).then(result => result.data);
+  }
+
   getHistory(companyId, reservationId, skipJwtAuth) {
     const deferred = this.$q.defer();
 
