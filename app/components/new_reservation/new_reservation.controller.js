@@ -45,6 +45,7 @@ export default class Controller {
       }
       if (this.isLead) {
         this.reservation.is_lead = this.isLead;
+        this.reservation.send_confirmation = false;
       }
       if (this.type === 'customer') {
         this.current_company_id = $stateParams.id;

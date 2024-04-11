@@ -70,7 +70,7 @@
               </md-radio-button>
             </md-radio-group>
           </div>
-          <div ng-if='ctrl.type !== "customer"' class='md-form-group no-padder'>
+          <div ng-if='ctrl.type !== "customer" || !ctrl.reservation.is_lead' class='md-form-group no-padder'>
             <md-checkbox ng-model='ctrl.reservation.send_confirmation'
                          ng-checked='true'
                          aria-label='{{ "mail_confirmation" | translate }}'>
