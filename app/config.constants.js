@@ -49,6 +49,7 @@ export default angular.module('app.constants', [])
       gala: 'gala',
       lunch: 'lunch',
       meeting: 'meeting',
+      promotion: 'promotion',
       other: 'other',
     },
     reservationStatusClasses: {

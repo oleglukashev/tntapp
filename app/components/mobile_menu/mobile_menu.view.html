@@ -69,6 +69,19 @@
         </div>
       </div>
 
+      <div class='inset' ng-if='ctrl.userIsManager()'>
+        <div class='md-list-item-left'>
+          <i class='mdi mdi-calendar icon-muted i-24'></i>
+        </div>
+        <div class='md-list-item-content mt-8'>
+          <a
+            class='text-md'
+            ng-click='ctrl.closeMenu()'
+            ui-sref='app.leads'
+            translate='top_menu.leads'></a>
+        </div>
+      </div>
+
     </ul>
   </md-content>
 </md-sidenav>

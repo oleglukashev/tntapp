@@ -152,6 +152,7 @@ export default {
       gala: 'Gala',
       lunch: 'Lunch',
       meeting: 'Meeting',
+      promotion: 'Promotion',
       other: 'Other',
     },
   },
