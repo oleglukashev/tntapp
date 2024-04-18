@@ -17,6 +17,7 @@ export default class Controller {
     this.date_range_filter = {
       selectedTemplate: 'TM',
     }
+    this.source = 'leads';
 
     PageFilterFactory(this);
 

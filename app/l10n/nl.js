@@ -45,6 +45,8 @@ export default {
     reservation: 'Reserveringen',
     time_asc: 'Tijd oplopend',
     time_desc: 'Tijd aflopend',
+    date_asc: 'Datum oplopend',
+    date_desc: 'Datum aflopend',
     guests_asc: 'Aantal personen oplopend',
     guests_desc: 'Aantal personen aflopend',
     status: 'Status',

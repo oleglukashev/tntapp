@@ -24,12 +24,12 @@
 
 
   .header-menu
-    width 500px
+    width 540px
     float left
     overflow hidden
 
     md-tabs.header-menu-wrapper
-      width 530px
+      //width 530px
 
       md-tabs-canvas
         height header-menu-tab-height
@@ -40,7 +40,6 @@
           md-tab-item
             transition all .3s ease-in-out
             height header-menu-tab-height
-            margin-left 26px
             line-height 52px
             padding 10px 15px
             font-weight bold
@@ -55,7 +54,7 @@
 
   @media (min-width 768px)
     .header-menu
-      width 500px
+      //width 500px
 
   @media (max-width 962px)
     .navbar-right
@@ -186,7 +185,9 @@
         .dropdown-menu
           display block
 
-
+  .header-deskt
+    margin-left 15px
+    margin-right 15px
   .header-mobile
     .header-mobile__config,
     .header-mobile__menu
@@ -201,6 +202,9 @@
 
       i
         font-size 25px
+
+    &.navbar-header
+      width 100%
 
     .navbar-nav
       margin 0

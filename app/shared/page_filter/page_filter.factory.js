@@ -12,6 +12,7 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     instance.status_filter_params = [];
     instance.product_filter = [];
     instance.status_filter = [];
+    console.log(instance.source);
 
     instance.sort_params = [{
       name: 'name_a_z',
@@ -29,12 +30,12 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
       reverse: false,
     },
     {
-      name: 'time_asc',
+      name: instance.source === 'leads' ? 'date_asc' : 'time_asc',
       value: 'time',
       reverse: false,
     },
     {
-      name: 'time_desc',
+      name: instance.source === 'leads' ? 'date_desc' : 'time_desc',
       value: 'time',
       reverse: true,
     },
@@ -59,7 +60,19 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
       reverse: false,
     }];
 
-    instance.status_filter_params = [{
+    instance.status_filter_params = instance.source === 'leads' ? [{
+      name: 'status',
+      value: 'confirmed',
+      translate: 'confirmed', // don't mix with value
+    }, {
+      name: 'status',
+      value: 'lead',
+      translate: 'lead',
+    }, {
+      name: 'status',
+      value: 'cancelled',
+      translate: 'cancelled',
+    }] : [{
       name: 'status',
       value: 'confirmed',
       translate: 'confirmed', // don't mix with value

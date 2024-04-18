@@ -1,18 +1,17 @@
 <!-- navbar header -->
-<div class='header-mobile navbar-header visible-xs'>
+<div class='header-mobile navbar-header visible-xs visible-sm'>
   <button
-    class='header-mobile__menu pull-left visible-xs'
+    class='header-mobile__menu pull-left'
     ng-click='ctrl.openMobileMenu()'>
     <i class='mdi mdi-format-align-justify'></i>
   </button>
   <!-- brand -->
-
   <header-user-menu></header-user-menu>
 </div>
 <!-- / navbar header -->
 
 <!-- navbar collapse -->
-<div class='collapse navbar-collapse'>
+<div class='navbar-collapse hidden-xs hidden-sm'>
   <div class='header-logo pull-left'>
     <a ui-sref='app.dashboard'></a>
   </div>
@@ -21,9 +20,9 @@
              class='header-menu-wrapper'
              ng-click='ctrl.hideRightSidebar()'>
       <md-tab md-active='ctrl.isDiactiveState()'></md-tab>
-      <!-- <md-tab md-active='ctrl.isActiveState("app.dashboard")' ui-sref='app.dashboard'>
+      <md-tab md-active='ctrl.isActiveState("app.dashboard")' ui-sref='app.dashboard'>
         <translate>top_menu.dashboard</translate>
-      </md-tab> -->
+      </md-tab>
       <md-tab md-active='ctrl.isActiveState("app.analytics")' ui-sref='app.analytics'>
         <translate>top_menu.analytics</translate>
       </md-tab>
@@ -38,11 +37,7 @@
       </md-tab>
     </md-tabs>
   </div>
-
-<!--   <div data-ng-include=" 'header.right_menu.view.html' "></div>-->
   <header-user-menu></header-user-menu>
-
   <header-search></header-search>
-  <!-- <div data-ng-include=" 'header_search.view.html' " ng-controller='HeaderSearchCtrl as search'></div> -->
 </div>
 <!-- / navbar collapse -->

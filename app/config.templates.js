@@ -17,5 +17,6 @@ export default function templates($templateCache) {
   $templateCache.put('page_filter.profile_settings.view.html', require('./shared/page_filter/page_filter.profile_settings.view.html'));
   $templateCache.put('page_filter.search_settings.view.html', require('./shared/page_filter/page_filter.search_settings.view.html'));
   $templateCache.put('page_filter.filter.view.html', require('./shared/page_filter/page_filter.filter.view.html'));
+  $templateCache.put('page_filter.lead.filter.view.html', require('./shared/page_filter/page_filter.lead.filter.view.html'));
   $templateCache.put('page_filter.sort.view.html', require('./shared/page_filter/page_filter.sort.view.html'));
 }

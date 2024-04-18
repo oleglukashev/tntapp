@@ -45,6 +45,8 @@ export default {
     reservation: 'Reservation',
     time_asc: 'Time ascending',
     time_desc: 'Time descending',
+    date_asc: 'Date ascending',
+    date_desc: 'Date descending',
     guests_asc: 'Number of guests ascending',
     guests_desc: 'Number of guests descending',
     status: 'Status',
