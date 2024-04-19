@@ -80,17 +80,24 @@ export default class User {
 
   getCompanies() {
     let result = [];
+    const resultIds = [];
 
     if (!this.current) {
       return result;
     }
 
     for (let company_data of this.current.company_roles) {
-      result.push(company_data.company);
+      if (!resultIds.includes(company_data.company.id)) {
+        result.push(company_data.company);
+        resultIds.push(company_data.company.id);
+      }
     }
 
     for (let company of this.current.owned_companies) {
-      result.push(company);
+      if (!resultIds.includes(company.id)) {
+        result.push(company);
+        resultIds.push(company.id);
+      }
     }
 
     return result;
