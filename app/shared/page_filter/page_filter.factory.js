@@ -12,7 +12,6 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     instance.status_filter_params = [];
     instance.product_filter = [];
     instance.status_filter = [];
-    console.log(instance.source);
 
     instance.sort_params = [{
       name: 'name_a_z',
