@@ -37,6 +37,7 @@ export default class ReservationItem {
       icon,
       product_name: part.product ? part.product.name : undefined,
       date_time: this.moment(part.date_time).format('DD.MM.YYYY HH:mm'),
+      sort_date_time: this.moment(part.date_time).format('YYYY.MM.DD HH:mm'),
       date: this.moment(part.date_time).format('DD.MM.YYYY'),
       time: this.moment(part.date_time).format('HH:mm'),
       number_of_persons: part.number_of_persons,

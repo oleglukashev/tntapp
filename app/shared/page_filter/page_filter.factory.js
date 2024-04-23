@@ -30,12 +30,12 @@ export default function PageFilterFactory(AppConstants, Reservation, Customer,
     },
     {
       name: instance.source === 'leads' ? 'date_asc' : 'time_asc',
-      value: instance.source === 'leads' ? 'date' : 'time',
+      value: instance.source === 'leads' ? 'sort_date_time' : 'time',
       reverse: false,
     },
     {
       name: instance.source === 'leads' ? 'date_desc' : 'time_desc',
-      value: instance.source === 'leads' ? 'date' : 'time',
+      value: instance.source === 'leads' ? 'sort_date_time' : 'time',
       reverse: true,
     },
     {
