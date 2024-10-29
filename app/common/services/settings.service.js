@@ -257,12 +257,15 @@ export default class Settings {
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then((result) => {
-      const anchor = angular.element('<a/>');
-      anchor.attr({
-        href: `data:attachment/csv;charset=utf-8,${encodeURI(result.data)}`,
-        target: '_blank',
-        download: 'export.csv',
-      })[0].click();
+      const blob = new Blob([result.data], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", "export.csv");
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     });
   }
 }
