@@ -276,6 +276,7 @@ export default {
       email_after_visit: 'Mail after visit',
       email_after_visit_description: 'Provide the number of hours after a visit you want to send an email',
       email_after_visit_hours_delay: 'Send mail X hours after visit',
+      send_mail_after_visit_positive_link: 'Email after visit green smiley link',
       following_placeholders: 'The next placeholders can be used in email templates:',
       netherlands: 'Dutch mails',
       english: 'English mails',
