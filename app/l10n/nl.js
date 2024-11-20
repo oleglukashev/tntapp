@@ -194,6 +194,13 @@ export default {
     particularities: 'Bijzonderheden',
     pick_date: 'Kies een datum',
     sender_email_text: 'Email adres is bevestigd. We dit adres om mails te versturen',
+    guest_satisfactions: {
+      title: 'Tevredenheid van gasten (vorige week)',
+      all: 'All',
+      negative: 'Negative',
+      neutral: 'Neutral',
+      positive: 'Positive',
+    }
   },
   language: {
     netherlands: 'Nederlands',

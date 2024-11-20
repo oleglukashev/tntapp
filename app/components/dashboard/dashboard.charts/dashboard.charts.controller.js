@@ -20,6 +20,7 @@ export default class DashboardChartsCtrl {
       this.charts.getPercent = Charts.getPercent;
       this.guests_with_repeats = this.reservations.guests_with_repeats;
       this.guests_with_allergies = this.reservations.guests_with_allergies;
+      this.guest_satisfactions = this.reservations.guest_satisfactions;
     }
   }
 

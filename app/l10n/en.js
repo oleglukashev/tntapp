@@ -194,6 +194,13 @@ export default {
     particularities: 'Particularities',
     pick_date: 'Pick a date',
     sender_email_text: 'Email was confirmed. We will use it for mail delivery',
+    guest_satisfactions: {
+      title: 'Guest satisfaction (last week)',
+      all: 'Alle',
+      negative: 'Negatief',
+      neutral: 'Neutrale',
+      positive: 'Positief',
+    }
   },
   language: {
     netherlands: 'Netherlands',

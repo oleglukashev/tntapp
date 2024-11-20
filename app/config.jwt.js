@@ -2,7 +2,7 @@ export default function Config($httpProvider, jwtOptionsProvider) {
   'ngInject';
 
   jwtOptionsProvider.config({
-    whiteListedDomains: ['tnt.me', 'deroohorecagroep.nl'],
+    whiteListedDomains: ['localhost', 'tnt.me', 'deroohorecagroep.nl'],
     tokenGetter: ['options', 'jwtHelper', '$http', 'JWT', '$state', 'moment', 'User',
       (options, jwtHelper, $http, JWT, $state, moment, User) => {
       // Skip authentication for any requests ending in .html
