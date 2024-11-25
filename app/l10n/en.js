@@ -344,6 +344,7 @@ export default {
         google_cal_link: '%GOOGLE_CAL_LINK%',
         tnr_link: '%TNRLINK%',
         payment: '%PAYMENT% (for customer bookings only)',
+        guest_satisfaction: '%GUEST_SATISFACTION%'
       },
     },
     products: {
