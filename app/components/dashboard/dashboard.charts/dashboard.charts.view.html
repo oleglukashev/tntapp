@@ -130,3 +130,27 @@
     </div>
   </div>
 </div>
+
+<div class='panel'>
+  <div class='panel-heading' translate='dashboard.guest_satisfactions.title'></div>
+  <div class='panel-body no-padder'>
+    <table class='table m-b-none'>
+      <thead>
+        <tr>
+            <th translate='dashboard.guest_satisfactions.all'></th>
+            <th translate='dashboard.guest_satisfactions.negative'></th>
+            <th translate='dashboard.guest_satisfactions.neutral'></th>
+            <th translate='dashboard.guest_satisfactions.positive'></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ charts.guest_satisfactions.all }}</td>
+          <td>{{ charts.guest_satisfactions.negative }}</td>
+          <td>{{ charts.guest_satisfactions.neutral }}</td>
+          <td>{{ charts.guest_satisfactions.positive }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

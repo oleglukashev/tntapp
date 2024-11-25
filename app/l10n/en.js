@@ -194,6 +194,13 @@ export default {
     particularities: 'Particularities',
     pick_date: 'Pick a date',
     sender_email_text: 'Email was confirmed. We will use it for mail delivery',
+    guest_satisfactions: {
+      title: 'Guest satisfaction (last week)',
+      all: 'Alle',
+      negative: 'Negatief',
+      neutral: 'Neutrale',
+      positive: 'Positief',
+    }
   },
   language: {
     netherlands: 'Netherlands',
@@ -276,6 +283,7 @@ export default {
       email_after_visit: 'Mail after visit',
       email_after_visit_description: 'Provide the number of hours after a visit you want to send an email',
       email_after_visit_hours_delay: 'Send mail X hours after visit',
+      send_mail_after_visit_positive_link: 'Email after visit green smiley link',
       following_placeholders: 'The next placeholders can be used in email templates:',
       netherlands: 'Dutch mails',
       english: 'English mails',

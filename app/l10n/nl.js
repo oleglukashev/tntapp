@@ -194,6 +194,13 @@ export default {
     particularities: 'Bijzonderheden',
     pick_date: 'Kies een datum',
     sender_email_text: 'Email adres is bevestigd. We dit adres om mails te versturen',
+    guest_satisfactions: {
+      title: 'Tevredenheid van gasten (vorige week)',
+      all: 'All',
+      negative: 'Negative',
+      neutral: 'Neutral',
+      positive: 'Positive',
+    }
   },
   language: {
     netherlands: 'Nederlands',
@@ -276,6 +283,7 @@ export default {
       email_after_visit: 'Mail na bezoek',
       email_after_visit_description: 'Geef aan hoeveel uur na het bezoek je een mail wil versturen',
       email_after_visit_hours_delay: 'Mail X uren na bezoek versturen',
+      send_mail_after_visit_positive_link: 'Mail na bezoek groene smiley link',
       following_placeholders: 'De volgende placeholders kunnen worden gebruikt:',
       netherlands: 'Nederlandse mails',
       english: 'Engelse mails',
