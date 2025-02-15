@@ -357,6 +357,13 @@ export default {
         tnr_link: '%TNRLINK%',
         payment: '%BETALING% (alleen voor klantenboekingen)',
         guest_satisfaction: '%GASTTEVREDENHEID%'
+        custom: {
+          title: 'Aangepaste tijdelijke aanduidingen',
+          title_en: 'Titel (en)',
+          title_nl: 'Titel (nl)',
+          new: 'Nieuwe tijdelijke aanduiding',
+          manage: 'Tijdelijke aanduiding beheren'
+        }
       },
       emails_delivery: {
         title: 'Levering',
