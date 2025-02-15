@@ -15,12 +15,12 @@
           ng-submit='ctrl.submitForm(create_emails_delivery_form.$valid)'>
       <div class='wrapper'>
         <md-input-container class='md-block'>
-          <label translate='recipient_condition'></label>
+          <label translate='type'></label>
           <md-select ng-model='ctrl.form_data.recipient_condition'>
             <md-option
               ng-value='name'
               ng-repeat='name in ctrl.recipient_conditions'>
-              {{ name }}
+              {{ 'settings.emails.emails_delivery.recipients.' + name | translate }}
             </md-option>
           </md-select>
           <div class='md-errors-spacer'></div>

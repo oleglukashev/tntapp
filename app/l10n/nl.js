@@ -367,7 +367,18 @@ export default {
       },
       emails_delivery: {
         title: 'Levering',
-        manage: 'Manage levering'
+        manage: 'Manage levering',
+        recipients: {
+          birthday: 'Gefeliciteerd',
+          all: 'Alle klanten',
+          newsletter_subscribers: 'Nieuwsbriefabonnees gebruikers',
+          reservation_label_wedding: 'Gasten met een reserveringslabel Bruiloft',
+          reservation_label_promotion: 'Gasten met een reserveringslabel Promotiefeest',
+          reservation_label_party: 'Gasten met een reserveringslabel Feest',
+          reservation_label_drinks: 'Gasten met een reserveringslabel Borrel',
+          reservation_label_condolence: 'Gasten met een reserveringslabel Condoleance',
+          reservation_label_company_outing: 'Gasten met een reserveringslabel Bedrijfsuitje',
+        }
       },
       build_email: 'E-mail opbouwen',
       edit_email: 'E-mail bewerken',

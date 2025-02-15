@@ -367,7 +367,18 @@ export default {
       },
       emails_delivery: {
         title: 'Delivery',
-        manage: 'Manage delivery'
+        manage: 'Manage delivery',
+        recipients: {
+          birthday: 'Happy birthday',
+          all: 'All customers',
+          newsletter_subscribers: 'Newsletter subscribers users',
+          reservation_label_wedding: 'Guests with a Wedding reservation label',
+          reservation_label_promotion: 'Guests with a Promotion reservation label',
+          reservation_label_party: 'Guests with a Party reservation label',
+          reservation_label_drinks: 'Guests with a Drinks reservation label',
+          reservation_label_condolence: 'Guests with a Condolence reservation label',
+          reservation_label_company_outing: 'Guests with a Company outing reservation label',
+        }
       },
       build_email: 'Build email',
       edit_email: 'Edit email',
