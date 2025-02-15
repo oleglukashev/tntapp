@@ -122,6 +122,15 @@ export default {
       failed: 'Mislukt',
       paid: 'Betaald',
     },
+    label: {
+      null: 'No label',
+      promo: 'Promotiefeest',
+      wedding: 'Bruiloft',
+      party: 'Feest',
+      drinks: 'Borrel',
+      condolence: 'Condoleance',
+      company_outing: 'Bedrijfsuitje',
+    },
     household_confirmation: 'Wij komen uit hetzelfde huishouden',
   },
   calendar: {
@@ -319,6 +328,9 @@ export default {
         before_visit: 'Voor bezoek',
       },
       placeholders: {
+        customer_title: 'Klant',
+        company_title: 'Bedrijf',
+        reservation_title: 'Reservering',
         notes: '%OPMERKINGEN%',
         status: '%STATUS%',
         company_name: '%BEDRIJFSNAAM%',
@@ -346,8 +358,12 @@ export default {
         payment: '%BETALING% (alleen voor klantenboekingen)',
         guest_satisfaction: '%GASTTEVREDENHEID%'
       },
-      news_delivery: 'Levering',
+      emails_delivery: {
+        title: 'Levering',
+        manage: 'Manage levering'
+      },
       build_email: 'E-mail opbouwen',
+      edit_email: 'E-mail bewerken',
     },
     products: {
       title: 'Openingstijden/producten',
@@ -442,9 +458,10 @@ export default {
       title: 'TheNextInvoice account',
       description: 'Log hier in om TheNextInvoice te koppelen aan je TheNextTable account. Hiermee kan je facturen uit Untill of Lightspeed mailen naar klanten indien deze koppeling is gelegd met TheNextTable. Dit kan je doen via het instellingenmenu van TheNextTable.',
     },
-    news_delivery: {
-      run: 'Rennen',
+    emails_delivery: {
+      run: 'Test rennen',
       remove: 'Verwijderen',
+      new: 'Nieuwe Levering',
     },
   },
   receipts: {
@@ -488,6 +505,7 @@ export default {
   full_name: 'Voor- en achternaam',
   persons: 'Personen',
   table: 'Tafel',
+  label: 'Label',
   tables: 'Tafels',
   notes: 'Opmerkingen',
   note: 'Opmerking',

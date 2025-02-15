@@ -1,0 +1,75 @@
+<section class='no-margin'>
+  <md-toolbar>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex translate='settings.emails.emails_delivery.manage'></h2>
+      <md-button class='md-icon-button'
+                 ng-click='ctrl.closeModal();'
+                 md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <form class='md-content-submit'
+          name='create_emails_delivery_form'
+          ng-submit='ctrl.submitForm(create_emails_delivery_form.$valid)'>
+      <div class='wrapper'>
+        <md-input-container class='md-block'>
+          <label translate='recipient_condition'></label>
+          <md-select ng-model='ctrl.form_data.recipient_condition'>
+            <md-option
+              ng-value='name'
+              ng-repeat='name in ctrl.recipient_conditions'>
+              {{ name }}
+            </md-option>
+          </md-select>
+          <div class='md-errors-spacer'></div>
+        </md-input-container>
+
+        <md-input-container class='md-block'>
+          <label translate='cron'></label>
+          <input ng-change="ctrl.updateCronDescription()" ng-model='ctrl.form_data.cron' />
+          <span>{{ ctrl.cronDescription }}</span>
+        </md-input-container>
+
+
+        <md-input-container class='md-block'>
+          <label translate='title'></label>
+          <input ng-model='ctrl.form_data.title' required />
+        </md-input-container>
+        <md-input-container class='md-block'>
+          <label translate='content'></label>
+          <textarea rows='10'
+                    max-rows='12'
+                    ng-model='ctrl.form_data.content'></textarea>
+        </md-input-container>
+
+        <md-input-container class='md-block m-t-none'>
+          <div class='md-form-group m-r-md'>
+            <md-switch ng-model='ctrl.form_data.enabled'>Enabled</md-switch>
+          </div>
+        </md-input-container>
+
+        <div>
+          <a
+          target="_blank"
+          ng-href='https://staging.deroohorecagroep.nl/grapes/index3.html'
+          md-ink-ripple
+          class='md-button btn-success no-margin'
+          translate='settings.emails.build_email'></a>
+          <a
+          target="_blank"
+          ng-href='https://staging.deroohorecagroep.nl/grapes/index4.html?html={{ctrl.filter(ctrl.form_data.content)}}'
+          md-ink-ripple
+          class='md-button btn-success no-margin'
+          translate='settings.emails.edit_email'></a>
+        </div>
+      </div>
+      <button type='submit'
+              ng-class="{ 'disabled': !create_emails_delivery_form.$valid || ctrl.is_submitting }"
+              class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
+              translate='save'>
+      </button>
+    </form>
+  </md-content>
+</section>

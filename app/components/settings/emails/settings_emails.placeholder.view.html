@@ -1,0 +1,48 @@
+<section class='no-margin'>
+  <md-toolbar>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex translate='settings.emails.placeholders.custom.manage'></h2>
+      <md-button class='md-icon-button'
+                 ng-click='ctrl.closeModal();'
+                 md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    <form class='md-content-submit'
+          name='create_placeholder_form'
+          ng-submit='ctrl.submitForm(create_placeholder_form.$valid)'>
+      <div class='wrapper'>
+        <md-input-container class='md-block'>
+          <label translate='title_en'></label>
+          <input ng-model='ctrl.form_data.title_en' required />
+        </md-input-container>
+
+        <md-input-container class='md-block'>
+          <label translate='title_nl'></label>
+          <input ng-model='ctrl.form_data.title_nl' required />
+        </md-input-container>
+
+        <md-input-container class='md-block'>
+          <label translate='content'></label>
+          <textarea rows='10'
+                    max-rows='12'
+                    ng-model='ctrl.form_data.content_en'></textarea>
+        </md-input-container>
+
+        <md-input-container class='md-block'>
+          <label translate='content'></label>
+          <textarea rows='10'
+                    max-rows='12'
+                    ng-model='ctrl.form_data.content_nl'></textarea>
+        </md-input-container>
+      </div>
+      <button type='submit'
+              ng-class="{ 'disabled': !create_placeholder_form.$valid || ctrl.is_submitting }"
+              class='btn btn-lg btn-success text-success w-full no-top-radius md-content-button'
+              translate='save'>
+      </button>
+    </form>
+  </md-content>
+</section>

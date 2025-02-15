@@ -122,6 +122,15 @@ export default {
       failed: 'Failed',
       paid: 'Paid',
     },
+    label: {
+      null: 'No label',
+      promo: 'Promotion Party',
+      wedding: 'Wedding',
+      party: 'Party',
+      drinks: 'Drinks',
+      condolence: 'Condolence',
+      company_outing: 'Company Outing',
+    },
     household_confirmation: 'We are from the same household',
   },
   calendar: {
@@ -319,6 +328,9 @@ export default {
         before_visit: 'Before visit',
       },
       placeholders: {
+        customer_title: 'Customer',
+        company_title: 'Company',
+        reservation_title: 'Reservation',
         notes: '%NOTES%',
         status: '%STATUS%',
         company_name: '%COMPANY_NAME%',
@@ -345,9 +357,20 @@ export default {
         tnr_link: '%TNRLINK%',
         payment: '%PAYMENT% (for customer bookings only)',
         guest_satisfaction: '%GUEST_SATISFACTION%'
+        custom: {
+          title: 'Custom placeholders',
+          title_en: 'Title (en)',
+          title_nl: 'Title (nl)',
+          new: 'New placeholder',
+          manage: 'Manage placeholder'
+        }
       },
-      news_delivery: 'Delivery',
+      emails_delivery: {
+        title: 'Delivery',
+        manage: 'Manage delivery'
+      },
       build_email: 'Build email',
+      edit_email: 'Edit email',
     },
     products: {
       title: 'Opening hours/products',
@@ -442,9 +465,10 @@ export default {
       title: 'TheNextInvoice account',
       description: 'To connect TheNextInvoice to your TheNextTable account please login here. With this integration you are able to get open tabs from Untill or LIghtspeed, create an invoice and send the invoice to your client by e-mail. You can find this function in the settingsmenu of TheNextTable.',
     },
-    news_delivery: {
-      run: 'Run',
+    emails_delivery: {
+      run: 'Test run',
       remove: 'Remove',
+      new: 'New Emails delivery',
     },
   },
   receipts: {
@@ -481,6 +505,7 @@ export default {
   av_rating: 'Average rating',
   status_name: 'Status',
   time: 'Time',
+  label: 'Label',
   product: 'Product',
   prepayment: 'Deposit',
   name: 'Name',

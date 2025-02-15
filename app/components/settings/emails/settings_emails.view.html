@@ -109,15 +109,13 @@
       </form>
     </div>
 
+    <h4>Placeholders</h4>
+
     <div class='panel blue-50'>
       <div class='panel-body'>
         <p translate='settings.emails.following_placeholders'></p>
+        <p translate='settings.emails.placeholders.customer_title'></p>
         <ul>
-          <li translate='settings.emails.placeholders.notes'></li>
-          <li translate='settings.emails.placeholders.status'></li>
-          <li translate='settings.emails.placeholders.company_name'></li>
-          <li translate='settings.emails.placeholders.number_of_guests'></li>
-          <li translate='settings.emails.placeholders.time'></li>
           <li translate='settings.emails.placeholders.first_name'></li>
           <li translate='settings.emails.placeholders.last_name'></li>
           <li translate='settings.emails.placeholders.primary_phone'></li>
@@ -129,7 +127,18 @@
           <li translate='settings.emails.placeholders.email'></li>
           <li translate='settings.emails.placeholders.date_of_birth'></li>
           <li translate='settings.emails.placeholders.gender'></li>
+        </ul>
+        <p translate='settings.emails.placeholders.company_title'></p>
+        <ul>
+          <li translate='settings.emails.placeholders.company_name'></li>
           <li translate='settings.emails.placeholders.restaurant_name'></li>
+        </ul>
+        <p translate='settings.emails.placeholders.reservation_title'></p>
+        <ul>
+          <li translate='settings.emails.placeholders.notes'></li>
+          <li translate='settings.emails.placeholders.status'></li>
+          <li translate='settings.emails.placeholders.number_of_guests'></li>
+          <li translate='settings.emails.placeholders.time'></li>
           <li translate='settings.emails.placeholders.product'></li>
           <li translate='settings.emails.placeholders.end_time'></li>
           <li translate='settings.emails.placeholders.start_time'></li>
@@ -142,6 +151,62 @@
         </ul>
       </div>
     </div>
+
+    <div class='panel'>
+      <div class='panel-heading' translate='settings.emails.placeholders.custom.title'></div>
+      <div class='md-list'>
+        <div class='md-list-item no-padder'>
+          <table class='table'>
+            <thead>
+              <th translate='settings.emails.placeholders.custom.title_en'></th>
+              <th translate='settings.emails.placeholders.custom.title_nl'></th>
+              <th translate='date'></th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in ctrl.placeholders">
+                <td class='v-middle'>{{ item.title_en }}</td>
+                <td class='v-middle'>{{ item.title_nl }}</td>
+                <td class='v-middle'>{{ item.created_on }}</td>
+                <td class='v-middle text-right'>
+                  <md-menu>
+                    <button md-ink-ripple
+                          class='md-btn md-fab no-shadow'
+                          ng-disabled='disabled'
+                          aria-haspopup='true'
+                          aria-expanded='false'
+                          aria-disabled='false'
+                          ng-click='$mdMenu.open($event)'>
+                      <i class='mdi mdi-dots-vertical i-24'></i>
+                    </button>
+                    <md-menu-content>
+                      <md-menu-item>
+                        <md-button ng-click='ctrl.editPlaceholder(item)'>
+                          {{ 'edit' | translate }}
+                        </md-button>
+                      </md-menu-item>
+                      <md-menu-item>
+                        <md-button ng-click='ctrl.removePlaceholder(item)'>
+                          {{ 'remove' | translate }}
+                        </md-button>
+                      </md-menu-item>
+                    </md-menu-content>
+                  </md-menu>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class='md-list-item clear'>
+          <button ng-click='ctrl.createPlaceholder()'
+                  class='md-button btn-success no-margin'
+                  translate='settings.emails.placeholders.custom.new' 
+                  md-ink-ripple></button>
+        </div>
+      </div>
+    </div>
+
+    <h4>Emails</h4>
 
     <div class='panel'>
       <div class='panel-heading' translate='settings.emails.netherlands'></div>
@@ -224,6 +289,67 @@
         </div>
       </div>
     </div>
+
+    <div class='panel'>
+    <div class='panel-heading' translate='settings.emails.emails_delivery.title'></div>
+    <div class='md-list'>
+      <div class='md-list-item no-padder'>
+        <table class='table'>
+          <thead>
+            <th translate='title'></th>
+            <th translate='enabled'></th>
+            <th translate='date'></th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in ctrl.emails_deliveries">
+              <td class='v-middle'>{{ item.title }}</td>
+              <td class='v-middle'>{{ item.enabled ? 'yes' : 'no' | translate }}</td>
+              <td class='v-middle'>{{ item.created_at }}</td>
+              <td class='v-middle text-right'>
+                <md-menu>
+                  <button md-ink-ripple
+                        class='md-btn md-fab no-shadow'
+                        ng-disabled='disabled'
+                        aria-haspopup='true'
+                        aria-expanded='false'
+                        aria-disabled='false'
+                        ng-click='$mdMenu.open($event)'>
+                    <i class='mdi mdi-dots-vertical i-24'></i>
+                  </button>
+                  <md-menu-content>
+                    <md-menu-item>
+                      <md-button ng-click='ctrl.runEmailsDelivery(item)'>
+                        {{ 'settings.emails_delivery.run' | translate }}
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                      <md-button ng-click='ctrl.editEmailsDelivery(item)'>
+                        {{ 'edit' | translate }}
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                      <md-button ng-click='ctrl.removeEmailsDelivery(item)'>
+                        {{ 'remove' | translate }}
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class='md-list-item clear'>
+        <button ng-click='ctrl.createEmailsDelivery()'
+                class='md-button btn-success no-margin'
+                translate='settings.emails_delivery.new' 
+                md-ink-ripple></button>
+      </div>
+    </div>
+  </div>
+
+    <h4>SMS</h4>
 
     <div
       class='panel'
@@ -448,67 +574,6 @@
       </div>
     </div>
   </div>
-
-  <div class='panel'>
-      <div class='panel-heading' translate='settings.emails.news_delivery'></div>
-      <div class='md-list'>
-        <div class='md-list-item no-padder'>
-          <table class='table'>
-            <thead>
-              <th translate='title'></th>
-              <th translate='status'></th>
-              <th translate='date'></th>
-              <th></th>
-            </thead>
-            <tbody>
-              <tr ng-repeat="item in ctrl.news_deliveries">
-                <td class='v-middle'>{{ item.title }}</td>
-                <td class='v-middle'>{{ item.completed }}</td>
-                <td class='v-middle'>{{ item.created_at }}</td>
-                <td class='v-middle text-right'>
-                  <md-menu>
-                    <button md-ink-ripple
-                          class='md-btn md-fab no-shadow'
-                          ng-disabled='disabled'
-                          aria-haspopup='true'
-                          aria-expanded='false'
-                          aria-disabled='false'
-                          ng-click='$mdMenu.open($event)'>
-                      <i class='mdi mdi-dots-vertical i-24'></i>
-                    </button>
-                    <md-menu-content>
-                      <md-menu-item>
-                        <md-button ng-click='ctrl.runNewsDelivery(item)'>
-                          {{ 'settings.news_delivery.run' | translate }}
-                        </md-button>
-                      </md-menu-item>
-                      <md-menu-item>
-                        <md-button ng-click='ctrl.removeNewsDelivery(item)'>
-                          {{ 'settings.news_delivery.remove' | translate }}
-                        </md-button>
-                      </md-menu-item>
-                    </md-menu-content>
-                  </md-menu>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class='md-list-item clear'>
-          <button ng-click='ctrl.createNewsDelivery()'
-                  class='md-button btn-success no-margin'
-                  translate='settings.emails.register_twilio_sid' 
-                  md-ink-ripple></button>
-
-          <a
-            target="_blank"
-            ng-href='/grapes'
-            md-ink-ripple
-            class='md-button btn-success no-margin'
-            translate='settings.emails.build_email'></a>
-        </div>
-      </div>
-    </div>
 
   <div class='panel' ng-if='!ctrl.is_loaded'>
     <div class='panel-heading' translate='settings.emails.emails_title'></div>

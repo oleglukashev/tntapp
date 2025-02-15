@@ -1,4 +1,4 @@
-export default class NewsDelivery {
+export default class EmailsDelivery {
   constructor($http, $q) {
     'ngInject';
 
@@ -12,7 +12,7 @@ export default class NewsDelivery {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/settings/news_deliveries`,
+      url: `${API_URL}/company/${companyId}/settings/emails_deliveries`,
       skipAuthorization: skipJwtAuth,
       method: 'GET',
     }).then(result => result.data);
@@ -24,9 +24,22 @@ export default class NewsDelivery {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/settings/news_deliveries`,
+      url: `${API_URL}/company/${companyId}/settings/emails_deliveries`,
       method: 'POST',
       skipAuthorization: skipJwtAuth,
+      data,
+    }).then(result => result.data);
+  }
+
+  update(companyId, data, id, skipJwtAuth) {
+    if (!companyId || !id) {
+      return this.$q.defer().promise;
+    }
+
+    return this.$http({
+      url: `${API_URL}/company/${companyId}/settings/emails_deliveries/${id}`,
+      skipAuthorization: skipJwtAuth,
+      method: 'PATCH',
       data,
     }).then(result => result.data);
   }
@@ -37,7 +50,7 @@ export default class NewsDelivery {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/settings/news_deliveries/${id}/run`,
+      url: `${API_URL}/company/${companyId}/settings/emails_deliveries/${id}/run`,
       method: 'POST',
       skipAuthorization: skipJwtAuth
     }).then(result => result.data);
@@ -49,7 +62,7 @@ export default class NewsDelivery {
     }
 
     return this.$http({
-      url: `${API_URL}/company/${companyId}/settings/news_deliveries/${id}`,
+      url: `${API_URL}/company/${companyId}/settings/emails_deliveries/${id}`,
       method: 'DELETE',
       skipAuthorization: skipJwtAuth
     }).then(result => result.data);

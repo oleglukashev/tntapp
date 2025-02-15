@@ -1,12 +1,14 @@
 import editEmailController from './settings_emails.edit_email.controller';
 import editSmsController from './settings_emails.edit_sms.controller';
-import createNewsDeliveryController from './settings_emails.news_delivery.controller';
+import createEmailsDeliveryController from './settings_emails.emails_delivery.controller';
+import createPlaceholderController from './settings_emails.placeholder.controller';
 import editEmailView from './settings_emails.edit_email.view.html';
 import editSmsView from './settings_emails.edit_sms.view.html';
-import createNewsDeliveryView from './settings_emails.news_delivery.view.html';
+import createEmailsDeliveryView from './settings_emails.emails_delivery.view.html';
+import createPlaceholderView from './settings_emails.placeholder.view.html';
 
 export default class Controller {
-  constructor(User, Settings, SmsText, EmailText, NewsDelivery, filterFilter, $scope, $uibModal, $mdDialog,
+  constructor(User, Settings, SmsText, EmailText, EmailsDelivery, Placeholder, filterFilter, $scope, $uibModal, $mdDialog,
     $rootScope, $q, moment, $translate) {
     'ngInject';
 
@@ -22,7 +24,8 @@ export default class Controller {
     this.Settings = Settings;
     this.EmailText = EmailText;
     this.SmsText = SmsText;
-    this.NewsDelivery = NewsDelivery;
+    this.EmailsDelivery = EmailsDelivery;
+    this.Placeholder = Placeholder;
 
     if (this.current_company_id) {
       const currentCompany = User.getCompany(this.current_company_id);
@@ -47,12 +50,14 @@ export default class Controller {
         this.Settings.getEmailsSettings(this.current_company_id),
         this.EmailText.getAll(this.current_company_id),
         this.SmsText.getAll(this.current_company_id),
-        this.NewsDelivery.getAll(this.current_company_id),
+        this.EmailsDelivery.getAll(this.current_company_id),
+        this.Placeholder.getAll(this.current_company_id),
       ]).then((result) => {
         this.initEmailSettings(result[0]);
         this.initEmailTexts(result[1]);
         this.initSmsTexts(result[2]);
-        this.initNewsDeliveries(result[3]);
+        this.initEmailsDeliveries(result[3]);
+        this.initPlaceholders(result[4]);
         this.is_loaded = true;
       });
     } else {
@@ -88,21 +93,68 @@ export default class Controller {
     modalInstance.result.then(() => {}, () => {});
   }
 
-  createNewsDelivery() {
+  createEmailsDelivery() {
     const modalInstance = this.$modal.open({
-      template: createNewsDeliveryView,
-      controller: createNewsDeliveryController,
+      template: createEmailsDeliveryView,
+      controller: createEmailsDeliveryController,
       controllerAs: 'ctrl',
       size: 'md',
       backdrop: 'static',
       resolve: {
-        news_deliveries: () => this.news_deliveries,
+        emails_deliveries: () => this.emails_deliveries,
+        item: null,
       },
     });
 
-    modalInstance.result.then((data) => {
-    }, (data) => {
+    modalInstance.result.then((data) => {}, (data) => {});
+  }
+
+  editEmailsDelivery(item) {
+    const modalInstance = this.$modal.open({
+      template: createEmailsDeliveryView,
+      controller: createEmailsDeliveryController,
+      controllerAs: 'ctrl',
+      size: 'md',
+      backdrop: 'static',
+      resolve: {
+        emails_deliveries: () => this.emails_deliveries,
+        item: item,
+      },
     });
+
+    modalInstance.result.then(() => {}, () => {});
+  }
+
+  createPlaceholder() {
+    const modalInstance = this.$modal.open({
+      template: createPlaceholderView,
+      controller: createPlaceholderController,
+      controllerAs: 'ctrl',
+      size: 'md',
+      backdrop: 'static',
+      resolve: {
+        placeholders: () => this.placeholders,
+        item: null,
+      },
+    });
+
+    modalInstance.result.then((data) => {}, (data) => {});
+  }
+
+  editPlaceholder(item) {
+    const modalInstance = this.$modal.open({
+      template: createPlaceholderView,
+      controller: createPlaceholderController,
+      controllerAs: 'ctrl',
+      size: 'md',
+      backdrop: 'static',
+      resolve: {
+        placeholders: () => this.placeholders,
+        item: item,
+      },
+    });
+
+    modalInstance.result.then((data) => {}, (data) => {});
   }
 
   editSms(id) {
@@ -120,17 +172,23 @@ export default class Controller {
     modalInstance.result.then(() => {}, () => {});
   }
 
-  removeNewsDelivery(item) {
-    this.NewsDelivery.remove(this.current_company_id, item.id).then(() => {
-      const index = this.news_deliveries.indexOf(item);
-      this.news_deliveries.splice(index, 1);
+  removeEmailsDelivery(item) {
+    this.EmailsDelivery.remove(this.current_company_id, item.id).then(() => {
+      const index = this.emails_deliveries.indexOf(item);
+      this.emails_deliveries.splice(index, 1);
     });
   }
 
-  runNewsDelivery(item) {
-    this.NewsDelivery.run(this.current_company_id, item.id).then(() => {
-      const index = this.news_deliveries.indexOf(item);
-      this.news_deliveries[index].completed = true;
+  removePlaceholder(item) {
+    this.Placeholder.remove(this.current_company_id, item.id).then(() => {
+      const index = this.placeholders.indexOf(item);
+      this.placeholders.splice(index, 1);
+    });
+  }
+
+  runEmailsDelivery(item) {
+    this.EmailsDelivery.run(this.current_company_id, item.id).then(() => {
+      //
     });
   }
 
@@ -175,8 +233,12 @@ export default class Controller {
     this.sms_texts = smsTexts;
   }
 
-  initNewsDeliveries(newsDeliveries) {
-    this.news_deliveries = newsDeliveries
+  initEmailsDeliveries(emailsDeliveries) {
+    this.emails_deliveries = emailsDeliveries
+  }
+
+  initPlaceholders(placeholders) {
+    this.placeholders = placeholders;
   }
 
   registerTwilioSid() {

@@ -49,6 +49,11 @@
   show-more
   show-more-trigger={{agenda.view_type}}>
   {{ ctrl.data.notes }}
+  <md-icon ng-if="ctrl.data.reservation.label">
+    <i
+      class='mdi mdi-label i-20'
+      ng-class="{ 'mdi-label-promo': ctrl.data.reservation.label === 'promo','mdi-label-wedding': ctrl.data.reservation.label === 'wedding','mdi-label-party': ctrl.data.reservation.label === 'party','mdi-label-condolence': ctrl.data.reservation.label === 'condolence','mdi-label-drinks': ctrl.data.reservation.label === 'drinks','mdi-label-company_outing': ctrl.data.reservation.label === 'company_outing' }" />
+   </md-icon>
 </div>
 <div class='visible-xs visible-sm p-l-none'
   ng-click='ctrl.openCustomerMenu(ctrl.data.customer.id, ctrl.data.id)'>
@@ -76,8 +81,13 @@
     <i class='mdi mdi-information-outline icon-muted'
       ng-show='ctrl.data.customer.preferences.length > 0'></i>
   </div>
-  <div class='font-thin' ng-if='ctrl.data.notes' show-more>
+  <div class='font-thin' show-more>
     {{ ctrl.data.notes }}
+    <md-icon ng-if="ctrl.data.reservation.label">
+    <i
+      class='mdi mdi-label i-20'
+      ng-class="{ 'mdi-label-promo': ctrl.data.reservation.label === 'promo','mdi-label-wedding': ctrl.data.reservation.label === 'wedding','mdi-label-party': ctrl.data.reservation.label === 'party','mdi-label-condolence': ctrl.data.reservation.label === 'condolence','mdi-label-drinks': ctrl.data.reservation.label === 'drinks','mdi-label-company_outing': ctrl.data.reservation.label === 'company_outing' }" />
+   </md-icon>
   </div>
 </div>
 <div>
