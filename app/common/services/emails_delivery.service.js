@@ -67,4 +67,14 @@ export default class EmailsDelivery {
       skipAuthorization: skipJwtAuth
     }).then(result => result.data);
   }
+
+  openEmailEditor(html) {
+    const notApiUrl = API_URL.replace('/api/v2', '');
+    return this.$http({
+      url: `${notApiUrl}/grapes`,
+      method: 'POST',
+      data: { html },
+      skipAuthorization: true
+    }).then(result => result.data);
+  }
 }

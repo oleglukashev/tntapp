@@ -81,7 +81,18 @@ export default class Controller {
     this.$modalInstance.dismiss('cancel');
   }
 
-  filter(content) {
-    return encodeURIComponent(btoa(content.replace(/>\s+</g, '><')));
+  openEmailEditor(content) {
+    const encodedContent = encodeURIComponent(btoa(content.replace(/>\s+</g, '><')));
+    this.EmailsDelivery.openEmailEditor(encodedContent)
+      .then((data) => {
+        this.is_submitting = false;
+        this.$rootScope.show_spinner = false;
+        const blob = new Blob([data], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+      }, () => {
+        this.is_submitting = false;
+        this.$rootScope.show_spinner = false;
+      });
   }
 }

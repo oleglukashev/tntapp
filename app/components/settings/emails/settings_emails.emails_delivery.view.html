@@ -59,7 +59,7 @@
           translate='settings.emails.build_email'></a>
           <a
           target="_blank"
-          ng-href='https://staging.deroohorecagroep.nl/grapes/index4.html?html={{ctrl.filter(ctrl.form_data.content)}}'
+          ng-click='ctrl.openEmailEditor(ctrl.form_data.content)'
           md-ink-ripple
           class='md-button btn-success no-margin'
           translate='settings.emails.edit_email'></a>
