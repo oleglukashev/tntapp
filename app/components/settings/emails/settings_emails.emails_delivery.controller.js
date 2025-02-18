@@ -82,6 +82,6 @@ export default class Controller {
   }
 
   filter(content) {
-    return encodeURIComponent(content.replace(/>\s+</g, '><'));
+    return encodeURIComponent(btoa(content.replace(/>\s+</g, '><')));
   }
 }
