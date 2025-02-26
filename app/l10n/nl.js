@@ -380,6 +380,9 @@ export default {
           reservation_label_company_outing: 'Gasten met een reserveringslabel Bedrijfsuitje',
         }
       },
+      emails_images: {
+        title: 'Email afbeeldingen',
+      },
       build_email: 'E-mail opbouwen',
       edit_email: 'E-mail bewerken',
     },

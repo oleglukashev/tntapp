@@ -380,6 +380,9 @@ export default {
           reservation_label_company_outing: 'Guests with a Company outing reservation label',
         }
       },
+      emails_images: {
+        title: 'Email images',
+      },
       build_email: 'Build email',
       edit_email: 'Edit email',
     },

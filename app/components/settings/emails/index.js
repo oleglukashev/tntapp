@@ -6,7 +6,9 @@ import view from './settings_emails.view.html';
 import SmsTextService from '../../../common/services/sms_text.service';
 import EmailTextService from '../../../common/services/email_text.service';
 import EmailsDeliveryService from '../../../common/services/emails_delivery.service';
+import EmailsImageService from '../../../common/services/emails_image.service';
 import PlaceholderService from '../../../common/services/placeholder.service';
+import NotificationService from '../../../common/services/notification.service';
 
 import fixSettingsItemView from '../../fix.settings.item/fix.settings.item.view.html';
 import menu from '../menu';
@@ -23,5 +25,7 @@ export default angular.module('emailsSettings', [modal, menu])
   .service('SmsText', SmsTextService)
   .service('EmailText', EmailTextService)
   .service('EmailsDelivery', EmailsDeliveryService)
+  .service('EmailsImage', EmailsImageService)
   .service('Placeholder', PlaceholderService)
+  .service('Notification', NotificationService)
   .name;
