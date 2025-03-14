@@ -81,7 +81,7 @@ export default class Controller {
     this.$modalInstance.dismiss('cancel');
   }
 
-  openEmailEditor(content) {
+  openEmailEditor(content = '') {
     const encodedContent = encodeURIComponent(btoa(content.replace(/>\s+</g, '><')));
     this.EmailsDelivery.openEmailEditor(encodedContent)
       .then((data) => {
