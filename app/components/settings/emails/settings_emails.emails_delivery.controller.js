@@ -30,6 +30,7 @@ export default class Controller {
     };
     this.cronDescription = 'Every minute';
     this.updateCronDescription();
+    this.editorUrl = this.EmailsDelivery.editorUrl(this.current_company_id, item ? item.id : null);
   }
 
   updateCronDescription() {
@@ -79,21 +80,5 @@ export default class Controller {
 
   closeModal() {
     this.$modalInstance.dismiss('cancel');
-  }
-
-  openEmailEditor(content) {
-    content = content || '';
-    const encodedContent = encodeURIComponent(btoa(content.replace(/>\s+</g, '><')));
-    this.EmailsDelivery.openEmailEditor(encodedContent)
-      .then((data) => {
-        this.is_submitting = false;
-        this.$rootScope.show_spinner = false;
-        const blob = new Blob([data], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        window.open(url, '_blank');
-      }, () => {
-        this.is_submitting = false;
-        this.$rootScope.show_spinner = false;
-      });
   }
 }

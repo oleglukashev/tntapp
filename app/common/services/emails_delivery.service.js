@@ -6,6 +6,10 @@ export default class EmailsDelivery {
     this.$q = $q;
   }
 
+  editorUrl(companyId, id) {
+    return `${API_URL.replace('/api/v2', '')}/grapes/c/${companyId}${id ? '/' + id : ''}`;
+  }
+
   getAll(companyId, skipJwtAuth) {
     if (!companyId) {
       return this.$q.defer().promise;
@@ -65,16 +69,6 @@ export default class EmailsDelivery {
       url: `${API_URL}/company/${companyId}/settings/emails_deliveries/${id}`,
       method: 'DELETE',
       skipAuthorization: skipJwtAuth
-    }).then(result => result.data);
-  }
-
-  openEmailEditor(html) {
-    const notApiUrl = API_URL.replace('/api/v2', '');
-    return this.$http({
-      url: `${notApiUrl}/grapes`,
-      method: 'POST',
-      data: { html },
-      skipAuthorization: true
     }).then(result => result.data);
   }
 }
