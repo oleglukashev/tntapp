@@ -7,7 +7,7 @@ export default class EmailsDelivery {
   }
 
   editorUrl(companyId, id) {
-    return `${API_URL.replace('/api/v2', '')}/grapes/c/${companyId}${id ? '/' + id : ''}`;
+    return `${API_URL.replace('/api/v2', '')}/grapes/c/${companyId}${id ? '/d/' + id : ''}`;
   }
 
   getAll(companyId, skipJwtAuth) {
