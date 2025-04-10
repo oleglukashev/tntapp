@@ -1,0 +1,51 @@
+.email_delivery_modal
+  md-toolbar
+    -webkit-transition-duration: none;
+    transition-duration: none;
+    -webkit-transition-timing-function: none;
+    transition-timing-function: none;
+    -webkit-transition-property: none;
+    transition-property: none;
+  md-content
+    padding-bottom 0
+    min-height modal-height
+
+    md-tabs.email_delivery_tabs
+      md-tabs-wrapper
+        md-tabs-canvas
+          height new-reserv-tab-height
+
+          md-pagination-wrapper
+            height new-reserv-tab-height
+
+            md-tab-item
+              .text-center
+                font-size 14px
+              &.md-tab
+                width 50%
+                max-width 50% !important
+                height new-reserv-tab-height
+
+      md-tabs-content-wrapper
+        md-tab-content
+          min-height 464px
+
+          .email_delivery_template
+            padding-bottom 78px
+          
+    @media (max-width 600px)
+      md-tabs.email_delivery_tabs
+        md-tabs-wrapper
+          md-tabs-canvas
+            md-pagination-wrapper
+              md-tab-item
+                .text-center
+                  display none
+
+                  &:first-child
+                    display block
+                    heght 46px
+
+                    i
+                      font-size 22px
+                      line-height 46px

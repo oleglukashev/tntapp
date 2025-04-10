@@ -366,7 +366,7 @@ export default {
         }
       },
       emails_delivery: {
-        title: 'Levering',
+        title: 'Periodieke Emails',
         manage: 'Manage levering',
         recipients: {
           birthday: 'Gefeliciteerd',
@@ -482,7 +482,7 @@ export default {
     emails_delivery: {
       run: 'Test rennen',
       remove: 'Verwijderen',
-      new: 'Nieuwe Levering',
+      new: 'Aanmaken',
     },
   },
   receipts: {
