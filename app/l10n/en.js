@@ -483,6 +483,7 @@ export default {
       run: 'Test run',
       remove: 'Remove',
       new: 'New Emails delivery',
+      sents: 'Delivery report',
     },
   },
   receipts: {

@@ -2,10 +2,12 @@ import editEmailController from './settings_emails.edit_email.controller';
 import editSmsController from './settings_emails.edit_sms.controller';
 import createEmailsDeliveryController from './settings_emails.emails_delivery.controller';
 import createPlaceholderController from './settings_emails.placeholder.controller';
+import emailDeliverySentsController from './settings_emails.emails_delivery_sents.controller';
 import editEmailView from './settings_emails.edit_email.view.html';
 import editSmsView from './settings_emails.edit_sms.view.html';
 import createEmailsDeliveryView from './settings_emails.emails_delivery.view.html';
 import createPlaceholderView from './settings_emails.placeholder.view.html';
+import emailDeliverySentsView from './settings_emails.emails_delivery_sents.view.html';
 
 export default class Controller {
   constructor(User, Settings, SmsText, EmailText, Notification, EmailsDelivery, EmailsImage, Placeholder, filterFilter, $scope, $uibModal, $mdDialog,
@@ -216,6 +218,21 @@ export default class Controller {
       backdrop: 'static',
       resolve: {
         item: () => this.filterFilter(this.sms_texts, { id })[0],
+      },
+    });
+
+    modalInstance.result.then(() => {}, () => {});
+  }
+
+  openEmailsDeliveriesSents(emailDeliveryId) {
+    const modalInstance = this.$modal.open({
+      template: emailDeliverySentsView,
+      controller: emailDeliverySentsController,
+      controllerAs: 'ctrl',
+      size: 'md',
+      backdrop: 'static',
+      resolve: {
+        emailDeliveryId: () => emailDeliveryId,
       },
     });
 

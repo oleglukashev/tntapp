@@ -324,6 +324,11 @@
                       </md-button>
                     </md-menu-item>
                     <md-menu-item>
+                      <md-button ng-click='ctrl.openEmailsDeliveriesSents(item.id)'>
+                        {{ 'settings.emails_delivery.sents' | translate }}
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
                       <md-button ng-click='ctrl.editEmailsDelivery(item)'>
                         {{ 'edit' | translate }}
                       </md-button>

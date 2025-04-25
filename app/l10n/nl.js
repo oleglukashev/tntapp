@@ -483,6 +483,7 @@ export default {
       run: 'Test rennen',
       remove: 'Verwijderen',
       new: 'Aanmaken',
+      sents: 'Leveringsrapport',
     },
   },
   receipts: {
