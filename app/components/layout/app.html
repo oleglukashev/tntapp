@@ -7,9 +7,11 @@
   <div class='spinner-icon'></div>
 </div>
 
-<growl-notifications ng-if='app.Notification.getText()'></growl-notifications>
-<growl-notification ng-if='app.Notification.getText()'
+<growl-notifications ng-if='app.Notification.getText()'>
+	<growl-notification ng-if='app.Notification.getText()'
                     on-close="app.Notification.setText('')">
-  Error: {{ app.Notification.getText() }}
-</growl-notification>
+  {{ app.Notification.getText() }}
+	</growl-notification>
+</growl-notifications>
+
 <trial></trial>

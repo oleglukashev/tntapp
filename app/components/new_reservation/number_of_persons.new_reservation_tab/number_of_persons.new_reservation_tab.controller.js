@@ -5,6 +5,8 @@ export default class Controller {
     this.Reservation = Reservation;
     this.choose_number_of_persons_is_opened = false;
 
+    this.labels = this.Reservation.labels();
+
     this.$onChanges = () => {
       this.current_part = this.reservation.reservation_parts[this.currentIndex];
       this.current_tab_index = this.currentTabIndex;

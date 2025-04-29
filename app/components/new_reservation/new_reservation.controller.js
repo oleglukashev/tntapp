@@ -134,6 +134,7 @@ export default class Controller {
     let data = {
       is_customer: this.type === 'customer',
       language: this.reservation.language,
+      label: this.reservation.label,
       send_confirmation: this.reservation.send_confirmation,
       news_subscribed: this.reservation.news_subscribed,
       prepayment_value: this.reservation.prepayment_value,

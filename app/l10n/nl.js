@@ -122,6 +122,15 @@ export default {
       failed: 'Mislukt',
       paid: 'Betaald',
     },
+    label: {
+      null: 'No label',
+      promo: 'Promotiefeest',
+      wedding: 'Bruiloft',
+      party: 'Feest',
+      drinks: 'Borrel',
+      condolence: 'Condoleance',
+      company_outing: 'Bedrijfsuitje',
+    },
     household_confirmation: 'Wij komen uit hetzelfde huishouden',
   },
   calendar: {
@@ -319,6 +328,9 @@ export default {
         before_visit: 'Voor bezoek',
       },
       placeholders: {
+        customer_title: 'Klant',
+        company_title: 'Bedrijf',
+        reservation_title: 'Reservering',
         notes: '%OPMERKINGEN%',
         status: '%STATUS%',
         company_name: '%BEDRIJFSNAAM%',
@@ -344,8 +356,35 @@ export default {
         google_cal_link: '%GOOGLE_CAL_LINK%',
         tnr_link: '%TNRLINK%',
         payment: '%BETALING% (alleen voor klantenboekingen)',
-        guest_satisfaction: '%GASTTEVREDENHEID%'
+        guest_satisfaction: '%GASTTEVREDENHEID%',
+        custom: {
+          title: 'Aangepaste tijdelijke aanduidingen',
+          title_en: 'Titel (en)',
+          title_nl: 'Titel (nl)',
+          new: 'Nieuwe tijdelijke aanduiding',
+          manage: 'Tijdelijke aanduiding beheren'
+        }
       },
+      emails_delivery: {
+        title: 'Periodieke Emails',
+        manage: 'Manage levering',
+        recipients: {
+          birthday: 'Gefeliciteerd',
+          all: 'Alle klanten',
+          newsletter_subscribers: 'Nieuwsbriefabonnees gebruikers',
+          reservation_label_wedding: 'Gasten met een reserveringslabel Bruiloft',
+          reservation_label_promotion: 'Gasten met een reserveringslabel Promotiefeest',
+          reservation_label_party: 'Gasten met een reserveringslabel Feest',
+          reservation_label_drinks: 'Gasten met een reserveringslabel Borrel',
+          reservation_label_condolence: 'Gasten met een reserveringslabel Condoleance',
+          reservation_label_company_outing: 'Gasten met een reserveringslabel Bedrijfsuitje',
+        }
+      },
+      emails_images: {
+        title: 'Email afbeeldingen',
+      },
+      build_email: 'E-mail opbouwen',
+      edit_email: 'E-mail bewerken',
     },
     products: {
       title: 'Openingstijden/producten',
@@ -440,6 +479,12 @@ export default {
       title: 'TheNextInvoice account',
       description: 'Log hier in om TheNextInvoice te koppelen aan je TheNextTable account. Hiermee kan je facturen uit Untill of Lightspeed mailen naar klanten indien deze koppeling is gelegd met TheNextTable. Dit kan je doen via het instellingenmenu van TheNextTable.',
     },
+    emails_delivery: {
+      run: 'Test rennen',
+      remove: 'Verwijderen',
+      new: 'Aanmaken',
+      sents: 'Leveringsrapport',
+    },
   },
   receipts: {
     status: 'Receipt status',
@@ -482,6 +527,7 @@ export default {
   full_name: 'Voor- en achternaam',
   persons: 'Personen',
   table: 'Tafel',
+  label: 'Label',
   tables: 'Tafels',
   notes: 'Opmerkingen',
   note: 'Opmerking',

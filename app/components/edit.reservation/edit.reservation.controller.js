@@ -34,6 +34,8 @@ export default class EditReservationCtrl {
     this.tables = {};
     this.zones = [];
 
+    this.labels = this.Reservation.labels();
+
     this.$onInit = () => {
       this.reservation = this.resolve.reservation;
       this.reservationPart = this.resolve.reservationPart;
@@ -126,6 +128,7 @@ export default class EditReservationCtrl {
   prepareFormData() {
     const data = {
       notes: this.current_part.notes,
+      label: this.reservation.label,
       is_group: this.reservation.is_group,
       household_confirmation: this.reservation.household_confirmation,
       reservation_parts: [],

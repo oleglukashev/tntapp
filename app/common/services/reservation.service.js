@@ -25,6 +25,18 @@ export default class Reservation {
     };
   }
 
+  labels() {
+    return [
+      null,
+      'promo',
+      'wedding',
+      'party',
+      'drinks',
+      'condolence',
+      'company_outing',
+    ]
+  }
+
   getAll(companyId, date, skipJwtAuth) {
     const deferred = this.$q.defer();
 

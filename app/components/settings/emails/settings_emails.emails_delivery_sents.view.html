@@ -1,0 +1,24 @@
+<section class='email_delivery_sents_modal no-margin'>
+  <md-toolbar>
+    <div class='md-toolbar-tools'>
+      <h2 md-truncate flex translate='settings.emails_delivery.sents'></h2>
+      <md-button class='md-icon-button'
+                 ng-click='ctrl.closeModal();'
+                 md-no-ink>
+        <i class='mdi mdi-close m-r-sm i-24'></i>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content style='padding: 10px;'>
+    <table class='table' width="100%">
+      <tr>
+        <th>Email</th>
+        <th style='text-align: right'>Sent at</th>
+      </tr>
+      <tr ng-repeat='sent in ctrl.sents'>
+        <td style='border-bottom: 1px dashed #'>{{ sent.email }}</td>
+        <td style='text-align: right'>{{ sent.created_on }}</td>
+      </tr>
+    </table>
+  </md-content>
+</section>
