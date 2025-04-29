@@ -356,7 +356,7 @@ export default {
         google_cal_link: '%GOOGLE_CAL_LINK%',
         tnr_link: '%TNRLINK%',
         payment: '%BETALING% (alleen voor klantenboekingen)',
-        guest_satisfaction: '%GASTTEVREDENHEID%'
+        guest_satisfaction: '%GASTTEVREDENHEID%',
         custom: {
           title: 'Aangepaste tijdelijke aanduidingen',
           title_en: 'Titel (en)',
