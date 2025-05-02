@@ -13,13 +13,7 @@ export default class Controller {
     this.$modal = $uibModal;
     this.$rootScope = $rootScope;
 
-    this.userIsManager = User.isManager.bind(User);
-    if (this.userIsManager()) {
-      this.loadEmployees();
-    } else {
-      // no access
-      window.location.href = '/';
-    }
+    this.loadEmployees();
 
     this.is_loaded = false;
     this.employee_form = {};

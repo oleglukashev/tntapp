@@ -14,50 +14,43 @@ export default class Controller {
     this.AppConstants = AppConstants;
     this.iframe_widget = '<iframe src="https://dashboard.deroohorecagroep.nl/thenexttable-embed/iframe.php?rid=' + this.current_company_id + '" style="display: block; margin: 0 auto;" frameborder="0" seamless="seamless" height="440px;" width="300px;"></iframe>';
 
+    $q.all([
+      this.Settings.getGeneralSettings(this.current_company_id),
+      this.Settings.getPluginsSettings(this.current_company_id)
+    ]).then((result) => {
+      this.plugin_image_file_name = result[0].plugin_image_file_name;
+      this.api_token = result[1].api_token.token;
+      this.wordpress_token = result[1].wordpress_token;
+      this.tnr_sync_token = result[1].tnr_sync_token;
+      this.accept_prepayment = result[1].accept_prepayment;
+      this.prepayment_type = result[1].prepayment_type;
+      this.prepayment_value = result[1].prepayment_value;
+      this.mollie_access_token = result[1].mollie_access_token;
+      this.mollie_refresh_token = result[1].mollie_refresh_token;
+      this.mollie_profile_id = result[1].mollie_profile_id;
 
-    this.userIsManager = User.isManager.bind(User);
-    if (this.userIsManager()) {
-      $q.all([
-        this.Settings.getGeneralSettings(this.current_company_id),
-        this.Settings.getPluginsSettings(this.current_company_id)
-      ]).then((result) => {
-        this.plugin_image_file_name = result[0].plugin_image_file_name;
-        this.api_token = result[1].api_token.token;
-        this.wordpress_token = result[1].wordpress_token;
-        this.tnr_sync_token = result[1].tnr_sync_token;
-        this.accept_prepayment = result[1].accept_prepayment;
-        this.prepayment_type = result[1].prepayment_type;
-        this.prepayment_value = result[1].prepayment_value;
-        this.mollie_access_token = result[1].mollie_access_token;
-        this.mollie_refresh_token = result[1].mollie_refresh_token;
-        this.mollie_profile_id = result[1].mollie_profile_id;
+      if ($stateParams.access_token &&
+        $stateParams.refresh_token &&
+        ($stateParams.access_token !== this.mollie_access_token ||
+         $stateParams.refresh_token !== this.mollie_refresh_token) &&
+        $stateParams.action === 'update') {
+        Settings.updatePluginSettings(this.current_company_id, {
+          mollie_access_token: $stateParams.access_token,
+          mollie_refresh_token: $stateParams.refresh_token,
+          prepayment_value: 1
+        }).then((pluginsSettings) => {
+          this.mollie_access_token = pluginsSettings.mollie_access_token;
+          this.mollie_refresh_token = pluginsSettings.mollie_refresh_token;
+          this.prepayment_value = 1;
+          $location.search('access_token', null);
+          $location.search('refresh_token', null);
+          $location.search('action', null);
+        });
+      }
 
-        if ($stateParams.access_token &&
-          $stateParams.refresh_token &&
-          ($stateParams.access_token !== this.mollie_access_token ||
-           $stateParams.refresh_token !== this.mollie_refresh_token) &&
-          $stateParams.action === 'update') {
-          Settings.updatePluginSettings(this.current_company_id, {
-            mollie_access_token: $stateParams.access_token,
-            mollie_refresh_token: $stateParams.refresh_token,
-            prepayment_value: 1
-          }).then((pluginsSettings) => {
-            this.mollie_access_token = pluginsSettings.mollie_access_token;
-            this.mollie_refresh_token = pluginsSettings.mollie_refresh_token;
-            this.prepayment_value = 1;
-            $location.search('access_token', null);
-            $location.search('refresh_token', null);
-            $location.search('action', null);
-          });
-        }
-
-        this.$rootScope.show_spinner = false;
-        this.loadUntillSettings();
-      });
-    } else {
-      // no access
-      window.location.href = '/';
-    }
+      this.$rootScope.show_spinner = false;
+      this.loadUntillSettings();
+    });
   }
 
   loadUntillSettings() {

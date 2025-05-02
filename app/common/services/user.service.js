@@ -286,82 +286,82 @@ export default class User {
       });
   }
 
-  isManager() {
-    let result = false;
+  // isManager() {
+  //   let result = false;
 
-    if (this.isOwner()) {
-      result = true;
-    }
+  //   if (this.isOwner()) {
+  //     result = true;
+  //   }
 
-    if (this.isRestaurantManager()) {
-      result = true;
-    }
+  //   if (this.isRestaurantManager()) {
+  //     result = true;
+  //   }
 
-    if (this.isBackofficeManager()) {
-      result = true;
-    }
+  //   if (this.isBackofficeManager()) {
+  //     result = true;
+  //   }
 
-    return result;
-  }
+  //   return result;
+  // }
 
 
 
-  isOwner() {
-    let result = false;
+  // isOwner() {
+  //   let result = false;
 
-    if (this.getCompanyId() && this.current) {
-      if (this.current.company_roles &&
-        this.current.company_roles.length) {
-        this.current.company_roles.forEach((role) => {
-          if (role.company.id === this.getCompanyId() && role.name === 'owner') {
-            result = true;
-          }
-        });
-      }
+  //   if (this.getCompanyId() && this.current) {
+  //     if (this.current.company_roles &&
+  //       this.current.company_roles.length) {
+  //       this.current.company_roles.forEach((role) => {
+  //         if (role.company.id === this.getCompanyId() && role.name === 'owner') {
+  //           result = true;
+  //         }
+  //       });
+  //     }
 
-      if (this.current.owned_companies.length) {
-        this.current.owned_companies.forEach((company) => {
-          if (company.id === this.getCompanyId()) {
-            result = true;
-          }
-        });
-      }
-    }
+  //     if (this.current.owned_companies.length) {
+  //       this.current.owned_companies.forEach((company) => {
+  //         if (company.id === this.getCompanyId()) {
+  //           result = true;
+  //         }
+  //       });
+  //     }
+  //   }
 
-    return result;
-  }
+  //   return result;
+  // }
 
-  isRestaurantManager() {
-    let result = false;
+  // isRestaurantManager() {
+  //   let result = false;
 
-    if (this.getCompanyId() &&
-      this.current &&
-      this.current.company_roles &&
-      this.current.company_roles.length) {
-      this.current.company_roles.forEach((role) => {
-        if (role.company.id === this.getCompanyId() && role.name === 'restaurant_manager') {
-          result = true;
-        }
-      });
-    }
+  //   if (this.getCompanyId() &&
+  //     this.current &&
+  //     this.current.company_roles &&
+  //     this.current.company_roles.length) {
+  //     this.current.company_roles.forEach((role) => {
+  //       if (role.company.id === this.getCompanyId() && role.name === 'restaurant_manager') {
+  //         result = true;
+  //       }
+  //     });
+  //   }
 
-    return result;
-  }
+  //   return result;
+  // }
 
-  isBackofficeManager() {
-    let result = false;
+  // isBackofficeManager() {
+  //   let result = false;
 
-    if (this.getCompanyId() &&
-      this.current &&
-      this.current.company_roles &&
-      this.current.company_roles.length) {
-      this.current.company_roles.forEach((role) => {
-        if (role.company.id === this.getCompanyId() && role.name === 'backoffice_manager') {
-          result = true;
-        }
-      });
-    }
+  //   if (this.getCompanyId() &&
+  //     this.current &&
+  //     this.current.company_roles &&
+  //     this.current.company_roles.length) {
+  //     this.current.company_roles.forEach((role) => {
+  //       if (role.company.id === this.getCompanyId() && role.name === 'backoffice_manager') {
+  //         result = true;
+  //       }
+  //     });
+  //   }
 
-    return result;
-  }
+  //   return result;
+  // }
 }

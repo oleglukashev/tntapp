@@ -13,7 +13,6 @@ export default class Controller {
     this.moment = moment;
     this.$rootScope = $rootScope;
     this.$modal = $uibModal;
-    this.userIsManager = User.isManager.bind(User);
     this.date_range_filter = {
       selectedTemplate: 'TM',
     }
@@ -24,16 +23,11 @@ export default class Controller {
     this.is_loaded = false;
     this.time_ranges_is_loaded = false;
 
-    if (this.userIsManager()) {
-      $q.all([
-        this.Zone.getAll(this.current_company_id)
-      ]).then((result) => {
-        this.initZones(result[0]);
-      })
-    } else {
-      // no access
-      window.location.href = '/';
-    }
+    $q.all([
+      this.Zone.getAll(this.current_company_id)
+    ]).then((result) => {
+      this.initZones(result[0]);
+    })
   }
 
   changeStatus(reservation, status) {

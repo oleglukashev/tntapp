@@ -51,28 +51,22 @@ export default class Controller {
     }
 
     this.is_loaded = false;
-    this.userIsManager = User.isManager.bind(User);
-    if (this.userIsManager()) {
-      $q.all([
-        this.Settings.getEmailsSettings(this.current_company_id),
-        this.EmailText.getAll(this.current_company_id),
-        this.SmsText.getAll(this.current_company_id),
-        this.EmailsDelivery.getAll(this.current_company_id),
-        this.EmailsImage.getAll(this.current_company_id),
-        this.Placeholder.getAll(this.current_company_id),
-      ]).then((result) => {
-        this.initEmailSettings(result[0]);
-        this.initEmailTexts(result[1]);
-        this.initSmsTexts(result[2]);
-        this.initEmailsDeliveries(result[3]);
-        this.initEmailsImages(result[4]);
-        this.initPlaceholders(result[5]);
-        this.is_loaded = true;
-      });
-    } else {
-      // no access
-      window.location.href = '/';
-    }
+    $q.all([
+      this.Settings.getEmailsSettings(this.current_company_id),
+      this.EmailText.getAll(this.current_company_id),
+      this.SmsText.getAll(this.current_company_id),
+      this.EmailsDelivery.getAll(this.current_company_id),
+      this.EmailsImage.getAll(this.current_company_id),
+      this.Placeholder.getAll(this.current_company_id),
+    ]).then((result) => {
+      this.initEmailSettings(result[0]);
+      this.initEmailTexts(result[1]);
+      this.initSmsTexts(result[2]);
+      this.initEmailsDeliveries(result[3]);
+      this.initEmailsImages(result[4]);
+      this.initPlaceholders(result[5]);
+      this.is_loaded = true;
+    });
   }
 
   submitEmailsSettingsForm() {

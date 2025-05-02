@@ -36,22 +36,18 @@
 
         <li class='m-t-sm'>
           <a href='javascript://'
-             ui-sref='app.general_settings'
-             ng-show='ctrl.userIsManager()'>
+             ui-sref='app.general_settings'>
             <span translate='right_menu.settings'></span>
           </a>
-          <span ng-hide='ctrl.userIsManager()'
-                title='{{ "notifications.access_only" | translate }}'
+          <span title='{{ "notifications.access_only" | translate }}'
                 translate='right_menu.settings'></span>
         </li>
         <li>
           <a href='javascript://'
-             ui-sref='app.upgrade'
-             ng-show='ctrl.userIsOwner()'>
+             ui-sref='app.upgrade'>
             <span translate='right_menu.upgrade'></span>
           </a>
-          <span ng-hide='ctrl.userIsOwner()'
-                title='{{ "notifications.access_only" | translate }}'
+          <span title='{{ "notifications.access_only" | translate }}'
                 translate='right_menu.upgrade'></span>
         </li>
         <li>

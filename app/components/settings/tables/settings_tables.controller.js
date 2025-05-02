@@ -23,14 +23,7 @@ export default class Controller {
     this.tables_by_zone = {};
     this.errors = {};
     this.opened = [true];
-
-    this.userIsManager = User.isManager.bind(User);
-    if (this.userIsManager()) {
-      this.loadZones();
-    } else {
-      // no access
-      window.location.href = '/';
-    }
+    this.loadZones();
   }
 
   addZone() {

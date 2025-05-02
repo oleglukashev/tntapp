@@ -10,12 +10,6 @@ export default class Controller {
     this.$cookieStore = $cookieStore;
     this.AppConstants = AppConstants;
     this.plugin_theme_name = Theme.get();
-
-    this.userIsManager = User.isManager.bind(User);
-    if (!this.userIsManager()) {
-      // no access
-      window.location.href = '/';
-    }
   }
 
   submitForm() {
