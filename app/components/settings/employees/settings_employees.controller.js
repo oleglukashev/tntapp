@@ -6,7 +6,6 @@ export default class Controller {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
-    this.isOwner = User.isOwner();
 
     this.filterFilter = filterFilter;
     this.Employee = Employee;

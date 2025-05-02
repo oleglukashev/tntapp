@@ -6,14 +6,14 @@
         <thead>
           <th translate='name'></th>
           <th translate='email'></th>
-          <th translate='settings.employees.rights' ng-show='ctrl.isOwner'></th>
-          <th ng-show='ctrl.isOwner'></th>
+          <th translate='settings.employees.rights'></th>
+          <th></th>
         </thead>
         <tbody>
           <tr ng-repeat='employee in ctrl.employees'>
             <td class='v-middle'>{{ employee.user.first_name }} {{ employee.user.last_name }}</td>
             <td class='v-middle'>{{ employee.user.email }}</td>
-            <td class='v-middle' ng-show='ctrl.isOwner'>
+            <td class='v-middle'>
               <form
                 name='employee_form'
                 ng-submit='ctrl.submitForm(employee.user.id);'>
@@ -30,7 +30,7 @@
                   </md-input-container>
                 </form>
             </td>
-            <td class='v-middle text-right' ng-if='ctrl.isOwner'>
+            <td class='v-middle text-right'>
               <md-menu>
                   <button md-ink-ripple
                         class='md-btn md-fab no-shadow'
@@ -55,7 +55,6 @@
     </div>
     <div class='panel-footer'>
       <button md-ink-ripple
-              ng-show='ctrl.isOwner'
               class='md-btn md-flat btn-fw text-success'
               ng-click='ctrl.addEmployee();'>
         <i class='mdi mdi-plus-circle'></i>

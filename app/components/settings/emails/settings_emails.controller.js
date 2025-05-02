@@ -261,8 +261,7 @@ export default class Controller {
   }
 
   canShowRegisterTwilioAccountBlock() {
-    return this.User.isOwner() &&
-      this.emails_settings_form_data &&
+    return this.emails_settings_form_data &&
       !this.emails_settings_form_data.twilio_sid;
   }
 
