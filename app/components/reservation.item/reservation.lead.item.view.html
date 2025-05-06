@@ -58,34 +58,34 @@
     </md-menu-content>
   </md-menu>
 
-  <div class='pull-right' ng-if='ctrl.isOwnerOrBackofficeManager'>
+  <div class='pull-right'>
     <textarea
       class='m-t-sm'
       ng-blur='ctrl.updateReservation()'
       ng-model="ctrl.data.reservation.remark"></textarea>
   </div>
 
-  <div class='pull-right' ng-if='ctrl.isOwnerOrBackofficeManager'>
+  <div class='pull-right'>
     <div class='md-form-group m-r-md'>
       <md-switch ng-model='ctrl.data.reservation.signed'
                  ng-change='ctrl.updateReservation()'></md-switch>
     </div>
   </div>
 
-  <div class='pull-right' ng-if='ctrl.isOwnerOrBackofficeManager'>
+  <div class='pull-right'>
     <md-input-container class='m-r-md'>
       <md-datepicker ng-model='ctrl.data.reservation.last_contact'
                      ng-change='ctrl.updateReservation()'></md-datepicker>
     </md-input-container>
   </div>
 
-  <div class='pull-right' ng-if='ctrl.isOwnerOrBackofficeManager'>
+  <div class='pull-right'>
     <div class='md-form-group m-r-md'>
       <md-switch ng-model='ctrl.data.reservation.quotation'
                  ng-change='ctrl.updateReservation()'></md-switch>
     </div>
   </div>
-  <div class='pull-right' ng-if='ctrl.isOwnerOrBackofficeManager'>
+  <div class='pull-right'>
     <div class='md-form-group m-r-md'>
       <md-select ng-change='ctrl.updateReservation()' ng-model='ctrl.data.reservation.lead_type'>
         <md-option

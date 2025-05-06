@@ -8,8 +8,6 @@ export default class HeaderUserMenuCtrl {
     this.$translate = $translate;
     this.User = User;
     this.logout = User.logout.bind(User);
-    this.userIsManager = User.isManager.bind(User);
-    this.userIsOwner = User.isOwner.bind(User);
   }
 
   hideRightSidebar() {

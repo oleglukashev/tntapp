@@ -9,13 +9,7 @@ export default class Controller {
     this.$mdDialog = $mdDialog;
     this.settings = {};
 
-    this.userIsManager = User.isManager.bind(User);
-    if (this.userIsManager()) {
-      this.loadGeneralSettings();
-    } else {
-      // no access
-      window.location.href = '/';
-    }
+    this.loadGeneralSettings();
   }
 
   submitForm(isValid) {

@@ -6,7 +6,6 @@ export default class Controller {
     this.currentUser = User.current;
     this.currentCompany = User.currentCompany;
     this.logout = User.logout.bind(User);
-    this.userIsManager = User.isManager.bind(User);
     this.$mdSidenav = $mdSidenav;
   }
 

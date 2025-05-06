@@ -15,14 +15,8 @@ export default class Controller {
     this.limit = 1;
     this.type = null;
 
-    this.userIsManager = User.isManager.bind(User);
-    if (this.userIsManager()) {
-      this.loadLimits();
-      this.loadGeneralSettings();
-    } else {
-      // no access
-      window.location.href = '/';
-    }
+    this.loadLimits();
+    this.loadGeneralSettings();
 
     this.limits = {};
 

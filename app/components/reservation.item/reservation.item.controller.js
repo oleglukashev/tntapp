@@ -20,8 +20,6 @@ export default class DashboardReservationItemCtrl {
 
     this.User = User;
 
-    this.isOwnerOrBackofficeManager = this.User.isOwner() || this.User.isBackofficeManager();
-
     this.$onInit = () => {
       this.customer_id = this.data.reservation.customer ? this.data.reservation.customer.id : null
     }

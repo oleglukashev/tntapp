@@ -7,7 +7,6 @@ export default class HeaderCtrl {
     this.$mdSidenav = $mdSidenav;
     this.User = User;
     this.Notification = Notification;
-    this.userIsManager = User.isManager.bind(User);
   }
 
   openMobileMenu() {

@@ -6,20 +6,13 @@ export default class Controller {
     'ngInject';
 
     this.current_company_id = User.getCompanyId();
-    this.isOwner = User.isOwner();
 
     this.filterFilter = filterFilter;
     this.Employee = Employee;
     this.$modal = $uibModal;
     this.$rootScope = $rootScope;
 
-    this.userIsManager = User.isManager.bind(User);
-    if (this.userIsManager()) {
-      this.loadEmployees();
-    } else {
-      // no access
-      window.location.href = '/';
-    }
+    this.loadEmployees();
 
     this.is_loaded = false;
     this.employee_form = {};

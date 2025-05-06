@@ -46,13 +46,7 @@ export default class Controller {
       }
     });
 
-    this.userIsManager = User.isManager.bind(User);
-    if (this.userIsManager()) {
-      this.loadProducts();
-    } else {
-      // no access
-      window.location.href = '/';
-    }
+    this.loadProducts();
   }
 
   sliderChanged(id, timeRange) {
