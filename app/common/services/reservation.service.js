@@ -148,7 +148,7 @@ export default class Reservation {
     }).then((result) => {
       const anchor = angular.element('<a/>');
       anchor.attr({
-        href: `data:attachment/csv;charset=utf-8,${encodeURI(result.data)}`,
+        href: `data:attachment/csv;charset=utf-8,${encodeURIComponent(result.data)}`,
         target: '_blank',
         download: 'export.csv',
       })[0].click();
